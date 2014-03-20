@@ -1,8 +1,8 @@
 <?php
 /**
   @package    catalog::templates::content
-  @author     AlgoZone, Inc
-  @copyright  Copyright 2013 AlgoZone, Inc
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
   @copyright  Portions Copyright 2003 osCommerce
   @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
@@ -49,16 +49,17 @@
   <div class="row content-mainpage-banner-container margin-bottom clear-both">
 	<div id="banner_slides" class="carousel slide">
 	  <!-- Indicators -->
-	  <ol class="carousel-indicators">
-	    <li data-target="#banner_slides" data-slide-to="0" class="active"></li>
+	  <ul class="carousel-indicators">
+	    <li data-target="#banner_slides" data-slide-to="0" class="active"><span class="bg"><?php echo 1; ?></span></li>
 	  	<?php 
 	  		for( $i = 1; $i < count($slider_banners); $i++) {
 	  	?>
-	  	<li data-target="#banner_slides" data-slide-to="<?php echo $i; ?>"></li>		
+        
+	  	<li data-target="#banner_slides" data-slide-to="<?php echo $i; ?>"><span class="bg"><?php echo $i+1; ?></span><span class="line"></span></li>		
 	  	<?php 
 	  		}
 	  	?>
-	  </ol>
+	  </ul>
 	
 	  <!-- Wrapper for slides -->
 	  <div class="carousel-inner">
@@ -75,11 +76,11 @@
 	  				echo $banner['banners_html_text'];
 	  			}
 	  	?>
-	    </div>	 		
+  </div>
 	  	<?php 
 	  		}
 	  	?>	  
-	  </div>
+</div>
 	
 	  <!-- Controls -->
 	  <a class="left carousel-control" href="#banner_slides" data-slide="prev">
@@ -94,13 +95,7 @@
 
 
 
-<div class="col-xs-12 col-sm-3 col-lg-3 right_sec staticbanner">
-  <div class="row content-static-banner-container margin-bottom clear-both">
-	<div class="col-xs-12 col-sm-12 col-lg-12"><?php echo $static_banners[0]['image']; ?></div>
-	<div class="col-xs-12 col-sm-12 col-lg-12"><?php echo $static_banners[1]['image']; ?></div>
-	<div class="col-xs-12 col-sm-12 col-lg-12"><?php echo $static_banners[2]['image']; ?></div>
-  </div>
-</div>
+
 
 
 <!--modules/content/mainpage_banner.php end-->

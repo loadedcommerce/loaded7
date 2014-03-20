@@ -1,8 +1,8 @@
 <?php
 /**
   @package    catalog::templates::content
-  @author     Loaded Commerce, LLC
-  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
   @copyright  Portions Copyright 2003 osCommerce
   @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
@@ -25,7 +25,7 @@
           </div>
         </div>    
         <div class="button-set">
-          <button class="pull-right btn btn-lg btn-primary" onkeypress="$('#advanced_search').submit();"><?php echo $lC_Language->get('button_search'); ?></button>
+          <button class="pull-right btn btn-lg btn-primary" onclick="$('#advanced_search').submit();" type="button"><?php echo $lC_Language->get('button_search'); ?></button>
           <p class="help-block margin-left"><a href="javascript:void(0);" onclick="javascript:window.open('<?php echo lc_href_link(FILENAME_SEARCH, 'help', 'AUTO'); ?>', 'searchHelp', 'location=0, status=0, toolbar=0, menubar=0, scrollbars=1, width=600, height=445'); return false"><?php echo $lC_Language->get('search_help_tips'); ?></a></p>
         </div>      
       </div>
@@ -39,7 +39,7 @@
         </div>
         <div class="form-group">
           <label class="control-label col-sm-3 col-lg-3 text-right margin-top"><?php echo $lC_Language->get('field_search_recursive'); ?></label>
-          <div class="col-sm-2 col-lg-2"><?php echo lc_draw_checkbox_field('recursive', null, null, 'class="form-control"', null); ?></div>
+          <div class="col-sm-9 col-lg-9"><?php echo lc_draw_checkbox_field('recursive', null, null, 'class="form-control"', null); ?></div>
         </div>
         <div class="form-group">
           <label class="control-label col-sm-3 col-lg-3 text-right small-margin-top"><?php echo $lC_Language->get('field_search_manufacturers'); ?></label>

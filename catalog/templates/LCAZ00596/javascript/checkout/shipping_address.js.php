@@ -1,8 +1,8 @@
 <?php
 /**
   @package    catalog::templates::content
-  @author     Loaded Commerce, LLC
-  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
   @copyright  Portions Copyright 2003 osCommerce
   @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
@@ -33,14 +33,11 @@ $('#shipping-address-form').click(function(){
    $('#shipping-address-form').html(text);
    $('#checkout_address').removeAttr('onsubmit');
  }
- $('#checkoutShippingAddressEntries').toggle('slideUp');
  $('#checkoutShippingAddressDetails').toggle('slideUp');
 }); 
 
 function selectRowEffect(object, buttonSelect) {
-
-  $('#content-checkout-address-selection-table tr').removeClass('module-row-selected');
-  
+  $('.content-checkout-address-selection-table tr').removeClass('module-row-selected');
   if (!selected) {
     if (document.getElementById) {
       selected = document.getElementById('defaultSelected');

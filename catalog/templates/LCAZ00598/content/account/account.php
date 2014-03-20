@@ -1,8 +1,8 @@
 <?php
 /**
   @package    catalog::templates::content
-  @author     Loaded Commerce, LLC
-  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
   @copyright  Portions Copyright 2003 osCommerce
   @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
@@ -13,7 +13,7 @@
 <div class="row">
   <h1 class="no-margin-top"><?php echo $lC_Template->getPageTitle(); ?></h1>
   <?php 
-    if ( $lC_MessageStack->size('account') > 0 ) echo '<div class="message-stack-container alert alert-error small-margin-bottom margin-left-neg">' . $lC_MessageStack->get('account') . '</div>' . "\n"; 
+    if (isset($_GET['success']) && $_GET['success'] != NULL) echo '<div class="message-success-container alert alert-success"><img class="margin-right" src="images/icons/success.gif">' . preg_replace('/[^a-zA-Z0-9]\'\.\,/', '', $_GET['success']) . '</div>' . "\n";
   ?>
   <div class="col-sm-12 col-lg-12">
     <h3><?php echo $lC_Language->get('my_details_title'); ?></h3>

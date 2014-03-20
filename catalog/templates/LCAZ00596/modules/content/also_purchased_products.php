@@ -1,8 +1,8 @@
 <?php
 /**
   @package    catalog::templates::content
-  @author     Loaded Commerce, LLC
-  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
   @copyright  Portions Copyright 2003 osCommerce
   @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
@@ -10,7 +10,7 @@
 */
 ?>
 <!--modules/content/also_purchased_products.php start-->
-<div class="col-sm-12 col-lg-12">
+<div class="content-also-purchased-products-div col-sm-12 col-lg-12">
   <div class="row">
     <h3 class="no-margin-top"><?php echo $lC_Box->getTitle(); ?></h3>
     <?php echo $lC_Box->getContent(); ?>
@@ -35,7 +35,9 @@ $(document).ready(function() {
     var dateContent = $(this).find('div.content-also-purchased-products-date').html();
     var buttonContent = $(this).find('div.content-also-purchased-products-button').html();
     buttonContentText = $(this).find('div.content-also-purchased-products-button').text();
+    var textAddToCart = '<?php echo $lC_Language->get('button_add_to_cart'); ?>';
     
+    buttonContent =buttonContent.replace(buttonContentText, textAddToCart);
     var newNameContentText = (nameContentText.length > 16) ? nameContentText.substr(0, 13) + '...' : nameContentText;
     nameContent = nameContent.replace(nameContentText, newNameContentText);
     

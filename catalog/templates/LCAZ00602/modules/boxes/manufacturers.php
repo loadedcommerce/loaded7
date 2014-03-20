@@ -1,8 +1,8 @@
 <?php
 /**
   @package    catalog::manufacturers::boxes
-  @author     Loaded Commerce, LLC
-  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
   @copyright  Portions Copyright 2003 osCommerce
   @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
@@ -11,7 +11,7 @@
 ?>
 <!--modules/boxes/manufacturers.php start-->
 <div class="well" >
-  <form role="form" class="form-inline no-margin-bottom" id="manufacturers" name="manufacturers" action="<?php echo lc_href_link(FILENAME_DEFAULT, null, 'NONSSL', false); ?>" method="get">
+  <form role="form" class="form-inline no-margin-bottom" name="manufacturers" action="<?php echo lc_href_link(FILENAME_DEFAULT, null, 'NONSSL', false); ?>" method="get">
     <ul class="box-templates list-unstyled">
       <li class="box-header small-margin-bottom"><?php echo $lC_Box->getTitle(); ?></li>
         <?php echo $lC_Box->getContent(); ?>

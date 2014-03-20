@@ -1,8 +1,8 @@
 <?php
 /**
   @package    catalog::templates::content
-  @author     Loaded Commerce, LLC
-  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
   @copyright  Portions Copyright 2003 osCommerce
   @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
@@ -19,11 +19,11 @@
     } else {
       require($lC_Vqmod->modCheck('includes/modules/product_listing.php')); 
     }
-    ?>     
-    <div class="button-set clearfix large-margin-bottom">
-      <button class="pull-left btn btn-lg btn-default" onclick="javascript: history.go(-1);" type="button"><?php echo $lC_Language->get('button_back'); ?></button>
-    </div>   
+    ?>   
   </div>
+</div>     
+<div class="button-set clearfix large-margin-bottom">
+  <button class="pull-left btn btn-lg btn-default" onclick="javascript: history.go(-1);" type="button"><?php echo $lC_Language->get('button_back'); ?></button>
 </div>
 <script>
 $(document).ready(function() {

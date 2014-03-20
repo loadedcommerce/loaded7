@@ -1,8 +1,8 @@
 <?php
 /**  
   @package    catalog::templates::content
-  @author     Loaded Commerce, LLC
-  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
   @copyright  Portions Copyright 2003 osCommerce
   @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
@@ -21,6 +21,13 @@ if ($lC_Payment->hasIframeParams()) {
   $fStyle = null;
 }
 $secureUrl = ($lC_Payment->hasIframeURL()) ? substr($lC_Payment->getIframeURL(), 0, strpos($lC_Payment->getIframeURL(), '?')) : (($lC_Payment->hasRelayURL()) ?  $lC_Payment->getRelayURL() : NULL);
+$isIE = (isset($_SESSION['browserName']) && $_SESSION['browserName'] == 'msie') ? true : false;
+if ($isIE && $lC_Payment->selected_module = 'lC_Payment_authorizenet_cc') {
+  $fWidth = '650px';
+  $fHeight = '550px';
+  $fScroll = 'yes';
+  $fStyle = null;
+}
 ?>
 <!--content/checkout/checkout_payment_template.php start-->
 <div class="row">
@@ -60,26 +67,33 @@ $secureUrl = ($lC_Payment->hasIframeURL()) ? substr($lC_Payment->getIframeURL(),
                 document.write(output);            
               </script>   
             </div>
-            <div class="col-sm-4 col-lg-4">
-              <div class="well">
-                <span class="strong"><?php echo $lC_Language->get('checkout_order_number'); ?></span>
-                <span class="pull-right strong"><?php echo $_SESSION['cartID']; ?></span> 
+            <?php 
+            if (!$isIE) {
+              ?>
+              <div class="col-sm-4 col-lg-4">
+                <div class="well">
+                  <span class="strong"><?php echo $lC_Language->get('text_amount_due'); ?></span>
+                  <span class="pull-right strong"><?php echo $lC_Currencies->format($lC_ShoppingCart->getTotal()); ?></span>
+                </div>
+                <div class="well relative no-padding-bottom">
+                  <h4 class="no-margin-top"><?php echo $lC_Language->get('bill_to_address'); ?></h4>
+                  <address>
+                    <?php echo lC_Address::format($lC_ShoppingCart->getBillingAddress(), '<br />'); ?>                
+                  </address>
+                  <div class="btn-group clearfix absolute-top-right">
+                    <form action="<?php echo lc_href_link(FILENAME_CHECKOUT, 'payment_address', 'SSL'); ?>" method="post"><button type="button" onclick="$(this).closest('form').submit();" class="btn btn-default btn-xs"><?php echo $lC_Language->get('button_edit'); ?></button></form>
+                  </div>                  
+                </div>
               </div>
-              <div class="well">
-                <span class="strong"><?php echo $lC_Language->get('text_amount_due'); ?></span>
-                <span class="pull-right strong"><?php echo $lC_Currencies->format($lC_ShoppingCart->getTotal()); ?></span>
-              </div>
-              <div class="well relative no-padding-bottom">
-                <h4 class="no-margin-top"><?php echo $lC_Language->get('bill_to_address'); ?></h4>
-                <address>
-                  <?php echo lC_Address::format($lC_ShoppingCart->getBillingAddress(), '<br />'); ?>                
-                </address>
-                <div class="btn-group clearfix absolute-top-right">
-                  <form action="<?php echo lc_href_link(FILENAME_CHECKOUT, 'payment_address', 'SSL'); ?>" method="post"><button type="button" onclick="$(this).closest('form').submit();" class="btn btn-default btn-xs"><?php echo $lC_Language->get('button_edit'); ?></button></form>
-                </div>                  
-              </div>
-            </div>
-            <div class="col-sm-8 col-lg-8 no-padding-left large-margin-bottom">
+              <div class="col-sm-8 col-lg-8 no-padding-left large-margin-bottom">
+              <?php
+            } else {
+              ?>
+              <div class="col-sm-1 col-lg-1"></div>
+              <div class="col-sm-11 col-lg-11">
+                <?php 
+            } 
+            ?>
               <div id="checkoutConfirmationDetails"> 
                 <div id="loading-container"><p id="iloader"></p></div>
                 <?php  

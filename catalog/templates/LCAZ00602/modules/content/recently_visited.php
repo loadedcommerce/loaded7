@@ -1,8 +1,8 @@
 <?php
 /**
   @package    catalog::templates::content
-  @author     Loaded Commerce, LLC
-  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
   @copyright  Portions Copyright 2003 osCommerce
   @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
@@ -10,7 +10,7 @@
 */
 ?>
 <!--modules/content/recently_visited.php start-->
-<div class="col-sm-12 col-lg-12">
+<div class="content-recently-visited-div col-sm-12 col-lg-12">
   <div class="row margin-bottom">
     <h3 class="no-margin-top"><?php echo $lC_Box->getTitle(); ?></h3>
     <?php echo $lC_Box->getContent(); ?>
@@ -36,8 +36,11 @@ $(document).ready(function() {
     var newNameContentText = (nameContentText.length > 16) ? nameContentText.substr(0, 13) + '...' : nameContentText;
     nameContent = nameContent.replace(nameContentText, newNameContentText);
     
-    output = '<div class="' + thisContentClass + ' with-padding-no-top-bottom">'+
-             '  <div class="thumbnail align-center large-padding-top">'+ imageContent +
+    // added for products with no image
+    if (!imageContent) imageContent = ''; 
+    
+    output = '<div class="' + thisContentClass + ' with-padding-no-top-bottom">' +
+             '  <div class="thumbnail align-center large-padding-top">' + imageContent +
              '    <div class="caption">' +
              '      <h3 class="content-recently-visited-text-name no-margin-top small-margin-bottom">' + nameContent + '</h3>' +
              '      <p class="text-center small-margin-top small-margin-bottom">' + fromContent + '</p>' +

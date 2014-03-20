@@ -1,8 +1,8 @@
 <?php
 /**
   @package    catalog::templates::content
-  @author     Loaded Commerce, LLC
-  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
   @copyright  Portions Copyright 2003 osCommerce
   @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
@@ -10,13 +10,13 @@
 */
 ?>
 <!--content/info/create.php start-->
-<div class="row">
+<div class="row login2">
   <div class="col-sm-12 col-lg-12">
     <h1 class="no-margin-top"><?php echo $lC_Template->getPageTitle(); ?></h1>
     <?php 
       if ( $lC_MessageStack->size('create') > 0 ) echo '<div class="message-stack-container alert alert-danger small-margin-bottom small-margin-left">' . $lC_MessageStack->get('create') . '</div>' . "\n"; 
     ?>
-    <div class="row">
+    <div class="row login2">
       <form role="form" class="form-inline" name="create" id="create" action="<?php echo lc_href_link(FILENAME_ACCOUNT, 'create=save', 'SSL'); ?>" method="post" onsubmit="return check_form(create);">
         <div class="col-sm-6 col-lg-6 large-padding-left margin-top">
           <div class="well no-padding-top">

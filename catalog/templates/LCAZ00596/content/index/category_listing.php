@@ -1,8 +1,8 @@
 <?php
 /**
   @package    catalog::templates::content
-  @author     Loaded Commerce, LLC
-  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
   @copyright  Portions Copyright 2003 osCommerce
   @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
@@ -10,32 +10,15 @@
 */
 ?>
 <!--content/index/category_listing.php start-->
-<div class="row listing-container">
-<div class="listing-title">
-  <?php 
-    if (PRODUCT_LIST_FILTER == '1') echo lC_Template_output::getManufacturerFilter();
-    $Qlisting = lC_Template_output::getProductsListingSql();  
-    
-    if ( ($Qlisting->numberOfRows() > 0) && ((PREV_NEXT_BAR_LOCATION == '1') || (PREV_NEXT_BAR_LOCATION == '3')) ) {
-      ?>
-      <!-- PAGINATION-->
-      <div class="product-listing-module-pagination">
-        <div class="pull-left"><?php echo $Qlisting->getBatchTotalPages($lC_Language->get('result_set_number_of_products')); ?></div>
-        <div class="btn_previous_next pull-right no-margin-bottom no-margin-top">
-          <ul class="pagination no-margin-top no-margin-bottom">
-            <?php echo $Qlisting->getBatchPageLinks('page', lc_get_all_get_params(array('page', 'info', 'x', 'y')), false); ?>
-          </ul>
-        </div>
-      </div><div class="clear-both"></div>
-      <!-- /PAGINATION--> 
-      <?php 
+<div class="row cat-listing-container">
+  <div class="col-sm-12 col-lg-12">
+    <h1 class="no-margin-top"><?php // echo $lC_Template->getPageTitle(); ?></h1>
+    <?php 
+    if (lC_Template_output::getCategoryDescription() != '') {
+      //echo lC_Template_output::getCategoryDescription(); 
     }
     ?>
-    </div>
-    
-  <div class="content-product-listing-container ">    
-    
-    <div class="">
+    <div class="col-sm-12 col-lg-12 container text-center">
       <?php echo lC_Template_output::getCategoryListing(); ?>
     </div>
   </div>

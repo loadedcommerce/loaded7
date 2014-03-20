@@ -1,8 +1,8 @@
 <?php
 /**
   @package    catalog::templates::content
-  @author     Loaded Commerce, LLC
-  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
   @copyright  Portions Copyright 2003 osCommerce
   @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
@@ -57,7 +57,7 @@
       <?php
       if ($lC_Reviews->is_enabled === true) {
         ?>  
-        <button class="pull-right btn btn-lg btn-primary large-margin-bottom" onclick="window.location.href='<?php echo lc_href_link(FILENAME_PRODUCTS, 'reviews=new&' . $lC_Product->getKeyword()); ?>'" type="button"><?php echo $lC_Language->get('button_continue'); ?></button>
+        <button class="pull-right btn btn-lg btn-primary large-margin-bottom" onclick="window.location.href='<?php echo lc_href_link(FILENAME_PRODUCTS, 'reviews=new&' . $lC_Product->getKeyword()); ?>'" type="button"><?php echo $lC_Language->get('button_write_review'); ?></button>
         <?php 
       } 
       ?>

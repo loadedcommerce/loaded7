@@ -1,13 +1,14 @@
 <?php
 /**
   @package    catalog::templates
-  @author     Loaded Commerce, LLC
-  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
   @copyright  Portions Copyright 2003 osCommerce
   @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: header.php v1.0 2013-08-08 datazen $
 */ 
+if (isset($_SESSION['admin_login']) && $_SESSION['admin_login'] === TRUE) echo '<div class="alert alert-danger no-margin-bottom no-padding-top no-padding-bottom text-center">' . $lC_Language->get('text_admin_session_active') . '</div>';
 ?>
 <!--header.php start-->
 

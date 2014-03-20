@@ -1,8 +1,8 @@
 <?php
 /**  
   @package    catalog::templates::content
-  @author     Loaded Commerce, LLC
-  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
   @copyright  Portions Copyright 2003 osCommerce
   @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
@@ -15,6 +15,12 @@
     <h1 class="no-margin-top"><?php echo $lC_Language->get('text_checkout'); ?></h1>
     <?php 
     if ( $lC_MessageStack->size('checkout_shipping_address') > 0 ) echo '<div class="message-stack-container alert alert-danger small-margin-bottom">' . $lC_MessageStack->get('checkout_shipping_address') . '</div>' . "\n"; 
+    ?>
+    <?php 
+    if ( $lC_MessageStack->size('checkout_address') > 0 ) echo '<div class="message-stack-container alert alert-danger small-margin-bottom">' . $lC_MessageStack->get('checkout_address') . '</div>' . "\n"; 
+    ?>
+    <?php 
+    if ( $lC_MessageStack->size('checkout_shipping_account') > 0 ) echo '<div class="message-stack-container alert alert-success small-margin-bottom">' . $lC_MessageStack->get('checkout_shipping_account') . '</div>' . "\n"; 
     ?>
     <div id="content-checkout-shipping-address-container">
       <div class="panel panel-default no-margin-bottom">
@@ -29,15 +35,10 @@
                 <address>
                   <?php echo $lC_Language->get('add_first_address'); ?>
                 </address>
-                <div class="btn-group clearfix absolute-top-right small-padding-right small-padding-top">
-                  <button type="button" onclick="document.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping_address', 'SSL'); ?>'" class="btn btn-default btn-xs"><?php echo $lC_Language->get('button_add_address'); ?></button>
-                </div>
+
               </div>
               <div class="well">
-                <div class="clearfix">
-                  <span class="strong pull-left"><?php echo $lC_Language->get('checkout_order_number'); ?></span>
-                  <span class="strong pull-right"><?php echo $_SESSION['cartID']; ?></span>                
-                </div>
+
                 <?php 
                 foreach ($lC_ShoppingCart->getOrderTotals() as $module) {   
                   ?>
@@ -97,19 +98,19 @@
                   ?>
                 </div>
                 <?php
-                if (lC_AddressBook::numberOfEntries() < MAX_ADDRESS_BOOK_ENTRIES) {
+                  if ( (lC_AddressBook::numberOfEntries() < MAX_ADDRESS_BOOK_ENTRIES) || (lC_AddressBook::numberOfEntries() < 1) ) {
                   ?>
-                  <div class="" id="checkoutShippingAddressDetails" style="display:none;">
+                  <div class="" id="checkoutShippingAddressDetails"<?php echo (lC_AddressBook::numberOfEntries() < 1) ? '' : 'style="display:none;"'; ?>>
                     <h3 class="no-margin-top"><?php echo $lC_Language->get('new_shipping_address_title'); ?></h3>
                     <p><?php echo $lC_Language->get('new_shipping_address'); ?></p>
                     <div id="addressBookDetails">
-                      <?php
-                        if (file_exists(DIR_FS_TEMPLATE . 'modules/address_book_details.php')) {
-                          require($lC_Vqmod->modCheck(DIR_FS_TEMPLATE . 'modules/address_book_details.php'));
-                        } else {
-                          require($lC_Vqmod->modCheck('includes/modules/address_book_details.php')); 
-                        }             
-                      ?>
+                    <?php
+                      if (file_exists(DIR_FS_TEMPLATE . 'modules/address_book_details.php')) {
+                        require($lC_Vqmod->modCheck(DIR_FS_TEMPLATE . 'modules/address_book_details.php'));
+                      } else {
+                        require($lC_Vqmod->modCheck('includes/modules/address_book_details.php')); 
+                      }             
+                    ?>
                     </div>
                   </div>
                   <?php
@@ -118,7 +119,13 @@
               </form>
               <div class="btn-set clearfix">
                 <button class="btn btn-lg btn-success pull-right" onclick="$('#checkout_address').submit();" type="button"><?php echo $lC_Language->get('button_continue'); ?></button>
+                <?php 
+                  if (lC_AddressBook::numberOfEntries() < 1) {
+                ?>
+                <button class="btn btn-lg" type="button" id="shipping-address-form"><?php echo $lC_Language->get('text_cancel'); ?></button>
+                <?php } else { ?>
                 <button class="btn btn-lg btn-primary" type="button" id="shipping-address-form" style="display:none;"><?php echo $lC_Language->get('show_address_form'); ?></button>
+                <?php } ?>
               </div> 
             </div>
           </div> <!-- /row -->        

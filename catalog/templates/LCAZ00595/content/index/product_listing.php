@@ -1,8 +1,8 @@
 <?php
 /**
   @package    catalog::templates::content
-  @author     Loaded Commerce, LLC
-  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
   @copyright  Portions Copyright 2003 osCommerce
   @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
@@ -13,7 +13,15 @@
 <div class="row listing-container">
   <div class="listing-title"><h1 class="no-margin-top"></h1></div>
   
-  <div class="content-product-listing-container">
+  <div id="content-product-listing-category-description-container">
+    <?php 
+      if (lC_Template_output::getCategoryDescription() != '') {
+        echo '<div id="content-product-listing-category-description">' . lC_Template_output::getCategoryDescription() . '</div>'; 
+      }
+    ?>
+  </div>
+  
+  <div class="content-product-listing-div">
     <?php 
     if (PRODUCT_LIST_FILTER == '1') echo lC_Template_output::getManufacturerFilter();
     $Qlisting = lC_Template_output::getProductsListingSql();

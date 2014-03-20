@@ -1,8 +1,8 @@
 <?php
 /**
   @package    catalog::templates::content
-  @author     Loaded Commerce, LLC
-  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
   @copyright  Portions Copyright 2003 osCommerce
   @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
@@ -10,7 +10,7 @@
 */
 ?>
 <!--modules/content/new_products.php start-->
-<div class="col-sm-12 col-lg-9">
+<div class="content-new-products-div col-sm-12 col-lg-12">
   <div class="row margin-bottom">
     <h3 class="no-margin-top mainpagetop"><?php echo $lC_Box->getTitle(); ?></h3>
     <?php echo $lC_Box->getContent(); ?>

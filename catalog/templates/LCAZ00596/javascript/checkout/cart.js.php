@@ -1,8 +1,8 @@
 <?php
 /**
   @package    catalog::templates::content
-  @author     Loaded Commerce, LLC
-  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
   @copyright  Portions Copyright 2003 osCommerce
   @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
@@ -23,7 +23,7 @@ function deleteItem(id) {
         window.location = location.href;
       }
       $('#tr-' + id).remove();
-      $('#totals-table tbody').html(data.otText);
+      $('#content-shopping-cart-order-totals-right').html(data.otText);
     }
   );
 }

@@ -1,8 +1,8 @@
 <?php
 /**  
   @package    catalog::templates::content
-  @author     Loaded Commerce, LLC
-  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
   @copyright  Portions Copyright 2003 osCommerce
   @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
@@ -23,27 +23,34 @@ $oID = lC_Success::getOrderID($lC_Customer->getID());
           <h3 class="no-margin-top no-margin-bottom"><?php echo $lC_Language->get('box_ordering_steps_complete'); ?></h3>
         </div>
         <div class="panel-body no-padding-bottom">
-          <div class="alert alert-success"><h3 class="no-margin-top no-margin-bottom"><img class="margin-right" alt="<?php echo $lC_Language->get('success_heading'); ?>" src="templates/bs_starter/images/icons/32/success.png"><?php echo $lC_Language->get('success_heading'); ?></h3></div>
+          <div class="alert alert-success"><h3 class="no-margin-top no-margin-bottom"><img class="margin-right" alt="<?php echo $lC_Language->get('success_heading'); ?>" src="templates/core/images/icons/32/success.png"><?php echo $lC_Language->get('success_heading'); ?></h3></div>
           <div class="row">
             <div class="col-sm-4 col-lg-4">
-              <div class="well relative no-padding-bottom">
-                <h4 class="no-margin-top"><?php echo $lC_Language->get('ship_to_address'); ?></h4>
-                <address>
-                  <?php echo lC_Address::format(lC_Success::getShippingAddress($oID, $lC_Customer->getID()), '<br />'); ?>                
-                </address>
-              </div>
-              <div class="well relative clearfix small-padding-top small-padding-bottom"> 
-                <h4><?php echo $lC_Language->get('shipping_method_heading'); ?></h4>
-                <p>              
-                <?php 
-                  foreach (lC_Success::getOrderTotals($oID) as $module) {
-                    if ($module['class'] == 'shipping') {
-                      echo $module['title']; 
-                    }                    
-                  } 
-                  ?>
-                </p>
-              </div>   
+              <?php
+              if (defined('SKIP_CHECKOUT_SHIPPING_PAGE') && SKIP_CHECKOUT_SHIPPING_PAGE == '1') {
+              } else {
+                ?>
+                <div class="well relative no-padding-bottom">
+                  <h4 class="no-margin-top"><?php echo $lC_Language->get('ship_to_address'); ?></h4>
+                  <address>
+                    <?php echo lC_Address::format(lC_Success::getShippingAddress($oID, $lC_Customer->getID()), '<br />'); ?>                
+                  </address>
+                </div>
+                <div class="well relative clearfix small-padding-top small-padding-bottom"> 
+                  <h4><?php echo $lC_Language->get('shipping_method_heading'); ?></h4>
+                  <p>              
+                  <?php 
+                    foreach (lC_Success::getOrderTotals($oID) as $module) {
+                      if ($module['class'] == 'shipping') {
+                        echo $module['title']; 
+                      }                    
+                    } 
+                    ?>
+                  </p>
+                </div>  
+              <?php
+              }
+              ?> 
               <div class="well relative no-padding-bottom">
                 <h4 class="no-margin-top"><?php echo $lC_Language->get('bill_to_address'); ?></h4>
                 <address>
@@ -63,10 +70,10 @@ $oID = lC_Success::getOrderID($lC_Customer->getID());
             </div>
             <div class="col-sm-8 col-lg-8">
               <h3 class="no-margin-top">
-                <span class="pull-right"><?php echo $lC_Language->get('checkout_order_number') . '&nbsp;' . $_SESSION['cartID']; ?></span>
-                <span class="pull-left"><?php echo $lC_Language->get('checkout_order_id') . '&nbsp;' . $oID; ?></span>
+                <span class="pull-left"></span>
+                <span class="pull-right"><?php echo $lC_Language->get('checkout_order_number') . '&nbsp;' . $oID; ?></span>
               </h3>
-              <div class="clearfix" id="content-checkout-confirmation-products-table">
+              <div class="clearfix" id="content-checkout-success-products-table">
                 <table class="table responsive-table no-margin-bottom">
                   <thead>
                     <tr><th colspan="3"><?php echo $lC_Language->get('order_products_title'); ?></th></tr>
@@ -74,7 +81,7 @@ $oID = lC_Success::getOrderID($lC_Customer->getID());
                   <?php
                   foreach (lC_Success::getOrderProducts($oID) as $products) {
                     echo '<tr class="confirmation-products-listing-row">' . "\n" .
-                         '  <td width="30">' . $products['quantity'] . '&nbsp;x&nbsp;</td>' . "\n" .
+                         '  <td class="content-checkout-success-qty-td">' . $products['quantity'] . '&nbsp;x&nbsp;</td>' . "\n" .
                          '  <td><span class="text-info strong">' . $products['name'] . '</span>' . "\n";
                     echo '<br /><span class="confirmation-products-listing-model">' . $lC_Language->get('listing_model_heading') . ': ' . $products['model'] . '</span>';
 
@@ -117,7 +124,7 @@ $oID = lC_Success::getOrderID($lC_Customer->getID());
                       $products_displayed = array();
                       for ($i=0, $n=sizeof($products_array); $i<$n; $i++) {
                         if (!in_array($products_array[$i]['id'], $products_displayed)) {
-                          echo '<div class="checkbox">' . lc_draw_checkbox_field('notify[]', $products_array[$i]['id']) . '<label class="margin-left">' . $products_array[$i]['text'] . '</label></div>' . "\n";
+                          echo '<div class="checkbox"><label class="">' . lc_draw_checkbox_field('notify[]', $products_array[$i]['id'], null, null, null) . $products_array[$i]['text'] . '</label></div>' . "\n";
                           $products_displayed[] = $products_array[$i]['id'];
                         }
                       }
@@ -128,7 +135,7 @@ $oID = lC_Success::getOrderID($lC_Customer->getID());
                 </form>
               </div>               
               <div class="btn-set clearfix">
-                <button id="content-checkout-confirmation-confirm-button" class="btn btn-lg btn-success pull-right" onclick="$('#checkout_success').submit();" type="button"><?php echo $lC_Language->get('button_continue'); ?></button>
+                <button id="content-checkout-success-confirm-button" class="btn btn-lg btn-success pull-right" onclick="$('#checkout_success').submit();" type="button"><?php echo $lC_Language->get('button_continue'); ?></button>
               </div> 
               <?php
                 if (DOWNLOAD_ENABLED == '1') {

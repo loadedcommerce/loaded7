@@ -1,8 +1,8 @@
 <?php
 /**
   @package    catalog::templates::boxes
-  @author     Loaded Commerce, LLC
-  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
   @copyright  Portions Copyright 2003 osCommerce
   @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
@@ -27,7 +27,7 @@ $(document).ready(function() {
   if (mediaType == 'tablet-portrait' || mediaType == 'small-tablet-landscape') {
     $('.box-to-email-address').attr('style', 'width:60%; display:inline;').addClass('form-control');
   } else {
-    $('.box-to-email-address').attr('style', 'width:70%; display:inline;').addClass('form-control');
+    $('.box-to-email-address').attr('style', 'width:73%; display:inline;').addClass('form-control');
   }
 });
 </script>

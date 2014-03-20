@@ -1,8 +1,8 @@
 <?php
 /**
   @package    catalog::templates::content
-  @author     Loaded Commerce, LLC
-  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
   @copyright  Portions Copyright 2003 osCommerce
   @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
@@ -10,13 +10,23 @@
 */                          
 ?>
 <!--content/index/product_listing.php start-->
-<div class="row listing-container">
-  <div class="listing-title">
-  <?php 
+<div class="row">
+  <h1 class="no-margin-top"><?php echo $lC_Template->getPageTitle(); ?></h1>
+  
+  <div id="content-product-listing-category-description-container">
+    <?php 
+      if (lC_Template_output::getCategoryDescription() != '') {
+        echo '<div id="content-product-listing-category-description">' . lC_Template_output::getCategoryDescription() . '</div>'; 
+      }
+    ?>
+  </div>
+  
+  <div class="content-product-listing-div">
+    <?php 
     if (PRODUCT_LIST_FILTER == '1') echo lC_Template_output::getManufacturerFilter();
-    $Qlisting = lC_Template_output::getProductsListingSql();  
-    
-    if ( ($Qlisting->numberOfRows() > 0) && ((PREV_NEXT_BAR_LOCATION == '1') || (PREV_NEXT_BAR_LOCATION == '3')) ) {
+    $Qlisting = lC_Template_output::getProductsListingSql();
+  
+    if ( ($Qlisting->numberOfRows() > 0) && ( (PREV_NEXT_BAR_LOCATION == '1') || (PREV_NEXT_BAR_LOCATION == '3') ) ) {
       ?>
       <!-- PAGINATION-->
       <div class="product-listing-module-pagination">

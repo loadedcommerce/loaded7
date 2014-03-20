@@ -1,8 +1,8 @@
 <?php
 /**
   @package    catalog::templates::content
-  @author     Loaded Commerce, LLC
-  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
   @copyright  Portions Copyright 2003 osCommerce
   @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
@@ -10,12 +10,12 @@
 */
 ?>
 <!--content/index/category_listing.php start-->
-<div class="row">
+<div class="row cat-listing-container">
   <div class="col-sm-12 col-lg-12">
-    <h1 class="no-margin-top"><?php echo $lC_Template->getPageTitle(); ?></h1>
+    <h1 class="no-margin-top"><?php // echo $lC_Template->getPageTitle(); ?></h1>
     <?php 
     if (lC_Template_output::getCategoryDescription() != '') {
-      echo lC_Template_output::getCategoryDescription(); 
+      //echo lC_Template_output::getCategoryDescription(); 
     }
     ?>
     <div class="col-sm-12 col-lg-12 container text-center">

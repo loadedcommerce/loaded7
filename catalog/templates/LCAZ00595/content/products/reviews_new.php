@@ -1,8 +1,8 @@
 <?php
 /**
   @package    catalog::templates::content
-  @author     Loaded Commerce, LLC
-  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
   @copyright  Portions Copyright 2003 osCommerce
   @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
@@ -38,7 +38,7 @@
         if ( $lC_MessageStack->size('reviews') > 0 ) echo '<div class="message-stack-container alert alert-error">' . $lC_MessageStack->get('reviews') . '</div>' . "\n"; 
         //if (isset($_GET['contact']) && $_GET['contact'] == 'success') echo '<div class="message-success-container alert alert-success">' . $lC_Language->get('contact_email_sent_successfully') . '</div>' . "\n"; 
         ?>
-        <form role="form" name="reviews_new" id="reviews_new" class="row" action="<?php echo lc_href_link(FILENAME_PRODUCTS, 'reviews=new&' . $lC_Product->getID() . '&action=process'); ?>" method="post" onsubmit="return checkForm(this);">
+        <form role="form" name="reviews_new" id="reviews_new" class="row" action="<?php echo lc_href_link(FILENAME_PRODUCTS, 'reviews=new&' . $lC_Product->getID() . '&action=process'); ?>" method="post" onsubmit="return check_form(this);">
           <div class="form-group"><label><?php echo $lC_Language->get('field_customer_name'); ?></label><input class="form-control" type="text" name="customer_name" value="<?php echo (($lC_Customer->isLoggedOn()) ? $lC_Customer->getName() : null); ?>"></div>
           <div class="form-group"><label><?php echo $lC_Language->get('field_customer_email_address'); ?></label><input class="form-control" type="text" name="customer_email_address" value="<?php echo (($lC_Customer->isLoggedOn()) ? $lC_Customer->getEmailAddress() : null); ?>"></div>
           <div class="form-group"><label><?php echo $lC_Language->get('field_customer_comments'); ?></label><textarea class="form-control" name="review" rows="5" cols="25"></textarea></div>
@@ -48,7 +48,7 @@
     </div>
   </div>                                                                                                                                                
   <div class="button-set clearfix large-margin-bottom">
-    <button class="pull-right btn btn-lg btn-primary large-margin-right" onclick="$('#reviews_new').submit();" type="button"><?php echo $lC_Language->get('button_continue'); ?></button>
+    <button class="pull-right btn btn-lg btn-primary large-margin-right" onclick="$('#reviews_new').submit();" type="button"><?php echo $lC_Language->get('button_write_review'); ?></button>
     <button class="pull-left btn btn-lg btn-default large-margin-left" onclick="window.location.href='<?php echo  lc_href_link(FILENAME_PRODUCTS, 'reviews&' . $lC_Product->getID()); ?>'" type="button"><?php echo $lC_Language->get('button_back'); ?></button>
   </div>    
 </div>

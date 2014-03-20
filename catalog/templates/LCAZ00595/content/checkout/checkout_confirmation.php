@@ -1,13 +1,13 @@
 <?php
 /**  
   @package    catalog::templates::content
-  @author     Loaded Commerce, LLC
-  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
   @copyright  Portions Copyright 2003 osCommerce
   @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: checkout_confirmation.php v1.0 2013-08-08 datazen $
-*/ 
+*/
 ?>
 <!--content/checkout/checkout_confirmation.php start-->
 <div class="row">
@@ -31,9 +31,10 @@
         <div class="panel-heading">
           <h3 class="no-margin-top no-margin-bottom"><?php echo $lC_Language->get('box_ordering_steps_confirmation'); ?></h3>
         </div>
-        <div class="panel-body no-padding-bottom">
+        <div class="panel-body no-padding-bottom">   
+          <form name="checkout_confirmation" id="checkout_confirmation" action="<?php echo ($lC_Payment->hasActionURL() && !isset($_SESSION['PPEC_PROCESS']['LINK'])) ? $lC_Payment->getActionURL() : lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL'); ?>" method="post">       
           <div class="row">
-            <form name="checkout_confirmation" id="checkout_confirmation" action="<?php echo ($lC_Payment->hasActionURL() && !isset($_SESSION['PPEC_PROCESS']['LINK'])) ? $lC_Payment->getActionURL() : lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL'); ?>" method="post">       
+            
             <div class="col-sm-4 col-lg-4">
               <div class="well relative no-padding-bottom">
                 <h4 class="no-margin-top"><?php echo $lC_Language->get('ship_to_address'); ?></h4>
@@ -70,8 +71,8 @@
               <div class="well relative clearfix small-padding-top small-padding-bottom"> 
                 <h4><?php echo $lC_Language->get('order_comment_title'); ?></h4>
                 <div class="form-group">
-                  <?php echo lc_draw_textarea_field('comments', (isset($_SESSION['comments']) ? $_SESSION['comments'] : null), 60, 5, 'class="form-control" placeholder="' . $lC_Language->get('text_add_comment_to_order') . '"'); ?>
-                </div>                  
+                  <?php echo lc_draw_textarea_field('comments', (isset($_SESSION['comments']) ? $_SESSION['comments'] : null), 60, 5, 'class="form-control" placeholder="' . $lC_Language->get('text_add_comment_to_order') . '" onkeyup="sendOrderCommentsToSession(this.value);"'); ?>
+                </div>                 
               </div>                                        
             </div>
             <div class="col-sm-8 col-lg-8">
@@ -143,7 +144,7 @@
                   ?>     
                 </div>
               </div>              
-              <?php 
+              <?php         
               if ($lC_Payment->hasActive()) echo $lC_Payment->process_button();                 
               if (DISPLAY_CONDITIONS_ON_CHECKOUT == '1') {
                 ?>     

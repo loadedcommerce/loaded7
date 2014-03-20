@@ -1,8 +1,8 @@
 <?php
 /**
   @package    catalog::templates::content
-  @author     Loaded Commerce, LLC
-  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
   @copyright  Portions Copyright 2003 osCommerce
   @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
@@ -13,7 +13,7 @@
 <div class="row">
   <div class="col-sm-12 col-lg-12">
     <h1 class="no-margin-top"><?php echo $lC_Template->getPageTitle(); ?></h1>
-    <form role="form" class="form-inline" name="account_newsletter" id="account_newsletter" action="#" method="post">
+    <form role="form" class="form-inline" name="account_newsletter" id="account_newsletter" action="<?php echo lc_href_link(FILENAME_ACCOUNT, 'newsletters=save', 'SSL'); ?>" method="post">
       <div class="well">
         <div class="checkbox">
           <label class=""><?php echo lc_draw_checkbox_field('newsletter_general', '1', $Qnewsletter->value('customers_newsletter'), null, null, null); ?>&nbsp;<?php echo $lC_Language->get('newsletter_general'); ?></label>
@@ -22,7 +22,7 @@
       </div>
     </form>
     <div class="btn-set small-margin-top clearfix">
-      <button class="pull-right btn btn-lg btn-primary" onclick="$('#account_newsletter').submit();" type="button"><?php echo $lC_Language->get('button_delete'); ?></button>
+      <button class="pull-right btn btn-lg btn-primary" onclick="$('#account_newsletter').submit();" type="button"><?php echo $lC_Language->get('button_update'); ?></button>
       <form action="<?php echo lc_href_link(FILENAME_ACCOUNT, '', 'SSL'); ?>" method="post"><button onclick="$(this).closest('form').submit();" class="pull-left btn btn-lg btn-default" type="submit"><?php echo $lC_Language->get('button_back'); ?></button></form>
     </div>     
   </div>

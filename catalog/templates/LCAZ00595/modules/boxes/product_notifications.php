@@ -1,8 +1,8 @@
 <?php
 /**
   @package    catalog::templates::boxes
-  @author     Loaded Commerce, LLC
-  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
   @copyright  Portions Copyright 2003 osCommerce
   @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
@@ -18,7 +18,7 @@
 </div>
 <script>
 $(document).ready(function() {
-  $('.box-product_notifications-image-container').html('<img class="product_notifications-image" src="templates/bs_starter/images/icons/32/info.png">');
+  $('.box-product_notifications-image-container').html('<img class="product_notifications-image" src="templates/core/images/icons/32/info.png">');
   $(".box-product-notifications li:last-child").addClass('small-margin-top align-center');
 });
 </script>

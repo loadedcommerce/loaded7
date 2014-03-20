@@ -1,8 +1,8 @@
 <?php
 /**
   @package    catalog::templates::content
-  @author     Loaded Commerce, LLC
-  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
   @copyright  Portions Copyright 2003 osCommerce
   @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
@@ -12,7 +12,7 @@
 <!--modules/content/mainpage_content.php start-->
 <div class="col-sm-12 col-lg-12">
   <div class="row content-mainpage-content-container margin-bottom">
-    <?php echo $lC_Box->getContent(); ?>
+
   </div>
 </div>
 <!--modules/content/mainpage_content.php end-->

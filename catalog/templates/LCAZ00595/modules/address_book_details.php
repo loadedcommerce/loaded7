@@ -1,8 +1,8 @@
 <?php
 /**
   @package    catalog::templates::content
-  @author     Loaded Commerce, LLC
-  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
   @copyright  Portions Copyright 2003 lC_ommerce
   @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
@@ -10,6 +10,7 @@
 */ 
 ?>
 <!--content/account/address_book_details.php start-->
+<?php $default_country = isset($Qentry) ? $Qentry->valueInt('entry_country_id') : STORE_COUNTRY; ?>
 <div class="col-sm-6 col-lg-6 large-padding-left margin-top">
   <div class="well no-padding-top">
     <h3><?php echo $lC_Language->get('personal_details_title'); ?></h3>
@@ -51,23 +52,8 @@
     if (ACCOUNT_STATE > -1) {
       echo '<div class="form-group full-width margin-bottom"><label class="sr-only"></label><span class="address-book-state-container">';
       
-      if ( (isset($_GET['new']) && ($_GET['new'] == 'save')) || (isset($_GET['edit']) && ($_GET['edit'] == 'save')) || (isset($_GET['address_book']) && ($_GET['address_book'] == 'process')) ) {
-        if ($entry_state_has_zones === true) {
-          $Qzones = $lC_Database->query('select zone_name from :table_zones where zone_country_id = :zone_country_id order by zone_name');
-          $Qzones->bindTable(':table_zones', TABLE_ZONES);
-          $Qzones->bindInt(':zone_country_id', $_POST['country']);
-          $Qzones->execute();
-
-          $zones_array = array();
-          while ($Qzones->next()) {
-            $zones_array[] = array('id' => $Qzones->value('zone_name'), 'text' => $Qzones->value('zone_name'));
-          }
-
-           echo lc_draw_pull_down_menu('state', $zones_array, null, 'class="form-control"');
-        } else {
-          echo lc_draw_input_field('state', null, 'placeholder="' . $lC_Language->get('field_customer_state') . '" class="form-control"');
-        }
-      } else {
+      $default_country = isset($_POST['country']) ? $_POST['country'] : $default_country;
+      
         if (isset($Qentry)) {
           $zone = $Qentry->value('entry_state');
 
@@ -76,13 +62,27 @@
           }
         }
 
-        echo lc_draw_input_field('state', (isset($Qentry) ? $zone : null), 'placeholder="' . $lC_Language->get('field_customer_state') . '" class="form-control"');
-      }      
+        if ($entry_state_has_zones === true || $default_country == 223) {
+          $Qzones = $lC_Database->query('select zone_name from :table_zones where zone_country_id = :zone_country_id order by zone_name');
+          $Qzones->bindTable(':table_zones', TABLE_ZONES);
+          $Qzones->bindInt(':zone_country_id', $default_country);
+          $Qzones->execute();
+
+          $zones_array = array();
+          while ($Qzones->next()) {
+            $zones_array[] = array('id' => $Qzones->value('zone_name'), 'text' => $Qzones->value('zone_name'));
+          }
+
+           echo lc_draw_pull_down_menu('state', $zones_array, (isset($Qentry) ? $zone : null), 'class="form-control"');
+        } else {
+          echo lc_draw_input_field('state', (isset($Qentry) ? $zone : null), 'placeholder="' . $lC_Language->get('field_customer_state') . '" class="form-control"');
+        }
+      
       echo '</span></div>';
     }
        
     if (ACCOUNT_POST_CODE > -1) {
-      echo '<div class="form-group full-width margin-bottom"><label class="sr-only"></label>' . lc_draw_input_field('postcode', (isset($Qentry) ? $Qentry->value('entry_postcode') : null), 'placeholder="' . $lC_Language->get('field_customer_post_code') . '" class="form-control"') . '</div>';
+      echo '<div class="form-group full-width margin-bottom"><label class="sr-only"></label>' . lc_draw_input_field('postcode', (isset($Qentry) ? $Qentry->value('entry_postcode') : null), 'placeholder="' . (($default_country == 223) ? $lC_Language->get('field_customer_zip_code') : $lC_Language->get('field_customer_post_code')) . '" class="form-control"') . '</div>';
     }                
     
     $countries_array = array(array('id' => '',
@@ -92,7 +92,7 @@
       $countries_array[] = array('id' => $country['id'],
                                  'text' => $country['name']);
     }
-    echo '<div class="form-group full-width margin-bottom"><label class="sr-only"></label>' . lc_draw_pull_down_menu('country', $countries_array, (isset($Qentry) ? $Qentry->valueInt('entry_country_id') : STORE_COUNTRY), 'class="form-control"') . '</div>';
+    echo '<div class="form-group full-width margin-bottom"><label class="sr-only"></label>' . lc_draw_pull_down_menu('country', $countries_array, $default_country, 'onchange="getZonesDropdown(this.value)" class="form-control"') . '</div>';
     
     if ($lC_Customer->hasDefaultAddress() && ((isset($_GET['edit']) && ($lC_Customer->getDefaultAddressID() != $_GET['address_book'])) || isset($_GET['new'])) ) {
       echo '<div class="checkbox small-margin-left">' . lc_draw_checkbox_field('primary', null, null, null, null) . '<label class="small-margin-left">' . $lC_Language->get('set_as_primary') . '</label></div>';
@@ -100,12 +100,6 @@
     ?>
   </div>
 </div>
-<?php $lC_Template->addJavascriptPhpFilename('templates/bs_starter/javascript/form_check.js.php'); ?>
-<script>
-$(document).ready(function() {
-  $('#country').change(function() {
-    $('.address-book-state-container').html('<?php echo lc_draw_input_field('state', null, 'placeholder="' . $lC_Language->get('field_customer_state') . '" class="form-control"'); ?>');  
-  });
-});
-</script>
+<?php $lC_Template->addJavascriptPhpFilename('templates/core/javascript/form_check.js.php'); ?>
+<?php $lC_Template->addJavascriptPhpFilename('templates/core/javascript/account/address_book_details.js.php'); ?>
 <!--content/account/address_book_details.php end-->

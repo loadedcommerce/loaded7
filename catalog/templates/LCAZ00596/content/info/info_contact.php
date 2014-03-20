@@ -1,8 +1,8 @@
 <?php
 /**
   @package    catalog::templates::content
-  @author     Loaded Commerce, LLC
-  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
   @copyright  Portions Copyright 2003 osCommerce
   @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
@@ -20,6 +20,14 @@
           <strong><?php echo STORE_NAME; ?></strong><br>
             <?php echo nl2br(STORE_NAME_ADDRESS); ?>
           </address>          
+          <?php
+            if ($lC_Template->getBranding('support_email') != '') {
+              echo '<br><strong>' . $lC_Language->get('contact_text_support_email') . '</strong><br>' . $lC_Template->getBranding('support_email') . '';
+            }
+            if ($lC_Template->getBranding('support_email') != '') {
+              echo '<br><strong>' . $lC_Language->get('contact_text_support_phone') . '</strong><br>' . $lC_Template->getBranding('support_phone') . '';
+            }
+          ?>
         </div>
       </div>
       <div class="col-sm-8 col-lg-8">
@@ -37,7 +45,6 @@
   </div>                                                                                                                                                
   <div class="btn-set small-margin-top clearfix">
     <button class="pull-right btn btn-lg btn-primary" onclick="$('#contact').submit();" type="button"><?php echo $lC_Language->get('button_send_message'); ?></button>
-    <form action="<?php echo lc_href_link(FILENAME_INFO, null, 'AUTO'); ?>" method="post"><button onclick="$(this).closest('form').submit();" class="pull-left btn btn-lg btn-default" type="submit"><?php echo $lC_Language->get('button_back'); ?></button></form>
   </div>    
 </div>
 <!--content/info/info_contact.php end-->

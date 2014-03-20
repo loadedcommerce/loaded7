@@ -1,9 +1,8 @@
 <?php
-<?php
 /**
   @package    catalog::templates::content
-  @author     Loaded Commerce, LLC
-  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
   @copyright  Portions Copyright 2003 osCommerce
   @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
@@ -24,7 +23,7 @@ $(document).ready(function() {
 });        
 
 $('#payment-address-form').click(function(){
- var isVisible = $('#checkoutShippingAddressDetails').is(':visible');
+ var isVisible = $('#checkoutBillingAddressDetails').is(':visible');
  var mediaType = _setMediaType();
  if (!isVisible) {
    var text = (mediaType == 'mobile-portrait') ? '<?php echo $lC_Language->get('text_hide'); ?>' : '<?php echo $lC_Language->get('hide_address_form'); ?>';
@@ -35,12 +34,11 @@ $('#payment-address-form').click(function(){
    $('#payment-address-form').html(text);
    $('#checkout_address').removeAttr('onsubmit');
  }
- $('#checkoutShippingAddressEntries').toggle('slideUp');
- $('#checkoutShippingAddressDetails').toggle('slideUp');
+ $('#checkoutBillingAddressDetails').toggle('slideUp');
 });
 
 function selectRowEffect(object, buttonSelect) {
-  $('#content-checkout-address-selection-table tr').removeClass('module-row-selected');
+  $('.content-checkout-address-selection-table tr').removeClass('module-row-selected');
   if (!selected) {
     if (document.getElementById) {
       selected = document.getElementById('defaultSelected');

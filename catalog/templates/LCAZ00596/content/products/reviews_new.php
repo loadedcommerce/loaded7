@@ -1,8 +1,8 @@
 <?php
 /**
   @package    catalog::templates::content
-  @author     Loaded Commerce, LLC
-  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
   @copyright  Portions Copyright 2003 osCommerce
   @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
@@ -24,12 +24,10 @@
             <p class=""><?php echo (strlen($lC_Product->getDescription()) > 60 ) ? substr(lc_clean_html($lC_Product->getDescription()), 0, 57) . '...' : lc_clean_html($lC_Product->getDescription()); ?></p>
             <div class="row">
               <div class="col-sm-6 col-lg-6">
-                <p class="lead"><?php echo $lC_Product->getPriceFormated(true); ?></p>
+                <p class="lead"><?php echo $lC_Product->getPriceFormated(); ?></p>
               </div>
               <div class="col-sm-6 col-lg-6 no-margin-left">
-                <a href="<?php echo lc_href_link(basename($_SERVER['SCRIPT_FILENAME']), $lC_Product->getKeyword() . '&' . lc_get_all_get_params(array('action', 'new')) . '&action=cart_add'); ?>">
-                  <button class="btn btn-success btn-block" type="button"><?php echo $lC_Language->get('button_add_to_cart'); ?></button>
-                </a>
+                <button class="btn btn-success btn-block" onclick="window.location.href='<?php echo lc_href_link(basename($_SERVER['SCRIPT_FILENAME']), $lC_Product->getKeyword() . '&' . lc_get_all_get_params(array('action', 'new')) . '&action=cart_add'); ?>'" type="button"><?php echo $lC_Language->get('button_buy_now'); ?></button>
               </div>
             </div>
           </div>
@@ -73,11 +71,13 @@
         <span class="buttonRight"><a onclick="$('#reviews_new').submit();"><button class="pull-right btn btn-lg btn-primary large-margin-right" type="submit"><?php echo $lC_Language->get('button_continue'); ?></button></a></span>
       </div>
       <div style="clear:both;"></div>
-      </form>
+        </form>
       </div>
     </div>
   </div>                                                                                                                                                
   <div class="button-set clearfix large-margin-bottom">
+    <button class="pull-right btn btn-lg btn-primary large-margin-right" onclick="$('#reviews_new').submit();" type="button"><?php echo $lC_Language->get('button_write_review'); ?></button>
+    <button class="pull-left btn btn-lg btn-default large-margin-left" onclick="window.location.href='<?php echo  lc_href_link(FILENAME_PRODUCTS, 'reviews&' . $lC_Product->getID()); ?>'" type="button"><?php echo $lC_Language->get('button_back'); ?></button>
   </div>    
 </div>
 <!--content/products/reviews_new.php end-->
