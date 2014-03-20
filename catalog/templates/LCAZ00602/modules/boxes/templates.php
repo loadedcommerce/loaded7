@@ -20,7 +20,7 @@
 </div>
 <script>
 $(document).ready(function() { 
-  $('.box-templates-select').addClass('form-input-width');
+  $('.box-templates-select').addClass('form-input-width').attr('style', 'height:35px;');
 });
 $('.box-templates-selection').addClass('form-group full-width');
 $('.box-templates-select').addClass('form-control');
