@@ -79,17 +79,17 @@
             <button class="button" title="" type="submit"></button>
           </form>
         </div> 
-               
-    <!-- QR Code -->
-    <div id="qr-code-container" class="pull-right margin-right margin-bottom">        
-      <a id="qrcode-tooltip">
-        <span style="cursor:pointer;">
-          <img src="images/icons/qr-icon.png" alt="<?php echo $lC_Language->get('text_click_and_scan');?>" style="vertical-align:middle; padding-right:6px;" /><span class="small-margin-left"><?php echo $lC_Language->get('text_click_and_scan');?></span>
-        </span>
-      </a>
-    </div>
-    <div id="ShowQRCode"></div>
-            
+
+        <!-- QR Code -->
+        <div id="qr-code-container" class="pull-right margin-right margin-bottom">        
+          <a id="qrcode-tooltip">
+            <span style="cursor:pointer;">
+              <img src="images/icons/qr-icon.png" alt="<?php echo $lC_Language->get('text_click_and_scan');?>" style="vertical-align:middle; padding-right:6px;" /><span class="small-margin-left"><?php echo $lC_Language->get('text_click_and_scan');?></span>
+            </span>
+          </a>
+        </div>
+        <div id="ShowQRCode"></div>
+        <div class="margin-left small-padding-left margin-right small-padding-right large-margin-top-neg clear-both"><p class="large-margin-top-neg"><?php echo $lC_Template->getBranding('footer_text');?></p></div>
       </div>
     </div>  
   </div>
@@ -114,5 +114,4 @@
     </div>
   </div>  
 </div>
-
 <!--footer.php end-->

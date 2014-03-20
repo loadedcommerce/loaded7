@@ -113,7 +113,7 @@
         </a>
       </div>
       <div id="ShowQRCode"></div>      
-      
+      <div class="margin-left small-padding-left margin-right small-padding-right clear-both"><p><?php echo $lC_Template->getBranding('footer_text');?></p></div>
     </div>
   </div>  
 </div>
