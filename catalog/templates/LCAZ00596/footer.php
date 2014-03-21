@@ -66,16 +66,78 @@
           <h4 class="line3 center standard-h4title"><span>Follow Us</span></h4>
           <div> 15,237 people Online</div>
 
-          <div class="thumbButtons">  
-            <div class="az_social_icon icon_facebook col-xs-4 col-sm-4 col-lg-4"><a onclick="window.open('http://www.facebook.com/algozone');"></a></div> 
-            <div class="az_social_icon icon_twitter  col-xs-4 col-sm-4 col-lg-4"><a onclick="window.open('http://www.twitter.com/Algozone');"></a></div>     
-            <div class="az_social_icon icon_flickr  col-xs-4 col-sm-4 col-lg-4"><a onclick="window.open('http://www.youtube.com/user/AlgoZoneCom');"></a></div> 
-          </div> 
-          <div class="thumbButtons">  
-            <div class="az_social_icon icon_linkedin col-xs-4 col-sm-4 col-lg-4"><a onclick="window.open('http://www.twitter.com/Algozone');" ></a></div> 
-            <div class="az_social_icon icon_rss  col-xs-4 col-sm-4 col-lg-4"><a onclick="window.open('http://www.twitter.com/Algozone');"></a></div>     
-            <div class="az_social_icon icon_myspace  col-xs-4 col-sm-4 col-lg-4"><a onclick="window.open('http://www.twitter.com/Algozone');"></a></div> 
-          </div>   
+            <div class="thumbButtons">  
+              <div class="az_social_icon icon_facebook col-xs-4 col-sm-4 col-lg-4">
+                <?php
+                  if ($lC_Template->getBranding('social_facebook_page') != '') {
+                    echo '<a href="' . $lC_Template->getBranding('social_facebook_page') . '" target="_blank"><img alt="Facebook" src="' . DIR_WS_IMAGES . 'icons/facebook.png" /></a>';
+                  } else {
+                  ?>
+                  <a onclick="window.open('http://www.facebook.com/algozone');"></a>   
+                  <?php
+                  }
+                ?>
+              </div> 
+              <div class="az_social_icon icon_twitter  col-xs-4 col-sm-4 col-lg-4">
+                <?php
+                  if ($lC_Template->getBranding('social_twitter') != '') {
+                    echo '<a href="' . $lC_Template->getBranding('social_twitter') . '" target="_blank"><img alt="Twitter" src="' . DIR_WS_IMAGES . 'icons/twitter_bird.png" /></a>';
+                  } else {
+                  ?>
+                  <a onclick="window.open('http://www.twitter.com/Algozone');"></a>   
+                  <?php
+                  }
+                ?>  
+              </div>     
+              <div class="az_social_icon icon_flickr  col-xs-4 col-sm-4 col-lg-4">
+                <?php
+                  if ($lC_Template->getBranding('social_youtube') != '') {
+                    echo '<a href="' . $lC_Template->getBranding('social_youtube') . '" target="_blank"><img alt="Youtube" src="' . DIR_WS_IMAGES . 'icons/youtube.png" /></a>';
+                  } else {
+                  ?>
+                  <a onclick="window.open('http://www.youtube.com/user/AlgoZoneCom');"></a>
+                  <?php
+                  }
+                ?>
+              </div> 
+
+            </div> 
+            <div class="thumbButtons">  
+              <div class="az_social_icon icon_rss col-xs-4 col-sm-4 col-lg-4">
+                <?php
+                  if ($lC_Template->getBranding('social_pinterest') != '') {
+                    echo '<a href="' . $lC_Template->getBranding('social_pinterest') . '" target="_blank"><img alt="Pinterest" src="' . DIR_WS_IMAGES . 'icons/pinterest.png" /></a>';
+                  } else {
+                  ?>
+                  <a onclick="window.open('http://www.linkedin.com/Algozone');" ></a>
+                  <?php
+                  }
+                ?>
+              </div> 
+              <div class="az_social_icon icon_1  col-xs-4 col-sm-4 col-lg-4">
+                <?php
+                  if ($lC_Template->getBranding('social_google_plus') != '') {
+                    echo '<a href="' . $lC_Template->getBranding('social_google_plus') . '" target="_blank"><img alt="Google+" src="' . DIR_WS_IMAGES . 'icons/google_plus.png" /></a>';
+                  } else {
+                  ?>
+                  <a onclick="window.open('http://www.linkedin.com/Algozone');" ></a>
+                  <?php
+                  }
+                ?>
+
+              </div>     
+              <div class="az_social_icon icon_2 col-xs-4 col-sm-4 col-lg-4">
+                <?php
+                  if ($lC_Template->getBranding('social_linkedin') != '') {
+                    echo '<a href="' . $lC_Template->getBranding('social_linkedin') . '" target="_blank"><img alt="LinkedIn" src="' . DIR_WS_IMAGES . 'icons/linkedin.png" /></a>';
+                  } else {
+                  ?>
+                  <a onclick="window.open('http://www.myspace.com/Algozone');"></a>
+                  <?php
+                  }
+                ?>
+              </div> 
+            </div>    
 
         </div>               
 

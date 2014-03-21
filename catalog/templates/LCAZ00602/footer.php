@@ -24,10 +24,10 @@
         <h4 class="line3 center standard-h4title"><span>Customer Service</span></h4>
         <ul class="footer-links list-indent list-unstyled">
           <li><a href="<?php echo lc_href_link(FILENAME_INFO, 'contact', 'SSL'); ?>"><?php echo $lC_Language->get('text_contact'); ?></a></li>
-          <li><a href="<?php echo lc_href_link(FILENAME_INFO, 'shipping', 'AUTO'); ?>"><?php echo $lC_Language->get('text_shipping_returns'); ?></a></li>
-          <li><a href="<?php echo lc_href_link(FILENAME_INFO, 'privacy', 'AUTO'); ?>"><?php echo $lC_Language->get('text_privacy'); ?></a></li>                                              
-          <li><a href="<?php echo lc_href_link(FILENAME_INFO, 'conditions', 'AUTO'); ?>"><?php echo $lC_Language->get('text_terms_conditions'); ?></a></li>
-          <li><a href="<?php echo lc_href_link(FILENAME_INFO, 'sitemap', 'AUTO'); ?>"><?php echo $lC_Language->get('text_sitemap'); ?></a></li> 
+          <li><a href="<?php echo lc_href_link(FILENAME_DEFAULT, 'cPath=2_3', 'AUTO'); ?>"><?php echo $lC_Language->get('text_shipping_returns'); ?></a></li>
+          <li><a href="<?php echo lc_href_link(FILENAME_DEFAULT, 'cPath=2_4', 'AUTO'); ?>"><?php echo $lC_Language->get('text_privacy'); ?></a></li>                                              
+          <li><a href="<?php echo lc_href_link(FILENAME_DEFAULT, 'cPath=2_5', 'AUTO'); ?>"><?php echo $lC_Language->get('text_terms_conditions'); ?></a></li>
+          <li><a href="<?php echo lc_href_link(FILENAME_INFO, 'sitemap', 'AUTO'); ?>"><?php echo $lC_Language->get('text_sitemap'); ?></a></li>  
         </ul>
       </div> 
 
@@ -41,20 +41,6 @@
           <li><a href="<?php echo lc_href_link(FILENAME_ACCOUNT, 'notifications', 'SSL'); ?>"><?php echo $lC_Language->get('text_my_updates_alerts'); ?></a></li>
         </ul>
       </div>
-
-      <?php
-        /*	
-        <div class="col-sm-3 col-lg-3 large-margin-bottom">
-        <h4 class="line3 center standard-h4title"><span>Our Office</span></h4>
-        <address class="margin-left">
-        <strong><?php echo STORE_NAME; ?></strong><br>
-        <?php echo nl2br(STORE_NAME_ADDRESS); ?><br>
-        </address>
-        <!-- QR Code -->
-        <?php echo $lC_Template->getQRCode(); ?>
-        </div>               
-        */
-      ?>
 
       <div class="col-sm-3 col-lg-3 large-margin-bottom">
         <h4 class="line3 center standard-h4title"><span>Follow Us</span></h4>

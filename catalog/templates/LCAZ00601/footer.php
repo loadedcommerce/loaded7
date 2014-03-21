@@ -21,24 +21,21 @@
           <h4 class="line3 center standard-h4title"><span>Information</span></h4>
           <ul>
             <li><a href="<?php echo lc_href_link(FILENAME_INFO, 'contact', 'SSL'); ?>"><?php echo $lC_Language->get('text_contact'); ?></a></li>
-            <li><a href="<?php echo lc_href_link(FILENAME_INFO, 'shipping', 'AUTO'); ?>"><?php echo $lC_Language->get('text_shipping_returns'); ?></a></li>
-            <li><a href="<?php echo lc_href_link(FILENAME_INFO, 'privacy', 'AUTO'); ?>"><?php echo $lC_Language->get('text_privacy'); ?></a></li>                                              
-            <li><a href="<?php echo lc_href_link(FILENAME_INFO, 'conditions', 'AUTO'); ?>"><?php echo $lC_Language->get('text_terms_conditions'); ?></a></li>
-            <li><a href="<?php echo lc_href_link(FILENAME_INFO, 'sitemap', 'AUTO'); ?>"><?php echo $lC_Language->get('text_sitemap'); ?></a></li>   
-
+            <li><a href="<?php echo lc_href_link(FILENAME_DEFAULT, 'cPath=2_3', 'AUTO'); ?>"><?php echo $lC_Language->get('text_shipping_returns'); ?></a></li>
+            <li><a href="<?php echo lc_href_link(FILENAME_DEFAULT, 'cPath=2_4', 'AUTO'); ?>"><?php echo $lC_Language->get('text_privacy'); ?></a></li>                                              
+            <li><a href="<?php echo lc_href_link(FILENAME_DEFAULT, 'cPath=2_5', 'AUTO'); ?>"><?php echo $lC_Language->get('text_terms_conditions'); ?></a></li>
+            <li><a href="<?php echo lc_href_link(FILENAME_INFO, 'sitemap', 'AUTO'); ?>"><?php echo $lC_Language->get('text_sitemap'); ?></a></li>    
           </ul>     
         </div>
 
         <div class="col-sm-3 col-lg-3 sicon">
           <h4 class="line3 center standard-h4title"><span>Stay Connected</span></h4>
           <ul>
-            <li><a onclick="window.open('http://www.facebook.com/algozone');"><span class="az_social_icon icon_facebook">Facebook</span></a> </li>
-            <li><a onclick="window.open('http://www.twitter.com/Algozone');"><span class="az_social_icon icon_twitter">Twitter</span></a> </li>
-            <li><a onclick="window.open('http://www.youtube.com/user/AlgoZoneCom');"><span class="az_social_icon icon_youtube">Youtube</span></a></li>                                              
-            <li><a onclick="window.open('http://www.twitter.com/Algozone');"><span class="az_social_icon icon_blogger">Blogger</span></a></li>
-            <li><a onclick="window.open('http://www.twitter.com/Algozone');"><span class="az_social_icon icon_linkdn">Linkedin</span></a></li> 
-            <li><a onclick="window.open('http://www.twitter.com/Algozone');"><span class="az_social_icon icon_myspace">Myspace</span></a></li>                                                               
-          </ul>    
+            <li style="cursor:pointer;"><a onclick="window.open('<?php echo (($lC_Template->getBranding('social_facebook_page') != '') ? $lC_Template->getBranding('social_facebook_page') : 'http://www.facebook.com/algozone'); ?>');"><span class="az_social_icon icon_facebook">Facebook</span></a></li>
+            <li style="cursor:pointer;"><a onclick="window.open('<?php echo (($lC_Template->getBranding('social_youtube') != '') ? $lC_Template->getBranding('social_youtube') : 'http://www.youtube.com/user/AlgoZoneCom'); ?>');"><span class="az_social_icon icon_youtube">Youtube</span></a></li>
+            <li style="cursor:pointer;"><a onclick="window.open('<?php echo (($lC_Template->getBranding('social_twitter') != '') ? $lC_Template->getBranding('social_twitter') : 'http://www.twitter.com/Algozone'); ?>');"><span class="az_social_icon icon_twitter">Twitter</span></a></li>
+            <li style="cursor:pointer;"><a onclick="window.open('<?php echo (($lC_Template->getBranding('social_linkedin') != '') ? $lC_Template->getBranding('social_linkedin') : 'http://www.linkedin.com/Algozone'); ?>');"><span class="az_social_icon icon_linkdn">Linkedin</span></a></li>
+          </ul>   
         </div>               
 
         <div class="col-sm-3 col-lg-3 firstchild">
