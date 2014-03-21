@@ -710,8 +710,8 @@ class lC_Products_import_export_Admin {
               
                 $ifParent = ' and c.parent_id = :parent_id';
                 $catCheck->bindInt(':parent_id', $parentCheck->value('categories_id'));
+                $lastParent = $parentCheck->value('categories_id');
               }
-              
               $catCheck->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
               $catCheck->bindTable(':table_categories', TABLE_CATEGORIES);
               $catCheck->bindValue(':categories_name', $catName);
@@ -723,7 +723,7 @@ class lC_Products_import_export_Admin {
                 // insert a category that doesnt exist
                 $QcatInsert = $lC_Database->query("insert into :table_categories (parent_id, categories_status, categories_mode) values (:parent_id, :categories_status, :categories_mode)");
                 $QcatInsert->bindTable(':table_categories', TABLE_CATEGORIES);
-                $QcatInsert->bindInt(':parent_id', '0');
+                $QcatInsert->bindInt(':parent_id', (($lastParent != null || $lastParent != 0) ? $lastParent : '0'));
                 $QcatInsert->bindInt(':categories_status', '1');
                 $QcatInsert->bindValue(':categories_mode', 'category');
                 $QcatInsert->execute();
@@ -797,12 +797,14 @@ class lC_Products_import_export_Admin {
             }
           } 
           $product['categories'] = $category_ids;
+          
           $currentCatId = null;
           $category_ids = null;
         }
         
         // build a cPath for later use
         $parents = self::getParentsPath($product['categories'][0]);
+        
         if (empty($parents)) {
           $query = "cPath=" . $product['categories'][0];
         } else {  
@@ -834,11 +836,12 @@ class lC_Products_import_export_Admin {
           }
         } 
 
-        // check for a match in the database	  
+        // check for an existing product match in the database	  
         $Qcheck = $lC_Database->query("SELECT * FROM :table_products WHERE products_id = :products_id");
         $Qcheck->bindTable(':table_products', TABLE_PRODUCTS);
         $Qcheck->bindInt(':products_id', $products_id);
         $Qcheck->execute();
+        
         if ($Qcheck->numberOfRows()) {
           // the product exists in the database so were just going to update the product with the new data
           $match_count++;
@@ -926,6 +929,7 @@ class lC_Products_import_export_Admin {
             $Qquery->bindInt(':language_id', $product['language_id']);
             $Qquery->bindInt(':type', 2);
             $Qquery->execute();
+            
             if ($Qquery->numberOfRows()) {
               if ($query != $Qquery->value('query')) {
                 $Qupdate = $lC_Database->query("update :table_permalinks set query = :query where item_id = :item_id and type = :type and language_id = :language_id");
@@ -1015,7 +1019,7 @@ class lC_Products_import_export_Admin {
               }
             }
           } 
-
+          
           if ( $error === false ) {
             $Qimage = $lC_Database->query('insert into :table_products_images (products_id, image, default_flag, sort_order, date_added) values (:products_id, :image, :default_flag, :sort_order, :date_added)');
             $Qimage->bindTable(':table_products_images', TABLE_PRODUCTS_IMAGES);
