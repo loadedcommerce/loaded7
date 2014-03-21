@@ -100,6 +100,6 @@
     ?>
   </div>
 </div>
-<?php $lC_Template->addJavascriptPhpFilename('templates/core/javascript/form_check.js.php'); ?>
-<?php $lC_Template->addJavascriptPhpFilename('templates/core/javascript/account/address_book_details.js.php'); ?>
+<?php $lC_Template->addJavascriptPhpFilename('templates/LCAZ00601/javascript/form_check.js.php'); ?>
+<?php $lC_Template->addJavascriptPhpFilename('templates/LCAZ00601/javascript/account/address_book_details.js.php'); ?>
 <!--content/account/address_book_details.php end-->

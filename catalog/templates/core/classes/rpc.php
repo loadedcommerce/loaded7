@@ -8,22 +8,8 @@
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: rpc.php v1.0 2013-08-08 datazen $
 */
-global $lC_Vqmod;
-require_once($lC_Vqmod->modCheck('includes/classes/address_book.php'));
 
 class lC_Core_rpc {
- /*
-  * Return the zones dropdown array
-  *
-  * @access public
-  * @return json
-  */
-  public static function getZonesDropdown() {
-    $result = array();
-    $result = lC_AddressBook::getZonesDropdownHtml($_GET['country'], $_GET['zone']);
-    if (is_array($result)) $result['rpcStatus'] = '1';
-    
-    echo json_encode($result);
-  }
+
 }
 ?>
