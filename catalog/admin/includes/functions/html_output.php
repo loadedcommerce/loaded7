@@ -210,11 +210,11 @@
   <span class="button-group">
 
     <?php if ($save) { ?>
-    <button type="submit" <?php echo $save; ?> class="button big icon-tick green-gradient"><?php echo $lC_Language->get('button_save'); ?></button>
+    <button type="button" <?php echo $save; ?> class="button big icon-tick green-gradient"><?php echo $lC_Language->get('button_save'); ?></button>
     <?php } ?>
     
     <?php if ($save_close) { ?>
-    <button type="submit" name="save_close" value="true" <?php echo $save; ?>  class="button big icon-squared-cross green-gradient"><?php echo $lC_Language->get('button_save_close'); ?></button>
+    <button type="button" name="save_close" value="true" <?php echo $save; ?>  class="button big icon-squared-cross green-gradient"><?php echo $lC_Language->get('button_save_close'); ?></button>
     <?php } ?>
 
   </span>

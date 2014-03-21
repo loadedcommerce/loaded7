@@ -353,3 +353,4 @@ text_yes = Yes
 text_no = No
 text_featured_product_expired = Featured Product has Expired!
 text_featured_product_no_expiration = No Expiration
+error_specials_date = Error:  The specials expire date cannot be before the start date.
