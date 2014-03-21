@@ -75,14 +75,14 @@
 
            echo lc_draw_pull_down_menu('state', $zones_array, (isset($Qentry) ? $zone : null), 'class="form-control"');
         } else {
-          echo lc_draw_input_field('state', (isset($Qentry) ? $zone : null), 'placeholder="' . $lC_Language->get('field_customer_state') . '" class="form-control"');
+          echo lc_draw_input_field('state', (isset($Qentry) ? $zone : null), 'placeholder="' . $lC_Language->get('field_customer_state') . '" class="form-control" style="width:96%;"');
         }
       
       echo '</span></div>';
     }
        
     if (ACCOUNT_POST_CODE > -1) {
-      echo '<div class="form-group full-width margin-bottom"><label class="sr-only"></label>' . lc_draw_input_field('postcode', (isset($Qentry) ? $Qentry->value('entry_postcode') : null), 'placeholder="' . (($default_country == 223) ? $lC_Language->get('field_customer_zip_code') : $lC_Language->get('field_customer_post_code')) . '" class="form-control" style="width:96%;"') . '</div>';
+      echo '<div class="form-group full-width margin-bottom"><label class="sr-only"></label>' . lc_draw_input_field('postcode', (isset($Qentry) ? $Qentry->value('entry_postcode') : null), 'placeholder="' . (($default_country == 223) ? $lC_Language->get('field_customer_zip_code') : $lC_Language->get('field_customer_post_code')) . '" class="form-control"') . '</div>';
     }                
     
     $countries_array = array(array('id' => '',
