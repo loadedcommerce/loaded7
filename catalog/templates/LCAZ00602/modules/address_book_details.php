@@ -92,7 +92,7 @@
       $countries_array[] = array('id' => $country['id'],
                                  'text' => $country['name']);
     }
-    echo '<div class="form-group full-width margin-bottom"><label class="sr-only"></label>' . lc_draw_pull_down_menu('country', $countries_array, $default_country, 'onchange="getZonesDropdown(this.value)" class="form-control"') . '</div>';
+    echo '<div class="form-group full-width margin-bottom"><label class="sr-only"></label>' . lc_draw_pull_down_menu('country', $countries_array, $default_country, 'onchange="getZonesDropdown(this.value)" class="form-control" style="width:97%;"') . '</div>';
     
     if ($lC_Customer->hasDefaultAddress() && ((isset($_GET['edit']) && ($lC_Customer->getDefaultAddressID() != $_GET['address_book'])) || isset($_GET['new'])) ) {
       echo '<div class="checkbox small-margin-left">' . lc_draw_checkbox_field('primary', null, null, null, null) . '<label class="small-margin-left">' . $lC_Language->get('set_as_primary') . '</label></div>';
