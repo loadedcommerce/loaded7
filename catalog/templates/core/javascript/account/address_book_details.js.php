@@ -11,7 +11,6 @@ global $lC_Language, $Qentry;
 ?>
 <script>
 function getZonesDropdown(country, zone) {
-  alert('core');
   var jsonLink = '<?php echo lc_href_link('rpc.php', 'account&action=getZonesDropdown&country=COUNTRY&zone=ZONE', 'AUTO'); ?>';   
   $.getJSON(jsonLink.replace('COUNTRY', country).replace('&amp;', '&').replace('ZONE', zone).replace('&amp;', '&'),
     function (data) {
