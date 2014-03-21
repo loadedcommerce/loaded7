@@ -552,3 +552,6 @@ a:hover, a:focus {
 }
 
 #quantity { height:33px; }
+
+input { height: 32px !important; }
+select { height: 32px !important; }
