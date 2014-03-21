@@ -75,7 +75,7 @@
 
            echo lc_draw_pull_down_menu('state', $zones_array, (isset($Qentry) ? $zone : null), 'class="form-control"');
         } else {
-          echo lc_draw_input_field('state', (isset($Qentry) ? $zone : null), 'placeholder="' . $lC_Language->get('field_customer_state') . '" class="form-control"');
+          echo lc_draw_input_field('state', (isset($Qentry) ? $zone : null), 'placeholder="' . $lC_Language->get('field_customer_state') . '" class="form-control" style="width:96%;"');
         }
       
       echo '</span></div>';
