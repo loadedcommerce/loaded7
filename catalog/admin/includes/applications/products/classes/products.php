@@ -1218,24 +1218,26 @@ class lC_Products_Admin {
           }  
           
           // add the new option values
-          foreach ( $data['simple_options_entry_price_modifier'] as $customers_group_id => $options ) {
-            foreach ( $options as $options_id => $option_value ) {
-              if ($options_id == $group_id) {
-                foreach ( $option_value as $values_id => $price_modifier ) {
-                  $Qoptval = $lC_Database->query('insert into :table_products_simple_options_values (products_id, values_id, options_id, customers_group_id, price_modifier) values (:products_id, :values_id, :options_id, :customers_group_id, :price_modifier)');
-                  $Qoptval->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
-                  $Qoptval->bindInt(':products_id', $products_id);
-                  $Qoptval->bindInt(':values_id', $values_id);
-                  $Qoptval->bindInt(':options_id', $options_id);
-                  $Qoptval->bindInt(':customers_group_id', $customers_group_id);
-                  $Qoptval->bindFloat(':price_modifier', (float)$price_modifier);
-                  $Qoptval->setLogging($_SESSION['module'], $products_id);
-                  $Qoptval->execute();
+          if (is_array($data['simple_options_entry_price_modifier'])) {
+            foreach ( $data['simple_options_entry_price_modifier'] as $customers_group_id => $options ) {
+              foreach ( $options as $options_id => $option_value ) {
+                if ($options_id == $group_id) {
+                  foreach ( $option_value as $values_id => $price_modifier ) {
+                    $Qoptval = $lC_Database->query('insert into :table_products_simple_options_values (products_id, values_id, options_id, customers_group_id, price_modifier) values (:products_id, :values_id, :options_id, :customers_group_id, :price_modifier)');
+                    $Qoptval->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
+                    $Qoptval->bindInt(':products_id', $products_id);
+                    $Qoptval->bindInt(':values_id', $values_id);
+                    $Qoptval->bindInt(':options_id', $options_id);
+                    $Qoptval->bindInt(':customers_group_id', $customers_group_id);
+                    $Qoptval->bindFloat(':price_modifier', (float)$price_modifier);
+                    $Qoptval->setLogging($_SESSION['module'], $products_id);
+                    $Qoptval->execute();
 
-                  if ( $lC_Database->isError() ) {
-                    $error = true;
-                    break 4;
-                  }            
+                    if ( $lC_Database->isError() ) {
+                      $error = true;
+                      break 4;
+                    }            
+                  }
                 }
               }
             }
