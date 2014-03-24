@@ -778,6 +778,12 @@ function productSearch(tf, f, p) {
   );
 }
 
+function setProductSearchSelection(tf, name, f, pid) {
+  $('#' + tf).val(name);
+  $('#' + f).val(pid);
+  $('.pResults').hide();
+}
+
 $("#li-search").click(function() {
   var addOpen = $('#addContainer').is(':visible');
   var msgOpen = $('#messagesContainer').is(':visible');
