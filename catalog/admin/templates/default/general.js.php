@@ -761,10 +761,9 @@ function search(q) {
   );
 }
 
-function psearch(p) {
-  alert('ping');
-  var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=psearch&p=PSEARCH'); ?>'
-  $.getJSON(jsonLink.replace('PSEARCH', p),
+function productSearch(tf, f, p) {
+  var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=productSearch&tf=THISFIELD&f=FIELD&p=PSEARCH'); ?>'
+  $.getJSON(jsonLink.replace('THISFIELD', tf).replace('FIELD', f).replace('PSEARCH', p),
     function (data) {
       if (data.rpcStatus == -10) { // no session
         var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
@@ -774,7 +773,7 @@ function psearch(p) {
         $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
         return false;
       } 
-      $('.presults').html(data.html);
+      $('.pResults').html(data.html);
     }
   );
 }

@@ -29,13 +29,15 @@ class lC_General_Admin_rpc {
     echo json_encode($result);
   }
  /*
-  * Returns the live search results
+  * Returns the live product search results
   *
+  * @param string $_GET['tf'] The field the search is coming from
+  * @param string $_GET['f'] The field the product id is going to
   * @param string $_GET['p'] The search string
   * @access public
   * @return json
   */
-  public static function psearch() {
+  public static function productSearch() {
     $result = array();
     if ($result = lC_General_Admin::findProducts($_GET['tf'], $_GET['f'], $_GET['p'])) {
       $result['rpcStatus'] = RPC_STATUS_SUCCESS;
