@@ -88,14 +88,13 @@
           <?php echo $lC_Language->get('text_product_sub_total') . ': ' . $oInfo->get('orderSubTotal'); ?>
         </div>
         <div class="columns with-small-padding small-margin-left align-left">
-          <label class="label" for="add_product">
-            <?php echo $lC_Language->get('text_add_product'); ?>:
-          </label>
-          <?php echo lc_draw_pull_down_menu('add_product', lC_Products_Admin::getProductsDropdownArray(), null, 'class="input with-small-padding mid-margin-right mid-margin-bottom"'); ?>
+          <div class="margin-right"><?php echo $lC_Template->showProductSearch('add_product'); ?></div>
+          <input id="add_product" type="hidden" value="" name="add_product">
+          <?php //echo lc_draw_pull_down_menu('add_product', lC_Products_Admin::getProductsDropdownArray(), null, 'class="input with-small-padding mid-margin-right mid-margin-bottom"'); ?>
           <a href="javascript:void(0);" onclick="addOrderProduct(<?php echo $_GET[$lC_Template->getModule()];?>);">
             <button class="button glossy" type="button">
               <span class="button-icon green-gradient"><span class="icon-plus"></span></span>
-              <?php echo $lC_Language->get('text_add_item'); ?>
+              <?php echo $lC_Language->get('text_add_product'); ?>
             </button>
           </a>
         </div>

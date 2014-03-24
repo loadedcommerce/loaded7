@@ -28,5 +28,20 @@ class lC_General_Admin_rpc {
     
     echo json_encode($result);
   }
+ /*
+  * Returns the live search results
+  *
+  * @param string $_GET['p'] The search string
+  * @access public
+  * @return json
+  */
+  public static function psearch() {
+    $result = array();
+    if ($result = lC_General_Admin::findProducts($_GET['tf'], $_GET['f'], $_GET['p'])) {
+      $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+    }
+    
+    echo json_encode($result);
+  }
 }
 ?>

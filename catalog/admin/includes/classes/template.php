@@ -188,6 +188,29 @@ class lC_Template_Admin extends lC_Template {
 
     //$this->_template_id = $_SESSION['template']['id'];
     //$this->_template = $_SESSION['template']['code'];
+  }  
+  /**
+  * Shows the products search like megasearch
+  *
+  * @param string $key The search term
+  * @access public
+  */
+  public function showProductSearch($field = null) {
+    global $lC_Language;
+    
+    $this_field = $field . '_product_search';
+    $html = '
+        <div class="productSearch">
+          <span class="input">
+            <form name="productSearch" action="productSearch" method="post">
+              <label class="button blue-gradient" for="p">Find</label>
+              <input id="' . $field . '_product_search" class="input-unstyled noEnterSubmit" type="text" onkeyup="productSearch(\'' . $this_field . '\', \'' . $field . '\', this.value);" autocomplete="off" placeholder="' . $lC_Language->get('product_search_placeholder') . '" value="" name="p">
+            </form>
+          </span>
+          <div class="pResults"></div> 
+        </div>';
+             
+    return $html;
   }
   
 }

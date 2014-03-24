@@ -253,7 +253,7 @@ if(defined('EDITOR_UPLOADCARE_PUBLIC_KEY') && EDITOR_UPLOADCARE_PUBLIC_KEY != ''
           <li id="li-add"><a onclick="toggleSubMenu('add');" href="#" title="<?php echo $lC_Language->get('tooltip_quick_add'); ?>"><span class="icon-plus-round" style="font-size:.9em;"></span></a></li>
           <li id="li-messages"><a onclick="toggleSubMenu('messages');" href="#" title="<?php echo $lC_Language->get('tooltip_messages'); ?>"><span class="icon-mail"></span></a></li>
           <li id="li-settings" <?php echo (($_SESSION['admin']['access']['configuration'] > 0) ? NULL : 'class="disabled"'); ?>><a href="#" title="<?php echo $lC_Language->get('tooltip_settings'); ?>"><span id="sp-settings" class="icon-gear"></span></a></li>
-        </ul>  
+        </ul>
         
         <div id="searchContainer" style="display:none;">
           <section>
@@ -262,7 +262,7 @@ if(defined('EDITOR_UPLOADCARE_PUBLIC_KEY') && EDITOR_UPLOADCARE_PUBLIC_KEY != ''
                 <ul class="inputs mega-search-border">
                   <li>
                     <span class="icon-search mid-margin-left"></span>
-                    <input class="input-unstyled noEnterSubmit" type="text" onkeyup="search(this.value);" autocomplete="off" placeholder="<?php echo $lC_Language->get('search_placeholder'); ?>" value="" name="q" id="megaSearch">
+                    <input class="input-unstyled noEnterSubmit" type="text" onkeyup="psearch(this.value);" autocomplete="off" placeholder="<?php echo $lC_Language->get('search_placeholder'); ?>" value="" name="q" id="megaSearch">
                   </li>
                 </ul>
               </form>

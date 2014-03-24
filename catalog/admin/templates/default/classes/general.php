@@ -205,6 +205,94 @@ class lC_General_Admin {
     }
   }
  /**
+  * Returns the product search results from database
+  *
+  * @param string $_GET['p'] The search string
+  * @access public
+  * @return array
+  */
+  public static function findProducts($this_field = null, $field = null, $search = null) {
+    global $lC_Database, $lC_Language, $lC_Currencies;
+    
+    if ($search) {
+      
+      // start building the main <ul>
+      $result['html'] = '' . "\n";
+      
+      // return products data
+      $Qproducts = $lC_Database->query("select p.products_id, 
+                                               p.products_price, 
+                                               p.products_model, 
+                                               pd.products_name 
+                                          from :table_products p  
+                                     left join :table_products_description pd 
+                                            on (p.products_id = pd.products_id and pd.language_id = :language_id) 
+                                         where (convert(`products_name` using utf8) regexp '" . $search . "' 
+                                                or convert(`products_model` using utf8) regexp '" . $search . "' 
+                                                or convert(`products_price` using utf8) regexp '" . $search . "' 
+                                                or convert(`products_sku` using utf8) regexp '" . $search . "' 
+                                                or convert(`products_keyword` using utf8) regexp '" . $search . "'
+                                               ) 
+                                      order by pd.products_name;");
+
+      $Qproducts->bindTable(':table_products', TABLE_PRODUCTS);
+      $Qproducts->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
+      $Qproducts->bindInt(':language_id', $lC_Language->getID());
+      $Qproducts->execute();
+
+      // set the products data results as an array
+      while ($Qproducts->next()) {
+        $QproductResults[] = $Qproducts->toArray();
+      }
+      
+      // build the products results <li> html for output
+      // return <li> only if greater than 0 results from products query  
+      if ($QproductResults > 0) {
+        if ((int)($_SESSION['admin']['access']['products'] > 0)) {
+          $result['html'] .= '    <ul class="products-menu">' . "\n";
+          foreach ($QproductResults as $key => $value) {
+            // check for product variants if product has children
+            if ($value['has_children'] > 0) {
+              $Qvariants = array();
+              $QvariantsCount = $lC_Database->query("select count(products_id) as variants from :table_products where parent_id = '" . $value['products_id'] . "'");
+              $QvariantsCount->bindTable(':table_products', TABLE_PRODUCTS);
+              $QvariantsCount->execute();
+              
+              // set the variants count results as an array
+              while ($QvariantsCount->next()) {
+                $Qvariants[] = $QvariantsCount->toArray();
+              }
+            }
+            
+            $result['html'] .= '      <li class="bevel cursor-pointer" title="' . $lC_Language->get('product_view_details') . ' ' . $value['products_name'] . '">' . "\n" . 
+                               '        <a onclick="setProductSearchSelection(\'' . $this_field . '\', \'' . $value['products_name'] . '\', \'' . $field . '\', \'' . $value['products_id'] . '\');">' . "\n" .
+                               '          <span class="float-right">' . "\n" . 
+                               '            ' . ($value['has_children'] != 0 ? '<span title="' . $lC_Language->get('this_product_has') . ' ' . $Qvariants[0]['variants'] . ' ' . $lC_Language->get('variants') . '">(' . $Qvariants[0]['variants'] . ') <span class="icon-path"></span></span>' : $lC_Currencies->format($value['products_price'])) . '<br />' . "\n" . 
+                               '          </span>' . "\n" . 
+                               '          <span class="green" title="' . $value['products_name'] . '"><b>' . (strlen($value['products_name']) > 16 ? substr($value['products_name'], 0, 16) . '...' : $value['products_name']) . '</b></span>' . ($value['has_children'] != 0 ? '' : '<small>' . $lC_Language->get('text_model') . ': '  . $value['products_model'] . '</small>') . "\n" . 
+                               '        </a>' . "\n" .
+                               '      </li>';
+                               
+            $Qvariants = null;
+          }
+        }
+        $result['html'] .= '    </ul>' . "\n";
+      } else {
+        $result['html'] .= '';
+      }
+       
+      return $result;
+      
+    } else {
+      
+      // we have nothing being sent from search field 
+      $result['html'] = '' . "\n";
+      
+      return $result;
+      
+    }
+  }
+ /**
   * Returns the admin profile image name from database
   *
   * @param int $id The admin profile id

@@ -254,6 +254,7 @@ product_view_details = View details for
 result_set_current_page = Page %s of %d
 
 search_placeholder = Search
+product_search_placeholder = Product Search
 site_maintenance_message_title = Maintenance Mode
 site_maintenance_message_text = Site is in Maintenance Mode.  Click here to disable it.
 
@@ -280,6 +281,7 @@ text_version = Version
 text_confirm_delete = Confirm Delete?
 text_sort = Sort
 text_mode = Mode
+text_model = Model
 text_mode_category = Category
 text_mode_page = Page
 text_mode_specials = Link To: Specials
