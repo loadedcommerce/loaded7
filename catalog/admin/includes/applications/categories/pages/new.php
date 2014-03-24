@@ -135,22 +135,7 @@
                       <label class="label" for="categories_mode"><b><?php echo $lC_Language->get('text_mode'); ?></b></label>
                       <select class="select full-width" id="categories_mode" name="categories_mode" onchange="customCheck();">
                         <?php
-                          // later this will become an array from the possible places to link to and expandable by dvelopers also
-                          $modes_array = array(
-                            array('text' => $lC_Language->get('text_category'), 'value' => 'category'),
-                            array('text' => $lC_Language->get('text_page'), 'value' => 'page'),
-                            array('text' => $lC_Language->get('link_to_specials'), 'value' => 'specials'),
-                            array('text' => $lC_Language->get('link_to_featured'), 'value' => 'featured'),
-                            array('text' => $lC_Language->get('link_to_new'), 'value' => 'new'),
-                            array('text' => $lC_Language->get('link_to_search'), 'value' => 'search'),
-                            array('text' => $lC_Language->get('link_to_cart'), 'value' => 'cart'),
-                            array('text' => $lC_Language->get('link_to_account'), 'value' => 'account'),
-                            array('text' => $lC_Language->get('link_to_info'), 'value' => 'info'),
-                            array('text' => $lC_Language->get('text_custom_link'), 'value' => 'override')
-                          );
-                          foreach ($modes_array as $mode) {
-                            echo '<option value="' . $mode['value'] . '">' . $mode['text'] . '</option>'; 
-                          }
+                          echo lC_Categories_Admin::modeSelect();
                         ?>
                       </select>
                       <p id="categories_link_target_p" class="small-margin-top" style="display:none;">

@@ -18,7 +18,7 @@ class lC_Products_Products extends lC_Template {
 
   /* Class constructor */
   public function lC_Products_Products() {
-    global $lC_Database, $lC_Services, $lC_Session, $lC_Language, $lC_Breadcrumb, $lC_Product, $lC_Image, $lC_Currencies;
+    global $lC_Database, $lC_Services, $lC_Session, $lC_Language, $lC_Breadcrumb, $lC_Product, $lC_Image, $lC_Currencies, $cPath_array;
     
     $template_code = (isset($_SESSION['template']['code']) && $_SESSION['template']['code'] != NULL) ? $_SESSION['template']['code'] : 'default';
                                  
@@ -60,10 +60,30 @@ class lC_Products_Products extends lC_Template {
           }
         }
       
-        lC_Services_category_path::process($lC_Product->getCategoryID());
-
+        lC_Services_category_path::process($lC_Product->getCategoryID());        
+    
+        if (empty($cPath_array) && $_GET['cPath'] == '' && isset($lC_Services) && $lC_Services->isStarted('seo')) {
+          foreach ($_GET as $cats => $values) { 
+            $cats = explode("/", $cats);
+            foreach ($cats as $cat) {
+              $Qcid = $lC_Database->query('select item_id from :table_permalinks where permalink = :permalink and type = 1 and language_id = :language_id');
+              $Qcid->bindTable(':table_permalinks', TABLE_PERMALINKS);
+              $Qcid->bindValue(':permalink', $cat);
+              $Qcid->bindInt(':language_id', $lC_Language->getID());
+              $Qcid->execute();
+            
+              $cPath_array[] = $Qcid->valueInt('item_id');
+            }
+          }
+        }
+    
         if ($lC_Services->isStarted('breadcrumb')) {
-          $lC_Breadcrumb->add($lC_Product->getTitle(), lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword()), $_GET['cPath']);
+          if (isset($_GET['cPath']) && $_GET['cPath'] != '') {
+            $path = $_GET['cPath'];
+          } else {
+            $path = implode("_", $cPath_array);
+          }
+          $lC_Breadcrumb->add($lC_Product->getTitle(), lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword()), $path);
         }
 
         $this->_page_title = $lC_Product->getTitle();
