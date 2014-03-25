@@ -10,6 +10,9 @@
 */
 global $lC_Language, $pInfo; 
 ?>
+<style>
+#comboOptionsTbody input { position:relative; z-index:20000; }
+</style>
 <div id="multiTypeControlButtons" class="button-group small-margin-top">
   <label id="lbl-radio-1" for="type_radio_1" class="button green-active">
     <input type="radio" onclick="toggleMultiSkuTypeRadioGroup(this.value);" name="multi_sku_type_radio_group" id="type_radio_1" value="1" />
@@ -21,9 +24,9 @@ global $lC_Language, $pInfo;
   </label>
 </div>  
          
-<div id="multiSKUOptionsContainer" class="margin-top">  
+<div id="comboOptionsContainer" class="margin-top">  
 	<span class="float-right" style="margin:-46px 0px 4px 0;"><a class="button icon-plus-round green-gradient compact" href="javascript:void(0)" onclick="addComboOption();"><?php echo $lC_Language->get('button_setup'); ?></a></span>
-	<table width="100%" style="margin-top:-8px;" id="multiSKUOptionsTable" class="simple-table">
+	<table width="100%" style="margin-top:-8px;" id="comboOptionsTable" class="simple-table">
 	  <thead>
 	    <tr>
 	      <th scope="col" class="align-center">&nbsp;</th>
@@ -38,7 +41,7 @@ global $lC_Language, $pInfo;
 	      <th scope="col" class="align-right" width="50px"><?php echo $lC_Language->get('table_heading_action'); ?></th>
 	    </tr>
 	  </thead>
-	  <tbody id="multiSKUOptionsTbody" class="sorted_table"><?php echo ((isset($pInfo)) ? lC_Products_Admin_Pro::getComboOptionsContent($pInfo->get('variants')) : null); ?></tbody>
+	  <tbody id="comboOptionsTbody" class="sorted_table"><?php echo ((isset($pInfo)) ? lC_Products_Admin_Pro::getComboOptionsContent($pInfo->get('variants')) : null); ?></tbody>
 	</table>       	
 </div>
 
@@ -211,13 +214,13 @@ function setSubProductImage(id) {
 /* 
  * Multi SKU functions 
  */
-function removeMultiSKUOptionsRow(id) {
+function removeComboOptionsRow(id) {
   $.modal.confirm('<?php echo $lC_Language->get('text_remove_row'); ?>', function() {
     $('#trmso-' + id).remove();
-  //  $('.trpmso-' + id).remove();
+    $('.trpmso-' + id).remove();
   
 	  // check if no rows and activate/deactivate sub products button
-	  var hasInfo = $('#multiSKUOptionsTbody').children().length;
+	  var hasInfo = $('#comboOptionsTbody').children().length;
 	  if (hasInfo == 0) {
 	  	$('label[for=\'type_radio_2\']').removeClass('disabled');
 	    $('#type_radio_2').attr('onclick', 'toggleMultiSkuTypeRadioGroup(this.value)'); 	  
@@ -230,7 +233,7 @@ function removeMultiSKUOptionsRow(id) {
   }); 	
 }
 
-function toggleMultiSKUOptionsStatus(id) {
+function toggleComboOptionsStatus(id) {
 	var current = $('#variants_status_' + id).val();
   if (current == '1') {
     $('#variants_status_' + id).val('0');
@@ -241,33 +244,45 @@ function toggleMultiSKUOptionsStatus(id) {
   } 
 }  
 
-function toggleMultiSKUOptionsFeatured(id) {
+function toggleComboOptionsFeatured(id) {
 	$('.default-combo').val('0');
 	$('.default-combo-span').removeClass('icon-orange').addClass('icon-grey');	
 	$('#variants_default_combo_span_' + id).removeClass('icon-grey').addClass('icon-orange');
 	$('#variants_default_combo_' + id).val('1');
 }
 
-function setMultiSKUImage(id) {
+function setComboOptionsImage(id) {
   setTimeout(function(){
     var v = ($('#multi_sku_image_' + id).val());
     if (v != '') {
-      $('#fileSelectButtonMultiSKU-' + id).removeClass('icon-grey').addClass('icon-green').prop('title', v);
+      $('#fileSelectButtonComboOptions-' + id).removeClass('icon-grey').addClass('icon-green').prop('title', v);
     } else {                                                              
       var title = '<?php echo $lC_Language->get('text_sub_products_select_image'); ?>';
-      $('#fileSelectButtonMultiSKU-' + id).removeClass('icon-green').addClass('icon-grey').prop('title', title);
+      $('#fileSelectButtonComboOptions-' + id).removeClass('icon-green').addClass('icon-grey').prop('title', title);
     }
   }, 500);
 } 
 
 function toggleMultiSkuTypeRadioGroup(val) {
   if (val == '1') {
-    $('#multiSKUOptionsContainer').slideDown();  
+    $('#comboOptionsContainer').slideDown();  
     $('#subProductsContainer').slideUp();
   } else {
-    $('#multiSKUOptionsContainer').slideUp();  
+    $('#comboOptionsContainer').slideUp();  
     $('#subProductsContainer').slideDown();            
   }
-  
+}
+
+function setDefaultVisual(e) {   
+  $('.chk').removeAttr('checked');
+  $(e).prop("checked", true);
+}
+
+function _resortComboOptions() {
+  var sort = 10;
+  $(".combo-sort").each(function(){
+    $(this).val(sort);
+    sort = sort + 10;
+  });
 }  
 </script>

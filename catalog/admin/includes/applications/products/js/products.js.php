@@ -71,11 +71,13 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
           item.removeClass("dragged");
           item.attr("style", "");
           $("body").removeClass("dragging");
-
+          
+          // re-sort the tables
           _setSimpleOptionsSortOrder();
+          if(_resortComboOptions()) _resortComboOptions();
         }    
       });
-             
+      
       // PRICING TAB
       _refreshSimpleOptionsPricingSymbols();
       _updatePricingDivChevrons(); 

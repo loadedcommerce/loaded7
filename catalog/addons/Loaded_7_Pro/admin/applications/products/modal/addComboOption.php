@@ -8,7 +8,7 @@
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: addComboOption.php v1.0 2013-08-08 datazen $
 */
-global $lC_Language, $lC_Template, $lC_Currencies;
+global $lC_Language, $lC_Template, $lC_Currencies, $pInfo;
 ?>
 <style>
 #addComboOption { padding-bottom:20px; }
@@ -75,9 +75,9 @@ function addComboOption(editRow) {
       $.each(d, function(key, val) {
         if (val.id != undefined && val.title != groupText) {
           if (cnt == 1) {
-            options += '<option selected="selected" value="' + val.id + '">' + val.title + '</option>';
+            options += '<option selected="selected" value="' + val.id + '__' + val.title + '">' + val.title + '</option>';
           } else {
-            options += '<option value="' + val.id + '">' + val.title + '</option>';
+            options += '<option value="' + val.id + '__' + val.title + '">' + val.title + '</option>';
           }                    
           cnt++;
         }
@@ -88,9 +88,9 @@ function addComboOption(editRow) {
       $.each(d, function(key, val) {
         if (val.id != undefined) { 
           if (v.indexOf(val.id) != -1) {
-            options += '<option selected="selected" value="' + val.id + '">' + val.title + '</option>';
+            options += '<option selected="selected" value="' + val.id + '__' + val.title + '">' + val.title + '</option>';
           } else {
-            options += '<option value="' + val.id + '">' + val.title + '</option>';
+            options += '<option value="' + val.id + '__' + val.title + '">' + val.title + '</option>';
           }                   
         }   
       });   
@@ -99,23 +99,139 @@ function addComboOption(editRow) {
     return options;
   }
   
-  function getOptionsRows(nvp) {
-    mask();
-    var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $_GET[$lC_Template->getModule()] . '&action=getComboRowData&addon=Loaded_7_Pro&NVP'); ?>'
-    $.getJSON(jsonLink.replace('NVP', nvp),
-      function (data) {
-        unmask();
-        if (data.rpcStatus == -10) { // no session
-          var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
-          $(location).attr('href',url);
-        }
-        if (data.rpcStatus != 1) {
-          $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
-          return false;
-        }
-alert(print_r(data, true));        
-      });    
+  function buildCombo(set, combo, callback) {
+    var thisCombo = new Array();
+    $.each(set, function(key, value) {
+      $.each(combo, function(group, values) {
+        $.each(values, function(k, v) {
+          thisCombo.push(value + '|' + v);
+        });    
+      }); 
+    }); 
     
+    callback(thisCombo);
+  }
+  
+  function comboExists(combo, callback) {
+    var result = new Array();
+    
+    result.exists = 0;
+    $(".option-name").each(function(){
+      var option = $(this).text();
+      if (option == combo) {
+        result.exists = 1;
+      }
+    });
+    
+    callback(result);
+  }
+  
+  function getOptionsRows(data) {
+    
+    var tbody = '';
+    
+    // start building new set using primary (1st) element in the array
+    var cnt = 1;
+    var setArray = new Array();
+    $.each(data.combo, function(group, values) {
+      if (cnt == 1) {
+        setArray = values;
+        delete data.combo[group];
+      }
+      cnt++;  
+    });
+    
+    // get the options matrix
+    buildCombo(setArray, data.combo, function(gdata) {
+      
+      // create the tbody
+      var cnt = 200;
+      $.each(gdata, function(key, set) {
+              
+        if (set != undefined) {
+          
+          var comboInput = '';
+          var comboText = '';
+          var row = set.split('|');
+          $.each(row, function(key, option) {
+            oData = option.split('__');
+            comboText += oData[1] + ', ';
+            comboInput += '<input type="hidden" id="variants_' + cnt + '_values_' + oData[0] + '"  name="variants[' + cnt + '][values][' + oData[0] + ']" value="' + oData[1] + '">';                        
+          });
+          var newText = comboText.substr(0, comboText.length-2);
+          
+          // do not insert new row if combo row already esits
+          comboExists(newText, function(cdata) { 
+            
+            if (cdata.exists != 1) {         
+          
+              var symbolLeft = '<?php echo $lC_Currencies->getSymbolLeft(); ?>';
+              var decimals = '<?php echo DECIMAL_PLACES; ?>';
+              var statusIcon = '<span id="variants_status_span_' + cnt + '" class="icon-tick icon-size2 icon-green with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"left"}\' title="Set Status"></span><input type="hidden" id="variants_status_' + cnt + '" name="variants[' + cnt + '][status]" value="0">';
+              var defaultIcon = '<span id="variants_default_combo_span_' + cnt + '" class="default-combo-span icon-star icon-size2 icon-grey with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"left"}\' title="<?php echo $lC_Language->get('text_default_selected_combo'); ?>"></span><input class="default-combo" type="hidden" id="variants_default_combo_' + cnt + '" name="variants[' + cnt + '][default_combo]" value="0">';
+              
+              var weight = (data.use_product_weight == 'on') ? parseFloat(data.products_weight).toFixed(4) : 0.0000;
+              var sku = '';
+              var quantity = data.set_product_qty;
+              var price = (data.use_product_price == 'on') ? parseFloat(data.products_price).toFixed(decimals) : 0.00;
+                
+              tbody += '<tr id="trmso-' + cnt + '"><input type="hidden" name="variants[' + cnt + '][product_id]" value="0"><input type="hidden" name="variants[' + cnt + '][sort]" class="combo-sort" value="">' + comboInput +
+                       '  <td width="16px" class="sort-icon" style="cursor:move;"><span class="icon-list icon-grey icon-size2"></span></td>' +
+                       '  <td class="option-name" width="25%">' + newText + '<span class="icon-light-up icon-orange mid-margin-left with-tooltip cursor-pointer" title="<?php echo $lC_Language->get('text_new_option_set_unsaved'); ?>"></span></td>' +
+                       '  <td width="16px" style="cursor:pointer;" onclick="toggleComboOptionsFeatured(\'' + cnt + '\');">' + defaultIcon + '</td>' +                    
+                       '  <td style="white-space:nowrap;">' +
+                       '     <div class="inputs" style="display:inline; padding:8px 0;">' +
+                       '       <input type="text" class="input-unstyled mid-margin-left" style="width:70%;" onfocus="this.select();" value="' + weight + '" tabindex="' + cnt + '2" name="variants[' + cnt + '][weight]">'+
+                       '       <span class="mid-margin-right no-margin-left"><?php echo lC_Weight::getCode(SHIPPING_WEIGHT_UNIT); ?></span>'+
+                       '     </div>' +
+                       '   </td>' +                   
+                       '  <td><input type="text" class="input half-width" onfocus="this.select();" tabindex="' + cnt + '3" name="variants[' + cnt + '][sku]" value="' + sku + '"></td>' +
+                       '  <td><input type="text" class="input half-width" onfocus="this.select();" tabindex="' + cnt + '4" name="variants[' + cnt + '][qoh]" value="' + quantity + '"></td>' +
+                       '  <td style="white-space:nowrap;">' +
+                       '     <div class="inputs" style="display:inline; padding:8px 0;">' +
+                       '       <span class="mid-margin-left no-margin-right">' + symbolLeft + '</span>' +
+                       '       <input type="text" class="input-unstyled" style="width:87%;" onchange="$(\'#variants_' + cnt + '_price_1\').val(this.value);" onfocus="this.select();" value="' + price + '" tabindex="' + cnt + '5" name="variants[' + cnt + '][price]" name="variants[' + cnt + '][price]">' +
+                       '     </div>' +
+                       '   </td>' +
+                       '  <td class="align-center align-middle">' +
+                       '    <input style="display:none;" type="file" id="multi_sku_image_' + cnt + '" name="variants[' + cnt + '][image]" onchange="setComboOptionsImage(\'' + cnt + '\');" multiple />' +
+                       '    <span class="icon-camera icon-grey icon-size2 cursor-pointer with-tooltip" title="" id="fileSelectButtonComboOptions-' + cnt + '" onclick="document.getElementById(\'multi_sku_image_' + cnt + '\').click();"></span>' +
+                       '  </td>' +
+                       '  <td width="16px" align="center" style="cursor:pointer;" onclick="toggleComboOptionsStatus(\'' + cnt + '\');">' + statusIcon + '</td>' +
+                       '  <td width="40px" align="right">' +
+                       '      <span class="icon-pencil icon-orange icon-size2 margin-right with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"left"}\' title="Edit Entry" style="cursor:pointer;" onclick="addMultiSKUOption(\'' + cnt + '\')"></span>' +
+                       '      <span class="icon-trash icon-size2 icon-red with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"right"}\' title="Remove Entry" style="cursor:pointer;" onclick="removeMultiSKUOptionsRow(\'' + cnt + '\');"></span>' +
+                       '    </td>' +
+                       '</tr>'; 
+             
+             var defaultGroup = '<?php echo DEFAULT_CUSTOMERS_GROUP_ID; ?>';
+             var customerGroups = <?php echo json_encode(lC_Customer_groups_Admin::getAll()); ?>;
+             $.each(customerGroups.entries, function(key, val) {
+               var customers_group_id = val.customers_group_id;
+               var pTbody = '';          
+               pTbody += '<tr class="trpmso-' + cnt + '">' +
+                         '  <td id="name-td-' + cnt + '" class="element">' + newText + '</td>' +
+                         '  <td>' +
+                         '    <div class="inputs' + ((customers_group_id == defaultGroup) ? '' : ' disabled') + '" style="display:inline; padding:8px 0;">' +
+                         '      <span class="mid-margin-left no-margin-right">' + symbolLeft + '</span>' +
+                         '      <input type="text" class="input-unstyled" onchange="$(\'#variants_' + cnt + '_price\').val(this.value);" onfocus="$(this).select()" value="' + ((customers_group_id == defaultGroup) ? price : parseFloat(0).toFixed(decimals)) + '" id="variants_' + cnt + '_price_' + customers_group_id + '" id="variants_' + cnt + '_price_' + customers_group_id + '" name="variants[' + cnt + '][price][' + customers_group_id + ']"' + ((customers_group_id == defaultGroup) ? '' : ' READONLY') + '>' +
+                         '    </div>' +
+                         '  </td>' +
+                         '</tr>'; 
+                         
+               $('#tbody-combo-options-' + customers_group_id).append(pTbody);                         
+             });
+            }         
+        });                   
+                                   
+        }
+        cnt++;
+      });    
+      
+      $('#comboOptionsTable').append(tbody);
+      _resortComboOptions();
+      
+    });    
     
   }
   
@@ -236,6 +352,10 @@ alert(print_r(data, true));
                                 var groupID2 = $('#group_2').find(":selected").val();
                                 set = set + ', ' + groupText2;
                                 
+                                var products_price = '<?php echo ((isset($pInfo)) ? number_format($pInfo->get('products_price'), DECIMAL_PLACES) : 0.00); ?>';
+                                var products_weight = '<?php echo ((isset($pInfo)) ? number_format($pInfo->get('products_weight'), 4) : 0.0000); ?>';
+                                var products_status = '<?php echo ((isset($pInfo)) ? (int)$pInfo->get('products_status') : 0.00); ?>';
+                                
                                 $.modal({
                                     content: '<div id="addComboOptionEntry2">'+
                                              '  <div id="addComboOptionEntryForm2">'+
@@ -283,7 +403,10 @@ alert(print_r(data, true));
                                              '      <p class="button-height inline-label">'+
                                              '        <label for="set_product_qty" class="label no-wrap"><?php echo $lC_Language->get('field_set_qoh_for_each'); ?></label>'+
                                              '        <?php echo lc_draw_input_field('set_product_qty', '100', 'id="edit-first_name" class="input" style="width:25%; float:right; margin-right:119px;"'); ?>'+
-                                             '      </p>'+                                             
+                                             '      </p>'+  
+                                             '      <input type="hidden" name="products_price" value="' + products_price + '">'+                                           
+                                             '      <input type="hidden" name="products_weight" value="' + products_weight + '">'+                                           
+                                             '      <input type="hidden" name="products_status" value="' + products_status + '">'+                                           
                                                                                           
                                              '    </form>'+
                                              '  </div>'+
@@ -318,12 +441,16 @@ alert(print_r(data, true));
                                             counter++;
                                             var formData = $('#seAdd2').serializeJSON();
                                             var formDataNVP = $('#seAdd2').serialize();
+                                            var lastSort = $('#yourtableid tr:last').attr('id');
+
+
+                                            
                                             formData.set = set;
                                             
                                             $.modal.all.closeModal(); 
                                             
                                             // insert options rows on stage
-                                            getOptionsRows(formDataNVP);                                             
+                                            getOptionsRows(formData);                                             
 
                                             // calculate the number of variants
                                             var groups = new Array();
@@ -461,8 +588,4 @@ alert(print_r(data, true));
   );
 }
 
-function setDefaultVisual(e) {   
-  $('.chk').removeAttr('checked');
-  $(e).prop("checked", true);
-}
 </script>

@@ -165,12 +165,13 @@ die('77');
                     '    <small class="input-info mid-margin-left mid-margin-right no-wrap">Qty</small>' . 
                     '    <div class="inputs" style="display:inline; padding:8px 0;">' .
                     '      <span class="mid-margin-left no-margin-right">' . $lC_Currencies->getSymbolLeft() . '</span>' .
-                    '      <input type="text" onfocus="this.select();" name="products_qty_break_price[' . $value['customers_group_id'] . '][0]" id="products_qty_break_price_' . $value['customers_group_id'] . '_0" value="' . number_format($pInfo->get('products_price'), DECIMAL_PLACES) . '" class="disabled input-unstyled small-margin-right" style="width:60px;" READONLY/>' .
+                    '      <input type="text" onfocus="this.select();" name="products_qty_break_price[' . $value['customers_group_id'] . '][0]" id="products_qty_break_price_' . $value['customers_group_id'] . '_0" value="' . ((isset($pInfo)) ? number_format($pInfo->get('products_price'), DECIMAL_PLACES) : 0.00) . '" class="disabled input-unstyled small-margin-right" style="width:60px;" READONLY/>' .
                     '    </div>' . 
                     '    <small class="input-info mid-margin-left no-wrap">Price</small>' . 
                     '  </div>';
 
-        if (self::hasQPBPricing($pInfo->get('products_id'))) {
+                    
+        if ( isset($pInfo) && self::hasQPBPricing($pInfo->get('products_id')) ) {
           
           $qpbData = self::getQPBPricing($pInfo->get('products_id'), $value['customers_group_id']);
           
@@ -233,46 +234,6 @@ die('77');
     return $content;
   }
  /*
-  *  Return the product simple options accordian price listing content
-  *
-  * @access public
-  * @return array
-  */
-  public static function getComboOptionsPricingContent() {
-    global $lC_Language, $pInfo;
-    
-    $content = '';
-    $groups = lC_Customer_groups_Admin::getAll();
-    foreach($groups['entries'] as $key => $value) {
-      $content .= '<dt><span class="strong">' . $value['customers_group_name'] . '</span></dt>' .
-                  '<dd>' .
-                  '  <div class="with-padding">';
-                  
-      if (isset($pInfo) && is_array($pInfo->get('simple_options'))) {                  
-        $content .= '    <div class="big-text underline" style="padding-bottom:8px;">' . $lC_Language->get('text_simple_options') . '</div>' .
-                    '    <table style="" id="simpleOptionsPricingTable" class="simple-table">' .
-                    '      <tbody id="tbody-' . $value['customers_group_id'] . '">' . self::_getComboOptionsPricingTbody($pInfo->get('simple_options'), $value['customers_group_id']) . '</tbody>' .
-                    '    </table>';
-                    
-      } else if (isset($pInfo) && $pInfo->get('has_subproducts') == '1') {
-        $content .= '    <div class="big-text underline" style="padding-bottom:8px;">' . $lC_Language->get('text_sub_products') . '</div>' .
-                    '    <table id="subProductsPricingTable" class="simple-table">' .
-                    '      <tbody id="tbody-' . $value['customers_group_id'] . '">' . self::_getComboOptionsPricingTbody($pInfo, $value['customers_group_id']) . '</tbody>' .
-                    '    </table>';        
-        
-      } else if (isset($pInfo) && $pInfo->get('has_variants') == '1') {
-      
-      } else {      
-        $content .= '<table class="simple-table"><tbody id="tbody-' . $value['customers_group_id'] . '"><tr id="no-options-' . $value['customers_group_id'] . '"><td>' . $lC_Language->get('text_no_options_defined') . '</td></tr></tbody></table>'; 
-      }
-                
-      $content .= '  </div>' .
-                  '</dd>';  
-    }
-    
-    return $content;
-  }
- /*
   * Determine if the product has subproducts
   *
   * @param integer $id The product id
@@ -323,12 +284,12 @@ die('77');
         if (strstr($title, ',')) $title = substr($title, 0, -2);
         
         if ((isset($title) && $title != NULL)) {
-          $tbody .= '<tr class="trp-' . $cnt . '">' .
+          $tbody .= '<tr class="trpmso-' . $cnt . '">' .
                     '  <td id="name-td-' . $cnt . '" class="element">' . $title . '</td>' . 
                     '  <td>' .
-                    '    <div class="inputs' . (($customers_group_id == '1' || $ok) ? '' : ' disabled') . '" style="display:inline; padding:8px 0;">' .
+                    '    <div class="inputs' . (($customers_group_id == DEFAULT_CUSTOMERS_GROUP_ID && $ok) ? '' : ' disabled') . '" style="display:inline; padding:8px 0;">' .
                     '      <span class="mid-margin-left no-margin-right">' . $lC_Currencies->getSymbolLeft() . '</span>' .
-                    '      <input type="text" class="input-unstyled" onfocus="$(this).select()" value="' . $val['data']['price'] . '" id="variants_' . $product_id . '_price_' . $customers_group_id . '" name="variants[' . $product_id . '][price][' . $customers_group_id . ']" ' . (($customers_group_id == '1' || $ok) ? '' : ' DISABLED') . '>' .
+                    '      <input type="text" class="input-unstyled" onchange="$(\'#variants_' . $cnt . '_price\').val(this.value);" onfocus="$(this).select()" value="' . (($customers_group_id == DEFAULT_CUSTOMERS_GROUP_ID && $ok) ? number_format($val['data']['price'], DECIMAL_PLACES) : number_format(0, DECIMAL_PLACES)) . '" id="variants_' . $cnt . '_price_' . $customers_group_id . '" name="variants[' . $cnt . '][price][' . $customers_group_id . ']" ' . (($customers_group_id == '1' && $ok) ? '' : ' READONLY') . '>' .
                     '    </div>' .
                     '  </td>' .
                     '</tr>';
@@ -347,10 +308,11 @@ die('77');
   * @return string
   */  
   private static function _getComboOptionsTbody($options) {
-  	global $lC_Currencies;
+  	global $lC_Currencies, $lC_Language;
 		
     $tbody = '';  	
     $sort = 10;
+    $cnt = 0;
     if (isset($options) && !empty($options)) {
       foreach ($options as $product_id => $mso) {     	
         $combo = '';
@@ -364,40 +326,46 @@ die('77');
 							$module = $data['module'];	
               $default = $data['default'];            
 							$default_visual = $data['default_visual'];						
-              $comboInput .= '<input type="hidden" id="variants_' . $product_id .'_values_' . $key . '"  name="variants[' . $product_id .'][values][' . $key . ']" value="' . $data['value_title'] . '">';                        
-							$comboInput .= '<input type="hidden" id="variants_' . $product_id .'_default_visual_' . $default_visual . '"  name="variants[' . $product_id .'][default_visual]" value="' . $default_visual . '">';          							
+              $comboInput .= '<input type="hidden" id="variants_' . $cnt .'_values_' . $key . '"  name="variants[' . $cnt .'][values][' . $key . ']" value="' . $data['value_title'] . '">';                        
+							$comboInput .= '<input type="hidden" id="variants_' . $cnt .'_default_visual_' . $default_visual . '"  name="variants[' . $cnt .'][default_visual]" value="' . $default_visual . '">';          							
 					  }
           }
 					if (strstr($combo, ',')) $combo = substr($combo, 0, -2);
           
-          $statusIcon = (isset($mso['data']['status']) && $mso['data']['status'] == '1') ? '<span id="variants_status_span_' . $product_id .'" class="icon-tick icon-size2 icon-green with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"left"}\' title="Set Status"></span><input type="hidden" id="variants_status_' . $product_id .'" name="variants[' . $product_id . '][status]" value="1">' : '<span id="variants_status_span_' . $product_id .'" class="icon-cross icon-size2 icon-red with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"left"}\' title="Set Status"></span><input type="hidden" id="variants_status_' . $product_id .'" name="variants[' . $product_id . '][status]" value="0">';
-          $defaultIcon = (isset($default) && $default == '1') ? '<span id="variants_default_combo_span_' . $product_id .'" class="default-combo-span icon-star icon-size2 icon-orange with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"left"}\' title="Default Combo"></span><input class="default-combo" type="hidden" id="variants_default_combo_' . $product_id .'" name="variants[' . $product_id . '][default_combo]" value="1">' : '<span id="variants_default_combo_span_' . $product_id .'" class="default-combo-span icon-star icon-size2 icon-grey with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"left"}\' title="Set Default Combo"></span><input class="default-combo" type="hidden" id="variants_default_combo_' . $product_id .'" name="variants[' . $product_id . '][default_combo]" value="0">';          
+          $statusIcon = (isset($mso['data']['status']) && $mso['data']['status'] == '1') ? '<span id="variants_status_span_' . $cnt .'" class="icon-tick icon-size2 icon-green with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"left"}\' title="Set Status"></span><input type="hidden" id="variants_status_' . $cnt .'" name="variants[' . $cnt . '][status]" value="1">' : '<span id="variants_status_span_' . $cnt .'" class="icon-cross icon-size2 icon-red with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"left"}\' title="Set Status"></span><input type="hidden" id="variants_status_' . $cnt .'" name="variants[' . $cnt . '][status]" value="0">';
+          $defaultIcon = (isset($default) && $default == '1') ? '<span id="variants_default_combo_span_' . $cnt .'" class="default-combo-span icon-star icon-size2 icon-orange with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"left"}\' title="' . $lC_Language->get('text_default_selected_combo') . '"></span><input class="default-combo" type="hidden" id="variants_default_combo_' . $cnt .'" name="variants[' . $cnt . '][default_combo]" value="1">' : '<span id="variants_default_combo_span_' . $cnt .'" class="default-combo-span icon-star icon-size2 icon-grey with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"left"}\' title="' . $lC_Language->get('text_set_default_combo') . '"></span><input class="default-combo" type="hidden" id="variants_default_combo_' . $cnt .'" name="variants[' . $cnt . '][default_combo]" value="0">';          
 					          
-          $tbody .= '<tr id="trmso-' . $product_id .'"><input type="hidden" name="variants[' . $product_id .'][sort]" value="' . $sort . '">' . $comboInput .
-                    '  <td width="16px" style="cursor:move;"><span class="icon-list icon-grey icon-size2"></span></td>' .
-                    '  <td width="25%">' . $combo . '</td>' .
-                    '  <td width="16px" style="cursor:pointer;" onclick="toggleMultiSKUOptionsFeatured(\'' . $product_id . '\');">' . $defaultIcon . '</td>' .                    
-                    '  <td><input type="text" class="input half-width" onfocus="this.select();" tabindex="' . $product_id . '2" name="variants[' . $product_id . '][weight]" value="' . $mso['data']['weight'] . '"></td>' .
-                    '  <td><input type="text" class="input half-width" onfocus="this.select();" tabindex="' . $product_id . '3" name="variants[' . $product_id . '][sku]" value="' . $mso['data']['sku'] . '"></td>' .
-                    '  <td><input type="text" class="input half-width" onfocus="this.select();" tabindex="' . $product_id . '4" name="variants[' . $product_id . '][qoh]" value="' . $mso['data']['quantity'] . '"></td>' .
+          $tbody .= '<tr id="trmso-' . $cnt .'"><input type="hidden" name="variants[' . $cnt . '][product_id]" value="' . $product_id . '"><input type="hidden" class="combo-sort" name="variants[' . $cnt .'][sort]" value="' . $sort . '">' . $comboInput .
+                    '  <td width="16px" class="sort-icon" style="cursor:move;"><span class="icon-list icon-grey icon-size2"></span></td>' .
+                    '  <td class="option-name" width="25%">' . $combo . '</td>' .
+                    '  <td width="16px" style="cursor:pointer;" onclick="toggleComboOptionsFeatured(\'' . $cnt . '\');">' . $defaultIcon . '</td>' .                    
+                    '  <td style="white-space:nowrap;">
+                         <div class="inputs" style="display:inline; padding:8px 0;">
+                           <input type="text" class="input-unstyled mid-margin-left" style="width:70%;" onfocus="this.select();" value="' . number_format($mso['data']['weight'], 4) . '" tabindex="' . $cnt . '2" name="variants[' . $cnt . '][weight]">
+                           <span class="mid-margin-right no-margin-left">' . lC_Weight::getCode(SHIPPING_WEIGHT_UNIT) . '</span>
+                         </div>
+                       </td>' .                    
+                    '  <td><input type="text" class="input half-width" onfocus="this.select();" tabindex="' . $cnt . '3" name="variants[' . $cnt . '][sku]" value="' . $mso['data']['sku'] . '"></td>' .
+                    '  <td><input type="text" class="input half-width" onfocus="this.select();" tabindex="' . $cnt . '4" name="variants[' . $cnt . '][qoh]" value="' . (int)$mso['data']['quantity'] . '"></td>' .
                     '  <td style="white-space:nowrap;">
                          <div class="inputs" style="display:inline; padding:8px 0;">
                            <span class="mid-margin-left no-margin-right">' . $lC_Currencies->getSymbolLeft() . '</span>
-                           <input type="text" class="input-unstyled" style="width:87%;" onfocus="this.select();" value="' . $mso['data']['price'] . '" tabindex="' . $product_id . '5" name="variants[' . $product_id . '][price]">
+                           <input type="text" class="input-unstyled" style="width:87%;" onchange="$(\'#variants_' . $cnt . '_price_1\').val(this.value);" onfocus="this.select();" value="' . number_format($mso['data']['price'], DECIMAL_PLACES) . '" tabindex="' . $cnt . '5" name="variants[' . $cnt . '][price]" id="variants_' . $cnt . '_price">
                          </div>
                        </td>' .
 			              '  <td class="align-center align-middle">' .
-			              '    <input style="display:none;" type="file" id="multi_sku_image_' . $product_id . '" name="variants[' . $product_id . '][image]" onchange="setMultiSKUImage(\'' . $product_id . '\');" multiple />' .
-			              '    <span class="icon-camera icon-size2 cursor-pointer with-tooltip ' . ((isset($mso['data']['image']) && $mso['data']['image'] != null) ? 'icon-green' : 'icon-grey') . '" title="' . ((isset($mso['data']['image']) && $mso['data']['image'] != null) ? $mso['data']['image'] : null) . '" id="fileSelectButtonMultiSKU-' . $product_id . '" onclick="document.getElementById(\'multi_sku_image_' . $product_id . '\').click();"></span>' .
+			              '    <input style="display:none;" type="file" id="multi_sku_image_' . $cnt . '" name="variants[' . $cnt . '][image]" onchange="setComboOptionsImage(\'' . $cnt . '\');" multiple />' .
+			              '    <span class="icon-camera icon-size2 cursor-pointer with-tooltip ' . ((isset($mso['data']['image']) && $mso['data']['image'] != null) ? 'icon-green' : 'icon-grey') . '" title="' . ((isset($mso['data']['image']) && $mso['data']['image'] != null) ? $mso['data']['image'] : null) . '" id="fileSelectButtonComboOptions-' . $cnt . '" onclick="document.getElementById(\'multi_sku_image_' . $cnt . '\').click();"></span>' .
 			              '  </td>' .                       
-                    '  <td width="16px" align="center" style="cursor:pointer;" onclick="toggleMultiSKUOptionsStatus(\'' . $product_id . '\');">' . $statusIcon . '</td>' .
+                    '  <td width="16px" align="center" style="cursor:pointer;" onclick="toggleComboOptionsStatus(\'' . $cnt . '\');">' . $statusIcon . '</td>' .
                     '  <td width="40px" align="right">
-                         <span class="icon-pencil icon-orange icon-size2 margin-right with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"left"}\' title="Edit Entry" style="cursor:pointer;" onclick="addMultiSKUOption(\'' . $product_id. '\')"></span>
-                         <span class="icon-trash icon-size2 icon-red with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"right"}\' title="Remove Entry" style="cursor:pointer;" onclick="removeMultiSKUOptionsRow(\'' . $product_id . '\');"></span>
+                         <span class="icon-pencil icon-orange icon-size2 margin-right with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"left"}\' title="Edit Entry" style="cursor:pointer;" onclick="addMultiSKUOption(\'' . $cnt. '\')"></span>
+                         <span class="icon-trash icon-size2 icon-red with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"right"}\' title="Remove Entry" style="cursor:pointer;" onclick="removeComboOptionsRow(\'' . $cnt . '\');"></span>
                        </td>' .
                     '</tr>';
         }
         $sort = ($sort + 10);
+        $cnt++;
       }
     }
     
@@ -470,7 +438,7 @@ die('77');
       } else if (isset($pInfo) && $pInfo->get('has_children') == '1') {
         $content .= '    <div class="big-text underline" style="padding-bottom:8px;">' . $lC_Language->get('text_combo_options') . '</div>' .
                     '    <table id="comboOptionsPricingTable" class="simple-table">' .
-                    '      <tbody id="tbody-' . $value['customers_group_id'] . '">' . lC_Products_Admin_Pro::getComboOptionsPricingTbody($pInfo, $value['customers_group_id']) . '</tbody>' .
+                    '      <tbody id="tbody-combo-options-' . $value['customers_group_id'] . '">' . lC_Products_Admin_Pro::getComboOptionsPricingTbody($pInfo, $value['customers_group_id']) . '</tbody>' .
                     '    </table>';         
       } else {      
         $content .= '<table class="simple-table"><tbody id="tbody-' . $value['customers_group_id'] . '"><tr id="no-options-' . $value['customers_group_id'] . '"><td>' . $lC_Language->get('text_no_options_defined') . '</td></tr></tbody></table>'; 
@@ -482,23 +450,4 @@ die('77');
     
     return $content;
   } 
-  
-  public static function getComboRowData($data) {
-    global $lC_Currencies;
-    
-echo "<pre>";
-print_r($data);
-echo "</pre>";
-die();    
-    
-    $tbody = '';    
-    $sort = 10;
-    if (isset($options) && !empty($options)) {
-      foreach ($options as $product_id => $mso) {       
-        
-        $combo = '';
-      }
-    }
-    
-  }
 }
