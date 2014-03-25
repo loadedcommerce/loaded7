@@ -772,7 +772,8 @@ function productSearch(tf, f, p) {
       if (data.rpcStatus != 1) {
         $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
         return false;
-      } 
+      }
+      $('.pResults').show(); 
       $('.pResults').html(data.html);
     }
   );

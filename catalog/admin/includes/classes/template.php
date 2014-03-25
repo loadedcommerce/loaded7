@@ -203,8 +203,8 @@ class lC_Template_Admin extends lC_Template {
         <div class="productSearch">
           <span class="input">
             <form name="productSearch" action="productSearch" method="post">
-              <label class="button blue-gradient" for="p">Find</label>
-              <input id="' . $field . '_product_search" class="input-unstyled noEnterSubmit" type="text" onkeyup="productSearch(\'' . $this_field . '\', \'' . $field . '\', this.value);" autocomplete="off" placeholder="' . $lC_Language->get('product_search_placeholder') . '" value="" name="p">
+              <label class="button blue-gradient" for="p">' . $lC_Language->get('text_select') . '</label>
+              <input id="' . $field . '_product_search" class="input-unstyled noEnterSubmit" type="text" onkeyup="productSearch(\'' . $this_field . '\', \'' . $field . '\', this.value);" autocomplete="off" placeholder="' . $lC_Language->get('product_search_placeholder') . '" value="" name="p" style="padding-right: 0 !important;">
             </form>
           </span>
           <div class="pResults"></div> 

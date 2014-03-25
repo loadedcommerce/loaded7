@@ -304,6 +304,7 @@ text_enable_coupon = Click to Enable Coupon
 text_disable_coupon = Click to Disable Coupon
 text_enable = Click to Enable
 text_disable = Click to Disable
+text_select = Select
 text_special_enabled = Has Special Price (Enabled)
 text_special_disabled = Has Special Price (Disabled)
 
