@@ -442,8 +442,6 @@ function addComboOption(editRow) {
                                             var formData = $('#seAdd2').serializeJSON();
                                             var formDataNVP = $('#seAdd2').serialize();
                                             var lastSort = $('#yourtableid tr:last').attr('id');
-
-
                                             
                                             formData.set = set;
                                             
@@ -452,14 +450,15 @@ function addComboOption(editRow) {
                                             // insert options rows on stage
                                             getOptionsRows(formData);                                             
 
+                                            var data = $('#seAdd2').serializeJSON();
                                             // calculate the number of variants
                                             var groups = new Array();
-                                            $.each(formData.combo, function(key, val) {
+                                            $.each(data.combo, function(key, val) {
                                             if (val != undefined) {
-                                                groups[key] = val.length;
+                                                var parts = key.split('__');
+                                                groups[parts[0]] = val.length;
                                               }
                                             }); 
-                                            
                                             var cnt = 1;
                                             var variants = 0;
                                             $.each(groups, function(k, v) {
