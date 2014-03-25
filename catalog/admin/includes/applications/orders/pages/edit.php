@@ -13,10 +13,9 @@ if ( is_numeric($_GET[$lC_Template->getModule()]) ) {
 }
 ?>
 <style scoped="scoped">
-<!--
   .replacement > .select-value { height: 19px; }
   span.select { height: 33px; }
--->
+  .select-value { line-height: 19px; }
 </style>
 <!-- Main content -->
 <section role="main" id="main">
