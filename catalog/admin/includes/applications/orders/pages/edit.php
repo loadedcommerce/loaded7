@@ -12,6 +12,12 @@ if ( is_numeric($_GET[$lC_Template->getModule()]) ) {
   $oInfo = new lC_ObjectInfo(lC_Orders_Admin::getInfo($_GET[$lC_Template->getModule()]));
 }
 ?>
+<style scoped="scoped">
+<!--
+  .replacement > .select-value { height: 19px; }
+  span.select { height: 33px; }
+-->
+</style>
 <!-- Main content -->
 <section role="main" id="main">
   <hgroup id="main-title" class="thin">
