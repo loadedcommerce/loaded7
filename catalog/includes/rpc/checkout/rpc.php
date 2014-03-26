@@ -46,7 +46,7 @@ class lC_Checkout_rpc {
   }
     
   
-  protected static function _getCartHtml($data) {
+  protected static function _getCartHtml($data = null) {
     global $lC_Database, $lC_Language, $lC_Currencies, $lC_Customer, $lC_ShoppingCart, $lC_Image;
 
     $result = array();
