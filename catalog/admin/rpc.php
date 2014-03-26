@@ -10,7 +10,8 @@
 header('Cache-Control: no-cache, must-revalidate');
 header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
 
-ini_set('display_errors', 1);
+ini_set('display_errors', 0);
+ini_set('error_reporting', 0);
 
 require('includes/application_top.php');
 require($lC_Vqmod->modCheck('includes/classes/template.php'));
