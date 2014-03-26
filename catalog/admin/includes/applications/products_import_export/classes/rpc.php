@@ -9,6 +9,7 @@
   @version    $Id: rpc.php v1.0 2013-12-01 resultsonlyweb $
 */
 global $lC_Vqmod;
+
 require_once($lC_Vqmod->modCheck('includes/applications/products_import_export/classes/products_import_export.php'));
 
 class lC_Products_import_export_Admin_rpc {

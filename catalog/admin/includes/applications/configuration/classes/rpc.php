@@ -10,7 +10,7 @@
 */
 global $lC_Vqmod;
 
-require($lC_Vqmod->modCheck('includes/applications/configuration/classes/configuration.php'));
+require_once($lC_Vqmod->modCheck('includes/applications/configuration/classes/configuration.php'));
 
 class lC_Configuration_Admin_rpc {
  /*
