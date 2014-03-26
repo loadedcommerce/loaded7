@@ -973,18 +973,28 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
     */
   }
   
-  function setActiveTab() {    
-    // show/hide tabs and their content if set in url
-    var tProducts = parseInt('<?php echo $_GET["tabProducts"];?>');
-    var tCustomer = parseInt('<?php echo $_GET["tabCustomer"];?>');    
-    var tShipping = parseInt('<?php echo $_GET["tabShipping"];?>');    
-    var tStatus = parseInt('<?php echo $_GET["tabStatus"];?>');    
-    var tFraud = parseInt('<?php echo $_GET["tabFraud"];?>');    
-    var tPayments = parseInt('<?php echo $_GET["tabPayments"];?>');    
-    var tTransactions = parseInt('<?php echo $_GET["tabTransactions"];?>');    
-    var tTotals = parseInt('<?php echo $_GET["tabTotals"];?>');
+  function setActiveTab(tab) {
+    if (tab) { // if the tab is not sent in the function call 
+      if (tab == 'tabProducts') var tabProducts = 1;
+      if (tab == 'tabCustomer') var tabCustomer = 1;
+      if (tab == 'tabShipping') var tabShipping = 1;
+      if (tab == 'tabStatus') var tabStatus = 1;
+      if (tab == 'tabFraud') var tabFraud = 1;
+      if (tab == 'tabPayments') var tabPayments = 1;
+      if (tab == 'tabTransactions') var tabTransactions = 1;
+      if (tab == 'tabTotals') var tabTotals = 1;
+    } else { //get it from url
+      var tabProducts = parseInt('<?php echo $_GET["tabProducts"];?>');
+      var tabCustomer = parseInt('<?php echo $_GET["tabCustomer"];?>');    
+      var tabShipping = parseInt('<?php echo $_GET["tabShipping"];?>');    
+      var tabStatus = parseInt('<?php echo $_GET["tabStatus"];?>');    
+      var tabFraud = parseInt('<?php echo $_GET["tabFraud"];?>');    
+      var tabPayments = parseInt('<?php echo $_GET["tabPayments"];?>');    
+      var tabTransactions = parseInt('<?php echo $_GET["tabTransactions"];?>');    
+      var tabTotals = parseInt('<?php echo $_GET["tabTotals"];?>');
+    }
         
-    if (tProducts == 1) {
+    if (tabProducts == 1) {
       // hide all but products 
       $("#id_tab_orders_summary").removeClass("active");
       $('#section_orders_summary').hide();
@@ -1005,7 +1015,7 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
       // show products
       $("#id_tab_orders_products").addClass("active");
       $('#section_orders_products').show();
-    } else if (tCustomer == 1) {
+    } else if (tabCustomer == 1) {
       // hide all but customers 
       $("#id_tab_orders_summary").removeClass("active");
       $('#section_orders_summary').hide();
@@ -1026,7 +1036,7 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
       // show customers
       $("#id_tab_orders_customers").addClass("active");
       $('#section_orders_customers').show();
-    } else if (tShipping == 1) {
+    } else if (tabShipping == 1) {
       // hide all but shipping 
       $("#id_tab_orders_summary").removeClass("active");
       $('#section_orders_summary').hide();
@@ -1047,7 +1057,7 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
       // show shipping
       $("#id_tab_orders_shipping").addClass("active");
       $('#section_orders_shipping').show();
-    } else if (tStatus == 1) {
+    } else if (tabStatus == 1) {
       // hide all but status 
       $("#id_tab_orders_summary").removeClass("active");
       $('#section_orders_summary').hide();
@@ -1068,7 +1078,7 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
       // show status
       $("#id_tab_orders_status").addClass("active");
       $('#section_orders_status').show();
-    } else if (tFraud == 1) {
+    } else if (tabFraud == 1) {
       // hide all but fraud 
       $("#id_tab_orders_summary").removeClass("active");
       $('#section_orders_summary').hide();
@@ -1089,7 +1099,7 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
       // show fraud
       $("#id_tab_orders_fraud").addClass("active");
       $('#section_orders_fraud').show();
-    } else if (tPayments == 1) {
+    } else if (tabPayments == 1) {
       // hide all but payments 
       $("#id_tab_orders_summary").removeClass("active");
       $('#section_orders_summary').hide();
@@ -1110,7 +1120,7 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
       // show payments
       $("#id_tab_orders_payments").addClass("active");
       $('#section_orders_payments').show();
-    } else if (tTransactions == 1) {
+    } else if (tabTransactions == 1) {
       // hide all but transactions 
       $("#id_tab_orders_summary").removeClass("active");
       $('#section_orders_summary').hide();
@@ -1131,7 +1141,7 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
       // show transactions
       $("#id_tab_orders_transactions").addClass("active");
       $('#section_orders_transactions').show();
-    } else if (tTotals == 1) {
+    } else if (tabTotals == 1) {
       // hide all but totals 
       $("#id_tab_orders_summary").removeClass("active");
       $('#section_orders_summary').hide();

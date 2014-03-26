@@ -676,16 +676,24 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
       return false;
     }
     
-    function setActiveTab() {
-      // show/hide tabs and their content if set in url
-      var tImages = parseInt('<?php echo $_GET["tabImages"];?>');
-      var tData = parseInt('<?php echo $_GET["tabData"];?>');
-      var tOptions = parseInt('<?php echo $_GET["tabOptions"];?>');
-      var tPricing = parseInt('<?php echo $_GET["tabPricing"];?>');
-      var tShipping = parseInt('<?php echo $_GET["tabShipping"];?>');
-      var tRelationships = parseInt('<?php echo $_GET["tabRelationships"];?>');
+    function setActiveTab(tab) {
+      if (tab) { // if the tab is not sent in the function call 
+        if (tab == 'tabImages') var tabImages = 1;
+        if (tab == 'tabData') var tabData = 1;
+        if (tab == 'tabOptions') var tabOptions = 1;
+        if (tab == 'tabPricing') var tabPricing = 1;
+        if (tab == 'tabShipping') var tabShipping = 1;
+        if (tab == 'tabRelationships') var tabRelationships = 1;
+      } else { //get it from url
+        var tabImages = parseInt('<?php echo $_GET["tabImages"];?>');
+        var tabData = parseInt('<?php echo $_GET["tabData"];?>');
+        var tabOptions = parseInt('<?php echo $_GET["tabOptions"];?>');
+        var tabPricing = parseInt('<?php echo $_GET["tabPricing"];?>');
+        var tabShipping = parseInt('<?php echo $_GET["tabShipping"];?>');
+        var tabRelationships = parseInt('<?php echo $_GET["tabRelationships"];?>');
+      }
           
-      if (tImages == 1) {
+      if (tabImages == 1) {
         // hide all but images 
         $("#tabHeaderSectionContent").removeClass("active");
         $('#section_general_content').hide();
@@ -702,7 +710,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
         // show images
         $("#tabHeaderSectionImages").addClass("active");
         $('#section_images_content').show();
-      } else if (tData == 1) {
+      } else if (tabData == 1) {
         // hide all but data  
         $("#tabHeaderSectionContent").removeClass("active");
         $('#section_general_content').hide();
@@ -719,7 +727,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
         // show data
         $("#tabHeaderSectionData").addClass("active");
         $('#section_data_content').show();
-      } else if (tOptions == 1) {
+      } else if (tabOptions == 1) {
         // hide all but options 
         $("#tabHeaderSectionContent").removeClass("active");
         $('#section_general_content').hide();
@@ -736,7 +744,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
         // show options
         $("#tabHeaderSectionOptions").addClass("active");
         $('#section_options_content').show();
-      } else if (tPricing == 1) {
+      } else if (tabPricing == 1) {
         // hide all but pricing 
         $("#tabHeaderSectionContent").removeClass("active");
         $('#section_general_content').hide();
@@ -753,7 +761,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
         // show pricing
         $("#tabHeaderSectionPricing").addClass("active");
         $('#section_pricing_content').show();
-      } else if (tShipping == 1) {
+      } else if (tabShipping == 1) {
         // hide all but shipping 
         $("#tabHeaderSectionContent").removeClass("active");
         $('#section_general_content').hide();
@@ -770,7 +778,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
         // show shipping
         $("#tabHeaderSectionShipping").addClass("active");
         $('#section_shipping_content').show();
-      } else if (tRelationships == 1) {
+      } else if (tabRelationships == 1) {
         // hide all but relationships  
         $("#tabHeaderSectionContent").removeClass("active");
         $('#section_general_content').hide();
