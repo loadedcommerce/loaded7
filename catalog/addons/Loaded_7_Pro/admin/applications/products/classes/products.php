@@ -222,33 +222,37 @@ die('77');
       $variants_array = array();
       $default_variant_combo = null;
 
-      if ( isset($data['variants_combo']) && !empty($data['variants_combo']) ) {
-        foreach ( $data['variants_combo'] as $key => $combos ) {
-          if ( isset($data['variants_combo_db'][$key]) ) {
+      if ( isset($data['variants']) && !empty($data['variants']) ) {
+        foreach ( $data['variants'] as $key => $combo ) {
+          if ( isset($data['variants'][$key]['product_id']) ) {
             $Qsubproduct = $lC_Database->query('update :table_products set products_quantity = :products_quantity, products_cost = :products_cost, products_price = :products_price, products_msrp = :products_msrp, products_model = :products_model, products_sku = :products_sku, products_weight = :products_weight, products_weight_class = :products_weight_class, products_status = :products_status, products_tax_class_id = :products_tax_class_id where products_id = :products_id');
-            $Qsubproduct->bindInt(':products_id', $data['variants_combo_db'][$key]);
+            $Qsubproduct->bindInt(':products_id', $data['variants'][$key]['product_id']);
           } else {
             $Qsubproduct = $lC_Database->query('insert into :table_products (parent_id, products_quantity, products_cost, products_price, products_msrp, products_model, products_sku, products_weight, products_weight_class, products_status, products_tax_class_id, products_date_added) values (:parent_id, :products_quantity, :products_price, :products_model, :products_sku, :products_weight, :products_weight_class, :products_status, :products_tax_class_id, :products_date_added)');
             $Qsubproduct->bindInt(':parent_id', $products_id);
             $Qsubproduct->bindRaw(':products_date_added', 'now()');
           }
 
+          $price = array_values($data['variants'][$key]['price'])[0];
+          
           $Qsubproduct->bindTable(':table_products', TABLE_PRODUCTS);
-          $Qsubproduct->bindInt(':products_quantity', $data['variants_quantity'][$key]);
-          $Qsubproduct->bindFloat(':products_cost', $data['variants_cost'][$key]);
-          $Qsubproduct->bindFloat(':products_price', $data['variants_price'][$key]);
-          $Qsubproduct->bindFloat(':products_msrp', $data['variants_msrp'][$key]);
-          $Qsubproduct->bindValue(':products_model', $data['variants_model'][$key]);
-          $Qsubproduct->bindValue(':products_sku', $data['variants_sku'][$key]);
-          $Qsubproduct->bindFloat(':products_weight', $data['variants_weight'][$key]);
-          $Qsubproduct->bindInt(':products_weight_class', $data['variants_weight_class'][$key]);
-          $Qsubproduct->bindInt(':products_status', (isset($data['variants_status'][$key]) && $data['variants_status'][$key] == 'on') ? 1 : 0);
-          $Qsubproduct->bindInt(':products_tax_class_id', $data['variants_tax_class_id'][$key]);
-          $Qsubproduct->setLogging($_SESSION['module'], $id);
+          $Qsubproduct->bindInt(':products_quantity', $data['variants'][$key]['qoh']);
+          $Qsubproduct->bindFloat(':products_cost', $data['variants'][$key]['cost']);
+          $Qsubproduct->bindFloat(':products_price', $price);
+          $Qsubproduct->bindFloat(':products_msrp', $data['variants'][$key]['msrp']);
+          $Qsubproduct->bindValue(':products_model', $data['variants'][$key]['model']);
+          $Qsubproduct->bindValue(':products_sku', $data['variants'][$key]['sku']);
+          $Qsubproduct->bindFloat(':products_weight', $data['variants'][$key]['weight']);
+          $Qsubproduct->bindInt(':products_weight_class', $data['weight_class']);
+          $Qsubproduct->bindInt(':products_status', (isset($data['variants'][$key]['status']) && $data['variants'][$key]['status'] == 1) ? 1 : 0);
+          $Qsubproduct->bindInt(':products_tax_class_id', $data['tax_class_id']);
+          $Qsubproduct->setLogging($_SESSION['module'], $products_id);
           $Qsubproduct->execute();
 
-          if ( isset($data['variants_combo_db'][$key])) {
-            $subproduct_id = $data['variants_combo_db'][$key];
+if ($lC_Database->isError()) die($lC_Database->getError());
+
+          if ( isset($data['variants'][$key]['product_id'])) {
+            $subproduct_id = $data['variants'][$key]['product_id'];
           } else {
             $Qnext = $lC_Database->query('select max(products_id) as maxID from :table_products');
             $Qnext->bindTable(':table_products', TABLE_PRODUCTS);
@@ -256,33 +260,33 @@ die('77');
             $subproduct_id = $Qnext->valueInt('maxID');
             $Qnext->freeResult();
           }
+if ($lC_Database->isError()) die($lC_Database->getError());
 
-          if ( $data['variants_default_combo'] == $key ) {
+          if ( $data['variants'][$key]['default_combo'] == 1) {
             $default_variant_combo = $subproduct_id;
           }
 
-          $combos_array = explode(';', $combos);
+          foreach ( $data['variants'][$key]['values'] as $values_id => $values_text ) {
+            
+            $variants_array[$subproduct_id][] = $values_id;
 
-          foreach ( $combos_array as $combo ) {
-            list($vgroup, $vvalue) = explode('_', $combo);
-
-            $variants_array[$subproduct_id][] = $vvalue;
-
-            $check_combos_array[] = $vvalue;
+            $check_combos_array[] = $values_id;            
 
             $Qcheck = $lC_Database->query('select products_id from :table_products_variants where products_id = :products_id and products_variants_values_id = :products_variants_values_id');
             $Qcheck->bindTable(':table_products_variants', TABLE_PRODUCTS_VARIANTS);
             $Qcheck->bindInt(':products_id', $subproduct_id);
-            $Qcheck->bindInt(':products_variants_values_id', $vvalue);
+            $Qcheck->bindInt(':products_variants_values_id', $values_id);
             $Qcheck->execute();
+if ($lC_Database->isError()) die($lC_Database->getError());
 
             if ( $Qcheck->numberOfRows() < 1 ) {
               $Qvcombo = $lC_Database->query('insert into :table_products_variants (products_id, products_variants_values_id) values (:products_id, :products_variants_values_id)');
               $Qvcombo->bindTable(':table_products_variants', TABLE_PRODUCTS_VARIANTS);
               $Qvcombo->bindInt(':products_id', $subproduct_id);
-              $Qvcombo->bindInt(':products_variants_values_id', $vvalue);
+              $Qvcombo->bindInt(':products_variants_values_id', $values_id);
               $Qvcombo->setLogging($_SESSION['module'], $products_id);
               $Qvcombo->execute();
+if ($lC_Database->isError()) die($lC_Database->getError());
 
               if ( $lC_Database->isError() ) {
                 $error = true;
@@ -300,17 +304,21 @@ die('77');
           $Qcheck->bindTable(':table_products_variants', TABLE_PRODUCTS_VARIANTS);
           $Qcheck->bindInt(':parent_id', $products_id);
           $Qcheck->execute();
+if ($lC_Database->isError()) die($lC_Database->getError());
 
           while ( $Qcheck->next() ) {
             $Qdel = $lC_Database->query('delete from :table_products_variants where products_id = :products_id');
             $Qdel->bindTable(':table_products_variants', TABLE_PRODUCTS_VARIANTS);
             $Qdel->bindInt(':products_id', $Qcheck->valueInt('products_id'));
             $Qdel->execute();
+if ($lC_Database->isError()) die($lC_Database->getError());
 
             $Qdel = $lC_Database->query('delete from :table_products where products_id = :products_id');
             $Qdel->bindTable(':table_products', TABLE_PRODUCTS);
             $Qdel->bindInt(':products_id', $Qcheck->valueInt('products_id'));
             $Qdel->execute();
+if ($lC_Database->isError()) die($lC_Database->getError());
+            
           }
         } else {
           $Qcheck = $lC_Database->query('select pv.* from :table_products p, :table_products_variants pv where p.parent_id = :parent_id and p.products_id = pv.products_id and pv.products_id not in (":products_id")');
@@ -319,6 +327,7 @@ die('77');
           $Qcheck->bindInt(':parent_id', $products_id);
           $Qcheck->bindRaw(':products_id', implode('", "', array_keys($variants_array)));
           $Qcheck->execute();
+if ($lC_Database->isError()) die($lC_Database->getError());
 
           while ( $Qcheck->next() ) {
             $Qdel = $lC_Database->query('delete from :table_products_variants where products_id = :products_id and products_variants_values_id = :products_variants_values_id');
@@ -326,11 +335,14 @@ die('77');
             $Qdel->bindInt(':products_id', $Qcheck->valueInt('products_id'));
             $Qdel->bindInt(':products_variants_values_id', $Qcheck->valueInt('products_variants_values_id'));
             $Qdel->execute();
+if ($lC_Database->isError()) die($lC_Database->getError());
 
             $Qdel = $lC_Database->query('delete from :table_products where products_id = :products_id');
             $Qdel->bindTable(':table_products', TABLE_PRODUCTS);
             $Qdel->bindInt(':products_id', $Qcheck->valueInt('products_id'));
             $Qdel->execute();
+if ($lC_Database->isError()) die($lC_Database->getError());
+            
           }
 
           foreach ( $variants_array as $key => $values ) {
@@ -342,6 +354,7 @@ die('77');
           }
         }
       }
+if ($lC_Database->isError()) die($lC_Database->getError());
 
       $Qupdate = $lC_Database->query('update :table_products set has_children = :has_children where products_id = :products_id');
       $Qupdate->bindTable(':table_products', TABLE_PRODUCTS);
@@ -349,6 +362,7 @@ die('77');
       $Qupdate->bindInt(':products_id', $products_id);
       $Qupdate->execute();
     }  
+if ($lC_Database->isError()) die($lC_Database->getError());
     
     if ( $error === false ) {
       $Qupdate = $lC_Database->query('update :table_products_variants set default_combo = :default_combo where products_id in (":products_id")');
@@ -356,6 +370,7 @@ die('77');
       $Qupdate->bindInt(':default_combo', 0);
       $Qupdate->bindRaw(':products_id', implode('", "', array_keys($variants_array)));
       $Qupdate->execute();
+if ($lC_Database->isError()) die($lC_Database->getError());
 
       if ( is_numeric($default_variant_combo) ) {
         $Qupdate = $lC_Database->query('update :table_products_variants set default_combo = :default_combo where products_id = :products_id');
@@ -365,6 +380,7 @@ die('77');
         $Qupdate->execute();
       }
     }      
+if ($lC_Database->isError()) die($lC_Database->getError());
     
     
   }
