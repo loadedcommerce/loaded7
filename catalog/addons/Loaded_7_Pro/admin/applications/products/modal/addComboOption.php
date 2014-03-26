@@ -33,7 +33,6 @@ function addComboOption(editRow) {
   }
   mask();  
   
-  
   function getOptionsData(id, callback) {
     mask()
     var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $_GET[$lC_Template->getModule()] . '&action=getSimpleOptionEntryData&dummy=0&group=GROUP'); ?>'
@@ -232,9 +231,7 @@ function addComboOption(editRow) {
       _resortComboOptions();
       
     });    
-    
   }
-  
   
   var set = '';
   var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $_GET[$lC_Template->getModule()] . '&action=getSimpleOptionData'); ?>'
@@ -368,7 +365,6 @@ function addComboOption(editRow) {
                                              '          <div id="entryVisualContainer2" class="visual" style="width:10%; position:absolute; top:4px; right:0;"></div>'+
                                              '        </div><div class="clear-both"></div>'+
                                              '      </p>'+
-                                             
                                              '      <p class="button-height block-label">'+
                                              '        <label for="group" class="label small-margin-bottom"></label>'+
                                              '        <p class="silver-bg with-small-padding big-text">&nbsp;' + groupText2 + '<span class="float-right small-margin-right"><input type="checkbox" style="vertical-align:0%;" class="input chk" onchange="setDefaultVisual(this);" name="visual[' + groupID2 + ']"></span></p>'+
@@ -381,25 +377,21 @@ function addComboOption(editRow) {
                                              '      <p class="button-height block-label">'+
                                              '        <a href="javascript:void(0);" onclick="addOptionGroup(counter);" class="button"><?php echo $lC_Language->get('button_add_another_group'); ?></a>'+
                                              '      </p><hr>'+
-                                             
                                              '      <p class="button-height block-label">'+
                                              '        <label for="use_product_price" class="label small-margin-bottom">'+
                                              '        <?php echo lc_draw_checkbox_field('use_product_price', null, true, 'class="switch tiny" data-text-on="' . strtoupper($lC_Language->get('button_yes')) . '" data-text-off="' . strtoupper($lC_Language->get('button_no')) . '"');?>'+
                                              '        <?php echo $lC_Language->get('field_use_product_price'); ?></label>'+
                                              '      </p>'+                                             
-                                             
                                              '      <p class="button-height block-label">'+
                                              '        <label for="use_product_weight" class="label small-margin-bottom">'+
                                              '        <?php echo lc_draw_checkbox_field('use_product_weight', null, true, 'class="switch tiny" data-text-on="' . strtoupper($lC_Language->get('button_yes')) . '" data-text-off="' . strtoupper($lC_Language->get('button_no')) . '"');?>'+
                                              '        <?php echo $lC_Language->get('field_use_product_weight'); ?></label>'+
                                              '      </p>'+                                              
-                                             
                                              '      <p class="button-height block-label">'+
                                              '        <label for="use_product_status" class="label small-margin-bottom">'+
                                              '        <?php echo lc_draw_checkbox_field('use_product_status', null, true, 'class="switch tiny" data-text-on="' . strtoupper($lC_Language->get('button_yes')) . '" data-text-off="' . strtoupper($lC_Language->get('button_no')) . '"');?>'+
                                              '        <?php echo $lC_Language->get('field_use_product_status'); ?></label>'+
                                              '      </p>'+                                              
-                                             
                                              '      <p class="button-height inline-label">'+
                                              '        <label for="set_product_qty" class="label no-wrap"><?php echo $lC_Language->get('field_set_qoh_for_each'); ?></label>'+
                                              '        <?php echo lc_draw_input_field('set_product_qty', '100', 'id="edit-first_name" class="input" style="width:25%; float:right; margin-right:119px;"'); ?>'+
@@ -407,7 +399,6 @@ function addComboOption(editRow) {
                                              '      <input type="hidden" name="products_price" value="' + products_price + '">'+                                           
                                              '      <input type="hidden" name="products_weight" value="' + products_weight + '">'+                                           
                                              '      <input type="hidden" name="products_status" value="' + products_status + '">'+                                           
-                                                                                          
                                              '    </form>'+
                                              '  </div>'+
                                              '</div>',
@@ -440,16 +431,18 @@ function addComboOption(editRow) {
                                           if (bValid) {
                                             counter++;
                                             var formData = $('#seAdd2').serializeJSON();
-                                            var formDataNVP = $('#seAdd2').serialize();
-                                            var lastSort = $('#yourtableid tr:last').attr('id');
                                             
                                             formData.set = set;
                                             
-                                            $.modal.all.closeModal(); 
+                                            $.modal.all.closeModal();  
+                                            
+                                            // take a snapshot before any changes
+                                            var snapshot = $('#comboOptionsTbody').html();
                                             
                                             // insert options rows on stage
-                                            getOptionsRows(formData);                                             
-
+                                            getOptionsRows(formData);  
+                                            
+                                            // get the number of variants created                                           
                                             var data = $('#seAdd2').serializeJSON();
                                             // calculate the number of variants
                                             var groups = new Array();
@@ -470,7 +463,7 @@ function addComboOption(editRow) {
                                                   variants = variants * v;
                                                 }
                                               }
-                                            });                                           
+                                            })                                            
                                             
                                             $.modal({
                                                 content: '<div id="addComboOptionConfirm">'+
@@ -509,22 +502,18 @@ function addComboOption(editRow) {
                                                 actions: {
                                                   'Close' : {
                                                     color: 'red',
-                                                    click: function(fwin) { $.modal.all.closeModal(); }
+                                                    click: function(fwin) { $('#comboOptionsTbody').html(snapshot); $.modal.all.closeModal(); }
                                                   }
                                                 },
                                                 buttons: {
                                                   '<?php echo $lC_Language->get('button_cancel'); ?>': {
                                                     classes:  'glossy',
-                                                    click:    function(fwin) { $.modal.all.closeModal(); }
+                                                    click:    function(fwin) { $('#comboOptionsTbody').html(snapshot); $.modal.all.closeModal(); }
                                                   },
                                                   '<?php echo $lC_Language->get('button_done'); ?>': {
                                                     classes:  'blue-gradient glossy',
                                                     click:    function(fwin) {
-                                                      counter++;
-                                                        
-                                                        
-                                                      alert('set status ... done');
-                                                      
+                                                      // done
                                                       fwin.closeModal();  
                                                     }
                                                   }
@@ -557,7 +546,6 @@ function addComboOption(editRow) {
                                   $("#entryVisualContainer3").html(fdata.visual);  
                                   $.modal.all.centerModal();                              
                                 });  
-                                
                               }                              
                             }
                           }
@@ -576,7 +564,6 @@ function addComboOption(editRow) {
                     $("#groupSelectComboContainer" + counter.toString()).html('<select id="group_' + counter.toString() + '" name="group[' + counter.toString() + ']" class="select multiple full-width">' +  getGroupsSelectOptions(data) + '</select>').change();                    
                   }
                 );                               
-                
               }
             }
           },
@@ -586,5 +573,4 @@ function addComboOption(editRow) {
     }
   );
 }
-
 </script>
