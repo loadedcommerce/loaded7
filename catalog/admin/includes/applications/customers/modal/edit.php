@@ -483,7 +483,7 @@ function saveAddress(save) {
           }
         } else {
           if (save == 1) {
-            window.location = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, "orders&action=quick_add&editProduct=1&cID=' + cid + '");?>';
+            window.location = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, "orders&action=quick_add&tabProducts=1&cID=' + cid + '");?>';
           }
           // get new form data
           getFormData(cid);
@@ -615,7 +615,7 @@ function isDefaultAddressIDExists(cid, aid) {
 function createNewOrder(cid, aid) {
   if (isDefaultAddressIDExists(cid, aid)) {
     if (parseInt(cid) > 0 ) {
-      window.location = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, "orders&action=quick_add&editProduct=1&cID=' + cid + '");?>';
+      window.location = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, "orders&action=quick_add&tabProducts=1&cID=' + cid + '");?>';
     }
     
     var isVisible = $('#addAddress').is(':visible');

@@ -47,7 +47,7 @@ if ( is_numeric($_GET[$lC_Template->getModule()]) ) {
           <!--<li id="id_tab_orders_fraud"><?php echo lc_link_object('#section_orders_fraud', $lC_Language->get('section_orders_fraud')); ?></li>
           <li id="id_tab_orders_payments"><?php echo lc_link_object('#section_orders_payments', $lC_Language->get('section_orders_payments')); ?></li>-->
           <li id="id_tab_orders_transactions"><?php echo lc_link_object('#section_orders_transactions', $lC_Language->get('section_transaction_history')); ?></li>
-          <li id="id_tab_order_totals"><?php echo lc_link_object('#section_order_totals', $lC_Language->get('section_order_totals')); ?></li>
+          <li id="id_tab_orders_totals"><?php echo lc_link_object('#section_orders_totals', $lC_Language->get('section_order_totals')); ?></li>
         </ul>
         <div class="tabs-content" id="orders_sections">
           <?php 

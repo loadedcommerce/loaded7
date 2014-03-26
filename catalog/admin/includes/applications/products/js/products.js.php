@@ -97,7 +97,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
         } 
       }
       ?> 
-         
+      setActiveTab();   
     });
     <?php if ($pInfo) { ?>
     /**
@@ -674,8 +674,121 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
       $("#products_price0").removeClass("error");
 
       return false;
-    }       
+    }
     
+    function setActiveTab() {
+      // show/hide tabs and their content if set in url
+      var tImages = parseInt('<?php echo $_GET["tabImages"];?>');
+      var tData = parseInt('<?php echo $_GET["tabData"];?>');
+      var tOptions = parseInt('<?php echo $_GET["tabOptions"];?>');
+      var tPricing = parseInt('<?php echo $_GET["tabPricing"];?>');
+      var tShipping = parseInt('<?php echo $_GET["tabShipping"];?>');
+      var tRelationships = parseInt('<?php echo $_GET["tabRelationships"];?>');
+          
+      if (tImages == 1) {
+        // hide all but images 
+        $("#tabHeaderSectionContent").removeClass("active");
+        $('#section_general_content').hide();
+        $("#tabHeaderSectionData").removeClass("active");
+        $('#section_data_content').hide();
+        $("#tabHeaderSectionOptions").removeClass("active");
+        $('#section_options_content').hide();
+        $("#tabHeaderSectionPricing").removeClass("active");
+        $('#section_pricing_content').hide();
+        $("#tabHeaderSectionShipping").removeClass("active");
+        $('#section_shipping_content').hide();
+        $("#tabHeaderSectionRelationships").removeClass("active");
+        $('#section_relationships_content').hide();
+        // show images
+        $("#tabHeaderSectionImages").addClass("active");
+        $('#section_images_content').show();
+      } else if (tData == 1) {
+        // hide all but data  
+        $("#tabHeaderSectionContent").removeClass("active");
+        $('#section_general_content').hide();
+        $("#tabHeaderSectionImages").removeClass("active");
+        $('#section_images_content').hide();
+        $("#tabHeaderSectionOptions").removeClass("active");
+        $('#section_options_content').hide();
+        $("#tabHeaderSectionPricing").removeClass("active");
+        $('#section_pricing_content').hide();
+        $("#tabHeaderSectionShipping").removeClass("active");
+        $('#section_shipping_content').hide();
+        $("#tabHeaderSectionRelationships").removeClass("active");
+        $('#section_relationships_content').hide();
+        // show data
+        $("#tabHeaderSectionData").addClass("active");
+        $('#section_data_content').show();
+      } else if (tOptions == 1) {
+        // hide all but options 
+        $("#tabHeaderSectionContent").removeClass("active");
+        $('#section_general_content').hide();
+        $("#tabHeaderSectionImages").removeClass("active");
+        $('#section_images_content').hide();
+        $("#tabHeaderSectionData").removeClass("active");
+        $('#section_data_content').hide(); 
+        $("#tabHeaderSectionPricing").removeClass("active");
+        $('#section_pricing_content').hide();
+        $("#tabHeaderSectionShipping").removeClass("active");
+        $('#section_shipping_content').hide();
+        $("#tabHeaderSectionRelationships").removeClass("active");
+        $('#section_relationships_content').hide();
+        // show options
+        $("#tabHeaderSectionOptions").addClass("active");
+        $('#section_options_content').show();
+      } else if (tPricing == 1) {
+        // hide all but pricing 
+        $("#tabHeaderSectionContent").removeClass("active");
+        $('#section_general_content').hide();
+        $("#tabHeaderSectionImages").removeClass("active");
+        $('#section_images_content').hide();
+        $("#tabHeaderSectionData").removeClass("active");
+        $('#section_data_content').hide();
+        $("#tabHeaderSectionOptions").removeClass("active");
+        $('#section_options_content').hide();
+        $("#tabHeaderSectionShipping").removeClass("active");
+        $('#section_shipping_content').hide();
+        $("#tabHeaderSectionRelationships").removeClass("active");
+        $('#section_relationships_content').hide();
+        // show pricing
+        $("#tabHeaderSectionPricing").addClass("active");
+        $('#section_pricing_content').show();
+      } else if (tShipping == 1) {
+        // hide all but shipping 
+        $("#tabHeaderSectionContent").removeClass("active");
+        $('#section_general_content').hide();
+        $("#tabHeaderSectionImages").removeClass("active");
+        $('#section_images_content').hide();
+        $("#tabHeaderSectionData").removeClass("active");
+        $('#section_data_content').hide();
+        $("#tabHeaderSectionOptions").removeClass("active");
+        $('#section_options_content').hide();
+        $("#tabHeaderSectionPricing").removeClass("active");
+        $('#section_pricing_content').hide();
+        $("#tabHeaderSectionRelationships").removeClass("active");
+        $('#section_relationships_content').hide();
+        // show shipping
+        $("#tabHeaderSectionShipping").addClass("active");
+        $('#section_shipping_content').show();
+      } else if (tRelationships == 1) {
+        // hide all but relationships  
+        $("#tabHeaderSectionContent").removeClass("active");
+        $('#section_general_content').hide();
+        $("#tabHeaderSectionImages").removeClass("active");
+        $('#section_images_content').hide();
+        $("#tabHeaderSectionData").removeClass("active");
+        $('#section_data_content').hide();
+        $("#tabHeaderSectionOptions").removeClass("active");
+        $('#section_options_content').hide();
+        $("#tabHeaderSectionPricing").removeClass("active");
+        $('#section_pricing_content').hide();
+        $("#tabHeaderSectionShipping").removeClass("active");
+        $('#section_shipping_content').hide();
+        // show relationships
+        $("#tabHeaderSectionRelationships").addClass("active");
+        $('#section_relationships_content').show();       
+      } 
+    }
   </script>
   <?php
 } else { // default product listing
