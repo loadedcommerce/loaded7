@@ -469,10 +469,10 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
     $.modal.all.centerModal();
   }
   
-  function addOrderProduct(oId) {    
-    var pid = parseInt($("#add_product").val()); 
+  function addOrderProduct(oId, field) {    
+    var pid = $("#" + field).val();
     url = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=add_product&oID=OID&pID=PID&tabProducts=1'); ?>';
-    window.location = url.replace('OID', oId).replace('PID',pid);
+    window.location = url.replace('OID', oId).replace('PID', pid);
   }
 
   function cancelOrderProductEdit(val) {

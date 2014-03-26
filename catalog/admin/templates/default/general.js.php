@@ -430,7 +430,11 @@ $(document).ready(function() {
   }
   setTimeout(function() {
     $("#dataTable_length").find('select').addClass("input with-small-padding");
-  }, 700);        
+  }, 700);
+  
+  $(".productSearchInput").keypress(function() {
+    $(".productSearchInput").parents().eq(4).find('[type=button]').attr('disabled', true);  
+  });     
 });
 
 function _apiHealthCheckAlert() {
@@ -773,8 +777,8 @@ function productSearch(tf, f, p) {
         $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
         return false;
       }
-      $('.pResults').show(); 
-      $('.pResults').html(data.html);
+      $('.' + f + '_results').show(); 
+      $('.' + f + '_results').html(data.html);
     }
   );
 }
@@ -782,7 +786,14 @@ function productSearch(tf, f, p) {
 function setProductSearchSelection(tf, name, f, pid) {
   $('#' + tf).val(name);
   $('#' + f).val(pid);
-  $('.pResults').hide();
+  $('.' + f + '_results').hide();
+  $('#' + f).parent().find('[type=button]').removeAttr('disabled');
+    /*if ($(this).val() == '') {
+      $('.enableOnInput').prop('disabled', true);
+    } else {
+      $('.enableOnInput').prop('disabled', false);
+    }*/
+  //});
 }
 
 $("#li-search").click(function() {
