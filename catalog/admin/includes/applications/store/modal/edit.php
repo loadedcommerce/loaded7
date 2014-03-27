@@ -67,7 +67,7 @@ function editAddon(id, name) {
                       $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
                       return false;
                     }
-                    window.location.href = window.location.href + '&type=' + name; 
+                    window.location.href = window.location.href;
                   }
                 );
                 win.closeModal();

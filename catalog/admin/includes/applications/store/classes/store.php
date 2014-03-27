@@ -180,7 +180,7 @@ if (!class_exists('lC_Store_Admin')) {
     public static function drawMenu() {
       foreach ( self::getAllTypes() as $key => $type ) {
         $menu .= '<li style="cursor:pointer;" class="message-menu store-menu-' . strtolower(str_replace(' ', '-', $type['text'])) . '" id="menuType' . str_replace(' ', '', ucwords($type['text'])) . '">' . 
-        '  <a href="javascript:void(0);" class="" id="menuLink' . (int)$type['id'] . '" onclick="showAddonType(\'' . (int)$type['id'] . '\', \'' . lc_output_string_protected($type['text']) . '\');">' . 
+        '  <a href="javascript:void(0);" class="" id="menuLink' . (int)$type['id'] . '" onclick="showAddonType(\'' . lc_output_string_protected($type['text']) . '\');">' . 
         '    <span class="message-status" style="padding-top:8px;"><img src="' . $type['icon'] . '" alt="' . $type['text'] . '"></span>' .
         '     <br><strong>' . lc_output_string_protected($type['text']) . '</strong>' .
         '   </a>' .
@@ -392,17 +392,33 @@ if (!class_exists('lC_Store_Admin')) {
           $addon->install();
 
           $code = $addon->getAddonType(); 
-          if (is_dir(DIR_FS_CATALOG . 'addons/' . $addon->getAddonCode() . '/modules/' . $addon->getAddonType())) {
-            $lC_DirectoryListing = new lC_DirectoryListing(DIR_FS_CATALOG . 'addons/' . $addon->getAddonCode() . '/modules/' . $addon->getAddonType());
+          $title = $addon->getAddonTitle();
+          // check for payment or shipping modules and adjust addon $code to module $code
+          if (is_dir(DIR_FS_CATALOG . 'addons/' . $addon->getAddonCode() . '/modules/payment/')) {
+            $lC_DirectoryListing = new lC_DirectoryListing(DIR_FS_CATALOG . 'addons/' . $addon->getAddonCode() . '/modules/payment/');
             $lC_DirectoryListing->setCheckExtension('php');
 
             foreach ( $lC_DirectoryListing->getFiles() as $ao ) { 
               if (isset($ao['name'])) {
                 $code = substr($ao['name'], 0, strpos($ao['name'], '.'));
+                $title = str_replace('_', ' ', $key);
+                $modules_group = 'payment|' . $key;
                 break;  
               }        
             }
-          }
+          } else if (is_dir(DIR_FS_CATALOG . 'addons/' . $addon->getAddonCode() . '/modules/shipping/')) {
+            $lC_DirectoryListing = new lC_DirectoryListing(DIR_FS_CATALOG . 'addons/' . $addon->getAddonCode() . '/modules/shipping/');
+            $lC_DirectoryListing->setCheckExtension('php');
+
+            foreach ( $lC_DirectoryListing->getFiles() as $ao ) { 
+              if (isset($ao['name'])) {
+                $code = substr($ao['name'], 0, strpos($ao['name'], '.'));
+                $title = str_replace('_', ' ', $key);
+                $modules_group = 'shipping|' . $key;
+                break;  
+              }        
+            }
+          } 
 
           if (empty($code) === false) {     
             $Qdel = $lC_Database->query('delete from :table_templates_boxes where modules_group = :modules_group');
@@ -412,7 +428,7 @@ if (!class_exists('lC_Store_Admin')) {
 
             $Qinstall = $lC_Database->query('insert into :table_templates_boxes (title, code, author_name, author_www, modules_group) values (:title, :code, :author_name, :author_www, :modules_group)');
             $Qinstall->bindTable(':table_templates_boxes', TABLE_TEMPLATES_BOXES);
-            $Qinstall->bindValue(':title', $addon->getAddonTitle());
+            $Qinstall->bindValue(':title', $title);
             $Qinstall->bindValue(':code', $code);
             $Qinstall->bindValue(':author_name', $addon->getAddonAuthor());
             $Qinstall->bindValue(':author_www', $addon->getAddonAuthorWWW());
@@ -450,12 +466,28 @@ if (!class_exists('lC_Store_Admin')) {
         $lC_DirectoryListing = new lC_DirectoryListing(DIR_FS_CATALOG . 'addons/' . $addon->getAddonCode() . '/modules/' . $addon->getAddonType());
         $lC_DirectoryListing->setCheckExtension('php');
 
-        $code = '';
-        foreach ( $lC_DirectoryListing->getFiles() as $ao ) { 
-          if (isset($ao['name'])) {
-            $code = substr($ao['name'], 0, strpos($ao['name'], '.'));
-            break;  
-          }        
+        $code = $addon->getAddonType(); 
+        // check for payment or shipping modules and adjust addon $code to module $code
+        if (is_dir(DIR_FS_CATALOG . 'addons/' . $addon->getAddonCode() . '/modules/payment/')) {
+          $lC_DirectoryListing = new lC_DirectoryListing(DIR_FS_CATALOG . 'addons/' . $addon->getAddonCode() . '/modules/payment/');
+          $lC_DirectoryListing->setCheckExtension('php');
+
+          foreach ( $lC_DirectoryListing->getFiles() as $ao ) { 
+            if (isset($ao['name'])) {
+              $code = substr($ao['name'], 0, strpos($ao['name'], '.'));
+              break;  
+            }        
+          }
+        } else if (is_dir(DIR_FS_CATALOG . 'addons/' . $addon->getAddonCode() . '/modules/shipping/')) {
+          $lC_DirectoryListing = new lC_DirectoryListing(DIR_FS_CATALOG . 'addons/' . $addon->getAddonCode() . '/modules/shipping/');
+          $lC_DirectoryListing->setCheckExtension('php');
+
+          foreach ( $lC_DirectoryListing->getFiles() as $ao ) { 
+            if (isset($ao['name'])) {
+              $code = substr($ao['name'], 0, strpos($ao['name'], '.'));
+              break;  
+            }        
+          }
         }      
 
         $Qdel = $lC_Database->query('delete from :table_templates_boxes where code = :code and modules_group = :modules_group');

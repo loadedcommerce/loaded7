@@ -12,14 +12,11 @@ global $lC_Template, $lC_Language;
 ?>
 <script>
 $(document).ready(function() {
-  
-  var sel = '<?php echo $_GET['type']; ?>';
-  if (sel != '') {
-    if (sel == 'featured') showAddonType('1', 'Featured');   
-    if (sel == 'payment') showAddonType('2', 'Payment');   
-    if (sel == 'shipping') showAddonType('3', 'Shipping');   
+  var type = '<?php echo $_GET['type']; ?>';
+  if (type != '') {
+    showAddonType(type);
   } else { 
-    showAddonType('1', 'Featured'); 
+    showAddonType('Featured'); 
   }
   $(this).scrollTop(0); 
 });
@@ -27,17 +24,17 @@ $(document).ready(function() {
 $('input[name=sortby]').click(function() {
   var type = $('.store-type-selected').closest('li').attr('onclick');
   var atype = type.substring(type.indexOf("('")+1, type.indexOf("')")).replace(/'/gi,'').replace(/ /gi,'').split(",");
-  showAddonType(atype[0], atype[1]);
+  showAddonType(atype[1]);
 });
 
-function showAddonType(id, text) {
+function showAddonType(type) {
   
   var filter = $('input[name=sortby]:radio:checked').val();
-  var dataTableDataURL = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&aid=AID&action=getAll&type=TYPE&media=MEDIA&filter=FILTER'); ?>';
+  var dataTableDataURL = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=getAll&type=TYPE&media=MEDIA&filter=FILTER'); ?>';
   oTable = $('#dataTable').dataTable({
       "bProcessing": true,
       "bServerSide": true,
-      "sAjaxSource": dataTableDataURL.replace('AID', parseInt(id)).replace('TYPE', text).replace('MEDIA', $.template.mediaQuery.name).replace('FILTER', filter),
+      "sAjaxSource": dataTableDataURL.replace('TYPE', type).replace('MEDIA', $.template.mediaQuery.name).replace('FILTER', filter),
       "bPaginate": false,
       "bLengthChange": false,
       "bFilter": false,
@@ -51,13 +48,13 @@ function showAddonType(id, text) {
   });  
   oTable.responsiveTable();  
   $('#dataTable thead').remove();
-  $('#cfgTitleText').html(text + ' Add Ons'); 
+  $('#cfgTitleText').html(type + ' Add Ons'); 
   $('#dataTable_wrapper').removeClass('dataTables_wrapper');
   $(".unstyled-list a").removeClass("store-type-selected");   
 
   if ($.template.mediaQuery.isSmallerThan('tablet-portrait')) {
   } else {
-    $("#menuLink" + id).addClass('store-type-selected');
+   // $("#menuLink" + id).addClass('store-type-selected');
   }
 
   setTimeout('updateWindowSize()', 50);
