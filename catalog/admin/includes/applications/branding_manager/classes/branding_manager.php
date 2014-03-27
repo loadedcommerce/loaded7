@@ -108,6 +108,7 @@ class lC_Branding_manager_Admin {
     $QbrandingData->bindValue(':social_google_plus', $data['social_google_plus']);
     $QbrandingData->bindValue(':social_youtube', $data['social_youtube']);
     $QbrandingData->bindValue(':social_linkedin', $data['social_linkedin']);
+    $QbrandingData->bindValue(':custom_css', $data['custom_css']);
     $QbrandingData->bindValue(':language_id', $language_id);
     $QbrandingData->execute();
 

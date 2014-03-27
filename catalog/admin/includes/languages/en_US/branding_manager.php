@@ -31,6 +31,7 @@ field_google_plus = Google+:
 field_youtube = YouTube:
 field_linkedin = LinkedIn:
 field_home_page_text = Home Page HTML Content:
+field_customcss_text = Custom CSS Code:
 
 info_bubble_branding_manager_logo = Catalog Logo image <br>Allowed Extensions: jpg, jpeg, png, gif
 info_bubble_site_name = This is the name of your site. This entry will show the same for all languages, it is not a multi-language setting.
@@ -57,6 +58,7 @@ info_bubble_youtube = This is your YouTube url. This is not a multi-language set
 info_bubble_linkedin = This is your LinkedIn url. This is not a multi-language setting.
 info_bubble_footer = This is the text/code for your site footer area. It can include text, html, javascript or any non-dynaimcally generated code. This is a multi-language setting.
 info_bubble_home_page = This is the text/code for your site home page. It can include text, html.
+info_bubble_customcss = You can add new, modify CSS classes by adding CSS code.
 
 tab_header = Header
 tab_company_info = Company Info 
@@ -64,6 +66,7 @@ tab_seo = SEO
 tab_footer_text = Footer Text
 tab_social_links = Social Links 
 tab_home_page = Home Page
+tab_customcss_text = Custom CSS
  
 text_drag_drop_to_replace = Drag & Drop or&nbsp;
 text_content_not_installed_message = This content is only displayed when the Template Content Module "Content on Main Page" is installed.<br>Go to Settings -> Setup -> Template Modules -> <a href="index.php?templates_modules&set=content">Content on Main Page</a> to install this module. If it is not installed Install it.<br>Then go to Settings -> Setup -> Template Modules Layout -> <a href="index.php?templates_modules_layout&set=content">Content on Main Page</a> to configure the page(s) and placement for your site.
