@@ -862,6 +862,8 @@ class lC_LocalUpgrader extends lC_Upgrader {
         $lcgidQry = $source_db->query("SELECT MIN(customers_group_id) AS customers_group_id FROM customers_groups");
         $lcgidQry->execute();
         
+        $customers_group_id = ($lcgidQry->numberOfRows() > 0) ? $lcgidQry->value('customers_group_id') : 1;
+        
         if ($product['products_price1'] > 0) {
           $tp1Qry = $target_db->query('INSERT INTO :table_products_pricing (products_id,
                                                                             group_id,
@@ -876,7 +878,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
                                                                     
           $tp1Qry->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
           $tp1Qry->bindInt(':products_id'             , $product['products_id']);
-          $tp1Qry->bindInt(':group_id'                , $lcgidQry->value('customers_group_id'));
+          $tp1Qry->bindInt(':group_id'                , $customers_group_id);
           $tp1Qry->bindInt(':tax_class_id'            , $product['products_tax_class_id']);
           $tp1Qry->bindInt(':qty_break'               , $product['products_price1_qty']);
           $tp1Qry->bindFloat(':price_break'           , $product['products_price1']);
@@ -898,7 +900,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
                                                                     
           $tp2Qry->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
           $tp2Qry->bindInt(':products_id'             , $product['products_id']);
-          $tp2Qry->bindInt(':group_id'                , $lcgidQry->value('customers_group_id'));
+          $tp2Qry->bindInt(':group_id'                , $customers_group_id);
           $tp2Qry->bindInt(':tax_class_id'            , $product['products_tax_class_id']);
           $tp2Qry->bindInt(':qty_break'               , $product['products_price2_qty']);
           $tp2Qry->bindFloat(':price_break'           , $product['products_price2']);
@@ -920,7 +922,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
                                                                     
           $tp3Qry->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
           $tp3Qry->bindInt(':products_id'             , $product['products_id']);
-          $tp3Qry->bindInt(':group_id'                , $lcgidQry->value('customers_group_id'));
+          $tp3Qry->bindInt(':group_id'                , $customers_group_id);
           $tp3Qry->bindInt(':tax_class_id'            , $product['products_tax_class_id']);
           $tp3Qry->bindInt(':qty_break'               , $product['products_price3_qty']);
           $tp3Qry->bindFloat(':price_break'           , $product['products_price3']);
@@ -942,7 +944,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
                                                                     
           $tp4Qry->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
           $tp4Qry->bindInt(':products_id'             , $product['products_id']);
-          $tp4Qry->bindInt(':group_id'                , $lcgidQry->value('customers_group_id'));
+          $tp4Qry->bindInt(':group_id'                , $customers_group_id);
           $tp4Qry->bindInt(':tax_class_id'            , $product['products_tax_class_id']);
           $tp4Qry->bindInt(':qty_break'               , $product['products_price4_qty']);
           $tp4Qry->bindFloat(':price_break'           , $product['products_price4']);
@@ -964,7 +966,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
                                                                     
           $tp5Qry->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
           $tp5Qry->bindInt(':products_id'             , $product['products_id']);
-          $tp5Qry->bindInt(':group_id'                , $lcgidQry->value('customers_group_id'));
+          $tp5Qry->bindInt(':group_id'                , $customers_group_id);
           $tp5Qry->bindInt(':tax_class_id'            , $product['products_tax_class_id']);
           $tp5Qry->bindInt(':qty_break'               , $product['products_price5_qty']);
           $tp5Qry->bindFloat(':price_break'           , $product['products_price5']);
@@ -986,7 +988,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
                                                                     
           $tp6Qry->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
           $tp6Qry->bindInt(':products_id'             , $product['products_id']);
-          $tp6Qry->bindInt(':group_id'                , $lcgidQry->value('customers_group_id'));
+          $tp6Qry->bindInt(':group_id'                , $customers_group_id);
           $tp6Qry->bindInt(':tax_class_id'            , $product['products_tax_class_id']);
           $tp6Qry->bindInt(':qty_break'               , $product['products_price6_qty']);
           $tp6Qry->bindFloat(':price_break'           , $product['products_price6']);
@@ -1008,7 +1010,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
                                                                     
           $tp7Qry->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
           $tp7Qry->bindInt(':products_id'             , $product['products_id']);
-          $tp7Qry->bindInt(':group_id'                , $lcgidQry->value('customers_group_id'));
+          $tp7Qry->bindInt(':group_id'                , $customers_group_id);
           $tp7Qry->bindInt(':tax_class_id'            , $product['products_tax_class_id']);
           $tp7Qry->bindInt(':qty_break'               , $product['products_price7_qty']);
           $tp7Qry->bindFloat(':price_break'           , $product['products_price7']);
@@ -1030,7 +1032,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
                                                                     
           $tp8Qry->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
           $tp8Qry->bindInt(':products_id'             , $product['products_id']);
-          $tp8Qry->bindInt(':group_id'                , $lcgidQry->value('customers_group_id'));
+          $tp8Qry->bindInt(':group_id'                , $customers_group_id);
           $tp8Qry->bindInt(':tax_class_id'            , $product['products_tax_class_id']);
           $tp8Qry->bindInt(':qty_break'               , $product['products_price8_qty']);
           $tp8Qry->bindFloat(':price_break'           , $product['products_price8']);
@@ -1052,7 +1054,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
                                                                     
           $tp9Qry->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
           $tp9Qry->bindInt(':products_id'             , $product['products_id']);
-          $tp9Qry->bindInt(':group_id'                , $lcgidQry->value('customers_group_id'));
+          $tp9Qry->bindInt(':group_id'                , $customers_group_id);
           $tp9Qry->bindInt(':tax_class_id'            , $product['products_tax_class_id']);
           $tp9Qry->bindInt(':qty_break'               , $product['products_price9_qty']);
           $tp9Qry->bindFloat(':price_break'           , $product['products_price9']);
@@ -1074,7 +1076,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
                                                                     
           $tp10Qry->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
           $tp10Qry->bindInt(':products_id'             , $product['products_id']);
-          $tp10Qry->bindInt(':group_id'                , $lcgidQry->value('customers_group_id'));
+          $tp10Qry->bindInt(':group_id'                , $customers_group_id);
           $tp10Qry->bindInt(':tax_class_id'            , $product['products_tax_class_id']);
           $tp10Qry->bindInt(':qty_break'               , $product['products_price10_qty']);
           $tp10Qry->bindFloat(':price_break'           , $product['products_price10']);
@@ -1096,7 +1098,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
                                                                     
           $tp11Qry->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
           $tp11Qry->bindInt(':products_id'             , $product['products_id']);
-          $tp11Qry->bindInt(':group_id'                , $lcgidQry->value('customers_group_id'));
+          $tp11Qry->bindInt(':group_id'                , $customers_group_id);
           $tp11Qry->bindInt(':tax_class_id'            , $product['products_tax_class_id']);
           $tp11Qry->bindInt(':qty_break'               , $product['products_price11_qty']);
           $tp11Qry->bindFloat(':price_break'           , $product['products_price11']);
@@ -2745,7 +2747,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
       while ($sQry->next()) {
         $customer  = array(
                              'customers_id'                 => $sQry->value($map['customers_id'])
-                           , 'customers_group_id'           => $sQry->value($map['customers_group_id'])
+                           , 'customers_group_id'           => ($sQry->value($map['customers_group_id']) != null) ? $sQry->value($map['customers_group_id']) : 1
                            , 'customers_gender'             => $sQry->value($map['customers_gender'])
                            , 'customers_firstname'          => $sQry->value($map['customers_firstname'])
                            , 'customers_lastname'           => $sQry->value($map['customers_lastname'])
@@ -4278,9 +4280,9 @@ class lC_LocalUpgrader extends lC_Upgrader {
           $module = 'text_field';
           $text_field_data[] = array('products_id'                 => $asoQry->value('products_id'),
                                      'products_variants_groups_id' => $sQry->value('products_options_text_id'),
-                                     'title'                       => $sQry->value('products_options_instruct'), 
+                                     'title'                       => $sQry->value('products_options_name'), 
                                      'sort_order'                  => $asoQry->value('products_options_sort_order') 
-                                     );
+                                     ); 
         } else if ($otQry->value('options_type') == '2') { 
           $module = 'radio_buttons';
         } else if ($otQry->value('options_type') == '3') { 
@@ -4291,7 +4293,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
           $module = 'text_field';
           $text_field_data[] = array('products_id'                 => $asoQry->value('products_id'),
                                      'products_variants_groups_id' => $sQry->value('products_options_text_id'),
-                                     'title'                       => $sQry->value('products_options_instruct'), 
+                                     'title'                       => $sQry->value('products_options_name'), 
                                      'sort_order'                  => $asoQry->value('products_options_sort_order') 
                                      );
         // no support for file upload yet even for conversion
@@ -4410,6 +4412,8 @@ class lC_LocalUpgrader extends lC_Upgrader {
     // get the lowest customers group id from the target db
     $tQry = $target_db->query('SELECT MIN(customers_group_id) AS customers_group_id FROM customers_groups');
     $tQry->execute();
+    
+    $customers_group_id = ($tQry->numberOfRows() > 0) ? $tQry->value('customers_group_id') : 1;
       
     if ($sQry->numberOfRows() > 0) { 
       $cnt = 0;
@@ -4417,11 +4421,9 @@ class lC_LocalUpgrader extends lC_Upgrader {
         
         if ($sQry->valueInt('products_id') == 0) continue;
       
-        $options_id = $sQry->valueInt('options_id'); 
-        
         $option  = array(
                            'id'          => ''
-                         , 'options_id'  => $options_id
+                         , 'options_id'  => $sQry->valueInt('options_id')
                          , 'products_id' => $sQry->valueInt('products_id')
                          , 'sort_order'  => $sQry->valueInt('sort_order')
                          , 'status'      => 1
@@ -4434,9 +4436,9 @@ class lC_LocalUpgrader extends lC_Upgrader {
         $value  = array(
                           'id'                 => ''
                         , 'products_id'        => $sQry->valueInt('products_id')
-                        , 'customers_group_id' => $tQry->valueInt('customers_group_id')
+                        , 'customers_group_id' => $customers_group_id
                         , 'values_id'          => $sQry->valueInt('options_values_id')
-                        , 'options_id'         => $options_id
+                        , 'options_id'         => $sQry->valueInt('options_id')
                         , 'price_modifier'     => $sQry->valueDecimal('options_values_price') * $prefix
                          ); 
                          
@@ -4495,18 +4497,19 @@ class lC_LocalUpgrader extends lC_Upgrader {
 
     // END LOAD PRODUCTS SIMPLE OPTIONS TO TARGET DB
     
-    // LOAD PRODUCTS SIMPLE VALUES TO TARGET DB
+    // LOAD PRODUCTS SIMPLE OPTIONS VALUES TO TARGET DB
       
     $iCnt = 0;
     foreach ($simple_values as $value) {
       
-      /*$Qchk = $target_db->query('SELECT id from :products_simple_options_values WHERE options_id = :options_id and values_id = :values_id limit 1');
+      $Qchk = $target_db->query('SELECT id from :products_simple_options_values WHERE products_id = :products_id and options_id = :options_id and values_id = :values_id limit 1');
+      $Qchk->bindInt  (':products_id' , $value['products_id']);
       $Qchk->bindInt  (':options_id' , $value['options_id']);
       $Qchk->bindInt  (':values_id', $value['values_id']);
       $Qchk->bindTable(':products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
       $Qchk->execute();
       
-      if ($Qchk->numberOfRows() == 0) {*/
+      if ($Qchk->numberOfRows() == 0) {
         
         // get products_id from products_simple_options
         /*$Qso = $target_db->query('SELECT products_id from :products_simple_options WHERE options_id = :options_id and products_id = :products_id limit 1');
@@ -4541,12 +4544,16 @@ class lC_LocalUpgrader extends lC_Upgrader {
           return false;
         }
         $iCnt++;
-      //}
+      }
 
-      //$Qchk->freeResult();
+      $Qchk->freeResult();
     }
     
-    // END LOAD PRODUCTS SIMPLE VALUES TO TARGET DB
+    //$clean = $target_db->query('ALTER IGNORE TABLE :products_simple_options_values ADD UNIQUE INDEX (products_id, values_id, options_id)');
+    //$clean->bindTable(':products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
+    //$clean->execute();
+    
+    // END LOAD PRODUCTS SIMPLE OPTIONS VALUES TO TARGET DB
     
     // ########## Added for text_field options
     
