@@ -840,24 +840,26 @@ class lC_Products_Admin {
           }  
           
           // add the new option values
-          foreach ( $data['simple_options_entry_price_modifier'] as $customers_group_id => $options ) {
-            foreach ( $options as $options_id => $option_value ) {
-              if ($options_id == $group_id) {
-                foreach ( $option_value as $values_id => $price_modifier ) {
-                  $Qoptval = $lC_Database->query('insert into :table_products_simple_options_values (products_id, values_id, options_id, customers_group_id, price_modifier) values (:products_id, :values_id, :options_id, :customers_group_id, :price_modifier)');
-                  $Qoptval->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
-                  $Qoptval->bindInt(':products_id', $products_id);
-                  $Qoptval->bindInt(':values_id', $values_id);
-                  $Qoptval->bindInt(':options_id', $options_id);
-                  $Qoptval->bindInt(':customers_group_id', $customers_group_id);
-                  $Qoptval->bindFloat(':price_modifier', (float)$price_modifier);
-                  $Qoptval->setLogging($_SESSION['module'], $products_id);
-                  $Qoptval->execute();
+          if (is_array($data['simple_options_entry_price_modifier'])) {
+            foreach ( $data['simple_options_entry_price_modifier'] as $customers_group_id => $options ) {
+              foreach ( $options as $options_id => $option_value ) {
+                if ($options_id == $group_id) {
+                  foreach ( $option_value as $values_id => $price_modifier ) {
+                    $Qoptval = $lC_Database->query('insert into :table_products_simple_options_values (products_id, values_id, options_id, customers_group_id, price_modifier) values (:products_id, :values_id, :options_id, :customers_group_id, :price_modifier)');
+                    $Qoptval->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
+                    $Qoptval->bindInt(':products_id', $products_id);
+                    $Qoptval->bindInt(':values_id', $values_id);
+                    $Qoptval->bindInt(':options_id', $options_id);
+                    $Qoptval->bindInt(':customers_group_id', $customers_group_id);
+                    $Qoptval->bindFloat(':price_modifier', (float)$price_modifier);
+                    $Qoptval->setLogging($_SESSION['module'], $products_id);
+                    $Qoptval->execute();
 
-                  if ( $lC_Database->isError() ) {
-                    $error = true;
-                    break 4;
-                  }            
+                    if ( $lC_Database->isError() ) {
+                      $error = true;
+                      break 4;
+                    }            
+                  }
                 }
               }
             }
@@ -1638,7 +1640,7 @@ class lC_Products_Admin {
           
           
           $tbody .= '<tr id="tre-' . $so['options_id'] .'">' .
-                    '  <td width="16px" style="cursor:move;"><span class="icon-list icon-grey icon-size2"></span></td>' .
+                    '  <td width="16px" style="cursor:move;" class="dragsort"><span class="icon-list icon-grey icon-size2"></span></td>' .
                     '  <td width="16px" style="cursor:pointer;" onclick="toggleSimpleOptionsRow(\'#drope' . $so['options_id'] . '\');"><span id="drope' . $so['options_id'] . '_span" class="toggle-icon icon-squared-plus icon-grey icon-size2"></span></td>' .
                     '  <td width="40%">' . $so['title'] . '<div class="small-margin-top dropall" id="drope' . $so['options_id'] . '" style="display:none;"><span>' . $items . '</span></div></td>' .
                     '  <td width="30%" class="hide-below-480">' . ucwords(str_replace('_', ' ', $so['module'])) . '</td>' .
@@ -1666,7 +1668,7 @@ class lC_Products_Admin {
   * @return array
   */
   public static function getOptionsPricingContent() {
-    global $lC_Language, $pInfo;
+    global $lC_Language, $pInfo;  
     
     $content = '';
     $groups = lC_Customer_groups_Admin::getAll();
@@ -1676,11 +1678,11 @@ class lC_Products_Admin {
                   '  <div class="with-padding">';
       if (isset($pInfo) && is_array($pInfo->get('simple_options'))) {                  
         $content .= '    <div class="big-text underline" style="padding-bottom:8px;">' . $lC_Language->get('text_simple_options') . '</div>' .
-                    '    <table style="" id="simpleOptionsPricingTable" class="simple-table">' .
-                    '      <tbody id="tbody-' . $value['customers_group_id'] . '">' . self::_getSimpleOptionsPricingTbody($pInfo->get('simple_options'), $value['customers_group_id']) . '</tbody>' .
+                    '    <table class="simple-table simple-options-pricing-table">' .
+                    '      <tbody id="tbody-simple-options-pricing-' . $value['customers_group_id'] . '">' . self::getSimpleOptionsPricingTbody($pInfo->get('simple_options'), $value['customers_group_id']) . '</tbody>' .
                     '    </table>';        
       } else {      
-        $content .= '<table class="simple-table"><tbody id="tbody-' . $value['customers_group_id'] . '"><tr id="no-options-' . $value['customers_group_id'] . '"><td>' . $lC_Language->get('text_no_options_defined') . '</td></tr></tbody></table>'; 
+        $content .= '<table class="simple-table simple-options-pricing-table"><tbody id="tbody-options-pricing-' . $value['customers_group_id'] . '"><tr id="no-options-' . $value['customers_group_id'] . '"><td>' . $lC_Language->get('text_no_options_defined') . '</td></tr></tbody></table>'; 
       }
       $content .= '  </div>' .
                   '</dd>';  
@@ -1718,7 +1720,7 @@ class lC_Products_Admin {
   * @access public
   * @return string
   */  
-  private static function _getSimpleOptionsPricingTbody($options, $customers_group_id) {
+  public static function getSimpleOptionsPricingTbody($options, $customers_group_id) {
     global $lC_Currencies, $pInfo;
     
     if ($customers_group_id == '') return false;
@@ -1730,11 +1732,12 @@ class lC_Products_Admin {
     $tbody = '';  
     if (isset($options) && !empty($options)) {
       foreach ($options as $key => $so) {
+
         if ((isset($so['title']) && $so['title'] != NULL)) {
           $items = '';
           if (is_array($options['values'])) {
             foreach ($options['values'] as $k => $v) {
-              if ($v['options_id'] == $so['options_id'] && $v['customers_group_id'] == $customers_group_id && $v['products_id'] == $pInfo->get('products_id')) {
+              if ($v['options_id'] == $so['options_id'] && $v['products_id'] == $pInfo->get('products_id')) {
                 if ($customers_group_id == DEFAULT_CUSTOMERS_GROUP_ID) {
                   $mod = (isset($v['price_modifier']) && !empty($v['price_modifier'])) ? number_format($v['price_modifier'], DECIMAL_PLACES) : '0.00';
                 } else {
@@ -1755,7 +1758,7 @@ class lC_Products_Admin {
             }
           }
                    
-          $tbody .= '<tr id="trp-' . $so['options_id'] . '" class="trp-' . $so['options_id'] . '"><td width="100px" class="strong">' . $so['title'] . '</td></tr>' . $items;
+          $tbody .= '<tr id="trp-' . $customers_group_id . '-' . $so['options_id'] . '" class="trp-' . $so['options_id'] . '"><td width="100px" class="strong">' . $so['title'] . '</td></tr>' . $items;
 
         }
       }

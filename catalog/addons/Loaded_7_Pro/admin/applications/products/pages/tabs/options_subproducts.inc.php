@@ -10,9 +10,6 @@
 */
 global $lC_Language, $pInfo; 
 ?>
-<style>
-#comboOptionsTbody input { position:relative; z-index:20000; }
-</style>
 <div id="multiTypeControlButtons" class="button-group small-margin-top">
   <label id="lbl-radio-1" for="type_radio_1" class="button green-active">
     <input type="radio" onclick="toggleMultiSkuTypeRadioGroup(this.value);" name="multi_sku_type_radio_group" id="type_radio_1" value="1" />
@@ -25,7 +22,7 @@ global $lC_Language, $pInfo;
 </div>  
          
 <div id="comboOptionsContainer" class="margin-top">  
-	<span class="float-right" style="margin:-46px 0px 4px 0;"><a class="button icon-plus-round green-gradient compact" href="javascript:void(0)" onclick="addComboOption();"><?php echo $lC_Language->get('button_setup'); ?></a></span>
+	<span class="float-right" style="margin:-46px 0px 4px 0;"><a class="button icon-plus-round green-gradient compact" href="javascript:void(0)" onclick="addComboOption();"><?php echo $lC_Language->get('button_setup'); ?></a><a id="button-revert" class="button icon-back-in-time red-gradient compact small-margin-left with-tooltip" style="display:none;" title="<?php echo $lC_Language->get('button_revert_changes'); ?>" href="javascript:void(0)" onclick="revertComboOptionsSetup();"></a></span>
 	<table width="100%" style="margin-top:-8px;" id="comboOptionsTable" class="simple-table">
 	  <thead>
 	    <tr>
@@ -41,7 +38,7 @@ global $lC_Language, $pInfo;
 	      <th scope="col" class="align-right" width="50px"><?php echo $lC_Language->get('table_heading_action'); ?></th>
 	    </tr>
 	  </thead>
-	  <tbody id="comboOptionsTbody" class="sorted_table"><?php echo ((isset($pInfo)) ? lC_Products_Admin_Pro::getComboOptionsContent($pInfo->get('variants')) : null); ?></tbody>
+	  <tbody id="comboOptionsTbody" class="sorted_combo_table"><?php echo ((isset($pInfo)) ? lC_Products_Admin_Pro::getComboOptionsContent($pInfo->get('variants')) : null); ?></tbody>
 	</table>       	
 </div>
 
@@ -59,11 +56,37 @@ global $lC_Language, $pInfo;
         <th scope="col" class="align-right" width="50px"><?php echo $lC_Language->get('table_heading_action'); ?></th>
       </tr>
     </thead>      
-    <tbody id="subProductsTbody" class=""></tbody>
+    <tbody id="subProductsTbody"></tbody>
   </table>          
 </div>       
 <script>
-$(document).ready(function() {
+$(document).ready(function() {  
+  
+  $('.sorted_combo_table').sortable({  
+    containerSelector: 'tbody',
+    itemSelector: 'tr',
+    handle: '.dragsort',
+    placeholder: '<tr class="placeholder" />',
+    tolerance: '1',
+    onDragStart: function (item, group, _super) {
+      item.css({
+        height: item.height(),
+        width: item.width()
+      });
+      item.addClass("dragged");
+      $('body').addClass('dragging');
+    },
+    onDrop: function  (item, container, _super) { 
+      item.removeClass("dragged");
+      $("body").removeClass("dragging");
+      _resortComboOptions();
+    },
+    pullPlaceholder: true,
+    onMouseDown: function($item, event, _super) {
+      event.preventDefault()
+    }    
+  });  
+  
   var edit = '<?php echo (isset($pInfo)) ? '1' : '0'; ?>';
   var has_subproducts = '<?php echo (isset($pInfo) && $pInfo->get('has_subproducts') == '1') ? '1' : '0'; ?>';
   var has_variants = '<?php echo (isset($pInfo) && $pInfo->get('has_children') == '1') ? '1' : '0'; ?>';
@@ -90,6 +113,11 @@ $(document).ready(function() {
   addSubProductsRow(false, false, false);  
   $("#subProductsTable tr:last-child td:first-child").find('input').focus();  
 }); 
+
+function revertComboOptionsSetup() {
+  $('.new-option').remove();
+  $('#button-revert').hide();  
+}
 
 function getSubProductsRows() {
   var subproducts = <?php echo (isset($pInfo)) ? json_encode($pInfo->get('subproducts')) : json_encode(array()); ?>;
@@ -170,7 +198,7 @@ function addSubProductsRow(include_price_row, e, key) {
                  '  </td>'+
                  '</tr>';                    
                  
-      $('#tbody-' + val.customers_group_id).append(prow);
+      $('#tbody-subproducts-pricing-' + val.customers_group_id).append(prow);
     });
   }
 }   
@@ -234,14 +262,22 @@ function removeComboOptionsRow(id) {
 }
 
 function toggleComboOptionsStatus(id) {
-	var current = $('#variants_status_' + id).val();
-  if (current == '1') {
-    $('#variants_status_' + id).val('0');
-    $('#variants_status_span_' + id).removeClass('icon-green icon-tick').addClass('icon-red icon-cross');
+  if (id == 'on') {
+    $('.variants-status').removeClass('icon-cross').removeClass('icon-red').addClass('icon-tick').addClass('icon-green');
+    $('.variants-status-input').val("1");
+  } else if (id == 'off') { 
+    $('.variants-status').removeClass('icon-tick').removeClass('icon-green').addClass('icon-cross').addClass('icon-red');
+    $('.variants-status-input').val("0");    
   } else {
-    $('#variants_status_' + id).val('1');
-    $('#variants_status_span_' + id).removeClass('icon-red icon-cross').addClass('icon-green icon-tick');
-  } 
+	  var current = $('#variants_status_' + id).val();
+    if (current == '1') {
+      $('#variants_status_' + id).val('0');
+      $('#variants_status_span_' + id).removeClass('icon-green icon-tick').addClass('icon-red icon-cross');
+    } else {
+      $('#variants_status_' + id).val('1');
+      $('#variants_status_span_' + id).removeClass('icon-red icon-cross').addClass('icon-green icon-tick');
+    } 
+  }
 }  
 
 function toggleComboOptionsFeatured(id) {

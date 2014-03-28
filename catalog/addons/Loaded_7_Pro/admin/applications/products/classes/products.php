@@ -27,11 +27,6 @@ class lC_Products_Admin_Pro extends lC_Products_Admin {
   public static function save($id = null, $data) {
     global $lC_Database, $lC_Language;	
 		
-echo "<pre>";
-print_r($data);
-echo "</pre>";
-die('77');
-    
     $error = false;
     
     $products_id = parent::save($id, $data);
@@ -224,11 +219,11 @@ die('77');
 
       if ( isset($data['variants']) && !empty($data['variants']) ) {
         foreach ( $data['variants'] as $key => $combo ) {
-          if ( isset($data['variants'][$key]['product_id']) ) {
+          if (isset($data['variants'][$key]['product_id']) && $data['variants'][$key]['product_id'] != 0) {
             $Qsubproduct = $lC_Database->query('update :table_products set products_quantity = :products_quantity, products_cost = :products_cost, products_price = :products_price, products_msrp = :products_msrp, products_model = :products_model, products_sku = :products_sku, products_weight = :products_weight, products_weight_class = :products_weight_class, products_status = :products_status, products_tax_class_id = :products_tax_class_id where products_id = :products_id');
             $Qsubproduct->bindInt(':products_id', $data['variants'][$key]['product_id']);
           } else {
-            $Qsubproduct = $lC_Database->query('insert into :table_products (parent_id, products_quantity, products_cost, products_price, products_msrp, products_model, products_sku, products_weight, products_weight_class, products_status, products_tax_class_id, products_date_added) values (:parent_id, :products_quantity, :products_price, :products_model, :products_sku, :products_weight, :products_weight_class, :products_status, :products_tax_class_id, :products_date_added)');
+            $Qsubproduct = $lC_Database->query('insert into :table_products (parent_id, products_quantity, products_cost, products_price, products_msrp, products_model, products_sku, products_weight, products_weight_class, products_status, products_tax_class_id, products_date_added) values (:parent_id, :products_quantity, :products_cost, :products_price, :products_msrp, :products_model, :products_sku, :products_weight, :products_weight_class, :products_status, :products_tax_class_id, :products_date_added)');
             $Qsubproduct->bindInt(':parent_id', $products_id);
             $Qsubproduct->bindRaw(':products_date_added', 'now()');
           }
@@ -244,14 +239,12 @@ die('77');
           $Qsubproduct->bindValue(':products_sku', $data['variants'][$key]['sku']);
           $Qsubproduct->bindFloat(':products_weight', $data['variants'][$key]['weight']);
           $Qsubproduct->bindInt(':products_weight_class', $data['weight_class']);
-          $Qsubproduct->bindInt(':products_status', (isset($data['variants'][$key]['status']) && $data['variants'][$key]['status'] == 1) ? 1 : 0);
+          $Qsubproduct->bindInt(':products_status', $data['variants'][$key]['status']);
           $Qsubproduct->bindInt(':products_tax_class_id', $data['tax_class_id']);
           $Qsubproduct->setLogging($_SESSION['module'], $products_id);
           $Qsubproduct->execute();
-
-if ($lC_Database->isError()) die($lC_Database->getError());
-
-          if ( isset($data['variants'][$key]['product_id'])) {
+          
+          if ( isset($data['variants'][$key]['product_id']) && $data['variants'][$key]['product_id'] != '0') {
             $subproduct_id = $data['variants'][$key]['product_id'];
           } else {
             $Qnext = $lC_Database->query('select max(products_id) as maxID from :table_products');
@@ -260,12 +253,11 @@ if ($lC_Database->isError()) die($lC_Database->getError());
             $subproduct_id = $Qnext->valueInt('maxID');
             $Qnext->freeResult();
           }
-if ($lC_Database->isError()) die($lC_Database->getError());
 
           if ( $data['variants'][$key]['default_combo'] == 1) {
             $default_variant_combo = $subproduct_id;
           }
-
+      
           foreach ( $data['variants'][$key]['values'] as $values_id => $values_text ) {
             
             $variants_array[$subproduct_id][] = $values_id;
@@ -277,16 +269,15 @@ if ($lC_Database->isError()) die($lC_Database->getError());
             $Qcheck->bindInt(':products_id', $subproduct_id);
             $Qcheck->bindInt(':products_variants_values_id', $values_id);
             $Qcheck->execute();
-if ($lC_Database->isError()) die($lC_Database->getError());
 
             if ( $Qcheck->numberOfRows() < 1 ) {
+        
               $Qvcombo = $lC_Database->query('insert into :table_products_variants (products_id, products_variants_values_id) values (:products_id, :products_variants_values_id)');
               $Qvcombo->bindTable(':table_products_variants', TABLE_PRODUCTS_VARIANTS);
               $Qvcombo->bindInt(':products_id', $subproduct_id);
               $Qvcombo->bindInt(':products_variants_values_id', $values_id);
               $Qvcombo->setLogging($_SESSION['module'], $products_id);
               $Qvcombo->execute();
-if ($lC_Database->isError()) die($lC_Database->getError());
 
               if ( $lC_Database->isError() ) {
                 $error = true;
@@ -294,9 +285,10 @@ if ($lC_Database->isError()) die($lC_Database->getError());
               }
             }
           }
+         
         }
       }
-
+   
       if ( $error === false ) {
         if ( empty($variants_array) ) {
           $Qcheck = $lC_Database->query('select pv.* from :table_products p, :table_products_variants pv where p.parent_id = :parent_id and p.products_id = pv.products_id');
@@ -304,20 +296,17 @@ if ($lC_Database->isError()) die($lC_Database->getError());
           $Qcheck->bindTable(':table_products_variants', TABLE_PRODUCTS_VARIANTS);
           $Qcheck->bindInt(':parent_id', $products_id);
           $Qcheck->execute();
-if ($lC_Database->isError()) die($lC_Database->getError());
 
           while ( $Qcheck->next() ) {
             $Qdel = $lC_Database->query('delete from :table_products_variants where products_id = :products_id');
             $Qdel->bindTable(':table_products_variants', TABLE_PRODUCTS_VARIANTS);
             $Qdel->bindInt(':products_id', $Qcheck->valueInt('products_id'));
             $Qdel->execute();
-if ($lC_Database->isError()) die($lC_Database->getError());
 
             $Qdel = $lC_Database->query('delete from :table_products where products_id = :products_id');
             $Qdel->bindTable(':table_products', TABLE_PRODUCTS);
             $Qdel->bindInt(':products_id', $Qcheck->valueInt('products_id'));
             $Qdel->execute();
-if ($lC_Database->isError()) die($lC_Database->getError());
             
           }
         } else {
@@ -327,7 +316,6 @@ if ($lC_Database->isError()) die($lC_Database->getError());
           $Qcheck->bindInt(':parent_id', $products_id);
           $Qcheck->bindRaw(':products_id', implode('", "', array_keys($variants_array)));
           $Qcheck->execute();
-if ($lC_Database->isError()) die($lC_Database->getError());
 
           while ( $Qcheck->next() ) {
             $Qdel = $lC_Database->query('delete from :table_products_variants where products_id = :products_id and products_variants_values_id = :products_variants_values_id');
@@ -335,13 +323,11 @@ if ($lC_Database->isError()) die($lC_Database->getError());
             $Qdel->bindInt(':products_id', $Qcheck->valueInt('products_id'));
             $Qdel->bindInt(':products_variants_values_id', $Qcheck->valueInt('products_variants_values_id'));
             $Qdel->execute();
-if ($lC_Database->isError()) die($lC_Database->getError());
 
             $Qdel = $lC_Database->query('delete from :table_products where products_id = :products_id');
             $Qdel->bindTable(':table_products', TABLE_PRODUCTS);
             $Qdel->bindInt(':products_id', $Qcheck->valueInt('products_id'));
             $Qdel->execute();
-if ($lC_Database->isError()) die($lC_Database->getError());
             
           }
 
@@ -354,15 +340,14 @@ if ($lC_Database->isError()) die($lC_Database->getError());
           }
         }
       }
-if ($lC_Database->isError()) die($lC_Database->getError());
 
       $Qupdate = $lC_Database->query('update :table_products set has_children = :has_children where products_id = :products_id');
       $Qupdate->bindTable(':table_products', TABLE_PRODUCTS);
       $Qupdate->bindInt(':has_children', (empty($variants_array)) ? 0 : 1);
       $Qupdate->bindInt(':products_id', $products_id);
       $Qupdate->execute();
+      
     }  
-if ($lC_Database->isError()) die($lC_Database->getError());
     
     if ( $error === false ) {
       $Qupdate = $lC_Database->query('update :table_products_variants set default_combo = :default_combo where products_id in (":products_id")');
@@ -370,7 +355,6 @@ if ($lC_Database->isError()) die($lC_Database->getError());
       $Qupdate->bindInt(':default_combo', 0);
       $Qupdate->bindRaw(':products_id', implode('", "', array_keys($variants_array)));
       $Qupdate->execute();
-if ($lC_Database->isError()) die($lC_Database->getError());
 
       if ( is_numeric($default_variant_combo) ) {
         $Qupdate = $lC_Database->query('update :table_products_variants set default_combo = :default_combo where products_id = :products_id');
@@ -379,10 +363,8 @@ if ($lC_Database->isError()) die($lC_Database->getError());
         $Qupdate->bindInt(':products_id', $default_variant_combo);
         $Qupdate->execute();
       }
-    }      
-if ($lC_Database->isError()) die($lC_Database->getError());
-    
-    
+    }    
+      
   }
  /*
   *  Return the product simple options accordian price listing content
@@ -402,23 +384,29 @@ if ($lC_Database->isError()) die($lC_Database->getError());
                   
       if (isset($pInfo) && is_array($pInfo->get('simple_options'))) {                  
         $content .= '    <div class="big-text underline" style="padding-bottom:8px;">' . $lC_Language->get('text_simple_options') . '</div>' .
-                    '    <table style="" id="simpleOptionsPricingTable" class="simple-table">' .
-                    '      <tbody id="tbody-' . $value['customers_group_id'] . '">' . lC_Products_Admin::_getSimpleOptionsPricingTbody($pInfo->get('simple_options'), $value['customers_group_id']) . '</tbody>' .
+                    '    <table class="simple-table simple-options-pricing-table">' .
+                    '      <tbody id="tbody-simple-options-pricing-' . $value['customers_group_id'] . '">' . lC_Products_Admin::getSimpleOptionsPricingTbody($pInfo->get('simple_options'), $value['customers_group_id']) . '</tbody>' .
                     '    </table>';
                     
-      } else if (isset($pInfo) && $pInfo->get('has_subproducts') == '1') {               
-        $content .= '    <div class="big-text underline" style="padding-bottom:8px;">' . $lC_Language->get('text_sub_products') . '</div>' .
-                    '    <table id="subProductsPricingTable" class="simple-table">' .
-                    '      <tbody id="tbody-' . $value['customers_group_id'] . '">' . lC_Products_Admin_Pro::getSubProductsPricingTbody($pInfo, $value['customers_group_id']) . '</tbody>' .
+      } 
+      
+      if (isset($pInfo) && $pInfo->get('has_subproducts') == '1') {               
+        $content .= '    <div class="big-text underline margin-top" style="padding-bottom:8px;">' . $lC_Language->get('text_sub_products') . '</div>' .
+                    '    <table class="simple-table subproducts-pricing-table">' .
+                    '      <tbody id="tbody-subproducts-pricing-' . $value['customers_group_id'] . '">' . lC_Products_Admin_Pro::getSubProductsPricingTbody($pInfo, $value['customers_group_id']) . '</tbody>' .
                     '    </table>';        
         
-      } else if (isset($pInfo) && $pInfo->get('has_children') == '1') {
-        $content .= '    <div class="big-text underline" style="padding-bottom:8px;">' . $lC_Language->get('text_combo_options') . '</div>' .
-                    '    <table id="comboOptionsPricingTable" class="simple-table">' .
-                    '      <tbody id="tbody-combo-options-' . $value['customers_group_id'] . '">' . lC_Products_Admin_Pro::getComboOptionsPricingTbody($pInfo, $value['customers_group_id']) . '</tbody>' .
+      } 
+      
+      if (isset($pInfo) && $pInfo->get('has_children') == '1') {
+        $content .= '    <div class="big-text underline margin-top" style="padding-bottom:8px;">' . $lC_Language->get('text_combo_options') . '</div>' .
+                    '    <table class="simple-table combo-options-pricing-table">' .
+                    '      <tbody id="tbody-combo-options-pricing-' . $value['customers_group_id'] . '">' . lC_Products_Admin_Pro::getComboOptionsPricingTbody($pInfo, $value['customers_group_id']) . '</tbody>' .
                     '    </table>';         
-      } else {      
-        $content .= '<table class="simple-table"><tbody id="tbody-' . $value['customers_group_id'] . '"><tr id="no-options-' . $value['customers_group_id'] . '"><td>' . $lC_Language->get('text_no_options_defined') . '</td></tr></tbody></table>'; 
+      } 
+      
+      if ( (!isset($pInfo)) || (isset($pInfo) && $pInfo->get('has_subproducts') != '1' && $pInfo->get('has_children') != '1' && !is_array($pInfo->get('simple_options'))) ) {       
+        $content .= '<table class="simple-table no-options-defined"><tbody id="tbody-options-pricing-' . $value['customers_group_id'] . '"><tr id="no-options-' . $value['customers_group_id'] . '"><td>' . $lC_Language->get('text_no_options_defined') . '</td></tr></tbody></table>'; 
       }
                 
       $content .= '  </div>' .
@@ -658,7 +646,7 @@ if ($lC_Database->isError()) die($lC_Database->getError());
           $defaultIcon = (isset($default) && $default == '1') ? '<span id="variants_default_combo_span_' . $cnt .'" class="default-combo-span icon-star icon-size2 icon-orange with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"left"}\' title="' . $lC_Language->get('text_default_selected_combo') . '"></span><input class="default-combo" type="hidden" id="variants_default_combo_' . $cnt .'" name="variants[' . $cnt . '][default_combo]" value="1">' : '<span id="variants_default_combo_span_' . $cnt .'" class="default-combo-span icon-star icon-size2 icon-grey with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"left"}\' title="' . $lC_Language->get('text_set_default_combo') . '"></span><input class="default-combo" type="hidden" id="variants_default_combo_' . $cnt .'" name="variants[' . $cnt . '][default_combo]" value="0">';          
 					          
           $tbody .= '<tr id="trmso-' . $cnt .'"><input type="hidden" name="variants[' . $cnt . '][product_id]" value="' . $product_id . '"><input type="hidden" class="combo-sort" name="variants[' . $cnt .'][sort]" value="' . $sort . '">' . $comboInput .
-                    '  <td width="16px" class="sort-icon" style="cursor:move;"><span class="icon-list icon-grey icon-size2"></span></td>' .
+                    '  <td width="16px" class="sort-icon dragsort" style="cursor:move;"><span class="icon-list icon-grey icon-size2"></span></td>' .
                     '  <td class="option-name" width="25%">' . $combo . '</td>' .
                     '  <td width="16px" style="cursor:pointer;" onclick="toggleComboOptionsFeatured(\'' . $cnt . '\');">' . $defaultIcon . '</td>' .                    
                     '  <td style="white-space:nowrap;">

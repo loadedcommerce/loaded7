@@ -13,6 +13,7 @@ button_add_new_group = Add New Group
 button_add_new_item = Add New Item
 button_add_another_group = Add Another Group to this set
 button_new_row = New Row
+button_revert_changes = Revert Changes
 
 field_name = Name:
 field_complete = Complete
@@ -131,7 +132,7 @@ ms_error_products_categories_required = Please select at least one category rela
 ms_warning_image_processor_not_available = Warning: An image processor is not available. Please install and check the location of ImageMagicks "convert" program in the Configuration -> Configuration -> Program Locations section.
 ms_error_break_point_must_be_higher = The break point must be higher than the previous break point.
 ms_error_break_price_must_be_lower = The price must be lower than the previous price.
-ms_warning_options_set_complete = The options have been created but they are incomplete. The parent product has been set inactive. You can update the status here.  We recommend you continue to the Options tab to complete the data entry.
+ms_warning_options_set_complete = The options have been created but they are incomplete and have been set inactive. You can update the status globally here however we recommend you continue to the Options tab to complete the data entry.
 ms_info_options_set_pricing = Pricing for options is also set on the Pricing tab.
 
 section_general = Content

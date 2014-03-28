@@ -166,7 +166,7 @@ function addComboOption(editRow) {
           
               var symbolLeft = '<?php echo $lC_Currencies->getSymbolLeft(); ?>';
               var decimals = '<?php echo DECIMAL_PLACES; ?>';
-              var statusIcon = '<span id="variants_status_span_' + cnt + '" class="icon-tick icon-size2 icon-green with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"left"}\' title="Set Status"></span><input type="hidden" id="variants_status_' + cnt + '" name="variants[' + cnt + '][status]" value="0">';
+              var statusIcon = '<span id="variants_status_span_' + cnt + '" class="variants-status icon-cross icon-size2 icon-red with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"left"}\' title="Set Status"></span><input type="hidden" class="variants-status-input" id="variants_status_' + cnt + '" name="variants[' + cnt + '][status]" value="0">';
               var defaultIcon = '<span id="variants_default_combo_span_' + cnt + '" class="default-combo-span icon-star icon-size2 icon-grey with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"left"}\' title="<?php echo $lC_Language->get('text_default_selected_combo'); ?>"></span><input class="default-combo" type="hidden" id="variants_default_combo_' + cnt + '" name="variants[' + cnt + '][default_combo]" value="0">';
               
               var weight = (data.use_product_weight == 'on') ? parseFloat(data.products_weight).toFixed(4) : 0.0000;
@@ -174,8 +174,8 @@ function addComboOption(editRow) {
               var quantity = data.set_product_qty;
               var price = (data.use_product_price == 'on') ? parseFloat(data.products_price).toFixed(decimals) : 0.00;
                 
-              tbody += '<tr id="trmso-' + cnt + '"><input type="hidden" name="variants[' + cnt + '][product_id]" value="0"><input type="hidden" name="variants[' + cnt + '][sort]" class="combo-sort" value="">' + comboInput +
-                       '  <td width="16px" class="sort-icon" style="cursor:move;"><span class="icon-list icon-grey icon-size2"></span></td>' +
+              tbody += '<tr id="trmso-' + cnt + '" class="new-option"><input type="hidden" name="variants[' + cnt + '][product_id]" value="0"><input type="hidden" name="variants[' + cnt + '][sort]" class="combo-sort" value="">' + comboInput +
+                       '  <td width="16px" class="sort-icon dragsort" style="cursor:move;"><span class="icon-list icon-grey icon-size2"></span></td>' +
                        '  <td class="option-name" width="25%">' + newText + '<span class="icon-light-up icon-orange mid-margin-left with-tooltip cursor-pointer" title="<?php echo $lC_Language->get('text_new_option_set_unsaved'); ?>"></span></td>' +
                        '  <td width="16px" style="cursor:pointer;" onclick="toggleComboOptionsFeatured(\'' + cnt + '\');">' + defaultIcon + '</td>' +                    
                        '  <td style="white-space:nowrap;">' +
@@ -208,8 +208,8 @@ function addComboOption(editRow) {
              $.each(customerGroups.entries, function(key, val) {
                var customers_group_id = val.customers_group_id;
                var pTbody = '';          
-               pTbody += '<tr class="trpmso-' + cnt + '">' +
-                         '  <td id="name-td-' + cnt + '" class="element">' + newText + '</td>' +
+               pTbody += '<tr class="trpmso-' + cnt + ' new-option">' +
+                         '  <td id="name-td-' + customers_group_id + '-' + cnt + '" class="element">' + newText + '<span class="icon-light-up icon-orange mid-margin-left with-tooltip cursor-pointer" title="<?php echo $lC_Language->get('text_new_option_set_unsaved'); ?>"></span></td>' +
                          '  <td>' +
                          '    <div class="inputs' + ((customers_group_id == defaultGroup) ? '' : ' disabled') + '" style="display:inline; padding:8px 0;">' +
                          '      <span class="mid-margin-left no-margin-right">' + symbolLeft + '</span>' +
@@ -218,7 +218,7 @@ function addComboOption(editRow) {
                          '  </td>' +
                          '</tr>'; 
                          
-               $('#tbody-combo-options-' + customers_group_id).append(pTbody);                         
+               $('#tbody-combo-options-pricing-' + customers_group_id).append(pTbody);                         
              });
             }         
         });                   
@@ -438,6 +438,7 @@ function addComboOption(editRow) {
                                             
                                             // take a snapshot before any changes
                                             var snapshot = $('#comboOptionsTbody').html();
+                                            $('#button-revert').show();
                                             
                                             // insert options rows on stage
                                             getOptionsRows(formData);  
@@ -484,11 +485,11 @@ function addComboOption(editRow) {
                                                          '      <p class="align-center small-padding-bottom small-padding-top">'+
                                                          '        <span class="button-group">'+
                                                          '          <label for="status-1" class="button green-active">'+
-                                                         '            <input type="radio" name="status" id="status-1">'+
+                                                         '            <input type="radio" name="status" id="status-1" onclick="toggleComboOptionsStatus(\'on\');">'+
                                                          '            <?php echo $lC_Language->get('button_active'); ?>'+
                                                          '          </label>'+
                                                          '          <label for="status-2" class="button red-active">'+
-                                                         '            <input type="radio" name="status" id="status-2" checked>'+
+                                                         '            <input type="radio" name="status" id="status-2" onclick="toggleComboOptionsStatus(\'off\');" checked>'+
                                                          '            <?php echo $lC_Language->get('button_inactive'); ?>'+
                                                          '          </label>'+
                                                          '        </span>'+     
@@ -502,13 +503,13 @@ function addComboOption(editRow) {
                                                 actions: {
                                                   'Close' : {
                                                     color: 'red',
-                                                    click: function(fwin) { $('#comboOptionsTbody').html(snapshot); $.modal.all.closeModal(); }
+                                                    click: function(fwin) { $('#comboOptionsTbody').html(snapshot); $('#button-revert').show(); $.modal.all.closeModal(); }
                                                   }
                                                 },
                                                 buttons: {
                                                   '<?php echo $lC_Language->get('button_cancel'); ?>': {
                                                     classes:  'glossy',
-                                                    click:    function(fwin) { $('#comboOptionsTbody').html(snapshot); $.modal.all.closeModal(); }
+                                                    click:    function(fwin) { $('#comboOptionsTbody').html(snapshot); $('#button-revert').show(); $.modal.all.closeModal(); }
                                                   },
                                                   '<?php echo $lC_Language->get('button_done'); ?>': {
                                                     classes:  'blue-gradient glossy',

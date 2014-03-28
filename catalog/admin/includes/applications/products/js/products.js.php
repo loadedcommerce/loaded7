@@ -56,6 +56,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
       
       $('.sorted_table').sortable({  
         containerSelector: 'tbody',
+        handle: '.dragsort',        
         itemSelector: 'tr',
         placeholder: '<tr class="placeholder"/>',
         tolerance: '1',
@@ -74,7 +75,6 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
           
           // re-sort the tables
           _setSimpleOptionsSortOrder();
-          if(_resortComboOptions()) _resortComboOptions();
         }    
       });
       
@@ -506,7 +506,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
 
     // refresh simple option price modifier plus/minus symbols */
     function _refreshSimpleOptionsPricingSymbols() {
-      $('#simpleOptionsPricingTable input').each(function(index, element) {
+      $('.simple-options-pricing-table input').each(function(index, element) {
         var id = $(this).attr("id").replace('simple_options_entry_price_modifier_', '');
         showSimpleOptionsPricingSymbol(element, id); 
       });

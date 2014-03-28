@@ -65,7 +65,7 @@ function addSimpleOption(editRow) {
     });    
               
     var row = '<tr id="tre-' + ref + '">'+
-              '  <td width="16px" style="cursor:move;"><span class="icon-list icon-grey icon-size2"></span></td>'+
+              '  <td width="16px" style="cursor:move;" class="dragsort"><span class="icon-list icon-grey icon-size2"></span></td>'+
               '  <td width="16px" style="cursor:pointer;" onclick="toggleSimpleOptionsRow(\'#drope' + ref + '\');"><span id="drope' + ref + '_span" class="toggle-icon icon-squared-plus icon-grey icon-size2"></span></td>'+
               '  <td width="40%">' + groupTitle + '<div class="small-margin-top dropall" id="drope' + ref + '" style="display:none;"><span>' + items + '</span></div></td>'+
               '  <td width="30%" class="hide-below-480">' + groupModule + '</td>'+
@@ -88,7 +88,7 @@ function addSimpleOption(editRow) {
       $(this).closest('tr').remove();
     });
     // also remove it on the pricing table
-    $("#simpleOptionsPricingTable tr td:contains('" + groupTitle + "')").each(function() {
+    $(".simple-options-pricing-table tr td:contains('" + groupTitle + "')").each(function() {
       $(this).closest('tr').remove();
       $('.trp-' + id).remove();
     });   
@@ -98,7 +98,7 @@ function addSimpleOption(editRow) {
     var customerGroups = <?php echo json_encode(lC_Customer_groups_Admin::getAll()); ?>; 
     $.each(customerGroups.entries, function(key, val) { 
       var regex = new RegExp('CGROUP', 'g');   
-      $('#tbody-' + val.customers_group_id).append(prow.replace(regex, val.customers_group_id)); 
+      $('#tbody-simple-options-pricing-' + val.customers_group_id).append(prow.replace(regex, val.customers_group_id)); 
     });
   }   
   
