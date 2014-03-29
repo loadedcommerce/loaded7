@@ -92,20 +92,21 @@ $(document).ready(function() {
   var has_variants = '<?php echo (isset($pInfo) && $pInfo->get('has_children') == '1') ? '1' : '0'; ?>';
   var optionsDiv = $("input:radio[name=multi_sku_type_radio_group]").val();
   toggleMultiSkuTypeRadioGroup(optionsDiv);
-  
+
   if (edit == '1') { 	
     if (has_subproducts == '1') {
       getSubProductsRows();
       _updateInvControlType('2');
       $('#type_radio_2').click();
-      $('label[for=\'type_radio_1\']').addClass('disabled');
-      $('#type_radio_1').removeAttr('onclick');
+    //  toggleSubproductsButtonDisable(1);
+      toggleComboOptionsButtonDisable(0);  
     } else if (has_variants == '1') {
     	_updateInvControlType('2');
-    	$('#lbl-radio-1').removeClass('disabled');
       $('#type_radio_1').click();
-      $('label[for=\'type_radio_2\']').addClass('disabled');
-      $('#type_radio_2').removeAttr('onclick');      
+      toggleSubproductsButtonDisable(0);  
+    //  toggleComboOptionsButtonDisable(1);
+    } else {  
+      $('#type_radio_1').click();
     }
   } else {	
     $('#type_radio_1').click();
@@ -113,6 +114,28 @@ $(document).ready(function() {
   addSubProductsRow(false, false, false);  
   $("#subProductsTable tr:last-child td:first-child").find('input').focus();  
 }); 
+
+function toggleSubproductsButtonDisable(mode) {
+  if (mode == undefined) mode = 0;
+  if (mode == 1) {
+    $('#lbl-radio-2').removeClass('disabled');
+    $('#type_radio_2').attr('onclick', 'toggleMultiSkuTypeRadioGroup(this.value);')    
+  } else {
+    $('#lbl-radio-2').addClass('disabled');
+    $('#type_radio_2').removeAttr('onclick')    
+  }
+}
+
+function toggleComboOptionsButtonDisable(mode) {
+  if (mode == undefined) mode = 0;
+  if (mode == 1) {
+    $('#lbl-radio-1').removeClass('disabled');
+    $('#type_radio_1').attr('onclick', 'toggleMultiSkuTypeRadioGroup(this.value);')    
+  } else {
+    $('#lbl-radio-1').addClass('disabled');
+    $('#type_radio_1').removeAttr('onclick')    
+  }
+}
 
 function revertComboOptionsSetup() {
   $('.new-option').remove();
@@ -152,6 +175,7 @@ function getSubProductsRows() {
 function addSubProductsRow(include_price_row, e, key) {
   if($("#subProductsTable tbody").children().length > 0) {
     var id = $('#subProductsTable tr:last').attr('id').replace('tr-', '');
+  //  toggleComboOptionsButtonDisable(0);
   } else {
     var id = 0;
   }
@@ -239,9 +263,6 @@ function setSubProductImage(id) {
   }, 500);
 } 
 
-/* 
- * Multi SKU functions 
- */
 function removeComboOptionsRow(id) {
   $.modal.confirm('<?php echo $lC_Language->get('text_remove_row'); ?>', function() {
     $('#trmso-' + id).remove();
@@ -250,11 +271,13 @@ function removeComboOptionsRow(id) {
 	  // check if no rows and activate/deactivate sub products button
 	  var hasInfo = $('#comboOptionsTbody').children().length;
 	  if (hasInfo == 0) {
-	  	$('label[for=\'type_radio_2\']').removeClass('disabled');
-	    $('#type_radio_2').attr('onclick', 'toggleMultiSkuTypeRadioGroup(this.value)'); 	  
-	  } else {
-	  	$('label[for=\'type_radio_2\']').addClass('disabled');
-	  	$('#type_radio_2').removeAttr('onclick'); 	  
+      toggleSubproductsButtonDisable(1);
+      var groups = <?php echo json_encode(lC_Customer_groups_Admin::getAll()); ?>;
+      $.each(groups.entries, function( key, val ) {      
+        $('#combo-options-pricing-container-' + val.customers_group_id).html("");
+      });
+    } else {
+      toggleSubproductsButtonDisable(0); 
 	  }
   }, function() {
     return false;

@@ -199,14 +199,33 @@ function addComboOption(editRow) {
                        '  <td width="16px" align="center" style="cursor:pointer;" onclick="toggleComboOptionsStatus(\'' + cnt + '\');">' + statusIcon + '</td>' +
                        '  <td width="40px" align="right">' +
                        '      <span class="icon-pencil icon-orange icon-size2 margin-right with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"left"}\' title="Edit Entry" style="cursor:pointer;" onclick="addMultiSKUOption(\'' + cnt + '\')"></span>' +
-                       '      <span class="icon-trash icon-size2 icon-red with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"right"}\' title="Remove Entry" style="cursor:pointer;" onclick="removeMultiSKUOptionsRow(\'' + cnt + '\');"></span>' +
+                       '      <span class="icon-trash icon-size2 icon-red with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"right"}\' title="Remove Entry" style="cursor:pointer;" onclick="removeComboOptionsRow(\'' + cnt + '\');"></span>' +
                        '    </td>' +
                        '</tr>'; 
              
              var defaultGroup = '<?php echo DEFAULT_CUSTOMERS_GROUP_ID; ?>';
              var customerGroups = <?php echo json_encode(lC_Customer_groups_Admin::getAll()); ?>;
+             var lastID = 0;
+             var shown = false;
              $.each(customerGroups.entries, function(key, val) {
                var customers_group_id = val.customers_group_id;
+               var noOptions = ($("#combo-options-pricing-container-" + customers_group_id).text());
+
+               if (lastID != customers_group_id) {
+                 shown = false;
+                 lastID = customers_group_id;                       
+               }
+
+               if (noOptions == '' && shown == false) {
+                 var pTable = '<div class="big-text underline margin-top" style="padding-bottom:8px;"><?php echo $lC_Language->get('text_combo_options'); ?></div>' +
+                              '<table class="simple-table combo-options-pricing-table">' +
+                              '  <tbody id="tbody-combo-options-pricing-' + customers_group_id + '"></tbody>' +
+                              '</table>';
+               
+                 $('#combo-options-pricing-container-' + customers_group_id).html(pTable);                         
+                 shown = true;
+               }
+
                var pTbody = '';          
                pTbody += '<tr class="trpmso-' + cnt + ' new-option">' +
                          '  <td id="name-td-' + customers_group_id + '-' + cnt + '" class="element">' + newText + '<span class="icon-light-up icon-orange mid-margin-left with-tooltip cursor-pointer" title="<?php echo $lC_Language->get('text_new_option_set_unsaved'); ?>"></span></td>' +
@@ -218,7 +237,7 @@ function addComboOption(editRow) {
                          '  </td>' +
                          '</tr>'; 
                          
-               $('#tbody-combo-options-pricing-' + customers_group_id).append(pTbody);                         
+               $('#tbody-combo-options-pricing-' + customers_group_id).append(pTbody);  
              });
             }         
         });                   
@@ -229,6 +248,7 @@ function addComboOption(editRow) {
       
       $('#comboOptionsTable').append(tbody);
       _resortComboOptions();
+      toggleSubproductsButtonDisable(0);
       
     });    
   }

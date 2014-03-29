@@ -378,31 +378,37 @@ class lC_Products_Admin_Pro extends lC_Products_Admin {
     $content = '';
     $groups = lC_Customer_groups_Admin::getAll();
     foreach($groups['entries'] as $key => $value) {
-      $content .= '<dt><span class="strong">' . $value['customers_group_name'] . '</span></dt>' .
-                  '<dd>' .
-                  '  <div class="with-padding">';
+      $content .= '<dt id="dt-' . $value['customers_group_id'] . '"><span class="strong">' . $value['customers_group_name'] . '</span></dt>' .
+                  '<dd id="dd-' . $value['customers_group_id'] . '">' .
+                  '  <div class="with-padding" id="options-pricing-entries-div-' . $value['customers_group_id'] . '">';
                   
       if (isset($pInfo) && is_array($pInfo->get('simple_options'))) {                  
-        $content .= '    <div class="big-text underline" style="padding-bottom:8px;">' . $lC_Language->get('text_simple_options') . '</div>' .
-                    '    <table class="simple-table simple-options-pricing-table">' .
-                    '      <tbody id="tbody-simple-options-pricing-' . $value['customers_group_id'] . '">' . lC_Products_Admin::getSimpleOptionsPricingTbody($pInfo->get('simple_options'), $value['customers_group_id']) . '</tbody>' .
-                    '    </table>';
+        $content .= '<div class="simple-options-pricing-container">' .
+                    '  <div class="big-text underline" style="padding-bottom:8px;">' . $lC_Language->get('text_simple_options') . '</div>' .
+                    '  <table class="simple-table simple-options-pricing-table">' .
+                    '    <tbody id="tbody-simple-options-pricing-' . $value['customers_group_id'] . '">' . lC_Products_Admin::getSimpleOptionsPricingTbody($pInfo->get('simple_options'), $value['customers_group_id']) . '</tbody>' .
+                    '  </table>' . 
+                    '</div>';
                     
       } 
       
       if (isset($pInfo) && $pInfo->get('has_subproducts') == '1') {               
-        $content .= '    <div class="big-text underline margin-top" style="padding-bottom:8px;">' . $lC_Language->get('text_sub_products') . '</div>' .
-                    '    <table class="simple-table subproducts-pricing-table">' .
-                    '      <tbody id="tbody-subproducts-pricing-' . $value['customers_group_id'] . '">' . lC_Products_Admin_Pro::getSubProductsPricingTbody($pInfo, $value['customers_group_id']) . '</tbody>' .
-                    '    </table>';        
+        $content .= '<div class="subproducts-pricing-container">' .    
+                    '  <div class="big-text underline margin-top" style="padding-bottom:8px;">' . $lC_Language->get('text_sub_products') . '</div>' .
+                    '  <table class="simple-table subproducts-pricing-table">' .
+                    '    <tbody id="tbody-subproducts-pricing-' . $value['customers_group_id'] . '">' . lC_Products_Admin_Pro::getSubProductsPricingTbody($pInfo, $value['customers_group_id']) . '</tbody>' .
+                    '  </table>' .        
+                    '</div>';        
         
       } 
       
       if (isset($pInfo) && $pInfo->get('has_children') == '1') {
-        $content .= '    <div class="big-text underline margin-top" style="padding-bottom:8px;">' . $lC_Language->get('text_combo_options') . '</div>' .
-                    '    <table class="simple-table combo-options-pricing-table">' .
-                    '      <tbody id="tbody-combo-options-pricing-' . $value['customers_group_id'] . '">' . lC_Products_Admin_Pro::getComboOptionsPricingTbody($pInfo, $value['customers_group_id']) . '</tbody>' .
-                    '    </table>';         
+        $content .= '<div id="combo-options-pricing-container-' . $value['customers_group_id'] . '">' .    
+                    '  <div class="big-text underline margin-top" style="padding-bottom:8px;">' . $lC_Language->get('text_combo_options') . '</div>' .
+                    '  <table class="simple-table combo-options-pricing-table">' .
+                    '    <tbody id="tbody-combo-options-pricing-' . $value['customers_group_id'] . '">' . lC_Products_Admin_Pro::getComboOptionsPricingTbody($pInfo, $value['customers_group_id']) . '</tbody>' .
+                    '  </table>' .         
+                    '</div>';         
       } 
       
       if ( (!isset($pInfo)) || (isset($pInfo) && $pInfo->get('has_subproducts') != '1' && $pInfo->get('has_children') != '1' && !is_array($pInfo->get('simple_options'))) ) {       
