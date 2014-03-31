@@ -102,12 +102,12 @@ INSERT INTO lc_reviews (reviews_id, products_id, customers_id, customers_name, r
 INSERT INTO lc_products_variants_groups (id, languages_id, title, sort_order, module) VALUES(1, 1, 'Size', 0, 'pull_down_menu');
 INSERT INTO lc_products_variants_groups (id, languages_id, title, sort_order, module) VALUES(2, 1, 'Color', 1, 'pull_down_menu');
 
-INSERT INTO lc_products_variants_values (id, languages_id, products_variants_groups_id, title, sort_order) VALUES(1, 1, 1, 'Small', 1);
-INSERT INTO lc_products_variants_values (id, languages_id, products_variants_groups_id, title, sort_order) VALUES(2, 1, 1, 'Medium', 2);
-INSERT INTO lc_products_variants_values (id, languages_id, products_variants_groups_id, title, sort_order) VALUES(3, 1, 1, 'Large', 3);
-INSERT INTO lc_products_variants_values (id, languages_id, products_variants_groups_id, title, sort_order) VALUES(4, 1, 2, 'Red', 1);
-INSERT INTO lc_products_variants_values (id, languages_id, products_variants_groups_id, title, sort_order) VALUES(5, 1, 2, 'Green', 2);
-INSERT INTO lc_products_variants_values (id, languages_id, products_variants_groups_id, title, sort_order) VALUES(6, 1, 2, 'Blue', 3);
+INSERT INTO `lc_products_variants_values` (`id`, `languages_id`, `products_variants_groups_id`, `title`, `visual`, `sort_order`) VALUES(1, 1, 1, 'Small', '<div style="position:relative; width:60px; height:60px; border:1px solid grey; margin-bottom:6px;"><span style="position:absolute; top:7px; right:10px;">S</span></div>', 1);
+INSERT INTO `lc_products_variants_values` (`id`, `languages_id`, `products_variants_groups_id`, `title`, `visual`, `sort_order`) VALUES(2, 1, 1, 'Medium', '<div style="position:relative; width:60px; height:60px; border:1px solid grey; margin-bottom:6px;"><span style="font-size:1.5em; position:absolute; top:8px; right:7px;">M</span></div>', 2);
+INSERT INTO `lc_products_variants_values` (`id`, `languages_id`, `products_variants_groups_id`, `title`, `visual`, `sort_order`) VALUES(3, 1, 1, 'Large', '<div style="position:relative; width:60px; height:60px; border:1px solid grey; margin-bottom:6px;"><span style="font-size:2em; position:absolute; top:7px; right:7px;">L</span></div>', 3);
+INSERT INTO `lc_products_variants_values` (`id`, `languages_id`, `products_variants_groups_id`, `title`, `visual`, `sort_order`) VALUES(4, 1, 2, 'Red', '<div style="width:60px; height:60px; background-color:red; margin-bottom:6px;">&nbsp;</div>', 1);
+INSERT INTO `lc_products_variants_values` (`id`, `languages_id`, `products_variants_groups_id`, `title`, `visual`, `sort_order`) VALUES(5, 1, 2, 'Green', '<div style="width:60px; height:60px; background-color:green; margin-bottom:6px;">&nbsp;</div>', 2);
+INSERT INTO `lc_products_variants_values` (`id`, `languages_id`, `products_variants_groups_id`, `title`, `visual`, `sort_order`) VALUES(6, 1, 2, 'Blue', '<div style="width:60px; height:60px; background-color:blue; margin-bottom:6px;">&nbsp;</div>', 3);
 
 INSERT INTO lc_manufacturers (manufacturers_id, manufacturers_name, manufacturers_image, date_added, last_modified) VALUES(1, 'Inhouse', NULL, now(), now());
 INSERT INTO lc_manufacturers (manufacturers_id, manufacturers_name, manufacturers_image, date_added, last_modified) VALUES(2, 'Acme', NULL, now(), now());
