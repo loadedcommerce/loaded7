@@ -704,6 +704,7 @@ CREATE TABLE lc_products_variants_groups (
   id int(11) NOT NULL AUTO_INCREMENT,
   languages_id int(11) NOT NULL,
   title varchar(255) NOT NULL,
+  visual varchar(1024) DEFAULT NULL, 
   sort_order int(11) NOT NULL,
   module varchar(255) NOT NULL,
   PRIMARY KEY (id,languages_id)
