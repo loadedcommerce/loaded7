@@ -76,7 +76,7 @@ if ( empty($_GET) && $_GET['action'] != 'validateLogin') {
     exit;
   }  
   
-  if ($action != 'search') {
+  if ($action != 'search' && $action != 'productSearch') {
     
     if ( file_exists('includes/applications/' . $_module . '/classes/' . $class . '.php')) {
       include($lC_Vqmod->modCheck('includes/applications/' . $_module . '/classes/' . $class . '.php'));

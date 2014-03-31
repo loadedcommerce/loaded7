@@ -254,6 +254,7 @@ product_view_details = View details for
 result_set_current_page = Page %s of %d
 
 search_placeholder = Search
+product_search_placeholder = Product Search
 site_maintenance_message_title = Maintenance Mode
 site_maintenance_message_text = Site is in Maintenance Mode.  Click here to disable it.
 
@@ -280,10 +281,12 @@ text_version = Version
 text_confirm_delete = Confirm Delete?
 text_sort = Sort
 text_mode = Mode
-text_mode_category = Product Category
+
+text_model = Model
 text_mode_info_category = Information Category
 text_mode_faq_category = FAQ Category
 text_mode_article_category = Article Category
+text_mode_category = Category
 text_mode_page = Page
 text_mode_specials = Link To: Specials
 text_mode_featured = Link To: Featured Products
@@ -305,6 +308,8 @@ text_enable_coupon = Click to Enable Coupon
 text_disable_coupon = Click to Disable Coupon
 text_enable = Click to Enable
 text_disable = Click to Disable
+text_select = Select
+text_product = Product
 text_special_enabled = Has Special Price (Enabled)
 text_special_disabled = Has Special Price (Disabled)
 

@@ -430,7 +430,11 @@ $(document).ready(function() {
   }
   setTimeout(function() {
     $("#dataTable_length").find('select').addClass("input with-small-padding");
-  }, 700);        
+  }, 700);
+  
+  $(".productSearchInput").keypress(function() {
+    $(".productSearchInput").parents().eq(4).find('[type=button]').attr('disabled', true);  
+  });     
 });
 
 function _apiHealthCheckAlert() {
@@ -759,6 +763,37 @@ function search(q) {
       $('#searchResults').html(data.html);
     }
   );
+}
+
+function productSearch(tf, f, p) {
+  var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=productSearch&tf=THISFIELD&f=FIELD&p=PSEARCH'); ?>'
+  $.getJSON(jsonLink.replace('THISFIELD', tf).replace('FIELD', f).replace('PSEARCH', p),
+    function (data) {
+      if (data.rpcStatus == -10) { // no session
+        var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
+        $(location).attr('href',url);
+      }
+      if (data.rpcStatus != 1) {
+        $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
+        return false;
+      }
+      $('.' + f + '_results').show(); 
+      $('.' + f + '_results').html(data.html);
+    }
+  );
+}
+
+function setProductSearchSelection(tf, name, f, pid) {
+  $('#' + tf).val(name);
+  $('#' + f).val(pid);
+  $('.' + f + '_results').hide();
+  $('#' + f).parent().find('[type=button]').removeAttr('disabled');
+    /*if ($(this).val() == '') {
+      $('.enableOnInput').prop('disabled', true);
+    } else {
+      $('.enableOnInput').prop('disabled', false);
+    }*/
+  //});
 }
 
 $("#li-search").click(function() {
