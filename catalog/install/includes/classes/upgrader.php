@@ -4549,10 +4549,6 @@ class lC_LocalUpgrader extends lC_Upgrader {
       $Qchk->freeResult();
     }
     
-    //$clean = $target_db->query('ALTER IGNORE TABLE :products_simple_options_values ADD UNIQUE INDEX (products_id, values_id, options_id)');
-    //$clean->bindTable(':products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
-    //$clean->execute();
-    
     // END LOAD PRODUCTS SIMPLE OPTIONS VALUES TO TARGET DB
     
     // ########## Added for text_field options
@@ -4588,8 +4584,12 @@ class lC_LocalUpgrader extends lC_Upgrader {
       $sovQry->execute();
     }
 
-    // ##########
-
+    // added for removing duplicate simple options values entries
+    $clean = $target_db->query('ALTER IGNORE TABLE :products_simple_options_values ADD UNIQUE INDEX (products_id, values_id, options_id)');
+    $clean->bindTable(':products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
+    $clean->execute();
+        
+    
     // END DISABLE AUTO INCREMENT WHEN PRIMARY KEY = 0
     // $tQry = $target_db->query('SET GLOBAL sql_mode = ""');
     // $tQry->execute();
