@@ -310,7 +310,7 @@ class lC_Categories_Admin {
         // added for permalink
         if (!empty($data['permalink'][$l['id']])) {
           if ($data['permalink'][$l['id']] != 'no-permalink') {
-            if (is_numeric($id) && lC_Categories_Admin::validatePermalink(array($data['permalink'][$l['id']]), $category_id, 1) == 1) {
+            if (is_numeric($id) && lC_Categories_Admin::validatePermalink(array($data['permalink'][$l['id']]), $category_id, 1, $l['id']) == 1) {
               $Qpl = $lC_Database->query('update :table_permalinks set permalink = :permalink where item_id = :item_id and type = :type and language_id = :language_id');
             } else {
               $Qpl = $lC_Database->query('insert into :table_permalinks (item_id, language_id, type, query, permalink) values (:item_id, :language_id, :type, :query, :permalink)');
@@ -772,7 +772,7 @@ class lC_Categories_Admin {
   * @access public
   * @return integer
   */
-  public static function getPermalinkCount($permalink, $cid = null, $type = null) {
+  public static function getPermalinkCount($permalink, $cid = null, $type = null, $lid = null) {
     global $lC_Database;
 
     $Qpermalinks = $lC_Database->query('select count(*) as total, item_id, permalink from :table_permalinks where permalink = :permalink');
@@ -780,6 +780,11 @@ class lC_Categories_Admin {
     if (is_numeric($cid)) {
       $Qpermalinks->appendQuery('and item_id != :item_id');
       $Qpermalinks->bindInt(':item_id', $cid);
+    }
+    
+    if (is_numeric($lid)) {
+      $Qpermalinks->appendQuery('and language_id == :language_id');
+      $Qpermalinks->bindInt(':language_id', $lid);
     }
 
     $Qpermalinks->bindTable(':table_permalinks', TABLE_PERMALINKS);
@@ -802,17 +807,17 @@ class lC_Categories_Admin {
   * @access public
   * @return array
   */
-  public static function validatePermalink($permalink_array, $cid = null, $type = null) {
+  public static function validatePermalink($permalink_array, $cid = null, $type = null, $lid = null) {
     $validated = true;
     
     if (is_array($permalink_array)) {
       foreach($permalink_array as $permalink) {
         if ( preg_match('/^[a-z0-9_-]+$/iD', $permalink) !== 1 ) $validated = false;
-        if ( lC_Categories_Admin::getPermalinkCount($permalink, $cid, $type) > 0) $validated = false;
+        if ( lC_Categories_Admin::getPermalinkCount($permalink, $cid, $type, $lid) > 0) $validated = false;
       }
     } else {
       if ( preg_match('/^[a-z0-9_-]+$/iD', $permalink) !== 1 ) $validated = false;
-      if ( lC_Categories_Admin::getPermalinkCount($permalink, $cid, $type) > 0) $validated = false;
+      if ( lC_Categories_Admin::getPermalinkCount($permalink, $cid, $type, $lid) > 0) $validated = false;
     }
     
     return $validated;
