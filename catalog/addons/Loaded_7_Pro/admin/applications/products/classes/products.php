@@ -675,7 +675,7 @@ class lC_Products_Admin_Pro extends lC_Products_Admin {
 			              '  </td>' .                       
                     '  <td width="16px" align="center" style="cursor:pointer;" onclick="toggleComboOptionsStatus(\'' . $cnt . '\');">' . $statusIcon . '</td>' .
                     '  <td width="40px" align="right">
-                         <span class="icon-pencil icon-orange icon-size2 margin-right with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"left"}\' title="Edit Entry" style="cursor:pointer;" onclick="addMultiSKUOption(\'' . $cnt. '\')"></span>
+                         <!-- span class="icon-pencil icon-orange icon-size2 margin-right with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"left"}\' title="Edit Entry" style="cursor:pointer;" onclick="addMultiSKUOption(\'' . $cnt. '\')"></span -->
                          <span class="icon-trash icon-size2 icon-red with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"right"}\' title="Remove Entry" style="cursor:pointer;" onclick="removeComboOptionsRow(\'' . $cnt . '\');"></span>
                        </td>' .
                     '</tr>';
