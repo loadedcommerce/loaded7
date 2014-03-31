@@ -237,11 +237,11 @@ function editCustomer(id, add_addr) {
   }
 
   mask();  
-  getFormData(id); 
+  getCustomerFormData(id); 
   $('.datepicker').glDatePicker({ startDate: new Date("January 1, 1960"), zIndex: 100 });  
 }
 
-function getFormData(id) {
+function getCustomerFormData(id) {
   var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=getCustomerFormData&cid=CID'); ?>';
   $.getJSON(jsonLink.replace('CID', id),
     function (data) {
@@ -404,7 +404,7 @@ function saveCustomer() {
           cm = $('#editCustomerContainer').getModalWindow();
           setTimeout("$(cm).closeModal()", 2300);
           // get new form data
-          //getFormData(cid);
+          //getCustomerFormData(cid);
         }
       }
     );
@@ -486,7 +486,7 @@ function saveAddress(save) {
             window.location = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, "orders&action=quick_add&editProduct=1&cID=' + cid + '");?>';
           }
           // get new form data
-          getFormData(cid);
+          getCustomerFormData(cid);
           // show the address listing
           toggleAddressForm();
           // added to clear form after successful save
@@ -567,7 +567,7 @@ function deleteAddress(id) {
           }
         } else {
           // get new form data
-          getFormData(cid);
+          getCustomerFormData(cid);
         }
       }
     );
