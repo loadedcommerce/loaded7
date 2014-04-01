@@ -8,7 +8,7 @@
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: products.php v1.0 2013-08-08 datazen $
 */
-global $lC_Vqmod;
+global $lC_Vqmod;   
 
 if (!defined('DIR_FS_ADMIN')) return false;
 if (!defined('DIR_FS_CATALOG')) return false;
@@ -36,7 +36,6 @@ class lC_Products_Admin {
       $category_id = 0;
     }
 
-    
     $lC_Language->loadIniFile('products.php');
     
     $media = $_GET['media'];
@@ -155,24 +154,14 @@ class lC_Products_Admin {
       $products_status = ($Qproducts->valueInt('products_status') === 1);
       $products_keyword  = $Qproducts->value('products_keyword');
 
-      $products_quantity = $Qproducts->valueInt('products_quantity');
-      $price = $lC_Currencies->format($Qproducts->value('products_price'));
+      // VQMOD-hookpoint; DO NOT MODIFY OR REMOVE THE LINE BELOW
+      $products_quantity = lC_Products_Admin::getProductsListingQty($Qproducts->toArray());
+     
+      // VQMOD-hookpoint; DO NOT MODIFY OR REMOVE THE LINE BELOW
+      $price = lC_Products_Admin::getProductsListingPrice($Qproducts->toArray());
       
-      $icons = '';
-      if ( $Qproducts->valueInt('has_children') === 1 ) {
-        $icons .= '<span class="icon-flow-tree icon-blue mid-margin-right with-tooltip" style="cursor:pointer;" title="' . $lC_Language->get('text_has_variants') . '"></span>';
-      } else if ( self::_hasSubProducts($Qproducts->valueInt('products_id')) === true ) {
-        $icons .= '<span class="icon-flow-cascade icon-red mid-margin-right with-tooltip" style="cursor:pointer;" title="' . $lC_Language->get('text_has_subproducts') . '"></span>';
-      }
-      
-      $Qspecials = $lC_Database->query('select specials_new_products_price, status from :table_specials where products_id = :products_id');
-      $Qspecials->bindTable(':table_specials', TABLE_SPECIALS);
-      $Qspecials->bindInt(':products_id', $Qproducts->valueInt('products_id'));
-      $Qspecials->execute();
-      
-      if ($Qspecials->numberOfRows() > 0) {
-        $price = $price . ' <span class="tag glossy with-tooltip cursor-pointer' . (($Qspecials->valueInt('status') == 1) ? ' red-gradient' : ' grey-gradient') . '" title="' . (($Qspecials->valueInt('status') == 1) ? $lC_Language->get('text_special_enabled') : $lC_Language->get('text_special_disabled')) . '">' . $lC_Currencies->format($Qspecials->value('specials_new_products_price'), DECIMAL_PLACES) . '</span>';
-      }
+      // VQMOD-hookpoint; DO NOT MODIFY OR REMOVE THE LINE BELOW
+      $icons = lC_Products_Admin::getlistingIcons($Qproducts->valueInt('products_id'));    
 
       $extra_data = array('products_cost_formatted' => $cost,
                           'products_price_formatted' => $price,
@@ -205,7 +194,6 @@ class lC_Products_Admin {
       
       $Qproductscategories->freeResult();
       $Qimage->freeResult();
-      $Qspecials->freeResult();
     }
     $result['sEcho'] = intval($_GET['sEcho']);
 
@@ -213,6 +201,62 @@ class lC_Products_Admin {
 
     return $result;
   }
+ /*
+  * Returns the icons used in the product listing
+  *
+  * @param integer $id The products id
+  * @access public
+  * @return string
+  */
+  public static function getlistingIcons($products_id) {
+    global $lC_Language;
+    
+    $icons = '';
+    if (self::hasSimpleOptions($products_id)) {
+      $icons .= '<span class="icon-flow-branch icon-purple mid-margin-right with-tooltip" style="cursor:pointer;" title="' . $lC_Language->get('text_has_simple_options') . '"></span>';
+    }
+      
+    return $icons;
+  }
+ /*
+  * Returns the price info used in the product listing
+  *
+  * @param integer $data  The product data array
+  * @access public
+  * @return string
+  */  
+  public function getProductsListingPrice($data) {
+    global $lC_Database, $lC_Language, $lC_Currencies;
+
+    if ($customer_group_id == 0) $customer_group_id = DEFAULT_CUSTOMERS_GROUP_ID;
+    
+    $price = $lC_Currencies->format($data['products_price']);
+    
+    $Qspecials = $lC_Database->query('select specials_new_products_price, status from :table_specials where products_id = :products_id');
+    $Qspecials->bindTable(':table_specials', TABLE_SPECIALS);
+    $Qspecials->bindInt(':products_id', $data['products_id']);
+    $Qspecials->execute();
+    
+    if ($Qspecials->numberOfRows() > 0) {
+      $price = $price . ' <span class="tag glossy with-tooltip cursor-pointer' . (($Qspecials->valueInt('status') == 1) ? ' red-gradient' : ' grey-gradient') . '" title="' . (($Qspecials->valueInt('status') == 1) ? $lC_Language->get('text_special_enabled') : $lC_Language->get('text_special_disabled')) . '">' . $lC_Currencies->format($Qspecials->value('specials_new_products_price'), DECIMAL_PLACES) . '</span>';
+    }
+    
+    $Qspecials->freeResult();
+    
+    
+    return $price;
+  }
+ /*
+  * Returns the qty info used in the product listing
+  *
+  * @param integer $data  The product data array
+  * @access public
+  * @return string
+  */  
+  public function getProductsListingQty($data) {
+    return $data['products_quantity'];
+  }  
+  
  /*
   * Returns the data used on the dialog forms
   *
@@ -289,7 +333,6 @@ class lC_Products_Admin {
 
     return $result;
   }
-  // create path names
   /*function createPathNames($id) {
     global $lC_Database;
     
@@ -1599,7 +1642,6 @@ class lC_Products_Admin {
     
     return $optionsArr;
   } 
-  
  /*
   *  Return the product simple options accordian listing content
   *
@@ -1967,6 +2009,23 @@ class lC_Products_Admin {
     return $result;
   }
  /*
+  * Determine if the product has simple options
+  *
+  * @param integer $id The product id
+  * @access public
+  * @return boolean
+  */
+  public static function hasSimpleOptions($id) {
+    global $lC_Database;      
+
+    $Qchk = $lC_Database->query('select id from :table_products_simple_options where products_id = :products_id limit 1');
+    $Qchk->bindTable(':table_products_simple_options', TABLE_PRODUCTS_SIMPLE_OPTIONS);
+    $Qchk->bindInt(':products_id', $id);
+    $Qchk->execute();
+
+    return ( $Qchk->numberOfRows() === 1 );
+  }  
+ /*
   * Return the field name for the selected column (used for datatable ordering)
   *
   * @param integer $i The datatable column id
@@ -2016,12 +2075,7 @@ class lC_Products_Admin {
     $Qchk->bindInt(':is_subproduct', 0);
     $Qchk->execute();
 
-    if ( $Qchk->numberOfRows() === 1 ) {
-      return true;
-    }
-
-    return false;
+    return ( $Qchk->numberOfRows() === 1 );
   }   
 }
-
 ?>

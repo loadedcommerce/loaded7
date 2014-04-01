@@ -422,12 +422,98 @@ class lC_Products_Admin_Pro extends lC_Products_Admin {
     return $content;
   }  
  /*
+  * Returns the icons used in the product listing
+  *
+  * @param integer $id The products id
+  * @access public
+  * @return string
+  */
+  public static function getlistingIcons($products_id) {
+    global $lC_Language;
+    
+    $icons = parent::getlistingIcons($products_id);
+
+    if (self::hasSubProducts($products_id)) {
+      $icons .= '<span class="icon-flow-cascade icon-red mid-margin-right with-tooltip" style="cursor:pointer;" title="' . $lC_Language->get('text_has_subproducts') . '"></span>';
+    }         
+    if (self::hasComboOptions($products_id)) {
+      $icons .= '<span class="icon-flow-tree icon-blue mid-margin-right with-tooltip" style="cursor:pointer;" title="' . $lC_Language->get('text_has_combo_options') . '"></span>';
+    } 
+      
+    return $icons;
+  }  
+ /*
+  * Returns the price info used in the product listing
+  *
+  * @param integer $data  The product data array
+  * @access public
+  * @return string
+  */  
+  public function getProductsListingPrice($data) {
+    global $lC_Database, $lC_Language, $lC_Currencies;
+    
+    if (self::hasSubProducts($data['products_id']) === false && self::hasComboOptions($data['products_id']) === false) { 
+      $price = parent::getProductsListingPrice($data);
+    } else {
+      $mm = self::getMinMaxPrice($data['products_id']);
+      $price  = ($mm['min'] == $mm['max']) ? $lC_Currencies->format($mm['min']) : '(' . $lC_Currencies->format($mm['min']) . ' - ' . $lC_Currencies->format($mm['max']) . ')';
+    }
+
+    return $price;
+  }  
+ /*
+  * Returns the min/max price used in the product listing
+  *
+  * @param integer $id  The product id
+  * @access public
+  * @return string
+  */
+  public static function getMinMaxPrice($id) {
+    global $lC_Database;
+
+    $Qproducts = $lC_Database->query('select MAX(products_price) as max, MIN(products_price) as min from :table_products where parent_id = :parent_id');
+    $Qproducts->bindTable(':table_products', TABLE_PRODUCTS);
+    $Qproducts->bindInt(':parent_id', $id);
+    $Qproducts->execute();
+   
+    $result = $Qproducts->toArray();
+    
+    $Qproducts->freeResult();
+    
+    return $result;    
+  }
+ /*
+  * Returns the price info used in the product listing
+  *
+  * @param integer $data  The product data array
+  * @access public
+  * @return string
+  */  
+  public function getProductsListingQty($data) {
+    global $lC_Database;
+    
+    if (self::hasSubProducts($data['products_id']) === false && self::hasComboOptions($data['products_id']) === false) { 
+      $result = $data['products_quantity'];
+    } else {
+      $Qproducts = $lC_Database->query('select SUM(products_quantity) as total from :table_products where parent_id = :parent_id');
+      $Qproducts->bindTable(':table_products', TABLE_PRODUCTS);
+      $Qproducts->bindInt(':parent_id', $data['products_id']);
+      $Qproducts->execute();
+     
+      $result = '(' . $Qproducts->valueInt('total') . ')';
+      
+      $Qproducts->freeResult();
+    }
+    
+    return $result;     
+  }   
+ /*
   *  Determine if product has qty price breaks
   *
   * @param integer $id The product id
   * @access public
   * @return boolean
-  */
+  */   
   public static function hasQPBPricing($id) {
     global $lC_Database;
 
@@ -558,7 +644,25 @@ class lC_Products_Admin_Pro extends lC_Products_Admin {
     return $content;
   } 
  /*
-  * Return the multi sku options listing content
+  * Determine if the product has combo options
+  *
+  * @param integer $id The product id
+  * @access public
+  * @return boolean
+  */                      
+  public static function hasComboOptions($id) {
+    global $lC_Database;
+    
+    $Qchk = $lC_Database->query('select has_children from :table_products where parent_id = :parent_id and products_id = :products_id limit 1');
+    $Qchk->bindTable(':table_products', TABLE_PRODUCTS);
+    $Qchk->bindInt(':parent_id', 0);
+    $Qchk->bindInt(':products_id', $id);
+    $Qchk->execute();
+    
+    return ( $Qchk->valueInt('has_children') === 1 );
+  }  
+ /*
+  * Return the combo options listing content
   *
   * @param array $options The multi sku options array
   * @access public
