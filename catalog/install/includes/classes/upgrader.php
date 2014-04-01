@@ -4431,6 +4431,16 @@ class lC_LocalUpgrader extends lC_Upgrader {
       $this->_msg = $target_db->getError();
       return false;
     }
+    
+    // added for removing duplicate simple options values entries
+    $clean = $target_db->query('ALTER IGNORE TABLE :table_products_simple_options ADD UNIQUE INDEX (options_id, products_id)');
+    $clean->bindTable(':table_products_simple_options', TABLE_PRODUCTS_SIMPLE_OPTIONS);
+    $clean->execute();
+        
+    if ($target_db->isError()) {
+      $this->_msg = $target_db->getError();
+      return false;
+    }    
           
     // END DISABLE AUTO INCREMENT WHEN PRIMARY KEY = 0
     // $tQry = $target_db->query('SET GLOBAL sql_mode = ""');
