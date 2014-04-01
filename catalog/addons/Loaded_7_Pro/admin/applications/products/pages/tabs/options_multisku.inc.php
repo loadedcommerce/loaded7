@@ -175,7 +175,6 @@ function getSubProductsRows() {
 function addSubProductsRow(include_price_row, e, key) {
   if($("#subProductsTable tbody").children().length > 0) {
     var id = $('#subProductsTable tr:last').attr('id').replace('tr-', '');
-  //  toggleComboOptionsButtonDisable(0);
   } else {
     var id = 0;
   }
@@ -206,6 +205,7 @@ function addSubProductsRow(include_price_row, e, key) {
           '</tr>';
           
   $('#subProductsTable > tbody').append(row);
+  if($("#subProductsTable tbody").children().length > 1) toggleComboOptionsButtonDisable(0);  
    
   if (include_price_row == '1') {       
     var ok = '<?php echo (defined('ADDONS_SYSTEM_LOADED_7_PRO_STATUS') && ADDONS_SYSTEM_LOADED_7_PRO_STATUS == '1') ? '1' : '0'; ?>';
@@ -230,7 +230,10 @@ function addSubProductsRow(include_price_row, e, key) {
 function removeSubProductRow(id) {
   $('#tr-' + id).remove();
   $('.trp-' + id).remove();
-  if($("#subProductsTable tbody").children().length == 0) addSubProductsRow(false, false, false);
+  if($("#subProductsTable tbody").children().length == 0) { 
+    addSubProductsRow(false, false, false);
+    toggleComboOptionsButtonDisable(1);
+  }
 }
 
 function setSubProductDefault(id) {

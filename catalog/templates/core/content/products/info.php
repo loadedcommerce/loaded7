@@ -98,6 +98,17 @@
         ?>      
       </div>  
       <?php
+      if ( $lC_Product->hasVariants() ) {
+        ?>
+        <div id="content-products-info-variants-container">
+          <?php
+            foreach ( $lC_Product->getVariants() as $group_id => $value ) {
+              echo lC_Variants::parse($value['module'], $value);
+            }
+          ?>
+        </div>
+        <?php
+      }
       if ( $lC_Product->hasSimpleOptions() ) {
         ?>
         <div id="content-products-info-simple-options-container margin-top">
@@ -116,19 +127,7 @@
           ?>
         </div>
         <?php
-      }
-      if ( $lC_Product->hasVariants() ) {
-        ?>
-        <div id="content-products-info-variants-container">
-          <?php
-            foreach ( $lC_Product->getVariants() as $group_id => $value ) {
-              echo lC_Variants::parse($value['module'], $value);
-            }
-            echo lC_Variants::defineJavascript($lC_Product->getVariants(false));
-          ?>
-        </div>
-        <?php
-      }
+      }      
       ?>  
     </div>
   </div>
