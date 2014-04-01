@@ -975,5 +975,21 @@ class lC_Template {
     }
     return $data;
   }
+  
+  /**
+  * Load the custom CSS
+  *
+  * @access public
+  * @return boolean
+  */
+  public function loadBrandingCSS() {
+
+    $html = '';
+    if ( file_exists('templates/' . $this->_template . '/css/custom.css.php') ) {
+      $html = '<link rel="stylesheet" href="templates/' . $this->_template . '/css/custom.css.php">' . "\n";
+    }
+
+    return $html;
+  }
 }
 ?>
