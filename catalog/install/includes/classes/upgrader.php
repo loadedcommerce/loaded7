@@ -4104,14 +4104,12 @@ class lC_LocalUpgrader extends lC_Upgrader {
 
     // LOAD PRODUCTS VARIANTS GROUPS FROM SOURCE DB
     $map = $this->_data_mapping['products_variants_groups'];
-    $text_field_data = array();
-
+    
     $sQry = $source_db->query('SELECT * FROM products_options_text WHERE language_id = :language_id');
     $sQry->bindInt(':language_id', $this->_languages_id_default);
     $sQry->execute();
     
     if ($sQry->numberOfRows() > 0) { 
-      $cnt = 0;
       while ($sQry->next()) {
         // From 6.X option types ////////////////////////////////
         // if ($opt_type == 0) return 'Select';
@@ -4130,12 +4128,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
         $asoQry->execute();
         
         if ($otQry->value('options_type') == '1') {
-          $module = 'text_field';
-          $text_field_data[] = array('products_id'                 => $asoQry->value('products_id'),
-                                     'products_variants_groups_id' => $sQry->value('products_options_text_id'),
-                                     'title'                       => $sQry->value('products_options_name'), 
-                                     'sort_order'                  => $asoQry->value('products_options_sort_order') 
-                                     ); 
+          $module = 'text_field'; 
         } else if ($otQry->value('options_type') == '2') { 
           $module = 'radio_buttons';
         } else if ($otQry->value('options_type') == '3') { 
@@ -4144,11 +4137,6 @@ class lC_LocalUpgrader extends lC_Upgrader {
         } else if ($otQry->value('options_type') == '4') {
           // $module = 'text_area'; // back to text_area once loaded7 supports it 
           $module = 'text_field';
-          $text_field_data[] = array('products_id'                 => $asoQry->value('products_id'),
-                                     'products_variants_groups_id' => $sQry->value('products_options_text_id'),
-                                     'title'                       => $sQry->value('products_options_name'), 
-                                     'sort_order'                  => $asoQry->value('products_options_sort_order') 
-                                     );
         // no support for file upload yet even for conversion
         // } else if ($otQry->value('options_type') == '5') { 
           // $module = 'file_upload'; // back to check_box once loaded7 supports it
@@ -4190,7 +4178,6 @@ class lC_LocalUpgrader extends lC_Upgrader {
           $this->_msg = $target_db->getError();
           return false;
         }
-        $cnt++;
       }
       
       $sQry->freeResult();
@@ -4208,10 +4195,9 @@ class lC_LocalUpgrader extends lC_Upgrader {
     $sQry->execute();
       
     if ($sQry->numberOfRows() > 0) { 
-      $cnt = 0;
       while ($sQry->next()) {
         $group  = array(
-                          'id'                          => "NULL"
+                          'id'                          => ""
                         , 'languages_id'                => $sQry->value($map['languages_id'])
                         , 'products_variants_groups_id' => $sQry->value('products_options_id')
                         , 'title'                       => $sQry->value('products_options_values_name')
@@ -4228,6 +4214,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
                                                                                 :sort_order)');
 
         $tQry->bindTable(':table_products_variants_values', TABLE_PRODUCTS_VARIANTS_VALUES);
+        
         $tQry->bindInt  (':languages_id'               , $group['languages_id']);
         $tQry->bindInt  (':products_variants_groups_id', $group['products_variants_groups_id']);
         $tQry->bindValue(':title'                      , $group['title']);
@@ -4238,7 +4225,6 @@ class lC_LocalUpgrader extends lC_Upgrader {
           $this->_msg = $target_db->getError();
           return false;
         }
-        $cnt++;
       }
       
       $sQry->freeResult();
@@ -4264,9 +4250,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
     $customers_group_id = ($tQry->numberOfRows() > 0) ? $tQry->value('customers_group_id') : 1;
       
     if ($sQry->numberOfRows() > 0) { 
-      $cnt = 0;
-      while ($sQry->next()) {
-        
+      while ($sQry->next()) {        
         if ($sQry->valueInt('products_id') == 0) continue;
       
         $option  = array(
@@ -4291,7 +4275,6 @@ class lC_LocalUpgrader extends lC_Upgrader {
                          ); 
                          
         $simple_values[] = $value;
-        $cnt++;
       }
       
       $sQry->freeResult();
@@ -4302,27 +4285,29 @@ class lC_LocalUpgrader extends lC_Upgrader {
     
     // LOAD PRODUCTS SIMPLE OPTIONS TO TARGET DB
     
-    $iCnt = 0;
     foreach ($simple_options as $option) {
-      $Qchk = $target_db->query('SELECT id from :products_simple_options WHERE options_id = :options_id and products_id = :products_id limit 1');
+      $Qchk = $target_db->query('SELECT id from :table_products_simple_options WHERE options_id = :options_id and products_id = :products_id limit 1');
+      
       $Qchk->bindTable(':products_simple_options', TABLE_PRODUCTS_SIMPLE_OPTIONS);
+      
       $Qchk->bindInt  (':options_id' , $option['options_id']);
       $Qchk->bindInt  (':products_id', $option['products_id']);
       $Qchk->execute();        
       
       if ($Qchk->numberOfRows() == 0) {
-        $tQry = $target_db->query('INSERT INTO :products_simple_options (id, 
-                                                                         options_id, 
-                                                                         products_id, 
-                                                                         sort_order, 
-                                                                         status) 
-                                                                 VALUES (:id, 
-                                                                         :options_id, 
-                                                                         :products_id, 
-                                                                         :sort_order, 
-                                                                         :status)');
+        $tQry = $target_db->query('INSERT INTO :table_products_simple_options (id, 
+                                                                               options_id, 
+                                                                               products_id, 
+                                                                               sort_order, 
+                                                                               status) 
+                                                                       VALUES (:id, 
+                                                                               :options_id, 
+                                                                               :products_id, 
+                                                                               :sort_order, 
+                                                                               :status)');
 
-        $tQry->bindTable(':products_simple_options', TABLE_PRODUCTS_SIMPLE_OPTIONS);
+        $tQry->bindTable(':table_products_simple_options', TABLE_PRODUCTS_SIMPLE_OPTIONS);
+        
         $tQry->bindInt  (':id'         , $option['id']);
         $tQry->bindInt  (':options_id' , $option['options_id']);
         $tQry->bindInt  (':products_id', $option['products_id']);
@@ -4333,8 +4318,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
         if ($target_db->isError()) {
           $this->_msg = $target_db->getError();
           return false;
-        } 
-        $iCnt++;
+        }
       }
       
       $Qchk->freeResult();
@@ -4344,10 +4328,9 @@ class lC_LocalUpgrader extends lC_Upgrader {
     
     // LOAD PRODUCTS SIMPLE OPTIONS VALUES TO TARGET DB
       
-    $iCnt = 0;
     foreach ($simple_values as $value) {
-      $Qchk = $target_db->query('SELECT id from :products_simple_options_values WHERE products_id = :products_id and options_id = :options_id and values_id = :values_id limit 1');
-      $Qchk->bindTable(':products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
+      $Qchk = $target_db->query('SELECT id from :table_products_simple_options_values WHERE products_id = :products_id and options_id = :options_id and values_id = :values_id limit 1');
+      $Qchk->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
       $Qchk->bindInt  (':products_id' , $value['products_id']);
       $Qchk->bindInt  (':options_id' , $value['options_id']);
       $Qchk->bindInt  (':values_id', $value['values_id']);
@@ -4361,18 +4344,19 @@ class lC_LocalUpgrader extends lC_Upgrader {
         $Qso->bindInt  (':products_id', $option['products_id']);
         $Qso->execute();*/
         
-        $tQry = $target_db->query('INSERT INTO :products_simple_options_values (products_id,
-                                                                                customers_group_id, 
-                                                                                values_id, 
-                                                                                options_id, 
-                                                                                price_modifier) 
-                                                                        VALUES (:products_id,
-                                                                                :customers_group_id, 
-                                                                                :values_id, 
-                                                                                :options_id, 
-                                                                                :price_modifier)');
+        $tQry = $target_db->query('INSERT INTO :table_products_simple_options_values (products_id,
+                                                                                      customers_group_id, 
+                                                                                      values_id, 
+                                                                                      options_id, 
+                                                                                      price_modifier) 
+                                                                              VALUES (:products_id,
+                                                                                      :customers_group_id, 
+                                                                                      :values_id, 
+                                                                                      :options_id, 
+                                                                                      :price_modifier)');
 
-        $tQry->bindTable(':products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
+        $tQry->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
+        
         $tQry->bindInt  (':products_id'       , $value['products_id']);
         $tQry->bindInt  (':customers_group_id', $value['customers_group_id']);
         $tQry->bindInt  (':values_id'         , $value['values_id']);
@@ -4384,7 +4368,6 @@ class lC_LocalUpgrader extends lC_Upgrader {
           $this->_msg = $target_db->getError();
           return false;
         }
-        $iCnt++;
       }
 
       $Qchk->freeResult();
@@ -4392,40 +4375,63 @@ class lC_LocalUpgrader extends lC_Upgrader {
     
     // END LOAD PRODUCTS SIMPLE OPTIONS VALUES TO TARGET DB
     
-    // ########## Added for text_field options
+    // Added for text_field options
+    $stfQry = $source_db->query('SELECT products_options_sort_order FROM products_options WHERE options_type = :options_type');
+    $stfQry->bindInt(':options_type', 4);
+    $stfQry->execute();
     
-    foreach ($text_field_data as $text_field) {
-      $pvvQry = $target_db->query('INSERT INTO :table_products_variants_values (languages_id, 
-                                                                                products_variants_groups_id, 
-                                                                                title, 
-                                                                                sort_order) 
-                                                                        VALUES (:languages_id, 
-                                                                                :products_variants_groups_id, 
-                                                                                :title, 
-                                                                                :sort_order)');
+    if ($stfQry->numberOfRows() > 0) {      
+      while ($stfQry->next()) { 
+        $stftQry = $source_db->query('SELECT products_options_name FROM products_options_text WHERE products_options_text_id = :products_options_text_id AND language_id = :language_id');
+        $stftQry->bindInt(':products_options_text_id', 4);
+        $stftQry->bindInt(':language_id', $this->_languages_id_default);
+        $stftQry->execute();
+        
+        while ($stftQry->next()) {
+          $ttfQry = $target_db->query('INSERT INTO :table_products_variants_values (languages_id,
+                                                                                    products_variants_groups_id, 
+                                                                                    title, 
+                                                                                    sort_order) 
+                                                                            VALUES (:languages_id,
+                                                                                    :products_variants_groups_id, 
+                                                                                    :title, 
+                                                                                    :sort_order)');          
+          
+          $ttfQry->bindTable(':table_products_variants_values', TABLE_PRODUCTS_VARIANTS_VALUES);
+          
+          $ttfQry->bindInt  (':languages_id'               , $this->_languages_id_default);
+          $ttfQry->bindInt  (':products_variants_groups_id', 4);
+          $ttfQry->bindValue(':title'                      , $stftQry->value('products_options_name'));
+          $ttfQry->bindInt  (':sort_order'                 , $stfQry->value('products_options_sort_order'));
+          $ttfQry->execute();
+        
+          $text_field_groups_id = $target_db->nextID();
+        
+          if ($target_db->isError()) {
+            $this->_msg = $target_db->getError();
+            return false;
+          }
+        }
 
-      $pvvQry->bindTable(':table_products_variants_values', TABLE_PRODUCTS_VARIANTS_VALUES);
-      $pvvQry->bindInt  (':languages_id'               , $this->_languages_id_default);
-      $pvvQry->bindInt  (':products_variants_groups_id', $text_field['products_variants_groups_id']);
-      $pvvQry->bindValue(':title'                      , $text_field['title']);
-      $pvvQry->bindInt  (':sort_order'                 , $text_field['sort_order']);
-      $pvvQry->execute();
-      
-      $sovID = $target_db->nextID();        
-      $sovQry = $target_db->query('UPDATE :table_products_simple_options_values SET values_id = :values_id, products_id = :products_id WHERE options_id = :options_id');
-
-      $sovQry->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
-      $sovQry->bindInt  (':values_id' , $sovID);
-      $sovQry->bindInt  (':products_id' , $text_field['products_id']);
-      $sovQry->bindInt  (':options_id', $text_field['products_variants_groups_id']);
-      $sovQry->execute();
+        $stftQry->freeResult();
+      }
     }
 
-    // added for removing duplicate simple options values entries
-    $clean = $target_db->query('ALTER IGNORE TABLE :products_simple_options_values ADD UNIQUE INDEX (products_id, values_id, options_id)');
-    $clean->bindTable(':products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
-    $clean->execute();         
+    $stfQry->freeResult();
     
+    $ttfsovQry = $target_db->query('UPDATE :table_products_simple_options_values SET values_id = :values_id WHERE options_id = :options_id');
+    
+    $ttfsovQry->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
+          
+    $ttfsovQry->bindInt(':values_id', $text_field_groups_id);
+    $ttfsovQry->bindInt(':options_id', 4);
+    $ttfsovQry->execute();
+        
+    if ($target_db->isError()) {
+      $this->_msg = $target_db->getError();
+      return false;
+    }
+          
     // END DISABLE AUTO INCREMENT WHEN PRIMARY KEY = 0
     // $tQry = $target_db->query('SET GLOBAL sql_mode = ""');
     // $tQry->execute();
@@ -6147,33 +6153,35 @@ class lC_LocalUpgrader extends lC_Upgrader {
         $vvQry->freeResult();
       }
       
-      /*foreach ($text_field_data as $text_field) {
-        $pvvQry = $target_db->query('INSERT INTO :table_products_variants_values (languages_id, 
-                                                                                  products_variants_groups_id, 
-                                                                                  title, 
-                                                                                  sort_order) 
-                                                                          VALUES (:languages_id, 
-                                                                                  :products_variants_groups_id, 
-                                                                                  :title, 
-                                                                                  :sort_order)');
-
-        $pvvQry->bindTable(':table_products_variants_values', TABLE_PRODUCTS_VARIANTS_VALUES);
-        $pvvQry->bindInt  (':languages_id'                  , $language['languages_id']);
-        $pvvQry->bindInt  (':products_variants_groups_id'   , $text_field['products_variants_groups_id']);
-        $pvvQry->bindValue(':title'                         , $text_field['title']);
-        $pvvQry->bindInt  (':sort_order'                    , $text_field['sort_order']);
-        $pvvQry->execute();
-        
-        $sovID = $target_db->nextID();        
-        $sovQry = $target_db->query('UPDATE :table_products_simple_options_values SET values_id = :values_id, products_id = :products_id WHERE options_id = :options_id');
-
-        $sovQry->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
-        $sovQry->bindInt  (':values_id'                           , $sovID);
-        $sovQry->bindInt  (':products_id'                         , $text_field['products_id']);
-        $sovQry->bindInt  (':options_id'                          , $text_field['products_variants_groups_id']);
-        $sovQry->execute();
-      }*/
+      // Added for text_field options
+      $stfQry = $source_db->query('SELECT products_options_sort_order FROM products_options WHERE options_type = :options_type');
+      $stfQry->bindInt(':options_type', 4);
+      $stfQry->execute();
       
+      if ($stfQry->numberOfRows() > 0) {      
+        while ($stfQry->next()) { 
+          $stftQry = $source_db->query('SELECT products_options_name FROM products_options_text WHERE products_options_text_id = :products_options_text_id AND language_id = :language_id');
+          $stftQry->bindInt(':products_options_text_id', 4);
+          $stftQry->bindInt(':language_id', $language['languages_id']);
+          $stftQry->execute();
+          
+          while ($stftQry->next()) {
+            $ttfQry = $target_db->query('UPDATE :table_products_variants_values SET title = :title WHERE products_variants_groups_id = :products_variants_groups_id AND languages_id = :languages_id');          
+            
+            $ttfQry->bindTable(':table_products_variants_values', TABLE_PRODUCTS_VARIANTS_VALUES);
+            
+            $ttfQry->bindInt  (':languages_id'               , $language['languages_id']);
+            $ttfQry->bindInt  (':products_variants_groups_id', 4);
+            $ttfQry->bindValue(':title'                      , $stftQry->value('products_options_name'));
+            $ttfQry->execute();
+          
+            if ($target_db->isError()) {
+              $this->_msg = $target_db->getError();
+              return false;
+            }
+          }
+        }
+      }
     }
     
     // END LOAD LANGUAGES TO TARGET DB 
