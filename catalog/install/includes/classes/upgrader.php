@@ -6116,11 +6116,13 @@ class lC_LocalUpgrader extends lC_Upgrader {
           $vvnQry->bindInt(':language_id', $language['languages_id']);
           $vvnQry->execute(); 
           
-          $tQry = $target_db->query('INSERT INTO :table_products_variants_values (languages_id, 
+          $tQry = $target_db->query('INSERT INTO :table_products_variants_values (id, 
+                                                                                  languages_id, 
                                                                                   products_variants_groups_id, 
                                                                                   title, 
                                                                                   sort_order) 
-                                                                          VALUES (:languages_id, 
+                                                                          VALUES (:id, 
+                                                                                  :languages_id, 
                                                                                   :products_variants_groups_id, 
                                                                                   :title, 
                                                                                   :sort_order)');
@@ -6155,19 +6157,19 @@ class lC_LocalUpgrader extends lC_Upgrader {
                                                                                   :sort_order)');
 
         $pvvQry->bindTable(':table_products_variants_values', TABLE_PRODUCTS_VARIANTS_VALUES);
-        $pvvQry->bindInt  (':languages_id'               , $language['languages_id']);
-        $pvvQry->bindInt  (':products_variants_groups_id', $text_field['products_variants_groups_id']);
-        $pvvQry->bindValue(':title'                      , $text_field['title']);
-        $pvvQry->bindInt  (':sort_order'                 , $text_field['sort_order']);
+        $pvvQry->bindInt  (':languages_id'                  , $language['languages_id']);
+        $pvvQry->bindInt  (':products_variants_groups_id'   , $text_field['products_variants_groups_id']);
+        $pvvQry->bindValue(':title'                         , $text_field['title']);
+        $pvvQry->bindInt  (':sort_order'                    , $text_field['sort_order']);
         $pvvQry->execute();
         
         $sovID = $target_db->nextID();        
         $sovQry = $target_db->query('UPDATE :table_products_simple_options_values SET values_id = :values_id, products_id = :products_id WHERE options_id = :options_id');
 
         $sovQry->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
-        $sovQry->bindInt  (':values_id' , $sovID);
-        $sovQry->bindInt  (':products_id' , $text_field['products_id']);
-        $sovQry->bindInt  (':options_id', $text_field['products_variants_groups_id']);
+        $sovQry->bindInt  (':values_id'                           , $sovID);
+        $sovQry->bindInt  (':products_id'                         , $text_field['products_id']);
+        $sovQry->bindInt  (':options_id'                          , $text_field['products_variants_groups_id']);
         $sovQry->execute();
       }*/
       
