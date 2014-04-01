@@ -49,7 +49,7 @@ class lC_Variants_text_field extends lC_Variants_Abstract {
       $string = '';
       foreach ( $data['data'] as $field ) {
         $string .= '<div class="form-group margin-left">
-                      <label class="label-control">' . $data['title']  . '</label>
+                      <label class="label-control small-margin-top">' . $data['title']  . '</label>
                       <input type="text" class="form-control display-inline two-third-width mid-margin-left mid-margin-right float-right" name="variants[' . $data['group_id'] . '][' . $field['id'] . ']" id="variants_' . $data['group_id'] . '_' . $field['id'] . '">
                     </div>';
       }
