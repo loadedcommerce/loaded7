@@ -6063,7 +6063,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
           $vgnQry = $source_db->query('SELECT products_options_name FROM products_options_text WHERE products_options_text_id = :products_options_text_id AND language_id = :language_id');
           $vgnQry->bindInt(':products_options_text_id', $vgQry->value('id'));
           $vgnQry->bindInt(':language_id', $language['languages_id']);
-          $vgnQry->execute(); 
+          $vgnQry->execute();
           
           $tQry = $target_db->query('INSERT INTO :table_products_variants_groups (id, 
                                                                                   languages_id, 
@@ -6077,6 +6077,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
                                                                                   :module)');
 
           $tQry->bindTable(':table_products_variants_groups', TABLE_PRODUCTS_VARIANTS_GROUPS);
+          
           $tQry->bindInt  (':id'          , $vgQry->value('id'));
           $tQry->bindInt  (':languages_id', $language['languages_id']);
           $tQry->bindValue(':title'       , $vgnQry->value('products_options_name'));
