@@ -6,7 +6,7 @@
   @copyright  Portions Copyright 2003 osCommerce
   @copyright  Template built on Developr theme by DisplayInline http://themeforest.net/user/displayinline under Extended license 
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
-  @version    $Id: options_subproducts.inc.php v1.0 2014-01-24 datazen $
+  @version    $Id: options_multisku.inc.php v1.0 2014-01-24 datazen $
 */
 global $lC_Language, $pInfo; 
 ?>
