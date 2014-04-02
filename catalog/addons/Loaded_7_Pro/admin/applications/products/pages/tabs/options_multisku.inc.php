@@ -140,6 +140,20 @@ function toggleComboOptionsButtonDisable(mode) {
 function revertComboOptionsSetup() {
   $('.new-option').remove();
   $('#button-revert').hide();  
+  
+  var customerGroups = <?php echo json_encode(lC_Customer_groups_Admin::getAll()); ?>;
+  $.each(customerGroups.entries, function( key, val ) {
+    if(!$("#tbody-combo-options-pricing-" + val.customers_group_id).html().replace(/ /g,'')) {
+       $('#options-pricing-entries-div-' + val.customers_group_id + ' .combo-options-pricing-container').remove();
+       $('#options-pricing-entries-div-' + val.customers_group_id + ' .no-options-defined').remove();
+       toggleSubproductsButtonDisable(1);
+    } else {
+      toggleSubproductsButtonDisable(0);
+    }
+    if(!$("#options-pricing-entries-div-" + val.customers_group_id).html().replace(/ /g,'')) {
+      $('#options-pricing-entries-div-' + val.customers_group_id).html('<table class="simple-table no-options-defined"><tbody id="tbody-options-pricing-' + val.customers_group_id + '"><tr id="no-options-' + val.customers_group_id + '"><td><?php echo $lC_Language->get('text_no_options_defined'); ?></td></tr></tbody></table>');
+    }
+  });   
 }
 
 function getSubProductsRows() {
@@ -147,7 +161,7 @@ function getSubProductsRows() {
   var editLink = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'products=PID&subproduct=1&cID=' . $_GET['cID'] . '&action=save'); ?>'; 
   var output = '';
   $.each(subproducts, function(key, val) {
-    output += '<tr id="tr-' + key + '">'+
+    output += '<tr id="trsp-' + key + '">'+
               '  <td><input type="text" class="input" onblur="addSubProductsRow(true, this, \'' + key + '\');" onfocus="this.select();" tabindex="' + key + '1" id="sub_products_name_' + key + '" name="sub_products_name[' + key + ']" value="' + val.products_name + '"></td>'+
               '  <td class="align-center align-middle"><input type="hidden" name="sub_products_id[' + key + ']"  value="' + val.products_id + '">'+
               '    <a onclick="setSubProductDefault(\'' + key + '\');" class="with-tooltip" title="<?php echo $lC_Language->get('text_sub_products_set_as_default'); ?>" href="javascript:void(0);"><span id="sub_products_default_span_' + key + '" class="icon-star icon-size2 margin-right ' + ((val.is_subproduct == 2) ? "icon-orange" : "icon-grey") + '"></span></a>'+
@@ -174,16 +188,16 @@ function getSubProductsRows() {
 
 function addSubProductsRow(include_price_row, e, key) {
   if($("#subProductsTable tbody").children().length > 0) {
-    var id = $('#subProductsTable tr:last').attr('id').replace('tr-', '');
+    var id = $('#subProductsTable tr:last').attr('id').replace('trsp-', '');
   } else {
     var id = 0;
   }
-  if (e.value != undefined) $('#name-td-' + key).text(e.value);                
+  if (e.value != undefined) $('#sp-name-td-' + key).text(e.value);                
   if($('#sub_products_name_' + id).val() == '') return false;
 
   var prevName = $('#sub_products_name_' + id).val();
   var nextId = parseInt(id) + 1;
-  var row = '<tr id="tr-' + nextId + '">'+
+  var row = '<tr id="trsp-' + nextId + '">'+
             '  <td><input type="text" class="input" onblur="addSubProductsRow(true, this, \'' + key + '\');" onfocus="this.select();" tabindex="' + nextId + '1" id="sub_products_name_' + nextId + '" name="sub_products_name[' + nextId + ']" value=""></td>'+
             '  <td class="align-center align-middle">'+
             '    <a onclick="setSubProductDefault(\'' + nextId + '\');" class="with-tooltip" title="<?php echo $lC_Language->get('text_sub_products_set_as_default'); ?>" href="javascript:void(0);"><span id="sub_products_default_span_' + nextId + '" class="icon-star icon-size2 margin-right icon-grey"></span></a>'+
@@ -191,10 +205,15 @@ function addSubProductsRow(include_price_row, e, key) {
             '    <input type="hidden" id="sub_products_default_' + nextId + '" name="sub_products_default[' + nextId + ']" class="sub_products_default" value="">'+
             '    <input type="hidden" id="sub_products_status_' + nextId + '" name="sub_products_status[' + nextId + ']" value="1">'+
             '  </td>'+
-            '  <td><input type="text" class="input half-width" onfocus="this.select();" tabindex="' + nextId + '2" name="sub_products_weight[' + nextId + ']" value=""></td>'+
+            '  <td style="white-space:nowrap;">' +
+            '     <div class="inputs" style="display:inline; padding:8px 0;">' +
+            '       <input type="text" class="input-unstyled mid-margin-left" style="width:70%;" onfocus="this.select();" value="0.0000" tabindex="' + nextId + '2" name="sub_products_weight[' + nextId + ']">'+
+            '       <span class="mid-margin-right no-margin-left"><?php echo lC_Weight::getCode(SHIPPING_WEIGHT_UNIT); ?></span>'+
+            '     </div>' +
+            '   </td>' +             
             '  <td><input type="text" class="input half-width" onfocus="this.select();" tabindex="' + nextId + '3" name="sub_products_sku[' + nextId + ']" value=""></td>'+
             '  <td><input type="text" class="input half-width" onfocus="this.select();" tabindex="' + nextId + '4" name="sub_products_qoh[' + nextId + ']" value=""></td>'+
-            '  <td style="white-space:nowrap;"><div class="inputs" style="display:inline; padding:8px 0;"><span class="mid-margin-left no-margin-right"><?php echo $lC_Currencies->getSymbolLeft(); ?></span><input type="text" class="input-unstyled" style="width:87%;" onchange="$(\'#sub_products_price_1_' + nextId + '\').val(this.value);" onfocus="this.select();" tabindex="' + nextId + '5" name="sub_products_price[' + nextId + ']" value="0.0000"></div></td>'+
+            '  <td style="white-space:nowrap;"><div class="inputs" style="display:inline; padding:8px 0;"><span class="mid-margin-left no-margin-right"><?php echo $lC_Currencies->getSymbolLeft(); ?></span><input type="text" class="input-unstyled" style="width:87%;" onchange="$(\'#sub_products_price_1_' + nextId + '\').val(this.value);" onfocus="this.select();" tabindex="' + nextId + '5" name="sub_products_price[' + nextId + ']" id="sub_products_price_' + nextId + '" value="0.00"></div></td>'+
             '  <td class="align-center align-middle">'+
             '    <input style="display:none;" type="file" id="sub_products_image_' + nextId + '" name="sub_products_image[' + nextId + ']" onchange="setSubProductImage(\'' + nextId + '\');" multiple />'+
             '    <span class="icon-camera icon-size2 icon-grey cursor-pointer with-tooltip" title="<?php echo $lC_Language->get('text_sub_products_select_image'); ?>" id="fileSelectButton-' + nextId + '" onclick="document.getElementById(\'sub_products_image_' + nextId + '\').click();"></span>'+
@@ -208,32 +227,60 @@ function addSubProductsRow(include_price_row, e, key) {
   if($("#subProductsTable tbody").children().length > 1) toggleComboOptionsButtonDisable(0);  
    
   if (include_price_row == '1') {       
-    var ok = '<?php echo (defined('ADDONS_SYSTEM_LOADED_7_PRO_STATUS') && ADDONS_SYSTEM_LOADED_7_PRO_STATUS == '1') ? '1' : '0'; ?>';
     var groups = <?php echo json_encode(lC_Customer_groups_Admin::getAll()); ?>;
+    var defaultGroup = '<?php echo DEFAULT_CUSTOMERS_GROUP_ID; ?>';
     $.each(groups.entries, function( key, val ) {
+      var noOptions = $("#tbody-subproducts-pricing-" + val.customers_group_id).length;
+      if (noOptions == 0) {
+        var pTable = '<div class="subproducts-pricing-container">' +
+                     '  <div class="big-text underline margin-top" style="padding-bottom:8px;"><?php echo $lC_Language->get('text_sub_products'); ?></div>' +
+                     '  <table class="simple-table subproducts-pricing-table">' +
+                     '    <tbody id="tbody-subproducts-pricing-' + val.customers_group_id + '"></tbody>' +
+                     '  </table>';                     
+                     '</div>'; 
+                                         
+        $('#options-pricing-entries-div-' + val.customers_group_id).append(pTable);                         
+      } 
+
       $('#no-options-' + val.customers_group_id).remove();
-      var prow = '<tr class="trp-' + nextId + '">'+
-                 '  <td id="name-td-' + nextId + '" class="element">' + prevName + '</td>'+
+      var prow = '<tr class="trspp-' + id + '">'+
+                 '  <td id="sp-name-td-' + id + '" class="element">' + prevName + '</td>'+
                  '  <td>'+
-                 '    <div class="inputs' + ((val.customers_group_id == '1' || ok == '1') ? '' : ' disabled') + '" style="display:inline; padding:8px 0;">'+
+                 '    <div class="inputs' + ((val.customers_group_id == defaultGroup) ? '' : ' disabled') + '" style="display:inline; padding:8px 0;">'+
                  '      <span class="mid-margin-left no-margin-right"><?php echo $lC_Currencies->getSymbolLeft(); ?></span>'+
-                 '      <input type="text" class="input-unstyled" onfocus="$(this).select()" value="0.0000" id="sub_products_price_' + val.customers_group_id + '_' + id + '" name="sub_products_price[' + val.customers_group_id + '][' + id + ']" ' + ((val.customers_group_id == '1' || ok == '1') ? '' : ' DISABLED') + '>'+
+                 '      <input type="text" class="input-unstyled" onchange="$(\'#sub_products_price_' + id + '\').val(this.value);" onfocus="$(this).select()" value="0.00" id="sub_products_price_' + val.customers_group_id + '_' + id + '" name="sub_products_price[' + val.customers_group_id + '][' + id + ']" ' + ((val.customers_group_id == defaultGroup) ? '' : ' DISABLED') + '>'+
                  '    </div>'+
                  '  </td>'+
-                 '</tr>';                    
+                 '</tr>';  
                  
       $('#tbody-subproducts-pricing-' + val.customers_group_id).append(prow);
+      
     });
   }
 }   
 
 function removeSubProductRow(id) {
-  $('#tr-' + id).remove();
-  $('.trp-' + id).remove();
-  if($("#subProductsTable tbody").children().length == 0) { 
-    addSubProductsRow(false, false, false);
-    toggleComboOptionsButtonDisable(1);
-  }
+  $.modal.confirm('<?php echo $lC_Language->get('text_remove_row'); ?>', function() {
+    $('#trsp-' + id).remove();
+    $('.trspp-' + id).remove();
+    if($("#subProductsTable tbody").children().length == 0) { 
+      addSubProductsRow(false, false, false);
+      toggleComboOptionsButtonDisable(1);
+    }
+    
+    var customerGroups = <?php echo json_encode(lC_Customer_groups_Admin::getAll()); ?>;
+    $.each(customerGroups.entries, function( key, val ) {
+      if(!$("#tbody-subproducts-pricing-" + val.customers_group_id).html().replace(/ /g,'')) {
+         $('#options-pricing-entries-div-' + val.customers_group_id + ' .subproducts-pricing-container').remove();
+         $('#options-pricing-entries-div-' + val.customers_group_id + ' .no-options-defined').remove();
+      }
+      if(!$("#options-pricing-entries-div-" + val.customers_group_id).html().replace(/ /g,'')) {
+        $('#options-pricing-entries-div-' + val.customers_group_id).html('<table class="simple-table no-options-defined"><tbody id="tbody-options-pricing-' + val.customers_group_id + '"><tr id="no-options-' + val.customers_group_id + '"><td><?php echo $lC_Language->get('text_no_options_defined'); ?></td></tr></tbody></table>');
+      }
+    });
+    }, function() {
+      return false;
+  });  
 }
 
 function setSubProductDefault(id) {
@@ -270,18 +317,21 @@ function removeComboOptionsRow(id) {
   $.modal.confirm('<?php echo $lC_Language->get('text_remove_row'); ?>', function() {
     $('#trmso-' + id).remove();
     $('.trpmso-' + id).remove();
-  
-	  // check if no rows and activate/deactivate sub products button
-	  var hasInfo = $('#comboOptionsTbody').children().length;
-	  if (hasInfo == 0) {
-      toggleSubproductsButtonDisable(1);
-      var groups = <?php echo json_encode(lC_Customer_groups_Admin::getAll()); ?>;
-      $.each(groups.entries, function( key, val ) {      
-        $('#combo-options-pricing-container-' + val.customers_group_id).html("");
-      });
-    } else {
-      toggleSubproductsButtonDisable(0); 
-	  }
+    
+    var customerGroups = <?php echo json_encode(lC_Customer_groups_Admin::getAll()); ?>;
+    $.each(customerGroups.entries, function( key, val ) {
+      if(!$("#tbody-combo-options-pricing-" + val.customers_group_id).html().replace(/ /g,'')) {
+         $('#options-pricing-entries-div-' + val.customers_group_id + ' .combo-options-pricing-container').remove();
+         $('#options-pricing-entries-div-' + val.customers_group_id + ' .no-options-defined').remove();
+         toggleSubproductsButtonDisable(1);
+      } else {
+        toggleSubproductsButtonDisable(0);
+      }
+      if(!$("#options-pricing-entries-div-" + val.customers_group_id).html().replace(/ /g,'')) {
+        $('#options-pricing-entries-div-' + val.customers_group_id).html('<table class="simple-table no-options-defined"><tbody id="tbody-options-pricing-' + val.customers_group_id + '"><tr id="no-options-' + val.customers_group_id + '"><td><?php echo $lC_Language->get('text_no_options_defined'); ?></td></tr></tbody></table>');
+      }
+    });    
+
   }, function() {
     return false;
   }); 	

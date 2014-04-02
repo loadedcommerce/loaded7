@@ -206,33 +206,34 @@ function addComboOption(editRow) {
              var defaultGroup = '<?php echo DEFAULT_CUSTOMERS_GROUP_ID; ?>';
              var customerGroups = <?php echo json_encode(lC_Customer_groups_Admin::getAll()); ?>;
              var lastID = 0;
-             var shown = false;
              $.each(customerGroups.entries, function(key, val) {
                var customers_group_id = val.customers_group_id;
-               var noOptions = ($("#combo-options-pricing-container-" + customers_group_id).text());
 
                if (lastID != customers_group_id) {
                  shown = false;
                  lastID = customers_group_id;                       
                }
-
-               if (noOptions == '' && shown == false) {
-                 var pTable = '<div class="big-text underline margin-top" style="padding-bottom:8px;"><?php echo $lC_Language->get('text_combo_options'); ?></div>' +
-                              '<table class="simple-table combo-options-pricing-table">' +
-                              '  <tbody id="tbody-combo-options-pricing-' + customers_group_id + '"></tbody>' +
-                              '</table>';
                
-                 $('#combo-options-pricing-container-' + customers_group_id).html(pTable);                         
-                 shown = true;
-               }
-
+               var noOptions = $("#tbody-combo-options-pricing-" + val.customers_group_id).length;
+               if (noOptions == 0) {
+                 $('#no-options-' + val.customers_group_id).remove();
+                 var pTable = '<div class="combo-options-pricing-container">' +
+                              '  <div class="big-text underline margin-top" style="padding-bottom:8px;"><?php echo $lC_Language->get('text_combo_options'); ?></div>' +
+                              '  <table class="simple-table combo-options-pricing-table">' +
+                              '    <tbody id="tbody-combo-options-pricing-' + val.customers_group_id + '"></tbody>' +
+                              '  </table>' +
+                              '</div>';
+                                                  
+                 $('#options-pricing-entries-div-' + val.customers_group_id).append(pTable);                         
+               }                
+               
                var pTbody = '';          
                pTbody += '<tr class="trpmso-' + cnt + ' new-option">' +
-                         '  <td id="name-td-' + customers_group_id + '-' + cnt + '" class="element">' + newText + '<span class="icon-light-up icon-orange mid-margin-left with-tooltip cursor-pointer" title="<?php echo $lC_Language->get('text_new_option_set_unsaved'); ?>"></span></td>' +
+                         '  <td id="co-name-td-' + customers_group_id + '-' + cnt + '" class="element">' + newText + '<span class="icon-light-up icon-orange mid-margin-left with-tooltip cursor-pointer" title="<?php echo $lC_Language->get('text_new_option_set_unsaved'); ?>"></span></td>' +
                          '  <td>' +
                          '    <div class="inputs' + ((customers_group_id == defaultGroup) ? '' : ' disabled') + '" style="display:inline; padding:8px 0;">' +
                          '      <span class="mid-margin-left no-margin-right">' + symbolLeft + '</span>' +
-                         '      <input type="text" class="input-unstyled" onchange="$(\'#variants_' + cnt + '_price\').val(this.value);" onfocus="$(this).select()" value="' + ((customers_group_id == defaultGroup) ? price : parseFloat(0).toFixed(decimals)) + '" id="variants_' + cnt + '_price_' + customers_group_id + '" id="variants_' + cnt + '_price_' + customers_group_id + '" name="variants[' + cnt + '][price][' + customers_group_id + ']"' + ((customers_group_id == defaultGroup) ? '' : ' READONLY') + '>' +
+                         '      <input type="text" class="input-unstyled" onchange="$(\'#variants_' + cnt + '_price\').val(this.value);" onfocus="$(this).select()" value="' + ((customers_group_id == defaultGroup) ? price : parseFloat(0).toFixed(decimals)) + '" id="variants_' + cnt + '_price_' + customers_group_id + '" name="variants[' + cnt + '][price][' + customers_group_id + ']"' + ((customers_group_id == defaultGroup) ? '' : ' READONLY') + '>' +
                          '    </div>' +
                          '  </td>' +
                          '</tr>'; 

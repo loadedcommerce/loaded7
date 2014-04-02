@@ -21,6 +21,10 @@ body.dragging, body.dragging * { cursor: move !important; }
 .simple-options-pricing-table .element { padding-left:24px; vertical-align:middle; width:100px; }
 
 .combo-options-pricing-table .element { width:137px; }
+.combo-options-pricing-table input { width:58px; }
+
+.subproducts-pricing-table .element { width:136px; vertical-align:middle; }
+.subproducts-pricing-table input { width:58px; }
 
 .accordion > dt { 
   background: -webkit-gradient(linear, left top, left bottom, from(#565656), to(#404040));

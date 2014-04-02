@@ -477,7 +477,14 @@ class lC_Product {
     
     return $data;
   }  
-  
+ /*
+  * Retrieve quantity price breaks data
+  *
+  * @param integer $products_id       The product id
+  * @param integer $customers_group_id The customer group id
+  * @access public
+  * @return array
+  */   
   public function getPriceFormated($with_special = false) {
     global $lC_Services, $lC_Specials, $lC_Currencies;
     

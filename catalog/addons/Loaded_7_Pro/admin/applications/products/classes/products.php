@@ -81,29 +81,29 @@ class lC_Products_Admin_Pro extends lC_Products_Admin {
     
     // subproducts
     if ( $error === false ) {
-      if (isset($data['sub_products_name'])) {
-
-        if (is_numeric($id)) {
-          // first delete the subproducts that have been removed and not in the post data
-          $Qchk = $lC_Database->query('select products_id from :table_products where parent_id = :parent_id');
-          $Qchk->bindTable(':table_products', TABLE_PRODUCTS);
-          $Qchk->bindInt(':parent_id', $products_id);
-          $Qchk->execute();
-          
-          while( $Qchk->next() ) {
-            if (! @in_array($Qchk->valueInt('products_id'), $data['sub_products_id'])) {
-              self::delete($Qchk->valueInt('products_id'));              
-            }
+      
+      if (isset($data['sub_products_id'])) {
+        // always delete the subproducts that have been removed and not in the post data
+        $Qchk = $lC_Database->query('select products_id from :table_products where parent_id = :parent_id');
+        $Qchk->bindTable(':table_products', TABLE_PRODUCTS);
+        $Qchk->bindInt(':parent_id', $products_id);
+        $Qchk->execute();
+        
+        while( $Qchk->next() ) {
+          if (! @in_array($Qchk->valueInt('products_id'), $data['sub_products_id'])) {
+            self::delete($Qchk->valueInt('products_id'));              
           }
-        } else { 
-          // delete any possible ghosts for sanity
-          $Qdel = $lC_Database->query('delete from :table_products where parent_id = :products_id and is_subproduct = :is_subproduct');
-          $Qdel->bindTable(':table_products', TABLE_PRODUCTS);
-          $Qdel->bindInt(':parent_id', $products_id);
-          $Qdel->bindInt(':is_subproduct', 1);
-          $Qdel->execute();          
-        }        
-
+        }
+      } else { 
+        // delete any possible ghosts for sanity
+        $Qdel = $lC_Database->query('delete from :table_products where parent_id = :parent_id and is_subproduct = :is_subproduct');
+        $Qdel->bindTable(':table_products', TABLE_PRODUCTS);
+        $Qdel->bindInt(':parent_id', $products_id);
+        $Qdel->bindInt(':is_subproduct', 1);
+        $Qdel->execute(); 
+      }
+      
+      if (isset($data['sub_products_name'])) {
         for ($i=0; $i < sizeof($data['sub_products_name']); $i++) {
           if ($data['sub_products_name'][$i] == '') continue;
 
@@ -384,7 +384,7 @@ class lC_Products_Admin_Pro extends lC_Products_Admin {
                   
       if (isset($pInfo) && is_array($pInfo->get('simple_options'))) {                  
         $content .= '<div class="simple-options-pricing-container">' .
-                    '  <div class="big-text underline" style="padding-bottom:8px;">' . $lC_Language->get('text_simple_options') . '</div>' .
+                    '  <div class="big-text underline margin-top" style="padding-bottom:8px;">' . $lC_Language->get('text_simple_options') . '</div>' .
                     '  <table class="simple-table simple-options-pricing-table">' .
                     '    <tbody id="tbody-simple-options-pricing-' . $value['customers_group_id'] . '">' . lC_Products_Admin::getSimpleOptionsPricingTbody($pInfo->get('simple_options'), $value['customers_group_id']) . '</tbody>' .
                     '  </table>' . 
@@ -403,7 +403,7 @@ class lC_Products_Admin_Pro extends lC_Products_Admin {
       } 
       
       if (isset($pInfo) && $pInfo->get('has_children') == '1') {
-        $content .= '<div id="combo-options-pricing-container-' . $value['customers_group_id'] . '">' .    
+        $content .= '<div class="combo-options-pricing-container">' .    
                     '  <div class="big-text underline margin-top" style="padding-bottom:8px;">' . $lC_Language->get('text_combo_options') . '</div>' .
                     '  <table class="simple-table combo-options-pricing-table">' .
                     '    <tbody id="tbody-combo-options-pricing-' . $value['customers_group_id'] . '">' . lC_Products_Admin_Pro::getComboOptionsPricingTbody($pInfo, $value['customers_group_id']) . '</tbody>' .
@@ -705,7 +705,7 @@ class lC_Products_Admin_Pro extends lC_Products_Admin {
         
         if ((isset($title) && $title != NULL)) {
           $tbody .= '<tr class="trpmso-' . $cnt . '">' .
-                    '  <td id="name-td-' . $cnt . '" class="element">' . $title . '</td>' . 
+                    '  <td id="co-name-td-' . $cnt . '" class="element">' . $title . '</td>' . 
                     '  <td>' .
                     '    <div class="inputs' . (($customers_group_id == DEFAULT_CUSTOMERS_GROUP_ID && $ok) ? '' : ' disabled') . '" style="display:inline; padding:8px 0;">' .
                     '      <span class="mid-margin-left no-margin-right">' . $lC_Currencies->getSymbolLeft() . '</span>' .
@@ -832,12 +832,12 @@ class lC_Products_Admin_Pro extends lC_Products_Admin {
       foreach ($pInfo->get('subproducts') as $key => $sub) {
         if ((isset($sub['products_name']) && $sub['products_name'] != NULL)) {
 
-          $tbody .= '<tr class="trp-' . $cnt . '">' .
-                    '  <td id="name-td-' . $cnt . '" class="element">' . $sub['products_name'] . '</td>' . 
+          $tbody .= '<tr class="trspp-' . $cnt . '">' .
+                    '  <td id="sp-name-td-' . $cnt . '" class="element">' . $sub['products_name'] . '</td>' . 
                     '  <td>' .
                     '    <div class="inputs' . (($customers_group_id == '1' || $ok) ? '' : ' disabled') . '" style="display:inline; padding:8px 0;">' .
                     '      <span class="mid-margin-left no-margin-right">' . $lC_Currencies->getSymbolLeft() . '</span>' .
-                    '      <input type="text" class="input-unstyled" onfocus="$(this).select()" value="' . $sub['products_price'] . '" id="sub_products_price_' . $customers_group_id . '_' . $cnt . '" name="sub_products_price[' . $customers_group_id . '][' . $cnt . ']" ' . (($customers_group_id == '1' || $ok) ? '' : ' DISABLED') . '>' .
+                    '      <input type="text" class="input-unstyled" onfocus="$(this).select()" value="' . number_format($sub['products_price'], DECIMAL_PLACES) . '" id="sub_products_price_' . $customers_group_id . '_' . $cnt . '" name="sub_products_price[' . $customers_group_id . '][' . $cnt . ']" ' . (($customers_group_id == '1' || $ok) ? '' : ' DISABLED') . '>' .
                     '    </div>' .
                     '  </td>' .
                     '</tr>';

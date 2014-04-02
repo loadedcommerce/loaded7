@@ -1685,7 +1685,7 @@ class lC_Products_Admin {
                     '  <td width="16px" style="cursor:move;" class="dragsort"><span class="icon-list icon-grey icon-size2"></span></td>' .
                     '  <td width="16px" style="cursor:pointer;" onclick="toggleSimpleOptionsRow(\'#drope' . $so['options_id'] . '\');"><span id="drope' . $so['options_id'] . '_span" class="toggle-icon icon-squared-plus icon-grey icon-size2"></span></td>' .
                     '  <td width="40%">' . $so['title'] . '<div class="small-margin-top dropall" id="drope' . $so['options_id'] . '" style="display:none;"><span>' . $items . '</span></div></td>' .
-                    '  <td width="30%" class="hide-below-480">' . ucwords(str_replace('_', ' ', $so['module'])) . '</td>' .
+                    '  <td width="30%" class="hide-below-480">' . $so['module'] . '</td>' .
                     '  <td width="10%" class="sort hide-below-480"></td>' .
                     '  <td width="15%" align="center" style="cursor:pointer;" onclick="toggleSimpleOptionsStatus(this, \'' . $so['options_id'] . '\');">' . $statusIcon . '</td>' .
                     '  <td width="15%" align="right">
@@ -1721,7 +1721,7 @@ class lC_Products_Admin {
                   
       if (isset($pInfo) && is_array($pInfo->get('simple_options'))) {                  
         $content .= '<div class="simple-options-pricing-container">' .
-                    '  <div class="big-text underline" style="padding-bottom:8px;">' . $lC_Language->get('text_simple_options') . '</div>' .
+                    '  <div class="big-text underline margin-top" style="padding-bottom:8px;">' . $lC_Language->get('text_simple_options') . '</div>' .
                     '  <table class="simple-table simple-options-pricing-table">' .
                     '    <tbody id="tbody-simple-options-pricing-' . $value['customers_group_id'] . '">' . lC_Products_Admin::getSimpleOptionsPricingTbody($pInfo->get('simple_options'), $value['customers_group_id']) . '</tbody>' .
                     '  </table>' . 
@@ -1784,7 +1784,7 @@ class lC_Products_Admin {
           $items = '';
           if (is_array($options['values'])) {
             foreach ($options['values'] as $k => $v) {
-              if ($v['options_id'] == $so['options_id'] && $v['products_id'] == $pInfo->get('products_id')) {
+              if ($v['options_id'] == $so['options_id'] && $v['products_id'] == $pInfo->get('products_id') && $customers_group_id == $v['customers_group_id']) {
                 if ($customers_group_id == DEFAULT_CUSTOMERS_GROUP_ID) {
                   $mod = (isset($v['price_modifier']) && !empty($v['price_modifier'])) ? number_format($v['price_modifier'], DECIMAL_PLACES) : '0.00';
                 } else {
@@ -2050,7 +2050,7 @@ class lC_Products_Admin {
   * @access private
   * @return integer
   */  
-  private static function _getLastID() {
+  protected static function _getLastID() {
     global $lC_Database;
     
     $Qchk = $lC_Database->query('select products_id from :table_products order by products_id desc limit 1');

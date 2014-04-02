@@ -64,7 +64,7 @@ function addSimpleOption(editRow) {
       }
     });    
               
-    var row = '<tr id="tre-' + ref + '">'+
+    var row = '<tr id="tre-' + id + '">'+
               '  <td width="16px" style="cursor:move;" class="dragsort"><span class="icon-list icon-grey icon-size2"></span></td>'+
               '  <td width="16px" style="cursor:pointer;" onclick="toggleSimpleOptionsRow(\'#drope' + ref + '\');"><span id="drope' + ref + '_span" class="toggle-icon icon-squared-plus icon-grey icon-size2"></span></td>'+
               '  <td width="40%">' + groupTitle + '<div class="small-margin-top dropall" id="drope' + ref + '" style="display:none;"><span>' + items + '</span></div></td>'+
@@ -81,7 +81,7 @@ function addSimpleOption(editRow) {
               '  <input type="hidden" id="simple_options_group_status_' + id + '" name="simple_options_group_status[' + id + ']" value="1">' + itemsInput +
               '</tr>';              
               
-    var prow = '<tr id="trp-' + ref + '" class="trp-' + ref + '"><td width="100px" class="strong">' + groupTitle + '</td></tr>' + pitemsInput;
+    var prow = '<tr id="trp-' + ref + '" class="trp-' + id + '"><td width="100px" class="strong">' + groupTitle + '</td></tr>' + pitemsInput;
      
     // if the group already exists, remove it before adding
     $("#simpleOptionsTable tr td:contains('" + groupTitle + "')").each(function() {
@@ -97,6 +97,20 @@ function addSimpleOption(editRow) {
     
     var customerGroups = <?php echo json_encode(lC_Customer_groups_Admin::getAll()); ?>; 
     $.each(customerGroups.entries, function(key, val) { 
+      
+      var noOptions = $("#tbody-simple-options-pricing-" + val.customers_group_id).length;
+      if (noOptions == 0) {
+        $('#no-options-' + val.customers_group_id).remove();
+        var pTable = '<div class="simple-options-pricing-container">' +
+                     '  <div class="big-text underline margin-top" style="padding-bottom:8px;"><?php echo $lC_Language->get('text_simple_options'); ?></div>' +
+                     '  <table class="simple-table simple-options-pricing-table">' +
+                     '    <tbody id="tbody-simple-options-pricing-' + val.customers_group_id + '"></tbody>' +
+                     '  </table>' +
+                     '</div>';
+                                         
+        $('#options-pricing-entries-div-' + val.customers_group_id).append(pTable);                         
+      }      
+      
       var regex = new RegExp('CGROUP', 'g');   
       $('#tbody-simple-options-pricing-' + val.customers_group_id).append(prow.replace(regex, val.customers_group_id)); 
     });
