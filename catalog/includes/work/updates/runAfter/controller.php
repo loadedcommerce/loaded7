@@ -204,7 +204,10 @@ class lC_Updates_Admin_run_after extends lC_Updates_Admin {
     }
           
     $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "branding` ADD `homepage_text` VARCHAR(20000) NOT NULL DEFAULT '' AFTER `language_id`;");
-    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "branding` ADD `homepage_text` VARCHAR(20000) NOT NULL DEFAULT '' AFTER `language_id`;");    
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "branding` ADD `homepage_text` VARCHAR(20000) NOT NULL DEFAULT '' AFTER `language_id`;");  
+    
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "products_variants_groups` ADD `visual` VARCHAR( 1024 ) DEFAULT NULL AFTER `title`");  
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "products_variants_groups` ADD `visual` VARCHAR( 1024 ) DEFAULT NULL AFTER `title`");  
       
   }
 }  
