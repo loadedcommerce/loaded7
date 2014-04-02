@@ -34,7 +34,7 @@ class lC_Products_Products extends lC_Template {
 
         break;
       }
-
+      
       if (($id !== false) && lC_Product::checkEntry($id)) {
         $lC_Product = new lC_Product($id);
         $lC_Product->incrementCounter();
