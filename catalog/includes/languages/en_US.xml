@@ -1910,6 +1910,11 @@ Note: If you did not request this action via our password forgotten page, please
       <group>products</group>
     </definition>
     <definition>
+      <key>product_not_available</key>
+      <value><![CDATA[This product is currently not available. The expected date of availability is:]]></value>
+      <group>products</group>
+    </definition>
+    <definition>
       <key>add_to_wishlist</key>
       <value><![CDATA[Add to Wishlist]]></value>
       <group>general</group>
