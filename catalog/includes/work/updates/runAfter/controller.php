@@ -269,6 +269,9 @@ class lC_Updates_Admin_run_after extends lC_Updates_Admin {
 
     $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "updates_log` CHANGE `action` `action` VARCHAR(32) NOT NULL DEFAULT '', CHANGE `result` `result` VARCHAR(128) NOT NULL DEFAULT '', CHANGE `user` `user` VARCHAR(64) NOT NULL DEFAULT '';");
     parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "updates_log` CHANGE `action` `action` VARCHAR(32) NOT NULL DEFAULT '', CHANGE `result` `result` VARCHAR(128) NOT NULL DEFAULT '', CHANGE `user` `user` VARCHAR(64) NOT NULL DEFAULT '';");
+    
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "branding_data` ADD COLUMN `custom_css` text NOT NULL;");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "branding_data` ADD COLUMN `custom_css` text NOT NULL;");
        
   }
 }  
