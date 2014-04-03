@@ -224,6 +224,16 @@ class lC_Product {
           $this->_data['reviews_average_rating'] = round($Qavg->value('rating'));
         }
       }
+      $Qcg = $lC_Database->query('select cg.language_id, cg.customers_group_name, cgd.baseline_discount from :table_customers_groups cg left join :table_customers_groups_data cgd on (cg.customers_group_id = cgd.customers_group_id) where cg.customers_group_id = :customers_group_id');
+      $Qcg->bindTable(':table_customers_groups', TABLE_CUSTOMERS_GROUPS);
+      $Qcg->bindTable(':table_customers_groups_data', TABLE_CUSTOMERS_GROUPS_DATA);
+      $Qcg->bindInt(':customers_group_id', (isset($_SESSION['lC_Customer_data']['customers_group_id'])? $_SESSION['lC_Customer_data']['customers_group_id'] : DEFAULT_CUSTOMERS_GROUP_ID));
+      $Qcg->execute();
+      while ( $Qcg->next() ) {
+        $discount = $Qcg->valueDecimal('baseline_discount');
+        $new_price = $this->_data['price'] - ($this->_data['price']*($discount/100));
+        $this->_data['price'] = $new_price;
+      }
     }
   }
 
