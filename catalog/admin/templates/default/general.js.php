@@ -411,8 +411,55 @@ $(document).ready(function() {
   var resize = '<?php echo (file_exists('../includes/work/resize.tmp')) ? '1' : '0'; ?>';
   var isLoggedIn = '<?php echo (isset($_SESSION['admin']) && empty($_SESSION['admin']) === false) ? '1' : '0'; ?>';
   var module = '<?php echo $lC_Template->getModule(); ?>';
-  if (resize == '1' && isLoggedIn == '1' && module != 'login') {
-    _resizeImages();
+  var remind = '<?php echo ((isset($_SESSION['img_resize_flag']) && $_SESSION['img_resize_flag'] == true) ? 1 : 0); ?>';
+  if (resize == '1' && isLoggedIn == '1' && module != 'login' && remind != 1) {  
+    $.modal({
+        content: '<div id="img-resize" style="padding-bottom:10px;">'+
+                 '  <p><?php echo $lC_Language->get('ms_warning_resize_images'); ?></p>'+
+                 '</div>',
+        title: '<?php echo $lC_Language->get('modal_heading_system_message'); ?>',
+        width: 500,
+        actions: {
+          'Close' : {
+            color: 'red',
+            click: function(win) { win.closeModal(); }
+          }
+        },
+        buttons: {
+          '<?php echo $lC_Language->get('button_never'); ?>': {
+            classes:  'red-gradient glossy',
+            click:    function(win) { 
+              var jsonLink = '<?php echo lc_href_link_admin('rpc.php', 'index' . '&action=removeResizeTmp'); ?>';
+              $.getJSON(jsonLink,
+                function (data) {
+                  return true;
+                }
+              );              
+              win.closeModal(); 
+            }
+          },
+          '<?php echo $lC_Language->get('button_no'); ?>': {
+            classes:  'glossy',
+            click:    function(win) { 
+              var jsonLink = '<?php echo lc_href_link_admin('rpc.php', 'index' . '&action=noRemindResize'); ?>';
+              $.getJSON(jsonLink,
+                function (data) {
+                  return true;
+                }
+              );              
+              win.closeModal(); 
+            }
+          },            
+          '<?php echo $lC_Language->get('button_yes'); ?>': {
+            classes:  'blue-gradient glossy',
+            click:    function(win) {
+              win.closeModal(); 
+              _resizeImages(); 
+            }
+          }
+        },
+        buttonsLowPadding: true
+    });  
   }
   
   // added for api communication health check

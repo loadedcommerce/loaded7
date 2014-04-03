@@ -36,6 +36,7 @@ button_move = Move
 button_new_file = New File
 button_new_folder = New Folder
 button_next = Next
+button_never = Never
 button_ok = OK
 button_orders_invoice = Invoice
 button_orders_packaging_slip = Packaging Slip
@@ -153,6 +154,7 @@ menu_title_get_help = Get Help
 
 modal_heading_profile_edit = Edit Profile
 modal_heading_profile_pass_change = Change Profile Password
+modal_heading_system_message = System Message
 
 ms_success_action_performed = Success: The action was successfully performed.
 ms_success_upload_file_saved = Success: The file uploaded has been saved successfully.
@@ -176,6 +178,7 @@ ms_error_nothing_to_move = You have not selected anything to move!
 ms_error_no_access = You do not have the access level required for this operation!
 ms_error_javascript_not_enabled_for_upload = Please enable JavaScript to use ajax file uploader.
 ms_error_javascript_not_enabled_warning = Your browser does not support JavaScript! Some features won't work as expected.
+ms_warning_resize_images = We have detected that your images need to be resized.  If you have a large amount of images, this process will take some time and can timeout depending on server settings and the number of images to process.<br /><br />For stores with more than 1000 images, we recommend choosing Never at this point and going to the <strong>Admin > Products > Settings > Image Groups</strong> area where you can resize individual groups one at a time.<br /><br /><small class="tag margin-right blue-gradient glossy" style="padding:2px 11px">YES</small>Attempt to process my images now.<br /><br /><small class="tag margin-right silver-gradient glossy" style="padding:2px 14px;">NO</small>Not now, remind me next session.<br /><br /><small class="tag red-gradient glossy margin-right">NEVER</small>Do nothing and do not remind me.
 
 password_change_success = You have successfully updated your password.
 parameter_true = Yes
