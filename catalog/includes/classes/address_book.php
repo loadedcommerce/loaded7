@@ -252,7 +252,7 @@ class lC_AddressBook {
       $result['single'] = '0';
 
     } else {                      
-      $result['zonesHtml'] = lc_draw_label('', null, 'state') . ' ' . lc_draw_input_field('state', (($zone != 'undefined') ? $zone : null), 'placeholder="' . $lC_Language->get('field_customer_state') ./* '" onfocus="this.placeholder = \'\'" onblur="this.placeholder = \'' . $lC_Language->get('field_customer_state') . '\'" */'"class="required form-control" style="width:99.7%;"');
+      $result['zonesHtml'] = lc_draw_label('', null, 'state') . ' ' . lc_draw_input_field('state', (($zone != 'undefined') ? $zone : null), 'placeholder="' . $lC_Language->get('field_customer_state') . '"class="required form-control" style="width:96%; margin-left:0px;"');
       $result['single'] = '1';
     }
     
