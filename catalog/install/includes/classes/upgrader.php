@@ -6067,7 +6067,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
                                     ); 
                                  
                 $languages[] = $language;
-                $cQry->freeResult();
+                $cQry->freeResult(); 
               } 
             }
           }
