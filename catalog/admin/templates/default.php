@@ -573,6 +573,7 @@ if(defined('EDITOR_UPLOADCARE_PUBLIC_KEY') && EDITOR_UPLOADCARE_PUBLIC_KEY != ''
   <script src="../ext/jquery/jquery.details.min.js"></script>
   <script src="../ext/jquery/jquery.blink.js"></script>
   <script src="../ext/jquery/jquery.loadmask.js"></script>
+  <script src="../ext/jquery/jquery.serializeJSON.js"></script>
   <?php if(ENABLE_EDITOR == '1') { ?>
   <script src="../ext/jquery/ckeditor/ckeditor.js"></script>
   <?php } ?>

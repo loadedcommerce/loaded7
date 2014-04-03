@@ -56,6 +56,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
       
       $('.sorted_table').sortable({  
         containerSelector: 'tbody',
+        handle: '.dragsort',        
         itemSelector: 'tr',
         placeholder: '<tr class="placeholder"/>',
         tolerance: '1',
@@ -71,11 +72,12 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
           item.removeClass("dragged");
           item.attr("style", "");
           $("body").removeClass("dragging");
-
+          
+          // re-sort the tables
           _setSimpleOptionsSortOrder();
         }    
       });
-             
+      
       // PRICING TAB
       _refreshSimpleOptionsPricingSymbols();
       _updatePricingDivChevrons(); 
@@ -469,6 +471,18 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
       $.modal.confirm('<?php echo $lC_Language->get('text_remove_row'); ?>', function() {
           $('#tre-' + id).remove();
           $('.trp-' + id).remove();
+          
+          var customerGroups = <?php echo json_encode(lC_Customer_groups_Admin::getAll()); ?>;
+          $.each(customerGroups.entries, function( key, val ) {
+            if(!$("#tbody-simple-options-pricing-" + val.customers_group_id).html().replace(/ /g,'')) {
+               $('#options-pricing-entries-div-' + val.customers_group_id + ' .simple-options-pricing-container').remove();
+               $('#options-pricing-entries-div-' + val.customers_group_id + ' .no-options-defined').remove();
+            }
+            if(!$("#options-pricing-entries-div-" + val.customers_group_id).html().replace(/ /g,'')) {
+              $('#options-pricing-entries-div-' + val.customers_group_id).html('<table class="simple-table no-options-defined"><tbody id="tbody-options-pricing-' + val.customers_group_id + '"><tr id="no-options-' + val.customers_group_id + '"><td><?php echo $lC_Language->get('text_no_options_defined'); ?></td></tr></tbody></table>');
+            }
+          });
+          
         }, function() {
           return false;
       });  
@@ -504,7 +518,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
 
     // refresh simple option price modifier plus/minus symbols */
     function _refreshSimpleOptionsPricingSymbols() {
-      $('#simpleOptionsPricingTable input').each(function(index, element) {
+      $('.simple-options-pricing-table input').each(function(index, element) {
         var id = $(this).attr("id").replace('simple_options_entry_price_modifier_', '');
         showSimpleOptionsPricingSymbol(element, id); 
       });
