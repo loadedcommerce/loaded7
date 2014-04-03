@@ -186,7 +186,7 @@ class lC_Product {
             $Qvariants->bindInt(':values_id', $QsimpleOptionsValues->valueInt('values_id'));
             $Qvariants->bindInt(':languages_id', $lC_Language->getID());
             $Qvariants->bindInt(':languages_id', $lC_Language->getID());
-            $Qvariants->execute();
+            $Qvariants->execute(); 
             
             $this->_data['simple_options'][$this->_data['master_id']]['values'][$QsimpleOptions->valueInt('options_id')][$QsimpleOptionsValues->valueInt('values_id')] = array('value_id' => $QsimpleOptionsValues->valueInt('values_id'),
                                                                                                                                                                                'group_id' => $QsimpleOptions->valueInt('options_id'),
