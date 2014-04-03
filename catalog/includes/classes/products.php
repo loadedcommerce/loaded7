@@ -115,7 +115,7 @@ class lC_Products {
     }
 
     if ($this->hasManufacturer()) {
-      $Qlisting->appendQuery('and pa.value = :manufacturers_id');
+      $Qlisting->appendQuery('and pa.id = tb.id and pa.value = :manufacturers_id');
       $Qlisting->bindInt(':manufacturers_id', $this->_manufacturer);
     }
 

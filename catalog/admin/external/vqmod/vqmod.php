@@ -185,7 +185,9 @@ final class VQMod {
   * @description Reoves modded cached files 
   */  
   private function _cleanup() { 
-return false;    
+    // cleanup function needs work - commented out for now
+    return false;    
+    /*
     $files = @scandir(DIR_FS_CATALOG . $this->vqCachePath);
       if (is_array($files) && !empty($files)) {
       foreach ($files as $file) {
@@ -196,6 +198,7 @@ return false;
         }
       }    
     }
+    */
   }  
  /**
   * VQMod::_phpLiteObfuscator()
