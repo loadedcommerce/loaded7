@@ -983,10 +983,25 @@ class lC_Template {
   * @return boolean
   */
   public function loadBrandingCSS() {
-
+    global $lC_Database;
+    
     $html = '';
-    if ( file_exists('templates/' . $this->_template . '/css/custom.css.php') ) {
-      $html = '<link rel="stylesheet" href="templates/' . $this->_template . '/css/custom.css.php">' . "\n";
+    
+    $Qcss = $lC_Database->query('select custom_css from :table_branding_data');
+    $Qcss->bindTable(':table_branding_data', TABLE_BRANDING_DATA);
+    $Qcss->execute();
+    
+    $css = $Qcss->toArray();
+    
+    if (!empty($css['custom_css'])) {
+      if ( file_exists('templates/css/custom.css') ) {
+        $customcss = $css['custom_css'];
+      
+        $file = 'templates/css/custom.css';
+        @file_put_contents($file, $customcss, LOCK_EX);
+        
+        $html = '<link rel="stylesheet" href="templates/css/custom.css">' . "\n";
+      }
     }
 
     return $html;
