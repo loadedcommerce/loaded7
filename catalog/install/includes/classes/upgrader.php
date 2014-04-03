@@ -6067,13 +6067,13 @@ class lC_LocalUpgrader extends lC_Upgrader {
                                     ); 
                                  
                 $languages[] = $language;
+                $cQry->freeResult();
               } 
             }
           }
-        }        
-        $sQry->freeResult();
-        $cQry->freeResult();
-      }
+        }
+      }         
+      $sQry->freeResult();
       
       // END LOAD LANGUAGES FROM SOURCE DB
 
@@ -6151,6 +6151,11 @@ class lC_LocalUpgrader extends lC_Upgrader {
           $igiQry->execute();
         }
         
+        if ($target_db->isError()) {
+          $this->_msg = $target_db->getError();
+          return false;
+        }
+        
         $otsQry = $target_db->query('select id, status_name from :table_orders_transactions_status where language_id = :language_id');
         $otsQry->bindTable(':table_orders_transactions_status', TABLE_ORDERS_TRANSACTIONS_STATUS);
         $otsQry->bindInt(':language_id', $this->_languages_id_default);
@@ -6163,6 +6168,11 @@ class lC_LocalUpgrader extends lC_Upgrader {
           $otsiQry->bindInt(':language_id', $language['languages_id']);
           $otsiQry->bindValue(':status_name', $otsQry->value('status_name'));
           $otsiQry->execute();
+        }
+        
+        if ($target_db->isError()) {
+          $this->_msg = $target_db->getError();
+          return false;
         }
         
         $saQry = $target_db->query('select id, title, css_key from :table_shipping_availability where languages_id = :languages_id');
@@ -6180,6 +6190,11 @@ class lC_LocalUpgrader extends lC_Upgrader {
           $saiQry->execute();
         }
         
+        if ($target_db->isError()) {
+          $this->_msg = $target_db->getError();
+          return false;
+        }
+        
         $wcQry = $target_db->query('select weight_class_id, weight_class_key, weight_class_title from :table_weight_classes where language_id = :language_id');
         $wcQry->bindTable(':table_weight_classes', TABLE_WEIGHT_CLASS);
         $wcQry->bindInt(':language_id', $this->_languages_id_default);
@@ -6193,6 +6208,11 @@ class lC_LocalUpgrader extends lC_Upgrader {
           $wciQry->bindInt(':language_id', $language['languages_id']);
           $wciQry->bindValue(':weight_class_title', $wcQry->value('weight_class_title'));
           $wciQry->execute();
+        }
+        
+        if ($target_db->isError()) {
+          $this->_msg = $target_db->getError();
+          return false;
         }
         
         $igQry->freeResult();
