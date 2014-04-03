@@ -67,7 +67,16 @@ function editAddon(id, name) {
                       $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
                       return false;
                     }
-                    window.location.href = window.location.href;
+                    
+                    var currentType = '<?php echo $_GET['type']; ?>';
+                    var url = window.location.href;
+                    var rUrl = '';
+                    if (currentType == '') {
+                      rUrl = url + '&type=' + name;
+                    } else if (currentType != name) {
+                      rUrl = url.replace('&type=' + currentType, '&type=' + name);
+                    } 
+                    window.location.href = rUrl;
                   }
                 );
                 win.closeModal();
