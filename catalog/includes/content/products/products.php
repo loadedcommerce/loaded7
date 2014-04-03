@@ -40,7 +40,7 @@ class lC_Products_Products extends lC_Template {
         $lC_Product->incrementCounter();
         
         if ( strtotime($lC_Product->getDateAvailable()) <= strtotime(lC_Datetime::getShort()) ) {
-          $this->addPageTags('description', substr(strip_tags($lC_Product->getDescription()),0,300));
+          $this->addPageTags('description', substr(strip_tags($lC_Product->getDescription()), 0, 300));
           $this->addPageTags('keywords', $lC_Product->getTitle());
           $this->addPageTags('keywords', $lC_Product->getModel());
 
@@ -51,7 +51,7 @@ class lC_Products_Products extends lC_Template {
           $this->addOGPTags('type', 'product');
           $this->addOGPTags('title', $lC_Product->getTitle() . ' ' . $lC_Product->getModel());
           $this->addOGPTags('description', $lC_Currencies->displayPrice($lC_Product->getPrice(), $lC_Product->getTaxClassID()) .  ' - ' . $lC_Product->getTitle() . ' ' . lc_clean_html($lC_Product->getDescription()));
-          $this->addOGPTags('url', lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword(), 'NONSSL',false,true,true));
+          $this->addOGPTags('url', lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword(), 'NONSSL', false, true, true));
           $this->addOGPTags('image', HTTP_SERVER . DIR_WS_CATALOG . 'templates/' . $template_code . '/images/logo.png');
           $this->addOGPTags('image', HTTP_SERVER . DIR_WS_CATALOG . $lC_Image->getAddress($lC_Product->getImage(), 'large'));
           foreach ( $lC_Product->getImages() as $key => $value ) {
