@@ -10,7 +10,7 @@
 */
 ?>
 <script>
-function uninstallAddon(id, name) {
+function uninstallAddon(id, name, type) {
   var accessLevel = '<?php echo $_SESSION['admin']['access'][$lC_Template->getModule()]; ?>';
   if (parseInt(accessLevel) < 4) {
     $.modal.alert('<?php echo $lC_Language->get('ms_error_no_access');?>');
@@ -52,7 +52,16 @@ function uninstallAddon(id, name) {
                 return false;
               } 
               $($.modal.all).closeModal();
-              window.location.href = window.location.href;
+              
+              var currentType = '<?php echo $_GET['type']; ?>';
+              var url = window.location.href;
+              var rUrl = '';
+              if (currentType == '') {
+                rUrl = url + '&type=' + type;
+              } else if (currentType != type) {
+                rUrl = url.replace('&type=' + currentType, '&type=' + type);
+              } 
+              window.location.href = rUrl;              
             }
           );
           win.closeModal();

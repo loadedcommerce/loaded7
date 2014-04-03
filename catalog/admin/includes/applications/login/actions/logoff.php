@@ -15,6 +15,7 @@ class lC_Application_Login_Actions_logoff extends lC_Application_Login {
     parent::__construct();
 
     unset($_SESSION['admin']);
+    if (isset($_SESSION['img_resize_flag'])) unset($_SESSION['img_resize_flag']);
 
     lc_redirect_admin(lc_href_link_admin(FILENAME_DEFAULT));
   }

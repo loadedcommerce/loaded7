@@ -143,7 +143,7 @@ param_import_coupon_description = importing Coupon data
 param_import_tax = TAX CLASSES/RATES 
 param_import_tax_description = importing Tax Class and Rate data  
 
-param_import_languages = LANGUAGE TABLE 
+param_import_languages = LANGUAGE DATA  
 param_import_tax_description = importing main Langaues table data 
 
 rpc_upgrade_success = import completed

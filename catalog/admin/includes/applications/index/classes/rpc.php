@@ -245,10 +245,34 @@ class lC_Index_Admin_rpc {
   */ 
   public static function removeApiTmp() {
     @unlink(DIR_FS_WORK . 'apinocom.tmp');
-    
     $result['rpcStatus'] = RPC_STATUS_SUCCESS;
     
     echo json_encode($result);
   }
+ /*
+  * Removes the image resize check status tmp file 
+  *
+  * @access public
+  * @return json
+  */ 
+  public static function removeResizeTmp() {
+    @unlink(DIR_FS_WORK . 'resize.tmp');
+    $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+    
+    echo json_encode($result);
+  }  
+ /*
+  * Sets the image resize no remind flag 
+  *
+  * @access public
+  * @return json
+  */ 
+  public static function noRemindResize() {
+    $_SESSION['img_resize_flag'] = true;
+    $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+    
+    echo json_encode($result);
+  }  
+  
 }
 ?>
