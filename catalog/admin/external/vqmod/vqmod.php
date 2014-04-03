@@ -201,10 +201,6 @@ return false;
   * VQMod::_phpLiteObfuscator()
   * 
   * @param  string  $SourceString
-  * @param  array   $_varsPrivate
-  * @param  array   $_funcPrivate
-  * @param  array   $classPrivate
-  * @param  array   $dicc
   * @return string
   * @description Obfuscates the modified code
   */   
