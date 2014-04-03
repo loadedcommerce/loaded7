@@ -9,38 +9,6 @@
 */
 //error_reporting(0);        
 class lC_Template_output { 
-
- /**
-  * Return the countries dropdown array
-  *
-  * @access public
-  * @return json
-  */
-  public static function getZonesDropdownHtml($countries_id, $zone = null) {
-    global $lC_Database, $lC_Language;
-
-    $Qzones = $lC_Database->query('select zone_name from :table_zones where zone_country_id = :zone_country_id order by zone_name');
-    $Qzones->bindTable(':table_zones', TABLE_ZONES);
-    $Qzones->bindInt(':zone_country_id', $countries_id);
-    $Qzones->execute();
-
-    $result = array();
-    if ($Qzones->numberOfRows() > 0) {
-      $zones_array = array();
-      while ($Qzones->next()) {
-        $zones_array[] = array('id' => $Qzones->value('zone_name'), 'text' => $Qzones->value('zone_name'));
-      }
-      $zone_name = (isset($zone) && is_numeric($zone) && $zone != 0) ? lC_Address::getZoneName($zone) : NULL;
-      $result['zonesHtml'] = lc_draw_label('', null, 'state') . lc_draw_pull_down_menu('state', $zones_array, $zone_name);
-      $result['single'] = '0';
-
-    } else {                      
-      $result['zonesHtml'] = lc_draw_label('', null, 'state') . ' ' . lc_draw_input_field('state', (($zone != 'undefined') ? $zone : null), 'placeholder="' . $lC_Language->get('field_customer_state') ./* '" onfocus="this.placeholder = \'\'" onblur="this.placeholder = \'' . $lC_Language->get('field_customer_state') . '\'" */'"class="required" style="width:99.7%;"');
-      $result['single'] = '1';
-    }
-    
-    return $result;
-  }
  /*
   * Returns the new arrival listing data
   *
