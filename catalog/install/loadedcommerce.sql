@@ -703,8 +703,7 @@ DROP TABLE IF EXISTS lc_products_variants_groups;
 CREATE TABLE lc_products_variants_groups (
   id int(11) NOT NULL AUTO_INCREMENT,
   languages_id int(11) NOT NULL,
-  title varchar(255) NOT NULL,
-  visual varchar(1024) DEFAULT NULL, 
+  title varchar(255) NOT NULL, 
   sort_order int(11) NOT NULL,
   module varchar(255) NOT NULL,
   PRIMARY KEY (id,languages_id)
@@ -716,6 +715,7 @@ CREATE TABLE lc_products_variants_values (
   languages_id int(11) NOT NULL,
   products_variants_groups_id int(11) NOT NULL,
   title varchar(255) NOT NULL,
+  visual varchar(1024) DEFAULT NULL,
   sort_order int(11) NOT NULL,
   PRIMARY KEY (id,languages_id),
   KEY idx_products_variants_values_groups_id (products_variants_groups_id)
