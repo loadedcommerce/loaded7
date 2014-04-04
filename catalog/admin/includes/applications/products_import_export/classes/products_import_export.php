@@ -679,7 +679,7 @@ class lC_Products_import_export_Admin {
         $products_id = $product['id'];
         
         // need to get the weight class since Im outputting lb and kg instead of the ids
-        if ($product['weight_class'] != '') {
+        /*if ($product['weight_class'] != '') {
           $QweightClass = $lC_Database->query("select * from :table_weight_classes wc where wc.weight_class_key = :weight_class_key");
           $QweightClass->bindTable(':table_weight_classes', TABLE_WEIGHT_CLASS);
           $QweightClass->bindValue(':weight_class_key', $product['weight_class']);
@@ -690,17 +690,16 @@ class lC_Products_import_export_Admin {
           } else {
             $product_weight_class_id = $QweightClass->value('weight_class_id');
           }
-        }
+        }*/
 
         // convert the permalink to a safe output
-        $product['permalink'] = lC_Products_import_export_Admin::generate_clean_permalink($product['permalink']);
+        //$product['permalink'] = lC_Products_import_export_Admin::generate_clean_permalink($product['permalink']);
 
         // need to get ids for these categories if they dont exist we need to make them and return that id
         if ($product['categories'] != '') {
           $product['categories'] = explode(",", $product['categories']);
           foreach ($product['categories'] as $catName) {
             if ($catName != '') {
-              $catCheck = $lC_Database->query("select cd.* from :table_categories_description cd left join :table_categories c on (cd.categories_id = c.categories_id) where cd.categories_name = :categories_name" . $ifParent);
               if ($product['parent_categories'] != '') {
                 $parentCheck = $lC_Database->query("select categories_id from :table_categories_description where categories_name = :categories_name and language_id = :language_id");
                 $parentCheck->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
@@ -712,6 +711,7 @@ class lC_Products_import_export_Admin {
                 $catCheck->bindInt(':parent_id', $parentCheck->value('categories_id'));
                 $lastParent = $parentCheck->value('categories_id');
               }
+              $catCheck = $lC_Database->query("select cd.* from :table_categories_description cd left join :table_categories c on (cd.categories_id = c.categories_id) where cd.categories_name = :categories_name" . $ifParent);
               $catCheck->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
               $catCheck->bindTable(':table_categories', TABLE_CATEGORIES);
               $catCheck->bindValue(':categories_name', $catName);
@@ -803,7 +803,7 @@ class lC_Products_import_export_Admin {
         }
         
         // build a cPath for later use
-        $parents = self::getParentsPath($product['categories'][0]);
+        /*$parents = self::getParentsPath($product['categories'][0]);
         
         if (empty($parents)) {
           $query = "cPath=" . $product['categories'][0];
@@ -1081,7 +1081,7 @@ class lC_Products_import_export_Admin {
           } else {
             $lC_Database->rollbackTransaction();
           }
-        }
+        }*/
       }
     } // end if $do
     // for all left in array match and update the records
