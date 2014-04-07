@@ -91,7 +91,7 @@ class lC_Branding_manager_Admin {
     }
 
     //save non language specific data
-    $QbrandingData = $lC_Database->query('insert into :table_branding_data (site_image, chat_code, support_phone, support_email, sales_phone, sales_email, og_image, meta_delimeter, social_facebook_page, social_twitter, social_pinterest, social_google_plus, social_youtube, social_linkedin) values ( :site_image, :chat_code, :support_phone, :support_email, :sales_phone, :sales_email, :og_image, :meta_delimeter, :social_facebook_page, :social_twitter, :social_pinterest, :social_google_plus, :social_youtube, :social_linkedin)');
+    $QbrandingData = $lC_Database->query('insert into :table_branding_data (site_image, chat_code, support_phone, support_email, sales_phone, sales_email, og_image, meta_delimeter, social_facebook_page, social_twitter, social_pinterest, social_google_plus, social_youtube, social_linkedin, custom_css) values ( :site_image, :chat_code, :support_phone, :support_email, :sales_phone, :sales_email, :og_image, :meta_delimeter, :social_facebook_page, :social_twitter, :social_pinterest, :social_google_plus, :social_youtube, :social_linkedin, :custom_css)');
     $QbrandingData->bindTable(':table_branding_data', TABLE_BRANDING_DATA);
     $QbrandingData->bindValue(':site_image', $data['site_image']);
     $QbrandingData->bindValue(':chat_code', $data['chat_code']);
@@ -108,6 +108,7 @@ class lC_Branding_manager_Admin {
     $QbrandingData->bindValue(':social_google_plus', $data['social_google_plus']);
     $QbrandingData->bindValue(':social_youtube', $data['social_youtube']);
     $QbrandingData->bindValue(':social_linkedin', $data['social_linkedin']);
+    $QbrandingData->bindValue(':custom_css', $data['custom_css']);
     $QbrandingData->bindValue(':language_id', $language_id);
     $QbrandingData->execute();
 

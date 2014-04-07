@@ -40,9 +40,7 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
     <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
     
     <!-- Load Page/Group Specific Tags -->
-    <?php
-      echo $lC_Template->loadCSS($lC_Template->getCode(), $lC_Template->getGroup());
-    ?>
+    <?php echo $lC_Template->loadCSS($lC_Template->getCode(), $lC_Template->getGroup()); ?>
 
     <!-- fav and touch icons -->
     <link rel="shortcut icon" href="templates/core/images/favicons/favicon.ico">
@@ -56,6 +54,8 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
     
     <!-- font-awesome -->
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <!-- Custom CSS Tags -->
+    <?php echo $lC_Template->loadBrandingCSS(); ?>
         
     <!-- jQuery is always at top -->
     <script src="ext/jquery/jquery-1.9.1.min.js"></script>
