@@ -994,13 +994,13 @@ class lC_Template {
     $css = $Qcss->toArray();
     
     if (!empty($css['custom_css'])) {
-      if ( file_exists('templates/css/custom.css') ) {
+      if ( file_exists('includes/work/css/custom.css') ) {
         $customcss = $css['custom_css'];
       
-        $file = 'templates/css/custom.css';
+        $file = 'includes/work/css/custom.css';
         @file_put_contents($file, $customcss, LOCK_EX);
         
-        $html = '<link rel="stylesheet" href="templates/css/custom.css">' . "\n";
+        $html = '<link rel="stylesheet" href="includes/work/css/custom.css">' . "\n";
       }
     }
 
