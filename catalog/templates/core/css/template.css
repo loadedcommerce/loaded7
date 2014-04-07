@@ -98,6 +98,18 @@
   width: 96% !important;
 }
 
+#loaded7 input[type=text] { 
+  width:98%; 
+}
+
+#loaded7 input[type=password] { 
+  width:98%; 
+}
+
+#loaded7 select { 
+  width:98%; 
+}
+
 #loaded7 .img-responsive {
   margin: auto !important;
 }
