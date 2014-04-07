@@ -58,6 +58,7 @@ class lC_Application_Branding_manager extends lC_Template_Admin {
           $branding_social_linkedin      = $_POST['branding_social_linkedin'];
           $branding_footer_text          = $_POST['branding_footer_text'];
           $branding_home_page_text       = $_POST['branding_home_page_text'];
+          $branding_customcss            = $_POST['branding_customcss'];
 
           $data = array('site_image'           => $branding_image,
                         'name'                 => $branding_name,
@@ -82,7 +83,8 @@ class lC_Application_Branding_manager extends lC_Template_Admin {
                         'social_youtube'       => $branding_social_youtube,
                         'social_linkedin'      => $branding_social_linkedin,
                         'footer_text'          => $branding_footer_text,
-                        'home_page_text'       => $branding_home_page_text
+                        'home_page_text'       => $branding_home_page_text,
+                        'custom_css'           => $branding_customcss
                         );
 
          /*

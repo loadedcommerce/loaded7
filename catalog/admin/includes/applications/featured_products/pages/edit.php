@@ -74,7 +74,7 @@
           <div style="float:right;">
             <p class="button-height" align="right">
               <?php
-                $save = (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 3) ? '' : ' onclick="validateForm(\'#feature\');"');
+                $save = (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 3) ? '' : ' onclick="validateForm(\'#featured\');"');
                 $close = lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule());
                 button_save_close($save, true, $close);
               ?>

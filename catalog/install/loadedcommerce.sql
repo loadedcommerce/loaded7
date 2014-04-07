@@ -135,7 +135,8 @@ CREATE TABLE IF NOT EXISTS lc_branding_data (
   social_pinterest varchar(128) NOT NULL,
   social_google_plus varchar(128) NOT NULL,
   social_youtube varchar(128) NOT NULL,
-  social_linkedin varchar(128) NOT NULL
+  social_linkedin varchar(128) NOT NULL,
+  custom_css text NOT NULL
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_categories;
