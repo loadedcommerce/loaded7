@@ -698,9 +698,14 @@ class lC_Products_import_export_Admin {
         // need to get ids for these categories if they dont exist we need to make them and return that id
         if ($product['categories'] != '') {
           $product['categories'] = explode(",", $product['categories']);
+          $ifParent = '';
           foreach ($product['categories'] as $catName) {
-            if ($catName != '') {
+            if ($catName != '') { 
               $catCheck = $lC_Database->query("select cd.* from :table_categories_description cd left join :table_categories c on (cd.categories_id = c.categories_id) where cd.categories_name = :categories_name" . $ifParent);
+              $catCheck->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
+              $catCheck->bindTable(':table_categories', TABLE_CATEGORIES);
+              $catCheck->bindValue(':categories_name', $catName);
+              
               if ($product['parent_categories'] != '') {
                 $parentCheck = $lC_Database->query("select categories_id from :table_categories_description where categories_name = :categories_name and language_id = :language_id");
                 $parentCheck->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
@@ -709,22 +714,21 @@ class lC_Products_import_export_Admin {
                 $parentCheck->execute();
               
                 $ifParent = ' and c.parent_id = :parent_id';
-                $catCheck->bindInt(':parent_id', $parentCheck->value('categories_id'));
-              }
+                $catCheck->bindInt(':parent_id', $parentCheck->valueInt('categories_id'));
+              }              
               
-              $catCheck->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
-              $catCheck->bindTable(':table_categories', TABLE_CATEGORIES);
-              $catCheck->bindValue(':categories_name', $catName);
               $catCheck->execute();
               
-              if ($catCheck->numberOfRows()) {              
-                $category_ids[] = $catCheck->value('categories_id');
+              if ($lC_Database->isError()) die($lC_Database->getError());
+              
+              if ($catCheck->numberOfRows() > 0) {              
+                $category_ids[] = $catCheck->valueInt('categories_id');
               } else {
                 // insert a category that doesnt exist
                 $QcatInsert = $lC_Database->query("insert into :table_categories (parent_id, categories_status, categories_mode) values (:parent_id, :categories_status, :categories_mode)");
                 $QcatInsert->bindTable(':table_categories', TABLE_CATEGORIES);
-                $QcatInsert->bindInt(':parent_id', '0');
-                $QcatInsert->bindInt(':categories_status', '1');
+                $QcatInsert->bindInt(':parent_id', 0);
+                $QcatInsert->bindInt(':categories_status', 1);
                 $QcatInsert->bindValue(':categories_mode', 'category');
                 $QcatInsert->execute();
 
@@ -793,6 +797,7 @@ class lC_Products_import_export_Admin {
                     }
                   }
                 }
+                $catCheck->freeResult();
               }
             }
           } 
@@ -834,7 +839,7 @@ class lC_Products_import_export_Admin {
           }
         } 
 
-        // check for a match in the database	  
+        // check for a match in the database    
         $Qcheck = $lC_Database->query("SELECT * FROM :table_products WHERE products_id = :products_id");
         $Qcheck->bindTable(':table_products', TABLE_PRODUCTS);
         $Qcheck->bindInt(':products_id', $products_id);
