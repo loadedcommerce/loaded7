@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+  <id>Products Class</id>
+  <version>1.0.0</version>
+  <vqmver>2.3.2</vqmver>
+  <author>loadedcommerce.com</author>
+  <file name="includes/applications/products/classes/products.php">
+    <operation info="Show Pro Product Listing Icons">
+      <search position="replace"><![CDATA[$icons = lC_Products_Admin::getlistingIcons($Qproducts->valueInt('products_id'));]]></search>         
+      <add><![CDATA[$icons = lC_Products_Admin_Pro::getlistingIcons($Qproducts->valueInt('products_id'));]]></add>
+    </operation>  
+    <operation info="Show Pro Product Listing Pricing">
+      <search position="replace"><![CDATA[$price = lC_Products_Admin::getProductsListingPrice($Qproducts->toArray());]]></search>         
+      <add><![CDATA[$price = lC_Products_Admin_Pro::getProductsListingPrice($Qproducts->toArray());]]></add>
+    </operation>  
+    <operation info="Show Pro Product Listing Qty">
+      <search position="replace"><![CDATA[$products_quantity = lC_Products_Admin::getProductsListingQty($Qproducts->toArray());]]></search>         
+      <add><![CDATA[$products_quantity = lC_Products_Admin_Pro::getProductsListingQty($Qproducts->toArray());]]></add>
+    </operation>             
+  </file> 
+</modification>
