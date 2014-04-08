@@ -742,21 +742,21 @@ class lC_Product {
     return $this->_data['variants'];
   }
 
-  public function variantExists($variant) {
+  public function variantExists($variant) { 
     return is_numeric($this->getProductVariantID($variant));
   }
 
   public function getProductVariantID($variant) {
     $_product_id = false;
 
-    $_size = sizeof($variant);
+    $_size = sizeof($variant); 
 
-    foreach ( $this->_data['variants'] as $product_id => $variants ) {
+    foreach ( $this->_data['variants'] as $product_id => $variants ) {  
       if ( sizeof($variants['values']) === $_size ) {
         $_array = array();
 
-        foreach ( $variants['values'] as $group_id => $value ) {
-          foreach ( $value as $value_id => $value_data ) {
+        foreach ( $variants['values'] as $group_id => $value ) {   
+          foreach ( $value as $value_id => $value_data ) {          
             if ( is_array($variant[$group_id]) && array_key_exists($value_id, $variant[$group_id]) ) {
               $_array[$group_id][$value_id] = $variant[$group_id][$value_id];
             } else {
