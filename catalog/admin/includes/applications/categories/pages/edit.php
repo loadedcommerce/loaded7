@@ -211,7 +211,7 @@
                 </div>
               </div>
             </div>
-            <div class="columns with-padding no-margin-bottom margin-top">
+            <div class="columns padding-top padding-left no-margin-bottom">
               <div class="twelve-columns no-margin-top no-margin-bottom">
                 <div class="columns no-margin-left">
                   <div class="three-columns twelve-columns-mobile"> 
@@ -236,7 +236,7 @@
                   </div>
                 </div>
               </div>
-              <div class="twelve-columns no-margin-top no-margin-bottom">
+              <!-- div class="twelve-columns no-margin-top no-margin-bottom">
                 <div class="columns no-margin-left">
                   <div class="three-columns twelve-columns-mobile"> 
                     <div class="margin-right">
@@ -250,7 +250,7 @@
                     <p class="small-margin-top"><?php echo $lC_Language->get('text_path_to_file'); ?></p>
                   </div>
                 </div>
-              </div>
+              </div -->
             </div>
           </div>
           <div id="section_data_content" class="with-padding">
