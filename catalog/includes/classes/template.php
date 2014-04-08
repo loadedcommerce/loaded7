@@ -670,7 +670,7 @@ class lC_Template {
     global $lC_Customer, $lC_Session, $lC_Language;
     $result['html'] = '';
     $BarcodeQR = new BarcodeQR();
-    $qrcode_url = (($request_type == 'SSL') ? HTTPS_SERVER : HTTP_SERVER) . $_SERVER['REQUEST_URI'];
+    $qrcode_url = $_SERVER['HTTP_REFERER'];
 
     if ($lC_Customer->isLoggedOn() === true && $lC_Customer->getEmailAddress != NULL ) {
       $qrcode_url_add = (stristr($qrcode_url, "?") ? '&' : '?') . $lC_Session->getName() . '=' . $lC_Session->getID() . '&email=' . $lC_Customer->getEmailAddress  . '&qr=1';
