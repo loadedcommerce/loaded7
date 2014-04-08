@@ -228,7 +228,7 @@ class lC_Products_Admin_Pro extends lC_Products_Admin {
             $Qsubproduct->bindRaw(':products_date_added', 'now()');
           }
 
-          $price = array_values($data['variants'][$key]['price'])[0];
+          $price = (is_array($data['variants'][$key]['price'])) ? array_values($data['variants'][$key]['price'])[0] : 0.00;
           
           $Qsubproduct->bindTable(':table_products', TABLE_PRODUCTS);
           $Qsubproduct->bindInt(':products_quantity', $data['variants'][$key]['qoh']);

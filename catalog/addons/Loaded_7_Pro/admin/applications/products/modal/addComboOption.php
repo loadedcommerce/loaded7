@@ -209,20 +209,22 @@ function addComboOption(editRow) {
              var shown = false;
              $.each(customerGroups.entries, function(key, val) {
                var customers_group_id = val.customers_group_id;
-               var noOptions = ($("#combo-options-pricing-container-" + customers_group_id).text());
+               var noOptions = ($("#tbody-combo-options-pricing-" + customers_group_id).text());
 
                if (lastID != customers_group_id) {
                  shown = false;
                  lastID = customers_group_id;                       
                }
 
-               if (noOptions == '' && shown == false) {
-                 var pTable = '<div class="big-text underline margin-top" style="padding-bottom:8px;"><?php echo $lC_Language->get('text_combo_options'); ?></div>' +
-                              '<table class="simple-table combo-options-pricing-table">' +
-                              '  <tbody id="tbody-combo-options-pricing-' + customers_group_id + '"></tbody>' +
-                              '</table>';
+               if (noOptions == '' && shown == false) {  
+                 var pTable = '<div class="combo-options-pricing-container">' +
+                              '  <div class="big-text underline margin-top" style="padding-bottom:8px;"><?php echo $lC_Language->get('text_combo_options'); ?></div>' +
+                              '  <table class="simple-table combo-options-pricing-table">' +
+                              '    <tbody id="tbody-combo-options-pricing-' + customers_group_id + '"></tbody>' +
+                              '  </table>' +
+                              '</div>';
                
-                 $('#combo-options-pricing-container-' + customers_group_id).html(pTable);                         
+                 $('#options-pricing-entries-div-' + customers_group_id).html(pTable);                         
                  shown = true;
                }
 
