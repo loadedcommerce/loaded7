@@ -116,7 +116,6 @@
  * @param string $key The key ID of the cached files to delete
  * @access public
  */
-
     public static function clear($key) {
       
       $key_length = strlen($key);
@@ -124,7 +123,7 @@
       $d = dir(DIR_FS_WORK . 'cache/');
       
       while ( ($entry = $d->read()) !== false ) {
-        if ( (strlen($entry) >= $key_length) && (substr($entry, 0, $key_length) == $key) ) {
+        if ( ((strlen($entry) >= $key_length) && (substr($entry, 0, $key_length) == $key)) || $key == '*') {
           @unlink(DIR_FS_WORK . 'cache/' . $entry);
         }
       }

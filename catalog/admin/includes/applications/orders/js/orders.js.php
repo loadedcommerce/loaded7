@@ -14,6 +14,7 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
 <script>
   $(document).ready(function() {
     updateOrderList();
+    setActiveTab();
   });
 
   function updateOrderList() {
@@ -92,23 +93,6 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
          
       }
     );
-    
-    var p = parseInt('<?php echo $_GET["editProduct"];?>');    
-    var o = parseInt('<?php echo $_GET["orderstotal"];?>');
-        
-    if (p == 1) {
-      $("#id_tab_orders_summary").removeClass("active");
-      $("#id_tab_orders_products").addClass("active");
-      // Display Address form (Hide Personal Form)
-      $('#section_orders_summary').hide();
-      $('#section_orders_products').show();
-    } else if(o == 1) {
-      $("#id_tab_orders_summary").removeClass("active");
-      $("#id_tab_order_totals").addClass("active");
-      // Display Address form (Hide Personal Form)
-      $('#section_orders_summary').hide();
-      $('#section_order_totals').show();
-    }
   }
 
   function hideElements() {  
@@ -225,7 +209,7 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
                   return false;
                 }
                 if (data.rpcStatus == 1) {
-                  url = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '=OID&action=save&editProduct=1'); ?>';
+                  url = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '=OID&action=save&tabProducts=1'); ?>';
                   $(location).attr('href', url.replace('OID', '<?php echo $_GET[$lC_Template->getModule()]; ?>'));
                 }
               }
@@ -417,7 +401,7 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
           return false;
         } 
         updateOrderList();        
-        url = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '=OID&action=save&editProduct=1'); ?>';
+        url = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '=OID&action=save&tabProducts=1'); ?>';
         $(location).attr('href', url.replace('OID', oid));
       }
     );
@@ -485,10 +469,10 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
     $.modal.all.centerModal();
   }
   
-  function addOrderProduct(oId) {    
-    var pid = parseInt($("#add_product").val()); 
-    url = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=add_product&oID=OID&pID=PID&editProduct=1'); ?>';
-    window.location = url.replace('OID', oId).replace('PID',pid);
+  function addOrderProduct(oId, field) {    
+    var pid = $("#" + field).val();
+    url = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=add_product&oID=OID&pID=PID&tabProducts=1'); ?>';
+    window.location = url.replace('OID', oId).replace('PID', pid);
   }
 
   function cancelOrderProductEdit(val) {
@@ -907,15 +891,15 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
     }
 
     var result = '<div class="with-small-padding" id="addedOrderTotalRow_' + type + '">' + 
-                 '<span class="icon-list icon-anthracite">&nbsp;' +
-                 '<input type="text" id="title_' + type + '" name="title_' + type + '" value="' + title + '" style="width:30%;">' +
-                 '</span>&nbsp;&nbsp;' +
-                 ' <input type="text" id = "value_' + type + '" name="value_' + type + '" value="'+currencySymbolLeft+num_value+'" style="width:10%;text-align:right;min-width:65px;" onkeyup="updateGrandTotal(\''+currencySymbolLeft+'\');">&nbsp;&nbsp;' +
-                 ' <a href="javascript:void(0);" onclick="removeOrderTotalRow(' + oID + ', \'' + type + '\', \''+currencySymbolLeft+'\')" class="icon-minus-round icon-red with-tooltip" title="remove"></a>' +
+                 '  <span class="icon-list icon-anthracite">&nbsp;' +
+                 '    <input type="text" id="title_' + type + '" name="title_' + type + '" value="' + title + '" style="width:30%;">' +
+                 '  </span>&nbsp;&nbsp;' +
+                 '  <input type="text" id = "value_' + type + '" name="value_' + type + '" value="' + currencySymbolLeft + num_value + '" style="width:10%;text-align:right;min-width:65px;" onkeyup="updateGrandTotal(\'' + currencySymbolLeft + '\');">&nbsp;&nbsp;' +
+                 '  <a href="javascript:void(0);" onclick="removeOrderTotalRow(' + oID + ', \'' + type + '\', \'' + currencySymbolLeft + '\')" class="icon-minus-round icon-red with-tooltip" title="remove"></a>' +
                  '</div>';
 
     var flag = true;
-    $.each($('input[type="text"]', '#order'), function(k){      
+    $.each($('input[type="text"]', '#order'), function(k) {      
       var name = $(this).attr('name');
       if (name.substr(0, 6) == "value_" && name.substr(6) == type) {
         flag = false;
@@ -940,7 +924,7 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
   
   function updateGrandTotal(currencySymbolLeft) { 
     var total = 0;
-    $.each($('input[type="text"]', '#order'),function(k){      
+    $.each($('input[type="text"]', '#order'),function(k) {      
       var name = $(this).attr('name');
       var value = $(this).val();
       var number = Number(value.replace(/[^0-9\.]+/g,""));
@@ -987,5 +971,197 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
       }
     );  
     */
+  }
+  
+  function setActiveTab(tab) {
+    if (tab) { // if the tab is not sent in the function call 
+      if (tab == 'tabProducts') var tabProducts = 1;
+      if (tab == 'tabCustomer') var tabCustomer = 1;
+      if (tab == 'tabShipping') var tabShipping = 1;
+      if (tab == 'tabStatus') var tabStatus = 1;
+      if (tab == 'tabFraud') var tabFraud = 1;
+      if (tab == 'tabPayments') var tabPayments = 1;
+      if (tab == 'tabTransactions') var tabTransactions = 1;
+      if (tab == 'tabTotals') var tabTotals = 1;
+    } else { //get it from url
+      var tabProducts = parseInt('<?php echo $_GET["tabProducts"];?>');
+      var tabCustomer = parseInt('<?php echo $_GET["tabCustomer"];?>');    
+      var tabShipping = parseInt('<?php echo $_GET["tabShipping"];?>');    
+      var tabStatus = parseInt('<?php echo $_GET["tabStatus"];?>');    
+      var tabFraud = parseInt('<?php echo $_GET["tabFraud"];?>');    
+      var tabPayments = parseInt('<?php echo $_GET["tabPayments"];?>');    
+      var tabTransactions = parseInt('<?php echo $_GET["tabTransactions"];?>');    
+      var tabTotals = parseInt('<?php echo $_GET["tabTotals"];?>');
+    }
+        
+    if (tabProducts == 1) {
+      // hide all but products 
+      $("#id_tab_orders_summary").removeClass("active");
+      $('#section_orders_summary').hide();
+      $("#id_tab_orders_customer").removeClass("active");
+      $('#section_orders_customer').hide();
+      $("#id_tab_orders_shipping").removeClass("active");
+      $('#section_orders_shipping').hide();
+      $("#id_tab_orders_status").removeClass("active");
+      $('#section_orders_status').hide();
+      $("#id_tab_orders_fraud").removeClass("active");
+      $('#section_orders_fraud').hide();
+      $("#id_tab_orders_payments").removeClass("active");
+      $('#section_orders_payments').hide();
+      $("#id_tab_orders_transactions").removeClass("active");
+      $('#section_orders_transactions').hide();
+      $("#id_tab_orders_totals").removeClass("active");
+      $('#section_orders_totals').hide();
+      // show products
+      $("#id_tab_orders_products").addClass("active");
+      $('#section_orders_products').show();
+    } else if (tabCustomer == 1) {
+      // hide all but customers 
+      $("#id_tab_orders_summary").removeClass("active");
+      $('#section_orders_summary').hide();
+      $("#id_tab_orders_products").removeClass("active");
+      $('#section_orders_products').hide();
+      $("#id_tab_orders_shipping").removeClass("active");
+      $('#section_orders_shipping').hide();
+      $("#id_tab_orders_status").removeClass("active");
+      $('#section_orders_status').hide();
+      $("#id_tab_orders_fraud").removeClass("active");
+      $('#section_orders_fraud').hide();
+      $("#id_tab_orders_payments").removeClass("active");
+      $('#section_orders_payments').hide();
+      $("#id_tab_orders_transactions").removeClass("active");
+      $('#section_orders_transactions').hide();
+      $("#id_tab_orders_totals").removeClass("active");
+      $('#section_orders_totals').hide();
+      // show customers
+      $("#id_tab_orders_customers").addClass("active");
+      $('#section_orders_customers').show();
+    } else if (tabShipping == 1) {
+      // hide all but shipping 
+      $("#id_tab_orders_summary").removeClass("active");
+      $('#section_orders_summary').hide();
+      $("#id_tab_orders_products").removeClass("active");
+      $('#section_orders_products').hide();
+      $("#id_tab_orders_customer").removeClass("active");
+      $('#section_orders_customer').hide();
+      $("#id_tab_orders_status").removeClass("active");
+      $('#section_orders_status').hide();
+      $("#id_tab_orders_fraud").removeClass("active");
+      $('#section_orders_fraud').hide();
+      $("#id_tab_orders_payments").removeClass("active");
+      $('#section_orders_payments').hide();
+      $("#id_tab_orders_transactions").removeClass("active");
+      $('#section_orders_transactions').hide();
+      $("#id_tab_orders_totals").removeClass("active");
+      $('#section_orders_totals').hide(); 
+      // show shipping
+      $("#id_tab_orders_shipping").addClass("active");
+      $('#section_orders_shipping').show();
+    } else if (tabStatus == 1) {
+      // hide all but status 
+      $("#id_tab_orders_summary").removeClass("active");
+      $('#section_orders_summary').hide();
+      $("#id_tab_orders_products").removeClass("active");
+      $('#section_orders_products').hide();
+      $("#id_tab_orders_customer").removeClass("active");
+      $('#section_orders_customer').hide();
+      $("#id_tab_orders_shipping").removeClass("active");
+      $('#section_orders_shipping').hide();
+      $("#id_tab_orders_fraud").removeClass("active");
+      $('#section_orders_fraud').hide();
+      $("#id_tab_orders_payments").removeClass("active");
+      $('#section_orders_payments').hide();
+      $("#id_tab_orders_transactions").removeClass("active");
+      $('#section_orders_transactions').hide();
+      $("#id_tab_orders_totals").removeClass("active");
+      $('#section_orders_totals').hide(); 
+      // show status
+      $("#id_tab_orders_status").addClass("active");
+      $('#section_orders_status').show();
+    } else if (tabFraud == 1) {
+      // hide all but fraud 
+      $("#id_tab_orders_summary").removeClass("active");
+      $('#section_orders_summary').hide();
+      $("#id_tab_orders_products").removeClass("active");
+      $('#section_orders_products').hide();
+      $("#id_tab_orders_customer").removeClass("active");
+      $('#section_orders_customer').hide();
+      $("#id_tab_orders_shipping").removeClass("active");
+      $('#section_orders_shipping').hide();
+      $("#id_tab_orders_status").removeClass("active");
+      $('#section_orders_status').hide();
+      $("#id_tab_orders_payments").removeClass("active");
+      $('#section_orders_payments').hide();
+      $("#id_tab_orders_transactions").removeClass("active");
+      $('#section_orders_transactions').hide();
+      $("#id_tab_orders_totals").removeClass("active");
+      $('#section_orders_totals').hide(); 
+      // show fraud
+      $("#id_tab_orders_fraud").addClass("active");
+      $('#section_orders_fraud').show();
+    } else if (tabPayments == 1) {
+      // hide all but payments 
+      $("#id_tab_orders_summary").removeClass("active");
+      $('#section_orders_summary').hide();
+      $("#id_tab_orders_products").removeClass("active");
+      $('#section_orders_products').hide();
+      $("#id_tab_orders_customer").removeClass("active");
+      $('#section_orders_customer').hide();
+      $("#id_tab_orders_shipping").removeClass("active");
+      $('#section_orders_shipping').hide();
+      $("#id_tab_orders_status").removeClass("active");
+      $('#section_orders_status').hide();
+      $("#id_tab_orders_fraud").removeClass("active");
+      $('#section_orders_fraud').hide();
+      $("#id_tab_orders_transactions").removeClass("active");
+      $('#section_orders_transactions').hide();
+      $("#id_tab_orders_totals").removeClass("active");
+      $('#section_orders_totals').hide(); 
+      // show payments
+      $("#id_tab_orders_payments").addClass("active");
+      $('#section_orders_payments').show();
+    } else if (tabTransactions == 1) {
+      // hide all but transactions 
+      $("#id_tab_orders_summary").removeClass("active");
+      $('#section_orders_summary').hide();
+      $("#id_tab_orders_products").removeClass("active");
+      $('#section_orders_products').hide();
+      $("#id_tab_orders_customer").removeClass("active");
+      $('#section_orders_customer').hide();
+      $("#id_tab_orders_shipping").removeClass("active");
+      $('#section_orders_shipping').hide();
+      $("#id_tab_orders_status").removeClass("active");
+      $('#section_orders_status').hide();
+      $("#id_tab_orders_fraud").removeClass("active");
+      $('#section_orders_fraud').hide();
+      $("#id_tab_orders_payments").removeClass("active");
+      $('#section_orders_payments').hide();
+      $("#id_tab_orders_totals").removeClass("active");
+      $('#section_orders_totals').hide(); 
+      // show transactions
+      $("#id_tab_orders_transactions").addClass("active");
+      $('#section_orders_transactions').show();
+    } else if (tabTotals == 1) {
+      // hide all but totals 
+      $("#id_tab_orders_summary").removeClass("active");
+      $('#section_orders_summary').hide();
+      $("#id_tab_orders_products").removeClass("active");
+      $('#section_orders_products').hide();
+      $("#id_tab_orders_customer").removeClass("active");
+      $('#section_orders_customer').hide();
+      $("#id_tab_orders_shipping").removeClass("active");
+      $('#section_orders_shipping').hide();
+      $("#id_tab_orders_status").removeClass("active");
+      $('#section_orders_status').hide();
+      $("#id_tab_orders_fraud").removeClass("active");
+      $('#section_orders_fraud').hide();
+      $("#id_tab_orders_payments").removeClass("active");
+      $('#section_orders_payments').hide();
+      $("#id_tab_orders_transactions").removeClass("active");
+      $('#section_orders_transactions').hide(); 
+      // show totals
+      $("#id_tab_orders_totals").addClass("active");
+      $('#section_orders_totals').show();
+    }
   }
 </script>

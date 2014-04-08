@@ -58,7 +58,7 @@ class lC_Image {
     if (empty($group) || !$this->exists($group)) {
       $group = $this->getCode(DEFAULT_IMAGE_GROUP_ID);
     }
-
+    
     $group_id = $this->getID($group);
 
     $width = $height = '';

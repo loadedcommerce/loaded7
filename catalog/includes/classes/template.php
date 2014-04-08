@@ -668,35 +668,29 @@ class lC_Template {
   */  
   public function getQRCode() {
     global $lC_Customer, $lC_Session, $lC_Language;
-    
+    $result['html'] = '';
     $BarcodeQR = new BarcodeQR();
-    $qrcode_url = (($request_type == 'SSL') ? HTTPS_SERVER : HTTP_SERVER) . $_SERVER['REQUEST_URI'];
+    $qrcode_url = $_SERVER['HTTP_REFERER'];
 
     if ($lC_Customer->isLoggedOn() === true && $lC_Customer->getEmailAddress != NULL ) {
       $qrcode_url_add = (stristr($qrcode_url, "?") ? '&' : '?') . $lC_Session->getName() . '=' . $lC_Session->getID() . '&email=' . $lC_Customer->getEmailAddress  . '&qr=1';
     } else {
       $qrcode_url_add = (stristr($qrcode_url, "?") ? '&' : '?') . $lC_Session->getName() . '=' . $lC_Session->getID();
     } 
-    
-    $output = '<a id="qrcode-tooltip">' .
-              '  <span style="cursor:pointer;">' .
-              '    <img src="images/icons/qr-icon.png" alt="' . $lC_Language->get('text_click_and_scan')  . '" style="vertical-align:middle; padding-right:6px;" /><span class="small-margin-left">' . $lC_Language->get('text_click_and_scan') . '</span>' .
-              '  </span>' .
-              '</a>' . 
-              '<div id="qr-message">' . 
+    $result['html'] .= '<div id="qr-message">' . 
               '<a class="close-qr" title="Hide message" onclick="$(\'#qr-message\').hide(\'500\');"><span style="color:#fff;">X</span></a>';
     
     $BarcodeQR->url($qrcode_url . $qrcode_url_add);
     if ($lC_Customer->isLoggedOn() === true) {
       $BarcodeQR->draw(230, DIR_FS_WORK . 'qrcode/c' .  $lC_Customer->id . '.png');
-      $output .= '<img alt="' . $lC_Language->get('text_click_and_scan') . '" src="includes/work/qrcode/c' . $lC_Customer->id . '.png" />';      
+      $result['html'] .= '<img alt="' . $lC_Language->get('text_click_and_scan') . '" src="includes/work/qrcode/c' . $lC_Customer->id . '.png" />';      
     } else {
       $BarcodeQR->draw(230, DIR_FS_WORK . 'qrcode/g' .  $lC_Session->getID() . '.png');
-      $output .= '<img alt="' . $lC_Language->get('text_click_and_scan') . '" src="includes/work/qrcode/g' . $lC_Session->getID() . '.png" />';
+      $result['html'] .= '<img alt="' . $lC_Language->get('text_click_and_scan') . '" src="includes/work/qrcode/g' . $lC_Session->getID() . '.png" />';
     }   
-    $output .= '</div><script>$("#qrcode-tooltip").click(function() { $("#qr-message").show("500"); });</script>';
+    $result['html'] .= '</div><script>$("#qrcode-tooltip").click(function() { $("#qr-message").show("500"); });</script>';
     
-    return $output;
+    return $result['html'];
   }
  /*
   * Return the language selection 
@@ -980,6 +974,37 @@ class lC_Template {
       break;
     }
     return $data;
+  }
+  
+  /**
+  * Load the custom CSS
+  *
+  * @access public
+  * @return boolean
+  */
+  public function loadBrandingCSS() {
+    global $lC_Database;
+    
+    $html = '';
+    
+    $Qcss = $lC_Database->query('select custom_css from :table_branding_data');
+    $Qcss->bindTable(':table_branding_data', TABLE_BRANDING_DATA);
+    $Qcss->execute();
+    
+    $css = $Qcss->toArray();
+    
+    if (!empty($css['custom_css'])) {
+      if ( file_exists('includes/work/branding_manager/custom.css') ) {
+        $customcss = $css['custom_css'];
+      
+        $file = 'includes/work/css/custom.css';
+        @file_put_contents($file, $customcss, LOCK_EX);
+        
+        $html = '<link rel="stylesheet" href="includes/work/branding_manager/custom.css">' . "\n";
+      }
+    }
+
+    return $html;
   }
 }
 ?>

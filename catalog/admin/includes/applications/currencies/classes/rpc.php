@@ -10,7 +10,7 @@
 */
 global $lC_Vqmod;
 
-require($lC_Vqmod->modCheck('includes/applications/currencies/classes/currencies.php'));
+require_once($lC_Vqmod->modCheck('includes/applications/currencies/classes/currencies.php'));
 
 class lC_Currencies_Admin_rpc {
  /*

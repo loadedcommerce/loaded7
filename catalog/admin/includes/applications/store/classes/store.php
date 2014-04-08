@@ -93,7 +93,7 @@ if (!class_exists('lC_Store_Admin')) {
                                <div class="strong">' . $addon->getAddonTitle() . '</div>
                                <div>' . lc_image('../images/stars_' . $addon->getAddonRating() . '.png', sprintf($lC_Language->get('rating_from_5_stars'), $addon->getAddonRating()), null, null, 'class="mid-margin-top small-margin-bottom"') . '</div>
                                <div><small>' . $addon->getAddonAuthor() . '</small></div>
-                               <div style="position:absolute; right:0; top:0;"><button id="uninstallButton" onclick="uninstallAddon(\'' . $addon->getAddonCode() . '\',\'' . urlencode($addon->getAddonTitle()) . '\');" class="button icon-undo red-gradient glossy"><span>Uninstall</span></button></div>
+                               <div style="position:absolute; right:0; top:0;"><button id="uninstallButton" onclick="uninstallAddon(\'' . $addon->getAddonCode() . '\',\'' . urlencode($addon->getAddonTitle()) . '\', \'' . $addon->getAddonType() . '\');" class="button icon-undo red-gradient glossy"><span>Uninstall</span></button></div>
                               </div>
                             </div>' . $blurb . '
                           </div>';
@@ -112,7 +112,7 @@ if (!class_exists('lC_Store_Admin')) {
           if (stristr($key, 'password')) {
             $keys .= lc_draw_password_field('configuration[' . $key . ']', 'class="input" onfocus="this.select();"', $Qkey->value('configuration_value'));
           } else {
-            if (stristr($key, '_COST') || stristr($key, '_HANDLING') || stristr($key, '_PRICE') || stristr($key, '_FEE') || stristr($key, '_MINIMUM_ORDER')) {
+            if (preg_match('/(_COST|_HANDLING|_PRICE|_FEE|_MINIMUM_ORDER)$/i',$key)) {
               $keys .= '<div class="inputs" style="display:inline; padding:8px 0;">' .
               '  <span class="mid-margin-left no-margin-right">' . $lC_Currencies->getSymbolLeft() . '</span>' .
               lc_draw_input_field('configuration[' . $key . ']', @number_format($Qkey->value('configuration_value'), DECIMAL_PLACES), 'class="input-unstyled" onfocus="this.select();"') .
@@ -180,7 +180,7 @@ if (!class_exists('lC_Store_Admin')) {
     public static function drawMenu() {
       foreach ( self::getAllTypes() as $key => $type ) {
         $menu .= '<li style="cursor:pointer;" class="message-menu store-menu-' . strtolower(str_replace(' ', '-', $type['text'])) . '" id="menuType' . str_replace(' ', '', ucwords($type['text'])) . '">' . 
-        '  <a href="javascript:void(0);" class="" id="menuLink' . (int)$type['id'] . '" onclick="showAddonType(\'' . (int)$type['id'] . '\', \'' . lc_output_string_protected($type['text']) . '\');">' . 
+        '  <a href="javascript:void(0);" class="" id="menuLink' . (int)$type['id'] . '" onclick="showAddonType(\'' . lc_output_string_protected($type['text']) . '\');">' . 
         '    <span class="message-status" style="padding-top:8px;"><img src="' . $type['icon'] . '" alt="' . $type['text'] . '"></span>' .
         '     <br><strong>' . lc_output_string_protected($type['text']) . '</strong>' .
         '   </a>' .

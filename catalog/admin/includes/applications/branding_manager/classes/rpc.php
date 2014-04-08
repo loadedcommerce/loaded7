@@ -8,7 +8,9 @@
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: rpc.php v1.0 2013-08-08 datazen $
 */
-require('includes/applications/branding_manager/classes/branding_manager.php');
+global $lC_Vqmod;
+
+require_once($lC_Vqmod->modCheck('includes/applications/branding_manager/classes/branding_manager.php'));
 require_once($lC_Vqmod->modCheck('includes/classes/image.php'));
 
 class lC_Branding_manager_Admin_rpc {

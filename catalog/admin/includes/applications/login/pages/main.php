@@ -53,7 +53,7 @@
               <li><span class="icon-unlock mid-margin-right"></span><input type="text" name="activation_serial" id="activation_serial" value="" style="width:85% !important;" class="input-unstyled" placeholder="<?php echo $lC_Language->get('placeholder_pro_serial'); ?>" autocomplete="off"></li>
             </ul>
             <p class="full-width"><button type="submit" class="button glossy red-gradient full-width disabled" id="activate-pro"><?php echo $lC_Language->get('button_activate_pro'); ?></button></p>
-            <button onclick="window.open('http://www.loadedcommerce.com/loaded-pre-order-p-395.html');" type="button" class="button glossy red-gradient full-width" id="buy-pro"><?php echo $lC_Language->get('button_buy_pro'); ?></button>
+            <button onclick="window.open('http://loadedcommerce.com/pricing/pro');" type="button" class="button glossy red-gradient full-width" id="buy-pro"><?php echo $lC_Language->get('button_buy_pro'); ?></button>
           </form>
           <?php
             } else {
@@ -68,7 +68,7 @@
             <p class="full-width">
               <button type="submit" class="button glossy red-gradient full-width disabled" id="activate-pro"><?php echo $lC_Language->get('heading_product_registration'); ?></button>
             </p>
-            <button onclick="window.open('http://www.loadedcommerce.com/loaded-pre-order-p-395.html');" type="button" class="button glossy red-gradient full-width" id="buy-pro"><?php echo $lC_Language->get('button_buy_pro'); ?></button>
+            <button onclick="window.open('http://loadedcommerce.com/pricing/pro');" type="button" class="button glossy red-gradient full-width" id="buy-pro"><?php echo $lC_Language->get('button_buy_pro'); ?></button>
           </form>
           <?php 
             }
@@ -76,7 +76,13 @@
         </div>
       </div>
     </div>
-    <p class="anthracite" align="center" style="line-height:1.5;">Copyright &copy; <?php echo @date("Y"); ?> <a class="anthracite" href="http://www.loaded7.com">Loaded Commerce</a><br /><?php echo $lC_Language->get('text_version') . ' ' . utility::getVersion(); ?></p>
+    <style>
+    #copyright-msg a:hover { text-decoration:underline; }
+    </style>
+    <div id="copyright-msg">
+      <p class="anthracite" align="center" style="line-height:1.5;">Copyright &copy; <?php echo @date("Y"); ?> <a class="anthracite" href="http://www.loaded7.com">Loaded Commerce</a><br /><?php echo $lC_Language->get('text_core') . ' ' . $lC_Language->get('text_version') . ' ' . utility::getVersion(); if (utility::isPro() === true) { echo '<small class="tag red-gradient mid-margin-left mid-margin-right">PRO</small>' . $lC_Language->get('text_version') . ' ' . utility::getProVersion(); } ?></p>
+      <p class="anthracite" align="center"><a class="anthracite" href="http://loadedcommerce.com/support" target="_blank"><?php echo $lC_Language->get('text_get_support'); ?></a> - <a class="anthracite" href="http://loadedcommerce.com" target="_blank"><?php echo $lC_Language->get('text_get_more_loaded'); ?></a></p>
+    </div>
   </div>
 </div>
 <script>

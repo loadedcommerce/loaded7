@@ -26,6 +26,14 @@ class lC_Application_Cache extends lC_Template_Admin {
     if ( !isset($_GET['action']) ) {
       $_GET['action'] = '';
     }
+    
+    $action = (isset($_GET['action']) && $_GET['action'] != NULL) ? $_GET['action'] : NULL;
+    
+    switch ($action) {
+      case 'clear' :
+        lC_Cache::clear('*');
+        break;
+    }
   }
 }
 ?>

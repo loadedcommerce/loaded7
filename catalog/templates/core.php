@@ -40,9 +40,7 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
     <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
     
     <!-- Load Page/Group Specific Tags -->
-    <?php
-      echo $lC_Template->loadCSS($lC_Template->getCode(), $lC_Template->getGroup());
-    ?>
+    <?php echo $lC_Template->loadCSS($lC_Template->getCode(), $lC_Template->getGroup()); ?>
 
     <!-- fav and touch icons -->
     <link rel="shortcut icon" href="templates/core/images/favicons/favicon.ico">
@@ -56,6 +54,8 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
     
     <!-- font-awesome -->
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <!-- Custom CSS Tags -->
+    <?php echo $lC_Template->loadBrandingCSS(); ?>
         
     <!-- jQuery is always at top -->
     <script src="ext/jquery/jquery-1.9.1.min.js"></script>
@@ -126,6 +126,8 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
               </div>
             </div>
           </div>
+        </div>
+        <div class="row">
            
           <!--left column -->
           <?php if (!empty($left)) echo '<div id="content-left-container" class="' . $box_class . ' hide-on-mobile">' . $lC_Template->getInfoBoxHtml('left') . '</div>' . "\n"; ?>
@@ -196,6 +198,11 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
             }               
             ?>
           </div>
+          <!--right column-->
+          <?php if (!empty($left)) echo '<div id="content-left-mobile-container" class="' . $box_class . ' show-on-mobile mobile-expand">' . $lC_Template->getInfoBoxHtml('left') . '</div>' . "\n"; ?>
+          <?php if (!empty($right)) echo '<div id="content-right-container" class="' . $box_class . ' mobile-expand">' . $lC_Template->getInfoBoxHtml('right') . '</div>' . "\n"; ?>
+        </div>
+        <div class="row">  
           <!--footer content modules--> 
           <div id="before-footer-container" class="container">
             <div class="row">
@@ -223,11 +230,6 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
               </div>
             </div>
           </div>
-            
-          <!--right column-->
-          <?php if (!empty($left)) echo '<div id="content-left-mobile-container" class="' . $box_class . ' show-on-mobile mobile-expand">' . $lC_Template->getInfoBoxHtml('left') . '</div>' . "\n"; ?>
-          <?php if (!empty($right)) echo '<div id="content-right-container" class="' . $box_class . ' mobile-expand">' . $lC_Template->getInfoBoxHtml('right') . '</div>' . "\n"; ?>
-                    
         </div> <!-- end row -->
         <?php
         // page footer

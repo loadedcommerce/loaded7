@@ -9,7 +9,7 @@
   @version    $Id: products.php v1.0 2013-08-08 datazen $
 */
 ?>
-<div id="section_order_totals">
+<div id="section_orders_totals">
   <h3 class="show-below-768 margin-left margin-top no-margin-bottom"><?php echo $lC_Language->get('text_order_totals'); ?></h3>
   <div class="columns with-padding">
     <div class="new-row-mobile twelve-columns twelve-columns-mobile no-margin-bottom">

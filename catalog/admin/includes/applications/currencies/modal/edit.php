@@ -100,7 +100,7 @@ function editCurrency(id) {
                         $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
                         return false;
                       }
-                      if ( data.currencyData.code != defaultCode && ($('.switch').is('.checked')) ) {
+                      if ( data.currencyData.code != defaultCode || ($('.switch').is('.checked')) ) {
                         // because default is a constant, we need to refresh the page to pick up the value if checked
                         window.location.href = window.location.href;
                       } else {
@@ -113,7 +113,7 @@ function editCurrency(id) {
             }
           },
           buttonsLowPadding: true
-      });
+      });      
       $("#editTitle").val(data.currencyData.title);
       $("#editCode").val(data.currencyData.code);
       $("#editSymbolLeft").val(data.currencyData.symbol_left);

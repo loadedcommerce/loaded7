@@ -46,7 +46,7 @@ class lC_Boxes_templates extends lC_Modules {
           $hidden_get_variables .= lc_draw_hidden_field($key, $value);
         }
       }
-
+      
       $this->_content = '<li class="box-templates-selection">' . $hidden_get_variables . lc_draw_pull_down_menu('template', $data, $_SESSION['template']['code'], 'class="box-templates-select" onchange="$(this).closest(\'form\').submit();"') . lc_draw_hidden_session_id_field() . '</li>';
     }
   }

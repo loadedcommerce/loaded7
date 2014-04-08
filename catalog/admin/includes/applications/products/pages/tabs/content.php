@@ -57,7 +57,7 @@ global $lC_Language, $pInfo, $products_description, $products_keyword, $products
                   </p>
                   <p class="button-height block-label">
                   <label class="label" for="<?php echo 'products_description[' . $l['id'] . ']'; ?>"><?php echo $lC_Language->get('field_description') . lc_show_info_bubble($lC_Language->get('info_bubble_content_description')); ?></label>
-                  <?php echo lc_draw_textarea_field('products_description[' . $l['id'] . ']', (isset($pInfo) && isset($products_description[$l['id']]) ? $products_description[$l['id']] : null), null, 10, 'id="ckEditorProductDescription_' . $l['id'] . '" style="width:97%;" class="required input full-width autoexpanding"'); ?>
+                  <?php echo lc_draw_textarea_field('products_description[' . $l['id'] . ']', (isset($pInfo) && isset($products_description[$l['id']]) ? $products_description[$l['id']] : null), null, 10, 'id="ckEditorProductDescription_' . $l['id'] . '" style="width:97%;" class="input full-width autoexpanding"'); ?>
                   </p>
                   <?php if (ENABLE_EDITOR == '1') { ?>
                   <p class="toggle-html-editor"><?php echo '<a href="javascript:toggleEditor(\'' . $l['id'] . '\');">' . $lC_Language->get('text_toggle_html_editor') . '</a>'; ?></p>

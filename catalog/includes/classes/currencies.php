@@ -12,7 +12,7 @@ class lC_Currencies {
 
   // class constructor
   public function lC_Currencies() {
-    global $lC_Database;
+    global $lC_Database, $lC_Language;
 
     $Qcurrencies = $lC_Database->query('select * from :table_currencies');
     $Qcurrencies->bindTable(':table_currencies', TABLE_CURRENCIES);
@@ -60,19 +60,18 @@ class lC_Currencies {
 
   public function addTaxRateToPrice($price, $tax_rate, $quantity = 1) {
     global $lC_Tax;
-
+    $price = $this->santizePrice($price);
     $price = lc_round($price, $this->currencies[DEFAULT_CURRENCY]['decimal_places']);
 
     if ( (DISPLAY_PRICE_WITH_TAX == '1') && ($tax_rate > 0) ) {
       $price += lc_round($price * ($tax_rate / 100), $this->currencies[DEFAULT_CURRENCY]['decimal_places']);
     }
-
     return lc_round($price * $quantity, $this->currencies[DEFAULT_CURRENCY]['decimal_places']);
   }
 
   public function displayPrice($price, $tax_class_id, $quantity = 1, $currency_code = null, $currency_value = null) {
     global $lC_Tax;
-
+    $price = $this->santizePrice($price);
     $price = lc_round($price, $this->currencies[DEFAULT_CURRENCY]['decimal_places']);
 
     if ( (DISPLAY_PRICE_WITH_TAX == '1') && ($tax_class_id > 0) ) {
@@ -84,14 +83,18 @@ class lC_Currencies {
 
   public function displayPriceWithTaxRate($price, $tax_rate, $quantity = 1, $force = false, $currency_code = '', $currency_value = '') {
     global $lC_Tax;
-
+    $price = $this->santizePrice($price);
     $price = lc_round($price, $this->currencies[DEFAULT_CURRENCY]['decimal_places']);
 
     if ( (($force === true) || (DISPLAY_PRICE_WITH_TAX == '1')) && ($tax_rate > 0) ) {
       $price += lc_round($price * ($tax_rate / 100), $this->currencies[DEFAULT_CURRENCY]['decimal_places']);
     }
-
     return $this->format($price * $quantity, $currency_code, $currency_value);
+  }
+  
+  public function santizePrice($price){
+    //santize the prise string 
+    return(str_replace(",", "", $price));
   }
 
   public function exists($code) {
@@ -162,6 +165,14 @@ class lC_Currencies {
     foreach ($this->currencies as $key => $value) {
       if ($key == $_SESSION['currency']) {
         return $value['symbol_left'];
+      }
+    }
+  }
+  
+  public function getSessionSymbolRight() {
+    foreach ($this->currencies as $key => $value) {
+      if ($key == $_SESSION['currency']) {
+        return $value['symbol_right'];
       }
     }
   }     

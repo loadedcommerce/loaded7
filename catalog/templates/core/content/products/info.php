@@ -37,7 +37,7 @@
     <?php
     if (sizeof($lC_Product->getImages()) > 1) {
       $_product_additionalimages = $lC_Product->getAdditionalImagesHtml(); 
-      echo '<div class="thumbnail img-responsive"><ul class="pr_gallery">' . $_product_additionalimages['images'] . '</ul></div>' . "\n";
+      echo '<div id="additional-images-container"><ul class="pr_gallery">' . $_product_additionalimages['images'] . '</ul></div>' . "\n";
       echo $_product_additionalimages['model']. "\n";
     }
     ?>
@@ -135,19 +135,21 @@
   if ( $lC_Product->hasSubProducts($lC_Product->getID()) === false) {
     ?>    
     <div id="qpb-message"></div>
-    <div class="display-inline">
-      <div class="col-sm-8 col-lg-8 align-right mid-margin-top">
-        <div class="form-group">
-          <label class="content-products-info-qty-label"><?php echo $lC_Language->get('text_add_to_cart_quantity'); ?></label>
-          <i class="fa fa-plus-square-o fa-lg" style="position:absolute; right:-1px; top:3px; opacity:.3; cursor:pointer;" onclick="setQty('up');"></i>
-          <input type="text" id="quantity" name="quantity" onfocus="this.select();" onchange="refreshPrice();" class="form-control content-products-info-qty-input mid-margin-right" value="1">
-          <i class="fa fa-minus-square-o fa-lg" style="position:absolute; right:-1px; top:19px; opacity:.3; cursor:pointer;" onclick="setQty('dn');"></i>
+    <div class="relative clear-both clearfix">
+      <div class="display-inline">
+        <div class="col-sm-8 col-lg-8 align-right mid-margin-top">
+          <div class="form-group">
+            <label class="content-products-info-qty-label"><?php echo $lC_Language->get('text_add_to_cart_quantity'); ?></label>
+            <i class="fa fa-plus-square-o fa-lg" style="position:absolute; right:-1px; top:3px; opacity:.3; cursor:pointer;" onclick="setQty('up');"></i>
+            <input type="text" id="quantity" name="quantity" onfocus="this.select();" onchange="refreshPrice();" class="form-control content-products-info-qty-input mid-margin-right" value="1">
+            <i class="fa fa-minus-square-o fa-lg" style="position:absolute; right:-1px; top:19px; opacity:.3; cursor:pointer;" onclick="setQty('dn');"></i>
+          </div>
         </div>
-      </div>
-      <div class="col-sm-4 col-lg-4">
-        <p class="margin-top"><button onclick="$('#cart_quantity').submit();" id="btn-buy-now" class="btn btn-block btn-lg btn-success"><?php echo $lC_Language->get('button_buy_now'); ?></button></p>
-      </div>
-    </div> 
+        <div class="col-sm-4 col-lg-4">
+          <p class="margin-top"><button onclick="$('#cart_quantity').submit();" id="btn-buy-now" class="btn btn-block btn-lg btn-success"><?php echo $lC_Language->get('button_buy_now'); ?></button></p>
+        </div>
+      </div> 
+    </div>
     <?php
   }
   if ( $lC_Product->hasSubProducts($lC_Product->getID()) === false) {

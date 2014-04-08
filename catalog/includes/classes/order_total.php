@@ -28,13 +28,13 @@ class lC_OrderTotal {
       }      
       $this->_modules[] = $Qmodules->value('code');
     }
-
+    
     $Qmodules->freeResult();
 
     $lC_Language->load('modules-order_total');
 
     foreach ($this->_modules as $module) {
-      $module_class = 'lC_OrderTotal_' . $module;
+      $module_class = 'lC_OrderTotal_' . $module; 
 
       if (class_exists($module_class) === false) {
         include($lC_Vqmod->modCheck('includes/modules/order_total/' . $module . '.' . substr(basename(__FILE__), (strrpos(basename(__FILE__), '.')+1))));

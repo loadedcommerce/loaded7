@@ -200,8 +200,8 @@
         <ul class="tabs">
           <li id="tabHeaderSectionContent" class="active"><?php echo lc_link_object('#section_general_content', $lC_Language->get('section_general')); ?></li>
           <?php if ($pInfo) { ?>
-            <li id="tabHeaderSectionImages"><?php echo lc_link_object('#section_images_content', $lC_Language->get('section_images')); ?></li>
-            <?php } ?>
+          <li id="tabHeaderSectionImages"><?php echo lc_link_object('#section_images_content', $lC_Language->get('section_images')); ?></li>
+          <?php } ?>
           <li id="tabHeaderSectionData"><?php echo lc_link_object('#section_data_content', $lC_Language->get('section_data')); ?></li>
           <li id="tabHeaderSectionOptions"><?php echo lc_link_object('#section_options_content', $lC_Language->get('section_options')); ?></li>
           <li id="tabHeaderSectionPricing"><?php echo lc_link_object('#section_pricing_content', $lC_Language->get('section_pricing')); ?></li>

@@ -349,7 +349,7 @@ table.dataTable th:active {
 	width: 7px;
 	height: 10px;
 	vertical-align: middle;
-	background: url(../../../img/standard/sprites.png) no-repeat -137px -8px;
+	background: url(../../img/standard/sprites.png) no-repeat -137px -8px;
 	margin: -1px 4px 1px 1px;
 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
 	filter: alpha(opacity=30);

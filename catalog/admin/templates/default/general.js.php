@@ -385,7 +385,7 @@ $(document).ready(function() {
   // defeat Google Chrome form autofill and its yellow background
   if(navigator.userAgent.toLowerCase().indexOf("chrome") >= 0 || navigator.userAgent.toLowerCase().indexOf("safari") >= 0){
     window.setInterval(function(){
-      $('input:-webkit-autofill').each(function(){
+      jQuery('input:-webkit-autofill').each(function(){
           var clone = $(this).clone(true, true);
           $(this).after(clone).remove();
       });
@@ -394,10 +394,6 @@ $(document).ready(function() {
   
   $("#profileLoader").hide();
   $("#profileInner").fadeTo(1000, 1);
-  
-  $("#qrcode-tooltip").click(function() {
-    $("#qr-message").show("500");
-  });
   
   if ($(window).width() < 1380) {
     $("#category_tabs").removeClass("side-tabs");
@@ -415,8 +411,55 @@ $(document).ready(function() {
   var resize = '<?php echo (file_exists('../includes/work/resize.tmp')) ? '1' : '0'; ?>';
   var isLoggedIn = '<?php echo (isset($_SESSION['admin']) && empty($_SESSION['admin']) === false) ? '1' : '0'; ?>';
   var module = '<?php echo $lC_Template->getModule(); ?>';
-  if (resize == '1' && isLoggedIn == '1' && module != 'login') {
-    _resizeImages();
+  var remind = '<?php echo ((isset($_SESSION['img_resize_flag']) && $_SESSION['img_resize_flag'] == true) ? 1 : 0); ?>';
+  if (resize == '1' && isLoggedIn == '1' && module != 'login' && remind != 1) {  
+    $.modal({
+        content: '<div id="img-resize" style="padding-bottom:10px;">'+
+                 '  <p><?php echo $lC_Language->get('ms_warning_resize_images'); ?></p>'+
+                 '</div>',
+        title: '<?php echo $lC_Language->get('modal_heading_system_message'); ?>',
+        width: 500,
+        actions: {
+          'Close' : {
+            color: 'red',
+            click: function(win) { win.closeModal(); }
+          }
+        },
+        buttons: {
+          '<?php echo $lC_Language->get('button_never'); ?>': {
+            classes:  'red-gradient glossy',
+            click:    function(win) { 
+              var jsonLink = '<?php echo lc_href_link_admin('rpc.php', 'index' . '&action=removeResizeTmp'); ?>';
+              $.getJSON(jsonLink,
+                function (data) {
+                  return true;
+                }
+              );              
+              win.closeModal(); 
+            }
+          },
+          '<?php echo $lC_Language->get('button_no'); ?>': {
+            classes:  'glossy',
+            click:    function(win) { 
+              var jsonLink = '<?php echo lc_href_link_admin('rpc.php', 'index' . '&action=noRemindResize'); ?>';
+              $.getJSON(jsonLink,
+                function (data) {
+                  return true;
+                }
+              );              
+              win.closeModal(); 
+            }
+          },            
+          '<?php echo $lC_Language->get('button_yes'); ?>': {
+            classes:  'blue-gradient glossy',
+            click:    function(win) {
+              win.closeModal(); 
+              _resizeImages(); 
+            }
+          }
+        },
+        buttonsLowPadding: true
+    });  
   }
   
   // added for api communication health check
@@ -434,7 +477,11 @@ $(document).ready(function() {
   }
   setTimeout(function() {
     $("#dataTable_length").find('select').addClass("input with-small-padding");
-  }, 700);        
+  }, 700);
+  
+  $(".productSearchInput").keypress(function() {
+    $(".productSearchInput").parents().eq(4).find('[type=button]').attr('disabled', true);  
+  });     
 });
 
 function _apiHealthCheckAlert() {
@@ -765,6 +812,37 @@ function search(q) {
   );
 }
 
+function productSearch(tf, f, p) {
+  var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=productSearch&tf=THISFIELD&f=FIELD&p=PSEARCH'); ?>'
+  $.getJSON(jsonLink.replace('THISFIELD', tf).replace('FIELD', f).replace('PSEARCH', p),
+    function (data) {
+      if (data.rpcStatus == -10) { // no session
+        var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
+        $(location).attr('href',url);
+      }
+      if (data.rpcStatus != 1) {
+        $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
+        return false;
+      }
+      $('.' + f + '_results').show(); 
+      $('.' + f + '_results').html(data.html);
+    }
+  );
+}
+
+function setProductSearchSelection(tf, name, f, pid) {
+  $('#' + tf).val(name);
+  $('#' + f).val(pid);
+  $('.' + f + '_results').hide();
+  $('#' + f).parent().find('[type=button]').removeAttr('disabled');
+    /*if ($(this).val() == '') {
+      $('.enableOnInput').prop('disabled', true);
+    } else {
+      $('.enableOnInput').prop('disabled', false);
+    }*/
+  //});
+}
+
 $("#li-search").click(function() {
   var addOpen = $('#addContainer').is(':visible');
   var msgOpen = $('#messagesContainer').is(':visible');
@@ -921,4 +999,18 @@ $("#li-settings").click(function() {
     include('templates/' . $_SESSION['template']['code'] . '/modal/' . $file['name']);
   }
 ?>
+//QR Code JSON
+$("#qrcode-tooltip").click(function(){
+var jsonLink = '<?php echo lc_href_link_admin('rpc.php','qrcode&action=getqrcode'); ?>'
+  $.getJSON(jsonLink,
+    function (data) {
+      if (data.rpcStatus != 1) {
+        $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
+        return false;
+      } 
+      $('#ShowQRCode').html(data.html);
+      $("#qr-message").show("500");
+    }
+  );
+})
 </script>

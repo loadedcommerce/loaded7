@@ -27,6 +27,7 @@ $bInfo = lC_Branding_manager_Admin::getAll();
         <li><a href="#seo"><?php echo $lC_Language->get('tab_seo'); ?></a></li>
         <li><a href="#social"><?php echo $lC_Language->get('tab_social_links'); ?></a></li>
         <li><a href="#footer"><?php echo $lC_Language->get('tab_footer_text'); ?></a></li>
+        <li><a href="#customcss"><?php echo $lC_Language->get('tab_customcss_text'); ?></a></li>
       </ul>
       <div class="tabs-content">
         <div id="home" class="with-padding">
@@ -299,6 +300,12 @@ $bInfo = lC_Branding_manager_Admin::getAll();
               <?php
               }
             ?>
+          </div>
+          <div id="customcss" class="with-padding">
+            <p class="button-height block-label mid-margin-bottom">
+              <label class="label" for="branding_customcss"><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_customcss')); ?><?php echo $lC_Language->get('field_customcss_text'); ?></label>
+              <?php echo lc_draw_textarea_field('branding_customcss', (isset($bInfo) && isset($bInfo['custom_css']) ? $bInfo['custom_css'] : null), 48, 15, 'id="branding_customcss" class="input full-width required autoexpanding small-margin-top margin-bottom"');?>
+            </p>
           </div>
         </div>
       </div>

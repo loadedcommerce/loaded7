@@ -86,8 +86,6 @@ final class VQMod {
       $this->_folderChecks = true;
     }
     
-    $this->_cleanup();
-
     if(!preg_match('%^([a-z]:)?[\\\\/]%i', $sourceFile)) {
       $sourcePath = $this->path($sourceFile);
     } else {
@@ -174,37 +172,15 @@ final class VQMod {
         //die('ERROR! FOLDER CANNOT BE CREATED: ' . $path);
       }
     }
-  }
- /**
-  * VQMod::_cleanup()
-  * 
-  * @return null
-  * @description Reoves modded cached files 
-  */  
-  private function _cleanup() { 
-    $files = @scandir(DIR_FS_CATALOG . $this->vqCachePath);
-      if (is_array($files) && !empty($files)) {
-      foreach ($files as $file) {
-        if ($file != "." && $file != ".." && $file != ".htaccess") {
-          if (file_exists(DIR_FS_CATALOG . $this->vqCachePath . $file)) {
-            unlink(DIR_FS_CATALOG . $this->vqCachePath . $file); 
-          }
-        }
-      }    
-    }
   } 
  /**
   * VQMod::_phpLiteObfuscator()
   * 
   * @param  string  $SourceString
-  * @param  array   $_varsPrivate
-  * @param  array   $_funcPrivate
-  * @param  array   $classPrivate
-  * @param  array   $dicc
   * @return string
   * @description Obfuscates the modified code
   */   
-  private function _phpLiteObfuscator( $SourceString, $_varsPrivate=array(), $_funcPrivate=array(), $classPrivate=array(), &$dicc) {
+  private function _phpLiteObfuscator($SourceString) {
     ##remove comments
     $SourceString = preg_replace( "/(\s+)#(.*)\n/","$1\n",$SourceString );
     $SourceString = preg_replace( "/(\s+)\/\/(.*)\n/","$1\n",$SourceString );
