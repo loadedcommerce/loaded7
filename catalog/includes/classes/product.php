@@ -834,7 +834,7 @@ class lC_Product {
       } else {
         $link = lc_href_link(DIR_WS_IMAGES . 'no_image.png');
       }
-      $output .= '<li><a data-toggle="modal" href="#popup-image-modal-'.$key.'"><img src="' . $lC_Image->getAddress($value['image'], $size) . '" title="' . $this->getTitle() . '" /></a></li>'; 
+      $output .= '<li><div class="additional-image-container well with-small-padding no-margin-bottom"><a data-toggle="modal" href="#popup-image-modal-'.$key.'"><img src="' . $lC_Image->getAddress($value['image'], $size) . '" title="' . $this->getTitle() . '" /></a></div></li>'; 
 
       if(file_exists(DIR_FS_CATALOG . $lC_Image->getAddress($value['image'], 'originals'))) {
         $link_image_modal = lc_href_link($lC_Image->getAddress($value['image'], 'originals'));

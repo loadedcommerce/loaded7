@@ -37,7 +37,7 @@
     <?php
     if (sizeof($lC_Product->getImages()) > 1) {
       $_product_additionalimages = $lC_Product->getAdditionalImagesHtml(); 
-      echo '<div class="thumbnail img-responsive"><ul class="pr_gallery">' . $_product_additionalimages['images'] . '</ul></div>' . "\n";
+      echo '<div id="additional-images-container"><ul class="pr_gallery">' . $_product_additionalimages['images'] . '</ul></div>' . "\n";
       echo $_product_additionalimages['model']. "\n";
     }
     ?>
@@ -135,7 +135,7 @@
   if ( $lC_Product->hasSubProducts($lC_Product->getID()) === false) {
     ?>    
     <div id="qpb-message"></div>
-    <div class="relative clear-both">
+    <div class="relative clear-both clearfix">
       <div class="display-inline">
         <div class="col-sm-8 col-lg-8 align-right mid-margin-top">
           <div class="form-group">
