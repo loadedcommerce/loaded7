@@ -478,10 +478,39 @@ class utility {
     if (!isset($lC_Addons)) $lC_Addons = new lC_Addons;
     
     $aoArr = $lC_Addons->getAddons('enabled');
-
+         
     return $aoArr['Loaded_7_Pro']['version'];
   }  
-  
+ /**
+  * Check if the B2B product is installed
+  *
+  * @access public
+  * @return boolean
+  */
+  public static function isB2B() {
+    if (file_exists(DIR_FS_CATALOG . 'addons/Loaded_7_B2B/controller.php')) {
+      if (defined('ADDONS_SYSTEM_LOADED_7_B2B_STATUS') && ADDONS_SYSTEM_LOADED_7_B2B_STATUS == '1') {
+        return true;
+      }
+    } 
+    
+    return false;
+  }
+ /**
+  * Get the B2B version
+  *
+  * @access public
+  * @return boolean
+  */
+  public static function getB2BVersion() {
+    global $lC_Addons;
+
+    if (!isset($lC_Addons)) $lC_Addons = new lC_Addons;
+    
+    $aoArr = $lC_Addons->getAddons('enabled');
+         
+    return $aoArr['Loaded_7_B2B']['version'];
+  }  
  /**
   * Detect browser type
   *  

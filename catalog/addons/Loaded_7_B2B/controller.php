@@ -16,7 +16,7 @@ class Loaded_7_B2B extends Loaded_7_Pro {
   * Class constructor
   */
   public function Loaded_7_B2B() {    
-    global $lC_Language;    
+    global $lC_Language, $lC_Database;   
    /**
     * The addon type (category)
     * valid types; payment, shipping, themes, checkout, catalog, admin, reports, connectors, other 
