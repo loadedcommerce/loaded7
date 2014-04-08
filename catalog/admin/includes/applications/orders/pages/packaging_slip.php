@@ -21,7 +21,7 @@ $lC_Order = new lC_Order($_GET['oid']);
       <tr>
         <td><table border="0" width="100%" cellspacing="0" cellpadding="0">
             <tr>
-              <td class="pageHeading"><?php echo nl2br(STORE_NAME_ADDRESS); ?></td>
+              <td class="pageHeading"><?php echo STORE_NAME . '<br>' . nl2br(STORE_NAME_ADDRESS); ?></td>
               <td class="pageHeading" align="right">
               <?php 
               if ($lC_Template->getBrandingImage() != '') {
