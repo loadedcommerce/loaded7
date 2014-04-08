@@ -23,7 +23,7 @@
       $result['html'] .= '<div id="qr-message" class="message" style="z-index:500">' . "\n";
       $result['html'] .= '<a class="close-qr" title="' . $lC_Language->get('text_hide_message') . '" onclick="$(\'#qr-message\').hide(\'500\');"><span style="color:#fff;">X</span></a>';
 
-      $qrcode_url = (($request_type == 'SSL') ? HTTPS_SERVER : HTTP_SERVER) . $_SERVER['REQUEST_URI'];
+      $qrcode_url = $_SERVER['HTTP_REFERER'];
       if(empty($_GET) === false && !array_key_exists($lC_Session->getName(),$_GET)) {     
         $qrcode_url .= '&'.$lC_Session->getName().'='.$lC_Session->getID();
       } else if(!isset($_GET) || empty($_GET)){
