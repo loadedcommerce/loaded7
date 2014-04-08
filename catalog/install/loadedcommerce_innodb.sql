@@ -6215,7 +6215,6 @@ INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, module
 INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(6, 'Categories', 'categories', 'Loaded Commerce', 'http://www.loadedcommerce.com', 'boxes');
 INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(7, 'Best Sellers', 'best_sellers', 'Loaded Commerce', 'http://www.loadedcommerce.com', 'boxes');
 INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(8, 'Currencies', 'currencies', 'Loaded Commerce', 'http://www.loadedcommerce.com', 'boxes');
-INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(9, 'Information', 'information', 'Loaded Commerce', 'http://www.loadedcommerce.com', 'boxes');
 INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(10, 'Languages', 'languages', 'Loaded Commerce', 'http://www.loadedcommerce.com', 'boxes');
 INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(11, 'Manufacturer Info', 'manufacturer_info', 'Loaded Commerce', 'http://www.loadedcommerce.com', 'boxes');
 INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(12, 'Manufacturers', 'manufacturers', 'Loaded Commerce', 'http://www.loadedcommerce.com', 'boxes');
