@@ -202,26 +202,26 @@
    return $html;    
  }
  
- function button_save_close($save = false, $save_close = false, $close = true){
+ function button_save_close($save = false, $save_close = false, $close = true) {
   global $lC_Language, $lC_Template;
-
+  
   if ($save_close || $save) { 
   ?>
   <span class="button-group">
 
-    <?php if ($save) { ?>
+    <?php if ($save !== false) { ?>
     <button type="button" <?php echo $save; ?> class="button big icon-tick green-gradient"><?php echo $lC_Language->get('button_save'); ?></button>
     <?php } ?>
     
-    <?php if ($save_close) { ?>
-    <button type="button" name="save_close" value="true" <?php echo $save; ?>  class="button big icon-squared-cross green-gradient"><?php echo $lC_Language->get('button_save_close'); ?></button>
+    <?php if ($save_close === true) { ?>
+    <button type="submit" name="save_close" value="true" <?php echo $save; ?>  class="button big icon-squared-cross green-gradient"><?php echo $lC_Language->get('button_save_close'); ?></button>
     <?php } ?>
 
   </span>
   <?php 
   } 
   
-  if ($close) { 
+  if ($close !== false) { 
   ?>
   <span class="button-group">
     <a href="<?php echo $close; ?>" class="button big icon-cross-round red-gradient"></a>
