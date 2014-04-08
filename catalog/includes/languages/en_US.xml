@@ -2909,6 +2909,16 @@ Your friend, %s, thought that you would be interested in %s from %s.]]></value>
       <key>text_admin_session_active</key>
       <value><![CDATA[ADMIN SESSION ACTIVE]]></value>
       <group>general</group>
+    </definition> 
+    <definition>
+      <key>text_low_qoh_title</key>
+      <value><![CDATA[Insufficient Stock]]></value>
+      <group>general</group>
+    </definition> 
+    <definition>
+      <key>text_low_qoh_modal</key>
+      <value><![CDATA[There is not enough stock on hand to purchase your desired quantity of this product. Please lower your quantity to checkout.]]></value>
+      <group>general</group>
     </definition>     
   </definitions>  
 </language>
