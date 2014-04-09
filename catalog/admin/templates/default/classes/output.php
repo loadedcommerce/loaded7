@@ -56,17 +56,9 @@ class output {
           if (array_key_exists($key, $access)) continue;
           $access[$key] = $value;  
         }
-        
     }
 
     $output = '';
-     
-if ($_section == 'configuration') {              
-echo "<pre>";
-print_r($access);
-echo "</pre>";        
-}      
-    
     foreach ( $access as $group => $links ) {
       ksort($links);
 
