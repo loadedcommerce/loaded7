@@ -21,7 +21,7 @@ class Loaded_7_B2B extends Loaded_7_Pro {
     * The addon type (category)
     * valid types; payment, shipping, themes, checkout, catalog, admin, reports, connectors, other 
     */    
-    $this->_type = 'system';
+    $this->_type = 'systems';
    /**
     * The addon class name
     */    
@@ -56,26 +56,13 @@ class Loaded_7_B2B extends Loaded_7_Pro {
     $this->_thumbnail = lc_image(DIR_WS_CATALOG . 'addons/' . $this->_code . '/images/loaded7-b2b.png', $this->_title);
    /**
     * The addon enable/disable switch
-    */ 
-    if (defined('INSTALLATION_ID') && INSTALLATION_ID != '') {
-      if ($this->_timeToCheck() === true) {
-        $this->_enabled = $this->_validateSerial(INSTALLATION_ID);
-        if ($this->_enabled) $this->_updateLastChecked();
-      } else {
-        $this->_enabled = (defined('ADDONS_SYSTEM_' . strtoupper($this->_code) . '_STATUS') && @constant('ADDONS_SYSTEM_' . strtoupper($this->_code) . '_STATUS') == '1') ? true : false;
-      }
-      if (!$this->_enabled) {
-        $lC_Database->simpleQuery("update " . TABLE_CONFIGURATION . " set configuration_value = '0' where configuration_key = 'ADDONS_SYSTEM_" . strtoupper($this->_code) . "_STATUS'");
-      } else {
-        $lC_Database->simpleQuery("update " . TABLE_CONFIGURATION . " set configuration_value = '1' where configuration_key = 'ADDONS_SYSTEM_" . strtoupper($this->_code) . "_STATUS'");
-      }      
-    } else {
-      $this->_enabled = false;
-    }         
+    */  
+    $this->_enabled = $this->_checkAndActivate();
+    if ($this->_enabled && !defined('ADDONS_SYSTEM_LOADED_7_B2B_STATUS')) $this->install();
    /**
     * Automatically install the module
     */ 
-    $this->_auto_install = true;    
+ //   $this->_auto_install = true;    
   }
  /**
   * Checks to see if the addon has been installed
@@ -84,7 +71,7 @@ class Loaded_7_B2B extends Loaded_7_Pro {
   * @return boolean
   */
   public function isInstalled() {
-    return (bool)defined('ADDONS_PAYMENT_' . strtoupper($this->_code) . '_STATUS');
+    return (bool)defined('ADDONS_SYSTEM_' . strtoupper($this->_code) . '_STATUS');
   }
  /**
   * Install the addon
@@ -94,8 +81,9 @@ class Loaded_7_B2B extends Loaded_7_Pro {
   */
   public function install() {
     global $lC_Database;
-
-    $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('Enable AddOn', 'ADDONS_PAYMENT_" . strtoupper($this->_code) . "_STATUS', '-1', 'Do you want to enable this addon?', '6', '0', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))', now())");
+    
+    $lC_Database->simpleQuery("delete from " . TABLE_CONFIGURATION . " where configuration_key = 'ADDONS_SYSTEM_" . strtoupper($this->_code) . "_STATUS'");
+    $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('Enable AddOn', 'ADDONS_SYSTEM_" . strtoupper($this->_code) . "_STATUS', '1', 'Do you want to enable this addon?', '6', '0', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))', now())");
   }
  /**
   * Return the configuration parameter keys an an array
@@ -105,10 +93,33 @@ class Loaded_7_B2B extends Loaded_7_Pro {
   */
   public function getKeys() {
     if (!isset($this->_keys)) {
-      $this->_keys = array('ADDONS_PAYMENT_' . strtoupper($this->_code) . '_STATUS');
+      $this->_keys = array('ADDONS_SYSTEM_' . strtoupper($this->_code) . '_STATUS');
     }
 
     return $this->_keys;
-  }    
+  } 
+  
+ /**
+  * Check if the Pro addon is active
+  *
+  * @access public
+  * @return array
+  */
+  protected function _checkAndActivate() {
+  
+    $isPro = utility::isPro();  
+    $isB2B = utility::isB2B();  
+    
+    $enabled = false;
+    if ($isPro) {
+      $enabled = true;
+      if ($isB2B) {
+      } else {
+        $this->install();
+      }
+    }
+    
+    return $enabled;
+  }  
 }
 ?>
