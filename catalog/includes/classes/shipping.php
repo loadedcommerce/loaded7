@@ -133,7 +133,7 @@ class lC_Shipping {
     $total_quotes = 0;
 
     foreach ($this->_quotes as $quotes) {
-      $total_quotes += sizeof($quotes['methods']);
+      $total_quotes += sizeof($quotes['module']);
     }
 
     return $total_quotes;
