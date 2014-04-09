@@ -59,7 +59,7 @@ class lC_Featured_products {
         }
       }
     } else {
-      $output .= '<div class="content-specials-listing-name">' . $lC_Language->get('text_no_featured') . '</div>';
+      $output .= '<div class="content-specials-listing-name">' . $lC_Language->get('text_no_featured_products') . '</div>';
     }
     
     return $output;
