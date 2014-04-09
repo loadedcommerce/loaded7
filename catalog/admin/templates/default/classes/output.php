@@ -60,6 +60,13 @@ class output {
     }
 
     $output = '';
+     
+if ($_section == 'configuration') {              
+echo "<pre>";
+print_r($access);
+echo "</pre>";        
+}      
+    
     foreach ( $access as $group => $links ) {
       ksort($links);
 

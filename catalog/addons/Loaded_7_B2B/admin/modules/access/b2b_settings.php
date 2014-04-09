@@ -12,7 +12,7 @@ class lC_Access_B2b_settings extends lC_Access {
       $_group = 'configuration',
       $_icon = 'settings.png',
       $_title,
-      $_sort_order = 100;
+      $_sort_order = 0;
 
   public function lC_Access_B2b_settings() {
     global $lC_Database, $lC_Language;

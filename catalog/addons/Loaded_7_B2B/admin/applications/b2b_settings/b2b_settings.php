@@ -7,7 +7,7 @@
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: b2b_settings.php v1.0 2013-08-08 datazen $
 */
-require(DIR_FS_CATALOG . 'addons/Loaded_7_Pro/admin/applications/b2b_settings/classes/b2b_settings.php');
+require(DIR_FS_CATALOG . 'addons/Loaded_7_B2B/admin/applications/b2b_settings/classes/b2b_settings.php');
 
 class lC_Application_B2b_settings extends lC_Template_Admin {
  /*
