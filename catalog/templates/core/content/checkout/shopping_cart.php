@@ -47,7 +47,7 @@
                   if (!empty($products['model'])) {
                     echo '<div class="small">- ' . $lC_Language->get('listing_model_heading') . ': ' . $products['model'] . '</div>' . "\n";
                   }
-                  if ( (STOCK_CHECK == '1') && ($lC_ShoppingCart->isInStock($products['id']) === false) ) {
+                  if ( (STOCK_CHECK == '1') && ($lC_ShoppingCart->isInStock($products['item_id']) === false) ) {
                     echo '<span class="warning">' . STOCK_MARK_PRODUCT_OUT_OF_STOCK . '</span>' . "\n";
                   }
                   if ( $lC_ShoppingCart->isVariant($products['item_id']) ) {
@@ -119,10 +119,15 @@
         <div class="margin-top large-margin-bottom pull-left">
           <button onclick="window.location.href='<?php echo lc_href_link(FILENAME_PRODUCTS, 'new', 'SSL'); ?>'" class="btn btn-primary" type="button"><?php echo $lC_Language->get('cart_continue_shopping'); ?></button>
         </div>      
+        <?php if ( (STOCK_CHECK == '1') && ($lC_ShoppingCart->isInStock($products['item_id']) === false) ) { ?>
         <div class="margin-top large-margin-bottom pull-right">
-          <!-- button class="btn btn-lg btn-default" onclick="$('#shopping_cart').submit();" type="button"><?php echo $lC_Language->get('button_update'); ?></button -->
+          <button id="btn-checkout" class="btn btn-lg btn-success" type="button" readonly><?php echo $lC_Language->get('button_checkout'); ?></button>
+        </div> 
+				<?php } else { ?>
+				<div class="margin-top large-margin-bottom pull-right">
           <button onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'); ?>'" id="btn-checkout" class="btn btn-lg btn-success" type="button"><?php echo $lC_Language->get('button_checkout'); ?></button>
         </div>  
+				<?php	} ?>         
       </div> 
       <?php
       if ($lC_Customer->isLoggedOn() !== false) {
