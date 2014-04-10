@@ -100,7 +100,7 @@
             <span class="small-margin-left upsellinfo" upselltitle="<?php echo $lC_Language->get('text_free_product_upsell_title'); ?>" upselldesc="<?php echo $lC_Language->get('text_free_product_upsell_desc'); ?>"><?php echo lc_go_pro(); ?></span>
             <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_free_product'), null, 'info-spot on-left grey margin-left'); ?>
             </div -->
-            <input type="hidden" name="type" id="type" value="<?php echo $type; ?>" />
+            <input type="hidden" name="type" id="type" value="<?php echo (isset($cInfo) ? $cInfo->get('type') : null); ?>" />
           </div>
         </fieldset>
         <script>
