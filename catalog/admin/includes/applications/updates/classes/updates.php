@@ -533,9 +533,6 @@ class lC_Updates_Admin {
       // execute run after process
       self::doRunAfter();
       
-      // added for older versions ioncube check
-      self::ioncubeCheck();
-      
       // verify 644 permissions on PHP files on Linux systems
       if (utility::execEnabled() === true && utility::isLinux() === true) {
         try {
@@ -580,16 +577,6 @@ class lC_Updates_Admin {
         return false;
       }
     }
-  }
- /**
-  * Execute the ioncube check
-  *  
-  * @access public      
-  * @return boolean
-  */   
-  public static function ioncubeCheck() {
-    self::log('##### IONCUBE CHECK  STATUS: SUCCESS', 'update');
-    return true;
   }
  /**
   * Make an update-log history entry
