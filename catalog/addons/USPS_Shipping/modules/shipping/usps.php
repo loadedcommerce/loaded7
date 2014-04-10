@@ -96,8 +96,9 @@ class lC_Shipping_usps extends lC_Shipping {
     $shipping_pounds = floor ($shipping_weight);
     $shipping_ounces = round(16 * ($shipping_weight - floor($shipping_weight)));
     $this->_setWeight($shipping_pounds, $shipping_ounces);
-    $shipping_weight_unit = $lC_Weight->display($lC_ShoppingCart->getWeight(), SHIPPING_WEIGHT_UNIT);
 
+    $shipping_weight_unit = $lC_Weight->display($lC_ShoppingCart->getWeight(), SHIPPING_WEIGHT_UNIT);
+    
     $uspsQuote = $this->_getQuote();
 
     if (is_array($uspsQuote)) {
