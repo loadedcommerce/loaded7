@@ -3956,7 +3956,6 @@ class lC_LocalUpgrader extends lC_Upgrader {
     
     $map = $this->_data_mapping['orders_products'];
     $orders_products = array();
-    $orders_products_metas = array();
 
     $sQry = $source_db->query('SELECT o.orders_products_id, o.orders_id, o.products_id, o.products_model, o.products_name, o.products_price, o.products_tax, o.products_quantity FROM orders_products AS o');
     $sQry->execute();
@@ -3966,6 +3965,42 @@ class lC_LocalUpgrader extends lC_Upgrader {
       $cnt = 0;
       while ($sQry->next()) {
         $orders_products_id = $sQry->value($map['orders_products_id']);
+        
+        // ADDED FOR ORDERS SIMPLE OPTIONS META DATA
+        
+        $products_simple_options_meta_data = array();
+        
+        $mdQry = $source_db->query('SELECT * FROM orders_products_attributes WHERE orders_products_id = :orders_products_id');
+        $mdQry->bindInt(':orders_products_id', $orders_products_id);
+        $mdQry->execute();
+        
+        if ($mdQry->numberOfRows() > 0) { 
+          while ($mdQry->next()) {            
+            $vQry = $source_db->query('SELECT products_options_values_id FROM products_options_values WHERE products_options_values_name LIKE :products_options_values_name LIMIT 1');
+            $vQry->bindValue(':products_options_values_name', '%' . $mdQry->value('products_options') . '%');
+            $vQry->execute();
+            
+            $oQry = $source_db->query('SELECT products_options_text_id FROM products_options_text WHERE products_options_name LIKE :products_options_name LIMIT 1');
+            $oQry->bindValue(':products_options_name', '%' . $mdQry->value('products_options') . '%');
+            $oQry->execute();
+            
+            $modifier = ($mdQry->value('price_prefix') == '+' ? 1 : -1);
+            
+            $products_simple_options_meta_data[] = array('value_id' => $vQry->valueInt('products_options_values_id'),
+                                                         'group_id' => $oQry->valueInt('products_options_text_id'),
+                                                         'group_title' => $mdQry->value('products_options'),
+                                                         'value_title' => $mdQry->value('products_options_values'),
+                                                         'price_modifier' => (($mdQry->valueDecimal('options_values_price') * $modifier < 0) ? 0 : $mdQry->valueDecimal('options_values_price') * $modifier));
+            
+            
+            
+            
+            $vQry->freeResult();
+            $oQry->freeResult();
+          }
+        }
+        
+        // END ADDED FOR ORDERS SIMPLE OPTIONS META DATA
                     
         $orders_product  = array(
                                    'orders_products_id'                => $orders_products_id
@@ -3976,8 +4011,11 @@ class lC_LocalUpgrader extends lC_Upgrader {
                                  , 'products_price'                    => $sQry->value($map['products_price'])
                                  , 'products_tax'                      => $sQry->value($map['products_tax'])
                                  , 'products_quantity'                 => $sQry->value($map['products_quantity'])
-                                 , 'products_simple_options_meta_data' => null                                            
-                                  ); 
+                                 , 'products_simple_options_meta_data' => serialize($products_simple_options_meta_data)                                            
+                                  );        
+        
+        $mdQry->freeResult();                          
+        $products_simple_options_meta_data = null; 
 
         $tQry = $target_db->query('INSERT INTO :table_orders_products (orders_products_id, 
                                                                        orders_id, 
@@ -4010,8 +4048,6 @@ class lC_LocalUpgrader extends lC_Upgrader {
         $tQry->bindValue(':products_simple_options_meta_data', $orders_product['products_simple_options_meta_data']);
         $tQry->execute();
 
-        $orders_products[] = $orders_products_id;
-
         $cnt++;
 
       }
@@ -4021,10 +4057,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
 
     // END LOAD ORDERS PRODUCTS FROM SOURCE DB
     
-    $orders_products = null;
     $orders_product = null;
-    $orders_products_metas = null;
-    $orders_products_meta = null;
     
     // ##########
 
