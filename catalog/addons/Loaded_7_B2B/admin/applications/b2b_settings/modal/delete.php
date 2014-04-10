@@ -14,19 +14,18 @@
 global $lC_Language, $lC_Template;
 ?>
 <script>
-function deleteClass(id, name) {
-  var defaultId = '<?php echo DEFAULT_PRODUCT_CLASSES_ID; ?>';
+function deleteCustomerAccessGroup(id, name) {
   var accessLevel = '<?php echo $_SESSION['admin']['access'][$lC_Template->getModule()]; ?>';
   if (parseInt(accessLevel) < 4) {
     $.modal.alert('<?php echo $lC_Language->get('ms_error_no_access');?>');
     return false;
   }
-  if ( id == defaultId ) {
-    $.modal.alert('<?php echo $lC_Language->get('delete_error_class_prohibited'); ?>');
+  if ( id == 1 || id == 2 ) {
+    $.modal.alert('<?php echo $lC_Language->get('delete_error_customer_access_level_prohibited'); ?>');
     return false;
   }
-  var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=getFormData&pcid=PCID&addon=Loaded_7_Pro'); ?>';
-  $.getJSON(jsonLink.replace('PCID', parseInt(id)),
+  var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=getCustomerAccessMembers&aid=AID&addon=Loaded_7_B2B'); ?>';
+  $.getJSON(jsonLink.replace('AID', parseInt(id)),
     function (data) {
       if (data.rpcStatus == -10) { // no session
         var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
@@ -34,7 +33,7 @@ function deleteClass(id, name) {
       }
       if (data.rpcStatus != 1) {
         if (data.rpcStatus == -2) {
-          $.modal.alert('<?php echo $lC_Language->get('delete_error_class_in_use_1'); ?> ' + data.totalProducts + ' <?php echo $lC_Language->get('delete_error_class_in_use_2'); ?>');
+          $.modal.alert('<?php echo $lC_Language->get('delete_error_customer_access_level_in_use'); ?> ' + data.totalMembers + ' <?php echo $lC_Language->get('delete_error_customer_access_level_in_use_end'); ?>');
           return false;                    
         } else {
           $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
@@ -42,14 +41,14 @@ function deleteClass(id, name) {
         }
       }
       $.modal({
-        content: '<div id="deleteClass">'+
+        content: '<div id="deleteCustomerAccessGroup">'+
                  '  <div id="deleteConfirm">'+
-                 '    <p id="deleteConfirmMessage"><?php echo $lC_Language->get('introduction_delete_class'); ?>'+
+                 '    <p id="deleteConfirmMessage"><?php echo $lC_Language->get('introduction_delete_customer_access_level'); ?>'+
                  '      <p><b>' + decodeURI(name.replace(/\+/g, '%20')) + '</b></p>'+
                  '    </p>'+
                  '  </div>'+
                  '</div>',
-        title: '<?php echo $lC_Language->get('modal_heading_delete_class'); ?>',
+        title: '<?php echo $lC_Language->get('modal_heading_delete_customer_access_level'); ?>',
         width: 300,
         scrolling: false,
         actions: {
@@ -66,8 +65,8 @@ function deleteClass(id, name) {
           '<?php echo $lC_Language->get('button_delete'); ?>': {
             classes:  'blue-gradient glossy',
             click:    function(win) {
-              var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=deleteClass&pcid=PCID&addon=Loaded_7_Pro'); ?>';
-              $.getJSON(jsonLink.replace('PCID', parseInt(id)),
+              var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=deleteCustomerAccessLevel&aid=AID&addon=Loaded_7_B2B'); ?>';
+              $.getJSON(jsonLink.replace('AID', parseInt(id)),
                 function (data) {
                   if (data.rpcStatus == -10) { // no session
                     var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
@@ -78,8 +77,6 @@ function deleteClass(id, name) {
                     return false;
                   }
                   oTable.fnReloadAjax();
-                  // we must refresh after delete to pick up the changed default constant
-                  window.location.href = window.location.href;
                 }
               );
               win.closeModal();

@@ -23,6 +23,20 @@ class lC_Application_B2b_settings extends lC_Template_Admin {
     global $lC_Language;
 
     $this->_page_title = $lC_Language->get('heading_title');
+    
+    $action = (isset($_GET['action']) && $_GET['action'] != NULL) ? $_GET['action'] : NULL;
+    
+    switch ($action) {
+      case 'save' :
+      
+        $data = array('allow_self_register' => (isset($_POST['allow_self_register']) ? $_POST['allow_self_register'] : null),
+                      'guest_catalog_access' => (isset($_POST['guest_catalog_access']) ? $_POST['guest_catalog_access'] : null));
+                        
+        lC_B2b_settings_Admin::save($data);
+                        
+        lc_redirect_admin(lc_href_link_admin(FILENAME_DEFAULT, $this->_module));
+        break;
+    }
   }
 }
 ?>
