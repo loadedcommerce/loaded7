@@ -78,7 +78,7 @@
                 <h3 class="no-margin-top"><?php echo $lC_Language->get('payment_method_title'); ?></h3>
                 <?php 
                 $selection = $lC_Payment->selection();
-                echo (sizeof($selection) > 1) ? '<div class="alert alert-warning">' . $lC_Language->get('choose_payment_method') . '</div>' : '<div class="alert alert-warning">' . $lC_Language->get('only_one_payment_method_available') . '</div>' . "\n"; 
+                echo (sizeof($selection) > 1) ? '<div class="alert alert-warning">' . $lC_Language->get('choose_payment_method') . '</div>' : (sizeof($selection) == 1) ? '<div class="alert alert-warning">' . $lC_Language->get('only_one_payment_method_available') . '</div>' : '<div class="alert alert-warning">' . $lC_Language->get('no_payment_method_available') . '</div>' . "\n"; 
                 $radio_buttons = 0;
                 for ($i=0, $n=sizeof($selection); $i<$n; $i++) {
                   ?>
