@@ -121,7 +121,7 @@
         </div>      
         <?php if ( (STOCK_CHECK == '1') && ($lC_ShoppingCart->isInStock($products['item_id']) === false) ) { ?>
         <div class="margin-top large-margin-bottom pull-right">
-          <button id="btn-checkout" class="btn btn-lg btn-success" type="button" readonly><?php echo $lC_Language->get('button_checkout'); ?></button>
+          <button id="btn-checkout" class="btn btn-lg btn-success disabled" type="button"><?php echo $lC_Language->get('button_checkout'); ?></button>
         </div> 
 				<?php } else { ?>
 				<div class="margin-top large-margin-bottom pull-right">
