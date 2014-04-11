@@ -50,7 +50,7 @@ ms_error_password_change = An error occurred. Please try again.
 ms_error_blank_key = Key cannot be blank. Please try again.
 ms_error_ioncube = ionCube Loader Error!
 ms_error_ioncube_invalid_title = ionCube Loader version is invalid!
-ms_error_ioncube_invalid_text = Ioncube loader is installed but needs to be updated.<br /><br />Loaded 7 Pro and Paid Addons will only work with ioncube loader version 4.4.1 or later.<br /><br />The most recent version of the loader can be found <a href="http://www.ioncube.com/loaders.php" target="_blank"><b>here</b></a>.
+ms_error_ioncube_invalid_text = ionCube Loader is installed but needs to be updated.<br /><br />Loaded 7 Pro and Paid Addons will only work with ionCube Loader version 4.4.1 or later.<br /><br />The most recent version of the loader can be found <a href="http://www.ioncube.com/loaders.php" target="_blank"><b>here</b></a>.
 ms_error_ioncube_not_installed = ionCube Loader is not installed on your server!
 ms_error_ioncube_not_installed_text = Please contact your web host and ask them to install ionCube Loader.<br /><br />Loaders can be downloaded from <a href="http://www.ioncube.com/loaders.php" target="_blank"><b>ioncube.com</b></a>.<br /><br />Installation Instructions can be found <a href="http://www.ioncube.com/loader_installation.php" target="_blank"><b>here</b></a>.<br /><br />For additional questions please contact <a href="http://www.loadedcommerce.com/support-memberships-pc-175_198.html" target="_blank"><b>Loaded Commerce Support</b></a>
 
