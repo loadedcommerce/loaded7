@@ -26,8 +26,10 @@ class lC_B2b_settings_Admin_rpc {
   
   public static function getCustomerAccessMembers() {
     $result = array();
-    $result = lC_B2b_settings_Admin::getMembers((int)$_GET['aid']);
-    $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+    $result = lC_B2b_settings_Admin::getCustomerAccessMembers((int)$_GET['aid']);
+    if (!isset($result['rpcStatus'])) {
+      $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+    }
 
     echo json_encode($result);    
   }
@@ -92,8 +94,24 @@ class lC_B2b_settings_Admin_rpc {
     }
 
     echo json_encode($result);
-  }  
-    
+  }
+ /*
+  * Update customer access level status
+  *
+  * @param int $_GET['aid'] The customer access level id 
+  * @param int $_GET['val'] The customer access level status 
+  * @access public
+  * @return json
+  */
+  public static function updateCustomerAccessLevelStatus() {
+    $result = array();
+    $result = lC_B2b_settings_Admin::updateCustomerAccessLevelStatus($_GET['aid'], $_GET['val']);
+    if ($result) {
+      $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+    }  
+
+    echo json_encode($result);
+  }    
    
 }
 ?>

@@ -21,12 +21,14 @@ heading_access_group_levels = Access Group Levels
 table_heading_id = ID
 table_heading_group = Access Level
 table_heading_members = Members
+table_heading_status = Status
 table_heading_action = Action
 
 label_allow_self_registrations = Allow Self Registrations
 label_guest_catalog_access = Guest Catalog Access
 label_guest = Guest
 label_status = Status
+label_active = Active
 label_registered = Registered
 label_new_access_level = New Access Level
 
@@ -45,7 +47,9 @@ info_bubble_displays_create_account_form = Displays Create Account Form
 info_bubble_guest_catalog_access = Control Guest Access to the Catalog
 
 text_add_to_cart = Add to Cart
-text_members = members
+text_members = Members
 text_none = None
 text_see_pricing = See Pricing
 text_view_catalog = View Catalog
+text_enable_level = Enable Level
+text_disable_level = Disable Level

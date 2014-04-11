@@ -20,7 +20,7 @@ class lC_Application_B2b_settings extends lC_Template_Admin {
   * Class constructor
   */
   function __construct() {
-    global $lC_Language;
+    global $lC_Language, $b2bInfo;
 
     $this->_page_title = $lC_Language->get('heading_title');
     
@@ -37,6 +37,8 @@ class lC_Application_B2b_settings extends lC_Template_Admin {
         lc_redirect_admin(lc_href_link_admin(FILENAME_DEFAULT, $this->_module));
         break;
     }
+    
+    $b2bInfo = new lC_ObjectInfo(lC_B2b_settings_Admin::get());
   }
 }
 ?>

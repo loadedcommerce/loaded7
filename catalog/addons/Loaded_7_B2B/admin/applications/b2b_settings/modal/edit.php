@@ -45,7 +45,7 @@ function editCustomerAccessGroup(id) {
                    '        <?php echo lc_draw_input_field('level', null, 'id="editLevel" class="input full-width"'); ?>'+
                    '      </p>'+ 
                    '      <p class="field-block button-height">'+
-                   '        <label for="name" class="label anthracite"><?php echo $lC_Language->get('label_status'); ?></label>'+
+                   '        <label for="name" class="label anthracite"><?php echo $lC_Language->get('label_active'); ?></label>'+
                    '         <?php echo "&nbsp;" . lc_draw_checkbox_field('status', null, null, 'class="switch medium" data-text-on="' . strtoupper($lC_Language->get('button_yes')) . '" data-text-off="' . strtoupper($lC_Language->get('button_no')) . '"');?>' +
                    '    </form>'+
                    '    </fieldset>'+

@@ -20,6 +20,7 @@
 .dataColID { text-align: left; }
 .dataColGroup { text-align: left; }
 .dataColMembers { text-align: left; }
+.dataColStatus { text-align: center; }
 .dataColAction { text-align: right; }
 
 .dataTables_wrapper { background:none; box-shadow: 0 0 0 0 #fff inset, 0 0 0 rgba(255, 255, 255, 0.35) inset; }
@@ -52,13 +53,16 @@
                 <div class="new-row-mobile twelve-columns mid-margin-bottom small-padding-left">
                   <p class="button-height inline-label">
                     <label for="allow_self_register" class="label allow-self-register"><?php echo $lC_Language->get('label_allow_self_registrations'); ?></label>
-                    <?php echo lc_draw_checkbox_field('allow_self_register', null, null, 'checked="checked" class="switch medium" data-text-on="' . strtoupper($lC_Language->get('button_yes')) . '" data-text-off="' . strtoupper($lC_Language->get('button_no')) . '"'); ?><span class="small margin-left"><?php echo $lC_Language->get('info_bubble_displays_create_account_form'); ?></span>                
+                    
+                    <?php 
+                    $checked = ((is_object($b2bInfo) && $b2bInfo->get('B2B_SETTINGS_ALLOW_SELF_REGISTER') == 'on') ? 'checked="checked"' : '');
+                    echo lc_draw_checkbox_field('allow_self_register', ((is_object($b2bInfo) && $b2bInfo->get('B2B_SETTINGS_ALLOW_SELF_REGISTER') == 'on') ? 1 : 0), null, $checked . ' class="switch medium" data-text-on="' . strtoupper($lC_Language->get('button_yes')) . '" data-text-off="' . strtoupper($lC_Language->get('button_no')) . '"'); ?><span class="small margin-left"><?php echo $lC_Language->get('info_bubble_displays_create_account_form'); ?></span>                
                   </p>
 
                   <p class="inline-medium-label button-height mid-margin-top">
                     <span class="label"><?php echo $lC_Language->get('label_guest_catalog_access'); ?></span>
-                    <input type="text" id="guest-catalog-access-slider" class="guest-catalog-access-slider" data-slider-options='{"size":false,"innerMarks":33,"step":33,"knob":true,"tooltip":"false","tooltipClass":"hidden","bottomMarks":[{"value":0,"label":"None"},{"value":33,"label":"View Catalog"},{"value":66,"label":"See Pricing"},{"value":100,"label":"Add to Cart"}],"insetExtremes":true,"barClasses":"orange-gradient"}'><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_guest_catalog_access')); ?>
-                    <input type="hidden" name="guest-catalog-access" id="guest-catalog-access" value="">
+                    <input type="text" id="guest_catalog_access-slider" class="guest_catalog_access-slider" data-slider-options='{"size":false,"innerMarks":33,"step":33,"knob":true,"tooltip":"false","tooltipClass":"hidden","bottomMarks":[{"value":0,"label":"None"},{"value":33,"label":"View Catalog"},{"value":66,"label":"See Pricing"},{"value":100,"label":"Add to Cart"}],"insetExtremes":true,"barClasses":"orange-gradient"}'><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_guest_catalog_access')); ?>
+                    <input type="hidden" name="guest_catalog_access" id="guest_catalog_access" value="">
                   </p>
 
                 </div>
@@ -75,6 +79,7 @@
                       <th scope="col" class="align-left"><?php echo $lC_Language->get('table_heading_id'); ?></th>
                       <th scope="col" class="align-left"><?php echo $lC_Language->get('table_heading_group'); ?></th>
                       <th scope="col" class="align-left"><?php echo $lC_Language->get('table_heading_members'); ?></th>
+                      <th scope="col" class="align-center"><?php echo $lC_Language->get('table_heading_status'); ?></th>
                       <th scope="col" class="align-right"><?php echo $lC_Language->get('table_heading_action'); ?></th>
                     </tr>
                   </thead>
@@ -82,7 +87,7 @@
                   </tbody>
                   <tfoot>
                     <tr>
-                      <th colspan="4">
+                      <th colspan="5">
                         <p class="inline-medium-label button-height small-margin-top margin-left">
                           <label for="new_customers_access_level" class="label"><?php echo $lC_Language->get('label_new_access_level'); ?></label>
                           <?php echo lc_draw_input_field('new_customers_access_level', null, 'class="input"'); ?>
@@ -127,10 +132,22 @@
 <?php $lC_Template->loadModal($lC_Template->getModule()); ?>
 <script>
 
-$("#guest-catalog-access-slider").change(function() {
-  var current = $("#guest-catalog-access-slider").val();
-  $('#guest-catalog-access').val(current);
+$("#guest_catalog_access-slider").change(function() {
+  var current = $("#guest_catalog_access-slider").val();
+  $('#guest_catalog_access').val(current);
 });
+
+function updateCustomerAccessLevelStatus(id, val) {
+  var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=updateCustomerAccessLevelStatus&aid=AID&val=VAL&addon=Loaded_7_B2B'); ?>';
+  $.getJSON(jsonLink.replace('AID', id).replace('VAL', val));
+  if (val == 1) {               
+    $("#customerAccessGroupStatus_" + id).attr('onclick', 'updateCustomerAccessLevelStatus(\'' + id + '\', \'0\')');
+    $("#customerAccessGroupStatus_" + id).html('<span class="icon-tick icon-size2 icon-green cursor-pointer with-tooltip" title="<?php echo $lC_Language->get('text_disable_level'); ?>"></span>');
+  } else {               
+    $("#customerAccessGroupStatus_" + id).attr('onclick', 'updateCustomerAccessLevelStatus(\'' + id + '\', \'1\')');
+    $("#customerAccessGroupStatus_" + id).html('<span class="icon-cross icon-size2 icon-red cursor-pointer with-tooltip" title="<?php echo $lC_Language->get('text_enable_level'); ?>"></span>');
+  }
+}
 
 function addNewCustomersAccessLevel(level) {
   if (level == '') return;
@@ -152,7 +169,11 @@ function addNewCustomersAccessLevel(level) {
 }
 
 $(document).ready(function() {  
-  $('.guest-catalog-access-slider').slider();
+  $('.guest_catalog_access-slider').slider();
+  
+  var guestCatalogAccess = '<?php echo B2B_SETTINGS_GUEST_CATALOG_ACCESS; ?>';
+  $('#guest_catalog_access').val(guestCatalogAccess);
+  $('#guest_catalog_access-slider').setSliderValue(guestCatalogAccess);
   
   var dataTableDataURL = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=getCustomersGroupAccessLevels&addon=Loaded_7_B2B&media=MEDIA'); ?>';   
   oTable = $('#dataTable').dataTable({
@@ -165,7 +186,8 @@ $(document).ready(function() {
     "bInfo": false,
     "aoColumns": [{ "sWidth": "5%", "bSortable": true, "sClass": "dataColID hide-on-mobile-portrait" },
                   { "sWidth": "55%", "bSortable": true, "sClass": "dataColGroup" },
-                  { "sWidth": "20%", "bSortable": true, "sClass": "dataColMembers hide-on-mobile-portrait" },
+                  { "sWidth": "10%", "bSortable": true, "sClass": "dataColMembers hide-on-mobile-portrait" },
+                  { "sWidth": "10%", "bSortable": true, "sClass": "dataColStatus hide-on-mobile-portrait" },
                   { "sWidth": "20%", "bSortable": false, "sClass": "dataColAction" }]
   });
   $('#dataTable').responsiveTable();  
