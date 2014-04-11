@@ -77,7 +77,11 @@ class lC_Coupons {
     
     $dTotal = 0;
     foreach ($this->_contents as $key => $module) {
-      $dTotal += (float)$module['total'];
+      $cInfo_tmp = $this->_getData($key);      
+      $valid = $this->_isValid($cInfo_tmp);
+      if ($module['total'] > 0 && $valid['status'] === true) {
+        $dTotal += (float)$module['total'];
+      }
     }    
 
     return $dTotal;
@@ -248,7 +252,10 @@ class lC_Coupons {
 
     // add back the entries
     foreach ($lC_Coupons->getAll() as $code => $val) {
-      if ($val['total'] > 0) {
+      $cInfo_tmp = $this->_getData($code);      
+      $valid = $lC_Coupons->_isValid($cInfo_tmp); 
+      
+      if ($val['total'] > 0 && $valid['status'] === true) {
         $_SESSION['lC_ShoppingCart_data']['order_totals'][] = array('code' => 'coupon',
                                                                     'title' => $val['title'],
                                                                     'text' => '<span onclick="removeCoupon(\'' . $code . '\');" style="padding:0; cursor:pointer;">' . lc_image(DIR_WS_CATALOG . 'templates/default/images/icons/16/cross_round.png', null, null, null, 'style="vertical-align:middle;"') . '&nbsp;-' . $lC_Currencies->format($val['total']) . '</span>',
