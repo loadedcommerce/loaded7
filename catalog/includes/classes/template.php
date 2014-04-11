@@ -997,7 +997,7 @@ class lC_Template {
       if ( file_exists('includes/work/branding_manager/custom.css') ) {
         $customcss = $css['custom_css'];
       
-        $file = 'includes/work/css/custom.css';
+        $file = 'includes/work/branding_manager/custom.css';
         @file_put_contents($file, $customcss, LOCK_EX);
         
         $html = '<link rel="stylesheet" href="includes/work/branding_manager/custom.css">' . "\n";
