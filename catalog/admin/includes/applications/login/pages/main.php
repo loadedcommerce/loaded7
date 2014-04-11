@@ -276,6 +276,7 @@ $(document).ready(function() {
       $('#buy-pro').removeClass('disabled');
       $.modal({
         title: '<?php echo $lC_Language->get('ms_error_ioncube'); ?>',
+        width: 300,
         content: '<p class="big-message align-left">' +
                  '  <span class="big-message-icon icon-warning icon-orange"></span>' +
                  '  <strong><?php echo $lC_Language->get('ms_error_ioncube_not_installed'); ?><br></strong>' +
