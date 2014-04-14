@@ -6255,3 +6255,15 @@ INSERT INTO lc_weight_classes (weight_class_id, weight_class_key, language_id, w
 INSERT INTO lc_weight_classes (weight_class_id, weight_class_key, language_id, weight_class_title) VALUES(3, 'oz', 1, 'Ounce(s)');
 INSERT INTO lc_weight_classes (weight_class_id, weight_class_key, language_id, weight_class_title) VALUES(4, 'lb', 1, 'Pound(s)');
 
+INSERT INTO lc_weight_classes_rules (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES(1, 2, 0.0010);
+INSERT INTO lc_weight_classes_rules (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES(1, 3, 0.0352);
+INSERT INTO lc_weight_classes_rules (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES(1, 4, 0.0022);
+INSERT INTO lc_weight_classes_rules (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES(2, 1, 1000.0000);
+INSERT INTO lc_weight_classes_rules (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES(2, 3, 35.2739);
+INSERT INTO lc_weight_classes_rules (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES(2, 4, 2.2046);
+INSERT INTO lc_weight_classes_rules (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES(3, 1, 28.3495);
+INSERT INTO lc_weight_classes_rules (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES(3, 2, 0.0283);
+INSERT INTO lc_weight_classes_rules (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES(3, 4, 0.0625);
+INSERT INTO lc_weight_classes_rules (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES(4, 1, 453.5923);
+INSERT INTO lc_weight_classes_rules (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES(4, 2, 0.4535);
+INSERT INTO lc_weight_classes_rules (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES(4, 3, 16.0000);
