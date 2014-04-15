@@ -243,7 +243,15 @@ class lC_Products_Admin {
     
     $Qspecials->freeResult();
     
-    
+    if(DISPLAY_PRICE_WITH_TAX == 1) {
+      $tax_data = lC_Tax_classes_Admin::getEntry($data['products_tax_class_id']);
+      $price = ($data['products_price'] + ($tax_data['tax_rate']/100)*$data['products_price']);
+      $price = $lC_Currencies->format($price, DECIMAL_PLACES);
+
+      //$data['products_cost_with_tax'] = $data['products_cost'] + ($tax_data['tax_rate']/100)*$data['products_cost'];
+      //$data['products_msrp_with_tax'] = ($data['products_msrp'] + ($tax_data['tax_rate']/100)*$data['products_msrp']);
+    }
+
     return $price;
   }
  /*
