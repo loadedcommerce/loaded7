@@ -37,7 +37,7 @@
     <?php
     if (sizeof($lC_Product->getImages()) > 1) {
       $_product_additionalimages = $lC_Product->getAdditionalImagesHtml(); 
-      echo '<div class="thumbnail img-responsive"><ul class="pr_gallery">' . $_product_additionalimages['images'] . '</ul></div>' . "\n";
+      echo '<div id="additional-images-container"><ul class="pr_gallery">' . $_product_additionalimages['images'] . '</ul></div>' . "\n";
       echo $_product_additionalimages['model']. "\n";
     }
     ?>
@@ -98,6 +98,17 @@
         ?>      
       </div>  
       <?php
+      if ( $lC_Product->hasVariants() ) {
+        ?>
+        <div id="content-products-info-variants-container">
+          <?php
+            foreach ( $lC_Product->getVariants() as $group_id => $value ) {
+              echo lC_Variants::parse($value['module'], $value);
+            }
+          ?>
+        </div>
+        <?php
+      }
       if ( $lC_Product->hasSimpleOptions() ) {
         ?>
         <div id="content-products-info-simple-options-container margin-top">
@@ -116,19 +127,7 @@
           ?>
         </div>
         <?php
-      }
-      if ( $lC_Product->hasVariants() ) {
-        ?>
-        <div id="content-products-info-variants-container">
-          <?php
-            foreach ( $lC_Product->getVariants() as $group_id => $value ) {
-              echo lC_Variants::parse($value['module'], $value);
-            }
-            echo lC_Variants::defineJavascript($lC_Product->getVariants(false));
-          ?>
-        </div>
-        <?php
-      }
+      }      
       ?>  
     </div>
   </div>
@@ -136,7 +135,7 @@
   if ( $lC_Product->hasSubProducts($lC_Product->getID()) === false) {
     ?>    
     <div id="qpb-message"></div>
-    <div class="relative clear-both">
+    <div class="relative clear-both clearfix">
       <div class="display-inline">
         <div class="col-sm-8 col-lg-8 align-right mid-margin-top">
           <div class="form-group">

@@ -46,7 +46,7 @@
         if (defined('DISABLE_ADD_TO_CART') && DISABLE_ADD_TO_CART == 1 && ($lC_Template->getModule() == 'products' || $lC_Template->getModule() == 'reviews') ) {
           foreach ($_GET as $key => $value) {
             $keys = end(explode("/", $key));
-            if ( (preg_match('/^[0-9]+(#?([0-9]+:?[0-9]+)+(;?([0-9]+:?[0-9]+)+)*)*$/', $key) || preg_match('/^[a-zA-Z0-9 -_]*$/', $key)) && ($key != $lC_Session->getName()) && ($key != 'cPath') ) {
+            if ( (preg_match('/^[0-9]+(#?([0-9]+:?[0-9]+)+(;?([0-9]+:?[0-9]+)+)*)*$/', $key) || preg_match('/^[a-zA-Z0-9 -_]*$/', $key)) && ($key != $lC_Session->getName()) && ($key != 'cPath') && ($key != 'currency') && ($key != 'language') ) {
               $id = $key;
             }
           }
@@ -260,16 +260,15 @@
   }
   //QR Code JSON
   $("#qrcode-tooltip").click(function(){
-      var jsonLink = '<?php echo lc_href_link('rpc.php','action=getqrcode'); ?>'
-      $.getJSON(jsonLink,
-        function (data) {
-          if (data.rpcStatus != 1) {
-            $.modal.alert('<?php echo addslashes($lC_Language->get('ms_error_action_not_performed')); ?>');
-            return false;
-          } 
-          $('#ShowQRCode').html(data.html);
-          $('#qr-message').show('500');
-        }
-      );
+    var jsonLink = '<?php echo lc_href_link('rpc.php', 'index&action=getqrcode', 'AUTO'); ?>';   
+    $.getJSON(jsonLink,
+      function (data) {
+        if (data.rpcStatus != 1) {
+          return false;
+        } 
+        $('#ShowQRCode').html(data.html);
+        $('#qr-message').show('500');
+      }
+    );
   })
 </script>

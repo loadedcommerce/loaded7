@@ -8,7 +8,9 @@
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: rpc.php v1.0 2013-08-08 datazen $
 */
-require_once('includes/applications/server_info/classes/server_info.php');
+global $lC_Vqmod;
+
+require_once($lC_Vqmod->modCheck('includes/applications/server_info/classes/server_info.php'));
 
 class lC_Server_info_Admin_rpc {
  /*

@@ -253,7 +253,7 @@ if(defined('EDITOR_UPLOADCARE_PUBLIC_KEY') && EDITOR_UPLOADCARE_PUBLIC_KEY != ''
           <li id="li-add"><a onclick="toggleSubMenu('add');" href="#" title="<?php echo $lC_Language->get('tooltip_quick_add'); ?>"><span class="icon-plus-round" style="font-size:.9em;"></span></a></li>
           <li id="li-messages"><a onclick="toggleSubMenu('messages');" href="#" title="<?php echo $lC_Language->get('tooltip_messages'); ?>"><span class="icon-mail"></span></a></li>
           <li id="li-settings" <?php echo (($_SESSION['admin']['access']['configuration'] > 0) ? NULL : 'class="disabled"'); ?>><a href="#" title="<?php echo $lC_Language->get('tooltip_settings'); ?>"><span id="sp-settings" class="icon-gear"></span></a></li>
-        </ul>  
+        </ul>
         
         <div id="searchContainer" style="display:none;">
           <section>
@@ -573,6 +573,7 @@ if(defined('EDITOR_UPLOADCARE_PUBLIC_KEY') && EDITOR_UPLOADCARE_PUBLIC_KEY != ''
   <script src="../ext/jquery/jquery.details.min.js"></script>
   <script src="../ext/jquery/jquery.blink.js"></script>
   <script src="../ext/jquery/jquery.loadmask.js"></script>
+  <script src="../ext/jquery/jquery.serializeJSON.js"></script>
   <?php if(ENABLE_EDITOR == '1') { ?>
   <script src="../ext/jquery/ckeditor/ckeditor.js"></script>
   <?php } ?>

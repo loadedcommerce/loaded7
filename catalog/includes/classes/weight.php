@@ -29,6 +29,18 @@ class lC_Weight {
 
     return $Qweight->value('weight_class_title');
   }
+  
+  public function getCode($id) {
+    global $lC_Database, $lC_Language;
+
+    $Qweight = $lC_Database->query('select weight_class_key from :table_weight_class where weight_class_id = :weight_class_id and language_id = :language_id');
+    $Qweight->bindTable(':table_weight_class', TABLE_WEIGHT_CLASS);
+    $Qweight->bindInt(':weight_class_id', $id);
+    $Qweight->bindInt(':language_id', $lC_Language->getID());
+    $Qweight->execute();
+
+    return $Qweight->value('weight_class_key');
+  }  
 
   public function prepareRules() {
     global $lC_Database, $lC_Language;

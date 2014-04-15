@@ -274,7 +274,7 @@ class lC_Image_Admin extends lC_Image {
 
     $width = $height = '';
 
-    if ( ($this->_groups[$group_id]['force_size'] == '1') || empty($image) ) {
+    if ( ($this->_groups[$group_id]['force_size'] == '1') ) {
       $width = $this->_groups[$group_id]['size_width'];
       $height = $this->_groups[$group_id]['size_height'];
     }

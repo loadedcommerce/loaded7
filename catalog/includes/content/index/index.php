@@ -37,6 +37,21 @@ class lC_Index_Index extends lC_Template {
       }
     }
     
+    if (empty($cPath_array) && $_GET['cPath'] == '' && isset($lC_Services) && $lC_Services->isStarted('seo')) {
+      foreach ($_GET as $cats => $values) { 
+        $cats = explode("/", $cats);
+        foreach ($cats as $cat) {
+          $Qcid = $lC_Database->query('select item_id from :table_permalinks where permalink = :permalink and type = 1 and language_id = :language_id');
+          $Qcid->bindTable(':table_permalinks', TABLE_PERMALINKS);
+          $Qcid->bindValue(':permalink', $cat);
+          $Qcid->bindInt(':language_id', $lC_Language->getID());
+          $Qcid->execute();
+          
+          $cPath_array[] = $Qcid->valueInt('item_id');
+        }
+      }
+    }
+    
     if ( isset($lC_Services) && $lC_Services->isStarted('seo') && $_GET['cpath'] == '' ) {
       $id = $lC_CategoryTree->getID($id);
       $cData = $lC_CategoryTree->getData($id);
@@ -62,7 +77,12 @@ class lC_Index_Index extends lC_Template {
         $Qcategories->freeResult();
 
         if ($lC_Services->isStarted('breadcrumb')) {
-          $lC_Breadcrumb->add(null, null, $_GET['cPath']);
+          if (isset($_GET['cPath']) && $_GET['cPath'] != '') {
+            $path = $_GET['cPath'];
+          } else {
+            $path = implode("_", $cPath_array);
+          }
+          $lC_Breadcrumb->add(null, null, $path);
         }          
 
       }

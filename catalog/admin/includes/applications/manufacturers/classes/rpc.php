@@ -10,7 +10,7 @@
 */
 global $lC_Vqmod;
 
-require($lC_Vqmod->modCheck('includes/applications/manufacturers/classes/manufacturers.php'));
+require_once($lC_Vqmod->modCheck('includes/applications/manufacturers/classes/manufacturers.php'));
 
 class lC_Manufacturers_Admin_rpc {
  /*

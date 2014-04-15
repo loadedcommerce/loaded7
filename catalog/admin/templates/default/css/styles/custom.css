@@ -317,7 +317,7 @@ Custom Template CSS added by Loaded7 Dev Team
   padding: 18px 0 18px 15px !important;
 }
 .list > li > span { 
-  color: white; 
+  color: #666666; 
 }
 .icon-pad-right { 
   padding-right: 8px; 
@@ -731,6 +731,7 @@ a.shortcut-reports:before { background-position: -70px -495px; }
 #title-bar {
   height: 40px !important;
 }
+.cursor-default { cursor: default; }
 .cursor-pointer { cursor: pointer; }
 
 .description-content { padding: 10px 10px 20px 16px; }
@@ -1147,4 +1148,4 @@ select.error { border: 2px solid red !important; }
     width: 100%;
   }
   .branding-extra-line { margin-left: 0px; }
-}
+} 

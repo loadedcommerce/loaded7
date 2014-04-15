@@ -26,7 +26,7 @@ function deleteEntry(id, name) {
       }
       $("#status-working").fadeOut('slow');
       if (data.pveData.total_products > 0) {
-        $,modal.alert('<?php echo $lC_Language->get('delete_error_entry_in_use_start'); ?> ' + data.pveData.total_products + ' <?php echo $lC_Language->get('delete_error_entry_in_use_end'); ?>');
+        $.modal.alert('<?php echo $lC_Language->get('delete_error_entry_in_use_start'); ?> ' + data.pveData.total_products + ' <?php echo $lC_Language->get('delete_error_entry_in_use_end'); ?>');
         return false;
       }
       if (data.rpcStatus != 1) {

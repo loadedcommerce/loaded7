@@ -100,15 +100,14 @@ function editCurrency(id) {
                         $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
                         return false;
                       }
-                      if ( data.currencyData.code != defaultCode && ($('.switch').is('.checked')) ) {
+                      if ( data.currencyData.code != defaultCode || ($('.switch').is('.checked')) ) {
                         // because default is a constant, we need to refresh the page to pick up the value if checked
                         window.location.href = window.location.href;
                       } else {
                         oTable.fnReloadAjax();
                       }                    }
                   );
-                  //win.closeModal();
-                  win.location.href = win.location.href;
+                  win.closeModal();
                 }
               }
             }

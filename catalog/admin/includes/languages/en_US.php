@@ -10,6 +10,7 @@ header_title_help = Help
 
 batch_results_number_of_entries = Displaying <b>%d</b> to <b>%d</b> (of <b>%d</b> entries)
 
+button_active = Active
 button_add = Add
 button_add_new = Add New
 button_approve = Approve
@@ -29,6 +30,7 @@ button_export = Export
 button_go = Global
 button_global = Go
 button_import = Import
+button_inactive = Inactive
 button_insert = Insert
 button_install = Install
 button_login = Login
@@ -36,6 +38,7 @@ button_move = Move
 button_new_file = New File
 button_new_folder = New Folder
 button_next = Next
+button_never = Never
 button_ok = OK
 button_orders_invoice = Invoice
 button_orders_packaging_slip = Packaging Slip
@@ -49,6 +52,7 @@ button_save_close = Save & Close
 button_save_and_close = Save & Close
 button_send = Send
 button_send_to_server = Browse & Upload
+button_setup = Setup
 button_uninstall = Uninstall
 button_update = Update
 button_update_currency_exchange_rates = Update Currency Exchange Rates
@@ -104,6 +108,7 @@ icon_install = Install
 icon_limited = Limited
 icon_locked = Locked
 icon_log = Log
+icon_login_as_customer = Login as Customer
 icon_move = Move
 icon_nav_back = Previous
 icon_nav_back_grey =
@@ -153,6 +158,7 @@ menu_title_get_help = Get Help
 
 modal_heading_profile_edit = Edit Profile
 modal_heading_profile_pass_change = Change Profile Password
+modal_heading_system_message = System Message
 
 ms_success_action_performed = Success: The action was successfully performed.
 ms_success_upload_file_saved = Success: The file uploaded has been saved successfully.
@@ -176,6 +182,7 @@ ms_error_nothing_to_move = You have not selected anything to move!
 ms_error_no_access = You do not have the access level required for this operation!
 ms_error_javascript_not_enabled_for_upload = Please enable JavaScript to use ajax file uploader.
 ms_error_javascript_not_enabled_warning = Your browser does not support JavaScript! Some features won't work as expected.
+ms_warning_resize_images = We have detected that your images need to be resized.  If you have a large amount of images, this process will take some time and can timeout depending on server settings and the number of images to process.<br /><br />For stores with more than 1000 images, we recommend choosing Never at this point and going to the <strong>Admin > Products > Settings > Image Groups</strong> area where you can resize individual groups one at a time.<br /><br /><small class="tag margin-right blue-gradient glossy" style="padding:2px 11px">YES</small>Attempt to process my images now.<br /><br /><small class="tag margin-right silver-gradient glossy" style="padding:2px 14px;">NO</small>Not now, remind me next session.<br /><br /><small class="tag red-gradient glossy margin-right">NEVER</small>Do nothing and do not remind me.
 
 password_change_success = You have successfully updated your password.
 parameter_true = Yes
@@ -254,6 +261,7 @@ product_view_details = View details for
 result_set_current_page = Page %s of %d
 
 search_placeholder = Search
+product_search_placeholder = Product Search
 site_maintenance_message_title = Maintenance Mode
 site_maintenance_message_text = Site is in Maintenance Mode.  Click here to disable it.
 
@@ -280,6 +288,12 @@ text_version = Version
 text_confirm_delete = Confirm Delete?
 text_sort = Sort
 text_mode = Mode
+
+text_model = Model
+text_mode_info_category = Information Category
+text_mode_faq_category = FAQ Category
+text_mode_article_category = Article Category
+text_or = Or
 text_mode_category = Category
 text_mode_page = Page
 text_mode_specials = Link To: Specials
@@ -302,6 +316,8 @@ text_enable_coupon = Click to Enable Coupon
 text_disable_coupon = Click to Disable Coupon
 text_enable = Click to Enable
 text_disable = Click to Disable
+text_select = Select
+text_product = Product
 text_special_enabled = Has Special Price (Enabled)
 text_special_disabled = Has Special Price (Disabled)
 
@@ -353,3 +369,4 @@ text_yes = Yes
 text_no = No
 text_featured_product_expired = Featured Product has Expired!
 text_featured_product_no_expiration = No Expiration
+error_specials_date = Error:  The specials expire date cannot be before the start date.

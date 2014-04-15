@@ -56,6 +56,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
       
       $('.sorted_table').sortable({  
         containerSelector: 'tbody',
+        handle: '.dragsort',        
         itemSelector: 'tr',
         placeholder: '<tr class="placeholder"/>',
         tolerance: '1',
@@ -71,11 +72,12 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
           item.removeClass("dragged");
           item.attr("style", "");
           $("body").removeClass("dragging");
-
+          
+          // re-sort the tables
           _setSimpleOptionsSortOrder();
         }    
       });
-             
+      
       // PRICING TAB
       _refreshSimpleOptionsPricingSymbols();
       _updatePricingDivChevrons(); 
@@ -97,7 +99,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
         } 
       }
       ?> 
-         
+      setActiveTab();   
     });
     <?php if ($pInfo) { ?>
     /**
@@ -469,6 +471,18 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
       $.modal.confirm('<?php echo $lC_Language->get('text_remove_row'); ?>', function() {
           $('#tre-' + id).remove();
           $('.trp-' + id).remove();
+          
+          var customerGroups = <?php echo json_encode(lC_Customer_groups_Admin::getAll()); ?>;
+          $.each(customerGroups.entries, function( key, val ) {
+            if(!$("#tbody-simple-options-pricing-" + val.customers_group_id).html().replace(/ /g,'')) {
+               $('#options-pricing-entries-div-' + val.customers_group_id + ' .simple-options-pricing-container').remove();
+               $('#options-pricing-entries-div-' + val.customers_group_id + ' .no-options-defined').remove();
+            }
+            if(!$("#options-pricing-entries-div-" + val.customers_group_id).html().replace(/ /g,'')) {
+              $('#options-pricing-entries-div-' + val.customers_group_id).html('<table class="simple-table no-options-defined"><tbody id="tbody-options-pricing-' + val.customers_group_id + '"><tr id="no-options-' + val.customers_group_id + '"><td><?php echo $lC_Language->get('text_no_options_defined'); ?></td></tr></tbody></table>');
+            }
+          });
+          
         }, function() {
           return false;
       });  
@@ -504,7 +518,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
 
     // refresh simple option price modifier plus/minus symbols */
     function _refreshSimpleOptionsPricingSymbols() {
-      $('#simpleOptionsPricingTable input').each(function(index, element) {
+      $('.simple-options-pricing-table input').each(function(index, element) {
         var id = $(this).attr("id").replace('simple_options_entry_price_modifier_', '');
         showSimpleOptionsPricingSymbol(element, id); 
       });
@@ -623,6 +637,14 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
           ?>
         }, 
       }).form();
+      // START - added to validate specials end date against start date
+      var start = $("#products_special_start_date1").val();  
+      var end = $("#products_special_expires_date1").val();     
+      if (Date.parse(start) > Date.parse(end)) {
+        $.modal.alert('<?php echo $lC_Language->get('error_specials_date'); ?>');
+        bValid = false;
+      }
+      // END - added to validate specials end date against start date
       $("#languageTabs").refreshTabs();
       if (bValid) {
         $(e).submit();
@@ -666,8 +688,129 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
       $("#products_price0").removeClass("error");
 
       return false;
-    }       
+    }
     
+    function setActiveTab(tab) {
+      if (tab) { // if the tab is not sent in the function call 
+        if (tab == 'tabImages') var tabImages = 1;
+        if (tab == 'tabData') var tabData = 1;
+        if (tab == 'tabOptions') var tabOptions = 1;
+        if (tab == 'tabPricing') var tabPricing = 1;
+        if (tab == 'tabShipping') var tabShipping = 1;
+        if (tab == 'tabRelationships') var tabRelationships = 1;
+      } else { //get it from url
+        var tabImages = parseInt('<?php echo $_GET["tabImages"];?>');
+        var tabData = parseInt('<?php echo $_GET["tabData"];?>');
+        var tabOptions = parseInt('<?php echo $_GET["tabOptions"];?>');
+        var tabPricing = parseInt('<?php echo $_GET["tabPricing"];?>');
+        var tabShipping = parseInt('<?php echo $_GET["tabShipping"];?>');
+        var tabRelationships = parseInt('<?php echo $_GET["tabRelationships"];?>');
+      }
+          
+      if (tabImages == 1) {
+        // hide all but images 
+        $("#tabHeaderSectionContent").removeClass("active");
+        $('#section_general_content').hide();
+        $("#tabHeaderSectionData").removeClass("active");
+        $('#section_data_content').hide();
+        $("#tabHeaderSectionOptions").removeClass("active");
+        $('#section_options_content').hide();
+        $("#tabHeaderSectionPricing").removeClass("active");
+        $('#section_pricing_content').hide();
+        $("#tabHeaderSectionShipping").removeClass("active");
+        $('#section_shipping_content').hide();
+        $("#tabHeaderSectionRelationships").removeClass("active");
+        $('#section_relationships_content').hide();
+        // show images
+        $("#tabHeaderSectionImages").addClass("active");
+        $('#section_images_content').show();
+      } else if (tabData == 1) {
+        // hide all but data  
+        $("#tabHeaderSectionContent").removeClass("active");
+        $('#section_general_content').hide();
+        $("#tabHeaderSectionImages").removeClass("active");
+        $('#section_images_content').hide();
+        $("#tabHeaderSectionOptions").removeClass("active");
+        $('#section_options_content').hide();
+        $("#tabHeaderSectionPricing").removeClass("active");
+        $('#section_pricing_content').hide();
+        $("#tabHeaderSectionShipping").removeClass("active");
+        $('#section_shipping_content').hide();
+        $("#tabHeaderSectionRelationships").removeClass("active");
+        $('#section_relationships_content').hide();
+        // show data
+        $("#tabHeaderSectionData").addClass("active");
+        $('#section_data_content').show();
+      } else if (tabOptions == 1) {
+        // hide all but options 
+        $("#tabHeaderSectionContent").removeClass("active");
+        $('#section_general_content').hide();
+        $("#tabHeaderSectionImages").removeClass("active");
+        $('#section_images_content').hide();
+        $("#tabHeaderSectionData").removeClass("active");
+        $('#section_data_content').hide(); 
+        $("#tabHeaderSectionPricing").removeClass("active");
+        $('#section_pricing_content').hide();
+        $("#tabHeaderSectionShipping").removeClass("active");
+        $('#section_shipping_content').hide();
+        $("#tabHeaderSectionRelationships").removeClass("active");
+        $('#section_relationships_content').hide();
+        // show options
+        $("#tabHeaderSectionOptions").addClass("active");
+        $('#section_options_content').show();
+      } else if (tabPricing == 1) {
+        // hide all but pricing 
+        $("#tabHeaderSectionContent").removeClass("active");
+        $('#section_general_content').hide();
+        $("#tabHeaderSectionImages").removeClass("active");
+        $('#section_images_content').hide();
+        $("#tabHeaderSectionData").removeClass("active");
+        $('#section_data_content').hide();
+        $("#tabHeaderSectionOptions").removeClass("active");
+        $('#section_options_content').hide();
+        $("#tabHeaderSectionShipping").removeClass("active");
+        $('#section_shipping_content').hide();
+        $("#tabHeaderSectionRelationships").removeClass("active");
+        $('#section_relationships_content').hide();
+        // show pricing
+        $("#tabHeaderSectionPricing").addClass("active");
+        $('#section_pricing_content').show();
+      } else if (tabShipping == 1) {
+        // hide all but shipping 
+        $("#tabHeaderSectionContent").removeClass("active");
+        $('#section_general_content').hide();
+        $("#tabHeaderSectionImages").removeClass("active");
+        $('#section_images_content').hide();
+        $("#tabHeaderSectionData").removeClass("active");
+        $('#section_data_content').hide();
+        $("#tabHeaderSectionOptions").removeClass("active");
+        $('#section_options_content').hide();
+        $("#tabHeaderSectionPricing").removeClass("active");
+        $('#section_pricing_content').hide();
+        $("#tabHeaderSectionRelationships").removeClass("active");
+        $('#section_relationships_content').hide();
+        // show shipping
+        $("#tabHeaderSectionShipping").addClass("active");
+        $('#section_shipping_content').show();
+      } else if (tabRelationships == 1) {
+        // hide all but relationships  
+        $("#tabHeaderSectionContent").removeClass("active");
+        $('#section_general_content').hide();
+        $("#tabHeaderSectionImages").removeClass("active");
+        $('#section_images_content').hide();
+        $("#tabHeaderSectionData").removeClass("active");
+        $('#section_data_content').hide();
+        $("#tabHeaderSectionOptions").removeClass("active");
+        $('#section_options_content').hide();
+        $("#tabHeaderSectionPricing").removeClass("active");
+        $('#section_pricing_content').hide();
+        $("#tabHeaderSectionShipping").removeClass("active");
+        $('#section_shipping_content').hide();
+        // show relationships
+        $("#tabHeaderSectionRelationships").addClass("active");
+        $('#section_relationships_content').show();       
+      } 
+    }
   </script>
   <?php
 } else { // default product listing

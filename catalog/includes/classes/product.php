@@ -186,7 +186,7 @@ class lC_Product {
             $Qvariants->bindInt(':values_id', $QsimpleOptionsValues->valueInt('values_id'));
             $Qvariants->bindInt(':languages_id', $lC_Language->getID());
             $Qvariants->bindInt(':languages_id', $lC_Language->getID());
-            $Qvariants->execute();
+            $Qvariants->execute(); 
             
             $this->_data['simple_options'][$this->_data['master_id']]['values'][$QsimpleOptions->valueInt('options_id')][$QsimpleOptionsValues->valueInt('values_id')] = array('value_id' => $QsimpleOptionsValues->valueInt('values_id'),
                                                                                                                                                                                'group_id' => $QsimpleOptions->valueInt('options_id'),
@@ -223,6 +223,16 @@ class lC_Product {
 
           $this->_data['reviews_average_rating'] = round($Qavg->value('rating'));
         }
+      }
+      $Qcg = $lC_Database->query('select cg.language_id, cg.customers_group_name, cgd.baseline_discount from :table_customers_groups cg left join :table_customers_groups_data cgd on (cg.customers_group_id = cgd.customers_group_id) where cg.customers_group_id = :customers_group_id');
+      $Qcg->bindTable(':table_customers_groups', TABLE_CUSTOMERS_GROUPS);
+      $Qcg->bindTable(':table_customers_groups_data', TABLE_CUSTOMERS_GROUPS_DATA);
+      $Qcg->bindInt(':customers_group_id', (isset($_SESSION['lC_Customer_data']['customers_group_id'])? $_SESSION['lC_Customer_data']['customers_group_id'] : DEFAULT_CUSTOMERS_GROUP_ID));
+      $Qcg->execute();
+      while ( $Qcg->next() ) {
+        $discount = $Qcg->valueDecimal('baseline_discount');
+        $new_price = $this->_data['price'] - ($this->_data['price']*($discount/100));
+        $this->_data['price'] = $new_price;
       }
     }
   }
@@ -491,7 +501,14 @@ class lC_Product {
     
     return $data;
   }  
-  
+ /*
+  * Retrieve quantity price breaks data
+  *
+  * @param integer $products_id       The product id
+  * @param integer $customers_group_id The customer group id
+  * @access public
+  * @return array
+  */   
   public function getPriceFormated($with_special = false) {
     global $lC_Services, $lC_Specials, $lC_Currencies;
     
@@ -827,7 +844,7 @@ class lC_Product {
       } else {
         $link = lc_href_link(DIR_WS_IMAGES . 'no_image.png');
       }
-      $output .= '<li><a data-toggle="modal" href="#popup-image-modal-'.$key.'"><img src="' . $lC_Image->getAddress($value['image'], $size) . '" title="' . $this->getTitle() . '" /></a></li>'; 
+      $output .= '<li><div class="additional-image-container well with-small-padding no-margin-bottom"><a data-toggle="modal" href="#popup-image-modal-'.$key.'"><img src="' . $lC_Image->getAddress($value['image'], $size) . '" title="' . $this->getTitle() . '" /></a></div></li>'; 
 
       if(file_exists(DIR_FS_CATALOG . $lC_Image->getAddress($value['image'], 'originals'))) {
         $link_image_modal = lc_href_link($lC_Image->getAddress($value['image'], 'originals'));

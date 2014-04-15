@@ -1036,7 +1036,7 @@ class lC_Languages_Admin {
 
       if ( $add_category_and_product_placeholders === true ) {
         if ( $error === false ) {
-          $Qcategories = $lC_Database->query('select categories_id, categories_name from :table_categories_description where language_id = :language_id');
+          $Qcategories = $lC_Database->query('select categories_id, categories_name, categories_menu_name, categories_blurb, categories_keyword from :table_categories_description where language_id = :language_id');
           $Qcategories->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
           $Qcategories->bindInt(':language_id', $default_language_id);
           $Qcategories->execute();
@@ -1047,6 +1047,9 @@ class lC_Languages_Admin {
             $Qinsert->bindInt(':categories_id', $Qcategories->valueInt('categories_id'));
             $Qinsert->bindInt(':language_id', $language_id);
             $Qinsert->bindValue(':categories_name', $Qcategories->value('categories_name'));
+            $Qinsert->bindValue(':categories_menu_name', $Qcategories->value('categories_menu_name'));
+            $Qinsert->bindValue(':categories_blurb', $Qcategories->value('categories_blurb'));
+            $Qinsert->bindValue(':categories_keyword', $Qcategories->value('categories_keyword'));
             $Qinsert->execute();
 
             if ( $lC_Database->isError() ) {
@@ -1271,6 +1274,30 @@ class lC_Languages_Admin {
             $Qinsert->bindInt(':size_width', $Qgroup->value('size_width'));
             $Qinsert->bindInt(':size_height', $Qgroup->value('size_height'));
             $Qinsert->bindInt(':force_size', $Qgroup->value('force_size'));
+            $Qinsert->execute();
+
+            if ( $lC_Database->isError() ) {
+              $error = true;
+              break;
+            }
+          }
+        }
+
+        // added for permalinks
+        if ( $error === false ) {
+          $Qpermalinks = $lC_Database->query('select * from :table_permalinks where language_id = :language_id');
+          $Qpermalinks->bindTable(':table_permalinks', TABLE_PERMALINKS);
+          $Qpermalinks->bindInt(':language_id', $default_language_id);
+          $Qpermalinks->execute();
+
+          while ( $Qpermalinks->next() ) {
+            $Qinsert = $lC_Database->query('insert into :table_permalinks (item_id, language_id, type, query, permalink) values (:item_id, :language_id, :type, :query, :permalink)');
+            $Qinsert->bindTable(':table_permalinks', TABLE_PERMALINKS);
+            $Qinsert->bindInt(':item_id', $Qpermalinks->valueInt('item_id'));
+            $Qinsert->bindInt(':language_id', $language_id);
+            $Qinsert->bindInt(':type', $Qpermalinks->valueInt('type'));
+            $Qinsert->bindValue(':query', $Qpermalinks->value('query'));
+            $Qinsert->bindValue(':permalink', $Qpermalinks->value('permalink'));
             $Qinsert->execute();
 
             if ( $lC_Database->isError() ) {

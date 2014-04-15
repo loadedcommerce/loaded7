@@ -44,17 +44,17 @@ class lC_Application_Orders extends lC_Template_Admin {
     
     if (isset($_GET['action']) && $_GET['action'] == "quick_add") {
       if ($order_insert_id = lC_Orders_Admin::createOrder($_GET['cID'])) {
-        lc_redirect_admin(lc_href_link_admin(FILENAME_DEFAULT, $this->_module . '=' . $order_insert_id . '&action=save&editProduct=1'));
+        lc_redirect_admin(lc_href_link_admin(FILENAME_DEFAULT, $this->_module . '=' . $order_insert_id . '&action=save&tabProducts=1'));
       }
     } else if (isset($_GET['action']) && $_GET['action'] == "add_product") {
       lC_Orders_Admin::addOrderProductData();
-      lc_redirect_admin(lc_href_link_admin(FILENAME_DEFAULT, $this->_module . '=' . $_GET['oID'] . '&action=save&editProduct=1'));
+      lc_redirect_admin(lc_href_link_admin(FILENAME_DEFAULT, $this->_module . '=' . $_GET['oID'] . '&action=save&tabProducts=1'));
     }
 
     // for temporary use
     if (isset($_POST['action_order_total']) && $_POST['action_order_total'] == 'save_order_total') {
       lC_Orders_Admin::saveOrderTotal(); 
-      lc_redirect_admin(lc_href_link_admin(FILENAME_DEFAULT, $this->_module . '=' . $_POST['oid'] . '&action=save&orderstotal=1'));
+      lc_redirect_admin(lc_href_link_admin(FILENAME_DEFAULT, $this->_module . '=' . $_POST['oid'] . '&action=save&tabTotals=1'));
     }
 
     if ( !empty($_GET['action']) ) {

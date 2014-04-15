@@ -92,6 +92,12 @@ function newSpecial() {
                   invalidHandler: function() {
                   }
                 }).form();
+                 var start = $("#specials_start_date").val();  
+                 var end = $("#specials_expires_date").val();
+                 if(Date.parse(start) > Date.parse(end)){
+                   $.modal.alert('<?php echo $lC_Language->get('error_date'); ?>');
+                   return false;
+                 }     
                 if (bValid) {
                   var nvp = $("#special").serialize();
                   var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=saveEntry&BATCH'); ?>'

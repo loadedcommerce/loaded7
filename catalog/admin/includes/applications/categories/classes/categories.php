@@ -9,6 +9,7 @@
   @version    $Id: categories.php v1.0 2013-08-08 datazen $
 */
 class lC_Categories_Admin {
+  
  /*
   * Returns the categories datatable data for listings
   *
@@ -70,6 +71,7 @@ class lC_Categories_Admin {
 
     return $result;
   }
+  
  /*
   * Returns all child categories
   *
@@ -97,6 +99,7 @@ class lC_Categories_Admin {
     }
     return $children;
   }
+  
  /*
   * Returns result of multidimensional array search
   *
@@ -114,6 +117,7 @@ class lC_Categories_Admin {
     }
     return false;
   }
+  
  /*
   * Returns the data used on the dialog forms
   *
@@ -164,6 +168,7 @@ class lC_Categories_Admin {
 
     return $result;
   }
+  
  /*
   * Returns the category information
   *
@@ -224,6 +229,7 @@ class lC_Categories_Admin {
     
     return $data;
   }
+  
  /*
   * Save the category record
   *
@@ -267,7 +273,12 @@ class lC_Categories_Admin {
     $Qcat->setLogging($_SESSION['module'], $id);
     $Qcat->execute();
     
-    if ( !$lC_Database->isError() ) {
+    //echo '<pre>';
+    //print_r($Qcat);
+    //echo '<pre>';
+    //die('after categories table execute');
+    
+    if ( !$lC_Database->isError()) {
       $category_id = (is_numeric($id)) ? $id : $lC_Database->nextID();
       $lC_CategoryTree = new lC_CategoryTree_Admin();
       $cPath = ($data['parent_id'] != 0) ? $lC_CategoryTree->getcPath($data['parent_id']) . '_' . $category_id : $category_id;
@@ -299,7 +310,7 @@ class lC_Categories_Admin {
         // added for permalink
         if (!empty($data['permalink'][$l['id']])) {
           if ($data['permalink'][$l['id']] != 'no-permalink') {
-            if (is_numeric($id) && lC_Categories_Admin::validatePermalink(array($data['permalink'][$l['id']]), $category_id, 1) == 1) {
+            if (is_numeric($id) && lC_Categories_Admin::validatePermalink(array($data['permalink'][$l['id']]), $category_id, 1, $l['id']) == 1) {
               $Qpl = $lC_Database->query('update :table_permalinks set permalink = :permalink where item_id = :item_id and type = :type and language_id = :language_id');
             } else {
               $Qpl = $lC_Database->query('insert into :table_permalinks (item_id, language_id, type, query, permalink) values (:item_id, :language_id, :type, :query, :permalink)');
@@ -342,6 +353,7 @@ class lC_Categories_Admin {
 
     return false;
   }
+  
  /*
   * Delete the category record and associated children
   *
@@ -467,6 +479,7 @@ class lC_Categories_Admin {
 
     return false;
   }
+  
  /*
   * Batch delete product categories
   *
@@ -480,6 +493,7 @@ class lC_Categories_Admin {
     }
     return true;
   }
+  
  /*
   * Move a product category
   *
@@ -510,6 +524,7 @@ class lC_Categories_Admin {
 
     return true;
   }
+  
  /*
   * Batch move product categories
   *
@@ -524,6 +539,7 @@ class lC_Categories_Admin {
     }
     return true;
   }
+  
  /*
   * Get category parent ID
   *
@@ -545,6 +561,7 @@ class lC_Categories_Admin {
 
     return $parentID;
   }
+  
  /*
   * Get final category parent ID
   *
@@ -608,6 +625,7 @@ class lC_Categories_Admin {
     
     return $cat_ids;
   }
+  
  /*
   * Update category sorting
   * 
@@ -632,6 +650,7 @@ class lC_Categories_Admin {
     }
     return true;
   }
+  
  /*
   * get next category sort for new entry
   * 
@@ -652,6 +671,7 @@ class lC_Categories_Admin {
 
     return $nextsort;
   }
+  
  /*
   * update category status db entry
   * 
@@ -669,6 +689,7 @@ class lC_Categories_Admin {
       
     return true;
   }
+  
  /*
   * update category show in top nav db entry
   * 
@@ -686,6 +707,7 @@ class lC_Categories_Admin {
       
     return true;
   }
+  
  /*
   * update category show in infobox db entry
   * 
@@ -703,6 +725,7 @@ class lC_Categories_Admin {
       
     return true;
   }
+  
  /*
   * get category icon
   * 
@@ -713,6 +736,12 @@ class lC_Categories_Admin {
     
     if ($type == 'category') {
       $icon = 'folder icon-orange';
+    } else if ($type == 'info_category') {
+      $icon = 'info-round icon-blue';
+    } else if ($type == 'faq_category') {
+      $icon = 'numbered-list icon-anthracite';
+    } else if ($type == 'article_category') {
+      $icon = 'newspaper icon-anthracite';
     } else if ($type == 'page') {
       $icon = 'page-list icon-black';
     } else if ($type == 'specials') {
@@ -734,7 +763,8 @@ class lC_Categories_Admin {
     }
 
     return $icon;
-  } 
+  }
+   
  /*
   * Return the number of permalinks for a category
   *
@@ -742,7 +772,7 @@ class lC_Categories_Admin {
   * @access public
   * @return integer
   */
-  public static function getPermalinkCount($permalink, $cid = null, $type = null) {
+  public static function getPermalinkCount($permalink, $cid = null, $type = null, $lid = null) {
     global $lC_Database;
 
     $Qpermalinks = $lC_Database->query('select count(*) as total, item_id, permalink from :table_permalinks where permalink = :permalink');
@@ -750,6 +780,11 @@ class lC_Categories_Admin {
     if (is_numeric($cid)) {
       $Qpermalinks->appendQuery('and item_id != :item_id');
       $Qpermalinks->bindInt(':item_id', $cid);
+    }
+    
+    if (is_numeric($lid)) {
+      $Qpermalinks->appendQuery('and language_id == :language_id');
+      $Qpermalinks->bindInt(':language_id', $lid);
     }
 
     $Qpermalinks->bindTable(':table_permalinks', TABLE_PERMALINKS);
@@ -764,6 +799,7 @@ class lC_Categories_Admin {
     
     return $permalink_count;
   }
+  
  /*
   * Validate the category permalink
   *
@@ -771,17 +807,17 @@ class lC_Categories_Admin {
   * @access public
   * @return array
   */
-  public static function validatePermalink($permalink_array, $cid = null, $type = null) {
+  public static function validatePermalink($permalink_array, $cid = null, $type = null, $lid = null) {
     $validated = true;
     
     if (is_array($permalink_array)) {
       foreach($permalink_array as $permalink) {
         if ( preg_match('/^[a-z0-9_-]+$/iD', $permalink) !== 1 ) $validated = false;
-        if ( lC_Categories_Admin::getPermalinkCount($permalink, $cid, $type) > 0) $validated = false;
+        if ( lC_Categories_Admin::getPermalinkCount($permalink, $cid, $type, $lid) > 0) $validated = false;
       }
     } else {
       if ( preg_match('/^[a-z0-9_-]+$/iD', $permalink) !== 1 ) $validated = false;
-      if ( lC_Categories_Admin::getPermalinkCount($permalink, $cid, $type) > 0) $validated = false;
+      if ( lC_Categories_Admin::getPermalinkCount($permalink, $cid, $type, $lid) > 0) $validated = false;
     }
     
     return $validated;
@@ -826,6 +862,37 @@ class lC_Categories_Admin {
       
     return true;
   }
-                          
+  
+ /*
+  * Return the category mode(s) array
+  *
+  * @access public
+  * @return array
+  */
+  public static function modeSelect($cmode = null) {
+    global $lC_Language;
+    
+    $modes_array = array(
+                         array('text' => $lC_Language->get('text_product_category'), 'value' => 'category'),
+                         array('text' => $lC_Language->get('text_info_category'), 'value' => 'info_category'),
+                         //array('text' => $lC_Language->get('text_faq_category'), 'value' => 'faq_category'),
+                         //array('text' => $lC_Language->get('text_article_category'), 'value' => 'article_category'),
+                         array('text' => $lC_Language->get('text_page'), 'value' => 'page'),
+                         array('text' => $lC_Language->get('link_to_specials'), 'value' => 'specials'),
+                         array('text' => $lC_Language->get('link_to_featured'), 'value' => 'featured'),
+                         array('text' => $lC_Language->get('link_to_new'), 'value' => 'new'),
+                         array('text' => $lC_Language->get('link_to_search'), 'value' => 'search'),
+                         array('text' => $lC_Language->get('link_to_cart'), 'value' => 'cart'),
+                         array('text' => $lC_Language->get('link_to_account'), 'value' => 'account'),
+                         array('text' => $lC_Language->get('link_to_info'), 'value' => 'info'),
+                         array('text' => $lC_Language->get('text_custom_link'), 'value' => 'override')
+                         );
+                         
+    foreach ($modes_array as $mode) {
+      $modes .= '<option value="' . $mode['value'] . '"' . (($cmode == $mode['value']) ? ' selected' : '') . '>' . $mode['text'] . '</option>'; 
+    }
+    
+    return $modes;
+  }                      
 }
 ?>
