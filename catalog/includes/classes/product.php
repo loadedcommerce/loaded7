@@ -289,7 +289,7 @@ class lC_Product {
     return $this->_data['tags'];
   }
   
-  //######## PRICING - ALL PRICING TO COME FROM HERE #########//
+  // ######## PRICING - ALL PRICING TO COME FROM HERE #########//
   public function getPriceInfo($product_id, $customers_group_id = 1, $data) {
     global $lC_Specials, $lC_Database, $lC_Language, $lC_Customer, $lC_Services, $lC_Currencies, $lC_ShoppingCart, $lC_Tax;
 
@@ -301,7 +301,7 @@ class lC_Product {
     $base_price = $this->getBasePrice();
     $price = (float)$base_price;
     
-    //options modifiers
+    // options modifiers
     if (is_array($data['simple_options']) && count($data['simple_options']) > 0) {
       $modTotal = 0;
       foreach ($data['simple_options'] as $options_id => $values_id) {
@@ -390,7 +390,8 @@ class lC_Product {
     $tax = 0;
     $taxRate = 0;
     $priceWithTax = $price;
-    if(DISPLAY_PRICE_WITH_TAX == 1) {
+    
+    if (DISPLAY_PRICE_WITH_TAX == 1) {
       $taxClassID = ($lC_ShoppingCart->getShippingMethod('tax_class_id') != NULL) ? $lC_ShoppingCart->getShippingMethod('tax_class_id') : $this->_data['tax_class_id']; 
       $countryID = ($lC_ShoppingCart->getShippingAddress('country_id') != NULL) ? $lC_ShoppingCart->getShippingAddress('country_id') : STORE_COUNTRY;
       $zoneID = ($lC_ShoppingCart->getShippingAddress('zone_id') != NULL) ? $lC_ShoppingCart->getShippingAddress('zone_id') : STORE_ZONE;
@@ -406,7 +407,7 @@ class lC_Product {
     }
     
     // #### DISCOUNTS #### //
-   /*
+    /*
     // set the adjusted base price var
     $base_price = $price;    
     // if logged in and has a group baseline discount, apply to price
@@ -414,7 +415,7 @@ class lC_Product {
       $baseline_discount = $lC_Customer->getBaselineDiscount($customers_group_id);
       $price = round((float)$base_price * ((float)$baseline_discount * .01), DECIMAL_PLACES); 
     }
-   */   
+    */   
    
     $return = array('base' => number_format($this->getBasePrice(), DECIMAL_PLACES),
                     'price' => number_format($price, DECIMAL_PLACES),
@@ -424,10 +425,10 @@ class lC_Product {
                     'qpbData' => $qpbData
                     );
                     
-//echo "<pre>return ";
-//print_r($return);
-//echo "</pre>";
-//die('55');                    
+    //echo "<pre>return ";
+    //print_r($return);
+    //echo "</pre>";
+    //die('55');                    
                     
     return $return;                    
   }
@@ -669,8 +670,12 @@ class lC_Product {
     return $this->_data['url'];
   }
 
+  public function hasDateAvailable() {
+    return (isset($this->_data['attributes']['date_available']) && !empty($this->_data['attributes']['date_available']));
+  }
+
   public function getDateAvailable() {
-    return false; //$this->_data['date_available'];
+    return $this->_data['attributes']['date_available'];
   }
 
   public function getDateAdded() {
@@ -796,12 +801,12 @@ class lC_Product {
 
   public function checkEntry($id) {
     global $lC_Database;
-
+    
     $Qproduct = $lC_Database->query('select p.products_id from :table_products p');
     $Qproduct->bindTable(':table_products', TABLE_PRODUCTS);
-
+    
     if ( is_numeric($id) ) {
-      $Qproduct->appendQuery('where p.products_id = :products_id');
+      $Qproduct->appendQuery(' where p.products_id = :products_id');
       $Qproduct->bindInt(':products_id', $id);
     } else {
       $Qproduct->appendQuery(', :table_products_description pd where pd.products_keyword = :products_keyword and pd.products_id = p.products_id');
@@ -809,10 +814,10 @@ class lC_Product {
       $Qproduct->bindValue(':products_keyword', $id);
     }
 
-    $Qproduct->appendQuery('and p.products_status = 1 limit 1');
+    $Qproduct->appendQuery(' and p.products_status = 1 limit 1');
     $Qproduct->execute();
 
-    return ( $Qproduct->numberOfRows() === 1 );
+    return ($Qproduct->numberOfRows() === 1);
   }
 
   public function incrementCounter() {

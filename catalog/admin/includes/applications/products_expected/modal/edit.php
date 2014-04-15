@@ -93,7 +93,13 @@ function editEntry(id) {
           buttonsLowPadding: true
       });
       $("#edit_products_date_available").val(data.pDate);
-      $('.datepicker').glDatePicker({ zIndex: 100 });
+      
+      var Adate = data.pDate;
+      var dSplit = Adate.split("/");
+      var Amonth = dSplit[0]-1;
+      var Aday = dSplit[1];
+      var Ayear = dSplit[2];
+      $('#edit_products_date_available').glDatePicker({ selectedDate: new Date(Ayear, Amonth, Aday) });
     }
   );
 }
