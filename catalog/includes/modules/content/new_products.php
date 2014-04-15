@@ -52,7 +52,7 @@ class lC_Content_new_products extends lC_Modules {
       $Qproducts->bindTable(':table_products', TABLE_PRODUCTS);
       $Qproducts->bindInt(':products_status', 1);
       $Qproducts->bindInt(':parent_id', 0);
-      $Qproducts->bindInt(':max_display_new_products', MODULE_CONTENT_NEW_PRODUCTS_MAX_DISPLAY);
+      $Qproducts->bindInt(':max_display_new_products', MAX_DISPLAY_PRODUCTS_NEW);
       $Qproducts->execute();
 
       while ( $Qproducts->next() ) {
