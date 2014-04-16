@@ -131,11 +131,16 @@
                   }
                 } else {
                   $permalink = substr($link, strpos($link, 'products.php?')+13);
+                  // added for support of getting products parent id's for cPath if no permalink present
+                  if (!stristr(get_permalink_query($permalink), 'cPath=') === FALSE) {
+                    $cPath = implode("_", explode("_", get_permalink_query($permalink)));
+                  } else {
+                    $cPath = implode("_", array_reverse(explode("_", get_permalink_query($permalink))));
+                  }
                   if (!strpos($permalink, '/') &&
                     !strpos($permalink, '?') &&
                     !strpos($permalink, ',')) {
-                    $pQuery = get_permalink_query($permalink);
-                    $cat_ids = explode("_", substr($pQuery, 6));
+                    $cat_ids = explode("_", $cPath);
                   }
                 }
               }
@@ -904,19 +909,15 @@
       $Qpid->bindInt(':categories_id', $id);
       $Qpid->execute();
       
-      $cPath = '';
+      $c_path = $id . '_';
       while ($Qpid->next()) {
-        $path .= $Qpid->valueInt('parent_id');
         if ($Qpid->valueInt('parent_id') != 0) {
-          $cPath .= $path . '_' . get_parents_path($Qpid->valueInt('parent_id'));
-        } else {
-          $cPath .= $path;
+          $c_path .= get_parents_path($Qpid->valueInt('parent_id'));
         }
       }
+      $c_path = preg_replace('/_$/', '', $c_path);
       
-      // saved
-      
-      return $cPath;
+      return $c_path;      
     }
   }
 ?>
