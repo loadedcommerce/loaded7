@@ -729,7 +729,8 @@ CREATE TABLE lc_product_attributes (
   languages_id int(10) unsigned NOT NULL,
   `value` text NOT NULL,
   KEY idx_pa_id_products_id (id,products_id),
-  KEY idx_pa_languages_id (languages_id)
+  KEY idx_pa_languages_id (languages_id),
+  KEY idx_pa_products_id (products_id)
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_reviews;
@@ -6160,9 +6161,9 @@ INSERT INTO lc_credit_cards (id, credit_card_name, pattern, credit_card_status, 
 INSERT INTO lc_credit_cards (id, credit_card_name, pattern, credit_card_status, sort_order) VALUES(12, 'Maestro', '/^(50|56|57|58|6)/', '0', 0);
 INSERT INTO lc_credit_cards (id, credit_card_name, pattern, credit_card_status, sort_order) VALUES(13, 'Smartpay', '/^4\\d{12}(\\d{3})?$/', '0', 0);
 
-INSERT INTO lc_currencies (currencies_id, title, code, symbol_left, symbol_right, decimal_places, value, last_updated) VALUES(2, 'Euro', 'EUR', '€', '', '2', 0.726579, '2014-03-03 09:59:23');
 INSERT INTO lc_currencies (currencies_id, title, code, symbol_left, symbol_right, decimal_places, value, last_updated) VALUES(1, 'US Dollar', 'USD', '$', '', '2', 1.00000000, '2014-03-03 09:59:23');
-INSERT INTO lc_currencies (currencies_id, title, code, symbol_left, symbol_right, decimal_places, value, last_updated) VALUES(3, 'British Pounds', 'GBP', '£', '', '2', 0.598311, '2014-03-03 09:59:23');
+INSERT INTO lc_currencies (currencies_id, title, code, symbol_left, symbol_right, decimal_places, value, last_updated) VALUES(2, 'Euro', 'EUR', '&euro;', '', '2', 0.726579, '2014-03-03 09:59:23');
+INSERT INTO lc_currencies (currencies_id, title, code, symbol_left, symbol_right, decimal_places, value, last_updated) VALUES(3, 'British Pounds', 'GBP', '&pound;', '', '2', 0.598311, '2014-03-03 09:59:23');
 
 INSERT INTO lc_customers_groups (customers_group_id, language_id, customers_group_name) VALUES(1, 1, 'Registered');
 INSERT INTO lc_customers_groups (customers_group_id, language_id, customers_group_name) VALUES(2, 1, 'Wholesale');
