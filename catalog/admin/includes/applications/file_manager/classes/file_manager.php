@@ -39,7 +39,34 @@ class lC_File_manager_Admin {
     }
     $lC_DirectoryListing = new lC_DirectoryListing($_SESSION['fm_directory']);
     $lC_DirectoryListing->setStats(true);
-
+    
+    foreach ($lC_DirectoryListing->getFiles() as $filedata) {
+      if ($filedata['is_directory'] === 1) {
+        $dirs[] = array('name' => $filedata['name'],
+                        'is_directory' => $filedata['is_directory'],
+                        'path' => $filedata['path'],
+                        'size' => $filedata['size'],
+                        'permissions' => $filedata['permissions'],
+                        'user_id' => $filedata['user_id'],
+                        'group_id' => $filedata['group_id'],
+                        'last_modified' => $filedata['last_modified']);
+      } else {
+        $files[] = array('name' => $filedata['name'],
+                         'is_directory' => $filedata['is_directory'],
+                         'path' => $filedata['path'],
+                         'size' => $filedata['size'],
+                         'permissions' => $filedata['permissions'],
+                         'user_id' => $filedata['user_id'],
+                         'group_id' => $filedata['group_id'],
+                         'last_modified' => $filedata['last_modified']);
+      }
+    }
+      
+    //$allfiles = array_merge($dirs, $files);
+    
+    print_r($dirs);
+    die();
+    
     $result = array('aaData' => array());
 
     if ( $_SESSION['fm_directory'] != LC_ADMIN_FILE_MANAGER_ROOT_PATH ) {
@@ -48,7 +75,7 @@ class lC_File_manager_Admin {
     }
 
     $cnt = 0;
-    foreach ( $lC_DirectoryListing->getFiles() as $file ) {
+    foreach ( $allfiles as $file ) {
       $file_owner = posix_getpwuid($file['user_id']);
       $group_owner = posix_getgrgid($file['group_id']);
 

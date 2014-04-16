@@ -19,7 +19,6 @@ $(document).ready(function() {
     "sAjaxSource": dataTableDataURL.replace('MEDIA', $.template.mediaQuery.name),
     "sPaginationType": paginationType,
     "bPaginate": false, 
-    "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]], 
     "aoColumns": [{ "sWidth": "20%", "sClass": "dataColFiles" },
                   { "sWidth": "10%", "sClass": "dataColSize hide-on-mobile-portrait" },
                   { "sWidth": "10%", "sClass": "dataColPerms hide-on-mobile-portrait" },
