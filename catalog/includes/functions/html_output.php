@@ -880,7 +880,7 @@
       
       if ($Qpermalink->numberOfRows() > 0) {
         return $Qpermalink->value('query');
-      } else {
+      } else { // added to support products with no permalink present
         $Qpid = $lC_Database->query('select ptc.categories_id from :table_products_to_categories ptc left join :table_products_description pd on (ptc.products_id = pd.products_id) where pd.products_keyword = :products_keyword and language_id = :language_id');
         $Qpid->bindTable(':table_products_to_categories', TABLE_PRODUCTS_TO_CATEGORIES);
         $Qpid->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
