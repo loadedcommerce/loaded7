@@ -740,10 +740,10 @@ class lC_ShoppingCart {
 
     $Qstock = $lC_Database->query('select products_quantity from :table_products where products_id = :products_id');
     $Qstock->bindTable(':table_products', TABLE_PRODUCTS);
-    $Qstock->bindInt(':products_id', $item_id);
+    $Qstock->bindInt(':products_id', $this->_contents[$item_id]['id']);
     $Qstock->execute();
 
-    if ( ($Qstock->valueInt('products_quantity') - $this->_contents[$item_id]['quantity']) > 0 ) {
+    if ( ($Qstock->valueInt('products_quantity') - $this->_contents[$item_id]['quantity']) >= 0 ) {
       return true;
     } elseif ( $this->_products_in_stock === true ) {
       $this->_products_in_stock = false;
