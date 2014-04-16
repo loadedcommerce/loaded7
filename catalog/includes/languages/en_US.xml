@@ -236,6 +236,11 @@
       <group>general</group>
     </definition>
     <definition>
+      <key>button_details</key>
+      <value><![CDATA[Details]]></value>
+      <group>general</group>
+    </definition>    
+    <definition>
       <key>button_close</key>
       <value><![CDATA[Close]]></value>
       <group>general</group>
@@ -2900,5 +2905,10 @@ Your friend, %s, thought that you would be interested in %s from %s.]]></value>
       <value><![CDATA[Low As]]></value>
       <group>general</group>
     </definition> 
+    <definition>
+      <key>text_admin_session_active</key>
+      <value><![CDATA[ADMIN SESSION ACTIVE]]></value>
+      <group>general</group>
+    </definition>     
   </definitions>  
 </language>

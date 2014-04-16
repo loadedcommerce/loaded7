@@ -32,4 +32,3 @@ introduction_delete_special = Please verify the removal of this special.
 introduction_batch_delete_specials = Please verify the removal of the selected specials.
 
 error_specials_price = Error:  The special price must be greater than zero and cannot be higher than the regular price.
-error_specials_date = Error:  The expire date cannot be less than the start date.

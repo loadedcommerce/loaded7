@@ -9,6 +9,7 @@
   @version    $Id: rpc.php v1.0 2013-08-08 datazen $
 */
 global $lC_Vqmod;
+
 require_once($lC_Vqmod->modCheck('includes/applications/login/classes/login.php')); 
 
 class lC_Login_Admin_rpc {

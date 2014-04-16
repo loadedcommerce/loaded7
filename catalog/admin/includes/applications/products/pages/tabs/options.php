@@ -80,33 +80,7 @@ if ( is_dir('includes/applications/products/modal') ) {
   if ( file_exists('includes/applications/products/modal/addSimpleOption.php') ) include_once($lC_Vqmod->modCheck('includes/applications/products/modal/addSimpleOption.php'));
 }
 ?>
-<script>
-$(document).ready(function() {
-  _setSimpleOptionsSortOrder();
-  
-  $('.sorted_table').sortable({  
-    containerSelector: 'tbody',
-    itemSelector: 'tr',
-    placeholder: '<tr class="placeholder"/>',
-    tolerance: '1',
-    onDragStart: function (item, group, _super) {      
-      item.css({
-        height: item.height(),
-        width: item.width()
-      });
-      item.addClass("dragged");
-      $('body').addClass('dragging');
-    },
-    onDrop: function  (item, container, _super) { 
-      item.removeClass("dragged");
-      item.attr("style", "");
-      $("body").removeClass("dragging");
-
-      _setSimpleOptionsSortOrder();
-    }    
-  });
-});   
-
+<script> 
 function _setSimpleOptionsSortOrder() {
   var order = 0;
   $('#simpleOptionsTable tr').each(function () {

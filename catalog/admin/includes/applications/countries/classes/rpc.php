@@ -10,7 +10,7 @@
 */
 global $lC_Vqmod;
 
-require($lC_Vqmod->modCheck('includes/applications/countries/classes/countries.php'));
+require_once($lC_Vqmod->modCheck('includes/applications/countries/classes/countries.php'));
 
 class lC_Countries_Admin_rpc {
  /*

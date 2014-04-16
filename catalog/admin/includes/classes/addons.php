@@ -123,7 +123,7 @@ class lC_Addons_Admin extends lC_Addons {
         }
       }
     }
-    
+
     return false;
   }  
  /*

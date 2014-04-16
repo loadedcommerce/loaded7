@@ -25,25 +25,25 @@ class lC_Application_Products_Actions_save extends lC_Application_Products {
     if ( isset($_POST['subaction']) && ($_POST['subaction'] == 'confirm') ) {
       
       $error = false;
+      $has_variants = ((isset($_POST['variants']))) ? true : false;
 
-      $has_variants = (isset($_POST['has_variants']) && $_POST['has_variants'] == 'on') ? true : false;   
-
-      $data = array('id' => (isset($_POST['products_id']) && $has_variants === false) ? $_POST['products_id'] : 0,
+      $data = array('id' => (isset($_POST['products_id'])) ? $_POST['products_id'] : 0,
                     'quantity' => (isset($_POST['products_quantity']) && $has_variants === false) ? $_POST['products_quantity'] : 0,
-                    'cost' => (is_numeric($_POST['products_cost']) && $has_variants === false) ? $_POST['products_cost'] : 0,
-                    'price' => (is_numeric($_POST['products_price']) && $has_variants === false) ? $_POST['products_price'] : 0,
-                    'msrp' => (is_numeric($_POST['products_msrp']) && $has_variants === false) ? $_POST['products_msrp'] : 0,
-                    'weight' => (isset($_POST['products_weight']) && $has_variants === false) ? $_POST['products_weight'] : 0,
-                    'weight_class' => (isset($_POST['products_weight_class']) && $has_variants === false) ? $_POST['products_weight_class'] : '',
-                    'status' => (isset($_POST['products_status']) && $_POST['products_status'] == 'on' && $has_variants === false) ? true : false,
-                    'model' => (isset($_POST['products_model']) && $has_variants === false) ? $_POST['products_model'] : '',
-                    'sku' => (isset($_POST['products_sku']) && $has_variants === false) ? $_POST['products_sku'] : '',
-                    'tax_class_id' => (isset($_POST['products_tax_class_id']) && $has_variants === false) ? $_POST['products_tax_class_id'] : 0,
+                    'cost' => (is_numeric($_POST['products_cost'])) ? $_POST['products_cost'] : 0,
+                    'price' => number_format($_POST['products_price'], DECIMAL_PLACES),
+                    'msrp' => (is_numeric($_POST['products_msrp'])) ? $_POST['products_msrp'] : 0,
+                    'weight' => $_POST['products_weight'],
+                    'weight_class' => (isset($_POST['products_weight_class'])) ? $_POST['products_weight_class'] : '',
+                    'status' => (isset($_POST['products_status']) && $_POST['products_status'] == 'on') ? true : false,
+                    'model' => (isset($_POST['products_model'])) ? $_POST['products_model'] : '',
+                    'sku' => (isset($_POST['products_sku'])) ? $_POST['products_sku'] : '',
+                    'tax_class_id' => (isset($_POST['products_tax_class_id'])) ? $_POST['products_tax_class_id'] : 0,
                     'products_name' => $_POST['products_name'],
                     'products_description' => $_POST['products_description'],
                     'products_keyword' => $_POST['products_keyword'],
                     'products_tags' => $_POST['products_tags'],
-                    'products_url' => $_POST['products_url']);
+                    'products_url' => $_POST['products_url'],
+                    'has_children' => $has_variants);
 
       if ( isset($_POST['attributes']) ) $data['attributes'] = $_POST['attributes'];
       if ( isset($_POST['categories']) ) $data['categories'] = $_POST['categories'];
@@ -66,8 +66,8 @@ class lC_Application_Products_Actions_save extends lC_Application_Products {
         if ( isset($_POST['products_special_expires_date'][1]) ) $data['products_special_expires_date1'] = $_POST['products_special_expires_date'][1];
       }
 
-      // multi SKU sub-products
-      if (isset($_POST['sub_products_name']) && $_POST['sub_products_name'] != NULL) {
+      // sub-products
+      if (is_array($_POST['sub_products_name']) && count($_POST['sub_products_name']) > 1) {
         $data['has_subproducts'] = '1';
         $data['sub_products_name'] = $_POST['sub_products_name'];
         if (isset($_POST['sub_products_default']) && $_POST['sub_products_default'] != NULL) $data['sub_products_default'] = $_POST['sub_products_default'];
@@ -78,78 +78,22 @@ class lC_Application_Products_Actions_save extends lC_Application_Products {
         if (isset($_POST['sub_products_id']) && $_POST['sub_products_id'] != NULL) $data['sub_products_id'] = $_POST['sub_products_id'];
         if (isset($_POST['sub_products_cost']) && $_POST['sub_products_cost'] != NULL) $data['sub_products_cost'] = $_POST['sub_products_cost'];
         if (isset($_POST['sub_products_price']) && $_POST['sub_products_price'] != NULL) $data['sub_products_price'] = $_POST['sub_products_price'];
-      }      
+      }  
       
       // qpb
-      if (isset($_POST['products_qty_break_point']) && $_POST['products_qty_break_point'] != NULL) $data['products_qty_break_point'] = $_POST['products_qty_break_point'];
-      if (isset($_POST['products_qty_break_price']) && $_POST['products_qty_break_price'] != NULL) $data['products_qty_break_price'] = $_POST['products_qty_break_price'];
+      if (is_array($_POST['products_qty_break_point']) && $_POST['products_qty_break_point'][1] != NULL) $data['products_qty_break_point'] = $_POST['products_qty_break_point'];
+      if (is_array($_POST['products_qty_break_price']) && $_POST['products_qty_break_price'][1] != NULL) $data['products_qty_break_price'] = $_POST['products_qty_break_price'];
       
-      // multi SKU combo
-      if ($has_variants === true) {
-        if ( isset($_POST['variants_status']) ) {
-          $data['variants_status'] = $_POST['variants_status'];
-        }
-
-        if ( isset($_POST['variants_cost']) ) {
-          $data['variants_cost'] = $_POST['variants_cost'];
-        }
-
-        if ( isset($_POST['variants_price']) ) {
-          $data['variants_price'] = $_POST['variants_price'];
-        }
-
-        if ( isset($_POST['variants_msrp']) ) {
-          $data['variants_msrp'] = $_POST['variants_msrp'];
-        }
-
-        if ( isset($_POST['variants_model']) ) {
-          $data['variants_model'] = $_POST['variants_model'];
-        }
-
-        if ( isset($_POST['variants_sku']) ) {
-          $data['variants_sku'] = $_POST['variants_sku'];
-        }
-
-        if ( isset($_POST['variants_tax_class_id']) ) {
-          $data['variants_tax_class_id'] = $_POST['variants_tax_class_id'];
-        }
-
-        if ( isset($_POST['variants_quantity']) ) {
-          $data['variants_quantity'] = $_POST['variants_quantity'];
-        }
-
-        if ( isset($_POST['variants_combo']) ) {
-          $data['variants_combo'] = $_POST['variants_combo'];
-        }
-
-        if ( isset($_POST['variants_combo_db']) ) {
-          $data['variants_combo_db'] = $_POST['variants_combo_db'];
-        }
-
-        if ( isset($_POST['variants_weight']) ) {
-          $data['variants_weight'] = $_POST['variants_weight'];
-        }
-
-        if ( isset($_POST['variants_weight_class']) ) {
-          $data['variants_weight_class'] = $_POST['variants_weight_class'];
-        }
-
-        if ( isset($_POST['variants_default_combo']) ) {
-          $data['variants_default_combo'] = $_POST['variants_default_combo'];
-        }
-      } 
-        
-      if ( isset($_POST['price_breaks']) ) {
-        $data['price_breaks'] = $_POST['price_breaks'];         
-      }
+      // multi SKU options
+      if (isset($_POST['variants'])) $data['variants'] = $_POST['variants'];
 
       if ( $error === false ) {
         // the line below is used as a hook match point - do not not modify or remove
         $id = lC_Products_Admin::save((isset($_GET[$this->_module]) && is_numeric($_GET[$this->_module]) ? $_GET[$this->_module] : null), $data);
         
         if ( is_numeric($id) ) {
-          if(empty($_POST['save_close'])){
-            lc_redirect_admin(lc_href_link_admin(FILENAME_DEFAULT, $this->_module . '='.$id.'&action=save&cID=' . $_GET['cID']));
+          if (empty($_POST['save_close'])) {
+            lc_redirect_admin(lc_href_link_admin(FILENAME_DEFAULT, $this->_module . '=' . $id . '&action=save&cID=' . $_GET['cID']));
           } else {
             lc_redirect_admin(lc_href_link_admin(FILENAME_DEFAULT, $this->_module . '&cID=' . $_GET['cID']));
           }

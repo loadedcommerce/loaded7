@@ -999,6 +999,9 @@ class lC_Updates_Admin {
 
         // Ignore "." and ".." folders
         if( in_array(substr($file, strrpos($file, '/')+1), array('.', '..')) ) continue;
+        
+        // added to exclude zips
+        if (strstr($file, '.zip')) continue;
 
         $file = realpath($file);
 

@@ -15,9 +15,9 @@ class lC_Variants_pull_down_menu extends lC_Variants_Abstract {
     global $lC_Currencies;
     
     $default_value = null;  
+    $options = '';
     
     if (isset($data['simple_option']) && $data['simple_option'] !== false) {
-      $options = '';
       $group_id = '';
       $group_title = '';
       unset($data['simple_option']);
@@ -39,14 +39,13 @@ class lC_Variants_pull_down_menu extends lC_Variants_Abstract {
       foreach ( $data['data'] as $variant ) {
         if ( $variant['default'] === true ) {
           $default_value = $variant['id'];
-
-          break;
         }
+        $options .= '<option value="' . $variant['id'] . '"' . (($variant['default'] === true ) ? ' selected="selected"' : null) . '>' . $variant['text'] . '</option>'; 
       }
       
       $string = '<div class="variant_sel form-group margin-top margin-left">' . 
-                '  <label class="control-label">' . $group_title . '</label>' . 
-                '  <select class="form-control display-inline two-third-width mid-margin-right float-right" onchange="refreshPrice();" value="' . $data['data'] . '" id="variants_' . $data['group_id'] . '" name="variants[' . $data['group_id'] . ']">' . $options . '</select>' . 
+                '  <label class="control-label">' . $data['title'] . '</label>' . 
+                '  <select class="form-control display-inline two-third-width mid-margin-right float-right" onchange="refreshPrice();" value="' . $data['group_id'] . '" id="variants_' . $data['group_id'] . '" name="variants[' . $data['group_id'] . ']">' . $options . '</select>' . 
                 '</div>';       
     }              
 

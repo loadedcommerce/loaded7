@@ -205,7 +205,82 @@ class lC_Updates_Admin_run_after extends lC_Updates_Admin {
           
     $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "branding` ADD `homepage_text` VARCHAR(20000) NOT NULL DEFAULT '' AFTER `language_id`;");
     parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "branding` ADD `homepage_text` VARCHAR(20000) NOT NULL DEFAULT '' AFTER `language_id`;");    
+    
+    $lC_Database->simpleQuery("UPDATE `" . $pf . "currencies` SET `symbol_left` = '&euro;' where `code` = 'EUR'");
+    parent::log("Database Update: UPDATE `" . $pf . "currencies` SET `symbol_left` = '&euro;' where `code` = 'EUR'");
+    
+    $lC_Database->simpleQuery("UPDATE `" . $pf . "currencies` SET `symbol_left` = '&pound;' where `code` = 'GBP'");
+    parent::log("Database Update: UPDATE `" . $pf . "currencies` SET `symbol_left` = '&pound;' where `code` = 'GBP'"); 
+    
+    // default values update
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "orders_status_history` ADD `administrators_id` INT( 11 ) NOT NULL DEFAULT '0' AFTER `comments`");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "orders_status_history` ADD `administrators_id` INT( 11 ) NOT NULL DEFAULT '0' AFTER `comments`");
+    
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "administrators` CHANGE `first_name` `first_name` VARCHAR(64) NOT NULL DEFAULT '', CHANGE `last_name` `last_name` VARCHAR(64) NOT NULL DEFAULT '', CHANGE `image` `image` VARCHAR(255) NOT NULL DEFAULT '', CHANGE `access_group_id` `access_group_id` INT(11) NOT NULL DEFAULT '0', CHANGE `verify_key` `verify_key` VARCHAR(64) NOT NULL DEFAULT '';");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "administrators` CHANGE `first_name` `first_name` VARCHAR(64) NOT NULL DEFAULT '', CHANGE `last_name` `last_name` VARCHAR(64) NOT NULL DEFAULT '', CHANGE `image` `image` VARCHAR(255) NOT NULL DEFAULT '', CHANGE `access_group_id` `access_group_id` INT(11) NOT NULL DEFAULT '0', CHANGE `verify_key` `verify_key` VARCHAR(64) NOT NULL DEFAULT '';");
+
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "administrators_access` CHANGE `administrators_id` `administrators_id` INT(11) NOT NULL DEFAULT '0', CHANGE `administrators_groups_id` `administrators_groups_id` INT(11) NOT NULL DEFAULT '0', CHANGE `module` `module` VARCHAR(255) NOT NULL DEFAULT '', CHANGE `level` `level` INT(11) NOT NULL DEFAULT '0';");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "administrators_access` CHANGE `administrators_id` `administrators_id` INT(11) NOT NULL DEFAULT '0', CHANGE `administrators_groups_id` `administrators_groups_id` INT(11) NOT NULL DEFAULT '0', CHANGE `module` `module` VARCHAR(255) NOT NULL DEFAULT '', CHANGE `level` `level` INT(11) NOT NULL DEFAULT '0';");
+
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "banners_history` CHANGE `banners_id` `banners_id` INT(11) NOT NULL DEFAULT '0', CHANGE `banners_shown` `banners_shown` INT(11) NOT NULL DEFAULT '0', CHANGE `banners_clicked` `banners_clicked` INT(11) NOT NULL DEFAULT '0';");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "banners_history` CHANGE `banners_id` `banners_id` INT(11) NOT NULL DEFAULT '0', CHANGE `banners_shown` `banners_shown` INT(11) NOT NULL DEFAULT '0', CHANGE `banners_clicked` `banners_clicked` INT(11) NOT NULL DEFAULT '0';");
+
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "branding` CHANGE `homepage_text` `homepage_text` VARCHAR(20000) NOT NULL DEFAULT '', CHANGE `slogan` `slogan` VARCHAR(256) NOT NULL DEFAULT '', CHANGE `meta_description` `meta_description` VARCHAR(250) NOT NULL DEFAULT '', CHANGE `meta_keywords` `meta_keywords` VARCHAR(128) NOT NULL DEFAULT '', CHANGE `meta_title` `meta_title` VARCHAR(128) NOT NULL DEFAULT '', CHANGE `footer_text` `footer_text` VARCHAR(256) NOT NULL DEFAULT '';");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "branding` CHANGE `homepage_text` `homepage_text` VARCHAR(20000) NOT NULL DEFAULT '', CHANGE `slogan` `slogan` VARCHAR(256) NOT NULL DEFAULT '', CHANGE `meta_description` `meta_description` VARCHAR(250) NOT NULL DEFAULT '', CHANGE `meta_keywords` `meta_keywords` VARCHAR(128) NOT NULL DEFAULT '', CHANGE `meta_title` `meta_title` VARCHAR(128) NOT NULL DEFAULT '', CHANGE `footer_text` `footer_text` VARCHAR(256) NOT NULL DEFAULT '';");
+
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "branding_data` CHANGE `site_image` `site_image` VARCHAR(128) NOT NULL DEFAULT '', CHANGE `chat_code` `chat_code` VARCHAR(8192) NOT NULL DEFAULT '', CHANGE `support_phone` `support_phone` VARCHAR(16) NOT NULL DEFAULT '', CHANGE `support_email` `support_email` VARCHAR(128) NOT NULL DEFAULT '', CHANGE `sales_phone` `sales_phone` VARCHAR(16) NOT NULL DEFAULT '', CHANGE `sales_email` `sales_email` VARCHAR(128) NOT NULL DEFAULT '', CHANGE `og_image` `og_image` VARCHAR(128) NOT NULL DEFAULT '', CHANGE `meta_delimeter` `meta_delimeter` VARCHAR(128) NOT NULL DEFAULT '';");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "branding_data` CHANGE `site_image` `site_image` VARCHAR(128) NOT NULL DEFAULT '', CHANGE `chat_code` `chat_code` VARCHAR(8192) NOT NULL DEFAULT '', CHANGE `support_phone` `support_phone` VARCHAR(16) NOT NULL DEFAULT '', CHANGE `support_email` `support_email` VARCHAR(128) NOT NULL DEFAULT '', CHANGE `sales_phone` `sales_phone` VARCHAR(16) NOT NULL DEFAULT '', CHANGE `sales_email` `sales_email` VARCHAR(128) NOT NULL DEFAULT '', CHANGE `og_image` `og_image` VARCHAR(128) NOT NULL DEFAULT '', CHANGE `meta_delimeter` `meta_delimeter` VARCHAR(128) NOT NULL DEFAULT '';");
+
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "categories` CHANGE `parent_id` `parent_id` INT(11) NOT NULL DEFAULT '0', CHANGE `categories_link_target` `categories_link_target` TINYINT(1) NULL DEFAULT '0', CHANGE `categories_visibility_nav` `categories_visibility_nav` TINYINT(1) NULL DEFAULT '0';");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "categories` CHANGE `parent_id` `parent_id` INT(11) NOT NULL DEFAULT '0', CHANGE `categories_link_target` `categories_link_target` TINYINT(1) NULL DEFAULT '0', CHANGE `categories_visibility_nav` `categories_visibility_nav` TINYINT(1) NULL DEFAULT '0';");
+
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "coupons` CHANGE `uses_per_coupon` `uses_per_coupon` INT(11) NOT NULL DEFAULT '0', CHANGE `uses_per_customer` `uses_per_customer` INT(11) NOT NULL DEFAULT '0', CHANGE `sale_exclude` `sale_exclude` TINYINT(1) NOT NULL DEFAULT '0';");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "coupons` CHANGE `uses_per_coupon` `uses_per_coupon` INT(11) NOT NULL DEFAULT '0', CHANGE `uses_per_customer` `uses_per_customer` INT(11) NOT NULL DEFAULT '0', CHANGE `sale_exclude` `sale_exclude` TINYINT(1) NOT NULL DEFAULT '0';");
+
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "coupons_description` CHANGE `coupons_id` `coupons_id` INT(11) NOT NULL DEFAULT '0', CHANGE `name` `name` VARCHAR(1024) NOT NULL DEFAULT '';");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "coupons_description` CHANGE `coupons_id` `coupons_id` INT(11) NOT NULL DEFAULT '0', CHANGE `name` `name` VARCHAR(1024) NOT NULL DEFAULT '';");
+
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "coupons_redeemed` CHANGE `coupons_id` `coupons_id` INT(11) NOT NULL DEFAULT '0', CHANGE `customers_id` `customers_id` INT(11) NOT NULL DEFAULT '0', CHANGE `redeem_ip` `redeem_ip` VARCHAR(32) NOT NULL DEFAULT '', CHANGE `order_id` `order_id` INT(11) NOT NULL DEFAULT '0';");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "coupons_redeemed` CHANGE `coupons_id` `coupons_id` INT(11) NOT NULL DEFAULT '0', CHANGE `customers_id` `customers_id` INT(11) NOT NULL DEFAULT '0', CHANGE `redeem_ip` `redeem_ip` VARCHAR(32) NOT NULL DEFAULT '', CHANGE `order_id` `order_id` INT(11) NOT NULL DEFAULT '0';");
+
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "featured_products` CHANGE `products_id` `products_id` INT(11) NOT NULL DEFAULT '0';");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "featured_products` CHANGE `products_id` `products_id` INT(11) NOT NULL DEFAULT '0';");
+
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "manufacturers_info` CHANGE `url_clicked` `url_clicked` INT(11) NOT NULL DEFAULT '0';");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "manufacturers_info` CHANGE `url_clicked` `url_clicked` INT(11) NOT NULL DEFAULT '0';");
+
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "orders_status_history` CHANGE `administrators_id` `administrators_id` INT(11) NOT NULL DEFAULT '0';");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "orders_status_history` CHANGE `administrators_id` `administrators_id` INT(11) NOT NULL DEFAULT '0';");
+
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "products` CHANGE `parent_id` `parent_id` INT(11) NULL DEFAULT '0', CHANGE `products_quantity` `products_quantity` INT(11) NOT NULL DEFAULT '0', CHANGE `products_weight_class` `products_weight_class` INT(11) NOT NULL DEFAULT '0', CHANGE `products_status` `products_status` TINYINT(1) NOT NULL DEFAULT '0', CHANGE `products_tax_class_id` `products_tax_class_id` INT(11) NOT NULL DEFAULT '0', CHANGE `products_ordered` `products_ordered` INT(11) NOT NULL DEFAULT '0';");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "products` CHANGE `parent_id` `parent_id` INT(11) NULL DEFAULT '0', CHANGE `products_quantity` `products_quantity` INT(11) NOT NULL DEFAULT '0', CHANGE `products_weight_class` `products_weight_class` INT(11) NOT NULL DEFAULT '0', CHANGE `products_status` `products_status` TINYINT(1) NOT NULL DEFAULT '0', CHANGE `products_tax_class_id` `products_tax_class_id` INT(11) NOT NULL DEFAULT '0', CHANGE `products_ordered` `products_ordered` INT(11) NOT NULL DEFAULT '0';");
+
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "products_simple_options` CHANGE `sort_order` `sort_order` INT(11) NOT NULL DEFAULT '0';");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "products_simple_options` CHANGE `sort_order` `sort_order` INT(11) NOT NULL DEFAULT '0';");
+
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "products_simple_options_values` CHANGE `sort_order` `sort_order` INT(11) NOT NULL DEFAULT '0';");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "products_simple_options_values` CHANGE `sort_order` `sort_order` INT(11) NOT NULL DEFAULT '0';");
+
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "reviews` CHANGE `products_id` `products_id` INT(11) NOT NULL DEFAULT '0', CHANGE `reviews_read` `reviews_read` INT(11) NOT NULL DEFAULT '0', CHANGE `reviews_status` `reviews_status` TINYINT(1) NOT NULL DEFAULT '0';");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "reviews` CHANGE `products_id` `products_id` INT(11) NOT NULL DEFAULT '0', CHANGE `reviews_read` `reviews_read` INT(11) NOT NULL DEFAULT '0', CHANGE `reviews_status` `reviews_status` TINYINT(1) NOT NULL DEFAULT '0';");
+
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "product_attributes` ADD INDEX(`idx_pa_products_id`);");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "product_attributes` ADD INDEX(`idx_pa_products_id`);");
+
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "updates_log` CHANGE `action` `action` VARCHAR(32) NOT NULL DEFAULT '', CHANGE `result` `result` VARCHAR(128) NOT NULL DEFAULT '', CHANGE `user` `user` VARCHAR(64) NOT NULL DEFAULT '';");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "updates_log` CHANGE `action` `action` VARCHAR(32) NOT NULL DEFAULT '', CHANGE `result` `result` VARCHAR(128) NOT NULL DEFAULT '', CHANGE `user` `user` VARCHAR(64) NOT NULL DEFAULT '';");
+    
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "branding_data` ADD COLUMN `custom_css` text NOT NULL;");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "branding_data` ADD COLUMN `custom_css` text NOT NULL;");
+       
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "products_variants_groups` ADD `visual` VARCHAR( 1024 ) DEFAULT NULL AFTER `title`");  
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "products_variants_groups` ADD `visual` VARCHAR( 1024 ) DEFAULT NULL AFTER `title`");  
       
+    $lC_Database->simpleQuery("UPDATE `" . $pf . "currencies` SET `symbol_left` = '&euro;' where `code` = 'EUR'");
+    parent::log("Database Update: UPDATE `" . $pf . "currencies` SET `symbol_left` = '&euro;' where `code` = 'EUR'");
+    
+    $lC_Database->simpleQuery("UPDATE `" . $pf . "currencies` SET `symbol_left` = '&pound;' where `code` = 'GBP'");
+    parent::log("Database Update: UPDATE `" . $pf . "currencies` SET `symbol_left` = '&pound;' where `code` = 'GBP'");      
   }
 }  
 ?>

@@ -14,7 +14,7 @@
 
       function setMaintenanceMode(s) {
         if (s == 'on') {
-          $("#loaded7").mask('<span style="font-size:2em !important;"><?php echo $lC_Language->get('text_site_maintenance_message'); ?></span>');
+          $("#loaded7").mask('<span style="font-size:2em !important;"><?php echo addslashes($lC_Language->get('text_site_maintenance_message')); ?></span>');
           $('.loadmask-msg').css({'top':'200px'});
         } else {
           $("body").unmask();
@@ -46,7 +46,7 @@
         if (defined('DISABLE_ADD_TO_CART') && DISABLE_ADD_TO_CART == 1 && ($lC_Template->getModule() == 'products' || $lC_Template->getModule() == 'reviews') ) {
           foreach ($_GET as $key => $value) {
             $keys = end(explode("/", $key));
-            if ( (preg_match('/^[0-9]+(#?([0-9]+:?[0-9]+)+(;?([0-9]+:?[0-9]+)+)*)*$/', $key) || preg_match('/^[a-zA-Z0-9 -_]*$/', $key)) && ($key != $lC_Session->getName()) && ($key != 'cPath') ) {
+            if ( (preg_match('/^[0-9]+(#?([0-9]+:?[0-9]+)+(;?([0-9]+:?[0-9]+)+)*)*$/', $key) || preg_match('/^[a-zA-Z0-9 -_]*$/', $key)) && ($key != $lC_Session->getName()) && ($key != 'cPath') && ($key != 'currency') && ($key != 'language') ) {
               $id = $key;
             }
           }
@@ -54,14 +54,14 @@
             include_once($lC_Vqmod->modCheck('templates/' . $lC_Template->getCode() . '/classes/output.php'));
             if (lC_Template_output::getProductsStock($id) < 1) {
             ?>
-            $(":contains('<?php echo $lC_Language->get('button_buy_now'); ?>')").closest('button').removeClass("btn-success").addClass("btn-default").addClass("disabled").html('<?php echo $lC_Language->get('out_of_stock'); ?>');
+            $(":contains('<?php echo addslashes($lC_Language->get('button_buy_now')); ?>')").closest('button').removeClass("btn-success").addClass("btn-default").addClass("disabled").html('<?php echo addslashes($lC_Language->get('out_of_stock')); ?>');
             $("input[name='quantity']").hide().parent().hide();
             <?php
             }
           }
         }
       ?>
-      $(":contains('<?php echo $lC_Language->get('out_of_stock'); ?>')").closest('button').removeClass("btn-success").addClass("btn-default");
+      $(":contains('<?php echo addslashes($lC_Language->get('out_of_stock')); ?>')").closest('button').removeClass("btn-success").addClass("btn-default");
 
   });
 
@@ -144,21 +144,21 @@
         if (data.rpcStatus != 1) {
           $('#coupon_code').val('');
           if (data.rpcStatus == -2) {
-            alert('<?php echo $lC_Language->get('ms_error_coupon_not_found'); ?>');
+            alert('<?php echo addslashes($lC_Language->get('ms_error_coupon_not_found')); ?>');
           } else if (data.rpcStatus == -3) {
-            alert('<?php echo $lC_Language->get('ms_error_coupon_not_valid'); ?>');
+            alert('<?php echo addslashes($lC_Language->get('ms_error_coupon_not_valid')); ?>');
           } else if (data.rpcStatus == -4) {
-            alert('<?php echo $lC_Language->get('ms_error_coupon_purchase_not_over_1'); ?> ' + data.msg + ' <?php echo $lC_Language->get('ms_error_coupon_purchase_not_over_2'); ?>');
+            alert('<?php echo addslashes($lC_Language->get('ms_error_coupon_purchase_not_over_1')); ?> ' + data.msg + ' <?php echo addslashes($lC_Language->get('ms_error_coupon_purchase_not_over_2')); ?>');
           } else if (data.rpcStatus == -5) {
-            alert('<?php echo $lC_Language->get('ms_error_coupon_start_date'); ?> ' + data.msg + '. <?php echo $lC_Language->get('ms_error_coupon_check_coupon'); ?>');                    
+            alert('<?php echo addslashes($lC_Language->get('ms_error_coupon_start_date')); ?> ' + data.msg + '. <?php echo addslashes($lC_Language->get('ms_error_coupon_check_coupon')); ?>');                    
           } else if (data.rpcStatus == -6) {
-            alert('<?php echo $lC_Language->get('ms_error_coupon_expires_date'); ?> ' + data.msg + '. <?php echo $lC_Language->get('ms_error_coupon_check_coupon'); ?>');
+            alert('<?php echo addslashes($lC_Language->get('ms_error_coupon_expires_date')); ?> ' + data.msg + '. <?php echo addslashes($lC_Language->get('ms_error_coupon_check_coupon')); ?>');
           } else if (data.rpcStatus == -7) {
-            alert('<?php echo $lC_Language->get('ms_error_coupon_max_uses'); ?>');
+            alert('<?php echo addslashes($lC_Language->get('ms_error_coupon_max_uses')); ?>');
           } else if (data.rpcStatus == -8) {
-            alert('<?php echo $lC_Language->get('ms_error_coupon_max_uses'); ?>');                    
+            alert('<?php echo addslashes($lC_Language->get('ms_error_coupon_max_uses')); ?>');                    
           } else {
-            alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
+            alert('<?php echo addslashes($lC_Language->get('ms_error_action_not_performed')); ?>');
           }       
           return false;
         }
@@ -173,7 +173,7 @@
     $.getJSON(jsonLink.replace('CODE', code).split('amp;').join(''),
       function (data) {
         if (data.rpcStatus != 1) {
-          alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
+          alert('<?php echo addslashes($lC_Language->get('ms_error_action_not_performed')); ?>');
           return false;
         }
         window.location.href = window.location.href;
@@ -260,16 +260,15 @@
   }
   //QR Code JSON
   $("#qrcode-tooltip").click(function(){
-      var jsonLink = '<?php echo lc_href_link('rpc.php','action=getqrcode'); ?>'
-      $.getJSON(jsonLink,
-        function (data) {
-          if (data.rpcStatus != 1) {
-            $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
-            return false;
-          } 
-          $('#ShowQRCode').html(data.html);
-          $('#qr-message').show('500');
-        }
-      );
+    var jsonLink = '<?php echo lc_href_link('rpc.php', 'index&action=getqrcode', 'AUTO'); ?>';   
+    $.getJSON(jsonLink,
+      function (data) {
+        if (data.rpcStatus != 1) {
+          return false;
+        } 
+        $('#ShowQRCode').html(data.html);
+        $('#qr-message').show('500');
+      }
+    );
   })
 </script>

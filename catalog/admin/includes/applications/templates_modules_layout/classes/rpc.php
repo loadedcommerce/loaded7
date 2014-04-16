@@ -10,7 +10,7 @@
 */
 global $lC_Vqmod;
 
-require($lC_Vqmod->modCheck('includes/applications/templates_modules_layout/classes/templates_modules_layout.php'));
+require_once($lC_Vqmod->modCheck('includes/applications/templates_modules_layout/classes/templates_modules_layout.php'));
 
 class lC_Templates_modules_layout_Admin_rpc {
  /*

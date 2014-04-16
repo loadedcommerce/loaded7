@@ -633,7 +633,7 @@ class lC_Order {
         $email_order .= $lC_Language->get('email_order_payment_method') . "\n" .
                         $lC_Language->get('email_order_separator') . "\n";
         
-        $email_order .= $lC_ShoppingCart->getBillingMethod('title') . "\n\n";
+        $email_order .= $Qorder->value('payment_method') . "\n\n";
         
         /*if (isset($this->email_footer)) {
           $email_order .= $this->email_footer . "\n\n";
