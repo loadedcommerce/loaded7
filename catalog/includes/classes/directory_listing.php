@@ -123,7 +123,7 @@ class lC_DirectoryListing {
             }
           } elseif (is_dir($dir->path . '/' . $entry)) {
             if ($this->_include_directories === true) {
-              $entry_name= $entry;
+              $entry_name = $entry;
 
               if ($this->_add_directory_to_filename === true) {
                 if ($dir->path != $this->_directory) {
