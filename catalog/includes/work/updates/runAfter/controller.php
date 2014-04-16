@@ -275,7 +275,44 @@ class lC_Updates_Admin_run_after extends lC_Updates_Admin {
        
     $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "products_variants_groups` ADD `visual` VARCHAR( 1024 ) DEFAULT NULL AFTER `title`");  
     parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "products_variants_groups` ADD `visual` VARCHAR( 1024 ) DEFAULT NULL AFTER `title`");  
-      
+    
+    // missing weight class rules
+    $lC_Database->simpleQuery("INSERT IGNORE INTO `" . $pf . "weight_classes_rules` (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES (1, 2, 0.0010)");
+    parent::log("Database Update: INSERT IGNORE INTO `" . $pf . "weight_classes_rules` (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES (1, 2, 0.0010)");
+    
+    $lC_Database->simpleQuery("INSERT IGNORE INTO `" . $pf . "weight_classes_rules` (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES (1, 3, 0.0352)");
+    parent::log("Database Update: INSERT IGNORE INTO `" . $pf . "weight_classes_rules` (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES (1, 3, 0.0352)");
+    
+    $lC_Database->simpleQuery("INSERT IGNORE INTO `" . $pf . "weight_classes_rules` (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES (1, 4, 0.0022)");
+    parent::log("Database Update: INSERT IGNORE INTO `" . $pf . "weight_classes_rules` (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES (1, 4, 0.0022)");
+    
+    $lC_Database->simpleQuery("INSERT IGNORE INTO `" . $pf . "weight_classes_rules` (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES (2, 1, 1000.0000)");
+    parent::log("Database Update: INSERT IGNORE INTO `" . $pf . "weight_classes_rules` (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES (2, 1, 1000.0000)");
+    
+    $lC_Database->simpleQuery("INSERT IGNORE INTO `" . $pf . "weight_classes_rules` (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES (2, 3, 35.2739)");
+    parent::log("Database Update: INSERT IGNORE INTO `" . $pf . "weight_classes_rules` (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES (2, 3, 35.2739)");
+    
+    $lC_Database->simpleQuery("INSERT IGNORE INTO `" . $pf . "weight_classes_rules` (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES (2, 4, 2.2046)");
+    parent::log("Database Update: INSERT IGNORE INTO `" . $pf . "weight_classes_rules` (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES (2, 4, 2.2046)");
+    
+    $lC_Database->simpleQuery("INSERT IGNORE INTO `" . $pf . "weight_classes_rules` (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES (3, 1, 28.3495)");
+    parent::log("Database Update: INSERT IGNORE INTO `" . $pf . "weight_classes_rules` (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES (3, 1, 28.3495)");
+    
+    $lC_Database->simpleQuery("INSERT IGNORE INTO `" . $pf . "weight_classes_rules` (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES (3, 2, 0.0283)");
+    parent::log("Database Update: INSERT IGNORE INTO `" . $pf . "weight_classes_rules` (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES (3, 2, 0.0283)");
+    
+    $lC_Database->simpleQuery("INSERT IGNORE INTO `" . $pf . "weight_classes_rules` (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES (3, 4, 0.0625)");
+    parent::log("Database Update: INSERT IGNORE INTO `" . $pf . "weight_classes_rules` (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES (3, 4, 0.0625)");
+    
+    $lC_Database->simpleQuery("INSERT IGNORE INTO `" . $pf . "weight_classes_rules` (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES (4, 1, 453.5923)");
+    parent::log("Database Update: INSERT IGNORE INTO `" . $pf . "weight_classes_rules` (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES (4, 1, 453.5923)");
+    
+    $lC_Database->simpleQuery("INSERT IGNORE INTO `" . $pf . "weight_classes_rules` (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES (4, 2, 0.4535)");
+    parent::log("Database Update: INSERT IGNORE INTO `" . $pf . "weight_classes_rules` (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES (4, 2, 0.4535)");
+    
+    $lC_Database->simpleQuery("INSERT IGNORE INTO `" . $pf . "weight_classes_rules` (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES (4, 3, 16.0000)");
+    parent::log("Database Update: INSERT IGNORE INTO `" . $pf . "weight_classes_rules` (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES (4, 3, 16.0000)");
+  
   }
 }  
 ?>
