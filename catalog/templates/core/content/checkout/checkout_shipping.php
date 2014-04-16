@@ -39,7 +39,12 @@
                 </div>
                 <div class="well">
                   <?php 
-                  foreach ($lC_ShoppingCart->getOrderTotals() as $module) {   
+                  foreach ($lC_ShoppingCart->getOrderTotals() as $module) { 
+                    if(count($lC_Shipping->getQuotes()) == 1 && $module['code'] == 'shipping') {
+                      $shipping_tmp = $lC_Shipping->getQuotes();
+                      $module['title'] = $shipping_tmp[0]['methods'][0]['title'];
+                      $module['text'] = $lC_Currencies->displayPrice($shipping_tmp[0]['methods'][0]['cost'],$shipping_tmp[0]['tax_class_id']);
+                    }
                     ?>
                     <div class="clearfix">
                       <span class="pull-left ot-<?php echo strtolower(str_replace('_', '-', $module['code'])); ?>"><?php echo strip_tags($module['title']); ?></span>
