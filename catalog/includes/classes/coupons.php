@@ -45,8 +45,9 @@ class lC_Coupons {
 
         $lC_ShoppingCart->refresh(true);
         $this->_refreshCouponOrderTotals();
+        $_SESSION['coupon_msg'] = "Applied coupon ".$name . ' (' . $code . ') with '. $discount ;
 
-        return array('rpcStatus' => 1);                                              
+        return array('rpcStatus' => 1 );                                              
       } else {
         // coupon not valid
         return $valid;
