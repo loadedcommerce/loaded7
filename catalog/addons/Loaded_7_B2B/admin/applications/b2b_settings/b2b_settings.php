@@ -28,7 +28,6 @@ class lC_Application_B2b_settings extends lC_Template_Admin {
     
     switch ($action) {
       case 'save' :
-      
         $data = array('allow_self_register' => (isset($_POST['allow_self_register']) ? $_POST['allow_self_register'] : null),
                       'guest_catalog_access' => (isset($_POST['guest_catalog_access']) ? $_POST['guest_catalog_access'] : null));
                         

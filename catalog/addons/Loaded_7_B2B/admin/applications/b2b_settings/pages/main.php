@@ -55,8 +55,8 @@
                     <label for="allow_self_register" class="label allow-self-register"><?php echo $lC_Language->get('label_allow_self_registrations'); ?></label>
                     
                     <?php 
-                    $checked = ((is_object($b2bInfo) && $b2bInfo->get('B2B_SETTINGS_ALLOW_SELF_REGISTER') == 'on') ? 'checked="checked"' : '');
-                    echo lc_draw_checkbox_field('allow_self_register', ((is_object($b2bInfo) && $b2bInfo->get('B2B_SETTINGS_ALLOW_SELF_REGISTER') == 'on') ? 1 : 0), null, $checked . ' class="switch medium" data-text-on="' . strtoupper($lC_Language->get('button_yes')) . '" data-text-off="' . strtoupper($lC_Language->get('button_no')) . '"'); ?><span class="small margin-left"><?php echo $lC_Language->get('info_bubble_displays_create_account_form'); ?></span>                
+                    $checked = ((is_object($b2bInfo) && $b2bInfo->get('B2B_SETTINGS_ALLOW_SELF_REGISTER') == 'on') ? 'checked="checked" ' : '');
+                    echo lc_draw_checkbox_field('allow_self_register',null, null, $checked . 'class="switch medium" data-text-on="' . strtoupper($lC_Language->get('button_yes')) . '" data-text-off="' . strtoupper($lC_Language->get('button_no')) . '"'); ?><span class="small margin-left"><?php echo $lC_Language->get('info_bubble_displays_create_account_form'); ?></span>                
                   </p>
 
                   <p class="inline-medium-label button-height mid-margin-top">
@@ -124,7 +124,8 @@
             </div>
           </div>
         </div>
-      </div>
+      </div><div class="clear-both"></div>
+
     </form>    
      
   </div>
