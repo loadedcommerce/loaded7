@@ -25,7 +25,7 @@ class lC_Application_File_manager extends lC_Template_Admin {
   * Class constructor
   */
   function __construct() {
-    global $lC_Language;
+    global $lC_Language, $breadcrumb_string;
 
     $this->_page_title = $lC_Language->get('heading_title');
 
@@ -103,6 +103,17 @@ class lC_Application_File_manager extends lC_Template_Admin {
           break;
       }
     }
+    
+    // setup the breadcrumb
+    $breadcrumb_array = array(lc_link_object(lc_href_link_admin(FILENAME_DEFAULT, $this->_module), $lC_Language->get('text_top')));
+    //foreach ( $lC_CategoryTree->getPathArray($current_category_id) as $category ) {
+    //  $breadcrumb_array[] = lc_link_object(lc_href_link_admin(FILENAME_DEFAULT, $this->_module . '=' . $category['id']), $category['name']);
+    //} 
+    $breadcrumb_string = '<ul>';
+    foreach ($breadcrumb_array as $key => $value) {
+      $breadcrumb_string .= '<li>' . $value . '</li>';
+    }  
+    $breadcrumb_string .= '</ul>';
   }
 }
 ?>
