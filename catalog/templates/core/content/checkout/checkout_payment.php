@@ -14,6 +14,10 @@
   <div class="col-sm-12 col-lg-12 large-margin-bottom">  
     <h1 class="no-margin-top"><?php echo $lC_Language->get('text_checkout'); ?></h1>
     <?php 
+    if(isset($_SESSION['coupon_msg']) && $_SESSION['coupon_msg'] != '') {
+      $lC_MessageStack->add('checkout_payment', $_SESSION['coupon_msg'], 'success');
+      unset($_SESSION['coupon_msg']);
+    }
     if ( $lC_MessageStack->size('checkout_payment') > 0 ) echo '<div class="message-stack-container alert alert-danger small-margin-bottom">' . $lC_MessageStack->get('checkout_payment') . '</div>' . "\n"; 
     ?>
     <form name="checkout_payment" id="checkout_payment" action="<?php echo lc_href_link(FILENAME_CHECKOUT, 'confirmation', 'SSL'); ?>" method="post" onsubmit="return check_form();">

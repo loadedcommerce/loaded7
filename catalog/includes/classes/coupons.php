@@ -27,7 +27,7 @@ class lC_Coupons {
   
   // public methods
   public function addEntry($code) {
-    global $lC_Coupons, $lC_ShoppingCart, $lC_OrderTotal;
+    global $lC_Coupons, $lC_ShoppingCart, $lC_OrderTotal, $lC_Language;
     
     $cInfo = $lC_Coupons->_getData($code);
          
@@ -45,7 +45,9 @@ class lC_Coupons {
 
         $lC_ShoppingCart->refresh(true);
         $this->_refreshCouponOrderTotals();
-        $_SESSION['coupon_msg'] = "Applied coupon ".$name . ' (' . $code . ') with '. $discount ;
+        //$_SESSION['coupon_msg'] = "Applied coupon ".$name . ' (' . $code . ') with '. $discount ;
+
+        $_SESSION['coupon_msg'] = $lC_Language->get('error_reedeemed_amount');      
 
         return array('rpcStatus' => 1 );                                              
       } else {
