@@ -40,10 +40,14 @@ $(document).ready(function() {
     $('.on-mobile').show();
     $('.selectContainer').hide();
   }
+  
   var error = '<?php echo $_SESSION['error']; ?>';
   if (error) {
     var errmsg = '<?php echo $_SESSION['errmsg']; ?>';
     $.modal.alert(errmsg);
   }
+  
+  // breadcrumb last li css
+  $(".fm-breadcrumb li:last-child").addClass("last");
 });
 </script>
