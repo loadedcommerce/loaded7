@@ -12,6 +12,7 @@ global $lC_Vqmod;
 
 require_once($lC_Vqmod->modCheck('includes/applications/customer_groups/classes/customer_groups.php'));
 
+// VQMOD-hookpoint; DO NOT MODIFY OR REMOVE THE LINE BELOW
 class lC_Customer_groups_Admin_rpc {
  /*
   * Returns the customer groups datatable data for listings

@@ -59,7 +59,9 @@ class lC_Customer_groups_Admin {
   * @return array
   */
   public static function getFormData($id = null, $edit = false) {
-    global $lC_Database, $lC_Language;
+    global $lC_Database, $lC_Language, $lC_Addons;
+    
+    $lC_Language->loadIniFile('customer_groups.php');
 
     $result = array();
     if (isset($id) && $id != null) {
@@ -132,7 +134,7 @@ class lC_Customer_groups_Admin {
   */
   public static function save($id = null, $data, $default = false) {   
     global $lC_Database, $lC_Language;
-
+    
     $error = false;
 
     $lC_Database->startTransaction();
@@ -282,5 +284,6 @@ class lC_Customer_groups_Admin {
 
     return $result;
   }
+  
 }
 ?>
