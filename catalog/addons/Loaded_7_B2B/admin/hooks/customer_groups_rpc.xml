@@ -12,6 +12,10 @@
     <operation info="Use B2B Class">
       <search position="replace"><![CDATA[$result = lC_Customer_groups_Admin::getFormData($_GET['cgid'], $edit);]]></search>         
       <add><![CDATA[$result = lC_Customer_groups_b2b_Admin::getFormData($_GET['cgid'], $edit);]]></add>
-    </operation>          
+    </operation>  
+    <operation info="Use B2B Class">
+      <search position="replace"><![CDATA[$saved = lC_Customer_groups_Admin::save($_GET['cgid'], $_GET, $default);]]></search>         
+      <add><![CDATA[$saved = lC_Customer_groups_b2b_Admin::save($_GET['cgid'], $_GET, $default);]]></add>
+    </operation>         
   </file> 
 </modification>

@@ -34,7 +34,6 @@ function newGroup() {
         return false;
       }
       var extraFormHtml = ((data.extraFormHtml != undefined) ? data.extraFormHtml : '');
-      
       $.modal({
           content: '<div id="newGroup">'+
                    '  <div id="newGroupForm">'+
@@ -46,12 +45,11 @@ function newGroup() {
                    '        <span id="newGroupNamesContainer"></span>'+
                    '      </div>'+
                    '      <div class="field-drop button-height black-inputs">'+
-                   '        <label for="baseline" class="label" style="width:63%;"><?php echo $lC_Language->get('field_baseline_discount'); ?></label>'+
+                   '        <label for="baseline" class="label" style="width:55%;"><?php echo $lC_Language->get('field_baseline_discount'); ?></label>'+
                    '        <div class="inputs" style="width:28%">'+
-                   '          <span class="mid-margin-right float-right strong">%</span><?php echo lc_draw_input_field('baseline', '0.00', 'class="input-unstyled small-margin-left strong" style="width:50%;"'); ?>'+
+                   '          <span class="mid-margin-right float-right strong">%</span><?php echo lc_draw_input_field('baseline', '0.00', 'onfocus="this.select();" class="input-unstyled small-margin-left strong" style="width:50%;"'); ?>'+
                    '        </div>'+
                    '      </div>'+ extraFormHtml +
-                   
                    '    </form>'+
                    '    </fieldset>'+
                    '  </div>'+
