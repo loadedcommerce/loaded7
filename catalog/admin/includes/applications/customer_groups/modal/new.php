@@ -22,9 +22,11 @@ function newGroup() {
     $.modal.alert('<?php echo $lC_Language->get('ms_error_no_access');?>');
     return false;
   }
+  mask();
   var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=getFormData'); ?>'
   $.getJSON(jsonLink,
     function (data) {
+      unmask();
       if (data.rpcStatus == -10) { // no session
         var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
         $(location).attr('href',url);
@@ -78,10 +80,12 @@ function newGroup() {
                   }
                 }).form();
                 if (bValid) {
+                  mask();
                   var nvp = $("#osNew").serialize();
                   var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=saveGroup&BATCH'); ?>'
                   $.getJSON(jsonLink.replace('BATCH', nvp),
                     function (data) {
+                      unmask();
                       if (data.rpcStatus == -10) { // no session
                         var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
                         $(location).attr('href',url);
