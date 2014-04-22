@@ -37,9 +37,9 @@ class lC_Content_new_products extends lC_Modules {
 
     $data = array();
 
-    if ( (MODULE_CONTENT_NEW_PRODUCTS_CACHE > 0) && $lC_Cache->read('new_products-' . $lC_Language->getCode() . '-' . $lC_Currencies->getCode() . '-' . $current_category_id, MODULE_CONTENT_NEW_PRODUCTS_CACHE) ) {
-      $data = $lC_Cache->getCache();
-    } else {
+  //  if ( (MODULE_CONTENT_NEW_PRODUCTS_CACHE > 0) && $lC_Cache->read('new_products-' . $lC_Language->getCode() . '-' . $lC_Currencies->getCode() . '-' . $current_category_id, MODULE_CONTENT_NEW_PRODUCTS_CACHE) ) {
+  //    $data = $lC_Cache->getCache();
+  //  } else {
       if ( $current_category_id < 1 ) {
         $Qproducts = $lC_Database->query('select products_id from :table_products where products_status = :products_status and parent_id = :parent_id order by products_date_added desc limit :max_display_new_products');
       } else {
@@ -56,6 +56,10 @@ class lC_Content_new_products extends lC_Modules {
       $Qproducts->execute();
 
       while ( $Qproducts->next() ) {
+
+global $lC_Customer; 
+if (!lC_Product_b2b::hasProductAccess($Qproducts->valueInt('products_id'), $lC_Customer->getCustomerGroup($lC_Customer->getID()))) continue;        
+
         $lC_Product = new lC_Product($Qproducts->valueInt('products_id'));
 
         $data[$lC_Product->getID()] = $lC_Product->getData();
@@ -64,7 +68,7 @@ class lC_Content_new_products extends lC_Modules {
       }
 
       $lC_Cache->write($data);
-    }
+ //   }
 
     if ( !empty($data) ) {
 
@@ -80,6 +84,7 @@ class lC_Content_new_products extends lC_Modules {
       }
     }
   }
+  
  /*
   * Install the module
   *

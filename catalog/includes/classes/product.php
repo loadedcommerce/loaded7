@@ -15,7 +15,7 @@ class lC_Product {
 
     if ( !empty($id) ) {
       if ( is_numeric($id) ) {
-        $Qproduct = $lC_Database->query('select products_id as id, parent_id, products_quantity as quantity, products_price as price, products_model as model, products_tax_class_id as tax_class_id, products_weight as weight, products_weight_class as weight_class_id, products_date_added as date_added, manufacturers_id, has_children, is_subproduct from :table_products where products_id = :products_id and products_status = :products_status');
+        $Qproduct = $lC_Database->query('select products_id as id, parent_id, products_quantity as quantity, products_price as price, products_model as model, products_tax_class_id as tax_class_id, products_weight as weight, products_weight_class as weight_class_id, products_date_added as date_added, manufacturers_id, has_children, is_subproduct, access_levels from :table_products where products_id = :products_id and products_status = :products_status');
         $Qproduct->bindTable(':table_products', TABLE_PRODUCTS);
         $Qproduct->bindInt(':products_id', $id);
         $Qproduct->bindInt(':products_status', 1);

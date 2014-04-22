@@ -10,6 +10,7 @@
 global $lC_Vqmod;
 
 include_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'addons/Loaded_7_Pro/controller.php'));
+include_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'addons/Loaded_7_B2B/classes/product.php'));
 
 class Loaded_7_B2B extends Loaded_7_Pro { 
   /*

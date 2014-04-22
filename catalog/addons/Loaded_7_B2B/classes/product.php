@@ -1,0 +1,61 @@
+<?php
+/**
+  @package    catalog::classes
+  @author     Loaded Commerce, LLC
+  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @copyright  Portions Copyright 2003 osCommerce
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: product.php v1.0 2013-08-08 datazen $
+*/
+global $lC_Vqmod;
+
+require_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/classes/product.php'));
+
+class lC_Product_b2b extends lC_Product {
+ /*
+  * Returns the datatable data for listings
+  *
+  * @access public
+  * @return array
+  */
+  public static function hasProductAccess($products_id, $customers_group_id) {
+    global $lC_Database;
+    
+    // get the access levels for the group
+    $Qcg = $lC_Database->query('select customers_access_levels from :table_customers_groups_data where customers_group_id = :customers_group_id limit 1');
+    $Qcg->bindTable(':table_customers_groups_data', TABLE_CUSTOMERS_GROUPS_DATA);
+    $Qcg->bindInt(':customers_group_id', $customers_group_id);
+    $Qcg->execute();
+          
+    $cg_access_levels = explode(';', $Qcg->value('customers_access_levels')); 
+    
+    $Qcg->freeResult();   
+    
+    // get the product access levels
+    $Qproduct = $lC_Database->query('select access_levels from :table_products where products_id = :products_id limit 1');
+    $Qproduct->bindTable(':table_products', TABLE_PRODUCTS);
+    $Qproduct->bindInt(':products_id', $products_id);
+    $Qproduct->execute();
+          
+    $product_access_levels = explode(';', $Qproduct->value('access_levels'));  
+    
+    $Qproduct->freeResult();  
+    
+    // check if product has access 
+    $valid = false;
+    foreach ($product_access_levels as $id) {
+      if ($id != '') {
+        if (in_array($id, $cg_access_levels)) {
+          $valid = true;
+          break;
+        } 
+      } else {
+        $valid = true;
+        break;
+      }
+    }
+
+    return $valid;
+  }  
+}
+?>
