@@ -313,6 +313,11 @@ class lC_Updates_Admin_run_after extends lC_Updates_Admin {
     $lC_Database->simpleQuery("INSERT IGNORE INTO `" . $pf . "weight_classes_rules` (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES (4, 3, 16.0000)");
     parent::log("Database Update: INSERT IGNORE INTO `" . $pf . "weight_classes_rules` (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES (4, 3, 16.0000)");
   
+    $lC_Database->simpleQuery("UPDATE `" . $pf . "currencies` SET `symbol_left` = '&euro;' where `code` = 'EUR'");
+    parent::log("Database Update: UPDATE `" . $pf . "currencies` SET `symbol_left` = '&euro;' where `code` = 'EUR'");
+    
+    $lC_Database->simpleQuery("UPDATE `" . $pf . "currencies` SET `symbol_left` = '&pound;' where `code` = 'GBP'");
+    parent::log("Database Update: UPDATE `" . $pf . "currencies` SET `symbol_left` = '&pound;' where `code` = 'GBP'");      
   }
 }  
 ?>
