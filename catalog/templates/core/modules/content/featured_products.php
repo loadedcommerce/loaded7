@@ -43,13 +43,13 @@ $(document).ready(function() {
              '    <div class="caption">' +
              '      <h3 style="line-height:1.1;">' + nameContent + '</h3>' +
              '      <p class="">' + descContent + '</p>' +
-             '      <div class="row">';
+             '      <div class="row pricing-row">';
     if (mediaType == 'desktop') {
       output += '        <div class="col-sm-6 col-lg-6">' +
                 '          <p class="lead small-margin-bottom">' + priceContent + '</p>' +
                 '        </div>';
     }
-    output += '        <div class="col-sm-6 col-lg-6 no-margin-left">' + buttonContent + '</div>' +
+    output += '        <div class="col-sm-6 col-lg-6 no-margin-left buy-btn-div">' + buttonContent + '</div>' +
               '      </div>' +
               '    </div>' +
               '  </div>' +
