@@ -5902,298 +5902,299 @@ class lC_LocalUpgrader extends lC_Upgrader {
                                   ); 
                                
               $languages[] = $language;
+              $cQry->freeResult();
             } 
           }
         }
       }        
       $sQry->freeResult();
-      $cQry->freeResult();
     }
     
     // END LOAD LANGUAGES FROM SOURCE DB
 
     // LOAD LANGUAGES TO TARGET DB
-      
-    foreach ($languages as $language) {
-      $tQry = $target_db->query('INSERT INTO :table_languages (languages_id, 
-                                                               name, 
-                                                               code, 
-                                                               locale, 
-                                                               charset, 
-                                                               date_format_short, 
-                                                               date_format_long, 
-                                                               time_format, 
-                                                               text_direction, 
-                                                               currencies_id, 
-                                                               numeric_separator_decimal, 
-                                                               numeric_separator_thousands, 
-                                                               parent_id, 
-                                                               sort_order) 
-                                                       VALUES (:languages_id, 
-                                                               :name, 
-                                                               :code, 
-                                                               :locale, 
-                                                               :charset, 
-                                                               :date_format_short, 
-                                                               :date_format_long, 
-                                                               :time_format, 
-                                                               :text_direction, 
-                                                               :currencies_id, 
-                                                               :numeric_separator_decimal, 
-                                                               :numeric_separator_thousands, 
-                                                               :parent_id, 
-                                                               :sort_order)');
-                                                                    
-      $tQry->bindTable(':table_languages', TABLE_LANGUAGES);
-      $tQry->bindInt  (':languages_id',                $language['languages_id']);
-      $tQry->bindValue(':name',                        $language['name']);
-      $tQry->bindValue(':code',                        $language['code']);
-      $tQry->bindValue(':locale',                      $language['locale']);
-      $tQry->bindValue(':charset',                     $language['charset']);
-      $tQry->bindValue(':date_format_short',           $language['date_format_short']);
-      $tQry->bindValue(':date_format_long',            $language['date_format_long']);
-      $tQry->bindValue(':time_format',                 $language['time_format']);
-      $tQry->bindValue(':text_direction',              $language['text_direction']);
-      $tQry->bindInt  (':currencies_id',               $language['currencies_id']);
-      $tQry->bindValue(':numeric_separator_decimal',   $language['numeric_separator_decimal']);
-      $tQry->bindValue(':numeric_separator_thousands', $language['numeric_separator_thousands']);
-      $tQry->bindInt  (':parent_id',                   $language['parent_id']);
-      $tQry->bindInt  (':sort_order',                  $language['sort_order']);
-      
-      $tQry->execute();
-      if ($target_db->isError()) {
-        $this->_msg = $target_db->getError();
-        return false;
-      }
-      
-      // added for products images groups
-      $igQry = $target_db->query('select id, title, code, size_width, size_height, force_size from :table_products_images_groups where language_id = :language_id');
-      $igQry->bindTable(':table_products_images_groups', TABLE_PRODUCTS_IMAGES_GROUPS);
-      $igQry->bindInt(':language_id', $this->_languages_id_default);
-      $igQry->execute();
-
-      if ($igQry->numberOfRows() > 0) {
-        while ( $igQry->next() ) {
-          $igiQry = $target_db->query('INSERT INTO :table_products_images_groups (id, language_id, title, code, size_width, size_height, force_size) VALUES (:id, :language_id, :title, :code, :size_width, :size_height, :force_size)');
-          $igiQry->bindTable(':table_products_images_groups', TABLE_PRODUCTS_IMAGES_GROUPS);
-          $igiQry->bindInt(':id', $igQry->valueInt('id'));
-          $igiQry->bindInt(':language_id', $language['languages_id']);
-          $igiQry->bindValue(':title', $igQry->value('title'));
-          $igiQry->bindValue(':code', $igQry->value('code'));
-          $igiQry->bindInt(':size_width', $igQry->value('size_width'));
-          $igiQry->bindInt(':size_height', $igQry->value('size_height'));
-          $igiQry->bindInt(':force_size', $igQry->value('force_size'));
-          $igiQry->execute();
+    
+    if (isset($languages) && !empty($languages)) {  
+      foreach ($languages as $language) {
+        $tQry = $target_db->query('INSERT INTO :table_languages (languages_id, 
+                                                                 name, 
+                                                                 code, 
+                                                                 locale, 
+                                                                 charset, 
+                                                                 date_format_short, 
+                                                                 date_format_long, 
+                                                                 time_format, 
+                                                                 text_direction, 
+                                                                 currencies_id, 
+                                                                 numeric_separator_decimal, 
+                                                                 numeric_separator_thousands, 
+                                                                 parent_id, 
+                                                                 sort_order) 
+                                                         VALUES (:languages_id, 
+                                                                 :name, 
+                                                                 :code, 
+                                                                 :locale, 
+                                                                 :charset, 
+                                                                 :date_format_short, 
+                                                                 :date_format_long, 
+                                                                 :time_format, 
+                                                                 :text_direction, 
+                                                                 :currencies_id, 
+                                                                 :numeric_separator_decimal, 
+                                                                 :numeric_separator_thousands, 
+                                                                 :parent_id, 
+                                                                 :sort_order)');
+                                                                      
+        $tQry->bindTable(':table_languages', TABLE_LANGUAGES);
+        $tQry->bindInt  (':languages_id',                $language['languages_id']);
+        $tQry->bindValue(':name',                        $language['name']);
+        $tQry->bindValue(':code',                        $language['code']);
+        $tQry->bindValue(':locale',                      $language['locale']);
+        $tQry->bindValue(':charset',                     $language['charset']);
+        $tQry->bindValue(':date_format_short',           $language['date_format_short']);
+        $tQry->bindValue(':date_format_long',            $language['date_format_long']);
+        $tQry->bindValue(':time_format',                 $language['time_format']);
+        $tQry->bindValue(':text_direction',              $language['text_direction']);
+        $tQry->bindInt  (':currencies_id',               $language['currencies_id']);
+        $tQry->bindValue(':numeric_separator_decimal',   $language['numeric_separator_decimal']);
+        $tQry->bindValue(':numeric_separator_thousands', $language['numeric_separator_thousands']);
+        $tQry->bindInt  (':parent_id',                   $language['parent_id']);
+        $tQry->bindInt  (':sort_order',                  $language['sort_order']);
+        
+        $tQry->execute();
+        if ($target_db->isError()) {
+          $this->_msg = $target_db->getError();
+          return false;
         }
-      }
-      
-      $igQry->freeResult();
-      
-      if ($target_db->isError()) {
-        $this->_msg = $target_db->getError();
-        return false;
-      }
-      
-      // added for orders transactions status
-      $otsQry = $target_db->query('select id, status_name from :table_orders_transactions_status where language_id = :language_id');
-      $otsQry->bindTable(':table_orders_transactions_status', TABLE_ORDERS_TRANSACTIONS_STATUS);
-      $otsQry->bindInt(':language_id', $this->_languages_id_default);
-      $otsQry->execute();
+        
+        // added for products images groups
+        $igQry = $target_db->query('select id, title, code, size_width, size_height, force_size from :table_products_images_groups where language_id = :language_id');
+        $igQry->bindTable(':table_products_images_groups', TABLE_PRODUCTS_IMAGES_GROUPS);
+        $igQry->bindInt(':language_id', $this->_languages_id_default);
+        $igQry->execute();
 
-      if ($otsQry->numberOfRows() > 0) {
-        while ( $otsQry->next() ) {
-          $otsiQry = $target_db->query('insert into :table_orders_transactions_status (id, language_id, status_name) values (:id, :language_id, :status_name)');
-          $otsiQry->bindTable(':table_orders_transactions_status', TABLE_ORDERS_TRANSACTIONS_STATUS);
-          $otsiQry->bindInt(':id', $otsQry->valueInt('id'));
-          $otsiQry->bindInt(':language_id', $language['languages_id']);
-          $otsiQry->bindValue(':status_name', $otsQry->value('status_name'));
-          $otsiQry->execute();
-        }
-      }
-      
-      $otsQry->freeResult();
-      
-      if ($target_db->isError()) {
-        $this->_msg = $target_db->getError();
-        return false;
-      }
-      
-      // added shipping availability
-      $saQry = $target_db->query('select id, title, css_key from :table_shipping_availability where languages_id = :languages_id');
-      $saQry->bindTable(':table_shipping_availability', TABLE_SHIPPING_AVAILABILITY);
-      $saQry->bindInt(':languages_id', $this->_languages_id_default);
-      $saQry->execute();
-
-      if ($saQry->numberOfRows() > 0) {
-        while ( $saQry->next() ) {
-          $saiQry = $target_db->query('insert into :table_shipping_availability (id, languages_id, title, css_key) values (:id, :languages_id, :title, :css_key)');
-          $saiQry->bindTable(':table_shipping_availability', TABLE_SHIPPING_AVAILABILITY);
-          $saiQry->bindInt(':id', $saQry->valueInt('id'));
-          $saiQry->bindInt(':languages_id', $language['languages_id']);
-          $saiQry->bindValue(':title', $saQry->value('title'));
-          $saiQry->bindValue(':css_key', $saQry->value('css_key'));
-          $saiQry->execute();
-        }
-      }
-      
-      $saQry->freeResult();
-      
-      if ($target_db->isError()) {
-        $this->_msg = $target_db->getError();
-        return false;
-      }
-      
-      // added for weight class
-      $wcQry = $target_db->query('select weight_class_id, weight_class_key, weight_class_title from :table_weight_classes where language_id = :language_id');
-      $wcQry->bindTable(':table_weight_classes', TABLE_WEIGHT_CLASS);
-      $wcQry->bindInt(':language_id', $this->_languages_id_default);
-      $wcQry->execute();
-
-      if ($wcQry->numberOfRows() > 0) {
-        while ( $wcQry->next() ) {
-          $wciQry = $target_db->query('insert into :table_weight_classes (weight_class_id, weight_class_key, language_id, weight_class_title) values (:weight_class_id, :weight_class_key, :language_id, :weight_class_title)');
-          $wciQry->bindTable(':table_weight_classes', TABLE_WEIGHT_CLASS);
-          $wciQry->bindInt(':weight_class_id', $wcQry->valueInt('weight_class_id'));
-          $wciQry->bindValue(':weight_class_key', $wcQry->value('weight_class_key'));
-          $wciQry->bindInt(':language_id', $language['languages_id']);
-          $wciQry->bindValue(':weight_class_title', $wcQry->value('weight_class_title'));
-          $wciQry->execute();
-        }
-      }
-      
-      if ($target_db->isError()) {
-        $this->_msg = $target_db->getError();
-        return false;
-      }
-      
-      $wcQry->freeResult();
-      
-      // added for variants groups
-      $vgQry = $target_db->query('SELECT * FROM :table_products_variants_groups WHERE languages_id = :languages_id');
-      $vgQry->bindTable(':table_products_variants_groups', TABLE_PRODUCTS_VARIANTS_GROUPS);
-      $vgQry->bindInt(':languages_id', $this->_languages_id_default);
-      $vgQry->execute();
-      
-      if ($vgQry->numberOfRows() > 0) { 
-        while ($vgQry->next()) {
-          $vgnQry = $source_db->query('SELECT products_options_name FROM products_options_text WHERE products_options_text_id = :products_options_text_id AND language_id = :language_id');
-          $vgnQry->bindInt(':products_options_text_id', $vgQry->value('id'));
-          $vgnQry->bindInt(':language_id', $language['languages_id']);
-          $vgnQry->execute();
-          
-          $tQry = $target_db->query('INSERT INTO :table_products_variants_groups (id, 
-                                                                                  languages_id, 
-                                                                                  title, 
-                                                                                  sort_order, 
-                                                                                  module) 
-                                                                          VALUES (:id, 
-                                                                                  :languages_id, 
-                                                                                  :title, 
-                                                                                  :sort_order, 
-                                                                                  :module)');
-
-          $tQry->bindTable(':table_products_variants_groups', TABLE_PRODUCTS_VARIANTS_GROUPS);
-          
-          $tQry->bindInt  (':id'          , $vgQry->value('id'));
-          $tQry->bindInt  (':languages_id', $language['languages_id']);
-          $tQry->bindValue(':title'       , $vgnQry->value('products_options_name'));
-          $tQry->bindInt  (':sort_order'  , $vgQry->value('sort_order'));
-          $tQry->bindValue(':module'      , $vgQry->value('module'));
-          $tQry->execute();
-          
-          $vgnQry->freeResult();
-          
-          if ($target_db->isError()) {
-            $this->_msg = $target_db->getError();
-            return false;
+        if ($igQry->numberOfRows() > 0) {
+          while ( $igQry->next() ) {
+            $igiQry = $target_db->query('INSERT INTO :table_products_images_groups (id, language_id, title, code, size_width, size_height, force_size) VALUES (:id, :language_id, :title, :code, :size_width, :size_height, :force_size)');
+            $igiQry->bindTable(':table_products_images_groups', TABLE_PRODUCTS_IMAGES_GROUPS);
+            $igiQry->bindInt(':id', $igQry->valueInt('id'));
+            $igiQry->bindInt(':language_id', $language['languages_id']);
+            $igiQry->bindValue(':title', $igQry->value('title'));
+            $igiQry->bindValue(':code', $igQry->value('code'));
+            $igiQry->bindInt(':size_width', $igQry->value('size_width'));
+            $igiQry->bindInt(':size_height', $igQry->value('size_height'));
+            $igiQry->bindInt(':force_size', $igQry->value('force_size'));
+            $igiQry->execute();
           }
+        }
+        
+        $igQry->freeResult();
+        
+        if ($target_db->isError()) {
+          $this->_msg = $target_db->getError();
+          return false;
+        }
+        
+        // added for orders transactions status
+        $otsQry = $target_db->query('select id, status_name from :table_orders_transactions_status where language_id = :language_id');
+        $otsQry->bindTable(':table_orders_transactions_status', TABLE_ORDERS_TRANSACTIONS_STATUS);
+        $otsQry->bindInt(':language_id', $this->_languages_id_default);
+        $otsQry->execute();
+
+        if ($otsQry->numberOfRows() > 0) {
+          while ( $otsQry->next() ) {
+            $otsiQry = $target_db->query('insert into :table_orders_transactions_status (id, language_id, status_name) values (:id, :language_id, :status_name)');
+            $otsiQry->bindTable(':table_orders_transactions_status', TABLE_ORDERS_TRANSACTIONS_STATUS);
+            $otsiQry->bindInt(':id', $otsQry->valueInt('id'));
+            $otsiQry->bindInt(':language_id', $language['languages_id']);
+            $otsiQry->bindValue(':status_name', $otsQry->value('status_name'));
+            $otsiQry->execute();
+          }
+        }
+        
+        $otsQry->freeResult();
+        
+        if ($target_db->isError()) {
+          $this->_msg = $target_db->getError();
+          return false;
+        }
+        
+        // added shipping availability
+        $saQry = $target_db->query('select id, title, css_key from :table_shipping_availability where languages_id = :languages_id');
+        $saQry->bindTable(':table_shipping_availability', TABLE_SHIPPING_AVAILABILITY);
+        $saQry->bindInt(':languages_id', $this->_languages_id_default);
+        $saQry->execute();
+
+        if ($saQry->numberOfRows() > 0) {
+          while ( $saQry->next() ) {
+            $saiQry = $target_db->query('insert into :table_shipping_availability (id, languages_id, title, css_key) values (:id, :languages_id, :title, :css_key)');
+            $saiQry->bindTable(':table_shipping_availability', TABLE_SHIPPING_AVAILABILITY);
+            $saiQry->bindInt(':id', $saQry->valueInt('id'));
+            $saiQry->bindInt(':languages_id', $language['languages_id']);
+            $saiQry->bindValue(':title', $saQry->value('title'));
+            $saiQry->bindValue(':css_key', $saQry->value('css_key'));
+            $saiQry->execute();
+          }
+        }
+        
+        $saQry->freeResult();
+        
+        if ($target_db->isError()) {
+          $this->_msg = $target_db->getError();
+          return false;
+        }
+        
+        // added for weight class
+        $wcQry = $target_db->query('select weight_class_id, weight_class_key, weight_class_title from :table_weight_classes where language_id = :language_id');
+        $wcQry->bindTable(':table_weight_classes', TABLE_WEIGHT_CLASS);
+        $wcQry->bindInt(':language_id', $this->_languages_id_default);
+        $wcQry->execute();
+
+        if ($wcQry->numberOfRows() > 0) {
+          while ( $wcQry->next() ) {
+            $wciQry = $target_db->query('insert into :table_weight_classes (weight_class_id, weight_class_key, language_id, weight_class_title) values (:weight_class_id, :weight_class_key, :language_id, :weight_class_title)');
+            $wciQry->bindTable(':table_weight_classes', TABLE_WEIGHT_CLASS);
+            $wciQry->bindInt(':weight_class_id', $wcQry->valueInt('weight_class_id'));
+            $wciQry->bindValue(':weight_class_key', $wcQry->value('weight_class_key'));
+            $wciQry->bindInt(':language_id', $language['languages_id']);
+            $wciQry->bindValue(':weight_class_title', $wcQry->value('weight_class_title'));
+            $wciQry->execute();
+          }
+        }
+        
+        if ($target_db->isError()) {
+          $this->_msg = $target_db->getError();
+          return false;
+        }
+        
+        $wcQry->freeResult();
+        
+        // added for variants groups
+        $vgQry = $target_db->query('SELECT * FROM :table_products_variants_groups WHERE languages_id = :languages_id');
+        $vgQry->bindTable(':table_products_variants_groups', TABLE_PRODUCTS_VARIANTS_GROUPS);
+        $vgQry->bindInt(':languages_id', $this->_languages_id_default);
+        $vgQry->execute();
+        
+        if ($vgQry->numberOfRows() > 0) { 
+          while ($vgQry->next()) {
+            $vgnQry = $source_db->query('SELECT products_options_name FROM products_options_text WHERE products_options_text_id = :products_options_text_id AND language_id = :language_id');
+            $vgnQry->bindInt(':products_options_text_id', $vgQry->value('id'));
+            $vgnQry->bindInt(':language_id', $language['languages_id']);
+            $vgnQry->execute();
+            
+            $tQry = $target_db->query('INSERT INTO :table_products_variants_groups (id, 
+                                                                                    languages_id, 
+                                                                                    title, 
+                                                                                    sort_order, 
+                                                                                    module) 
+                                                                            VALUES (:id, 
+                                                                                    :languages_id, 
+                                                                                    :title, 
+                                                                                    :sort_order, 
+                                                                                    :module)');
+
+            $tQry->bindTable(':table_products_variants_groups', TABLE_PRODUCTS_VARIANTS_GROUPS);
+            
+            $tQry->bindInt  (':id'          , $vgQry->value('id'));
+            $tQry->bindInt  (':languages_id', $language['languages_id']);
+            $tQry->bindValue(':title'       , $vgnQry->value('products_options_name'));
+            $tQry->bindInt  (':sort_order'  , $vgQry->value('sort_order'));
+            $tQry->bindValue(':module'      , $vgQry->value('module'));
+            $tQry->execute();
+            
+            $vgnQry->freeResult();
+            
+            if ($target_db->isError()) {
+              $this->_msg = $target_db->getError();
+              return false;
+            }
+          } 
+        
+          $vgQry->freeResult();
+          
         } 
-      
-        $vgQry->freeResult();
-        
-      } 
+              
+        // added for variants values
+        $vvQry = $target_db->query('SELECT * FROM :table_products_variants_values WHERE languages_id = :languages_id');
+        $vvQry->bindTable(':table_products_variants_values', TABLE_PRODUCTS_VARIANTS_VALUES);
+        $vvQry->bindInt(':languages_id', $this->_languages_id_default);
+        $vvQry->execute();
+          
+        if ($vvQry->numberOfRows() > 0) { 
+          while ($vvQry->next()) {
+            // later let's add sort order
+            //$vsoQry = $source_db->query('SELECT  FROM  WHERE  = : AND  = : AND  = :');
+            //$vsoQry->bindInt(':', $sQry->value(''));
+            //$vsoQry->bindInt(':', $sQry->value(''));
+            //$vsoQry->bindInt(':', $sQry->value(''));
+            //$vsoQry->execute();
             
-      // added for variants values
-      $vvQry = $target_db->query('SELECT * FROM :table_products_variants_values WHERE languages_id = :languages_id');
-      $vvQry->bindTable(':table_products_variants_values', TABLE_PRODUCTS_VARIANTS_VALUES);
-      $vvQry->bindInt(':languages_id', $this->_languages_id_default);
-      $vvQry->execute();
-        
-      if ($vvQry->numberOfRows() > 0) { 
-        while ($vvQry->next()) {
-          // later let's add sort order
-          //$vsoQry = $source_db->query('SELECT  FROM  WHERE  = : AND  = : AND  = :');
-          //$vsoQry->bindInt(':', $sQry->value(''));
-          //$vsoQry->bindInt(':', $sQry->value(''));
-          //$vsoQry->bindInt(':', $sQry->value(''));
-          //$vsoQry->execute();
-          
-          $vvnQry = $source_db->query('SELECT products_options_values_name FROM products_options_values WHERE products_options_values_id = :products_options_values_id AND language_id = :language_id');
-          $vvnQry->bindInt(':products_options_values_id', $vvQry->value('id'));
-          $vvnQry->bindInt(':language_id', $language['languages_id']);
-          $vvnQry->execute(); 
-          
-          $tQry = $target_db->query('INSERT INTO :table_products_variants_values (id, 
-                                                                                  languages_id, 
-                                                                                  products_variants_groups_id, 
-                                                                                  title, 
-                                                                                  sort_order) 
-                                                                          VALUES (:id, 
-                                                                                  :languages_id, 
-                                                                                  :products_variants_groups_id, 
-                                                                                  :title, 
-                                                                                  :sort_order)');
+            $vvnQry = $source_db->query('SELECT products_options_values_name FROM products_options_values WHERE products_options_values_id = :products_options_values_id AND language_id = :language_id');
+            $vvnQry->bindInt(':products_options_values_id', $vvQry->value('id'));
+            $vvnQry->bindInt(':language_id', $language['languages_id']);
+            $vvnQry->execute(); 
+            
+            $tQry = $target_db->query('INSERT INTO :table_products_variants_values (id, 
+                                                                                    languages_id, 
+                                                                                    products_variants_groups_id, 
+                                                                                    title, 
+                                                                                    sort_order) 
+                                                                            VALUES (:id, 
+                                                                                    :languages_id, 
+                                                                                    :products_variants_groups_id, 
+                                                                                    :title, 
+                                                                                    :sort_order)');
 
-          $tQry->bindTable(':table_products_variants_values', TABLE_PRODUCTS_VARIANTS_VALUES);
-          $tQry->bindInt  (':id'                            , $vvQry->value('id'));
-          $tQry->bindInt  (':languages_id'                  , $language['languages_id']);
-          $tQry->bindInt  (':products_variants_groups_id'   , $vvQry->value('products_variants_groups_id'));
-          $tQry->bindValue(':title'                         , $vvnQry->value('products_options_values_name'));
-          $tQry->bindInt  (':sort_order'                    , $vvQry->value('sort_order'));
-          $tQry->execute();
-          
-          $vvnQry->freeResult();
-          
-          if ($target_db->isError()) {
-            $this->_msg = $target_db->getError();
-            return false;
-          }
-        }
-        
-        $vvQry->freeResult();
-      }
-      
-      // Added for text_field options
-      $stfQry = $source_db->query('SELECT products_options_sort_order FROM products_options WHERE options_type = :options_type');
-      $stfQry->bindInt(':options_type', 4);
-      $stfQry->execute();
-      
-      if ($stfQry->numberOfRows() > 0) {      
-        while ($stfQry->next()) { 
-          $stftQry = $source_db->query('SELECT products_options_name FROM products_options_text WHERE products_options_text_id = :products_options_text_id AND language_id = :language_id');
-          $stftQry->bindInt(':products_options_text_id', 4);
-          $stftQry->bindInt(':language_id', $language['languages_id']);
-          $stftQry->execute();
-          
-          while ($stftQry->next()) {
-            $ttfQry = $target_db->query('UPDATE :table_products_variants_values SET title = :title WHERE products_variants_groups_id = :products_variants_groups_id AND languages_id = :languages_id');          
+            $tQry->bindTable(':table_products_variants_values', TABLE_PRODUCTS_VARIANTS_VALUES);
+            $tQry->bindInt  (':id'                            , $vvQry->value('id'));
+            $tQry->bindInt  (':languages_id'                  , $language['languages_id']);
+            $tQry->bindInt  (':products_variants_groups_id'   , $vvQry->value('products_variants_groups_id'));
+            $tQry->bindValue(':title'                         , $vvnQry->value('products_options_values_name'));
+            $tQry->bindInt  (':sort_order'                    , $vvQry->value('sort_order'));
+            $tQry->execute();
             
-            $ttfQry->bindTable(':table_products_variants_values', TABLE_PRODUCTS_VARIANTS_VALUES);
+            $vvnQry->freeResult();
             
-            $ttfQry->bindInt  (':languages_id'               , $language['languages_id']);
-            $ttfQry->bindInt  (':products_variants_groups_id', 4);
-            $ttfQry->bindValue(':title'                      , $stftQry->value('products_options_name'));
-            $ttfQry->execute();
-          
             if ($target_db->isError()) {
               $this->_msg = $target_db->getError();
               return false;
             }
           }
+          
+          $vvQry->freeResult();
+        }
+        
+        // Added for text_field options
+        $stfQry = $source_db->query('SELECT products_options_sort_order FROM products_options WHERE options_type = :options_type');
+        $stfQry->bindInt(':options_type', 4);
+        $stfQry->execute();
+        
+        if ($stfQry->numberOfRows() > 0) {      
+          while ($stfQry->next()) { 
+            $stftQry = $source_db->query('SELECT products_options_name FROM products_options_text WHERE products_options_text_id = :products_options_text_id AND language_id = :language_id');
+            $stftQry->bindInt(':products_options_text_id', 4);
+            $stftQry->bindInt(':language_id', $language['languages_id']);
+            $stftQry->execute();
+            
+            while ($stftQry->next()) {
+              $ttfQry = $target_db->query('UPDATE :table_products_variants_values SET title = :title WHERE products_variants_groups_id = :products_variants_groups_id AND languages_id = :languages_id');          
+              
+              $ttfQry->bindTable(':table_products_variants_values', TABLE_PRODUCTS_VARIANTS_VALUES);
+              
+              $ttfQry->bindInt  (':languages_id'               , $language['languages_id']);
+              $ttfQry->bindInt  (':products_variants_groups_id', 4);
+              $ttfQry->bindValue(':title'                      , $stftQry->value('products_options_name'));
+              $ttfQry->execute();
+            
+              if ($target_db->isError()) {
+                $this->_msg = $target_db->getError();
+                return false;
+              }
+            }
+          }
         }
       }
     }
-    
     // END LOAD LANGUAGES TO TARGET DB 
 
     // END DISABLE AUTO INCREMENT WHEN PRIMARY KEY = 0
