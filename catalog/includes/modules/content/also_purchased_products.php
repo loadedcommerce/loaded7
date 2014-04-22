@@ -65,8 +65,8 @@ class lC_Content_also_purchased_products extends lC_Modules {
           }
           $this->_content .= '<div class="content-also-purchased-products-name">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $Qorders->value('products_keyword')), $Qorders->value('products_name'))  . '</div>' . "\n" . 
                              '<div class="content-also-purchased-products-desc">' . $Qorders->value('products_description') . '</div>' . "\n" . 
-                             '<div class="content-also-purchased-products-price">' . $lC_Product->getPriceFormated(true). '</div>' . "\n" .
-                             '<div class="content-also-purchased-products-button"><button class="content-also-purchased-products-add-button" onclick="window.location.href=\'' . lc_href_link(FILENAME_PRODUCTS, $Qorders->value('products_keyword') . '&action=cart_add') . '\'" type="button">' . $lC_Language->get('customers_also_purchased_button_buy_now') . '</button></div>' . "\n";
+                             '<div class="content-also-purchased-products-price pricing-row">' . $lC_Product->getPriceFormated(true). '</div>' . "\n" .
+                             '<div class="content-also-purchased-products-button pricing-row buy-btn-div"><button class="content-also-purchased-products-add-button" onclick="window.location.href=\'' . lc_href_link(FILENAME_PRODUCTS, $Qorders->value('products_keyword') . '&action=cart_add') . '\'" type="button">' . $lC_Language->get('customers_also_purchased_button_buy_now') . '</button></div>' . "\n";
           $this->_content .= '</div>' . "\n";          
         }
       }

@@ -17,8 +17,8 @@ delete_warning_category_in_use = Warning: There are
 delete_warning_category_in_use_children = sub-categories assigned to this category that will also be removed.
 delete_warning_category_in_use_products = products assigned to this category that will have this category relationship removed.
 
-field_access_levels = Access Levels
-field_access_settings = Access Settings
+field_access = Access
+field_access_levels_override = Access Levels Override
 field_blurb = Listing Blurb
 field_categories_content_file = HTML Content File
 field_categories_page_type = Page Only Type
@@ -52,7 +52,7 @@ info_bubble_categories_page_type = Category Page Type
 info_bubble_categories_content_file = Category Content File
 info_bubble_categories_product_class = Category Product Class
 info_bubble_categories_permalink = Category Permalink
-info_bubble_categories_access_levels = Category Access Levels
+info_bubble_categories_access_levels = Select to set the customer access levels.
  
 introduction_new_category = Please fill in the following information for the new category.
 introduction_edit_category = Please make the necessary changes for this category.
@@ -85,7 +85,7 @@ ms_error_categories_permalink_required = The Permalink is required.
 
 section_general = Content
 section_data = Data 
-section_categories = Relationships
+section_relationships = Relationships
 
 table_heading_categories = Categories
 table_heading_status = Status

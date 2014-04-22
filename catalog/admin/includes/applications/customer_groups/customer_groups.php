@@ -23,7 +23,7 @@ class lC_Application_Customer_groups extends lC_Template_Admin {
   * Class constructor
   */
   function __construct() {
-    global $lC_Language;
+    global $lC_Language, $lC_Addons;
 
     $this->_page_title = $lC_Language->get('heading_title');
   }

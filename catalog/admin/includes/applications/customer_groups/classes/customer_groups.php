@@ -59,17 +59,22 @@ class lC_Customer_groups_Admin {
   * @return array
   */
   public static function getFormData($id = null, $edit = false) {
-    global $lC_Database, $lC_Language;
+    global $lC_Database, $lC_Language, $lC_Addons;
+    
+    $lC_Language->loadIniFile('customer_groups.php');
 
     $result = array();
     if (isset($id) && $id != null) {
       if ($edit === true) {
-        $Qcg = $lC_Database->query('select cg.language_id, cg.customers_group_name, cgd.baseline_discount from :table_customers_groups cg left join :table_customers_groups_data cgd on (cg.customers_group_id = cgd.customers_group_id) where cg.customers_group_id = :customers_group_id');
+        $Qcg = $lC_Database->query('select cg.language_id, cg.customers_group_name, cgd.* from :table_customers_groups cg left join :table_customers_groups_data cgd on (cg.customers_group_id = cgd.customers_group_id) where cg.customers_group_id = :customers_group_id');
         $Qcg->bindTable(':table_customers_groups', TABLE_CUSTOMERS_GROUPS);
         $Qcg->bindTable(':table_customers_groups_data', TABLE_CUSTOMERS_GROUPS_DATA);
         $Qcg->bindInt(':customers_group_id', $id);
         $Qcg->execute();
         
+        $result['cgData'] = $Qcg->toArray();
+        
+        $Qcg->execute();
         $status_name = array();
         while ( $Qcg->next() ) {
           $status_name[$Qcg->valueInt('language_id')] = $Qcg->value('customers_group_name');
@@ -132,7 +137,7 @@ class lC_Customer_groups_Admin {
   */
   public static function save($id = null, $data, $default = false) {   
     global $lC_Database, $lC_Language;
-
+    
     $error = false;
 
     $lC_Database->startTransaction();
@@ -148,7 +153,7 @@ class lC_Customer_groups_Admin {
       $Qgroups->execute();
 
       $customers_group_id = $Qgroups->valueInt('customers_group_id') + 1;
-    }
+    }   
 
     foreach ( $lC_Language->getAll() as $l ) {
       $Qgroups = $lC_Database->query('insert into :table_customers_groups (customers_group_id, language_id, customers_group_name) values (:customers_group_id, :language_id, :customers_group_name)');
@@ -198,7 +203,7 @@ class lC_Customer_groups_Admin {
         lC_Cache::clear('configuration');
       }
 
-      return true;
+      return $customers_group_id;
     }
 
     $lC_Database->rollbackTransaction();
@@ -282,5 +287,6 @@ class lC_Customer_groups_Admin {
 
     return $result;
   }
+  
 }
 ?>

@@ -11,6 +11,8 @@
 ?>
 <style>
 #editGroup { padding-bottom:20px; }
+.legend { font-weight:bold; font-size: 1.0em; }
+.fieldset.fields-list { background-image: none; }
 </style>
 <script>
 function editGroup(id) {
@@ -20,9 +22,11 @@ function editGroup(id) {
     $.modal.alert('<?php echo $lC_Language->get('ms_error_no_access');?>');
     return false;
   }
+  mask();
   var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=getFormData&cgid=CGID&edit=true'); ?>'
   $.getJSON(jsonLink.replace('CGID', parseInt(id)),
     function (data) {
+      unmask();
       if (data.rpcStatus == -10) { // no session
         var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
         $(location).attr('href',url);
@@ -31,6 +35,7 @@ function editGroup(id) {
         $.modal.alert('<?php echo $lC_Language->get('ms_error_retrieving_data'); ?>');
         return false;
       }
+      var extraFormHtml = ((data.extraFormHtml != undefined) ? data.extraFormHtml : '');
       $.modal({
           content: '<div id="editGroup">'+
                    '  <div id="editGroupForm">'+
@@ -45,17 +50,17 @@ function editGroup(id) {
                    '        <span id="editGroupDefault"></span>'+
                    '      </div>'+
                    '      <div class="field-drop button-height black-inputs">'+
-                   '        <label for="baseline" class="label" style="width:63%;"><?php echo $lC_Language->get('field_baseline_discount'); ?></label>'+
+                   '        <label for="baseline" class="label" style="width:55%;"><?php echo $lC_Language->get('field_baseline_discount'); ?></label>'+
                    '        <div class="inputs' + ((id == '1') ? ' disabled' : '') + '" style="width:28%">'+
                    '          <span class="mid-margin-right float-right strong">%</span><input type="text" name="baseline" class="input-unstyled small-margin-left strong" id="editBaseline" onfocus="this.select();" style="width:50%;"' + ((id == '1') ? ' DISABLED' : '') + '>'+
                    '        </div>'+
-                   '      </div>'+
+                   '      </div>'+ extraFormHtml +
                    '    </form>'+
                    '    </fieldset>'+
                    '  </div>'+
                    '</div>',        
           title: '<?php echo $lC_Language->get('modal_heading_edit_customer_group'); ?>',
-          width: 500,
+          width: 600,
                 actions: {
             'Close' : {
               color: 'red',
@@ -78,10 +83,12 @@ function editGroup(id) {
                   }
                 }).form();
                 if (bValid) {
+                  mask();
                   var nvp = $("#osEdit").serialize();
                   var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=saveGroup&cgid=CGID&BATCH'); ?>'
                   $.getJSON(jsonLink.replace('CGID', parseInt(id)).replace('BATCH', nvp),
                     function (rdata) {
+                      unmask();
                       if (rdata.rpcStatus == -10) { // no session
                         var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
                         $(location).attr('href',url);
@@ -106,12 +113,12 @@ function editGroup(id) {
       });
       $("#editGroupNamesContainer").html(data.editNames);
       $("#editGroupFormTable > tfoot").empty(); // clear the old values
-   //   if ( id != defaultId ) {
-   //     $("#editGroupDefault").html('<label for="default" class="label anthracite"><?php echo $lC_Language->get('field_set_as_default'); ?></label><?php echo lc_draw_checkbox_field('default', null, null, 'class="switch medium" data-text-on="' . strtoupper($lC_Language->get('button_yes')) . '" data-text-off="' . strtoupper($lC_Language->get('button_no')) . '"');?>');
-   //     $("#editGroupDefaultContainer").addClass('field-block');
-   //   } else {
+      if ( id != defaultId ) {
+        $("#editGroupDefault").html('<label for="default" class="label anthracite"><?php echo $lC_Language->get('field_set_as_default'); ?></label><?php echo lc_draw_checkbox_field('default', null, null, 'class="switch medium" data-text-on="' . strtoupper($lC_Language->get('button_yes')) . '" data-text-off="' . strtoupper($lC_Language->get('button_no')) . '"');?>');
+        $("#editGroupDefaultContainer").addClass('field-block');
+      } else {
         $("#editGroupDefaultContainer").removeClass('field-block');
-   //   }
+      }
       $('#editBaseline').val(data.editBaseline.toFixed(2));
     }
   );

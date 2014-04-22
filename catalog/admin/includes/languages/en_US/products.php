@@ -145,11 +145,13 @@ section_categories = Categories
 section_options = Options
 section_shipping = Shipping
 section_relationships = Relationships
+section_access_levels_overrides = Access Levels Overrides
 
 slider_switch_disabled = DISABLED
 slider_switch_enabled = ENABLED
 slider_switch_preview = PREVIEW
 
+subsection_access = Access
 subsection_price = Price
 subsection_pricing_modifiers = Pricing Modifiers
 subsection_data = Data
@@ -188,6 +190,7 @@ table_heading_img = Image
 
 text_additional_images = Additional Images
 text_add_handling_fee = Add Handling Fee
+text_all = All
 text_all_products = -- All Products --
 text_availability = Availability
 text_base_price = Base Price

@@ -12,6 +12,7 @@ global $lC_Vqmod;
 
 require_once($lC_Vqmod->modCheck('includes/applications/customer_groups/classes/customer_groups.php'));
 
+// VQMOD-hookpoint; DO NOT MODIFY OR REMOVE THE LINE BELOW
 class lC_Customer_groups_Admin_rpc {
  /*
   * Returns the customer groups datatable data for listings
@@ -35,6 +36,7 @@ class lC_Customer_groups_Admin_rpc {
   */
   public static function getFormData() {
     $edit = (isset($_GET['edit']) && $_GET['edit'] == 'true') ? true : false;
+    // VQMOD-hookpoint; DO NOT MODIFY OR REMOVE THE LINE BELOW
     $result = lC_Customer_groups_Admin::getFormData($_GET['cgid'], $edit);
     if (!isset($result['rpcStatus'])) {
       $result['rpcStatus'] = RPC_STATUS_SUCCESS;
@@ -54,8 +56,9 @@ class lC_Customer_groups_Admin_rpc {
   public static function saveGroup() { 
     $result = array();
     $default = (isset($_GET['default']) && $_GET['default'] == 'on') ? true : false;
+    // VQMOD-hookpoint; DO NOT MODIFY OR REMOVE THE LINE BELOW
     $saved = lC_Customer_groups_Admin::save($_GET['cgid'], $_GET, $default);
-    if ($saved) {
+    if ($saved > 0) {
       $result['rpcStatus'] = RPC_STATUS_SUCCESS;
     }
 

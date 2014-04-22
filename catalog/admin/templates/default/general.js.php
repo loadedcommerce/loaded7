@@ -314,13 +314,9 @@ $(document).ready(function() {
     $('#profileInner').css({"margin-left":"0px"});
     // if window width drops below 1280px change category edit tabs from side to top
     if ($(window).width() < 1380) {
-      $("#category_tabs").removeClass("side-tabs");
-      $("#category_tabs").addClass("standard-tabs");
-      $("#product_tabs").removeClass("side-tabs").addClass("standard-tabs");
+      $(".main-tabs").removeClass("side-tabs").addClass("standard-tabs"); // use this for all main tabs resizing
     } if ($(window).width() >= 1380) {
-      $("#category_tabs").removeClass("standard-tabs");
-      $("#category_tabs").addClass("side-tabs");
-      $("#product_tabs").removeClass("standard-tabs").addClass("side-tabs");
+      $(".main-tabs").removeClass("standard-tabs").addClass("side-tabs"); // use this for all main tabs resizing
     }
   });
   
@@ -386,11 +382,9 @@ $(document).ready(function() {
   $("#profileInner").fadeTo(1000, 1);
   
   if ($(window).width() < 1380) {
-    $("#category_tabs").removeClass("side-tabs");
-    $("#category_tabs").addClass("standard-tabs");
+    $(".main-tabs").removeClass("side-tabs").addClass("standard-tabs");
   } if ($(window).width() >= 1380) {
-    $("#category_tabs").removeClass("standard-tabs");
-    $("#category_tabs").addClass("side-tabs");
+    $(".main-tabs").removeClass("standard-tabs").addClass("side-tabs");
   }
   
   $(".go-pro-menu-ad").on('click', function(){
@@ -510,12 +504,6 @@ function _resizeImages() {
   );  
 }
 
-// check width of window for product edit tabs placement
-if ($(window).width() < 1380) {
-  $("#product_tabs").removeClass("side-tabs");
-  $("#product_tabs").addClass("standard-tabs");
-}
-  
 /* show the pro upsell spot modal */
 function showProUpsellSpot(e) {  
   
