@@ -96,6 +96,34 @@ class lC_Customer_groups_b2b_Admin extends lC_Customer_groups_Admin {
 
     return $result;
   }  
+  
+  public static function getCustomerAccessLevelsHtml() {
+    global $lC_Database, $lC_Language, $pInfo;
+   
+    $lC_Language->loadIniFile('customer_groups.php');
+    
+    $levels = array();
+    if (isset($pInfo)) {
+      $levels = explode(';', $pInfo->get('access_levels'));
+    }   
+
+    // get the access levels
+    $Qlevels = $lC_Database->query('select * from :table_customers_access where status = :status');
+    $Qlevels->bindTable(':table_customers_access', TABLE_CUSTOMERS_ACCESS);
+    $Qlevels->bindInt(':status', 1);
+    $Qlevels->execute();
+    
+    $accessHtml = '<label class="label button-height small-margin-left"><input onclick="checkAllLevels(this);" class="mid-margin-right input" type="checkbox" name="check_all_levels" id="check_all_levels">' . $lC_Language->get('text_all') . '</label><br />';
+    
+    while ($Qlevels->next()) {  
+      $checked = ( (in_array($Qlevels->valueInt('id'), $levels)) ? ' checked="checked" ' : '' );
+      $accessHtml .= '<label class="label button-height margin-left"><input class="mid-margin-right input levels" type="checkbox" name="access_levels[' . $Qlevels->valueInt('id') . ']" value="1" id="access_levels_' . $Qlevels->valueInt('id') . '"' . $checked . ' />' . $Qlevels->value('level') . '</label><br />';
+    }
+
+    $Qlevels->freeResult();    
+    
+    return $accessHtml;
+  }
  /*
   * Save the customer group information
   *

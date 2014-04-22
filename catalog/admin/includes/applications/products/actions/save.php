@@ -86,6 +86,9 @@ class lC_Application_Products_Actions_save extends lC_Application_Products {
       
       // multi SKU options
       if (isset($_POST['variants'])) $data['variants'] = $_POST['variants'];
+      
+      // access levels
+      if (isset($_POST['access_levels'])) $data['access_levels'] = $_POST['access_levels'];
 
       if ( $error === false ) {
         // the line below is used as a hook match point - do not not modify or remove

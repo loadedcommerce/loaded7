@@ -116,6 +116,8 @@ class lC_B2b_settings_Admin {
       $Qcfg->bindValue(':configuration_key', $const);
       $Qcfg->execute();
 
+      $newValue = ($value == 'on') ? '1' : (string)$value;
+      
       if ( $Qcfg->numberOfRows() === 1 ) {
         $Qsettings = $lC_Database->query('update :table_configuration set configuration_value = :configuration_value, last_modified = now() where configuration_key = :configuration_key');
       } else {
@@ -126,7 +128,7 @@ class lC_B2b_settings_Admin {
         $Qsettings->bindRaw(':date_added', 'now()');
       }
       $Qsettings->bindTable(':table_configuration', TABLE_CONFIGURATION);
-      $Qsettings->bindValue(':configuration_value', (string)$value);
+      $Qsettings->bindValue(':configuration_value', $newValue);
       $Qsettings->bindValue(':configuration_key', $const);
       $Qsettings->setLogging($_SESSION['module'], $key);
       $Qsettings->execute();

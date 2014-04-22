@@ -13,16 +13,22 @@ global $lC_Customer;
 <script><!--
 $(document).ready(function() {
   
+  var allowCreateAccount = '<?php echo (defined('B2B_SETTINGS_ALLOW_SELF_REGISTER') && B2B_SETTINGS_ALLOW_SELF_REGISTER == 1) ? 1 : 0; ?>';
   var isB2B = '<?php echo (defined('ADDONS_SYSTEM_LOADED_7_B2B_STATUS') && ADDONS_SYSTEM_LOADED_7_B2B_STATUS == 1) ? 1 : 0; ?>';
   var custAccess = '<?php echo (defined('B2B_SETTINGS_GUEST_CATALOG_ACCESS') && B2B_SETTINGS_GUEST_CATALOG_ACCESS > 0) ? (int)B2B_SETTINGS_GUEST_CATALOG_ACCESS : 0; ?>';
   var isGuest = '<?php echo (($lC_Customer->isLoggedOn() === false) ? 1 : 0); ?>';
-  if (isB2B && isGuest) {
-    if (custAccess == 33) { // view catalog
-      $('.pricing-row').hide();
-      $('.buy-btn-div').hide();
-    } else if (custAccess == 66) { // see pricing
-      $('.buy-btn-div').hide();
-    }  
+  if (isB2B) {
+    if (isGuest) {
+      if (custAccess == 33) { // view catalog
+        $('.pricing-row').hide();
+        $('.buy-btn-div').hide();
+      } else if (custAccess == 66) { // see pricing
+        $('.buy-btn-div').hide();
+      }  
+    }
+    if (allowCreateAccount == 0) {
+      $('.create-account-div').hide();
+    }
   }
   
   
