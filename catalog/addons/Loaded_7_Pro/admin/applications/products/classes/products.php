@@ -367,21 +367,20 @@ class lC_Products_Admin_Pro extends lC_Products_Admin {
     
     // customer access levels (B2B)
     if ( $error === false ) {
-      if (isset($data['access_levels']) && is_array($data['access_levels'])) {
-        $levels = '';
+      $levels = '';   
+      if (is_array($data['access_levels'])) {
         foreach($data['access_levels'] as $key => $val) {
           $levels .= $key . ';';
         }
-        $levels = substr($levels, 0, -1);
-        
-        $Qupdate = $lC_Database->query('update :table_products set access_levels = :access_levels where products_id = :products_id');
-        $Qupdate->bindTable(':table_products', TABLE_PRODUCTS);
-        $Qupdate->bindValue(':access_levels', $levels);
-        $Qupdate->bindInt(':products_id', $products_id);
-        $Qupdate->execute();
-      } 
-    } 
+        $levels = substr($levels, 0, -1);   
+      }
       
+      $Qupdate = $lC_Database->query('update :table_products set access_levels = :access_levels where products_id = :products_id');
+      $Qupdate->bindTable(':table_products', TABLE_PRODUCTS);
+      $Qupdate->bindValue(':access_levels', $levels);
+      $Qupdate->bindInt(':products_id', $products_id);
+      $Qupdate->execute();
+    } 
   }
  /*
   *  Return the product simple options accordian price listing content

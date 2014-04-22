@@ -98,14 +98,16 @@ class lC_Customer_groups_b2b_Admin extends lC_Customer_groups_Admin {
   }  
   
   public static function getCustomerAccessLevelsHtml() {
-    global $lC_Database, $lC_Language, $pInfo;
-   
+    global $lC_Database, $lC_Language, $pInfo, $cInfo;
+      
     $lC_Language->loadIniFile('customer_groups.php');
-    
+
     $levels = array();
     if (isset($pInfo)) {
       $levels = explode(';', $pInfo->get('access_levels'));
-    }   
+    } else if (isset($cInfo)) {
+      $levels = explode(';', $cInfo['access_levels']);
+    }  
 
     // get the access levels
     $Qlevels = $lC_Database->query('select * from :table_customers_access where status = :status');
