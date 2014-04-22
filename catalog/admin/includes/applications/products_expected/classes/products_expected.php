@@ -20,7 +20,7 @@ class lC_Products_expected_Admin {
 
     $media = $_GET['media'];
     
-    $Qproducts = $lC_Database->query('select p.products_id, pd.products_name, str_to_date(pa.value, "%Y-%m-%d") as products_date_available from :table_products p, :table_products_description pd, :table_product_attributes pa, :table_templates_boxes tb where tb.code = :code and tb.modules_group = :modules_group and tb.id = pa.id and pa.products_id = p.products_id and p.products_id = pd.products_id and pd.language_id = :language_id order by products_date_available');
+    $Qproducts = $lC_Database->query('select p.products_id, pd.products_name, pa.value as products_date_available from :table_products p, :table_products_description pd, :table_product_attributes pa, :table_templates_boxes tb where tb.code = :code and tb.modules_group = :modules_group and tb.id = pa.id and pa.products_id = p.products_id and p.products_id = pd.products_id and pd.language_id = :language_id order by products_date_available');
     $Qproducts->bindTable(':table_products', TABLE_PRODUCTS);
     $Qproducts->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
     $Qproducts->bindTable(':table_product_attributes', TABLE_PRODUCT_ATTRIBUTES);
@@ -33,7 +33,7 @@ class lC_Products_expected_Admin {
     $result = array('aaData' => array());
     while ( $Qproducts->next() ) {
       $product = '<td>' . $Qproducts->value('products_name') . '</td>';
-      $date = '<td>' . lC_DateTime::getShort($Qproducts->value('products_date_available')) . '</td>';
+      $date = '<td>' . $Qproducts->value('products_date_available') . '</td>';
       $action = '<td class="align-right vertical-center"><span class="button-group">
                    <a href="' . ((int)($_SESSION['admin']['access']['languages'] < 3) ? '#' : 'javascript://" onclick="editEntry(\'' . $Qproducts->valueInt('products_id') . '\')') . '" class="button icon-pencil' . ((int)($_SESSION['admin']['access']['languages'] < 3) ? ' disabled' : NULL) . '">' . (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_edit')) . '</a>
                  </span></td>';
@@ -56,7 +56,7 @@ class lC_Products_expected_Admin {
     $result = array();
     if (isset($id) && is_numeric($id)) {
       $lC_ObjectInfo = new lC_ObjectInfo(lC_Products_Admin::get($id));
-      $Qdata = $lC_Database->query('select str_to_date(pa.value, "%Y-%m-%d") as products_date_available from :table_product_attributes pa, :table_templates_boxes tb where tb.code = :code and tb.modules_group = :modules_group and tb.id = pa.id');
+      $Qdata = $lC_Database->query('select pa.value as products_date_available from :table_product_attributes pa, :table_templates_boxes tb where tb.code = :code and tb.modules_group = :modules_group and tb.id = pa.id');
       $Qdata->bindTable(':table_product_attributes', TABLE_PRODUCT_ATTRIBUTES);
       $Qdata->bindTable(':table_templates_boxes', TABLE_TEMPLATES_BOXES);
       $Qdata->bindValue(':code', 'date_available');
@@ -64,7 +64,7 @@ class lC_Products_expected_Admin {
       $Qdata->execute();
       $lC_ObjectInfo->set('products_date_available', $Qdata->value('products_date_available'));
 
-      $result['pDate'] = lC_DateTime::getShort($lC_ObjectInfo->get('products_date_available'));
+      $result['pDate'] = $lC_ObjectInfo->get('products_date_available');
 
       $Qdata->freeResult();
     }

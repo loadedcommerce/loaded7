@@ -1325,20 +1325,28 @@ class lC_Orders_Admin {
                '</div>'; 
                   
     if ($result != '') {
-      $result .=  '<div class="new-row-mobile six-columns twelve-columns-mobile with-small-padding align-right">' . 
-                     $lC_Language->get('text_grand_total') . 
-                  '  <span class="mid-margin-right" id="id_grand_total">' . $lC_Currencies->format(str_replace(',','',number_format($total, DECIMAL_PLACES))) . '</span>' . 
-                  '  <span class="button-group">' . 
-                  '    <a href="javascript:void(0);" onclick="saveOrderTotal(' . $oID . ');">' . 
-                  '      <button type="button" class="button glossy">' . 
-                  '        <span class="button-icon green-gradient">' . 
-                  '          <span class="icon-plus"></span>' . 
-                  '        </span>' . 
-                           $lC_Language->get('text_save') . 
-                  '      </button>' . 
-                  '    </a>' .  
-                  '  </span>' . 
-                  '</div>';	   
+      $result .=  '<div class="new-row-mobile twelve-columns twelve-columns-mobile no-margin-bottom">' .
+                  '  <div class="columns">' .
+                  '    <div class="new-row-mobile five-columns twelve-columns-mobile mid-margin-bottom align-right">' .
+                  '      <span class="icon-anthracite">' .
+                  '        <strong class="small-margin-left">' . $lC_Language->get('text_grand_total') . '</strong>' .
+                  '      </span>' .
+                  '      <span class="mid-margin-right" id="id_grand_total">' . $lC_Currencies->format(str_replace(',','',number_format($total, DECIMAL_PLACES))) . '</span>' .
+                  '    </div>' .
+                  '    <div class="new-row-mobile seven-columns twelve-columns-mobile no-margin-bottom">' .
+                  '      <span class="button-group mid-margin-bottom">' .
+                  '        <a href="javascript:void(0);" onclick="saveOrderTotal(' . $oID . ');">' .
+                  '          <button type="button" class="button glossy">' .
+                  '            <span class="button-icon green-gradient">' .
+                  '              <span class="icon-plus"></span>' .
+                  '            </span>' .
+                                $lC_Language->get('text_save') .             
+                  '          </button>' .
+                  '        </a>' .
+                  '      </span>' .
+                  '    </div>' .
+                  '  </div>' .
+                  '</div>';   
     }
 
     return $result;

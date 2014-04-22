@@ -32,63 +32,64 @@ if ($Qlisting->numberOfRows() > 0) {
     
     $lC_Product = new lC_Product($Qlisting->valueInt('products_id'));
 
-    $output .= '<div class="product-listing-module-items">';
-    
-    for ($col=0, $n=sizeof($column_list); $col<$n; $col++) {
-      switch ($column_list[$col]) {
-        case 'PRODUCT_LIST_MODEL':
-          $output .= '<div class="product-listing-module-model">' . $lC_Product->getModel() . '</div>' . "\n";
-          break;
+    if ( strtotime($lC_Product->getDateAvailable()) <= strtotime(lC_Datetime::getShort()) ) {
+      $output .= '<div class="product-listing-module-items">';
+      
+      for ($col=0, $n=sizeof($column_list); $col<$n; $col++) {
+        switch ($column_list[$col]) {
+          case 'PRODUCT_LIST_MODEL':
+            $output .= '<div class="product-listing-module-model">' . $lC_Product->getModel() . '</div>' . "\n";
+            break;
 
-        case 'PRODUCT_LIST_NAME':
-          if (isset($_GET['manufacturers'])) {
-            $output .= '<div class="product-listing-module-name">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword() . '&manufacturers=' . $_GET['manufacturers']), $lC_Product->getTitle()) . '</div>' . "\n" .
-                      '<div class="product-listing-module-description">' . ((strlen(lc_clean_html($lC_Product->getDescription())) > 65) ? substr(lc_clean_html($lC_Product->getDescription()), 0, 62) . '...' : lc_clean_html($lC_Product->getDescription())) . '</div>' . "\n";
-          } else {
-            $output .= '<div class="product-listing-module-name">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword() . ($cPath ? '&cPath=' . $cPath : '')), $lC_Product->getTitle()) . '</div>' . "\n" . 
-                      '<div class="product-listing-module-description">' . ((strlen(lc_clean_html($lC_Product->getDescription())) > 65) ? substr(lc_clean_html($lC_Product->getDescription()), 0, 62) . '...' : lc_clean_html($lC_Product->getDescription())) . '</div>' . "\n";
-          }
-          break;
+          case 'PRODUCT_LIST_NAME':
+            if (isset($_GET['manufacturers'])) {
+              $output .= '<div class="product-listing-module-name">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword() . '&manufacturers=' . $_GET['manufacturers']), $lC_Product->getTitle()) . '</div>' . "\n" .
+                        '<div class="product-listing-module-description">' . ((strlen(lc_clean_html($lC_Product->getDescription())) > 65) ? substr(lc_clean_html($lC_Product->getDescription()), 0, 62) . '...' : lc_clean_html($lC_Product->getDescription())) . '</div>' . "\n";
+            } else {
+              $output .= '<div class="product-listing-module-name">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword() . ($cPath ? '&cPath=' . $cPath : '')), $lC_Product->getTitle()) . '</div>' . "\n" . 
+                        '<div class="product-listing-module-description">' . ((strlen(lc_clean_html($lC_Product->getDescription())) > 65) ? substr(lc_clean_html($lC_Product->getDescription()), 0, 62) . '...' : lc_clean_html($lC_Product->getDescription())) . '</div>' . "\n";
+            }
+            break;
 
-        case 'PRODUCT_LIST_MANUFACTURER':
-          if ( $lC_Product->hasManufacturer() ) {
-            $output .= '<div class="product-listing-module-manufacturer' . lc_link_object(lc_href_link(FILENAME_DEFAULT, 'manufacturers=' . $lC_Product->getManufacturerID()), $lC_Product->getManufacturer()) . '</div>' . "\n";
-          } else {
-            $output .= '<div class="product-listing-module-manufacturer"></div>' . "\n";
-          }
-          break;
+          case 'PRODUCT_LIST_MANUFACTURER':
+            if ( $lC_Product->hasManufacturer() ) {
+              $output .= '<div class="product-listing-module-manufacturer' . lc_link_object(lc_href_link(FILENAME_DEFAULT, 'manufacturers=' . $lC_Product->getManufacturerID()), $lC_Product->getManufacturer()) . '</div>' . "\n";
+            } else {
+              $output .= '<div class="product-listing-module-manufacturer"></div>' . "\n";
+            }
+            break;
 
-        case 'PRODUCT_LIST_PRICE':
+          case 'PRODUCT_LIST_PRICE':
           $output .= '<div class="product-listing-module-price pricing-row">' . $lC_Product->getPriceFormated(true) . '</div>' . "\n";
-          break;
+            break;
 
-        case 'PRODUCT_LIST_QUANTITY':
-          $output .= '<div class="product-listing-module-quantity">' . $lC_Product->getQuantity() . '</div>' . "\n";
-          break;
+          case 'PRODUCT_LIST_QUANTITY':
+            $output .= '<div class="product-listing-module-quantity">' . $lC_Product->getQuantity() . '</div>' . "\n";
+            break;
 
-        case 'PRODUCT_LIST_WEIGHT':
-          $output .= '<div class="product-listing-module-weight">' . $lC_Product->getWeight() . '</div>' . "\n";
-          break; 
+          case 'PRODUCT_LIST_WEIGHT':
+            $output .= '<div class="product-listing-module-weight">' . $lC_Product->getWeight() . '</div>' . "\n";
+            break; 
 
-        case 'PRODUCT_LIST_IMAGE':
-          if (isset($_GET['manufacturers'])) {
-            $output .= '<div class="product-listing-module-image">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword() . '&manufacturers=' . $_GET['manufacturers']), $lC_Image->show($lC_Product->getImage(), $lC_Product->getTitle(), 'class="product-listing-module-image-src"')) . '</div>' . "\n";
-          } else {
-            $output .= '<div class="product-listing-module-image">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword() . ($cPath ? '&cPath=' . $cPath : '')), $lC_Image->show($lC_Product->getImage(), $lC_Product->getTitle(), 'class="product-listing-module-image-src"')) . '</div>' . "\n";
-          }
-          break;
-          
-        case 'PRODUCT_LIST_BUY_NOW':
-          if (DISABLE_ADD_TO_CART == 1 && $lC_Product->getQuantity() < 1) {
+          case 'PRODUCT_LIST_IMAGE':
+            if (isset($_GET['manufacturers'])) {
+              $output .= '<div class="product-listing-module-image">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword() . '&manufacturers=' . $_GET['manufacturers']), $lC_Image->show($lC_Product->getImage(), $lC_Product->getTitle(), 'class="product-listing-module-image-src"')) . '</div>' . "\n";
+            } else {
+              $output .= '<div class="product-listing-module-image">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword() . ($cPath ? '&cPath=' . $cPath : '')), $lC_Image->show($lC_Product->getImage(), $lC_Product->getTitle(), 'class="product-listing-module-image-src"')) . '</div>' . "\n";
+            }
+            break;
+            
+          case 'PRODUCT_LIST_BUY_NOW':
+            if (DISABLE_ADD_TO_CART == 1 && $lC_Product->getQuantity() < 1) {
             $output .= '<div class="product-listing-module-buy-now buy-btn-div"><button class="product-listing-module-buy-now-button" disabled>' . $lC_Language->get('out_of_stock') . '</button></div>' . "\n"; 
-          } else {
+            } else {
             $output .= '<div class="product-listing-module-buy-now buy-btn-div"><form action="' . lc_href_link(basename($_SERVER['SCRIPT_FILENAME']), $lC_Product->getKeyword() . '&' . lc_get_all_get_params(array('action', 'new')) . '&action=cart_add') . '" method="post"><button onclick="$(this).closest(\'form\').submit();" type="submit" class="product-listing-module-buy-now-button">' . $lC_Language->get('button_buy_now') . '</button></form></div>' . "\n"; 
-          }
-          break;
+            }
+            break;
+        }
       }
+      $output .= '</div>' . "\n";
     }
-    $output .= '</div>' . "\n";
-    
   }     
 } else {
   $output .= '<div class="product-listing-module-no-products"><p>' . $lC_Language->get('no_products_in_category') . '</p></div>';
