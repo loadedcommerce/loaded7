@@ -11,6 +11,22 @@
 ?>
 <script><!--
 $(document).ready(function() {
+  
+  var isB2B = '<?php echo (defined('ADDONS_SYSTEM_LOADED_7_B2B_STATUS') && ADDONS_SYSTEM_LOADED_7_B2B_STATUS == 1) ? 1 : 0; ?>';
+  var custAccess = '<?php echo (defined('B2B_SETTINGS_GUEST_CATALOG_ACCESS') && B2B_SETTINGS_GUEST_CATALOG_ACCESS > 0) ? (int)B2B_SETTINGS_GUEST_CATALOG_ACCESS : 0; ?>';
+  
+  if (isB2B) {
+alert(custAccess);    
+    if (custAccess == 33) { // view catalog
+      $('.pricing-row').hide();
+    } else if (custAccess == 66) { // see pricing
+      $('.product-listing-module-buy-now-button ').hide();
+    }  
+    
+    
+  }
+  
+  
   var isVisible = false;
   var clickedAway = false;
   $('[data-toggle="popover-mobile"]').popover({

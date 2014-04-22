@@ -22,11 +22,11 @@
               <?php echo lc_link_object(lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword()), $lC_Product->getTitle()); ?>
             </h3>
             <div class=""><?php echo (strlen($lC_Product->getDescription()) > 60 ) ? substr(lc_clean_html($lC_Product->getDescription()), 0, 57) . '...' : lc_clean_html($lC_Product->getDescription()); ?></div>
-            <div class="row margin-top">
+            <div class="row margin-top pricing-row">
               <div class="col-sm-6 col-lg-6">
                 <p class="lead"><?php echo $lC_Product->getPriceFormated(); ?></p>
               </div>
-              <div class="col-sm-6 col-lg-6 no-margin-left">
+              <div class="col-sm-6 col-lg-6 no-margin-left buy-btn-div">
                 <button class="btn btn-success btn-block large" onclick="window.location.href='<?php echo lc_href_link(basename($_SERVER['SCRIPT_FILENAME']), $lC_Product->getKeyword() . '&' . lc_get_all_get_params(array('action', 'new')) . '&action=cart_add'); ?>'" type="button"><?php echo $lC_Language->get('button_buy_now'); ?></button>
               </div>
             </div>

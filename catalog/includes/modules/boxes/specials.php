@@ -59,8 +59,8 @@ class lC_Boxes_specials extends lC_Modules {
           $this->_content = '<li class="box-specials-image">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $data['products_keyword']), $lC_Image->show($data['image'], $data['products_name'], 'class="box-specials-image-src"')) . '</li>';
         }
         $this->_content .= '<li class="box-specials-name">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $data['products_keyword']), $data['products_name']) . '</li>';
-        $this->_content .= '<li class="box-products-price">' . $data['products_price'] . '</li>';
-        $this->_content .= '<li class="box-specials-buy-now"><button onclick="window.location.href=\'' . lc_href_link(FILENAME_PRODUCTS, $data['products_keyword'] . '&action=cart_add') . '\'" title="" type="button">' . $lC_Language->get('button_buy_now') . '</button>';
+        $this->_content .= '<li class="box-products-price pricing-row">' . $data['products_price'] . '</li>';
+        $this->_content .= '<li class="box-specials-buy-now pricing-row buy-btn-div"><button onclick="window.location.href=\'' . lc_href_link(FILENAME_PRODUCTS, $data['products_keyword'] . '&action=cart_add') . '\'" title="" type="button">' . $lC_Language->get('button_buy_now') . '</button>';
       }
     }
   }

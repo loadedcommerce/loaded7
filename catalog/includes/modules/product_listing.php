@@ -59,7 +59,7 @@ if ($Qlisting->numberOfRows() > 0) {
           break;
 
         case 'PRODUCT_LIST_PRICE':
-          $output .= '<div class="product-listing-module-price">' . $lC_Product->getPriceFormated(true) . '</div>' . "\n";
+          $output .= '<div class="product-listing-module-price pricing-row">' . $lC_Product->getPriceFormated(true) . '</div>' . "\n";
           break;
 
         case 'PRODUCT_LIST_QUANTITY':
@@ -80,9 +80,9 @@ if ($Qlisting->numberOfRows() > 0) {
           
         case 'PRODUCT_LIST_BUY_NOW':
           if (DISABLE_ADD_TO_CART == 1 && $lC_Product->getQuantity() < 1) {
-            $output .= '<div class="product-listing-module-buy-now"><button class="product-listing-module-buy-now-button" disabled>' . $lC_Language->get('out_of_stock') . '</button></div>' . "\n"; 
+            $output .= '<div class="product-listing-module-buy-now buy-btn-div"><button class="product-listing-module-buy-now-button" disabled>' . $lC_Language->get('out_of_stock') . '</button></div>' . "\n"; 
           } else {
-            $output .= '<div class="product-listing-module-buy-now"><form action="' . lc_href_link(basename($_SERVER['SCRIPT_FILENAME']), $lC_Product->getKeyword() . '&' . lc_get_all_get_params(array('action', 'new')) . '&action=cart_add') . '" method="post"><button onclick="$(this).closest(\'form\').submit();" type="submit" class="product-listing-module-buy-now-button">' . $lC_Language->get('button_buy_now') . '</button></form></div>' . "\n"; 
+            $output .= '<div class="product-listing-module-buy-now buy-btn-div"><form action="' . lc_href_link(basename($_SERVER['SCRIPT_FILENAME']), $lC_Product->getKeyword() . '&' . lc_get_all_get_params(array('action', 'new')) . '&action=cart_add') . '" method="post"><button onclick="$(this).closest(\'form\').submit();" type="submit" class="product-listing-module-buy-now-button">' . $lC_Language->get('button_buy_now') . '</button></form></div>' . "\n"; 
           }
           break;
       }

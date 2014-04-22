@@ -44,8 +44,8 @@ class lC_Boxes_featured_products extends lC_Modules {
         $this->_content = '<li class="box-featured-products-image">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword()), $lC_Image->show($lC_Product->getImage(), $lC_Product->getTitle(), 'class="content-featured-products-image-src"')) . '</li>';
       }
       $this->_content .= '<li class="box-featured-products-name">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword()), $lC_Product->getTitle()) . '</li>';
-      $this->_content .= '<li class="box-featured-products-price">' . $lC_Product->getPriceFormated(true) . '</li>';
-      $this->_content .= '<li class="box-featured-products-buy-now"><button onclick="window.location.href=\'' . lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword() . '&action=cart_add') . '\'" type="button">' . $lC_Language->get('button_buy_now') . '</button>';
+      $this->_content .= '<li class="box-featured-products-price pricing-row">' . $lC_Product->getPriceFormated(true) . '</li>';
+      $this->_content .= '<li class="box-featured-products-buy-now pricing-row buy-btn-div"><button onclick="window.location.href=\'' . lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword() . '&action=cart_add') . '\'" type="button">' . $lC_Language->get('button_buy_now') . '</button>';
     }
   }
 
