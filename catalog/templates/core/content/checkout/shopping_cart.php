@@ -17,8 +17,13 @@
     if(isset($_SESSION['coupon_msg']) && $_SESSION['coupon_msg'] != '') {
       $lC_MessageStack->add('shopping_cart', $_SESSION['coupon_msg'], 'success');
       unset($_SESSION['coupon_msg']);
+      if ( $lC_MessageStack->size('shopping_cart') > 0 ) echo '<div class="message-stack-container alert alert-success small-margin-bottom">' . $lC_MessageStack->get('shopping_cart') . '</div>' . "\n"; 
     }
-    if ( $lC_MessageStack->size('shopping_cart') > 0 ) echo '<div class="message-stack-container alert alert-danger small-margin-bottom">' . $lC_MessageStack->get('shopping_cart') . '</div>' . "\n"; 
+    if(isset($_SESSION['remove_coupon_msg']) && $_SESSION['remove_coupon_msg'] != '') {
+      $lC_MessageStack->add('shopping_cart', $_SESSION['remove_coupon_msg'], 'warning');
+      unset($_SESSION['remove_coupon_msg']);
+      if ( $lC_MessageStack->size('shopping_cart') > 0 ) echo '<div class="message-stack-container alert alert-warning small-margin-bottom">' . $lC_MessageStack->get('shopping_cart') . '</div>' . "\n"; 
+    }       
     if ($lC_ShoppingCart->hasContents()) { 
       ?>
       <form role="form" class="no-margin-bottom" name="shopping_cart" id="shopping_cart" action="<?php echo lc_href_link(FILENAME_CHECKOUT, 'action=cart_update', 'SSL'); ?>" method="post">
@@ -108,10 +113,14 @@
           <?php
           foreach ($lC_ShoppingCart->getOrderTotals() as $module) {   
             $title = (strstr($module['title'], '(')) ? substr($module['title'], 0, strpos($module['title'], '(')) . ':' : $module['title'];
+            $class = str_replace(':', '', $title);
+            $class = 'ot-' . strtolower(str_replace(' ', '-', $class));
             ?>
             <div class="clearfix">
-              <span class="pull-left ot-<?php echo strtolower(str_replace('_', '-', $module['code'])); ?>"><?php echo strip_tags($title); ?></span>
-              <span class="pull-right ot-<?php echo strtolower(str_replace('_', '-', $module['code'])); ?>"><?php echo strip_tags($module['text']); ?></span>                
+             <?php echo '<div class="clearfix">' .
+                 '  <span class="pull-left ' . $class . '">' . $title . '</span>' .
+                 '  <span class="pull-right ' . $class . '">' . $module['text'] . '</span>' .
+                 '</div>';  ?>             
             </div>                    
             <?php
           }

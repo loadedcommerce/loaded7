@@ -47,7 +47,7 @@ class lC_Coupons {
         $this->_refreshCouponOrderTotals();
         //$_SESSION['coupon_msg'] = "Applied coupon ".$name . ' (' . $code . ') with '. $discount ;
 
-        $_SESSION['coupon_msg'] = $lC_Language->get('error_reedeemed_amount');      
+        $_SESSION['coupon_msg'] = $lC_Language->get('success_reedeemed_amount');      
 
         return array('rpcStatus' => 1 );                                              
       } else {
@@ -63,13 +63,14 @@ class lC_Coupons {
   }
   
   public function removeEntry($code) {
-    global $lC_ShoppingCart;
+    global $lC_ShoppingCart, $lC_Language;
     
     if (array_key_exists($code, $this->_contents)) {    
       unset($this->_contents[$code]);
       $lC_ShoppingCart->refresh(true);
       $this->_refreshCouponOrderTotals();
 
+       $_SESSION['remove_coupon_msg'] = $lC_Language->get('remove_coupon_message'); 
     }    
 
     return true;
@@ -261,7 +262,7 @@ class lC_Coupons {
       if ($val['total'] > 0 && $valid['status'] === true) {
         $_SESSION['lC_ShoppingCart_data']['order_totals'][] = array('code' => 'coupon',
                                                                     'title' => $val['title'],
-                                                                    'text' => '<span onclick="removeCoupon(\'' . $code . '\');" style="padding:0; cursor:pointer;">' . lc_image(DIR_WS_CATALOG . 'templates/default/images/icons/16/cross_round.png', null, null, null, 'style="vertical-align:middle;"') . '&nbsp;-' . $lC_Currencies->format($val['total']) . '</span>',
+                                                                    'text' => '<span onclick="removeCoupon(\'' . $code . '\');" style="padding:0; cursor:pointer;">' . lc_image(DIR_WS_CATALOG . 'templates/core/images/icons/16/cross_round.png', null, null, null, 'style="vertical-align:middle;"') . '&nbsp;-' . $lC_Currencies->format($val['total']) . '</span>',
                                                                     'value' => $val['total'],
                                                                     'sort_order' => (int)MODULE_ORDER_TOTAL_COUPON_SORT_ORDER);
       }
