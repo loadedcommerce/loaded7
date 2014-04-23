@@ -17,8 +17,9 @@ $(document).ready(function() {
   oTable = $('#dataTable').dataTable({
     "bProcessing": true,
     "sAjaxSource": dataTableDataURL.replace('MEDIA', $.template.mediaQuery.name),
-    "sPaginationType": paginationType, 
-    "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]], 
+    "sPaginationType": paginationType,
+    "bPaginate": false,
+    "bSort": false, 
     "aoColumns": [{ "sWidth": "20%", "sClass": "dataColFiles" },
                   { "sWidth": "10%", "sClass": "dataColSize hide-on-mobile-portrait" },
                   { "sWidth": "10%", "sClass": "dataColPerms hide-on-mobile-portrait" },
@@ -39,10 +40,14 @@ $(document).ready(function() {
     $('.on-mobile').show();
     $('.selectContainer').hide();
   }
+  
   var error = '<?php echo $_SESSION['error']; ?>';
   if (error) {
     var errmsg = '<?php echo $_SESSION['errmsg']; ?>';
     $.modal.alert(errmsg);
   }
+  
+  // breadcrumb last li css
+  $(".fm-breadcrumb li:last-child").addClass("last");
 });
 </script>
