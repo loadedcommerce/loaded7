@@ -29,7 +29,7 @@ if ($Qlisting->numberOfRows() > 0) {
   
   $output = '';      
   while ($Qlisting->next()) {
-    
+    // VQMOD-hookpoint; DO NOT MODIFY OR REMOVE THE LINE BELOW
     $lC_Product = new lC_Product($Qlisting->valueInt('products_id'));
 
     if ( strtotime($lC_Product->getDateAvailable()) <= strtotime(lC_Datetime::getShort()) ) {

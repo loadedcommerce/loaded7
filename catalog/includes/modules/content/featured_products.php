@@ -55,6 +55,7 @@ class lC_Content_featured_products extends lC_Modules {
     if ($Qfeatured->numberOfRows() > 0) {
       $this->_content = '';
       while ($Qfeatured->next()) {
+        // VQMOD-hookpoint; DO NOT MODIFY OR REMOVE THE LINE BELOW        
         $lC_Product = new lC_Product($Qfeatured->valueInt('products_id'));
 
         $this->_content .= '<div class="content-featured-products-container">' . "\n" . 

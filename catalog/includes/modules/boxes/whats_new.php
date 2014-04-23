@@ -39,6 +39,7 @@ class lC_Boxes_whats_new extends lC_Modules {
       $Qnew->executeRandomMulti();
 
       if ( $Qnew->numberOfRows() ) {
+        // VQMOD-hookpoint; DO NOT MODIFY OR REMOVE THE LINE BELOW
         $lC_Product = new lC_Product($Qnew->valueInt('products_id'));
 
         $data = $lC_Product->getData();

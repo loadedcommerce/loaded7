@@ -53,6 +53,7 @@ class lC_Content_upcoming_products extends lC_Modules {
       
       $this->_content = '';
       while ($Qupcoming->next()) {
+        // VQMOD-hookpoint; DO NOT MODIFY OR REMOVE THE LINE BELOW
         $lC_Product = new lC_Product($Qupcoming->valueInt('products_id'));
 
         $this->_content .= '<div class="content-upcoming-products-container">' . "\n" . 

@@ -37,6 +37,7 @@ class lC_Boxes_featured_products extends lC_Modules {
     $Qfeatured->execute();
 
     if ($Qfeatured->numberOfRows() > 0) {
+      // VQMOD-hookpoint; DO NOT MODIFY OR REMOVE THE LINE BELOW
       $lC_Product = new lC_Product($Qfeatured->valueInt('products_id'));
       
       $this->_content = '';

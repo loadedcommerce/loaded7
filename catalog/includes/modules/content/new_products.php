@@ -56,10 +56,7 @@ class lC_Content_new_products extends lC_Modules {
       $Qproducts->execute();
 
       while ( $Qproducts->next() ) {
-
-global $lC_Customer; 
-if (!lC_Product_b2b::hasProductAccess($Qproducts->valueInt('products_id'), $lC_Customer->getCustomerGroup($lC_Customer->getID()))) continue;        
-
+        // VQMOD-hookpoint; DO NOT MODIFY OR REMOVE THE LINE BELOW
         $lC_Product = new lC_Product($Qproducts->valueInt('products_id'));
 
         $data[$lC_Product->getID()] = $lC_Product->getData();

@@ -40,7 +40,7 @@ class lC_Content_recently_visited extends lC_Modules {
       $this->_content = '';
       if ($lC_RecentlyVisited->hasProducts()) {
         foreach ($lC_RecentlyVisited->getProducts() as $product) {
-
+          // VQMOD-hookpoint; DO NOT MODIFY OR REMOVE THE LINE BELOW
           $lC_Product = new lC_Product($product['id']);
          
           $this->_content .= '<div class="content-recently-visited-container">' . "\n" . 
@@ -56,6 +56,7 @@ class lC_Content_recently_visited extends lC_Modules {
       
       if ($lC_RecentlyVisited->hasCategories()) {
         foreach ($lC_RecentlyVisited->getCategories() as $category) {
+          // VQMOD-hookpoint; DO NOT MODIFY OR REMOVE THE LINE BELOW
           if (!empty($category['parent_id'])) { 
             $this->_content .= '<div class="content-recently-visited-container">' . "\n" . 
                                '  <div class="content-recently-visited-name">' . sprintf($lC_Language->get('recently_visited_item_in_category'), lc_link_object(lc_href_link(FILENAME_DEFAULT, 'cPath=' . $product['category_path']), $product['category_name'])). '</div>' . "\n";
