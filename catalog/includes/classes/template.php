@@ -7,7 +7,9 @@
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: template.php v1.0 2013-08-08 datazen $
 */
-include_once(DIR_FS_CATALOG . 'includes/classes/BarcodeQR.php');
+global $lC_Vqmod;
+
+include_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/classes/BarcodeQR.php'));
 
 class lC_Template {
   /**
@@ -617,7 +619,7 @@ class lC_Template {
   *
   * @access private
   */
-  private function _getJavascriptPhpFilenames() {
+  private function _getJavascriptPhpFilenames() { 
     foreach ($this->_javascript_php_filenames as $filename) {
       if ( file_exists($filename) ) {
         include($filename);

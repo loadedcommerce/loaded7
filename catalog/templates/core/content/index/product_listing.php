@@ -30,7 +30,7 @@
       ?>
       <!-- PAGINATION-->
       <div class="product-listing-module-pagination margin-bottom">
-        <div class="pull-left large-margin-bottom"><?php echo $Qlisting->getBatchTotalPages($lC_Language->get('result_set_number_of_products')); ?></div>
+        <div class="pull-left large-margin-bottom page-results"><?php echo $Qlisting->getBatchTotalPages($lC_Language->get('result_set_number_of_products')); ?></div>
         <div class="pull-right large-margin-bottom no-margin-top">
           <ul class="pagination no-margin-top no-margin-bottom">
             <?php echo $Qlisting->getBatchPageLinks('page', lc_get_all_get_params(array('page', 'info', 'x', 'y')), false); ?>
@@ -61,7 +61,7 @@
       ?>
       <!-- PAGINATION-->
       <div class="product-listing-module-pagination">
-        <div class="pull-left"><?php echo $Qlisting->getBatchTotalPages($lC_Language->get('result_set_number_of_products')); ?></div>
+        <div class="pull-left page-results"><?php echo $Qlisting->getBatchTotalPages($lC_Language->get('result_set_number_of_products')); ?></div>
         <div class="pull-right no-margin-bottom no-margin-top">
           <ul class="pagination no-margin-top no-margin-bottom">
             <?php echo $Qlisting->getBatchPageLinks('page', lc_get_all_get_params(array('page', 'info', 'x', 'y')), false); ?>

@@ -29,8 +29,6 @@ class lC_Product_b2b extends lC_Product {
           
     $cg_access_levels = explode(';', $Qcg->value('customers_access_levels')); 
     
-    $Qcg->freeResult();   
-    
     // get the product access levels
     $Qproduct = $lC_Database->query('select access_levels from :table_products where products_id = :products_id limit 1');
     $Qproduct->bindTable(':table_products', TABLE_PRODUCTS);
