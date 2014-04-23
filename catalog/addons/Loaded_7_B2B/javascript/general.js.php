@@ -19,14 +19,14 @@ $(document).ready(function() {
   if (isB2B == 1) {
     if (isGuest == 1) {
       if (custAccess == 33) { // view catalog
-        $('.pricing-row').hide();
-        $('.buy-btn-div').hide();
+        $('.pricing-row').empty();
+        $('.buy-btn-div').empty();
       } else if (custAccess == 66) { // see pricing
-        $('.buy-btn-div').hide();
+        $('.buy-btn-div').empty();
       }  
     }
     if (allowCreateAccount == 0) {
-      $('.create-account-div').hide();
+      $('.create-account-div').empty();
     }
     $('.page-results').hide();
   }
