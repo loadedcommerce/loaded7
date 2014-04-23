@@ -305,7 +305,7 @@ CREATE TABLE lc_customers (
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_customers_access;
-CREATE TABLE EXISTS lc_customers_access (
+CREATE TABLE lc_customers_access (
   id int(11) NOT NULL AUTO_INCREMENT,
   `level` varchar(128) NOT NULL DEFAULT '',
   `status` tinyint(1) NOT NULL DEFAULT '0',
