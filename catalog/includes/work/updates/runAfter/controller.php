@@ -324,6 +324,18 @@ class lC_Updates_Admin_run_after extends lC_Updates_Admin {
     
     $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "customers_groups_data` ADD `customers_access_levels` VARCHAR(255) NOT NULL DEFAULT '';");
     parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "customers_groups_data` ADD `customers_access_levels` VARCHAR(255) NOT NULL DEFAULT '';");
+
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "customers_groups_data` ADD `hidden_products_notification` TINYINT(1) NOT NULL DEFAULT '0';");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "customers_groups_data` ADD `hidden_products_notification` TINYINT(1) NOT NULL DEFAULT '0';");
+    
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "customers_groups_data` ADD `taxable` TINYINT(1) NOT NULL DEFAULT '0';");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "customers_groups_data` ADD `taxable` TINYINT(1) NOT NULL DEFAULT '0';");
+    
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "customers_groups_data` ADD `payment_modules` VARCHAR(255) NOT NULL DEFAULT '';");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "customers_groups_data` ADD `payment_modules` VARCHAR(255) NOT NULL DEFAULT '';");
+        
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "customers_groups_data` ADD `shipping_modules` VARCHAR(255) NOT NULL DEFAULT '';");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "customers_groups_data` ADD `shipping_modules` VARCHAR(255) NOT NULL DEFAULT '';");
     
     $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "products` ADD `access_levels` VARCHAR(255) NOT NULL DEFAULT '';");
     parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "products` ADD `access_levels` VARCHAR(255) NOT NULL DEFAULT '';");

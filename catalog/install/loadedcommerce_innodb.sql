@@ -327,6 +327,10 @@ CREATE TABLE lc_customers_groups_data (
   customers_group_id int(11) NOT NULL DEFAULT '1',
   baseline_discount decimal(5,2) NOT NULL DEFAULT '0.00',
   customers_access_levels varchar(255) NOT NULL DEFAULT '',
+  hidden_products_notification tinyint(1) NOT NULL DEFAULT '0',
+  taxable tinyint(1) NOT NULL DEFAULT '0',
+  payment_modules varchar(255) NOT NULL DEFAULT '',
+  shipping_modules varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (id)
 ) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
