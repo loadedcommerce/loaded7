@@ -330,6 +330,12 @@ class lC_Updates_Admin_run_after extends lC_Updates_Admin {
     
     $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "categories` ADD `access_levels` VARCHAR(255) NOT NULL DEFAULT '';");
     parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "categories` ADD `access_levels` VARCHAR(255) NOT NULL DEFAULT '';");
+
+    $lC_Database->simpleQuery("INSERT IGNORE INTO `" . $pf . "customers_access` (id, level, status) VALUES (1, 'Guest', 1)");
+    parent::log("Database Update: INSERT IGNORE INTO `" . $pf . "customers_access` (id, level, status) VALUES (1, 'Guest', 1)");
+
+    $lC_Database->simpleQuery("INSERT IGNORE INTO `" . $pf . "customers_access` (id, level, status) VALUES (2, 'Registered', 1)");
+    parent::log("Database Update: INSERT IGNORE INTO `" . $pf . "customers_access` (id, level, status) VALUES (2, 'Registered', 1)");
   }
 }  
 ?>

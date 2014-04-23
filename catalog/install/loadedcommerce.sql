@@ -6176,6 +6176,9 @@ INSERT INTO lc_currencies (currencies_id, title, code, symbol_left, symbol_right
 INSERT INTO lc_currencies (currencies_id, title, code, symbol_left, symbol_right, decimal_places, value, last_updated) VALUES(2, 'Euro', 'EUR', '&euro;', '', '2', 0.726579, '2014-03-03 09:59:23');
 INSERT INTO lc_currencies (currencies_id, title, code, symbol_left, symbol_right, decimal_places, value, last_updated) VALUES(3, 'British Pounds', 'GBP', '&pound;', '', '2', 0.598311, '2014-03-03 09:59:23');
 
+INSERT INTO lc_customers_access (id, level, status) VALUES(1, 'Guest', 1);
+INSERT INTO lc_customers_access (id, level, status) VALUES(2, 'Registered', 1);
+
 INSERT INTO lc_customers_groups (customers_group_id, language_id, customers_group_name) VALUES(1, 1, 'Registered');
 INSERT INTO lc_customers_groups (customers_group_id, language_id, customers_group_name) VALUES(2, 1, 'Wholesale');
 
