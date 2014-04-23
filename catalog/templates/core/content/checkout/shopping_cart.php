@@ -166,7 +166,29 @@
     } 
     ?>      
   </div> <!-- /col -->
-</div>  
+</div>
+<?php
+  if (STOCK_CHECK == 1 && DISABLE_ADD_TO_CART == 1) { 
+?>
+<!-- low qoh modal start -->
+<div class="modal fade" id="lowqoh">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title"><?php echo $lC_Language->get('text_low_qoh_title'); ?></h4>
+      </div>
+      <div class="modal-body">
+        <p><?php echo $lC_Language->get('text_low_qoh_modal'); ?></p>
+        <p align="right"><button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $lC_Language->get('button_close'); ?></button></p>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- low qoh modal end -->
+<?php
+  } 
+?>  
 <script>
 $(document).ready(function() {
   var rows = $('#content-center-container').attr('class');
@@ -195,6 +217,8 @@ function _update(row, qty) {
   // disable checkout button until ajax finishes loading
   var href = $('#btn-checkout').attr('onclick');
   $('#btn-checkout').attr('onclick', '');
+  var stockCheck = '<?php echo STOCK_CHECK; ?>'   
+  var disableAddToCart = '<?php echo DISABLE_ADD_TO_CART; ?>'   
   var decimals = '<?php echo DECIMAL_PLACES; ?>';
   var currencyValue = '<?php echo $lC_Currencies->value($lC_Currencies->getCode()); ?>';
   var currencySymbolLeft = '<?php echo $lC_Currencies->getSessionSymbolLeft(); ?>';
@@ -231,6 +255,16 @@ function _update(row, qty) {
       $('#content-shopping-cart-order-totals-right').html(data.otText);
       // enable checkout button
       $('#btn-checkout').attr('onclick', href);
+      if (stockCheck == true) {
+        if (disableAddToCart == true) {
+          if (data.priceData.qoh < $('#products_' + row).val()) {
+            $('#lowqoh').modal();
+            $("#btn-checkout").attr('disabled', 'disabled');
+          } else {
+            $("#btn-checkout").removeAttr('disabled');
+          }
+        }
+      }
     }
   );  
   
