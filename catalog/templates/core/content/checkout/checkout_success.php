@@ -96,7 +96,7 @@ $oID = lC_Success::getOrderID($lC_Customer->getID());
                       }
                     }                    
                     echo '</td>' . "\n";
-                    echo '<td class="text-right">' . $lC_Currencies->displayPrice($products['price'], $products['tax_class_id'], $products['quantity']) . '</td>' . "\n" .
+                    echo '<td class="text-right">' . $lC_Currencies->displayPriceWithTaxRate($products['price'], $products['tax'], $products['quantity']) . '</td>' . "\n" .
                     '</tr>' . "\n";
                   }
                   ?>
