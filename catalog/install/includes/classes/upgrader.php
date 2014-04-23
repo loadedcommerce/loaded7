@@ -3417,9 +3417,10 @@ class lC_LocalUpgrader extends lC_Upgrader {
       $this->_msg = $source_db->getError();
       return false;
     }
-      // END CONNNECT TO SOURCE DB
-      
-      // CONNNECT TO TARGET DB
+    
+    // END CONNNECT TO SOURCE DB
+    
+    // CONNNECT TO TARGET DB
 
     $class = 'lC_Database_' . $t_db['DB_CLASS'];
     $target_db = new $class($t_db['DB_SERVER'], $t_db['DB_SERVER_USERNAME'], $t_db['DB_SERVER_PASSWORD']);
@@ -3433,7 +3434,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
       return false;
     }
 
-      // END CONNNECT TO TARGET DB
+    // END CONNNECT TO TARGET DB
 
     // ##########
     
@@ -3701,6 +3702,8 @@ class lC_LocalUpgrader extends lC_Upgrader {
 
     $sQry = $source_db->query('SELECT o.*, o.ipaddy as customers_ip_address, o.customers_address_format_id AS customers_address_format, o.billing_address_format_id AS billing_address_format, o.delivery_address_format_id AS delivery_address_format, c.countries_iso_code_2 AS customers_country_iso2, c.countries_iso_code_3 AS customers_country_iso3, z.zone_code AS customers_state_code, zz.zone_code AS delivery_state_code, cc.countries_iso_code_2 AS delivery_country_iso2, cc.countries_iso_code_3 AS delivery_country_iso3, zzz.zone_code AS billing_state_code, ccc.countries_iso_code_2 AS billing_country_iso2, ccc.countries_iso_code_3 AS billing_country_iso3 FROM orders o LEFT JOIN countries c ON o.customers_country = c.countries_name LEFT JOIN countries cc ON o.delivery_country = cc.countries_name LEFT JOIN countries ccc ON o.billing_country = ccc.countries_name LEFT JOIN zones z ON o.customers_state = z.zone_name LEFT JOIN zones zz ON o.delivery_state = zz.zone_name LEFT JOIN zones zzz ON o.billing_state = zzz.zone_name');
     $sQry->execute();
+    
+    if (!isset($pending_id) || $pending_id == null || $pending_id == '') $pending_id = 1;
       
     $numrows= $sQry->numberOfRows();
     if ($numrows > 0) { 
@@ -3903,10 +3906,15 @@ class lC_LocalUpgrader extends lC_Upgrader {
         $tQry->bindValue(':last_modified'           , $order['last_modified']);
         $tQry->bindValue(':date_purchased'          , $order['date_purchased']);
         $tQry->bindInt  (':orders_status'           , ($order['orders_status'] == 0) ? $pending_id : $order['orders_status']);
-        $tQry->bindValue(':orders_date_finished'    , $order['orders_date_finished']);
+        $tQry->bindValue(':orders_date_finished'    , ($order['orders_date_finished'] != NULL) ? $order['orders_date_finished'] : '0000-00-00 00:00:00');
         $tQry->bindValue(':currency'                , $order['currency']);
-        $tQry->bindValue(':currency_value'          , $order['currency_value']);
+        $tQry->bindFloat(':currency_value'          , $order['currency_value']);
         $tQry->execute();
+        
+        if ($target_db->isError()) {
+          $this->_msg = $target_db->getError();
+          return false;
+        }
         
         $cnt++;
         
