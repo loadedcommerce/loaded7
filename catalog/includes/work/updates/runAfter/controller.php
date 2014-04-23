@@ -317,7 +317,19 @@ class lC_Updates_Admin_run_after extends lC_Updates_Admin {
     parent::log("Database Update: UPDATE `" . $pf . "currencies` SET `symbol_left` = '&euro;' where `code` = 'EUR'");
     
     $lC_Database->simpleQuery("UPDATE `" . $pf . "currencies` SET `symbol_left` = '&pound;' where `code` = 'GBP'");
-    parent::log("Database Update: UPDATE `" . $pf . "currencies` SET `symbol_left` = '&pound;' where `code` = 'GBP'");      
+    parent::log("Database Update: UPDATE `" . $pf . "currencies` SET `symbol_left` = '&pound;' where `code` = 'GBP'");  
+    
+    $lC_Database->simpleQuery("CREATE TABLE IF NOT EXISTS `" . $pf . "customers_access` (id int(11) NOT NULL AUTO_INCREMENT, `level` varchar(128) NOT NULL DEFAULT '', `status` tinyint(1) NOT NULL DEFAULT '0', PRIMARY KEY (id)) ENGINE=" . $engine . " CHARACTER SET utf8 COLLATE utf8_general_ci");   
+    parent::log("Database Update: CREATE TABLE IF NOT EXISTS `" . $pf . "customers_access` (id int(11) NOT NULL AUTO_INCREMENT, `level` varchar(128) NOT NULL DEFAULT '', `status` tinyint(1) NOT NULL DEFAULT '0', PRIMARY KEY (id)) ENGINE=" . $engine . " CHARACTER SET utf8 COLLATE utf8_general_ci");   
+    
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "customers_groups_data` ADD `customers_access_levels` VARCHAR(255) NOT NULL DEFAULT '';");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "customers_groups_data` ADD `customers_access_levels` VARCHAR(255) NOT NULL DEFAULT '';");
+    
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "products` ADD `access_levels` VARCHAR(255) NOT NULL DEFAULT '';");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "products` ADD `access_levels` VARCHAR(255) NOT NULL DEFAULT '';");
+    
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "categories` ADD `access_levels` VARCHAR(255) NOT NULL DEFAULT '';");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "categories` ADD `access_levels` VARCHAR(255) NOT NULL DEFAULT '';");
   }
 }  
 ?>
