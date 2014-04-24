@@ -862,7 +862,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
         
         $customers_group_id = ($lcgidQry->numberOfRows() > 0) ? $lcgidQry->value('customers_group_id') : 1;
         
-        if ($product['products_price1'] > 0) {
+        if ($product['products_price1'] > 0 && $product['products_price1'] !== $product['products_price']) {
           $tp1Qry = $target_db->query('INSERT INTO :table_products_pricing (products_id,
                                                                             group_id,
                                                                             tax_class_id,
@@ -883,7 +883,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
           $tp1Qry->execute();
         }
         
-        if ($product['products_price2'] > 0) {
+        if ($product['products_price2'] > 0 && $product['products_price2'] !== $product['products_price']) {
           $tp2Qry = $target_db->query('INSERT INTO :table_products_pricing (products_id,
                                                                             group_id,
                                                                             tax_class_id,
@@ -904,7 +904,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
           $tp2Qry->execute();
         }
         
-        if ($product['products_price3'] > 0) {
+        if ($product['products_price3'] > 0 && $product['products_price3'] !== $product['products_price']) {
           $tp3Qry = $target_db->query('INSERT INTO :table_products_pricing (products_id,
                                                                             group_id,
                                                                             tax_class_id,
@@ -925,7 +925,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
           $tp3Qry->execute();
         }
         
-        if ($product['products_price4'] > 0) {
+        if ($product['products_price4'] > 0 && $product['products_price4'] !== $product['products_price']) {
           $tp4Qry = $target_db->query('INSERT INTO :table_products_pricing (products_id,
                                                                             group_id,
                                                                             tax_class_id,
@@ -946,7 +946,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
           $tp4Qry->execute();
         }
         
-        if ($product['products_price5'] > 0) {
+        if ($product['products_price5'] > 0 && $product['products_price5'] !== $product['products_price']) {
           $tp5Qry = $target_db->query('INSERT INTO :table_products_pricing (products_id,
                                                                             group_id,
                                                                             tax_class_id,
@@ -967,7 +967,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
           $tp5Qry->execute();
         }
         
-        if ($product['products_price1'] > 0) {
+        if ($product['products_price6'] > 0 && $product['products_price6'] !== $product['products_price']) {
           $tp6Qry = $target_db->query('INSERT INTO :table_products_pricing (products_id,
                                                                             group_id,
                                                                             tax_class_id,
@@ -988,7 +988,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
           $tp6Qry->execute();
         }
         
-        if ($product['products_price7'] > 0) {
+        if ($product['products_price7'] > 0 && $product['products_price7'] !== $product['products_price']) {
           $tp7Qry = $target_db->query('INSERT INTO :table_products_pricing (products_id,
                                                                             group_id,
                                                                             tax_class_id,
@@ -1009,7 +1009,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
           $tp7Qry->execute();
         }
         
-        if ($product['products_price8'] > 0) {
+        if ($product['products_price8'] > 0 && $product['products_price8'] !== $product['products_price']) {
           $tp8Qry = $target_db->query('INSERT INTO :table_products_pricing (products_id,
                                                                             group_id,
                                                                             tax_class_id,
@@ -1030,7 +1030,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
           $tp8Qry->execute();
         }
         
-        if ($product['products_price9'] > 0) {
+        if ($product['products_price9'] > 0 && $product['products_price9'] !== $product['products_price']) {
           $tp9Qry = $target_db->query('INSERT INTO :table_products_pricing (products_id,
                                                                             group_id,
                                                                             tax_class_id,
@@ -1051,7 +1051,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
           $tp9Qry->execute();
         }
         
-        if ($product['products_price10'] > 0) {
+        if ($product['products_price10'] > 0 && $product['products_price10'] !== $product['products_price']) {
           $tp10Qry = $target_db->query('INSERT INTO :table_products_pricing (products_id,
                                                                              group_id,
                                                                              tax_class_id,
@@ -1072,7 +1072,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
           $tp10Qry->execute();
         }
         
-        if ($product['products_price11'] > 0) {
+        if ($product['products_price11'] > 0 && $product['products_price11'] !== $product['products_price']) {
           $tp11Qry = $target_db->query('INSERT INTO :table_products_pricing (products_id,
                                                                              group_id,
                                                                              tax_class_id,
@@ -1128,6 +1128,16 @@ class lC_LocalUpgrader extends lC_Upgrader {
       $mQry->freeResult();
     }
     
+    // added for removing duplicate qty price break entries
+    $clean = $target_db->query('ALTER IGNORE TABLE :table_products_pricing ADD UNIQUE INDEX (products_id, group_id, price_break)');
+    $clean->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
+    $clean->execute();
+        
+    if ($target_db->isError()) {
+      $this->_msg = $target_db->getError();
+      return false;
+    }
+    
     // END LOAD PRODUCTS FROM SOURCE DB
 
     // LOAD PRODUCTS DESCRIPTION FROM SOURCE DB
@@ -1168,49 +1178,60 @@ class lC_LocalUpgrader extends lC_Upgrader {
     // LOAD PRODUCTS DESCRIPTION TO TARGET DB
     
     $iCnt = 0;
-    foreach ($products_desc as $product) {      
-      
+    foreach ($products_desc as $product) {
       $permalink = self::generateCleanPermalink($product['products_name']);
+      
+      // START Added for duplicate keyword/permalink
+      $pkQry = $target_db->query('SELECT products_keyword FROM :table_products_description WHERE products_keyword = :products_keyword');
+      $pkQry->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
+      $pkQry->bindValue(':products_keyword', $permalink);
+      $pkQry->execute();
+      
+      if ($pkQry->numberOfRows() > 0) {
+        $permalink .= '-' . $product['products_id'];
+      } 
+      // END Added for duplicate keyword/permalink
       
       if (preg_match('/product$/i', $permalink)) {
         $permalink .= '-link';
       }
       
-      $tQry = $target_db->query('INSERT INTO :table_products_desc (products_id, 
-                                                                   language_id, 
-                                                                   products_name, 
-                                                                   products_description, 
-                                                                   products_keyword, 
-                                                                   products_tags, 
-                                                                   products_meta_title, 
-                                                                   products_meta_keywords, 
-                                                                   products_meta_description, 
-                                                                   products_url, 
-                                                                   products_viewed) 
-                                                           VALUES (:products_id, 
-                                                                   :language_id, 
-                                                                   :products_name, 
-                                                                   :products_description, 
-                                                                   :products_keyword, 
-                                                                   :products_tags, 
-                                                                   :products_meta_title, 
-                                                                   :products_meta_keywords, 
-                                                                   :products_meta_description, 
-                                                                   :products_url, 
-                                                                   :products_viewed)');
+      
+      $tQry = $target_db->query('INSERT INTO :table_products_description (products_id, 
+                                                                          language_id, 
+                                                                          products_name, 
+                                                                          products_description, 
+                                                                          products_keyword, 
+                                                                          products_tags, 
+                                                                          products_meta_title, 
+                                                                          products_meta_keywords, 
+                                                                          products_meta_description, 
+                                                                          products_url, 
+                                                                          products_viewed) 
+                                                                  VALUES (:products_id, 
+                                                                          :language_id, 
+                                                                          :products_name, 
+                                                                          :products_description, 
+                                                                          :products_keyword, 
+                                                                          :products_tags, 
+                                                                          :products_meta_title, 
+                                                                          :products_meta_keywords, 
+                                                                          :products_meta_description, 
+                                                                          :products_url, 
+                                                                          :products_viewed)');
 
-      $tQry->bindTable(':table_products_desc', TABLE_PRODUCTS_DESCRIPTION);
-      $tQry->bindInt  (':products_id'              , $product['products_id']);
-      $tQry->bindInt  (':language_id'              , $product['language_id']);
-      $tQry->bindValue(':products_name'            , $product['products_name']);
-      $tQry->bindValue(':products_description'     , $product['products_description']);
-      $tQry->bindValue(':products_keyword'         , $permalink);
-      $tQry->bindValue(':products_tags'            , $product['products_tags']);
-      $tQry->bindValue(':products_meta_title'      , $product['products_meta_title']);
-      $tQry->bindValue(':products_meta_keywords'   , $product['products_meta_keywords']);
-      $tQry->bindValue(':products_meta_description', $product['products_meta_description']);
-      $tQry->bindValue(':products_url'             , $product['products_url']);
-      $tQry->bindInt  (':products_viewed'          , $product['products_viewed']);
+      $tQry->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
+      $tQry->bindInt  (':products_id'               , $product['products_id']);
+      $tQry->bindInt  (':language_id'               , $product['language_id']);
+      $tQry->bindValue(':products_name'             , $product['products_name']);
+      $tQry->bindValue(':products_description'      , $product['products_description']);
+      $tQry->bindValue(':products_keyword'          , $permalink);
+      $tQry->bindValue(':products_tags'             , $product['products_tags']);
+      $tQry->bindValue(':products_meta_title'       , $product['products_meta_title']);
+      $tQry->bindValue(':products_meta_keywords'    , $product['products_meta_keywords']);
+      $tQry->bindValue(':products_meta_description' , $product['products_meta_description']);
+      $tQry->bindValue(':products_url'              , $product['products_url']);
+      $tQry->bindInt  (':products_viewed'           , $product['products_viewed']);
       $tQry->execute();
       
       if ($target_db->isError()) {
@@ -1360,6 +1381,17 @@ class lC_LocalUpgrader extends lC_Upgrader {
         // END getCPATH CODE         
       
         $permatext = self::generateCleanPermalink($sQry->value('products_name'));
+        
+        // START Added for duplicate keyword/permalink
+        $pkQry = $target_db->query('SELECT products_keyword FROM :table_products_description WHERE products_keyword = :products_keyword');
+        $pkQry->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
+        $pkQry->bindValue(':products_keyword', $permatext);
+        $pkQry->execute();
+        
+        if ($pkQry->numberOfRows() > 0) {
+          $permatext .= '-' . $sQry->value('products_id');
+        } 
+        // END Added for duplicate keyword/permalink
       
         if (preg_match('/product$/i', $permatext)) {
           $permatext .= '-link';
@@ -1993,7 +2025,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
     // LOAD CATEGORY PERMALINKs TO TARGET DB
     
     $iCnt = 0;
-    $sQry = $source_db->query('SELECT c.categories_id, cd.language_id, .parent_id, cd.categories_name FROM categories as c, categories_description AS cd WHERE c.categories_id = cd.categories_id');
+    $sQry = $source_db->query('SELECT c.categories_id, c.parent_id, cd.language_id, cd.categories_name FROM categories as c, categories_description AS cd WHERE c.categories_id = cd.categories_id');
     $sQry->execute();
       
     $numrows = $sQry->numberOfRows();
@@ -6225,14 +6257,14 @@ class lC_LocalUpgrader extends lC_Upgrader {
     $p = str_replace("---", "-", $p);
     $p = str_replace("--", "-", $p);
       
-    //Convert accented characters, and remove parentheses and apostrophes
+    // Convert accented characters, and remove parentheses and apostrophes
     $from = explode(',', "ç,æ,œ,á,é,í,ó,ú,à,è,ì,ò,ù,ä,ë,ï,ö,ü,ÿ,â,ê,î,ô,û,å,e,i,ø,u,(,),[,],'");
     $to = explode(',', 'c,ae,oe,a,e,i,o,u,a,e,i,o,u,a,e,i,o,u,y,a,e,i,o,u,a,e,i,o,u,,,,,,');
 
-    //Do the replacements, and convert all other non-alphanumeric characters to spaces
+    // Do the replacements, and convert all other non-alphanumeric characters to spaces
     $p = preg_replace('~[^\w\d]+~', '-', str_replace($from, $to, trim($p)));
 
-    //Remove a - at the beginning or end and make lowercase
+    // Remove a - at the beginning or end and make lowercase
     return strtolower(preg_replace('/^-/', '', preg_replace('/-$/', '', $p)));
   }
 }
