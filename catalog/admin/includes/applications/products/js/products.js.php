@@ -100,10 +100,6 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
       }
       ?> 
       setActiveTab();  
-      
-      // access levels  
-      var product = '<?php echo $_GET['products']; ?>';
-      if (product == '' && $('#check_all_levels').length) $('#check_all_levels').trigger('click');       
     });
     <?php if ($pInfo) { ?>
     /**

@@ -107,9 +107,6 @@ $(document).ready(function() {
     $("#clogo_controls").hide();
     $("#imagePreviewContainer").css("background", "none");
   });
-  // access levels  
-  var action = '<?php echo $_GET['action']; ?>';
-  if (action == 'new' && $('#check_all_levels').length) $('#check_all_levels').trigger('click');
 });
                   
 function createUploader() {

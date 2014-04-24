@@ -41,15 +41,16 @@ class lC_Product_b2b extends lC_Product {
     
     // check if product has access 
     $valid = false;
-    foreach ($product_access_levels as $id) {
-      if ($id != '') {
-        if (in_array($id, $cg_access_levels)) {
-          $valid = true;
-          break;
-        } 
-      } else {
- //       $valid = true;
- //       break;
+    if ($Qproduct->value('access_levels') == '') { // if nothing set, valid = true
+      $valid = true;
+    } else {
+      foreach ($product_access_levels as $id) {
+        if ($id != '') {
+          if (in_array($id, $cg_access_levels)) {
+            $valid = true;
+            break;
+          } 
+        }
       }
     }
 
@@ -86,15 +87,16 @@ class lC_Product_b2b extends lC_Product {
     
     // check if product has access 
     $valid = false;
-    foreach ($category_access_levels as $id) {
-      if ($id != '') {
-        if (in_array($id, $cg_access_levels)) {
-          $valid = true;
-          break;
-        } 
-      } else {
-    //    $valid = true;
-    //    break;
+    if ($Qcat->value('access_levels') == '') { // if nothing set, valid = true
+      $valid = true;
+    } else {
+      foreach ($category_access_levels as $id) {
+        if ($id != '') {
+          if (in_array($id, $cg_access_levels)) {
+            $valid = true;
+            break;
+          } 
+        }
       }
     }
 
