@@ -78,8 +78,8 @@
       if ( $lC_Product->hasSubProducts($lC_Product->getID()) === false) {
         ?>
         <div class="content-products-info-price-container">
-          <span class="content-products-info-price pull-left lt-blue pricing-row clearfix"><?php echo $lC_Product->getPriceFormated(true); ?></span>
-          <span class="content-products-info-avail with-padding-no-top-bottom clearfix"><?php echo $availability ?></span>
+          <span class="content-products-info-price pull-left lt-blue pricing-row clearfix margin-right"><?php echo $lC_Product->getPriceFormated(true); ?></span>
+          <span class="content-products-info-avail clearfix"><?php echo $availability ?></span>
         </div>
         <?php
       }
