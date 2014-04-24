@@ -14,7 +14,16 @@
   <div class="col-sm-12 col-lg-12 large-margin-bottom">  
     <h1 class="no-margin-top"><?php echo $lC_Language->get('text_checkout'); ?></h1>
     <?php 
-    if ( $lC_MessageStack->size('checkout_confirmation') > 0 ) echo '<div class="message-stack-container alert alert-danger small-margin-bottom">' . $lC_MessageStack->get('checkout_confirmation') . '</div>' . "\n"; 
+    if(isset($_SESSION['coupon_msg']) && $_SESSION['coupon_msg'] != '') {
+      $lC_MessageStack->add('shopping_cart', $_SESSION['coupon_msg'], 'success');
+      unset($_SESSION['coupon_msg']);
+      if ( $lC_MessageStack->size('shopping_cart') > 0 ) echo '<div class="message-stack-container alert alert-success small-margin-bottom">' . $lC_MessageStack->get('shopping_cart') . '</div>' . "\n"; 
+    }
+    if(isset($_SESSION['remove_coupon_msg']) && $_SESSION['remove_coupon_msg'] != '') {
+      $lC_MessageStack->add('shopping_cart', $_SESSION['remove_coupon_msg'], 'warning');
+      unset($_SESSION['remove_coupon_msg']);
+      if ( $lC_MessageStack->size('shopping_cart') > 0 ) echo '<div class="message-stack-container alert alert-warning small-margin-bottom">' . $lC_MessageStack->get('shopping_cart') . '</div>' . "\n"; 
+    }  
     ?>
     <div id="content-checkout-shipping-container">
       <div class="panel panel-default no-margin-bottom">
@@ -131,15 +140,20 @@
                 <div id="content-checkout-confirmation-order-totals-left" class="col-sm-5 col-lg-5"></div>
                 <div id="content-checkout-confirmation-order-totals-right" class="col-sm-7 col-lg-7">
                   <?php
-                  foreach ($lC_ShoppingCart->getOrderTotals() as $module) {   
-                    ?>
-                    <div class="clearfix">
-                      <span class="pull-left ot-<?php echo strtolower(str_replace('_', '-', $module['code'])); ?>"><?php echo strip_tags($module['title']); ?></span>
-                      <span class="pull-right ot-<?php echo strtolower(str_replace('_', '-', $module['code'])); ?>"><?php echo strip_tags($module['text']); ?></span>                
-                    </div>                    
-                    <?php
-                  }
-                  ?>     
+                  foreach ($lC_ShoppingCart->getOrderTotals() as $module) {  
+                    $title = (strstr($module['title'], '(')) ? substr($module['title'], 0, strpos($module['title'], '(')) . ':' : $module['title'];
+                    $class = str_replace(':', '', $title);
+                    $class = 'ot-' . strtolower(str_replace(' ', '-', $class));
+                 ?>
+                 <div class="clearfix">
+                 <?php echo '<div class="clearfix">' .
+                           '  <span class="pull-left ' . $class . '">' . $title . '</span>' .
+                           '  <span class="pull-right ' . $class . '">' . $module['text'] . '</span>' .'</div>';  
+                 ?> 
+                 </div>  
+                 <?php
+                   }
+                 ?>      
                 </div>
               </div>              
               <?php         

@@ -162,7 +162,12 @@
           }       
           return false;
         }
-        window.location.href = window.location.href;
+        url = window.location.href;
+        if(data.rpcMessage != '') {     
+          //url = window.location.href+'&msg='+data.rpcMessage;
+          //url.replace("/&msg=/g", '&msg='+data.rpcMessage);   
+         }
+        window.location.href = url;
       }
     );  
   }
@@ -176,7 +181,8 @@
           alert('<?php echo addslashes($lC_Language->get('ms_error_action_not_performed')); ?>');
           return false;
         }
-        window.location.href = window.location.href;
+        url = window.location.href;        
+        window.location.href = url;       
       }
     );  
   }

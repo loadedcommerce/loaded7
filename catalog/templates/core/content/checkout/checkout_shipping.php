@@ -14,7 +14,16 @@
   <div class="col-sm-12 col-lg-12 large-margin-bottom">  
     <h1 class="no-margin-top"><?php echo $lC_Language->get('text_checkout'); ?></h1>
     <?php 
-    if ( $lC_MessageStack->size('checkout_shipping') > 0 ) echo '<div class="message-stack-container alert alert-danger small-margin-bottom">' . $lC_MessageStack->get('checkout_shipping') . '</div>' . "\n"; 
+    if(isset($_SESSION['coupon_msg']) && $_SESSION['coupon_msg'] != '') {
+      $lC_MessageStack->add('shopping_cart', $_SESSION['coupon_msg'], 'success');
+      unset($_SESSION['coupon_msg']);
+      if ( $lC_MessageStack->size('shopping_cart') > 0 ) echo '<div class="message-stack-container alert alert-success small-margin-bottom">' . $lC_MessageStack->get('shopping_cart') . '</div>' . "\n"; 
+    }
+    if(isset($_SESSION['remove_coupon_msg']) && $_SESSION['remove_coupon_msg'] != '') {
+      $lC_MessageStack->add('shopping_cart', $_SESSION['remove_coupon_msg'], 'warning');
+      unset($_SESSION['remove_coupon_msg']);
+      if ( $lC_MessageStack->size('shopping_cart') > 0 ) echo '<div class="message-stack-container alert alert-warning small-margin-bottom">' . $lC_MessageStack->get('shopping_cart') . '</div>' . "\n"; 
+    }  
     ?>
     <form name="checkout_shipping" id="checkout_shipping" action="<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping=process', 'SSL'); ?>" method="post">
       <div id="content-checkout-shipping-container">      
@@ -40,6 +49,9 @@
                 <div class="well">
                   <?php 
                   foreach ($lC_ShoppingCart->getOrderTotals() as $module) { 
+                    $title = (strstr($module['title'], '(')) ? substr($module['title'], 0, strpos($module['title'], '(')) . ':' : $module['title'];
+                    $class = str_replace(':', '', $title);
+                    $class = 'ot-' . strtolower(str_replace(' ', '-', $class));
                     if(count($lC_Shipping->getQuotes()) == 1 && $module['code'] == 'shipping') {
                       $shipping_tmp = $lC_Shipping->getQuotes();
                       $module['title'] = $shipping_tmp[0]['methods'][0]['title'];
@@ -47,8 +59,10 @@
                     }
                     ?>
                     <div class="clearfix">
-                      <span class="pull-left ot-<?php echo strtolower(str_replace('_', '-', $module['code'])); ?>"><?php echo strip_tags($module['title']); ?></span>
-                      <span class="pull-right ot-<?php echo strtolower(str_replace('_', '-', $module['code'])); ?>"><?php echo strip_tags($module['text']); ?></span>                
+                 <?php echo '<div class="clearfix">' .
+                           '  <span class="pull-left ' . $class . '">' . $title . '</span>' .
+                           '  <span class="pull-right ' . $class . '">' . $module['text'] . '</span>' .'</div>';  
+                 ?> 
                     </div>                    
                     <?php
                   }
