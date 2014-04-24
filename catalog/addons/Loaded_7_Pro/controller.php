@@ -15,6 +15,7 @@ global $lC_Vqmod;
 
 require_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/classes/transport.php'));
 include_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'addons/Loaded_7_Pro/admin/applications/products/classes/products.php'));
+include_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'addons/Loaded_7_Pro/admin/applications/categories/classes/categories.php'));
 
 class Loaded_7_Pro extends lC_Addon { // your addon must extend lC_Addon
   /*
@@ -190,7 +191,7 @@ class Loaded_7_Pro extends lC_Addon { // your addon must extend lC_Addon
   * @access public
   * @return void
   */
-  private function _clearCache() {
+  protected function _clearCache() {
     lC_Cache::clear('configuration');
     lC_Cache::clear('languages');
     lC_Cache::clear('addons');
@@ -202,7 +203,7 @@ class Loaded_7_Pro extends lC_Addon { // your addon must extend lC_Addon
   * @access public
   * @return void
   */
-  private function _checkStatus() {
+  protected function _checkStatus() {
     $addons = '';
     if (file_exists('../includes/work/cache/addons.cache')) {
       $addons = @file_get_contents('../includes/work/cache/addons.cache');
@@ -213,10 +214,10 @@ class Loaded_7_Pro extends lC_Addon { // your addon must extend lC_Addon
  /**
   * Validate the serial is valid and active
   *
-  * @access private
+  * @access protected
   * @return boolean
   */
-  private function _validateSerial($serial) {
+  protected function _validateSerial($serial) {
     $result = array();
     $validateArr = array('serial' => $serial,
                          'storeName' => STORE_NAME,
@@ -236,10 +237,10 @@ class Loaded_7_Pro extends lC_Addon { // your addon must extend lC_Addon
   /**
   * Check to see if it's time to re-check addon validity
   *  
-  * @access private      
+  * @access protected      
   * @return boolean
   */   
-  private function _timeToCheck() {
+  protected function _timeToCheck() {
     global $lC_Database;
     
     $itsTime = false;
@@ -271,10 +272,10 @@ class Loaded_7_Pro extends lC_Addon { // your addon must extend lC_Addon
   /**
   * Update the time last checked the install ID
   *  
-  * @access private      
+  * @access protected      
   * @return void
   */   
-  private function _updateLastChecked() {
+  protected function _updateLastChecked() {
     global $lC_Database;
 
     $Qcheck = $lC_Database->query('update :table_configuration set last_modified = :last_modified where configuration_key = :configuration_key');

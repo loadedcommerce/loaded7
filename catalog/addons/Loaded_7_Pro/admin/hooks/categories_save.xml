@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+  <id>Categories Save</id>
+  <version>1.0.0</version>
+  <vqmver>2.3.2</vqmver>
+  <author>loadedcommerce.com</author>
+  <file name="includes/applications/categories/actions/save.php">
+    <operation info="Use Pro Class">
+      <search position="replace"><![CDATA[$id = lC_Categories_Admin::save((isset($_GET['categories']) && is_numeric($_GET['categories']) ? $_GET['categories'] : null), $data);]]></search>         
+      <add><![CDATA[$id = lC_Categories_Admin_Pro::save((isset($_GET['categories']) && is_numeric($_GET['categories']) ? $_GET['categories'] : null), $data);]]></add>
+    </operation>  
+  </file> 
+</modification>
