@@ -697,6 +697,7 @@ CREATE TABLE lc_products_variants (
   products_id int(10) unsigned NOT NULL,
   products_variants_values_id int(10) unsigned NOT NULL,
   default_combo tinyint(3) unsigned DEFAULT NULL,
+  default_visual int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (products_id,products_variants_values_id)
 ) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
