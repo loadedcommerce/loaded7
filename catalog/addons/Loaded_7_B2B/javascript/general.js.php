@@ -21,6 +21,8 @@ $(document).ready(function() {
       if (custAccess == 33) { // view catalog
         $('.pricing-row').empty();
         $('.buy-btn-div').empty();
+        $('.content-products-info-price').remove();
+        $('.ships24hours').addClass('pull-left margin-bottom margin-left');
       } else if (custAccess == 66) { // see pricing
         $('.buy-btn-div').empty();
       }  
