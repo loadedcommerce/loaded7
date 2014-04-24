@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+  <id>After Image Groups, add Product Classes</id>
+  <version>1.0.0</version>
+  <vqmver>2.3.2</vqmver>
+  <author>loadedcommerce.com</author>
+  <file name="includes/modules/access/product_settings.php">
+    <operation info="After Image Groups, add Product Classes">
+      <search position="after"><![CDATA[global $lC_Language;]]></search>         
+      <add><![CDATA[global $lC_Template;
+                    $lC_Language->loadIniFile(DIR_FS_CATALOG . 'addons/Loaded_7_Pro/admin/languages/en_US/modules/access/product_classes.php', null, null, true);]]></add>
+                    $lC_Template->setSubOf('product_settings');
+    </operation>
+
+    <operation info="After Image Groups, add Product Classes">
+      <search position="after"><![CDATA['identifier' => '?image_groups'),]]></search>         
+      <add><![CDATA[            array('icon' => 'classes.png',
+                                      'title' => $lC_Language->get('access_product_classes_title'),
+                                      'identifier' => '?product_classes'),      ]]></add>
+    </operation>
+  </file>
+  <file name="includes/classes/template.php">
+    <operation info="After Image Groups, add Product Classes">
+      <search position="after"><![CDATA[} else if ($_module == 'image_groups' && $_SESSION['admin']['access']['product_settings'] > 0) { $ok = TRUE;]]></search>         
+      <add><![CDATA[} else if ($_module == 'product_classes' && $_SESSION['admin']['access']['product_settings'] > 0) { $ok = TRUE;]]></add>
+    </operation>    
+  </file> 
+</modification>
