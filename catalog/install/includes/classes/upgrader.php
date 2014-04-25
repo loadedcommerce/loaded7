@@ -4266,6 +4266,8 @@ class lC_LocalUpgrader extends lC_Upgrader {
           $this->_msg = $target_db->getError();
           return false;
         }
+        
+        $tQry->freeResult();
       }
       
       $sQry->freeResult();
@@ -4318,6 +4320,8 @@ class lC_LocalUpgrader extends lC_Upgrader {
           $this->_msg = $target_db->getError();
           return false;
         }
+        
+        $tQry->freeResult();
       }
       
       $sQry->freeResult();
@@ -4337,10 +4341,11 @@ class lC_LocalUpgrader extends lC_Upgrader {
     $sQry->execute();
       
     // get the lowest customers group id from the target db
-    $tQry = $target_db->query('SELECT MIN(customers_group_id) AS customers_group_id FROM customers_groups');
-    $tQry->execute();
+    $cgQry = $target_db->query('SELECT MIN(customers_group_id) AS customers_group_id FROM :table_customers_groups');
+    $cgQry->bindTable(':table_customers_groups', TABLE_CUSTOMERS_GROUPS);
+    $cgQry->execute();
     
-    $customers_group_id = ($tQry->numberOfRows() > 0) ? $tQry->value('customers_group_id') : 0;
+    $customers_group_id = ($cgQry->numberOfRows() > 0) ? $cgQry->valueInt('customers_group_id') : 0;
       
     if ($sQry->numberOfRows() > 0) { 
       while ($sQry->next()) {        
@@ -4371,7 +4376,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
       }
       
       $sQry->freeResult();
-      $tQry->freeResult();
+      $cgQry->freeResult();
     }
     
     // LOAD PRODUCTS SIMPLE OPTIONS AND PRODUCTS SIMPLE OPTIONS VALUES FROM SOURCE DB
