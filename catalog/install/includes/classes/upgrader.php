@@ -4225,8 +4225,8 @@ class lC_LocalUpgrader extends lC_Upgrader {
         } else if ($otQry->value('options_type') == '4') {
           // $module = 'text_area'; // back to text_area once loaded7 supports it 
           $module = 'text_field';
-        // no support for file upload yet even for conversion
-        // } else if ($otQry->value('options_type') == '5') { 
+          // no support for file upload yet even for conversion
+          // } else if ($otQry->value('options_type') == '5') { 
           // $module = 'file_upload'; // back to check_box once loaded7 supports it
         } else {
           $module = 'pull_down_menu';
@@ -4285,28 +4285,33 @@ class lC_LocalUpgrader extends lC_Upgrader {
     if ($sQry->numberOfRows() > 0) { 
       while ($sQry->next()) {
         $group  = array(
-                          'id'                          => ""
+                          'id'                          => $sQry->value('products_options_values_id')
                         , 'languages_id'                => $sQry->value($map['languages_id'])
                         , 'products_variants_groups_id' => $sQry->value('products_options_id')
                         , 'title'                       => $sQry->value('products_options_values_name')
                         , 'sort_order'                  => 0
                          ); 
                          
-        $tQry = $target_db->query('INSERT INTO :table_products_variants_values (languages_id, 
+        $tQry = $target_db->query('INSERT INTO :table_products_variants_values (id, 
+                                                                                languages_id, 
                                                                                 products_variants_groups_id, 
                                                                                 title, 
                                                                                 sort_order) 
-                                                                        VALUES (:languages_id, 
+                                                                        VALUES (:id,
+                                                                                :languages_id, 
                                                                                 :products_variants_groups_id, 
                                                                                 :title, 
-                                                                                :sort_order)');
+                                                                                :sort_order) 
+                                                   ON DUPLICATE KEY UPDATE id = :update_id');
 
         $tQry->bindTable(':table_products_variants_values', TABLE_PRODUCTS_VARIANTS_VALUES);
         
+        $tQry->bindInt  (':id'                         , $group['id']);
         $tQry->bindInt  (':languages_id'               , $group['languages_id']);
         $tQry->bindInt  (':products_variants_groups_id', $group['products_variants_groups_id']);
         $tQry->bindValue(':title'                      , $group['title']);
         $tQry->bindInt  (':sort_order'                 , $group['sort_order']);
+        $tQry->bindInt  (':update_id'                         , $group['id']);
         $tQry->execute();
         
         if ($target_db->isError()) {
@@ -4335,7 +4340,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
     $tQry = $target_db->query('SELECT MIN(customers_group_id) AS customers_group_id FROM customers_groups');
     $tQry->execute();
     
-    $customers_group_id = ($tQry->numberOfRows() > 0) ? $tQry->value('customers_group_id') : 1;
+    $customers_group_id = ($tQry->numberOfRows() > 0) ? $tQry->value('customers_group_id') : 0;
       
     if ($sQry->numberOfRows() > 0) { 
       while ($sQry->next()) {        
