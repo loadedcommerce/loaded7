@@ -4426,8 +4426,8 @@ class lC_LocalUpgrader extends lC_Upgrader {
       
       if ($Qchk->numberOfRows() == 0) {
         // get products_id from products_simple_options
-        /*$Qso = $target_db->query('SELECT products_id from :products_simple_options WHERE options_id = :options_id and products_id = :products_id limit 1');
-        $Qso->bindTable(':products_simple_options', TABLE_PRODUCTS_SIMPLE_OPTIONS);
+        /*$Qso = $target_db->query('SELECT products_id from :table_products_simple_options WHERE options_id = :options_id and products_id = :products_id limit 1');
+        $Qso->bindTable(':table_products_simple_options', TABLE_PRODUCTS_SIMPLE_OPTIONS);
         $Qso->bindInt  (':options_id' , $option['options_id']);
         $Qso->bindInt  (':products_id', $option['products_id']);
         $Qso->execute();*/
