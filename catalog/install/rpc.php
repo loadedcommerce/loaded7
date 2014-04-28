@@ -650,6 +650,24 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
       exit;
       break;
       
+      case 'import_currencies':
+      {
+        require_once("includes/classes/upgrader.php");
+        $upgrader = UpgraderFactory::create($_POST['UPGRADE_METHOD']);
+        $upgrader->setConnectDetails($_POST);
+        $rslt = $upgrader->importCurrencies();
+        
+        if($rslt == false){
+          echo '[[0|'.$upgrader->displayMessage().']]';
+          return false;
+        }
+        
+        echo '[[1]]';
+        return true;
+      }
+      exit;
+      break;
+      
       // END IMPORT FUNCTIONS
   }
 }
