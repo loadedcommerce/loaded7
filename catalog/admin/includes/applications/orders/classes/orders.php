@@ -926,7 +926,7 @@ class lC_Orders_Admin {
     return $tData;
   }
   
-  public static function getOrderStatusArray() {
+ /* public static function getOrderStatusArray() {
     global $lC_Language, $lC_Database;
     
     // build the order status array
@@ -947,7 +947,7 @@ class lC_Orders_Admin {
     }
     
     return $orderStatusArray;
-  }      
+  }  */    
 
   public static function getOrdersProducts($id) {
     global $lC_Language, $lC_Database;
@@ -1591,5 +1591,55 @@ class lC_Orders_Admin {
 
     return $data;
   }
+   public static function getOrderStatusArray() {
+    global $lC_Language, $lC_Database;
+    
+    // build the order status array
+    $orders_status_type_array = array();
+    $Qstatuses_type = $lC_Database->query('select distinct(orders_status_type) as orders_status_type from :table_orders_status where language_id = :language_id');
+    $Qstatuses_type->bindTable(':table_orders_status', TABLE_ORDERS_STATUS);
+    $Qstatuses_type->bindInt(':language_id', $lC_Language->getID());
+    $Qstatuses_type->execute();
+
+     
+
+    
+    while ($Qstatuses_type->next()) {
+      $orderStatusType_Array[$Qstatuses_type->value('orders_status_type')] = $Qstatuses_type->value('orders_status_type');
+    }
+    
+
+    $orderStatusTypeArray[] = array('id' => -1, 'text' => $lC_Language->get('text_status_type'));
+    foreach($orderStatusType_Array as $id => $text) {
+          $orderStatusTypeArray[] = array('id' => $id, 'text' => ' - '.$text);
+    }
+     
+     
+
+    // build the order status array
+    $orders_status_array = array();
+    $Qstatuses = $lC_Database->query('select orders_status_id, orders_status_name from :table_orders_status where language_id = :language_id');
+    $Qstatuses->bindTable(':table_orders_status', TABLE_ORDERS_STATUS);
+    $Qstatuses->bindInt(':language_id', $lC_Language->getID());
+    $Qstatuses->execute();
+    
+    while ($Qstatuses->next()) {
+      $orders_status_array[$Qstatuses->valueInt('orders_status_id')] = $Qstatuses->value('orders_status_name');
+    }
+    
+    $orderStatusArray = array();
+    $orderStatusArray[] = array('id' => 0, 'text' => $lC_Language->get('text_all'));
+
+    $orderStatusArray = array_merge($orderStatusArray,$orderStatusTypeArray);
+    $orderStatusArray[] = array('id' => -2, 'text' => $lC_Language->get('text_statuses'));
+
+   
+
+    foreach($orders_status_array as $id => $text) {
+      $orderStatusArray[] = array('id' => $id, 'text' => ' - '.$text);
+    }
+    
+    return $orderStatusArray;
+  }    
 }
 ?>
