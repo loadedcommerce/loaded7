@@ -1448,4 +1448,16 @@
   #loaded7 .mobile-expand {
     margin: 0 -10px;
   } 
+
+  #loaded7 .product-listing-module-pagination {
+    text-align: center !important;
+  }
+  
+  #loaded7 .product-listing-module-pagination .pull-left{
+    float:none !important;
+  }
+  
+  #loaded7 .product-listing-module-pagination .pull-right{
+    float:none !important;
+  }
 }
