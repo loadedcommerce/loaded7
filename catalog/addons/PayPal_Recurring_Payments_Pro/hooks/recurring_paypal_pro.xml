@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+  <id>After VQMOD-002, add PayPal Express Checkout Logic</id>
+  <version>1.0.0</version>
+  <vqmver>2.3.2</vqmver>
+  <author>loadedcommerce.com</author>
+  <file name="includes/content/checkout/shipping.php">
+    <operation info="After VQMOD-002, add PayPal Express Checkout Logic">
+      <search position="after"><![CDATA[
+    /*VQMOD-002*/
+      ]]></search>         
+      <add><![CDATA[
+
+        // ppec intercept
+      if (isset($_GET['ppec']) && $_GET['ppec'] == 'process') {
+        // setExpressCheckout()
+        include_once(DIR_FS_CATALOG . 'includes/classes/order.php');
+        include_once(DIR_FS_CATALOG . 'includes/classes/payment.php');
+        
+        include_once(DIR_FS_CATALOG . 'addons/PayPal_Recurring_Payments_Pro/modules/payment/recurring_payment_pro.php');
+        
+        $ppec = new lC_Payment_recurring_payment_pro();
+        $_SESSION['PPEC_TOKEN'] = $ppec->setExpressCheckout(); 
+        if (!$_SESSION['PPEC_TOKEN']) {
+          lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'cart', 'SSL')); 
+        }
+        $_SESSION['recurring_payment_pro_ec'] = 1;
+        // insert the order before leaving for paypal
+        $ppec->confirmation();
+        // redirect to paypal
+        lc_redirect($ppec->_ec_redirect_url . $_SESSION['PPEC_TOKEN']);
+      }     
+      
+      ]]></add>
+    </operation>
+  </file>
+  <file name="templates/core/content/checkout/checkout_payment.php">
+    <operation info="Add PayPal Pro Express Checkout Logic">
+      <search position="before"><![CDATA[
+        <table class="table margin-bottom-neg"><tr><td>&nbsp;</td></tr></table>
+      ]]></search>         
+      <add><![CDATA[
+        <table class="content-checkout-payment-methods-table table table-hover table-responsive no-margin-bottom">
+        <?php
+          if(ADDONS_PAYMENT_PAYPAL_RECURRING_PAYMENTS_PRO_EC_STATUS == 'On') {  
+            echo '<tr class="module-row cursor-pointer" onclick="selectRowEffect(this, ' . $radio_buttons . ')">' . "\n";
+            if ($radio_buttons > 0) {
+              ?>
+              <td>            
+              <?php echo '<div class="payment-selection">' . $lC_Language->get('payment_paypal_recurring_pro_express_method_title') . '</div><div class="payment-selection-title">' . $lC_Language->get('payment_paypal_recurring_pro_express_method_blurb') . '</div>'; ?>
+              </td>
+              <td class="text-right"><?php echo lc_draw_radio_field('payment_method', 'recurring_payment_pro_ec', ($lC_ShoppingCart->hasBillingMethod() ? $lC_ShoppingCart->getBillingMethod('id') : null), 'id="pm_' . $counter . '"',''); ?></td>
+              <?php
+            } else {
+              ?>
+              <td class="content-checkout-listing-blank no-padding-left"></td>
+              <td><?php echo '<div class="payment-selection">' . $lC_Language->get('payment_paypal_recurring_pro_express_method_title') . '</div><div class="payment-selection-title">' . $lC_Language->get('payment_paypal_recurring_pro_express_method_blurb') . '</div>' . lc_draw_hidden_field('payment_method', 'recurring_payment_pro_ec'); ?></td>
+              <?php
+            } 
+          }
+        ?>
+        </table>        
+      ]]></add>
+    </operation>
+  </file> 
+  <file name="includes/content/checkout/confirmation.php">
+    <operation info="Add PayPal Pro Express Checkout Logic">
+      <search position="after"><![CDATA[
+        include($lC_Vqmod->modCheck('includes/classes/payment.php'));
+      ]]></search>         
+      <add><![CDATA[ 
+     
+        if($_POST['payment_method'] == 'recurring_payment_pro_ec' && ADDONS_PAYMENT_PAYPAL_RECURRING_PAYMENTS_PRO_EC_STATUS == 'On') {
+          $_POST['payment_method'] = "recurring_payment_pro";
+          $_SESSION['recurring_payment_pro_ec'] = 1;
+
+          global $lC_Language, $lC_ShoppingCart;
+          $lC_ShoppingCart->setBillingMethod(array('id' => 'recurring_payment_pro', 'title' => ((isset($_SESSION['recurring_payment_pro_ec']) && $_SESSION['recurring_payment_pro_ec'] == 1) ? $lC_Language->get('payment_paypal_recurring_pro_express_method_title') : $this->_method_title)));
+
+        } else if((int)ADDONS_PAYMENT_PAYPAL_RECURRING_PAYMENTS_PRO_DP_STATUS && $_POST['payment_method'] == 'recurring_payment_pro') {
+          $_SESSION['recurring_payment_pro_ec'] = 0;
+        }
+      ]]></add>
+    </operation>
+  </file> 
+</modification>
