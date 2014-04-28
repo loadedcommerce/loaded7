@@ -693,7 +693,11 @@ class lC_Products_import_export_Admin {
         }
 
         // convert the permalink to a safe output
-        $product['permalink'] = lC_Products_import_export_Admin::generate_clean_permalink($product['permalink']);
+        if (!empty($product['permalink'])) {
+          $product['permalink'] = lC_Products_import_export_Admin::generate_clean_permalink($product['permalink']);
+        } else {
+          $product['permalink'] = lC_Products_import_export_Admin::generate_clean_permalink($product['name']);
+        }
 
         // need to get ids for these categories if they dont exist we need to make them and return that id
         if ($product['categories'] != '') {
