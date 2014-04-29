@@ -1334,6 +1334,10 @@
 }
 
 @media (max-width: 479px) {
+  body {
+    overflow-x: hidden !important; 
+  }
+
   #loaded7 .show-on-mobile {
     display: block;
   }
