@@ -466,8 +466,8 @@ TD { height:19px; }
             <?php echo addslashes($lC_Language->get('image_button_retry')); ?>
           </a>
         </div>
-        <div id="phpInfoContainer" class="large-margin-top large-margin-right" style="float:right">
-          <a href="index.php" class="button">
+        <div id="phpInfoContainer" class="large-margin-top large-margin-right" style="float:right;cursor:pointer;">
+          <a class="button" id="phpInfoTrigger">
             <span class="button-icon blue-gradient glossy"><span class="icon-info-round"></span></span>
             <?php echo addslashes($lC_Language->get('image_button_phpinfo')); ?>
           </a>
@@ -510,3 +510,10 @@ TD { height:19px; }
     </div>    
   </fieldset>  
 </form>
+<script>
+  $(document).ready(function() {
+    $("#phpInfoTrigger").click(function() {
+      $("#phpInfo").show();
+    });
+  });
+</script>
