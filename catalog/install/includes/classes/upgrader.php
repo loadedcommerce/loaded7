@@ -2803,7 +2803,8 @@ class lC_LocalUpgrader extends lC_Upgrader {
       $cnt = 0;
       while ($sQry->next()) {
         $address  = array(
-                            'customers_id'         => $sQry->value($map['customers_id'])
+                            'address_book_id'      => $sQry->value($map['address_book_id'])
+                          , 'customers_id'         => $sQry->value($map['customers_id'])
                           , 'entry_gender'         => $sQry->value($map['entry_gender'])
                           , 'entry_company'        => $sQry->value($map['entry_company'])
                           , 'entry_firstname'      => $sQry->value($map['entry_firstname'])
@@ -2832,7 +2833,8 @@ class lC_LocalUpgrader extends lC_Upgrader {
         $nzQry = $target_db->query("SELECT zone_id FROM " . $t_db['DB_PREFIX'] . "zones WHERE zone_country_id = " . $sQry->value($map['entry_country_id']) . " AND zone_name = '" . $zone_name . "'");
         $nzQry->execute();
         
-        $tQry = $target_db->query('INSERT INTO :table_address_book (customers_id, 
+        $tQry = $target_db->query('INSERT INTO :table_address_book (address_book_id,
+                                                                    customers_id, 
                                                                     entry_gender, 
                                                                     entry_company, 
                                                                     entry_firstname, 
@@ -2846,7 +2848,8 @@ class lC_LocalUpgrader extends lC_Upgrader {
                                                                     entry_zone_id, 
                                                                     entry_telephone, 
                                                                     entry_fax) 
-                                                            VALUES (:customers_id, 
+                                                            VALUES (:address_book_id,
+                                                                    :customers_id, 
                                                                     :entry_gender, 
                                                                     :entry_company, 
                                                                     :entry_firstname, 
@@ -2862,6 +2865,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
                                                                     :entry_fax)');
         
         $tQry->bindTable(':table_address_book', TABLE_ADDRESS_BOOK);
+        $tQry->bindInt  (':address_book_id'     , $address['address_book_id']);
         $tQry->bindInt  (':customers_id'        , $address['customers_id']);
         $tQry->bindValue(':entry_gender'        , $address['entry_gender']);
         $tQry->bindValue(':entry_company'       , $address['entry_company']);
