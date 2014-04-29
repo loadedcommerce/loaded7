@@ -514,6 +514,9 @@ TD { height:19px; }
   $(document).ready(function() {
     $("#phpInfoTrigger").click(function() {
       $("#phpInfo").show();
+      $("#phpInfo").animate({
+        scrollTop: $("#phpInfo").offset().top
+      }, 2000);
     });
   });
 </script>
