@@ -18,14 +18,11 @@ ioncube_installed_version = Installed:
 ioncube_update_needed = Ioncube loader is installed but needs to be updated. Loaded 7 paid addons will only work with ioncube loader version 4.4.1 or later. The most recent version of the loader can be found <a href="http://www.ioncube.com/loaders.php" target="_blank"><b>here</b></a>.
 ioncube_not_installed_instructions = <br />&nbsp; - Please contact your web host and ask them to install ionCube loader on your server.<br />&nbsp; - Loaders can be downloaded from <a href="http://www.ioncube.com/loaders.php" target="_blank"><b>www.ioncube.com</b></a>.<br />&nbsp; - Installation Instructions can be found <a href="http://www.ioncube.com/loader_installation.php" target="_blank"><b>here</b></a>.<br />&nbsp; - For additional questions please contact <a href="http://www.loadedcommerce.com/support-memberships-pc-175_198.html" target="_blank"><b>Loaded Commerce Support</b></a>
 
-
 text_status = Status: 
 text_instructions = Instructions: 
 title_language = Language:
 text_not_installed = Not Installed
-
 text_welcome = Loaded Commerce is the next generation self-hosted open source ecommerce platform and is available for free under the GNU General Public License. A rich set of features and functionality allow store owners to setup, run, and maintain online stores with minimal effort and minimal cost.
-
 text_under_development = Loaded Commerce v%s is currently in development and does not yet contain all its planned features. This release is recommended for developers and users who are participating in its development and are providing feedback.
 
 box_server_title = Server Capabilities
@@ -57,3 +54,4 @@ error_javascript_disabled = Javascript is required for the installation procedur
 
 image_button_install = New Install
 image_button_upgrade = Upgrade from 6.x Version
+image_button_phpinfo = Show PHP Information
