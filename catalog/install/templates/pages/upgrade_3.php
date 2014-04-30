@@ -604,53 +604,53 @@ $(document).ready(function() {
 });
   
 var doImport = function(datatype){
-	var _success = false;
-	var _emsg = "";
-	$.ajax({
- 		 				url: "rpc.php?action=import"+datatype,
- 		 				type: 'POST',
- 		 				data : $("form").serialize(),
- 		 				async : false, 
-  					cache: false,
-  					beforeSend : function() { 
-  						$("#img_copy_progress"+datatype).show();
-  						$("#img_copy_cross"+datatype).hide();
-  						$("#img_copy_tick"+datatype).hide();
-						},
-    				success : function(data) {                          
-  						$("#img_copy_progress"+datatype).hide();
-  						$("#img_copy_cross"+datatype).hide();
-  						$("#img_copy_tick"+datatype).show();
-  						
-	    		    	var result = /\[\[([^|]*?)(?:\|([^|]*?)){0,1}\]\]/.exec(data);
-	    		    	result.shift();
-								
-	    		    	if (result[0] == '1') {
-  								$("#img_copy_progress"+datatype).hide();
-  								$("#img_copy_cross"+datatype).hide();
-  								$("#img_copy_tick"+datatype).show();
-								} else {
-  								$("#img_copy_progress"+datatype).hide();
-  								$("#img_copy_cross"+datatype).show();
-  								$("#img_copy_tick"+datatype).hide();
-  								
-									_success = false;
-									_emsg = result[1];
-  								$('body').clearQueue();
-	    		    	}
-  						
-    					// Que up next ajax call
-    					$('body').dequeue();
-    				},
-    				error : function(){
-  						$("#img_copy_progress"+datatype).hide();
-  						$("#img_copy_cross"+datatype).show();
-  						$("#img_copy_tick"+datatype).hide();
+  var _success = false;
+  var _emsg = "";
+  $.ajax({
+    url: "rpc.php?action=import"+datatype,
+    type: 'POST',
+    data : $("form").serialize(),
+    async : false, 
+    cache: false,
+    beforeSend : function() { 
+      $("#img_copy_progress"+datatype).show();
+      $("#img_copy_cross"+datatype).hide();
+      $("#img_copy_tick"+datatype).hide();
+    },
+    success : function(data) {                          
+      $("#img_copy_progress"+datatype).hide();
+      $("#img_copy_cross"+datatype).hide();
+      $("#img_copy_tick"+datatype).show();
 
-							_success = false;
-    					$('body').clearQueue();
-    				}
-	});
-	return _emsg;
+      var result = /\[\[([^|]*?)(?:\|([^|]*?)){0,1}\]\]/.exec(data);
+      result.shift();
+
+      if (result[0] == '1') {
+        $("#img_copy_progress"+datatype).hide();
+        $("#img_copy_cross"+datatype).hide();
+        $("#img_copy_tick"+datatype).show();
+      } else {
+        $("#img_copy_progress"+datatype).hide();
+        $("#img_copy_cross"+datatype).show();
+        $("#img_copy_tick"+datatype).hide();
+
+        _success = false;
+        _emsg = result[1];
+        $('body').clearQueue();
+      }
+
+      // Que up next ajax call
+      $('body').dequeue();
+    },
+    error : function(){
+      $("#img_copy_progress"+datatype).hide();
+      $("#img_copy_cross"+datatype).show();
+      $("#img_copy_tick"+datatype).hide();
+
+      _success = false;
+      $('body').clearQueue();
+    }
+  });
+  return _emsg;
 };
 </script>
