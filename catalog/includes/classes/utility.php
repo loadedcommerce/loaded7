@@ -692,6 +692,57 @@ class utility {
     }
     
     return $status;
+  }
+ /**
+  * Get the ioncube loader version number
+  *  
+  * @access public      
+  * @return array
+  */
+  public static function ioncube_loader_version_array() {
+    if (function_exists('ioncube_loader_iversion') ) {
+      $ioncube_loader_iversion = ioncube_loader_iversion();
+      $ioncube_loader_version_major = (int)substr($ioncube_loader_iversion, 0, 1);
+      $ioncube_loader_version_minor = (int)substr($ioncube_loader_iversion, 1, 2);
+      $ioncube_loader_version_revision = (int)substr($ioncube_loader_iversion, 3, 2);
+      $ioncube_loader_version = "$ioncube_loader_version_major.$ioncube_loader_version_minor.$ioncube_loader_version_revision";
+    } else {
+      $ioncube_loader_version = ioncube_loader_version();
+      $ioncube_loader_version_major = (int)substr($ioncube_loader_version, 0, 1);
+      $ioncube_loader_version_minor = (int)substr($ioncube_loader_version, 2, 1);
+      $ioncube_loader_version_revision = (int)substr($ioncube_loader_iversion, 3, 2);
+    }
+    return array('version' => $ioncube_loader_version, 'major' => $ioncube_loader_version_major, 'minor' => $ioncube_loader_version_minor, 'revision' => $ioncube_loader_version_revision);
+  }
+ /**
+  * Check the ioncube installed status and version number
+  *  
+  * @access public      
+  * @return array
+  */
+  public static function ioncubeCheck() {
+    global $lC_Language;
+    
+    $ioncubeStatus = '';
+    
+    if (extension_loaded('ionCube Loader')) {
+      $ioncube_loader_version = self::ioncube_loader_version_array();
+      if (($ioncube_loader_version['major'] <= 4 && $ioncube_loader_version['minor'] < 4 && $ioncube_loader_version['revision'] < 1)) {
+        $ioncubeStatus = array('installed' => true,
+                               'version' => $ioncube_loader_version['major'] . '.' . $ioncube_loader_version['minor'] . '.' . $ioncube_loader_version['revision'],
+                               'valid' => false);
+      } else {
+        $ioncubeStatus = array('installed' => true,
+                               'version' => $ioncube_loader_version['major'] . '.' . $ioncube_loader_version['minor'] . '.' . $ioncube_loader_version['revision'],
+                               'valid' => true);
+      }
+    } else {
+      $ioncubeStatus = array('installed' => false,
+                             'version' => null,
+                             'valid' => false);
+    }
+    
+    return $ioncubeStatus;
   } 
 } 
 ?>
