@@ -53,11 +53,11 @@ function addComboOption(editRow) {
         }
         
         var visual = '';
-        $.each(data, function(key, val) {
-          if (val.id != undefined) {
-            visual = visual + val.visual;
-          }
-        }); 
+//        $.each(data, function(key, val) {
+//          if (val.id != undefined) {
+//            visual = visual + val.visual;
+//          }
+//        }); 
         data.visual = visual;       
 
         callback(data); 
@@ -327,8 +327,8 @@ function addComboOption(editRow) {
                                  '        <label for="group" class="label small-margin-bottom"><?php echo $lC_Language->get('field_select_option_items'); ?></label>'+
                                  '        <p class="silver-bg with-small-padding big-text">&nbsp;' + groupText + '</p>'+
                                  '        <div class="relative">'+
-                                 '          <div id="entrySelectContainer" class="visual" style="width:85%;"></div>'+
-                                 '          <div id="entryVisualContainer" class="visual" style="width:10%; position:absolute; top:4px; right:0;"></div>'+
+                                 '          <div id="entrySelectContainer" class="visual" style="width:100%;"></div>'+
+//                                 '          <div id="entryVisualContainer" class="visual" style="width:10%; position:absolute; top:4px; right:0;"></div>'+
                                  '        </div>'+
                                  '      </p>'+
                                  '      <p class="button-height block-label">'+
@@ -380,19 +380,23 @@ function addComboOption(editRow) {
                                              '  <div id="addComboOptionEntryForm2">'+
                                              '    <form name="seAdd2" id="seAdd2" action="" method="post">'+
                                              '      <p class="button-height block-label">'+
-                                             '        <label for="group" class="label small-margin-bottom"><?php echo $lC_Language->get('field_select_combo_group_variants'); ?><small class="float-right mid-padding-top">VISUALS</small></label>'+
-                                             '        <p class="silver-bg with-small-padding big-text">&nbsp;' + groupText + '<span class="float-right small-margin-right"><input type="checkbox" style="vertical-align:0%;" class="input chk" onchange="setDefaultVisual(this);" name="visual[' + groupID + ']" checked></span></p>'+
+                                             '        <label for="group" class="label small-margin-bottom"><?php echo $lC_Language->get('field_select_combo_group_variants'); ?><!-- small class="float-right mid-padding-top">VISUALS</small --></label>'+
+                                             '        <p class="silver-bg with-small-padding big-text">&nbsp;' + groupText + '<span class="float-right small-margin-right">'+
+                                             //<input type="checkbox" style="vertical-align:0%;" class="input chk" onchange="setDefaultVisual(this);" name="visual[' + groupID + ']" checked></span>
+                                             '        </p>'+
                                              '        <div class="relative">'+
-                                             '          <div id="entrySelectContainer2" class="visual" style="width:85%;"></div>'+
-                                             '          <div id="entryVisualContainer2" class="visual" style="width:10%; position:absolute; top:4px; right:0;"></div>'+
+                                             '          <div id="entrySelectContainer2" class="visual" style="width:100%;"></div>'+
+//                                             '          <div id="entryVisualContainer2" class="visual" style="width:10%; position:absolute; top:4px; right:0;"></div>'+
                                              '        </div><div class="clear-both"></div>'+
                                              '      </p>'+
                                              '      <p class="button-height block-label">'+
                                              '        <label for="group" class="label small-margin-bottom"></label>'+
-                                             '        <p class="silver-bg with-small-padding big-text">&nbsp;' + groupText2 + '<span class="float-right small-margin-right"><input type="checkbox" style="vertical-align:0%;" class="input chk" onchange="setDefaultVisual(this);" name="visual[' + groupID2 + ']"></span></p>'+
+                                             '        <p class="silver-bg with-small-padding big-text">&nbsp;' + groupText2 + '<span class="float-right small-margin-right">'+
+                                             //<input type="checkbox" style="vertical-align:0%;" class="input chk" onchange="setDefaultVisual(this);" name="visual[' + groupID2 + ']"></span>
+                                             '        </p>'+
                                              '        <div class="relative">'+
-                                             '          <div id="entrySelectContainer3" class="visual" style="width:85%;"></div>'+
-                                             '          <div id="entryVisualContainer3" class="visual" style="width:10%; position:absolute; top:4px; right:0;"></div>'+
+                                             '          <div id="entrySelectContainer3" class="visual" style="width:100%;"></div>'+
+//                                             '          <div id="entryVisualContainer3" class="visual" style="width:10%; position:absolute; top:4px; right:0;"></div>'+
                                              '        </div><div class="clear-both"></div>'+
                                              '      </p>'+                                             
                                              '      <p class="block-label"><?php echo strtoupper($lC_Language->get('text_or')); ?></p>'+
@@ -552,11 +556,11 @@ function addComboOption(editRow) {
                                 }); 
                                 
                                 var visual = '';
-                                $.each(edata, function(key, val) {
-                                  if (val.id != undefined) {
-                                    visual = visual + val.visual;
-                                  }
-                                });
+                         //       $.each(edata, function(key, val) {
+                         //         if (val.id != undefined) {
+                         //           visual = visual + val.visual;
+                         //         }
+                         //       });
 
                                 // get the selected values in csv string
                                 var values = $("#combo-" + groupID).val() || [];
@@ -577,11 +581,11 @@ function addComboOption(editRow) {
                     }); 
                     
                     var visual = '';
-                    $.each(edata, function(key, val) {
-                      if (val.id != undefined) {
-                        visual = visual + val.visual;
-                      }
-                    });
+                 //   $.each(edata, function(key, val) {
+                 //     if (val.id != undefined) {
+                 //       visual = visual + val.visual;
+                 //     }
+                 //   });
                     $("#entrySelectContainer").html('<select id="combo-' + groupID + '" name="combo[' + groupID + '][]" class="select check-list full-width easy-multiple-selection" multiple>' + getGroupsSelectOptions(edata) + '</select>').change();                    
                     $("#entryVisualContainer").html(visual);  
                     $("#groupSelectComboContainer" + counter.toString()).html('<select id="group_' + counter.toString() + '" name="group[' + counter.toString() + ']" class="select multiple full-width">' +  getGroupsSelectOptions(data) + '</select>').change();                    
