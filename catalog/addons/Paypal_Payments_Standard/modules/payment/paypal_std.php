@@ -169,7 +169,7 @@ class lC_Payment_paypal_std extends lC_Payment {
   * @return string
   */ 
   private function _paypal_standard_params() {
-    global $lC_Language, $lC_ShoppingCart, $lC_Currencies, $lC_Customer;  
+    global $lC_Language, $lC_ShoppingCart, $lC_Currencies, $lC_Customer, $lC_Tax;  
 
     $upload         = 0;
     $no_shipping    = '1';
@@ -198,27 +198,38 @@ class lC_Payment_paypal_std extends lC_Payment {
         'handling_cart' => $shippingTotal,
         'discount_amount_cart' => $discount_amount_cart
         );
-       for ($i=1; $i<=sizeof($shoppingcart_products); $i++) {
-          $paypal_shoppingcart_params = array(
-            'item_name_'.$i => $shoppingcart_products[$i]['name'],
-            'item_number_'.$i => $shoppingcart_products[$i]['item_id'],
-            'quantity_'.$i => $shoppingcart_products[$i]['quantity'],
-            'amount_'.$i => $lC_Currencies->formatRaw($shoppingcart_products[$i]['price'], $lC_Currencies->getCode()),
-            'tax_'.$i => $shoppingcart_products[$i]['tax_class_id']            
-            ); 
-                   
+
+      $i = 1;
+      foreach($shoppingcart_products as $products) {
+        $taxClassID = $products['tax_class_id']; 
+        $countryID = ($lC_ShoppingCart->getShippingAddress('country_id') != NULL) ? $lC_ShoppingCart->getShippingAddress('country_id') : STORE_COUNTRY;
+        $zoneID = ($lC_ShoppingCart->getShippingAddress('zone_id') != NULL) ? $lC_ShoppingCart->getShippingAddress('zone_id') : STORE_ZONE;
+        $taxRate = $lC_Tax->getTaxRate($taxClassID, $countryID, $zoneID);
+        $tax = $lC_Tax->calculate($products['price'], $taxRate);
+        $paypal_shoppingcart_params = array(
+            'item_name_'.$i => $products['name'],
+            'item_number_'.$i => $products['item_id'],
+            'quantity_'.$i => $products['quantity'],
+            'amount_'.$i => $lC_Currencies->formatRaw($products['price'], $lC_Currencies->getCode()),
+            'tax_'.$i => $tax            
+            );
+
         //Customer Specified Product Options: PayPal Max = 2
-        if($shoppingcart_products[$i]['variants']) {
-          for ($j=0, $n=sizeof($shoppingcart_products[$i]['variants']); $j<2; $j++) {
-            $paypal_shoppingcart_variants_params = array(
-                'on'.$j.'_'.$i => $shoppingcart_products[$i]['variants'][$j]['group_title'],
-                'os'.$j.'_'.$i => $shoppingcart_products[$i]['variants'][$j]['value_title']          
+        if($products['simple_options']) {
+          for ($j=0, $n=sizeof($products['simple_options']); $j<2; $j++) {
+            $paypal_shoppingcart_simple_options_params = array(
+                'on'.$j.'_'.$i => $products['simple_options'][$j]['group_title'],
+                'os'.$j.'_'.$i => $products['simple_options'][$j]['value_title']          
                 ); 
-            $paypal_shoppingcart_params =  array_merge($paypal_shoppingcart_params,$paypal_shoppingcart_variants_params);
+            $paypal_shoppingcart_params =  array_merge($paypal_shoppingcart_params,$paypal_shoppingcart_simple_options_params);
           }
         }
+        
         $paypal_action_params = array_merge($paypal_action_params,$paypal_shoppingcart_params);
+        
+        $i++;
       }
+
     } else {
       $item_number = '';
       for ($i=1; $i<=sizeof($shoppingcart_products); $i++) {
@@ -271,7 +282,7 @@ class lC_Payment_paypal_std extends lC_Payment {
         'state' => $lC_ShoppingCart->getBillingAddress('state'), 
         'zip' => $lC_ShoppingCart->getBillingAddress('postcode'),
         'lc' => $lC_ShoppingCart->getBillingAddress('country_iso_code_3'),
-        'no_note' => (ADDONS_PAYMENT_PAYPAL_PAYMENTS_STANDARD_NO_NOTE == 'Yes') ? '0': '1',    
+        'no_note' => (ADDONS_PAYMENT_PAYPAL_PAYMENTS_STANDARD_NO_NOTE == 'Yes') ? '0': '1',
         'form' => 'mage');   
   
     $paypal_standard_action_params =  array_merge($paypal_standard_params,$paypal_action_params); 
