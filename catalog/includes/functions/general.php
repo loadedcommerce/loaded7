@@ -370,7 +370,7 @@ if (!function_exists('lc_get_ip_address')) {
         $ip = getenv('REMOTE_ADDR');
       }
     }
-$ip = "192.168.1.140";
+
     return $ip;
   }
 }

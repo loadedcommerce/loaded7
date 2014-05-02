@@ -232,6 +232,15 @@ class lC_Payment_paypal_std extends lC_Payment {
         'shipping' => $shippingTotal,
         'item_number' => $item_number
         ); 
+      $paypal_action_tax_params = array();
+      foreach ($lC_ShoppingCart->getOrderTotals() as $module) {
+        if($module['code'] == 'tax') {
+          $paypal_action_tax_params = array(
+            'tax' => $module['value']
+            ); 
+        }
+      }
+      $paypal_action_params =  array_merge($paypal_action_params,$paypal_action_tax_params); 
     }
 
     $order_id = (isset($_SESSION['prepOrderID']) && $_SESSION['prepOrderID'] != NULL) ? end(explode('-', $_SESSION['prepOrderID'])) : 0;
