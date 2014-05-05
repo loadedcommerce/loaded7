@@ -438,8 +438,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
         $('#inventory_control_multi').hide('300');
         $('label[for=\'ic_radio_1\']').addClass('active');
         $('label[for=\'ioc_radio_1\']').addClass('active'); 
-        $('#multiSkuContainer').hide();   
-        $('#simpleOptionsContainer').show();   
+        $('#multiSkuContainer').slideUp();   
       } else if (type == '2') {   
         var disabled = $('label[for=\'ioc_radio_2\']').is('.disabled');
         if (disabled) { 
@@ -451,8 +450,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
         $('#inventory_control_multi').show('300');
         $('label[for=\'ic_radio_2\']').addClass('active');
         $('label[for=\'ioc_radio_2\']').addClass('active'); 
-        $('#multiSkuContainer').show();   
-        $('#simpleOptionsContainer').hide();        
+        $('#multiSkuContainer').slideDown();   
       }
     }
 
