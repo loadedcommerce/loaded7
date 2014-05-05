@@ -47,7 +47,7 @@ global $lC_Language, $pInfo;
     <div id="simpleOptionsContainer" class="twelve-columns">
       <fieldset class="fieldset">
         <legend class="legend"><?php echo $lC_Language->get('text_simple_options'); ?></legend>
-        <span class="float-right" style="margin:-46px 0px 4px 0;"><a class="button icon-plus-round green-gradient glossy compact" href="javascript:void(0)" onclick="addSimpleOption();"><?php echo $lC_Language->get('button_add'); ?></a></span>
+        <span class="float-right" style="margin:-46px 25px 4px 0;"><a class="button icon-plus-round green-gradient compact" href="javascript:void(0)" onclick="addSimpleOption();"><?php echo $lC_Language->get('button_setup'); ?></a></span>
         <table width="100%" style="margin-top:-8px;" id="simpleOptionsTable" class="simple-table">
           <thead>
             <tr>
