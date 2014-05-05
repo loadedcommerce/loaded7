@@ -1302,7 +1302,6 @@ class lC_Orders_Admin {
     $Qtotals->execute();
     
     while ($Qtotals->next()) {
-
       $str_flag = ($Qtotals->value('class') == 'coupon') ? ' - ' : '' ;  
 
       if ($Qtotals->value('class') == 'total') {
@@ -1310,42 +1309,21 @@ class lC_Orders_Admin {
       } else {
         $total += $Qtotals->value('value');
       }
-      $result .= '  <div class="with-small-padding" id="addedOrderTotalRow_' . $Qtotals->value('class') . '">' . 
+      $result .= '  <div class="with-small-padding align-right" id="addedOrderTotalRow_' . $Qtotals->value('class') . '">' . 
                  '    <span class="icon-list icon-anthracite">&nbsp;' .
-                        lc_draw_input_field("title_" . $Qtotals->value('class'), $Qtotals->value('title'), ' style="width:30%;"') . 
+                        lc_draw_input_field("title_" . $Qtotals->value('class'), $Qtotals->value('title'), ' style="width:30%;" class="input with-small-padding"') . 
                  '    </span>&nbsp;&nbsp;' . 
-                      lc_draw_input_field("value_" . $Qtotals->value('class'), $str_flag.$lC_Currencies->format($Qtotals->value('value')), ' id = "value_'. $Qtotals->value('class'). '"  style="width:10%;text-align:right;min-width:65px;" onkeyup="updateGrandTotal(\''.$lC_Currencies->getSymbolLeft().'\');"') . '&nbsp;&nbsp;' .
+                        lc_draw_input_field("value_" . $Qtotals->value('class'), $str_flag.$lC_Currencies->format($Qtotals->value('value')), ' id="value_'. $Qtotals->value('class'). '"  class="input with-small-padding" style="width:10%;text-align:right;min-width:65px;" onkeyup="updateGrandTotal(\''.$lC_Currencies->getSymbolLeft().'\');"') . '&nbsp;&nbsp;' .
                  '    <a href="javascript:void(0);" onclick="removeOrderTotal(' . $oID . ', \'' . $Qtotals->value('class') . '\',\''.$lC_Currencies->getSymbolLeft().'\')" class="icon-minus-round icon-red with-tooltip" title="remove"></a>' . 
-                 '  </div>';    
-      
-
-       
+                 '  </div>';
     }
     $result .= '  <div id="addedOrderTotal"></div>' . 
                '</div>'; 
                   
     if ($result != '') {
-      $result .=  '<div class="new-row-mobile twelve-columns twelve-columns-mobile no-margin-bottom">' .
-                  '  <div class="columns">' .
-                  '    <div class="new-row-mobile five-columns twelve-columns-mobile mid-margin-bottom align-right">' .
-                  '      <span class="icon-anthracite">' .
-                  '        <strong class="small-margin-left">' . $lC_Language->get('text_grand_total') . '</strong>' .
-                  '      </span>' .
-                  '      <span class="mid-margin-right" id="id_grand_total">' . $lC_Currencies->format(str_replace(',','',number_format($total, DECIMAL_PLACES))) . '</span>' .
-                  '    </div>' .
-                  '    <div class="new-row-mobile seven-columns twelve-columns-mobile no-margin-bottom">' .
-                  '      <span class="button-group mid-margin-bottom">' .
-                  '        <a href="javascript:void(0);" onclick="saveOrderTotal(' . $oID . ');">' .
-                  '          <button type="button" class="button glossy">' .
-                  '            <span class="button-icon green-gradient">' .
-                  '              <span class="icon-plus"></span>' .
-                  '            </span>' .
-                                $lC_Language->get('text_save') .             
-                  '          </button>' .
-                  '        </a>' .
-                  '      </span>' .
-                  '    </div>' .
-                  '  </div>' .
+      $result .=  '<div class="new-row-mobile twelve-columns twelve-columns-mobile align-right">' .
+                  '  <strong class="small-margin-left">' . $lC_Language->get('text_grand_total') . '</strong>' .
+                  '  <span class="margin-right" id="id_grand_total">' . $lC_Currencies->format(str_replace(',','',number_format($total, DECIMAL_PLACES))) . '&nbsp;&nbsp;</span>' .
                   '</div>';   
     }
 
