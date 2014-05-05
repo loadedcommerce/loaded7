@@ -26,7 +26,6 @@ $(document).ready(function() {
   });
   
   var imageContent = $('.box-whats-new-image').html();
-  $('.box-whats-new-image').html('<div class="thumbnail">' + imageContent + '</div>');  
   $('.box-whats-new-price').addClass('red');
   $('.box-whats-new-buy-now button').addClass('btn btn-warning margin-top');
   $('.box-whats-new-image-src').addClass('img-responsive');
