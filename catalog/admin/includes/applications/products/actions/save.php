@@ -89,7 +89,7 @@ class lC_Application_Products_Actions_save extends lC_Application_Products {
 
       if ( $error === false ) {
         // the line below is used as a hook match point - do not not modify or remove
-        $id = lC_Products_Admin::save((isset($_GET[$this->_module]) && is_numeric($_GET[$this->_module]) ? $_GET[$this->_module] : null), $data);
+        $id = (int)lC_Products_Admin::save((isset($_GET[$this->_module]) && is_numeric($_GET[$this->_module]) ? $_GET[$this->_module] : null), $data);
         
         if ( is_numeric($id) ) {
           if (empty($_POST['save_close'])) {
