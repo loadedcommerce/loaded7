@@ -25,11 +25,11 @@ class lC_Products_Admin_Pro extends lC_Products_Admin {
   * @return boolean
   */ 
   public static function save($id = null, $data) {
-    global $lC_Database, $lC_Language;	
-		
+    global $lC_Database, $lC_Language;  
+    
     $error = false;
     
-    $products_id = parent::save($id, $data);
+    $products_id = parent::save($id, $data);   
     
     $group = (defined('DEFAULT_CUSTOMERS_GROUP_ID') && DEFAULT_CUSTOMERS_GROUP_ID != null) ? (int)DEFAULT_CUSTOMERS_GROUP_ID : 1;    
     
@@ -71,8 +71,6 @@ class lC_Products_Admin_Pro extends lC_Products_Admin {
         
         if ( $error === false ) {
           $lC_Database->commitTransaction();
-
-          return $products_id; // Return the products id for use with the save_close buttons
         }
         
         $lC_Database->rollbackTransaction();        
@@ -381,6 +379,9 @@ class lC_Products_Admin_Pro extends lC_Products_Admin {
       $Qupdate->bindInt(':products_id', $products_id);
       $Qupdate->execute();
     } 
+    
+    return $products_id; // Return the products id for use with the save_close buttons
+
   }
  /*
   *  Return the product simple options accordian price listing content
@@ -746,33 +747,33 @@ class lC_Products_Admin_Pro extends lC_Products_Admin {
   * @return string
   */  
   private static function _getComboOptionsTbody($options) {
-  	global $lC_Currencies, $lC_Language;
-		
-    $tbody = '';  	
+    global $lC_Currencies, $lC_Language;
+    
+    $tbody = '';    
     $sort = 10;
     $cnt = 0;
     if (isset($options) && !empty($options)) {
-      foreach ($options as $product_id => $mso) {     	
+      foreach ($options as $product_id => $mso) {       
         $combo = '';
-				$default = '';
-				$module = '';
+        $default = '';
+        $module = '';
         $comboInput = '';
         if (is_array($mso['values'])) {
           foreach ($mso['values'] as $group_id => $value_id) {
-          	foreach ($value_id as $key => $data) {	
+            foreach ($value_id as $key => $data) {  
               $combo .= $data['value_title'] . ', ';
-							$module = $data['module'];	
+              $module = $data['module'];  
               $default = $data['default'];            
-							$default_visual = $data['default_visual'];						
+              $default_visual = $data['default_visual'];            
               $comboInput .= '<input type="hidden" id="variants_' . $cnt .'_values_' . $key . '"  name="variants[' . $cnt .'][values][' . $key . ']" value="' . $data['value_title'] . '">';                        
-							$comboInput .= '<input type="hidden" id="variants_' . $cnt .'_default_visual_' . $default_visual . '"  name="variants[' . $cnt .'][default_visual]" value="' . $default_visual . '">';          							
-					  }
+              $comboInput .= '<input type="hidden" id="variants_' . $cnt .'_default_visual_' . $default_visual . '"  name="variants[' . $cnt .'][default_visual]" value="' . $default_visual . '">';                        
+            }
           }
-					if (strstr($combo, ',')) $combo = substr($combo, 0, -2);
+          if (strstr($combo, ',')) $combo = substr($combo, 0, -2);
           
           $statusIcon = (isset($mso['data']['status']) && $mso['data']['status'] == '1') ? '<span id="variants_status_span_' . $cnt .'" class="icon-tick icon-size2 icon-green with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"left"}\' title="Set Status"></span><input type="hidden" id="variants_status_' . $cnt .'" name="variants[' . $cnt . '][status]" value="1">' : '<span id="variants_status_span_' . $cnt .'" class="icon-cross icon-size2 icon-red with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"left"}\' title="Set Status"></span><input type="hidden" id="variants_status_' . $cnt .'" name="variants[' . $cnt . '][status]" value="0">';
           $defaultIcon = (isset($default) && $default == '1') ? '<span id="variants_default_combo_span_' . $cnt .'" class="default-combo-span icon-star icon-size2 icon-orange with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"left"}\' title="' . $lC_Language->get('text_default_selected_combo') . '"></span><input class="default-combo" type="hidden" id="variants_default_combo_' . $cnt .'" name="variants[' . $cnt . '][default_combo]" value="1">' : '<span id="variants_default_combo_span_' . $cnt .'" class="default-combo-span icon-star icon-size2 icon-grey with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"left"}\' title="' . $lC_Language->get('text_set_default_combo') . '"></span><input class="default-combo" type="hidden" id="variants_default_combo_' . $cnt .'" name="variants[' . $cnt . '][default_combo]" value="0">';          
-					          
+                    
           $tbody .= '<tr id="trmso-' . $cnt .'"><input type="hidden" name="variants[' . $cnt . '][product_id]" value="' . $product_id . '"><input type="hidden" class="combo-sort" name="variants[' . $cnt .'][sort]" value="' . $sort . '">' . $comboInput .
                     '  <td width="16px" class="sort-icon dragsort" style="cursor:move;"><span class="icon-list icon-grey icon-size2"></span></td>' .
                     '  <td class="option-name" width="25%">' . $combo . '</td>' .
@@ -791,10 +792,10 @@ class lC_Products_Admin_Pro extends lC_Products_Admin {
                            <input type="text" class="input-unstyled" style="width:87%;" onchange="$(\'#variants_' . $cnt . '_price_1\').val(this.value);" onfocus="this.select();" value="' . number_format($mso['data']['price'], DECIMAL_PLACES) . '" tabindex="' . $cnt . '5" name="variants[' . $cnt . '][price]" id="variants_' . $cnt . '_price">
                          </div>
                        </td>' .
-			              '  <td class="align-center align-middle">' .
-			              '    <input style="display:none;" type="file" id="multi_sku_image_' . $cnt . '" name="variants[' . $cnt . '][image]" onchange="setComboOptionsImage(\'' . $cnt . '\');" multiple />' .
-			              '    <span class="icon-camera icon-size2 cursor-pointer with-tooltip ' . ((isset($mso['data']['image']) && $mso['data']['image'] != null) ? 'icon-green' : 'icon-grey') . '" title="' . ((isset($mso['data']['image']) && $mso['data']['image'] != null) ? $mso['data']['image'] : null) . '" id="fileSelectButtonComboOptions-' . $cnt . '" onclick="document.getElementById(\'multi_sku_image_' . $cnt . '\').click();"></span>' .
-			              '  </td>' .                       
+                    '  <td class="align-center align-middle">' .
+                    '    <input style="display:none;" type="file" id="multi_sku_image_' . $cnt . '" name="variants[' . $cnt . '][image]" onchange="setComboOptionsImage(\'' . $cnt . '\');" multiple />' .
+                    '    <span class="icon-camera icon-size2 cursor-pointer with-tooltip ' . ((isset($mso['data']['image']) && $mso['data']['image'] != null) ? 'icon-green' : 'icon-grey') . '" title="' . ((isset($mso['data']['image']) && $mso['data']['image'] != null) ? $mso['data']['image'] : null) . '" id="fileSelectButtonComboOptions-' . $cnt . '" onclick="document.getElementById(\'multi_sku_image_' . $cnt . '\').click();"></span>' .
+                    '  </td>' .                       
                     '  <td width="16px" align="center" style="cursor:pointer;" onclick="toggleComboOptionsStatus(\'' . $cnt . '\');">' . $statusIcon . '</td>' .
                     '  <td width="40px" align="right">
                          <!-- span class="icon-pencil icon-orange icon-size2 margin-right with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"left"}\' title="Edit Entry" style="cursor:pointer;" onclick="addMultiSKUOption(\'' . $cnt. '\')"></span -->

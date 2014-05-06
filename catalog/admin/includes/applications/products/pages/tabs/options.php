@@ -16,7 +16,6 @@ global $lC_Language, $pInfo;
       <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
         <div class="twelve-columns no-margin-bottom">
           <div class="strong"><?php echo $lC_Language->get('text_inventory_control'); ?><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_inventory_control'), null, 'info-spot on-right grey margin-left'); ?></div>
-          
           <div id="optionsInvControlButtons" class="upsellwrapper button-group small-margin-top">
             <!-- lc_options_inventory_control begin -->
             <label for="ioc_radio_1" class="oicb button blue-active<?php echo (isset($pInfo) && ($pInfo->getInt('has_children') == 1 || $pInfo->getInt('has_subproducts') == 1) ? '' : ' active'); ?>">
