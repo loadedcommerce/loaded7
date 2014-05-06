@@ -276,8 +276,8 @@ class lC_Updates_Admin_run_after extends lC_Updates_Admin {
     $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "products_variants` ADD `default_visual` INT( 11 ) DEFAULT '0' AFTER `default_combo`");  
     parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "products_variants` ADD `default_visual` INT( 11 ) DEFAULT '0' AFTER `default_combo`");  
        
-    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "products_variants_groups` ADD `visual` VARCHAR( 1024 ) DEFAULT NULL AFTER `title`");  
-    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "products_variants_groups` ADD `visual` VARCHAR( 1024 ) DEFAULT NULL AFTER `title`");  
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "products_variants_values` ADD `visual` VARCHAR( 1024 ) DEFAULT NULL AFTER `title`");  
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "products_variants_values` ADD `visual` VARCHAR( 1024 ) DEFAULT NULL AFTER `title`");  
     
     // missing weight class rules
     $lC_Database->simpleQuery("INSERT IGNORE INTO `" . $pf . "weight_classes_rules` (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES (1, 2, 0.0010)");
