@@ -675,7 +675,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
   *  returns : true or false  
   *
   */
-  public function importProducts() {
+  public function importProducts($switch) {
 
     $s_db = $this->_sDB;
     $t_db = $this->_tDB;
@@ -1817,8 +1817,8 @@ class lC_LocalUpgrader extends lC_Upgrader {
   *  returns : true or false  
   *
   */
-  public function importCategories() {
-      
+  public function importCategories($switch) {
+    
     $s_db = $this->_sDB;
     $t_db = $this->_tDB;
     $map = $this->_data_mapping['categories'];
@@ -2167,7 +2167,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
   *  returns : true or false  
   *
   */
-  public function importPages() {
+  public function importPages($switch) {
   
     $s_db = $this->_sDB;
     $t_db = $this->_tDB;
@@ -2631,7 +2631,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
   *  returns : true or false  
   *
   */
-  public function importCustomers() {
+  public function importCustomers($switch) {
   
     $s_db = $this->_sDB;
     $t_db = $this->_tDB;
@@ -3254,7 +3254,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
       
   } // end importCategoryImages
   
-  function saveToProductsImages($target_db, $pid, $image, $sort, $default_flag = 1){
+  public function saveToProductsImages($target_db, $pid, $image, $sort, $default_flag = 1) {
   
     $image = end(explode('/', $image));
     
@@ -3291,7 +3291,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
   *  returns : true or false  
   *
   */
-  public function importCustomerGroups() {
+  public function importCustomerGroups($switch) {
     global $lC_Language;
     
     $s_db = $this->_sDB;
@@ -3443,7 +3443,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
   *  returns : true or false  
   *
   */
-  public function importOrders() {
+  public function importOrders($switch) {
     
     $s_db = $this->_sDB;
     $t_db = $this->_tDB;
@@ -4129,7 +4129,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
   *  returns : true or false  
   *
   */
-  public function importAttributes() {
+  public function importAttributes($switch) {
     
     $s_db = $this->_sDB;
     $t_db = $this->_tDB;
@@ -4564,7 +4564,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
   *  returns : true or false  
   *
   */
-  public function importAdministrators() {
+  public function importAdministrators($switch) {
     
       $s_db = $this->_sDB;
       $t_db = $this->_tDB;
@@ -4739,7 +4739,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
   *  returns : true or false  
   *
   */
-  public function importNewsletter() {
+  public function importNewsletter($switch) {
     
     $s_db = $this->_sDB;
     $t_db = $this->_tDB;
@@ -4882,7 +4882,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
   *  returns : true or false  
   *
   */
-  public function importBanners() {
+  public function importBanners($switch) {
     
     $s_db = $this->_sDB;
     $t_db = $this->_tDB;
@@ -5108,7 +5108,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
   *  returns : true or false  
   *
   */
-  public function importConfiguration() {
+  public function importConfiguration($switch) {
     
     return true; // temporarily disable this function until we decide to include configuration from older version of the cart 
     
@@ -5316,7 +5316,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
   *  returns : true or false  
   *
   */
-  public function importCoupons() {
+  public function importCoupons($switch) {
     
     $s_db = $this->_sDB;
     $t_db = $this->_tDB;
@@ -5628,7 +5628,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
   *  returns : true or false  
   *
   */
-  public function importTaxClassesRates() {
+  public function importTaxClassesRates($switch) {
     
     $s_db = $this->_sDB;
     $t_db = $this->_tDB;
@@ -5836,7 +5836,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
   *  returns : true or false  
   *
   */
-  public function importLanguages() {
+  public function importLanguages($switch) {
     
     $s_db = $this->_sDB;
     $t_db = $this->_tDB;
@@ -6316,7 +6316,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
   *  returns : true or false  
   *
   */
-  public function importCurrencies() {
+  public function importCurrencies($switch) {
     
     $s_db = $this->_sDB;
     $t_db = $this->_tDB;

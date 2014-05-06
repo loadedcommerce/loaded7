@@ -35,18 +35,19 @@ switch($_POST['upgradeMethod']){
 		//echo '<pre>';
     //print_r($_POST);
 		//echo '</pre>';
+    //die();
 	}
 	break;
 }
 ?>
-<script type="text/css">
+<style scoped="scoped">
 	.importstatus { 
 		height: 20px;
 	}
-	.step_err_msg{
+	.step_err_msg {
 		margin: 0px 0px 0px -190px; padding: 0px 10px 10px 0px;
-	}
-</script>
+	} 
+</style>
 <script language="javascript" type="text/javascript" src="../includes/javascript/xmlhttp/xmlhttp.js"></script>
 <script language="javascript" type="text/javascript" src="../includes/javascript/xmlhttp/autocomplete.js"></script>
 <script language="javascript" type="text/javascript">
@@ -181,7 +182,7 @@ function prepareWork() {
     	    </p> 
     	  </div>      
       </div>
-      <div class="field-block button-height large-margin-left large-margin-right">
+      <!--<div class="field-block button-height large-margin-left large-margin-right">
         <label for="IMPORT_CUSTOMERS" class="label"><b><?php echo $lC_Language->get('param_import_customers'); ?></b></label>
     	  <div style="display:block; padding:0px 20px 0px 0px"> 
     	    <p id="pBoxContainer_customers" style="height:25px; padding-top:5px;">   
@@ -270,8 +271,7 @@ function prepareWork() {
     	      <span id="eBoxContents_cds"></span>
     	    </p> 
     	  </div>      
-      </div> 
-
+      </div>
       <div class="field-block button-height large-margin-left large-margin-right">
         <label for="IMPORT_ADMIN" class="label"><b><?php echo $lC_Language->get('param_import_admin'); ?></b></label>
     	  <div style="display:block; padding:0px 20px 0px 0px"> 
@@ -391,7 +391,7 @@ function prepareWork() {
             <span id="eBoxContents_currencies"></span>
           </p> 
         </div>      
-      </div> 
+      </div>--> 
     </div>
     <div id="buttonContainer" class="large-margin-top margin-right" style="float:right; display:none;">
       <a id="btn_continue" href="javascript://" onclick="$('#mBox').hide(); $('#pBox').hide();$('#upgradeForm').submit();" class="button">
@@ -431,17 +431,15 @@ $(document).ready(function() {
       $('#img_copy_progress_categories').show();
       setTimeout(function() {
         _rslt = doImport('_categories'); 
-        if(_rslt === ""){  }
-        else { _err = true ; _errmsg = _errmsg + '<p>' + _rslt; 
+        if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
           $('#eBoxContents_categories').html(_rslt);
           $('#eBox_categories').show();
         }
             
-        $('#img_copy_progress_customers').show();
+        /*$('#img_copy_progress_customers').show();
         setTimeout(function() {
           _rslt = doImport('_customers'); 
-          if(_rslt === ""){  }
-          else { _err = true ; _errmsg = _errmsg + '<p>' + _rslt; 
+          if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
             $('#eBoxContents_customers').html(_rslt);
             $('#eBox_customers').show();
           }
@@ -449,8 +447,7 @@ $(document).ready(function() {
           $('#img_copy_progress_customer_groups').show();
           setTimeout(function() {
             _rslt = doImport('_customer_groups'); 
-            if(_rslt === ""){  }
-            else { _err = true ; _errmsg = _errmsg + '<p>' + _rslt; 
+            if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
               $('#eBoxContents_customer_groups').html(_rslt);
               $('#eBox_customer_groups').show();
             }
@@ -458,8 +455,7 @@ $(document).ready(function() {
             $('#img_copy_progress_products').show();
             setTimeout(function() {
               _rslt = doImport('_products'); 
-              if(_rslt === ""){  }
-              else { _err = true ; _errmsg = _errmsg + '<p>' + _rslt; 
+              if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
                 $('#eBoxContents_products').html(_rslt);
                 $('#eBox_products').show();
               }
@@ -467,8 +463,7 @@ $(document).ready(function() {
               $('#img_copy_progress_attributes').show();
               setTimeout(function() {
                 _rslt = doImport('_attributes'); 
-                if(_rslt === ""){  }
-                else { _err = true ; _errmsg = _errmsg + '<p>' + _rslt; 
+                if (_rslt === "") {  else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
                   $('#eBoxContents_attributes').html(_rslt);
                   $('#eBox_attributes').show();
                 }
@@ -476,8 +471,7 @@ $(document).ready(function() {
                 $('#img_copy_progress_orders').show();
                 setTimeout(function() {
                   _rslt = doImport('_orders'); 
-                  if(_rslt === ""){  }
-                  else { _err = true ; _errmsg = _errmsg + '<p>' + _rslt; 
+                  if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
                     $('#eBoxContents_orders').html(_rslt);
                     $('#eBox_customer_orders').show();
                   }
@@ -485,8 +479,7 @@ $(document).ready(function() {
                   $('#img_copy_progress_cds').show();
                   setTimeout(function() {
                     _rslt = doImport('_cds'); 
-                    if(_rslt === ""){  }
-                    else { _err = true ; _errmsg = _errmsg + '<p>' + _rslt; 
+                    if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
                       $('#eBoxContents_cds').html(_rslt);
                       $('#eBox_customer_cds').show();
                     }
@@ -494,8 +487,7 @@ $(document).ready(function() {
                     $('#img_copy_progress_administrators').show();
                     setTimeout(function() {
                       _rslt = doImport('_administrators'); 
-                      if(_rslt === ""){  }
-                      else { _err = true ; _errmsg = _errmsg + '<p>' + _rslt; 
+                      if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
                         $('#eBoxContents_administrators').html(_rslt);
                         $('#eBox_customer_administrators').show();
                       }
@@ -503,8 +495,7 @@ $(document).ready(function() {
                       $('#img_copy_progress_newsletter').show();
                       setTimeout(function() {
                         _rslt = doImport('_newsletter'); 
-                        if(_rslt === ""){  }
-                        else { _err = true ; _errmsg = _errmsg + '<p>' + _rslt; 
+                        if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
                           $('#eBoxContents_newsletter').html(_rslt);
                           $('#eBox_customer_newsletter').show();
                         }
@@ -512,8 +503,7 @@ $(document).ready(function() {
                         $('#img_copy_progress_banners').show();
                         setTimeout(function() {
                           _rslt = doImport('_banners'); 
-                          if(_rslt === ""){  }
-                          else { _err = true ; _errmsg = _errmsg + '<p>' + _rslt; 
+                          if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
                             $('#eBoxContents_banners').html(_rslt);
                             $('#eBox_customer_banners').show();
                           }
@@ -521,8 +511,7 @@ $(document).ready(function() {
                           $('#img_copy_progress_configuration').show();
                           setTimeout(function() {
                             _rslt = doImport('_configuration'); 
-                            if(_rslt === ""){  }
-                            else { _err = true ; _errmsg = _errmsg + '<p>' + _rslt; 
+                            if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
                               $('#eBoxContents_configuration').html(_rslt);
                               $('#eBox_customer_configuration').show();
                             }
@@ -530,8 +519,7 @@ $(document).ready(function() {
                             $('#img_copy_progress_coupons').show();
                             setTimeout(function() {
                               _rslt = doImport('_coupons'); 
-                              if(_rslt === ""){  }
-                              else { _err = true ; _errmsg = _errmsg + '<p>' + _rslt; 
+                              if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
                                 $('#eBoxContents_coupons').html(_rslt);
                                 $('#eBox_customer_coupons').show();
                               }
@@ -539,8 +527,7 @@ $(document).ready(function() {
                               $('#img_copy_progress_taxclasses').show();
                               setTimeout(function() {
                                 _rslt = doImport('_taxclasses'); 
-                                if(_rslt === ""){  }
-                                else { _err = true ; _errmsg = _errmsg + '<p>' + _rslt; 
+                                if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
                                   $('#eBoxContents_taxclasses').html(_rslt);
                                   $('#eBox_customer_taxclasses').show();
                                 }
@@ -548,8 +535,7 @@ $(document).ready(function() {
                                 $('#img_copy_progress_languages').show();
                                 setTimeout(function() {
                                   _rslt = doImport('_languages'); 
-                                  if(_rslt === ""){  }
-                                  else { _err = true ; _errmsg = _errmsg + '<p>' + _rslt; 
+                                  if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
                                     $('#eBoxContents_languages').html(_rslt);
                                     $('#eBox_languages').show();
                                   }
@@ -557,11 +543,10 @@ $(document).ready(function() {
                                   $('#img_copy_progress_currencies').show();
                                   setTimeout(function() {
                                     _rslt = doImport('_currencies'); 
-                                    if(_rslt === ""){  }
-                                    else { _err = true ; _errmsg = _errmsg + '<p>' + _rslt; 
+                                    if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
                                       $('#eBoxContents_currencies').html(_rslt);
                                       $('#eBox_currencies').show();
-                                    }
+                                    }*/
                                   
                                     // DONE
                                     $('#pBox').hide();
@@ -584,7 +569,7 @@ $(document).ready(function() {
                                     
                                     $('#buttonContainer').show();                                  
                                   
-                                  }, 3000);
+                                  /*}, 3000);
                                 }, 3000);  
                               }, 3000);                                 
                             }, 3000);                              
@@ -595,15 +580,15 @@ $(document).ready(function() {
                   }, 3000);                     
                 }, 3000);                  
               }, 3000);                
-            }, 3000);              
-          }, 3000);            
-        }, 3000);          
+            }, 3000);             
+          }, 3000);             
+        }, 3000);*/          
       }, 3000);
     });
   }, 3000);
 });
   
-var doImport = function(datatype){
+var doImport = function(datatype) {
   var _success = false;
   var _emsg = "";
   $.ajax({
