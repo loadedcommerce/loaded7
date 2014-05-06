@@ -350,6 +350,7 @@ class lC_ShoppingCart {
           $Qupdate->execute();
         }
       } else {
+        
         if ( !is_numeric($quantity) ) {
           $quantity = 1;
         } 
@@ -362,18 +363,18 @@ class lC_ShoppingCart {
         
         $desc = $Qdescription->toArray();
         
-        if ($Qproduct->valueInt('is_subproduct') > 0) {
+        if ($Qproduct->valueInt('parent_id') > 0) {
           $Qmaster = $lC_Database->query('select products_name as parent_name, products_description as description, products_keyword as keyword, products_tags as tags, products_url as url from :table_products_description where products_id = :products_id and language_id = :language_id limit 1');
           $Qmaster->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
           $Qmaster->bindInt(':products_id', $Qproduct->valueInt('parent_id'));
           $Qmaster->bindInt(':language_id', $lC_Language->getID());
           $Qmaster->execute();              
           
-          $parent_name = $Qmaster->value('parent_name');
-          
-          if (empty($parent_name) === false) {
-            $desc['products_name'] = $parent_name . ' - ' . $desc['products_name'];
-          }            
+          if ($Qproduct->valueInt('is_subproduct') > 0) {
+             $desc['products_name'] = $Qmaster->value('parent_name') . ' - ' . $desc['products_name'];
+          } else {
+            $desc['products_name'] = $Qmaster->value('parent_name');
+          }
           $desc['products_description'] = $Qmaster->value('description');
           $desc['products_keyword'] = $Qmaster->value('keyword');
           $desc['products_tags'] = $Qmaster->value('tags');
@@ -414,7 +415,7 @@ class lC_ShoppingCart {
                                            'weight' => $Qproduct->value('products_weight'),
                                            'tax_class_id' => $Qproduct->valueInt('products_tax_class_id'),
                                            'date_added' => lC_DateTime::getShort(lC_DateTime::getNow()),
-                                           'weight_class_id' => $Qproduct->valueInt('products_weight_class'));                                           
+                                           'weight_class_id' => $Qproduct->valueInt('products_weight_class')); 
 
         // simple options
         if (isset($_POST['simple_options']) && empty($_POST['simple_options']) === false) {
