@@ -83,16 +83,20 @@ $oID = lC_Success::getOrderID($lC_Customer->getID());
                     echo '<tr class="confirmation-products-listing-row">' . "\n" .
                          '  <td class="content-checkout-confirmation-qty-td">' . $products['quantity'] . '&nbsp;x&nbsp;</td>' . "\n" .
                          '  <td><span class="text-info strong">' . $products['name'] . '</span>' . "\n";
-                    echo '<br /><span class="confirmation-products-listing-model">' . $lC_Language->get('listing_model_heading') . ': ' . $products['model'] . '</span>';
-                    
+                    if (!empty($products['model'])) {     
+                      echo '<div class="small">' . $lC_Language->get('listing_model_heading') . ': ' . $products['model'] . '</div>';
+                    }
+                    if (!empty($products['sku'])) {
+                      echo '<div class="small">- ' . $lC_Language->get('listing_sku_heading') . ': ' . $products['sku'] . '</div>' . "\n";
+                    }                    
                     if ( lC_Success::isVariant($products['id']) === true ) {
                       foreach ( lC_Success::getVariants($products['id']) as $variant) {
-                        echo '<br /><small>- ' . $variant['group_title'] . ': ' . $variant['value_title'] . '</small>' . "\n";
+                        echo '<div class="small">- ' . $variant['group_title'] . ': ' . $variant['value_title'] . '</div>' . "\n";
                       }
                     }
                     if ( is_array($products['options']) && empty($products['options']) === false ) {
                       foreach ( $products['options'] as $key => $val) {
-                        echo '<br /><small>- ' . $option['group_title'] . ': ' . $option['value_title'] . '</small>' . "\n";
+                        echo '<div class="small">- ' . $option['group_title'] . ': ' . $option['value_title'] . '</div>' . "\n";
                       }
                     }                        
                     echo '</td>' . "\n";

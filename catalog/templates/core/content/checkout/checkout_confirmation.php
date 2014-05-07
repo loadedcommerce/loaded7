@@ -114,15 +114,20 @@
                     if ( (STOCK_CHECK == '1') && !$lC_ShoppingCart->isInStock($products['item_id']) ) {
                       echo '<span class="text-danger small-margin-left">' . STOCK_MARK_PRODUCT_OUT_OF_STOCK . '</span>' . "\n";
                     }
-                    echo '<br /><span class="confirmation-products-listing-model">' . $lC_Language->get('listing_model_heading') . ': ' . $products['model'] . '</span>';
+                    if (!empty($products['model'])) {
+                      echo '<div class="small">- ' . $lC_Language->get('listing_model_heading') . ': ' . $products['model'] . '</div>' . "\n";
+                    }
+                    if (!empty($products['sku'])) {
+                      echo '<div class="small">- ' . $lC_Language->get('listing_sku_heading') . ': ' . $products['sku'] . '</div>' . "\n";
+                    }                     
                     if ( $lC_ShoppingCart->isVariant($products['item_id']) ) {
                       foreach ( $lC_ShoppingCart->getVariant($products['item_id']) as $variant) {
-                        echo '<br /><small>- ' . $variant['group_title'] . ': ' . $variant['value_title'] . '</small>' . "\n";
+                        echo '<div class="small">- ' . $variant['group_title'] . ': ' . $variant['value_title'] . '</div>' . "\n";
                       }
                     }
                     if ( $lC_ShoppingCart->hasSimpleOptions($products['item_id']) ) {
                       foreach ( $lC_ShoppingCart->getSimpleOptions($products['item_id']) as $option) {
-                        echo '<br /><small>- ' . $option['group_title'] . ': ' . $option['value_title'] . '</small>' . "\n";
+                        echo '<div class="small">- ' . $option['group_title'] . ': ' . $option['value_title'] . '</div>' . "\n";
                       }
                     }                        
                     echo '</td>' . "\n";
