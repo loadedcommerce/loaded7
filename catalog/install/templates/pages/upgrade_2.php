@@ -35,9 +35,9 @@ $page_title_text = $lC_Language->get('upgrade_step2_page_title');
 $page_description_text = $lC_Language->get('upgrade_step2_page_desc');
 $db_imported = false; 
 $error = '';
-
-if ((isset($_POST['db_switch']) && $_POST['db_switch'] != -1)) {              
-  if ((isset($_POST['save_settings']) && $_POST['upgrade_method'] == 'S')) {	
+              
+if ((isset($_POST['save_settings']) && $_POST['upgrade_method'] == 'S')) {
+  if ((isset($_POST['db_switch']) && $_POST['db_switch'] != -1)) {	
     $db = array('DB_SERVER' => trim(urldecode($_POST['DB_SERVER'])),
                 'DB_SERVER_USERNAME' => trim(urldecode($_POST['DB_SERVER_USERNAME'])),
                 'DB_SERVER_PASSWORD' => trim(urldecode($_POST['DB_SERVER_PASSWORD'])),
@@ -215,29 +215,34 @@ if ((isset($_POST['db_switch']) && $_POST['db_switch'] != -1)) {
       $db_imported = true; 
       $form_action = "upgrade.php?step=3";
       $page_title_text = $lC_Language->get('upgrade_step2_page_title_success');
-      $page_description_text = $lC_Language->get('upgrade_step2_page_desc_success');
+      $page_description_text = $lC_Language->get('upgrade_step2_page_desc_success'); 
+    }
+  } else {
+    $db = array('DB_SERVER' => trim(urldecode($_POST['DB_SERVER'])),
+                'DB_SERVER_USERNAME' => trim(urldecode($_POST['DB_SERVER_USERNAME'])),
+                'DB_SERVER_PASSWORD' => trim(urldecode($_POST['DB_SERVER_PASSWORD'])),
+                'DB_DATABASE' => trim(urldecode($_POST['DB_DATABASE'])),
+                'DB_DATABASE_CLASS' => trim(urldecode($_POST['DB_DATABASE_CLASS'])),
+                'DB_INSERT_SAMPLE_DATA' => ((trim(urldecode($_POST['DB_INSERT_SAMPLE_DATA'])) == '1') ? 'true' : 'false'),
+                'DB_TABLE_PREFIX' => trim(urldecode($_POST['DB_TABLE_PREFIX']))
+                );
+    
+    $lC_Database = lC_Database::connect($db['DB_SERVER'], $db['DB_SERVER_USERNAME'], $db['DB_SERVER_PASSWORD'], $db['DB_DATABASE_CLASS']);
+
+    if ($lC_Database->isError() === false) {
+      $lC_Database->selectDatabase($db['DB_DATABASE']);
+    }
+    
+    if ($lC_Database->isError() === false) {
+      $db_imported = true; 
+      $form_action = "upgrade.php?step=3";
+      $page_title_text = $lC_Language->get('upgrade_step2_page_title_success');
+      $page_description_text = $lC_Language->get('upgrade_step2_page_desc_success'); 
+    } else {
+      $error = $lC_Database->getError();
     }
   }
-} else {
-  $db = array('DB_SERVER' => trim(urldecode($_POST['DB_SERVER'])),
-              'DB_SERVER_USERNAME' => trim(urldecode($_POST['DB_SERVER_USERNAME'])),
-              'DB_SERVER_PASSWORD' => trim(urldecode($_POST['DB_SERVER_PASSWORD'])),
-              'DB_DATABASE' => trim(urldecode($_POST['DB_DATABASE'])),
-              'DB_DATABASE_CLASS' => trim(urldecode($_POST['DB_DATABASE_CLASS'])),
-              'DB_INSERT_SAMPLE_DATA' => ((trim(urldecode($_POST['DB_INSERT_SAMPLE_DATA'])) == '1') ? 'true' : 'false'),
-              'DB_TABLE_PREFIX' => trim(urldecode($_POST['DB_TABLE_PREFIX']))
-              );
-  
-  $lC_Database = lC_Database::connect($db['DB_SERVER'], $db['DB_SERVER_USERNAME'], $db['DB_SERVER_PASSWORD'], $db['DB_DATABASE_CLASS']);
-
-  if ($lC_Database->isError() === false) {  
-    $form_action = "upgrade.php?step=3";
-    $page_title_text = $lC_Language->get('upgrade_step2_page_title_success');
-    $page_description_text = $lC_Language->get('upgrade_step2_page_desc_success');
-  } else {
-    $error = $lC_Database->getError();
-  }
-}      
+}
 ?>
 <script language="javascript" type="text/javascript">
 <!--
