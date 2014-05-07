@@ -8,9 +8,11 @@
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: info.php v1.0 2013-08-08 datazen $
 */
+$error = (isset($_GET['error']) && $_GET['error'] != NULL) ? preg_replace('/[^A-Za-z0-9\_\s]/', '', urldecode($_GET['error'])) : NULL;
 ?>
 <!--content/products/info.php start-->
 <div class="row">
+  <?php if ( $error != NULL ) echo '<div class="message-stack-container alert alert-danger margin-bottom mid-margin-right with-padding">' . $error . '</div>' . "\n"; ?>
   <div class="col-sm-4 col-lg-4 clearfix">
     <div class="large-margin-top no-margin-bottom text-center">
       <a data-toggle="modal" href="#popup-image-modal" title="<?php echo $lC_Product->getTitle(); ?>"><img class="img-responsive" src="<?php echo $lC_Image->getAddress($lC_Product->getImage(), 'large'); ?>" title="<?php echo $lC_Product->getTitle(); ?>" alt="<?php echo $lC_Product->getTitle(); ?>" /></a>
@@ -135,7 +137,7 @@
   if ( $lC_Product->hasSubProducts($lC_Product->getID()) === false) {
     ?>    
     <div id="qpb-message"></div>
-    <div class="relative clear-both clearfix">
+    <div class="relative clear-both clearfix buy-btn-div">
       <div class="display-inline">
         <div class="col-sm-8 col-lg-8 align-right mid-margin-top">
           <div class="form-group">
@@ -203,8 +205,9 @@ function setQty(mode) {
 function refreshPrice() {
   // disable checkout button until ajax finishes loading
   var href = $('#btn-buy-now').attr('onclick');
-  $('#btn-buy-now').attr('onclick', ''); 
-  
+  $('#btn-buy-now').attr('onclick', '');    
+  $('.message-stack-container').delay(5000).slideUp();    
+    
   var stockCheck = '<?php echo STOCK_CHECK; ?>'   
   var disableAddToCart = '<?php echo DISABLE_ADD_TO_CART; ?>'   
     
@@ -234,7 +237,7 @@ function refreshPrice() {
             $("#btn-buy-now").attr('disabled', 'disabled');
           } else {
             $("#btn-buy-now").removeAttr('disabled');
-          }
+    }
         }
       }
     }
