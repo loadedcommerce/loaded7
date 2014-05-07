@@ -206,8 +206,11 @@ upgrade_step1_err_nopass 		= The existing store file (admin/includes/configure.p
 upgrade_step1_err_nodb 			= The existing store file (admin/includes/configure.php) missing the value of DB_DATABASE
 upgrade_step1_err_noimage		= The existing store file (admin/includes/configure.php) missing the value of DIR_WS_IMAGES
 
+upgrade_step1_method_title = Upgrade Method
+upgrade_step1_method_description = To run an upgrade for the first time or completely overwrite previous data choose <strong>Create New Database</strong>. To Re-run an upgrade and preserve previous configuration data choose <strong>Re-run existing upgrade</strong>.
+
 upgrade_step2_page_title = New Database Settings
-upgrade_step2_page_desc = Please enter settings of the new database. The new database must be empty. The installer will copy your existing data to this new database .
+upgrade_step2_page_desc = Please enter settings of the new database. The new database must be empty. The installer will copy your existing data to this new database.
 
 upgrade_step2_page_title_success = New Database Settings
 upgrade_step2_page_desc_success = Successfully connected to the database server.
@@ -215,7 +218,7 @@ upgrade_step2_page_retry_text = <strong>Create New Database</strong> will delete
 
 upgrade_step3_page_title = Database Import
 upgrade_step3_page_desc = The installer will copy the existing database to the new database and convert the data to work with Loaded7. This may take a few minutes. Please do not close the browser, press the back button or navigate away from this page.
-upgrade_step3_page_errfound = ERROR(S) FOUND . Please correct to proceed
+upgrade_step3_page_errfound = ERROR(S) FOUND. Please correct to proceed
 
 upgrade_step4_page_title = Image Import
 upgrade_step4_page_desc = The installer will copy the existing images to the new database and convert the data to work with Loaded7. This may take a few minutes. Please do not close the browser, press the back button or navigate away from this page.

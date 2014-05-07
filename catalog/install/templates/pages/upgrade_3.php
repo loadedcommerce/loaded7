@@ -7,7 +7,7 @@
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: upgrade_3.php v1.0 2013-08-08 datazen $
 */
-switch($_POST['upgradeMethod']){
+switch ($_POST['upgrade_method']) {
 	case 'R':
 	{
 		$www_location = 'http://' . $_SERVER['HTTP_HOST'];
@@ -139,13 +139,11 @@ function prepareWork() {
     <li class="hide-on-mobile"><span class="wizard-step">4</span><?php echo $lC_Language->get('upgrade_nav_text_4'); ?></li>
     <li class="hide-on-mobile"><span class="wizard-step">5</span><?php echo $lC_Language->get('upgrade_nav_text_5'); ?></li>
   </ul>
-
   <fieldset class="wizard-fieldset fields-list current active">
     <div class="field-block margin-bottom" style="padding-left:20px;">
       <h4><?php echo $lC_Language->get('upgrade_step3_page_title'); ?></h4>
       <p><?php echo $lC_Language->get('upgrade_step3_page_desc'); ?></p>
     </div>
-    
     <div id="pBox" style="display:none; padding: 0px 20px 10px;">
       <p class="message blue-gradient align-center">  
         <span class="stripes animated"></span>
@@ -153,19 +151,16 @@ function prepareWork() {
         <span class="block-arrow bottom"></span>
       </p>      
     </div>
-    
     <div id="mBox" style="display:none; padding:0px 20px 10px"> 
       <p class="message icon-warning red-gradient align-center">   
         <span id="mBoxContents"></span>
       </p> 
-    </div>      
-    
+    </div>
     <div id="mBoxSuccess" style="display:none; padding:0px 20px 10px"> 
       <p class="message green-gradient align-center">   
         <span id="mBoxSuccessContents"></span>
       </p> 
-    </div>      
-    
+    </div>
     <div class="with-padding">  
       <div class="field-block button-height large-margin-left large-margin-right">
         <label for="IMPORT_CATEGORIES" class="label"><b><?php echo $lC_Language->get('param_import_categories'); ?></b></label>
@@ -182,7 +177,7 @@ function prepareWork() {
     	    </p> 
     	  </div>      
       </div>
-      <!--<div class="field-block button-height large-margin-left large-margin-right">
+      <div class="field-block button-height large-margin-left large-margin-right">
         <label for="IMPORT_CUSTOMERS" class="label"><b><?php echo $lC_Language->get('param_import_customers'); ?></b></label>
     	  <div style="display:block; padding:0px 20px 0px 0px"> 
     	    <p id="pBoxContainer_customers" style="height:25px; padding-top:5px;">   
@@ -391,7 +386,7 @@ function prepareWork() {
             <span id="eBoxContents_currencies"></span>
           </p> 
         </div>      
-      </div>--> 
+      </div> 
     </div>
     <div id="buttonContainer" class="large-margin-top margin-right" style="float:right; display:none;">
       <a id="btn_continue" href="javascript://" onclick="$('#mBox').hide(); $('#pBox').hide();$('#upgradeForm').submit();" class="button">
@@ -436,7 +431,7 @@ $(document).ready(function() {
           $('#eBox_categories').show();
         }
             
-        /*$('#img_copy_progress_customers').show();
+        $('#img_copy_progress_customers').show();
         setTimeout(function() {
           _rslt = doImport('_customers'); 
           if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
@@ -463,7 +458,7 @@ $(document).ready(function() {
               $('#img_copy_progress_attributes').show();
               setTimeout(function() {
                 _rslt = doImport('_attributes'); 
-                if (_rslt === "") {  else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
+                if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
                   $('#eBoxContents_attributes').html(_rslt);
                   $('#eBox_attributes').show();
                 }
@@ -546,7 +541,7 @@ $(document).ready(function() {
                                     if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
                                       $('#eBoxContents_currencies').html(_rslt);
                                       $('#eBox_currencies').show();
-                                    }*/
+                                    }
                                   
                                     // DONE
                                     $('#pBox').hide();
@@ -569,7 +564,7 @@ $(document).ready(function() {
                                     
                                     $('#buttonContainer').show();                                  
                                   
-                                  /*}, 3000);
+                                  }, 3000);
                                 }, 3000);  
                               }, 3000);                                 
                             }, 3000);                              
@@ -582,7 +577,7 @@ $(document).ready(function() {
               }, 3000);                
             }, 3000);             
           }, 3000);             
-        }, 3000);*/          
+        }, 3000);          
       }, 3000);
     });
   }, 3000);

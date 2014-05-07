@@ -165,7 +165,7 @@ if(($_POST['upgrade_method'] == 'R')) {
     <li class="hide-on-mobile"><span class="wizard-step">5</span><?php echo $lC_Language->get('upgrade_nav_text_5'); ?></li>
   </ul>
   <?php
-	  if($_POST['upgrade_method'] == 'F'){
+	  if ($_POST['upgrade_method'] == 'F') {
   ?>
   <fieldset class="wizard-fieldset fields-list current active">
     <div class="field-block margin-bottom" style="padding-left:20px;">
@@ -204,7 +204,7 @@ if(($_POST['upgrade_method'] == 'R')) {
     </div>   
   </fieldset>
   <?php
-	  }	else if($_POST['upgrade_method'] == 'D') {
+	  }	else if ($_POST['upgrade_method'] == 'D') {
   ?>
   <fieldset class="wizard-fieldset fields-list current active">
     <div class="field-block margin-bottom" style="padding-left:20px;">
@@ -264,6 +264,11 @@ if(($_POST['upgrade_method'] == 'R')) {
   </fieldset>
   <?php
 	  } else {
+      $page_retry_text = '<div class="with-padding margin-left">
+                            <p><input type="radio" name="db_switch" class="radio" value="1" checked="checked">&nbsp;' . $lC_Language->get('upgrade_step2_create_db') . '</p>
+                            <p><input type="radio" name="db_switch" class="radio" value="-1">&nbsp;' . $lC_Language->get('upgrade_step2_upgrade_db') . '</p>
+                          </div>';
+      $page_retry_text .= '<p class="with-padding">' . $lC_Language->get('upgrade_step2_page_retry_text') . '</p>';
   ?>
   <fieldset class="wizard-fieldset fields-list current active">
     <div class="field-block margin-bottom" style="padding-left:20px;">
@@ -291,6 +296,11 @@ if(($_POST['upgrade_method'] == 'R')) {
     	  <label class="label"><b><?php echo $lC_Language->get('upgrade_step1_label'); ?></b></label>
     	  <input type="text" name="INSTALL_PATH" id="INSTALL_PATH" value="<?php echo $fs_www_root; ?>" class="input" style="width:93%;">
     	</div>
+      <div class="margin-bottom large-margin-top">
+        <h4><?php echo $lC_Language->get('upgrade_step1_method_title'); ?></h4>
+        <p><?php echo $lC_Language->get('upgrade_step1_method_description'); ?></p>
+      </div>
+      <div><?php echo $page_retry_text; ?></div>
     	<div id="buttonContainer" class="large-margin-top margin-right" style="float:right">
     	  <a href="index.php" class="button">
     	    <span class="button-icon red-gradient glossy"><span class="icon-cross"></span></span>
@@ -302,6 +312,7 @@ if(($_POST['upgrade_method'] == 'R')) {
     	  </a>
     	</div>
     </div>
+    
     <?php
 		  } else {	
     ?>

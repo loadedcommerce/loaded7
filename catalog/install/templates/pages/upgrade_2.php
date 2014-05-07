@@ -33,58 +33,42 @@ if (isset($_POST['INSTALL_PATH']) && $_POST['INSTALL_PATH'] != '') {
 
 $page_title_text = $lC_Language->get('upgrade_step2_page_title');
 $page_description_text = $lC_Language->get('upgrade_step2_page_desc');
-$db_imported = false ; 
+$db_imported = false; 
 $error = '';
-              
-if (($_POST['upgrade_method'] == 'S') && isset($_POST['save_settings'])) {	
-  $db = array('DB_SERVER' => trim(urldecode($_POST['DB_SERVER'])),
-              'DB_SERVER_USERNAME' => trim(urldecode($_POST['DB_SERVER_USERNAME'])),
-              'DB_SERVER_PASSWORD' => trim(urldecode($_POST['DB_SERVER_PASSWORD'])),
-              'DB_DATABASE' => trim(urldecode($_POST['DB_DATABASE'])),
-              'DB_DATABASE_CLASS' => trim(urldecode($_POST['DB_DATABASE_CLASS'])),
-              'DB_INSERT_SAMPLE_DATA' => ((trim(urldecode($_POST['DB_INSERT_SAMPLE_DATA'])) == '1') ? 'true' : 'false'),
-              'DB_TABLE_PREFIX' => trim(urldecode($_POST['DB_TABLE_PREFIX']))
-              );
-	
-  $lC_Database = lC_Database::connect($db['DB_SERVER'], $db['DB_SERVER_USERNAME'], $db['DB_SERVER_PASSWORD'], $db['DB_DATABASE_CLASS']);
 
-  if ($lC_Database->isError() === false) {
-    $lC_Database->selectDatabase($db['DB_DATABASE']);
-  }
-  
-  if ($lC_Database->isError() === false) {
-    if ($_POST['class'] == 'mysqli_innodb') {
-      $sql_file = $dir_fs_www_root . '/loadedcommerce_innodb.sql';
-    } else {
-      $sql_file = $dir_fs_www_root . '/loadedcommerce.sql';
+if ((isset($_POST['db_switch']) && $_POST['db_switch'] != -1)) {              
+  if ((isset($_POST['save_settings']) && $_POST['upgrade_method'] == 'S')) {	
+    $db = array('DB_SERVER' => trim(urldecode($_POST['DB_SERVER'])),
+                'DB_SERVER_USERNAME' => trim(urldecode($_POST['DB_SERVER_USERNAME'])),
+                'DB_SERVER_PASSWORD' => trim(urldecode($_POST['DB_SERVER_PASSWORD'])),
+                'DB_DATABASE' => trim(urldecode($_POST['DB_DATABASE'])),
+                'DB_DATABASE_CLASS' => trim(urldecode($_POST['DB_DATABASE_CLASS'])),
+                'DB_INSERT_SAMPLE_DATA' => ((trim(urldecode($_POST['DB_INSERT_SAMPLE_DATA'])) == '1') ? 'true' : 'false'),
+                'DB_TABLE_PREFIX' => trim(urldecode($_POST['DB_TABLE_PREFIX']))
+                );
+	  
+    $lC_Database = lC_Database::connect($db['DB_SERVER'], $db['DB_SERVER_USERNAME'], $db['DB_SERVER_PASSWORD'], $db['DB_DATABASE_CLASS']);
+
+    if ($lC_Database->isError() === false) {
+      $lC_Database->selectDatabase($db['DB_DATABASE']);
     }
-    $lC_Database->importSQL($sql_file, $db['DB_DATABASE'], $db['DB_TABLE_PREFIX']);
-  }
-
-  if (($lC_Database->isError() === false) && ($db['DB_INSERT_SAMPLE_DATA'] == 'true')) {
-    $sql_file = $dir_fs_www_root . '/loadedcommerce_sample_data.sql';
-    $lC_Database->importSQL($sql_file, $db['DB_DATABASE'], $db['DB_TABLE_PREFIX']);
-  }
-
-  if ($lC_Database->isError() === false) {
-    foreach ($lC_Language->extractDefinitions('en_US.xml') as $def) {
-      $Qdef = $lC_Database->query('insert into :table_languages_definitions (languages_id, content_group, definition_key, definition_value) values (:languages_id, :content_group, :definition_key, :definition_value)');
-      $Qdef->bindTable(':table_languages_definitions', $db['DB_TABLE_PREFIX'] . 'languages_definitions');
-      $Qdef->bindInt(':languages_id', 1);
-      $Qdef->bindValue(':content_group', $def['group']);
-      $Qdef->bindValue(':definition_key', $def['key']);
-      $Qdef->bindValue(':definition_value', $def['value']);
-      $Qdef->execute();
+    
+    if ($lC_Database->isError() === false) {
+      if ($_POST['class'] == 'mysqli_innodb') {
+        $sql_file = $dir_fs_www_root . '/loadedcommerce_innodb.sql';
+      } else {
+        $sql_file = $dir_fs_www_root . '/loadedcommerce.sql';
+      }
+      $lC_Database->importSQL($sql_file, $db['DB_DATABASE'], $db['DB_TABLE_PREFIX']);
     }
-           
-    $lC_DirectoryListing = new lC_DirectoryListing('../includes/languages/en_US');
-    $lC_DirectoryListing->setRecursive(true);
-    $lC_DirectoryListing->setIncludeDirectories(false);
-    $lC_DirectoryListing->setAddDirectoryToFilename(true);
-    $lC_DirectoryListing->setCheckExtension('xml');
 
-    foreach ($lC_DirectoryListing->getFiles() as $files) {
-      foreach ($lC_Language->extractDefinitions('en_US/' . $files['name']) as $def) {
+    if (($lC_Database->isError() === false) && ($db['DB_INSERT_SAMPLE_DATA'] == 'true')) {
+      $sql_file = $dir_fs_www_root . '/loadedcommerce_sample_data.sql';
+      $lC_Database->importSQL($sql_file, $db['DB_DATABASE'], $db['DB_TABLE_PREFIX']);
+    }
+
+    if ($lC_Database->isError() === false) {
+      foreach ($lC_Language->extractDefinitions('en_US.xml') as $def) {
         $Qdef = $lC_Database->query('insert into :table_languages_definitions (languages_id, content_group, definition_key, definition_value) values (:languages_id, :content_group, :definition_key, :definition_value)');
         $Qdef->bindTable(':table_languages_definitions', $db['DB_TABLE_PREFIX'] . 'languages_definitions');
         $Qdef->bindInt(':languages_id', 1);
@@ -93,135 +77,167 @@ if (($_POST['upgrade_method'] == 'S') && isset($_POST['save_settings'])) {
         $Qdef->bindValue(':definition_value', $def['value']);
         $Qdef->execute();
       }
+             
+      $lC_DirectoryListing = new lC_DirectoryListing('../includes/languages/en_US');
+      $lC_DirectoryListing->setRecursive(true);
+      $lC_DirectoryListing->setIncludeDirectories(false);
+      $lC_DirectoryListing->setAddDirectoryToFilename(true);
+      $lC_DirectoryListing->setCheckExtension('xml');
+
+      foreach ($lC_DirectoryListing->getFiles() as $files) {
+        foreach ($lC_Language->extractDefinitions('en_US/' . $files['name']) as $def) {
+          $Qdef = $lC_Database->query('insert into :table_languages_definitions (languages_id, content_group, definition_key, definition_value) values (:languages_id, :content_group, :definition_key, :definition_value)');
+          $Qdef->bindTable(':table_languages_definitions', $db['DB_TABLE_PREFIX'] . 'languages_definitions');
+          $Qdef->bindInt(':languages_id', 1);
+          $Qdef->bindValue(':content_group', $def['group']);
+          $Qdef->bindValue(':definition_key', $def['key']);
+          $Qdef->bindValue(':definition_value', $def['value']);
+          $Qdef->execute();
+        }
+      }
     }
-  }
 
-  if ($lC_Database->isError() === false) {
-    define('DB_TABLE_PREFIX', $db['DB_TABLE_PREFIX']);
-    include('../includes/database_tables.php');
+    if ($lC_Database->isError() === false) {
+      define('DB_TABLE_PREFIX', $db['DB_TABLE_PREFIX']);
+      include('../includes/database_tables.php');
 
-    $services = array('output_compression',
-                      'session',
-                      'language',
-                      'currencies',
-                      'core',
-                      'simple_counter',
-                      'category_path',
-                      'breadcrumb',
-                      'whos_online',
-                      'banner',
-                      'specials',
-                      'reviews',
-                      'recently_visited');
+      $services = array('output_compression',
+                        'session',
+                        'language',
+                        'currencies',
+                        'core',
+                        'simple_counter',
+                        'category_path',
+                        'breadcrumb',
+                        'whos_online',
+                        'banner',
+                        'specials',
+                        'reviews',
+                        'recently_visited');
 
-    $installed = array();
+      $installed = array();
 
-    foreach ($services as $service) {
-      include('../admin/includes/modules/services/' . $service . '.php');
-      $class = 'lC_Services_' . $service . '_Admin';
-      $module = new $class();
+      foreach ($services as $service) {
+        include('../admin/includes/modules/services/' . $service . '.php');
+        $class = 'lC_Services_' . $service . '_Admin';
+        $module = new $class();
+        $module->install();
+
+        if (isset($module->depends)) {
+          if (is_string($module->depends) && (($key = array_search($module->depends, $installed)) !== false)) {
+            if (isset($installed[$key+1])) {
+              array_splice($installed, $key+1, 0, $service);
+            } else {
+              $installed[] = $service;
+            }
+          } elseif (is_array($module->depends)) {
+            foreach ($module->depends as $depends_module) {
+              if (($key = array_search($depends_module, $installed)) !== false) {
+                if (!isset($array_position) || ($key > $array_position)) {
+                  $array_position = $key;
+                }
+              }
+            }
+            if (isset($array_position)) {
+              array_splice($installed, $array_position+1, 0, $service);
+            } else {
+              $installed[] = $service;
+            }
+          }
+        } elseif (isset($module->precedes)) {
+          if (is_string($module->precedes)) {
+            if ((($key = array_search($module->precedes, $installed)) !== false)) {
+              array_splice($installed, $key, 0, $service);
+            } else {
+              $installed[] = $service;
+            }
+          } elseif (is_array($module->precedes)) {
+            foreach ($module->precedes as $precedes_module) {
+              if (($key = array_search($precedes_module, $installed)) !== false) {
+                if (!isset($array_position) || ($key < $array_position)) {
+                  $array_position = $key;
+                }
+              }
+            }
+            if (isset($array_position)) {
+              array_splice($installed, $array_position, 0, $service);
+            } else {
+              $installed[] = $service;
+            }
+          }
+        } else {
+          $installed[] = $service;
+        }
+        unset($array_position);
+      }
+
+      $Qs = $lC_Database->query('insert into :table_configuration (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, date_added) VALUES ("Service Modules", "MODULE_SERVICES_INSTALLED",  :configuration_value, "Installed services modules", "6", "0", now())');
+      $Qs->bindTable(':table_configuration', TABLE_CONFIGURATION);
+      $Qs->bindValue(':configuration_value', implode(';', $installed));
+      $Qs->execute();
+
+      include('includes/classes/payment.php');
+      include('includes/classes/shipping.php');
+      include('includes/classes/order_total.php');
+      include('../admin/includes/applications/modules_order_total/classes/modules_order_total.php');
+      include('../admin/includes/modules/order_total/sub_total.php');
+      
+      $module = new lC_OrderTotal_sub_total();
       $module->install();
 
-      if (isset($module->depends)) {
-        if (is_string($module->depends) && (($key = array_search($module->depends, $installed)) !== false)) {
-          if (isset($installed[$key+1])) {
-            array_splice($installed, $key+1, 0, $service);
-          } else {
-            $installed[] = $service;
-          }
-        } elseif (is_array($module->depends)) {
-          foreach ($module->depends as $depends_module) {
-            if (($key = array_search($depends_module, $installed)) !== false) {
-              if (!isset($array_position) || ($key > $array_position)) {
-                $array_position = $key;
-              }
-            }
-          }
-          if (isset($array_position)) {
-            array_splice($installed, $array_position+1, 0, $service);
-          } else {
-            $installed[] = $service;
-          }
-        }
-      } elseif (isset($module->precedes)) {
-        if (is_string($module->precedes)) {
-          if ((($key = array_search($module->precedes, $installed)) !== false)) {
-            array_splice($installed, $key, 0, $service);
-          } else {
-            $installed[] = $service;
-          }
-        } elseif (is_array($module->precedes)) {
-          foreach ($module->precedes as $precedes_module) {
-            if (($key = array_search($precedes_module, $installed)) !== false) {
-              if (!isset($array_position) || ($key < $array_position)) {
-                $array_position = $key;
-              }
-            }
-          }
-          if (isset($array_position)) {
-            array_splice($installed, $array_position, 0, $service);
-          } else {
-            $installed[] = $service;
-          }
-        }
-      } else {
-        $installed[] = $service;
-      }
-      unset($array_position);
+      include('../admin/includes/modules/order_total/shipping.php');
+      $module = new lC_OrderTotal_shipping();
+      $module->install();
+
+      include('../admin/includes/modules/order_total/tax.php');
+      $module = new lC_OrderTotal_tax();
+      $module->install();
+
+      include('../admin/includes/modules/order_total/total.php');
+      $module = new lC_OrderTotal_total();
+      $module->install();
     }
 
-    $Qs = $lC_Database->query('insert into :table_configuration (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, date_added) VALUES ("Service Modules", "MODULE_SERVICES_INSTALLED",  :configuration_value, "Installed services modules", "6", "0", now())');
-    $Qs->bindTable(':table_configuration', TABLE_CONFIGURATION);
-    $Qs->bindValue(':configuration_value', implode(';', $installed));
-    $Qs->execute();
+    if (($lC_Database->isError() === false) && ($db['DB_DATABASE_CLASS'] == 'mysql_innodb')) {
+      $Qinno = $lC_Database->query('show variables like "have_innodb"');
+      if (($Qinno->numberOfRows() === 1) && (strtolower($Qinno->value('Value')) == 'yes')) {
+        $database_tables = array('address_book', 'categories', 'categories_description', 'customers', 'manufacturers', 'manufacturers_info', 'orders', 'orders_products', 'orders_status', 'orders_status_history', 'orders_products_attributes', 'orders_products_download', 'orders_total', 'products', 'products_attributes', 'products_attributes_download', 'products_description', 'products_options', 'products_options_values', 'products_options_values_to_products_options', 'products_to_categories', 'reviews', 'shopping_carts', 'shopping_carts_custom_variants_values', 'weight_classes', 'weight_classes_rules');
 
-    include('includes/classes/payment.php');
-    include('includes/classes/shipping.php');
-    include('includes/classes/order_total.php');
-    include('../admin/includes/applications/modules_order_total/classes/modules_order_total.php');
-    include('../admin/includes/modules/order_total/sub_total.php');
-    
-    $module = new lC_OrderTotal_sub_total();
-    $module->install();
-
-    include('../admin/includes/modules/order_total/shipping.php');
-    $module = new lC_OrderTotal_shipping();
-    $module->install();
-
-    include('../admin/includes/modules/order_total/tax.php');
-    $module = new lC_OrderTotal_tax();
-    $module->install();
-
-    include('../admin/includes/modules/order_total/total.php');
-    $module = new lC_OrderTotal_total();
-    $module->install();
-  }
-
-  if (($lC_Database->isError() === false) && ($db['DB_DATABASE_CLASS'] == 'mysql_innodb')) {
-    $Qinno = $lC_Database->query('show variables like "have_innodb"');
-    if (($Qinno->numberOfRows() === 1) && (strtolower($Qinno->value('Value')) == 'yes')) {
-      $database_tables = array('address_book', 'categories', 'categories_description', 'customers', 'manufacturers', 'manufacturers_info', 'orders', 'orders_products', 'orders_status', 'orders_status_history', 'orders_products_attributes', 'orders_products_download', 'orders_total', 'products', 'products_attributes', 'products_attributes_download', 'products_description', 'products_options', 'products_options_values', 'products_options_values_to_products_options', 'products_to_categories', 'reviews', 'shopping_carts', 'shopping_carts_custom_variants_values', 'weight_classes', 'weight_classes_rules');
-
-      foreach ($database_tables as $table) {
-        $lC_Database->simpleQuery('alter table ' . $db['DB_TABLE_PREFIX'] . $table . ' type = innodb');
+        foreach ($database_tables as $table) {
+          $lC_Database->simpleQuery('alter table ' . $db['DB_TABLE_PREFIX'] . $table . ' type = innodb');
+        }
       }
     }
-  }
 
-  if ($lC_Database->isError()) {
-    $error = $lC_Database->getError();
-  } else {
+    if ($lC_Database->isError()) {
+      $error = $lC_Database->getError();
+    } else {
+      $db_imported = true; 
+      $form_action = "upgrade.php?step=3";
+      $page_title_text = $lC_Language->get('upgrade_step2_page_title_success');
+      $page_description_text = $lC_Language->get('upgrade_step2_page_desc_success');
+    }
+  }
+} else {
+  $db = array('DB_SERVER' => trim(urldecode($_POST['DB_SERVER'])),
+              'DB_SERVER_USERNAME' => trim(urldecode($_POST['DB_SERVER_USERNAME'])),
+              'DB_SERVER_PASSWORD' => trim(urldecode($_POST['DB_SERVER_PASSWORD'])),
+              'DB_DATABASE' => trim(urldecode($_POST['DB_DATABASE'])),
+              'DB_DATABASE_CLASS' => trim(urldecode($_POST['DB_DATABASE_CLASS'])),
+              'DB_INSERT_SAMPLE_DATA' => ((trim(urldecode($_POST['DB_INSERT_SAMPLE_DATA'])) == '1') ? 'true' : 'false'),
+              'DB_TABLE_PREFIX' => trim(urldecode($_POST['DB_TABLE_PREFIX']))
+              );
+  
+  $lC_Database = lC_Database::connect($db['DB_SERVER'], $db['DB_SERVER_USERNAME'], $db['DB_SERVER_PASSWORD'], $db['DB_DATABASE_CLASS']);
+
+  if ($lC_Database->isError() === false) {  
     $form_action = "upgrade.php?step=3";
     $page_title_text = $lC_Language->get('upgrade_step2_page_title_success');
     $page_description_text = $lC_Language->get('upgrade_step2_page_desc_success');
-    $page_retry_text = '<div class="with-padding margin-left">
-                          <p><input type="radio" id="new_db" name="create_db" class="radio">&nbsp;' . $lC_Language->get('upgrade_step2_create_db') . '</p>
-                          <p><input type="radio" id="existing_db" name="upgrade_db" class="radio">&nbsp;' . $lC_Language->get('upgrade_step2_upgrade_db') . '</p>
-                        </div>';
-    $page_retry_text .= '<p class="with-padding">' . $lC_Language->get('upgrade_step2_page_retry_text') . '</p>';
-	  $db_imported = true; 
+  } else {
+    $error = $lC_Database->getError();
   }
-}       
+}      
 ?>
 <script language="javascript" type="text/javascript">
 <!--
@@ -265,7 +281,6 @@ if (($_POST['upgrade_method'] == 'S') && isset($_POST['save_settings'])) {
     <div class="field-block margin-bottom" style="padding-left:20px;">
       <h4><?php echo $page_title_text; ?></h4>
       <p><?php echo $page_description_text; ?></p>
-      <?php echo $page_retry_text; ?>
     </div>
     <div id="pBox" style="display:none; padding: 0px 20px 10px;">
       <p class="message blue-gradient align-center">  

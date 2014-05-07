@@ -366,7 +366,7 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
       case 'import_categories':
       {
         
-        $upgrader = UpgraderFactory::create($_POST['UPGRADE_METHOD']); 
+        $upgrader = UpgraderFactory::create($_POST['upgrade_method']); 
         $upgrader->setConnectDetails($_POST);
         $rslt = $upgrader->importCategories($db_switch);
         
@@ -384,7 +384,7 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
       case 'import_customers':
       {
       
-        $upgrader = UpgraderFactory::create($_POST['UPGRADE_METHOD']); 
+        $upgrader = UpgraderFactory::create($_POST['upgrade_method']); 
         $upgrader->setConnectDetails($_POST);
         $rslt = $upgrader->importCustomers($db_switch);
         
@@ -402,7 +402,7 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
       case 'import_customer_groups':
       {
         require_once("includes/classes/upgrader.php");
-        $upgrader = UpgraderFactory::create($_POST['UPGRADE_METHOD']);
+        $upgrader = UpgraderFactory::create($_POST['upgrade_method']);
         $upgrader->setConnectDetails($_POST);
         $rslt = $upgrader->importCustomerGroups($db_switch);
         
@@ -421,7 +421,7 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
       {
 
 				require_once("includes/classes/upgrader.php");
-				$upgrader = UpgraderFactory::create($_POST['UPGRADE_METHOD']);
+				$upgrader = UpgraderFactory::create($_POST['upgrade_method']);
 				$upgrader->setConnectDetails($_POST);
 				$rslt = $upgrader->importProducts($db_switch);
 				
@@ -438,7 +438,7 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
 
       case 'import_attributes':
       {
-				$upgrader = UpgraderFactory::create($_POST['UPGRADE_METHOD']); 
+				$upgrader = UpgraderFactory::create($_POST['upgrade_method']); 
 				$upgrader->setConnectDetails($_POST);
 				$rslt = $upgrader->importAttributes($db_switch);
 				
@@ -456,7 +456,7 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
       case 'import_orders':
       {
 				require_once("includes/classes/upgrader.php");
-				$upgrader = UpgraderFactory::create($_POST['UPGRADE_METHOD']);
+				$upgrader = UpgraderFactory::create($_POST['upgrade_method']);
 				$upgrader->setConnectDetails($_POST);
 				$rslt = $upgrader->importOrders($db_switch);
 				
@@ -474,7 +474,7 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
       case 'import_cds':
       {
 				require_once("includes/classes/upgrader.php");
-				$upgrader = UpgraderFactory::create($_POST['UPGRADE_METHOD']);
+				$upgrader = UpgraderFactory::create($_POST['upgrade_method']);
 				$upgrader->setConnectDetails($_POST);
 				$rslt = $upgrader->importPages($db_switch);
 				
@@ -492,7 +492,7 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
       case 'import_administrators':
       {
 				require_once("includes/classes/upgrader.php");
-				$upgrader = UpgraderFactory::create($_POST['UPGRADE_METHOD']);
+				$upgrader = UpgraderFactory::create($_POST['upgrade_method']);
 				$upgrader->setConnectDetails($_POST);
 				$rslt = $upgrader->importAdministrators($db_switch);
 				
@@ -510,7 +510,7 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
       case 'import_newsletter':
       {
 				require_once("includes/classes/upgrader.php");
-				$upgrader = UpgraderFactory::create($_POST['UPGRADE_METHOD']);
+				$upgrader = UpgraderFactory::create($_POST['upgrade_method']);
 				$upgrader->setConnectDetails($_POST);
 				$rslt = $upgrader->importNewsletter($db_switch);
 				
@@ -528,7 +528,7 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
       case 'import_banners':
       {
 				require_once("includes/classes/upgrader.php");
-				$upgrader = UpgraderFactory::create($_POST['UPGRADE_METHOD']);
+				$upgrader = UpgraderFactory::create($_POST['upgrade_method']);
 				$upgrader->setConnectDetails($_POST);
 				$rslt = $upgrader->importBanners($db_switch);
 				
@@ -545,11 +545,10 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
       
       case 'import_configuration':
       {
-				require_once("includes/classes/upgrader.php");
-				$upgrader = UpgraderFactory::create($_POST['UPGRADE_METHOD']);
+        require_once("includes/classes/upgrader.php");
+				$upgrader = UpgraderFactory::create($_POST['upgrade_method']);
 				$upgrader->setConnectDetails($_POST);
-				$rslt = $upgrader->importConfiguration($db_switch);
-				
+        $rslt = $upgrader->importConfiguration($db_switch);
 				if ($rslt == false) {
 					echo '[[0|'.$upgrader->displayMessage().']]';
 					return false;
@@ -564,7 +563,7 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
       case 'import_coupons':
       {
 				require_once("includes/classes/upgrader.php");
-				$upgrader = UpgraderFactory::create($_POST['UPGRADE_METHOD']);
+				$upgrader = UpgraderFactory::create($_POST['upgrade_method']);
 				$upgrader->setConnectDetails($_POST);
 				$rslt = $upgrader->importCoupons($db_switch);
 				
@@ -582,7 +581,7 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
       case 'import_taxclasses':
       {
         require_once("includes/classes/upgrader.php");
-        $upgrader = UpgraderFactory::create($_POST['UPGRADE_METHOD']);
+        $upgrader = UpgraderFactory::create($_POST['upgrade_method']);
         $upgrader->setConnectDetails($_POST);
         $rslt = $upgrader->importTaxClassesRates($db_switch);
         
@@ -600,7 +599,7 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
       case 'import_languages':
       {
         require_once("includes/classes/upgrader.php");
-        $upgrader = UpgraderFactory::create($_POST['UPGRADE_METHOD']);
+        $upgrader = UpgraderFactory::create($_POST['upgrade_method']);
         $upgrader->setConnectDetails($_POST);
         $rslt = $upgrader->importLanguages($db_switch);
         
@@ -618,7 +617,7 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
       case 'import_currencies':
       {
         require_once("includes/classes/upgrader.php");
-        $upgrader = UpgraderFactory::create($_POST['UPGRADE_METHOD']);
+        $upgrader = UpgraderFactory::create($_POST['upgrade_method']);
         $upgrader->setConnectDetails($_POST);
         $rslt = $upgrader->importCurrencies($db_switch);
         
@@ -637,7 +636,7 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
       {
 
         require_once("includes/classes/upgrader.php");
-        $upgrader = UpgraderFactory::create($_POST['UPGRADE_METHOD']);
+        $upgrader = UpgraderFactory::create($_POST['upgrade_method']);
         $upgrader->setConnectDetails($_POST);
   
         // $target_img_dir = str_replace("install", "", getcwd()).'images/products/originals/';
@@ -659,7 +658,7 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
       {
 
         require_once("includes/classes/upgrader.php");
-        $upgrader = UpgraderFactory::create($_POST['UPGRADE_METHOD']);
+        $upgrader = UpgraderFactory::create($_POST['upgrade_method']);
         $upgrader->setConnectDetails($_POST);
   
         // $target_img_dir = str_replace("install", "", getcwd()).'images/categories/';
