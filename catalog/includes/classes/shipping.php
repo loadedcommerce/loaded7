@@ -24,7 +24,7 @@ class lC_Shipping {
 
     $Qmodules = $lC_Database->query("select code, modules_group from :table_templates_boxes where modules_group LIKE '%shipping%'");
     $Qmodules->bindTable(':table_templates_boxes', TABLE_TEMPLATES_BOXES);
-    $Qmodules->setCache('modules-shipping');
+    //$Qmodules->setCache('modules-shipping');
     $Qmodules->execute();
 
     while ($Qmodules->next()) {
