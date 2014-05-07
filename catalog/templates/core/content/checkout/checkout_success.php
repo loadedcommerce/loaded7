@@ -81,24 +81,24 @@ $oID = lC_Success::getOrderID($lC_Customer->getID());
                   <?php
                   foreach (lC_Success::getOrderProducts($oID) as $products) {
                     echo '<tr class="confirmation-products-listing-row">' . "\n" .
-                         '  <td class="content-checkout-success-qty-td">' . $products['quantity'] . '&nbsp;x&nbsp;</td>' . "\n" .
+                         '  <td class="content-checkout-confirmation-qty-td">' . $products['quantity'] . '&nbsp;x&nbsp;</td>' . "\n" .
                          '  <td><span class="text-info strong">' . $products['name'] . '</span>' . "\n";
                     echo '<br /><span class="confirmation-products-listing-model">' . $lC_Language->get('listing_model_heading') . ': ' . $products['model'] . '</span>';
-
-                    if ( is_array($products['options']) && empty($products['options']) === false ) {
-                      foreach ( $products['options'] as $key => $val) {
-                        echo '<br /><small>- ' . $val['group_title'] . ': ' . $val['value_title'] . '</small>';
-                      }
-                    }                     
+                    
                     if ( lC_Success::isVariant($products['id']) === true ) {
                       foreach ( lC_Success::getVariants($products['id']) as $variant) {
-                        echo '<br /><small>- ' . $val['group_title'] . ': ' . $val['value_title'] . '</small>';
+                        echo '<br /><small>- ' . $variant['group_title'] . ': ' . $variant['value_title'] . '</small>' . "\n";
                       }
-                    }                    
+                    }
+                    if ( is_array($products['options']) && empty($products['options']) === false ) {
+                      foreach ( $products['options'] as $key => $val) {
+                        echo '<br /><small>- ' . $option['group_title'] . ': ' . $option['value_title'] . '</small>' . "\n";
+                      }
+                    }                        
                     echo '</td>' . "\n";
                     echo '<td class="text-right">' . $lC_Currencies->displayPriceWithTaxRate($products['price'], $products['tax'], $products['quantity']) . '</td>' . "\n" .
                     '</tr>' . "\n";
-                  }
+                  }                  
                   ?>
                 </table> 
                 <table class="table margin-bottom-neg"><tr><td>&nbsp;</td></tr></table>
