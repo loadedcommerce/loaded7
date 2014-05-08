@@ -210,7 +210,7 @@ class lC_Success {
                                        'quantity' => $QorderProducts->valueInt('products_quantity'),
                                        'name' => $QorderProducts->value('products_name'),
                                        'model' => $QorderProducts->value('products_model'),
-                                       'sku' => self::getSKU($QorderProducts->value('products_id')),
+                                       'sku' => $QorderProducts->value('products_sku'),
                                        'price' => $QorderProducts->value('products_price'),
                                        'tax' => $QorderProducts->value('products_tax'),
                                        'options' => unserialize($QorderProducts->value('products_simple_options_meta_data')));
@@ -219,23 +219,6 @@ class lC_Success {
     return $orders_products_array;
     
     $QorderProducts->freeResult();    
-  }
- /*
-  * Returns the product SKU
-  *
-  * @param int $id The products_id 
-  * @access public
-  * @return array
-  */
-  public static function getSKU($id) {
-    global $lC_Database;
-
-    $Qproducts = $lC_Database->query('select products_sku from :table_products where products_id = :products_id limit 1');
-    $Qproducts->bindTable(':table_products', TABLE_PRODUCTS);
-    $Qproducts->bindInt(':products_id', $id);
-    $Qproducts->execute();    
-    
-    return $Qproducts->value('products_sku');
   }
  /*
   * Returns the payment method

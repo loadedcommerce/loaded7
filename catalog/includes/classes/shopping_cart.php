@@ -151,7 +151,7 @@ class lC_ShoppingCart {
 
     $_delete_array = array();
 
-    $Qproducts = $lC_Database->query('select sc.item_id, sc.products_id, sc.quantity, sc.meta_data, sc.date_added, p.parent_id, p.products_price, p.products_model, p.products_tax_class_id, p.products_weight, p.products_weight_class, p.products_status from :table_shopping_carts sc, :table_products p where sc.customers_id = :customers_id and sc.products_id = p.products_id order by sc.date_added desc');
+    $Qproducts = $lC_Database->query('select sc.item_id, sc.products_id, sc.quantity, sc.meta_data, sc.date_added, p.parent_id, p.products_price, p.products_model, p.products_sku, p.products_tax_class_id, p.products_weight, p.products_weight_class, p.products_status from :table_shopping_carts sc, :table_products p where sc.customers_id = :customers_id and sc.products_id = p.products_id order by sc.date_added desc');
     $Qproducts->bindTable(':table_shopping_carts', TABLE_SHOPPING_CARTS);
     $Qproducts->bindTable(':table_products', TABLE_PRODUCTS);
     $Qproducts->bindInt(':customers_id', $lC_Customer->getID());
