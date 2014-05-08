@@ -830,11 +830,11 @@ class lC_ShoppingCart {
   }
 
   public function getShippingMethod($key = null) {
-    if ( empty($key) ) {
+    if ( empty($key) || !isset($this->_shipping_method["$key"]) ) {
       return $this->_shipping_method;
     }
 
-    return $this->_shipping_method[$key];
+    return $this->_shipping_method["$key"];
   }
 
   public function resetShippingMethod() {
