@@ -1693,12 +1693,12 @@ li.message-menu,
 	-moz-background-size: 100% 100%;
 	-o-background-size: 100% 100%;
 	background-size: 100% 100%;
-	background: -webkit-gradient(linear, left top, left bottom, from(#ce1d06), to(#e4360a)) !important;
-	background: -webkit-linear-gradient(top, #ce1d06, #e4360a) !important;
-	background: -moz-linear-gradient(top, #ce1d06, #e4360a) !important;
-	background: -ms-linear-gradient(top, #ce1d06, #e4360a) !important;
-	background: -o-linear-gradient(top, #ce1d06, #e4360a) !important;
-	background: linear-gradient(top, #ce1d06, #e4360a) !important;
+	background: -webkit-gradient(linear, left top, left bottom, from(#d72b09), to(#e14512)) !important;
+	background: -webkit-linear-gradient(top, #d72b09, #e14512) !important;
+	background: -moz-linear-gradient(top, #d72b09, #e14512) !important;
+	background: -ms-linear-gradient(top, #d72b09, #e14512) !important;
+	background: -o-linear-gradient(top, #d72b09, #e14512) !important;
+	background: linear-gradient(top, #d72b09, #e14512) !important;
 	color: white !important;
 	border-color: #931a03;
 }
@@ -1725,12 +1725,12 @@ li.message-menu,
 	-moz-background-size: 100% 100%;
 	-o-background-size: 100% 100%;
 	background-size: 100% 100%;
-	background: -webkit-gradient(linear, left top, left bottom, from(#6dad12), to(#b0d222)) !important;
-	background: -webkit-linear-gradient(top, #6dad12, #b0d222) !important;
-	background: -moz-linear-gradient(top, #6dad12, #b0d222) !important;
-	background: -ms-linear-gradient(top, #6dad12, #b0d222) !important;
-	background: -o-linear-gradient(top, #6dad12, #b0d222) !important;
-	background: linear-gradient(top, #6dad12, #b0d222) !important;
+	background: -webkit-gradient(linear, left top, left bottom, from(#8cbd1b), to(#a5cd32)) !important;
+	background: -webkit-linear-gradient(top, #8cbd1b, #a5cd32) !important;
+	background: -moz-linear-gradient(top, #8cbd1b, #a5cd32) !important;
+	background: -ms-linear-gradient(top, #8cbd1b, #a5cd32) !important;
+	background: -o-linear-gradient(top, #8cbd1b, #a5cd32) !important;
+	background: linear-gradient(top, #8cbd1b, #a5cd32) !important;
 	color: white !important;
 	border-color: #6d960c;
 }
