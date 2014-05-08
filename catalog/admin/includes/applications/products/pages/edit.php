@@ -230,7 +230,7 @@
                 <?php
                   $save = (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? '' : ' onclick="validateForm(\'#product\');"');
                   $close = lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule());
-                  button_save_close($save, true, $close);
+                  echo button_save_close($save, true, $close);
                 ?>
                 <!-- Save for later functionality reference
                 <select class="select expandable-list"> 

@@ -103,21 +103,25 @@ class lC_Specials {
     $Qspecials->bindInt(':default_flag', 1);
     $Qspecials->bindInt(':language_id', $lC_Language->getID());
     $Qspecials->setBatchLimit((isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : 1), MAX_DISPLAY_SPECIAL_PRODUCTS);
-    $Qspecials->execute();      
+    $Qspecials->execute();     
     
     $output = '';
-    while ( $Qspecials->next() ) {
-      $output .= '<div class="content-specials-listing-container">';
-      $output .= '  <div class="content-specials-listing-name">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $Qspecials->value('products_keyword')), $Qspecials->value('products_name')) . '</div>' . "\n";
-      $output .= '  <div class="content-specials-listing-description">' . lc_clean_html($Qspecials->value('products_description')) . '</div>' . "\n";
-      $output .= '  <div class="content-specials-listing-price"><s>' . $lC_Currencies->displayPrice($Qspecials->value('products_price'), $Qspecials->valueInt('products_tax_class_id')) . '</s> <span class="product-special-price">' . $lC_Currencies->displayPrice($Qspecials->value('specials_new_products_price'), $Qspecials->valueInt('products_tax_class_id')) . '</span></div>' . "\n";
-      $output .= '  <div class="content-specials-listing-image">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $Qspecials->value('products_keyword')), $lC_Image->show($Qspecials->value('image'), $Qspecials->value('products_name'))) . '</div>' . "\n";
-      if (DISABLE_ADD_TO_CART == 1 && $Qspecials->valueInt('products_quantity') < 1) {
-        $output .= '  <div class="content-specials-listing-buy-now"><button type="button" class="content-specials-listing-buy-now-button" disabled>' . $lC_Language->get('out_of_stock') . '</button></div>' . "\n"; 
-      } else {
-        $output .= '  <div class="content-specials-listing-buy-now"><button type="button" onclick="document.location.href=\'' . lc_href_link(basename($_SERVER['SCRIPT_FILENAME']), $Qspecials->value('products_keyword') . '&' . lc_get_all_get_params(array('action', 'new')) . '&action=cart_add') . '\'" class="content-specials-listing-buy-now-button">' . $lC_Language->get('button_buy_now') . '</button></div>' . "\n"; 
+    if( $Qspecials->numberOfRows() > 0 ){
+      while ( $Qspecials->next() ) {
+        $output .= '<div class="content-specials-listing-container">';
+        $output .= '  <div class="content-specials-listing-name">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $Qspecials->value('products_keyword')), $Qspecials->value('products_name')) . '</div>' . "\n";
+        $output .= '  <div class="content-specials-listing-description">' . lc_clean_html($Qspecials->value('products_description')) . '</div>' . "\n";
+        $output .= '  <div class="content-specials-listing-price"><s>' . $lC_Currencies->displayPrice($Qspecials->value('products_price'), $Qspecials->valueInt('products_tax_class_id')) . '</s> <span class="product-special-price">' . $lC_Currencies->displayPrice($Qspecials->value('specials_new_products_price'), $Qspecials->valueInt('products_tax_class_id')) . '</span></div>' . "\n";
+        $output .= '  <div class="content-specials-listing-image">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $Qspecials->value('products_keyword')), $lC_Image->show($Qspecials->value('image'), $Qspecials->value('products_name'))) . '</div>' . "\n";
+        if (DISABLE_ADD_TO_CART == 1 && $Qspecials->valueInt('products_quantity') < 1) {
+          $output .= '  <div class="content-specials-listing-buy-now"><button type="button" class="content-specials-listing-buy-now-button" disabled>' . $lC_Language->get('out_of_stock') . '</button></div>' . "\n"; 
+        } else {
+          $output .= '  <div class="content-specials-listing-buy-now"><button type="button" onclick="document.location.href=\'' . lc_href_link(basename($_SERVER['SCRIPT_FILENAME']), $Qspecials->value('products_keyword') . '&' . lc_get_all_get_params(array('action', 'new')) . '&action=cart_add') . '\'" class="content-specials-listing-buy-now-button">' . $lC_Language->get('button_buy_now') . '</button></div>' . "\n"; 
+        }
+        $output .= '</div>' . "\n";
       }
-      $output .= '</div>' . "\n";
+    } else {
+      $output .= '<div class="content-specials-listing-name">' . $lC_Language->get('text_no_specials') . '</div>';
     }
 
     return $output;

@@ -243,7 +243,15 @@ class lC_Products_Admin {
     
     $Qspecials->freeResult();
     
-    
+    if(DISPLAY_PRICE_WITH_TAX == 1) {
+      $tax_data = lC_Tax_classes_Admin::getEntry($data['products_tax_class_id']);
+      $price = ($data['products_price'] + ($tax_data['tax_rate']/100)*$data['products_price']);
+      $price = $lC_Currencies->format($price, DECIMAL_PLACES);
+
+      //$data['products_cost_with_tax'] = $data['products_cost'] + ($tax_data['tax_rate']/100)*$data['products_cost'];
+      //$data['products_msrp_with_tax'] = ($data['products_msrp'] + ($tax_data['tax_rate']/100)*$data['products_msrp']);
+    }
+
     return $price;
   }
  /*
@@ -630,7 +638,7 @@ class lC_Products_Admin {
     global $lC_Database, $lC_Language, $lC_Image, $lC_CategoryTree;
 
     $error = false;
-
+    
     $lC_Database->startTransaction();
 
     if ( is_numeric($id) ) {
@@ -661,16 +669,17 @@ class lC_Products_Admin {
     $Qproduct->bindInt(':products_status', $data['status']);
     $Qproduct->setLogging($_SESSION['module'], $id);
     $Qproduct->execute();
+      
+    if ( is_numeric($id) ) {
+      $products_id = $id;
+    } else {
+      $products_id = $lC_Database->nextID();
+    }
 
     // products to categories
     if ( $lC_Database->isError() ) {
       $error = true;
     } else {
-      if ( is_numeric($id) ) {
-        $products_id = $id;
-      } else {
-        $products_id = $lC_Database->nextID();
-      }
 
       $Qcategories = $lC_Database->query('delete from :table_products_to_categories where products_id = :products_id');
       $Qcategories->bindTable(':table_products_to_categories', TABLE_PRODUCTS_TO_CATEGORIES);
@@ -803,6 +812,7 @@ class lC_Products_Admin {
         $Qpl->bindInt(':type', 2);
         $Qpl->bindValue(':query', 'cPath=' . $cPath);
         $Qpl->bindValue(':permalink', $data['products_keyword'][$l['id']]);
+        $Qpl->setLogging($_SESSION['module'], $products_id);
         $Qpl->execute();
 
         if ( $lC_Database->isError() ) {
@@ -811,7 +821,7 @@ class lC_Products_Admin {
         }
       }
     }
-
+    
     // product attributes
     if ( $error === false ) {
       if ( isset($data['attributes']) && !empty($data['attributes']) ) {
@@ -924,14 +934,14 @@ class lC_Products_Admin {
         lC_Specials_Admin::save((int)$specials_id, $specials_data);
       }
     }   
-
+    
     if ( $error === false ) {
       $lC_Database->commitTransaction();
-
+      
       lC_Cache::clear('categories');
       lC_Cache::clear('category_tree');
       lC_Cache::clear('also_purchased');
-
+      
       return $products_id; // Return the products id for use with the save_close buttons
     }
 

@@ -325,6 +325,16 @@ class lC_LocalUpgrader extends lC_Upgrader {
                                                                              , 'redeem_ip'    => 'redeem_ip'
                                                                              , 'order_id'     => 'order_id'
                                                                               )
+                                 , 'currencies'                     => array(
+                                                                               'currencies_id'  => 'currencies_id'
+                                                                             , 'title'          => 'title'
+                                                                             , 'code'           => 'code'
+                                                                             , 'symbol_left'    => 'symbol_left'
+                                                                             , 'symbol_right'   => 'symbol_right'
+                                                                             , 'decimal_places' => 'decimal_places'
+                                                                             , 'value'          => 'value'
+                                                                             , 'last_updated'   => 'last_updated'
+                                                                              )
                                  , 'customers'                      => array(
                                                                                'customers_id'                 => 'customers_id'
                                                                              , 'customers_group_id'           => 'customers_group_id'
@@ -862,7 +872,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
         
         $customers_group_id = ($lcgidQry->numberOfRows() > 0) ? $lcgidQry->value('customers_group_id') : 1;
         
-        if ($product['products_price1'] > 0) {
+        if ($product['products_price1'] > 0 && $product['products_price1'] !== $product['products_price']) {
           $tp1Qry = $target_db->query('INSERT INTO :table_products_pricing (products_id,
                                                                             group_id,
                                                                             tax_class_id,
@@ -883,7 +893,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
           $tp1Qry->execute();
         }
         
-        if ($product['products_price2'] > 0) {
+        if ($product['products_price2'] > 0 && $product['products_price2'] !== $product['products_price']) {
           $tp2Qry = $target_db->query('INSERT INTO :table_products_pricing (products_id,
                                                                             group_id,
                                                                             tax_class_id,
@@ -904,7 +914,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
           $tp2Qry->execute();
         }
         
-        if ($product['products_price3'] > 0) {
+        if ($product['products_price3'] > 0 && $product['products_price3'] !== $product['products_price']) {
           $tp3Qry = $target_db->query('INSERT INTO :table_products_pricing (products_id,
                                                                             group_id,
                                                                             tax_class_id,
@@ -925,7 +935,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
           $tp3Qry->execute();
         }
         
-        if ($product['products_price4'] > 0) {
+        if ($product['products_price4'] > 0 && $product['products_price4'] !== $product['products_price']) {
           $tp4Qry = $target_db->query('INSERT INTO :table_products_pricing (products_id,
                                                                             group_id,
                                                                             tax_class_id,
@@ -946,7 +956,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
           $tp4Qry->execute();
         }
         
-        if ($product['products_price5'] > 0) {
+        if ($product['products_price5'] > 0 && $product['products_price5'] !== $product['products_price']) {
           $tp5Qry = $target_db->query('INSERT INTO :table_products_pricing (products_id,
                                                                             group_id,
                                                                             tax_class_id,
@@ -967,7 +977,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
           $tp5Qry->execute();
         }
         
-        if ($product['products_price1'] > 0) {
+        if ($product['products_price6'] > 0 && $product['products_price6'] !== $product['products_price']) {
           $tp6Qry = $target_db->query('INSERT INTO :table_products_pricing (products_id,
                                                                             group_id,
                                                                             tax_class_id,
@@ -988,7 +998,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
           $tp6Qry->execute();
         }
         
-        if ($product['products_price7'] > 0) {
+        if ($product['products_price7'] > 0 && $product['products_price7'] !== $product['products_price']) {
           $tp7Qry = $target_db->query('INSERT INTO :table_products_pricing (products_id,
                                                                             group_id,
                                                                             tax_class_id,
@@ -1009,7 +1019,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
           $tp7Qry->execute();
         }
         
-        if ($product['products_price8'] > 0) {
+        if ($product['products_price8'] > 0 && $product['products_price8'] !== $product['products_price']) {
           $tp8Qry = $target_db->query('INSERT INTO :table_products_pricing (products_id,
                                                                             group_id,
                                                                             tax_class_id,
@@ -1030,7 +1040,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
           $tp8Qry->execute();
         }
         
-        if ($product['products_price9'] > 0) {
+        if ($product['products_price9'] > 0 && $product['products_price9'] !== $product['products_price']) {
           $tp9Qry = $target_db->query('INSERT INTO :table_products_pricing (products_id,
                                                                             group_id,
                                                                             tax_class_id,
@@ -1051,7 +1061,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
           $tp9Qry->execute();
         }
         
-        if ($product['products_price10'] > 0) {
+        if ($product['products_price10'] > 0 && $product['products_price10'] !== $product['products_price']) {
           $tp10Qry = $target_db->query('INSERT INTO :table_products_pricing (products_id,
                                                                              group_id,
                                                                              tax_class_id,
@@ -1072,7 +1082,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
           $tp10Qry->execute();
         }
         
-        if ($product['products_price11'] > 0) {
+        if ($product['products_price11'] > 0 && $product['products_price11'] !== $product['products_price']) {
           $tp11Qry = $target_db->query('INSERT INTO :table_products_pricing (products_id,
                                                                              group_id,
                                                                              tax_class_id,
@@ -1128,6 +1138,16 @@ class lC_LocalUpgrader extends lC_Upgrader {
       $mQry->freeResult();
     }
     
+    // added for removing duplicate qty price break entries
+    $clean = $target_db->query('ALTER IGNORE TABLE :table_products_pricing ADD UNIQUE INDEX (products_id, group_id, price_break)');
+    $clean->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
+    $clean->execute();
+        
+    if ($target_db->isError()) {
+      $this->_msg = $target_db->getError();
+      return false;
+    }
+    
     // END LOAD PRODUCTS FROM SOURCE DB
 
     // LOAD PRODUCTS DESCRIPTION FROM SOURCE DB
@@ -1169,14 +1189,25 @@ class lC_LocalUpgrader extends lC_Upgrader {
     
     $iCnt = 0;
     foreach ($products_desc as $product) {      
-      
       $permalink = self::generateCleanPermalink($product['products_name']);
+      
+      // START Added for duplicate keyword/permalink
+      $pkQry = $target_db->query('SELECT products_keyword FROM :table_products_description WHERE products_keyword = :products_keyword');
+      $pkQry->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
+      $pkQry->bindValue(':products_keyword', $permalink);
+      $pkQry->execute();
+      
+      if ($pkQry->numberOfRows() > 0) {
+        $permalink .= '-' . $product['products_id'];
+      } 
+      // END Added for duplicate keyword/permalink
       
       if (preg_match('/product$/i', $permalink)) {
         $permalink .= '-link';
       }
       
-      $tQry = $target_db->query('INSERT INTO :table_products_desc (products_id, 
+      
+      $tQry = $target_db->query('INSERT INTO :table_products_description (products_id, 
                                                                    language_id, 
                                                                    products_name, 
                                                                    products_description, 
@@ -1199,7 +1230,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
                                                                    :products_url, 
                                                                    :products_viewed)');
 
-      $tQry->bindTable(':table_products_desc', TABLE_PRODUCTS_DESCRIPTION);
+      $tQry->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
       $tQry->bindInt  (':products_id'              , $product['products_id']);
       $tQry->bindInt  (':language_id'              , $product['language_id']);
       $tQry->bindValue(':products_name'            , $product['products_name']);
@@ -1360,6 +1391,17 @@ class lC_LocalUpgrader extends lC_Upgrader {
         // END getCPATH CODE         
       
         $permatext = self::generateCleanPermalink($sQry->value('products_name'));
+      
+        // START Added for duplicate keyword/permalink
+        $pkQry = $target_db->query('SELECT products_keyword FROM :table_products_description WHERE products_keyword = :products_keyword');
+        $pkQry->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
+        $pkQry->bindValue(':products_keyword', $permatext);
+        $pkQry->execute();
+        
+        if ($pkQry->numberOfRows() > 0) {
+          $permatext .= '-' . $sQry->value('products_id');
+        } 
+        // END Added for duplicate keyword/permalink
       
         if (preg_match('/product$/i', $permatext)) {
           $permatext .= '-link';
@@ -1993,7 +2035,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
     // LOAD CATEGORY PERMALINKs TO TARGET DB
     
     $iCnt = 0;
-    $sQry = $source_db->query('SELECT c.categories_id, cd.language_id, .parent_id, cd.categories_name FROM categories as c, categories_description AS cd WHERE c.categories_id = cd.categories_id');
+    $sQry = $source_db->query('SELECT c.categories_id, c.parent_id, cd.language_id, cd.categories_name FROM categories as c, categories_description AS cd WHERE c.categories_id = cd.categories_id');
     $sQry->execute();
       
     $numrows = $sQry->numberOfRows();
@@ -2686,6 +2728,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
                                                                  customers_default_address_id, 
                                                                  customers_telephone, 
                                                                  customers_fax, 
+                                                                 customers_password, 
                                                                  customers_newsletter, 
                                                                  customers_status, 
                                                                  customers_ip_address, 
@@ -2704,6 +2747,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
                                                                  :customers_default_address_id, 
                                                                  :customers_telephone, 
                                                                  :customers_fax, 
+                                                                 :customers_password, 
                                                                  :customers_newsletter, 
                                                                  :customers_status, 
                                                                  :customers_ip_address, 
@@ -2724,6 +2768,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
         $tQry->bindInt  (':customers_default_address_id', $customer['customers_default_address_id']);
         $tQry->bindValue(':customers_telephone'         , $customer['customers_telephone']);
         $tQry->bindValue(':customers_fax'               , $customer['customers_fax']);
+        $tQry->bindValue(':customers_password'          , $customer['customers_password']);
         $tQry->bindValue(':customers_newsletter'        , $customer['customers_newsletter']);
         $tQry->bindInt  (':customers_status'            , $customer['customers_status']);
         $tQry->bindValue(':customers_ip_address'        , $customer['customers_ip_address']);
@@ -2761,7 +2806,8 @@ class lC_LocalUpgrader extends lC_Upgrader {
       $cnt = 0;
       while ($sQry->next()) {
         $address  = array(
-                            'customers_id'         => $sQry->value($map['customers_id'])
+                            'address_book_id'      => $sQry->value($map['address_book_id'])
+                          , 'customers_id'         => $sQry->value($map['customers_id'])
                           , 'entry_gender'         => $sQry->value($map['entry_gender'])
                           , 'entry_company'        => $sQry->value($map['entry_company'])
                           , 'entry_firstname'      => $sQry->value($map['entry_firstname'])
@@ -2790,7 +2836,8 @@ class lC_LocalUpgrader extends lC_Upgrader {
         $nzQry = $target_db->query("SELECT zone_id FROM " . $t_db['DB_PREFIX'] . "zones WHERE zone_country_id = " . $sQry->value($map['entry_country_id']) . " AND zone_name = '" . $zone_name . "'");
         $nzQry->execute();
         
-        $tQry = $target_db->query('INSERT INTO :table_address_book (customers_id, 
+        $tQry = $target_db->query('INSERT INTO :table_address_book (address_book_id,
+                                                                    customers_id, 
                                                                     entry_gender, 
                                                                     entry_company, 
                                                                     entry_firstname, 
@@ -2804,7 +2851,8 @@ class lC_LocalUpgrader extends lC_Upgrader {
                                                                     entry_zone_id, 
                                                                     entry_telephone, 
                                                                     entry_fax) 
-                                                            VALUES (:customers_id, 
+                                                            VALUES (:address_book_id,
+                                                                    :customers_id, 
                                                                     :entry_gender, 
                                                                     :entry_company, 
                                                                     :entry_firstname, 
@@ -2820,6 +2868,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
                                                                     :entry_fax)');
         
         $tQry->bindTable(':table_address_book', TABLE_ADDRESS_BOOK);
+        $tQry->bindInt  (':address_book_id'     , $address['address_book_id']);
         $tQry->bindInt  (':customers_id'        , $address['customers_id']);
         $tQry->bindValue(':entry_gender'        , $address['entry_gender']);
         $tQry->bindValue(':entry_company'       , $address['entry_company']);
@@ -3417,9 +3466,10 @@ class lC_LocalUpgrader extends lC_Upgrader {
       $this->_msg = $source_db->getError();
       return false;
     }
-      // END CONNNECT TO SOURCE DB
-      
-      // CONNNECT TO TARGET DB
+    
+    // END CONNNECT TO SOURCE DB
+    
+    // CONNNECT TO TARGET DB
 
     $class = 'lC_Database_' . $t_db['DB_CLASS'];
     $target_db = new $class($t_db['DB_SERVER'], $t_db['DB_SERVER_USERNAME'], $t_db['DB_SERVER_PASSWORD']);
@@ -3433,7 +3483,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
       return false;
     }
 
-      // END CONNNECT TO TARGET DB
+    // END CONNNECT TO TARGET DB
 
     // ##########
     
@@ -3701,6 +3751,8 @@ class lC_LocalUpgrader extends lC_Upgrader {
 
     $sQry = $source_db->query('SELECT o.*, o.ipaddy as customers_ip_address, o.customers_address_format_id AS customers_address_format, o.billing_address_format_id AS billing_address_format, o.delivery_address_format_id AS delivery_address_format, c.countries_iso_code_2 AS customers_country_iso2, c.countries_iso_code_3 AS customers_country_iso3, z.zone_code AS customers_state_code, zz.zone_code AS delivery_state_code, cc.countries_iso_code_2 AS delivery_country_iso2, cc.countries_iso_code_3 AS delivery_country_iso3, zzz.zone_code AS billing_state_code, ccc.countries_iso_code_2 AS billing_country_iso2, ccc.countries_iso_code_3 AS billing_country_iso3 FROM orders o LEFT JOIN countries c ON o.customers_country = c.countries_name LEFT JOIN countries cc ON o.delivery_country = cc.countries_name LEFT JOIN countries ccc ON o.billing_country = ccc.countries_name LEFT JOIN zones z ON o.customers_state = z.zone_name LEFT JOIN zones zz ON o.delivery_state = zz.zone_name LEFT JOIN zones zzz ON o.billing_state = zzz.zone_name');
     $sQry->execute();
+    
+    if (!isset($pending_id) || $pending_id == null || $pending_id == '') $pending_id = 1;
       
     $numrows= $sQry->numberOfRows();
     if ($numrows > 0) { 
@@ -3722,7 +3774,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
                        , 'customers_country_iso3'   => $sQry->value($map['customers_country_iso3']) 
                        , 'customers_telephone'      => $sQry->value($map['customers_telephone'])
                        , 'customers_email_address'  => $sQry->value($map['customers_email_address'])
-                       , 'customers_address_format' => $sQry->value($map['customers_address_format'])
+                       , 'customers_address_format' => self::getAddressFormat($sQry->value($map['customers_country']))
                        , 'customers_ip_address'     => $sQry->value($map['customers_ip_address'])
                        , 'delivery_name'            => $sQry->value($map['delivery_name'])
                        , 'delivery_company'         => $sQry->value($map['delivery_company'])
@@ -3735,7 +3787,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
                        , 'delivery_country'         => $sQry->value($map['delivery_country'])
                        , 'delivery_country_iso2'    => $sQry->value($map['delivery_country_iso2'])
                        , 'delivery_country_iso3'    => $sQry->value($map['delivery_country_iso3'])
-                       , 'delivery_address_format'  => $sQry->value($map['delivery_address_format'])
+                       , 'delivery_address_format'  => self::getAddressFormat($sQry->value($map['delivery_country']))
                        , 'billing_name'             => $sQry->value($map['billing_name'])
                        , 'billing_company'          => $sQry->value($map['billing_company'])
                        , 'billing_street_address'   => $sQry->value($map['billing_street_address'])
@@ -3747,7 +3799,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
                        , 'billing_country'          => $sQry->value($map['billing_country'])
                        , 'billing_country_iso2'     => $sQry->value($map['billing_country_iso2'])
                        , 'billing_country_iso3'     => $sQry->value($map['billing_country_iso3'])
-                       , 'billing_address_format'   => $sQry->value($map['billing_address_format'])
+                       , 'billing_address_format'   => self::getAddressFormat($sQry->value($map['billing_country']))
                        , 'payment_method'           => $sQry->value($map['payment_method'])
                        , 'payment_module'           => $sQry->value($map['payment_info'])
                        , 'last_modified'            => $sQry->value($map['last_modified'])
@@ -3872,7 +3924,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
         $tQry->bindValue(':customers_country_iso3'  , $order['customers_country_iso3']);
         $tQry->bindValue(':customers_telephone'     , $order['customers_telephone']);
         $tQry->bindValue(':customers_email_address' , $order['customers_email_address']);
-        $tQry->bindInt  (':customers_address_format', $order['customers_address_format']);
+        $tQry->bindValue(':customers_address_format', $order['customers_address_format']);
         $tQry->bindValue(':customers_ip_address'    , $order['customers_ip_address']);
         $tQry->bindValue(':delivery_name'           , $order['delivery_name']);
         $tQry->bindValue(':delivery_company'        , $order['delivery_company']);
@@ -3885,7 +3937,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
         $tQry->bindValue(':delivery_country'        , $order['delivery_country']);
         $tQry->bindValue(':delivery_country_iso2'   , $order['delivery_country_iso2']);
         $tQry->bindValue(':delivery_country_iso3'   , $order['delivery_country_iso3']);
-        $tQry->bindInt  (':delivery_address_format' , $order['delivery_address_format']);
+        $tQry->bindValue(':delivery_address_format' , $order['delivery_address_format']);
         $tQry->bindValue(':billing_name'            , $order['billing_name']);
         $tQry->bindValue(':billing_company'         , $order['billing_company']);
         $tQry->bindValue(':billing_street_address'  , $order['billing_street_address']);
@@ -3897,16 +3949,21 @@ class lC_LocalUpgrader extends lC_Upgrader {
         $tQry->bindValue(':billing_country'         , $order['billing_country']);
         $tQry->bindValue(':billing_country_iso2'    , $order['billing_country_iso2']);
         $tQry->bindValue(':billing_country_iso3'    , $order['billing_country_iso3']);
-        $tQry->bindInt  (':billing_address_format'  , $order['billing_address_format']);
+        $tQry->bindValue(':billing_address_format'  , $order['billing_address_format']);
         $tQry->bindValue(':payment_method'          , $order['payment_method']);
         $tQry->bindValue(':payment_module'          , $order['payment_info']);
         $tQry->bindValue(':last_modified'           , $order['last_modified']);
         $tQry->bindValue(':date_purchased'          , $order['date_purchased']);
         $tQry->bindInt  (':orders_status'           , ($order['orders_status'] == 0) ? $pending_id : $order['orders_status']);
-        $tQry->bindValue(':orders_date_finished'    , $order['orders_date_finished']);
+        $tQry->bindValue(':orders_date_finished'    , ($order['orders_date_finished'] != NULL) ? $order['orders_date_finished'] : '0000-00-00 00:00:00');
         $tQry->bindValue(':currency'                , $order['currency']);
-        $tQry->bindValue(':currency_value'          , $order['currency_value']);
+        $tQry->bindFloat(':currency_value'          , $order['currency_value']);
         $tQry->execute();
+        
+        if ($target_db->isError()) {
+          $this->_msg = $target_db->getError();
+          return false;
+        }
         
         $cnt++;
         
@@ -3946,7 +4003,6 @@ class lC_LocalUpgrader extends lC_Upgrader {
     
     $map = $this->_data_mapping['orders_products'];
     $orders_products = array();
-    $orders_products_metas = array();
 
     $sQry = $source_db->query('SELECT o.orders_products_id, o.orders_id, o.products_id, o.products_model, o.products_name, o.products_price, o.products_tax, o.products_quantity FROM orders_products AS o');
     $sQry->execute();
@@ -3956,6 +4012,42 @@ class lC_LocalUpgrader extends lC_Upgrader {
       $cnt = 0;
       while ($sQry->next()) {
         $orders_products_id = $sQry->value($map['orders_products_id']);
+        
+        // ADDED FOR ORDERS SIMPLE OPTIONS META DATA
+        
+        $products_simple_options_meta_data = array();
+        
+        $mdQry = $source_db->query('SELECT * FROM orders_products_attributes WHERE orders_products_id = :orders_products_id');
+        $mdQry->bindInt(':orders_products_id', $orders_products_id);
+        $mdQry->execute();
+        
+        if ($mdQry->numberOfRows() > 0) { 
+          while ($mdQry->next()) {            
+            $vQry = $source_db->query('SELECT products_options_values_id FROM products_options_values WHERE products_options_values_name LIKE :products_options_values_name LIMIT 1');
+            $vQry->bindValue(':products_options_values_name', '%' . $mdQry->value('products_options') . '%');
+            $vQry->execute();
+            
+            $oQry = $source_db->query('SELECT products_options_text_id FROM products_options_text WHERE products_options_name LIKE :products_options_name LIMIT 1');
+            $oQry->bindValue(':products_options_name', '%' . $mdQry->value('products_options') . '%');
+            $oQry->execute();
+            
+            $modifier = ($mdQry->value('price_prefix') == '+' ? 1 : -1);
+            
+            $products_simple_options_meta_data[] = array('value_id' => $vQry->valueInt('products_options_values_id'),
+                                                         'group_id' => $oQry->valueInt('products_options_text_id'),
+                                                         'group_title' => $mdQry->value('products_options'),
+                                                         'value_title' => $mdQry->value('products_options_values'),
+                                                         'price_modifier' => (($mdQry->valueDecimal('options_values_price') * $modifier < 0) ? 0 : $mdQry->valueDecimal('options_values_price') * $modifier));
+            
+            
+            
+            
+            $vQry->freeResult();
+            $oQry->freeResult();
+          }
+        }
+        
+        // END ADDED FOR ORDERS SIMPLE OPTIONS META DATA
                     
         $orders_product  = array(
                                    'orders_products_id'                => $orders_products_id
@@ -3966,8 +4058,11 @@ class lC_LocalUpgrader extends lC_Upgrader {
                                  , 'products_price'                    => $sQry->value($map['products_price'])
                                  , 'products_tax'                      => $sQry->value($map['products_tax'])
                                  , 'products_quantity'                 => $sQry->value($map['products_quantity'])
-                                 , 'products_simple_options_meta_data' => null                                            
-                                  ); 
+                                 , 'products_simple_options_meta_data' => serialize($products_simple_options_meta_data)                                            
+                                  );        
+        
+        $mdQry->freeResult();                          
+        $products_simple_options_meta_data = null;  
 
         $tQry = $target_db->query('INSERT INTO :table_orders_products (orders_products_id, 
                                                                        orders_id, 
@@ -4000,8 +4095,6 @@ class lC_LocalUpgrader extends lC_Upgrader {
         $tQry->bindValue(':products_simple_options_meta_data', $orders_product['products_simple_options_meta_data']);
         $tQry->execute();
 
-        $orders_products[] = $orders_products_id;
-
         $cnt++;
 
       }
@@ -4011,10 +4104,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
 
     // END LOAD ORDERS PRODUCTS FROM SOURCE DB
     
-    $orders_products = null;
     $orders_product = null;
-    $orders_products_metas = null;
-    $orders_products_meta = null;
     
     // ##########
 
@@ -4178,6 +4268,8 @@ class lC_LocalUpgrader extends lC_Upgrader {
           $this->_msg = $target_db->getError();
           return false;
         }
+        
+        $tQry->freeResult();
       }
       
       $sQry->freeResult();
@@ -4197,34 +4289,41 @@ class lC_LocalUpgrader extends lC_Upgrader {
     if ($sQry->numberOfRows() > 0) { 
       while ($sQry->next()) {
         $group  = array(
-                          'id'                          => ""
+                          'id'                          => $sQry->value('products_options_values_id')
                         , 'languages_id'                => $sQry->value($map['languages_id'])
                         , 'products_variants_groups_id' => $sQry->value('products_options_id')
                         , 'title'                       => $sQry->value('products_options_values_name')
                         , 'sort_order'                  => 0
                          ); 
                          
-        $tQry = $target_db->query('INSERT INTO :table_products_variants_values (languages_id, 
+        $tQry = $target_db->query('INSERT INTO :table_products_variants_values (id, 
+                                                                                languages_id, 
                                                                                 products_variants_groups_id, 
                                                                                 title, 
                                                                                 sort_order) 
-                                                                        VALUES (:languages_id, 
+                                                                        VALUES (:id,
+                                                                                :languages_id, 
                                                                                 :products_variants_groups_id, 
                                                                                 :title, 
-                                                                                :sort_order)');
+                                                                                :sort_order) 
+                                                   ON DUPLICATE KEY UPDATE id = :update_id');
 
         $tQry->bindTable(':table_products_variants_values', TABLE_PRODUCTS_VARIANTS_VALUES);
         
+        $tQry->bindInt  (':id'                         , $group['id']);
         $tQry->bindInt  (':languages_id'               , $group['languages_id']);
         $tQry->bindInt  (':products_variants_groups_id', $group['products_variants_groups_id']);
         $tQry->bindValue(':title'                      , $group['title']);
         $tQry->bindInt  (':sort_order'                 , $group['sort_order']);
+        $tQry->bindInt  (':update_id'                         , $group['id']);
         $tQry->execute();
         
         if ($target_db->isError()) {
           $this->_msg = $target_db->getError();
           return false;
         }
+        
+        $tQry->freeResult();
       }
       
       $sQry->freeResult();
@@ -4244,10 +4343,11 @@ class lC_LocalUpgrader extends lC_Upgrader {
     $sQry->execute();
       
     // get the lowest customers group id from the target db
-    $tQry = $target_db->query('SELECT MIN(customers_group_id) AS customers_group_id FROM customers_groups');
-    $tQry->execute();
+    $cgQry = $target_db->query('SELECT MIN(customers_group_id) AS customers_group_id FROM :table_customers_groups');
+    $cgQry->bindTable(':table_customers_groups', TABLE_CUSTOMERS_GROUPS);
+    $cgQry->execute();
     
-    $customers_group_id = ($tQry->numberOfRows() > 0) ? $tQry->value('customers_group_id') : 1;
+    $customers_group_id = ($cgQry->numberOfRows() > 0) ? $cgQry->valueInt('customers_group_id') : 0;
       
     if ($sQry->numberOfRows() > 0) { 
       while ($sQry->next()) {        
@@ -4278,7 +4378,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
       }
       
       $sQry->freeResult();
-      $tQry->freeResult();
+      $cgQry->freeResult();
     }
     
     // LOAD PRODUCTS SIMPLE OPTIONS AND PRODUCTS SIMPLE OPTIONS VALUES FROM SOURCE DB
@@ -4338,8 +4438,8 @@ class lC_LocalUpgrader extends lC_Upgrader {
       
       if ($Qchk->numberOfRows() == 0) {
         // get products_id from products_simple_options
-        /*$Qso = $target_db->query('SELECT products_id from :products_simple_options WHERE options_id = :options_id and products_id = :products_id limit 1');
-        $Qso->bindTable(':products_simple_options', TABLE_PRODUCTS_SIMPLE_OPTIONS);
+        /*$Qso = $target_db->query('SELECT products_id from :table_products_simple_options WHERE options_id = :options_id and products_id = :products_id limit 1');
+        $Qso->bindTable(':table_products_simple_options', TABLE_PRODUCTS_SIMPLE_OPTIONS);
         $Qso->bindInt  (':options_id' , $option['options_id']);
         $Qso->bindInt  (':products_id', $option['products_id']);
         $Qso->execute();*/
@@ -6207,8 +6307,142 @@ class lC_LocalUpgrader extends lC_Upgrader {
     return true;
       
   } // end importLanguages
+  
+  /*
+  *  function name : importCurrencies()
+  *
+  *  description : load currencies table data from source to loaded7
+  *
+  *  returns : true or false  
+  *
+  */
+  public function importCurrencies() {
     
-  function generateCleanPermalink($p) {
+    $s_db = $this->_sDB;
+    $t_db = $this->_tDB;
+            
+    if (!defined('DB_TABLE_PREFIX')) define('DB_TABLE_PREFIX', $t_db['DB_PREFIX']);
+
+    // CONNNECT TO SOURCE DB
+      
+    require_once('../includes/database_tables.php');
+
+    require_once('../includes/classes/database/mysqli.php');
+    $class = 'lC_Database_mysqli'; // . $s_db['DB_DATABASE_CLASS'];
+    $source_db = new $class($s_db['DB_SERVER'], $s_db['DB_SERVER_USERNAME'], $s_db['DB_SERVER_PASSWORD']);
+      
+    if ($source_db->isError() === false) {
+      $source_db->selectDatabase($s_db['DB_DATABASE']);
+    }
+      
+    if ($source_db->isError()) {
+      $this->_msg = $source_db->getError();
+      return false;
+    }
+    // END CONNNECT TO SOURCE DB
+      
+    // CONNNECT TO TARGET DB
+
+    $class = 'lC_Database_' . $t_db['DB_CLASS'];
+    $target_db = new $class($t_db['DB_SERVER'], $t_db['DB_SERVER_USERNAME'], $t_db['DB_SERVER_PASSWORD']);
+      
+    if ($target_db->isError() === false) {
+      $target_db->selectDatabase($t_db['DB_DATABASE']);
+    }
+      
+    if ($target_db->isError()) {
+      $this->_msg = $target_db->getError();
+      return false;
+    }
+
+    // END CONNNECT TO TARGET DB
+    
+    // DISABLE AUTO INCREMENT WHEN PRIMARY KEY = 0
+    $tQry = $target_db->query('SET GLOBAL sql_mode = "NO_AUTO_VALUE_ON_ZERO"');
+    $tQry->execute();
+    
+    // TRUNCATE CURRENCIES TABLES IN TARGET DB
+    
+    $tQry = $target_db->query('truncate table ' . TABLE_CURRENCIES);
+    $tQry->execute();
+    
+    // END TRUNCATE CURRENCIES TABLES IN TARGET DB
+
+    // LOAD CURRENCIES FROM SOURCE DB
+    $map = $this->_data_mapping['currencies'];
+    
+    $sQry = $source_db->query('SELECT * FROM currencies order by currencies_id');
+    $sQry->execute();
+    
+    // END LOAD CURRENCIES FROM SOURCE DB
+
+    // LOAD CURRENCIES TO TARGET DB
+    
+    if ($sQry->numberOfRows() > 0) { 
+      while ($sQry->next()) {
+        $currency  = array(
+                             'currencies_id'  => $sQry->value($map['currencies_id'])
+                           , 'title'          => $sQry->value($map['title'])
+                           , 'code'           => $sQry->value($map['code'])
+                           , 'symbol_left'    => $sQry->value($map['symbol_left'])
+                           , 'symbol_right'   => $sQry->value($map['symbol_right'])
+                           , 'decimal_places' => $sQry->value($map['decimal_places'])
+                           , 'value'          => $sQry->value($map['value'])
+                           , 'last_updated'   => $sQry->value($map['last_updated'])
+                            );
+      
+        $tQry = $target_db->query('INSERT INTO :table_currencies (currencies_id, 
+                                                                  title, 
+                                                                  code, 
+                                                                  symbol_left, 
+                                                                  symbol_right, 
+                                                                  decimal_places, 
+                                                                  value,
+                                                                  last_updated) 
+                                                          VALUES (:currencies_id, 
+                                                                  :title, 
+                                                                  :code, 
+                                                                  :symbol_left, 
+                                                                  :symbol_right, 
+                                                                  :decimal_places, 
+                                                                  :value,
+                                                                  :last_updated)');
+
+        $tQry->bindTable(':table_currencies', TABLE_CURRENCIES);
+        
+        $tQry->bindInt   (':currencies_id' , $currency['currencies_id']);
+        $tQry->bindValue (':title'         , $currency['title']);
+        $tQry->bindValue (':code'          , $currency['code']);
+        $tQry->bindValue (':symbol_left'   , $currency['symbol_left']);
+        $tQry->bindValue (':symbol_right'  , $currency['symbol_right']);
+        $tQry->bindInt   (':decimal_places', $currency['decimal_places']);
+        $tQry->bindFloat (':value'         , $currency['value']);
+        $tQry->bindDate  (':last_updated'  , $currency['last_updated']);
+        $tQry->execute();
+        
+        if ($target_db->isError()) {
+          $this->_msg = $target_db->getError();
+          return false;
+        }
+      }
+      
+      $sQry->freeResult();
+    }
+    
+    // END LOAD CURRENCIES TO TARGET DB 
+
+    // END DISABLE AUTO INCREMENT WHEN PRIMARY KEY = 0
+    $tQry = $target_db->query('SET GLOBAL sql_mode = ""');
+    $tQry->execute();
+    
+    $source_db->disconnect();  
+    $target_db->disconnect();  
+    
+    return true;
+      
+  } // end importCurrencies
+    
+  public function generateCleanPermalink($p) {
     $p = preg_replace("/&.{0,}?;/", '', $p);
     $p = str_replace(array(" ", ",", "/", "(", ")", "'", ":", "?", ";", "\"", "%"), "-", $p);
     $p = str_replace("&", "and", $p);
@@ -6226,6 +6460,57 @@ class lC_LocalUpgrader extends lC_Upgrader {
 
     //Remove a - at the beginning or end and make lowercase
     return strtolower(preg_replace('/^-/', '', preg_replace('/-$/', '', $p)));
+  }
+  
+  public function getAddressFormat($name = null, $iso2 = null, $iso3 = null) {
+    
+    $t_db = $this->_tDB;
+            
+    if (!defined('DB_TABLE_PREFIX')) define('DB_TABLE_PREFIX', $t_db['DB_PREFIX']);
+
+    // CONNNECT TO TARGET DB
+
+    $class = 'lC_Database_' . $t_db['DB_CLASS'];
+    $target_db = new $class($t_db['DB_SERVER'], $t_db['DB_SERVER_USERNAME'], $t_db['DB_SERVER_PASSWORD']);
+      
+    if ($target_db->isError() === false) {
+      $target_db->selectDatabase($t_db['DB_DATABASE']);
+    }
+      
+    if ($target_db->isError()) {
+      $this->_msg = $target_db->getError();
+      return false;
+    }
+
+    // END CONNNECT TO TARGET DB
+    
+    // GET ADDRESS FORMAT FROM TARGET DB
+    
+    $tQry = $target_db->query('SELECT address_format FROM :table_countries WHERE countries_name = :countries_name OR countries_iso_code_2 = :countries_iso_code_2 OR countries_iso_code_3 = :countries_iso_code_3');
+    
+    $tQry->bindTable (':table_countries', TABLE_COUNTRIES);
+    
+    $tQry->bindValue(':countries_name' , $name); 
+    $tQry->bindValue(':countries_iso_code_2' , strtoupper($iso2)); 
+    $tQry->bindValue(':countries_iso_code_3' , strtoupper($iso3)); 
+    $tQry->execute();
+    
+    // END GET ADDRESS FORMAT FROM TARGET DB
+    
+    $address_format = '';     
+    
+    while ($tQry->next()) {
+      $address_format = $tQry->value('address_format');
+    }
+    
+    if ($address_format == '') {
+      $address_format = ':name' . "\n" . 
+                        ':street_address' . "\n" .
+                        ':city :state_code :postcode' . "\n" .
+                        ':country';
+    }
+      
+    return $address_format; 
   }
 }
 ?>

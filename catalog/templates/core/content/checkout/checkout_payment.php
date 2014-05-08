@@ -14,7 +14,16 @@
   <div class="col-sm-12 col-lg-12 large-margin-bottom">  
     <h1 class="no-margin-top"><?php echo $lC_Language->get('text_checkout'); ?></h1>
     <?php 
-    if ( $lC_MessageStack->size('checkout_payment') > 0 ) echo '<div class="message-stack-container alert alert-danger small-margin-bottom">' . $lC_MessageStack->get('checkout_payment') . '</div>' . "\n"; 
+    if(isset($_SESSION['coupon_msg']) && $_SESSION['coupon_msg'] != '') {
+      $lC_MessageStack->add('shopping_cart', $_SESSION['coupon_msg'], 'success');
+      unset($_SESSION['coupon_msg']);
+      if ( $lC_MessageStack->size('shopping_cart') > 0 ) echo '<div class="message-stack-container alert alert-success small-margin-bottom">' . $lC_MessageStack->get('shopping_cart') . '</div>' . "\n"; 
+    }
+    if(isset($_SESSION['remove_coupon_msg']) && $_SESSION['remove_coupon_msg'] != '') {
+      $lC_MessageStack->add('shopping_cart', $_SESSION['remove_coupon_msg'], 'warning');
+      unset($_SESSION['remove_coupon_msg']);
+      if ( $lC_MessageStack->size('shopping_cart') > 0 ) echo '<div class="message-stack-container alert alert-warning small-margin-bottom">' . $lC_MessageStack->get('shopping_cart') . '</div>' . "\n"; 
+    }  
     ?>
     <form name="checkout_payment" id="checkout_payment" action="<?php echo lc_href_link(FILENAME_CHECKOUT, 'confirmation', 'SSL'); ?>" method="post" onsubmit="return check_form();">
       <div id="content-checkout-payment-container">
@@ -47,16 +56,21 @@
                   </div>                  
                 </div>                
                 <div class="well">
-                  <?php 
-                  foreach ($lC_ShoppingCart->getOrderTotals() as $module) {   
-                    ?>
-                    <div class="clearfix">
-                      <span class="pull-left ot-<?php echo strtolower(str_replace('_', '-', $module['code'])); ?>"><?php echo strip_tags($module['title']); ?></span>
-                      <span class="pull-right ot-<?php echo strtolower(str_replace('_', '-', $module['code'])); ?>"><?php echo strip_tags($module['text']); ?></span>                
-                    </div>                    
-                    <?php
-                  }
-                  ?>                
+                  <?php
+                  foreach ($lC_ShoppingCart->getOrderTotals() as $module) {  
+                    $title = (strstr($module['title'], '(')) ? substr($module['title'], 0, strpos($module['title'], '(')) . ':' : $module['title'];
+                    $class = str_replace(':', '', $title);
+                    $class = 'ot-' . strtolower(str_replace(' ', '-', $class));
+                 ?>
+                 <div class="clearfix">
+                 <?php echo '<div class="clearfix">' .
+                           '  <span class="pull-left ' . $class . '">' . $title . '</span>' .
+                           '  <span class="pull-right ' . $class . '">' . $module['text'] . '</span>' .'</div>';  
+                 ?> 
+                 </div>  
+                 <?php
+                   }
+                 ?>                 
                 </div>        
               </div>
               <div class="col-sm-8 col-lg-8">
@@ -78,7 +92,7 @@
                 <h3 class="no-margin-top"><?php echo $lC_Language->get('payment_method_title'); ?></h3>
                 <?php 
                 $selection = $lC_Payment->selection();
-                echo (sizeof($selection) > 1) ? '<div class="alert alert-warning">' . $lC_Language->get('choose_payment_method') . '</div>' : '<div class="alert alert-warning">' . $lC_Language->get('only_one_payment_method_available') . '</div>' . "\n"; 
+                echo (sizeof($selection) > 1) ? '<div class="alert alert-warning">' . $lC_Language->get('choose_payment_method') . '</div>' : (sizeof($selection) == 1) ? '<div class="alert alert-warning">' . $lC_Language->get('only_one_payment_method_available') . '</div>' : '<div class="alert alert-warning">' . $lC_Language->get('no_payment_method_available') . '</div>' . "\n"; 
                 $radio_buttons = 0;
                 for ($i=0, $n=sizeof($selection); $i<$n; $i++) {
                   ?>
@@ -134,7 +148,7 @@
                 <?php
                 if ($lC_Customer->isLoggedOn() !== false) {
                   if (defined('MODULE_SERVICES_INSTALLED') && in_array('coupons', explode(';', MODULE_SERVICES_INSTALLED)) && 
-                      defined('SERVICE_COUPONS_DISPLAY_ON_CART_PAGE') && SERVICE_COUPONS_DISPLAY_ON_CART_PAGE == '1') {
+                      defined('SERVICE_COUPONS_DISPLAY_ON_CART_PAGE') && SERVICE_COUPONS_DISPLAY_ON_PAYMENT_PAGE == '1') {
                     ?>
                     <div class="well">
                       <h3 class="no-margin-top"><?php echo $lC_Language->get('text_coupon_code_heading'); ?></h3>

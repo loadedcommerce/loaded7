@@ -209,7 +209,7 @@ class lC_Order {
     $products_array = array();
     $key = 0;
 
-      $Qproducts = $lC_Database->query('select orders_products_id, products_id, products_name, products_model, products_price, products_tax, products_quantity, products_simple_options_meta_data from :table_orders_products where orders_id = :orders_id');
+      $Qproducts = $lC_Database->query('select orders_products_id, products_id, products_name, products_model, products_sku, products_price, products_tax, products_quantity, products_simple_options_meta_data from :table_orders_products where orders_id = :orders_id');
       $Qproducts->bindTable(':table_orders_products', TABLE_ORDERS_PRODUCTS);
       $Qproducts->bindInt(':orders_id', $this->_order_id);
       $Qproducts->execute();
@@ -220,6 +220,7 @@ class lC_Order {
                                       'products_id' => $Qproducts->value('products_id'),
                                       'name' => $Qproducts->value('products_name'),
                                       'model' => $Qproducts->value('products_model'),
+                                      'sku' => $Qproducts->value('products_sku'),
                                       'tax' => $Qproducts->value('products_tax'),
                                       'price' => $Qproducts->value('products_price'),
                                       'options' => unserialize($Qproducts->value('products_simple_options_meta_data')));
@@ -245,7 +246,7 @@ class lC_Order {
 
   protected function _getProduct($oid, $pid) {
     global $lC_Database;
-    $Qproduct = $lC_Database->query('select products_id, products_name, products_model, products_price, products_tax, products_quantity, products_simple_options_meta_data from :table_orders_products where orders_products_id = :orders_products_id and orders_id = :orders_id limit 1');
+    $Qproduct = $lC_Database->query('select products_id, products_name, products_model, products_sku, products_price, products_tax, products_quantity, products_simple_options_meta_data from :table_orders_products where orders_products_id = :orders_products_id and orders_id = :orders_id limit 1');
     $Qproduct->bindTable(':table_orders_products', TABLE_ORDERS_PRODUCTS);
     $Qproduct->bindInt(':orders_products_id', $pid);
     $Qproduct->bindInt(':orders_id', $oid);
@@ -255,6 +256,7 @@ class lC_Order {
                                    'products_id' => $Qproduct->value('products_id'),
                                    'name' => $Qproduct->value('products_name'),
                                    'model' => $Qproduct->value('products_model'),
+                                   'sku' => $Qproduct->value('products_sku'),
                                    'tax' => $Qproduct->value('products_tax'),
                                    'price' => $Qproduct->value('products_price'),
                                    'options' => unserialize($Qproduct->value('products_simple_options_meta_data')));

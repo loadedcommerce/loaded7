@@ -80,11 +80,18 @@ class lC_Session {
 
       ini_set('session.gc_maxlifetime', $this->_life_time);
     } else {
+      if (defined('SESSION_LIFETIME') && SESSION_LIFETIME != NULL) {
+        $this->_life_time = (int)SESSION_LIFETIME;
+        if ($this->_life_time < 60) $this->_life_time = 60; // cannot be set less than 60 seconds
+      } else {
    //   $this->_life_time = ini_get('session.gc_maxlifetime');
-      $this->_life_time = '9600';
+        $this->_life_time = '9600';
+      }
     }
 
-    session_set_cookie_params($this->_life_time, (($request_type == 'NONSSL') ? HTTP_COOKIE_PATH : HTTPS_COOKIE_PATH), (($request_type == 'NONSSL') ? HTTP_COOKIE_DOMAIN : HTTPS_COOKIE_DOMAIN));
+    if (defined('SESSION_FORCE_COOKIES') && SESSION_FORCE_COOKIES == 1) {
+      session_set_cookie_params($this->_life_time, (($request_type == 'NONSSL') ? HTTP_COOKIE_PATH : HTTPS_COOKIE_PATH), (($request_type == 'NONSSL') ? HTTP_COOKIE_DOMAIN : HTTPS_COOKIE_DOMAIN));
+    }
 
     register_shutdown_function(array($this, 'close'));
   }

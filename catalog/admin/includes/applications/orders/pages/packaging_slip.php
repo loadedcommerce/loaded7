@@ -21,8 +21,15 @@ $lC_Order = new lC_Order($_GET['oid']);
       <tr>
         <td><table border="0" width="100%" cellspacing="0" cellpadding="0">
             <tr>
-              <td class="pageHeading"><?php echo nl2br(STORE_NAME_ADDRESS); ?></td>
-              <td class="pageHeading" align="right"><?php echo lc_image('../images/store_logo.jpg', STORE_NAME); ?></td>
+              <td class="pageHeading"><?php echo STORE_NAME . '<br>' . nl2br(STORE_NAME_ADDRESS); ?></td>
+              <td class="pageHeading" align="right">
+              <?php 
+              if ($lC_Template->getBrandingImage() != '') {
+                echo lc_image('../images/branding/' . $lC_Template->getBrandingImage(), STORE_NAME, null, null, 'class="small-margin-right img-logo-responsive"');
+              } else { 
+                echo STORE_NAME; 
+              }
+              ?></td>
             </tr>
           </table></td>
       </tr>

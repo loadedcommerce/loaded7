@@ -20,7 +20,7 @@ class lC_Application_Coupons_Actions_save extends lC_Application_Coupons {
     $this->_page_contents = 'edit.php';
 
     if ( isset($_POST['subaction']) && ($_POST['subaction'] == 'confirm') ) {
-
+      
       // validate the input
       $type = (isset($_POST['type']) && $_POST['type'] != NULL) ? preg_replace('/[^A-Z\s]/', '', $_POST['type']) : 'R';
       $name = (isset($_POST['name']) && $_POST['name'] != NULL) ? preg_replace('/[^A-Za-z0-9\s]/', '', $_POST['name']) : NULL;
@@ -72,21 +72,16 @@ class lC_Application_Coupons_Actions_save extends lC_Application_Coupons {
       $id = lC_Coupons_Admin::save((isset($_GET[$this->_module]) && is_numeric($_GET[$this->_module]) ? $_GET[$this->_module] : null), $data);
 
       if ( is_numeric($id) && isset($id)){
-
-        if(!empty($_POST['save_close'])){
-
+        if (!empty($_POST['save_close'])) {
           lc_redirect_admin(lc_href_link_admin(FILENAME_DEFAULT, $this->_module));
-        }else{
-          
+        } else {          
           lc_redirect_admin(lc_href_link_admin(FILENAME_DEFAULT, $this->_module.'='.$id.'&action=save'));
         }
-      }else{
-
+      } else {
         $lC_MessageStack->add($this->_module, $lC_Language->get('ms_error_action_not_performed'), 'error');
         lc_redirect_admin(lc_href_link_admin(FILENAME_DEFAULT, $this->_module));
       }
     }
   }
 }
-
 ?>

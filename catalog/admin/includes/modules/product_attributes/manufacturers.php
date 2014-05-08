@@ -22,7 +22,7 @@ class lC_ProductAttributes_manufacturers extends lC_Product_attributes_Admin {
     $Qmanufacturers->bindTable(':table_manufacturers');
     $Qmanufacturers->execute();
 
-    $array = array(array('id' => '',
+    $array = array(array('id' => 'NULL',
                          'text' => $lC_Language->get('none')));
 
     while ( $Qmanufacturers->next() ) {

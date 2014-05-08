@@ -273,14 +273,70 @@ class lC_Updates_Admin_run_after extends lC_Updates_Admin {
     $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "branding_data` ADD COLUMN `custom_css` text NOT NULL;");
     parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "branding_data` ADD COLUMN `custom_css` text NOT NULL;");
        
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "products_variants` ADD `default_visual` INT( 11 ) DEFAULT '0' AFTER `default_combo`");  
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "products_variants` ADD `default_visual` INT( 11 ) DEFAULT '0' AFTER `default_combo`");  
+       
     $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "products_variants_groups` ADD `visual` VARCHAR( 1024 ) DEFAULT NULL AFTER `title`");  
     parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "products_variants_groups` ADD `visual` VARCHAR( 1024 ) DEFAULT NULL AFTER `title`");  
-      
+    
+    // missing weight class rules
+    $lC_Database->simpleQuery("INSERT IGNORE INTO `" . $pf . "weight_classes_rules` (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES (1, 2, 0.0010)");
+    parent::log("Database Update: INSERT IGNORE INTO `" . $pf . "weight_classes_rules` (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES (1, 2, 0.0010)");
+    
+    $lC_Database->simpleQuery("INSERT IGNORE INTO `" . $pf . "weight_classes_rules` (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES (1, 3, 0.0352)");
+    parent::log("Database Update: INSERT IGNORE INTO `" . $pf . "weight_classes_rules` (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES (1, 3, 0.0352)");
+    
+    $lC_Database->simpleQuery("INSERT IGNORE INTO `" . $pf . "weight_classes_rules` (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES (1, 4, 0.0022)");
+    parent::log("Database Update: INSERT IGNORE INTO `" . $pf . "weight_classes_rules` (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES (1, 4, 0.0022)");
+    
+    $lC_Database->simpleQuery("INSERT IGNORE INTO `" . $pf . "weight_classes_rules` (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES (2, 1, 1000.0000)");
+    parent::log("Database Update: INSERT IGNORE INTO `" . $pf . "weight_classes_rules` (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES (2, 1, 1000.0000)");
+    
+    $lC_Database->simpleQuery("INSERT IGNORE INTO `" . $pf . "weight_classes_rules` (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES (2, 3, 35.2739)");
+    parent::log("Database Update: INSERT IGNORE INTO `" . $pf . "weight_classes_rules` (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES (2, 3, 35.2739)");
+    
+    $lC_Database->simpleQuery("INSERT IGNORE INTO `" . $pf . "weight_classes_rules` (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES (2, 4, 2.2046)");
+    parent::log("Database Update: INSERT IGNORE INTO `" . $pf . "weight_classes_rules` (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES (2, 4, 2.2046)");
+    
+    $lC_Database->simpleQuery("INSERT IGNORE INTO `" . $pf . "weight_classes_rules` (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES (3, 1, 28.3495)");
+    parent::log("Database Update: INSERT IGNORE INTO `" . $pf . "weight_classes_rules` (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES (3, 1, 28.3495)");
+    
+    $lC_Database->simpleQuery("INSERT IGNORE INTO `" . $pf . "weight_classes_rules` (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES (3, 2, 0.0283)");
+    parent::log("Database Update: INSERT IGNORE INTO `" . $pf . "weight_classes_rules` (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES (3, 2, 0.0283)");
+    
+    $lC_Database->simpleQuery("INSERT IGNORE INTO `" . $pf . "weight_classes_rules` (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES (3, 4, 0.0625)");
+    parent::log("Database Update: INSERT IGNORE INTO `" . $pf . "weight_classes_rules` (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES (3, 4, 0.0625)");
+    
+    $lC_Database->simpleQuery("INSERT IGNORE INTO `" . $pf . "weight_classes_rules` (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES (4, 1, 453.5923)");
+    parent::log("Database Update: INSERT IGNORE INTO `" . $pf . "weight_classes_rules` (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES (4, 1, 453.5923)");
+    
+    $lC_Database->simpleQuery("INSERT IGNORE INTO `" . $pf . "weight_classes_rules` (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES (4, 2, 0.4535)");
+    parent::log("Database Update: INSERT IGNORE INTO `" . $pf . "weight_classes_rules` (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES (4, 2, 0.4535)");
+    
+    $lC_Database->simpleQuery("INSERT IGNORE INTO `" . $pf . "weight_classes_rules` (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES (4, 3, 16.0000)");
+    parent::log("Database Update: INSERT IGNORE INTO `" . $pf . "weight_classes_rules` (weight_class_from_id, weight_class_to_id, weight_class_rule) VALUES (4, 3, 16.0000)");
+  
     $lC_Database->simpleQuery("UPDATE `" . $pf . "currencies` SET `symbol_left` = '&euro;' where `code` = 'EUR'");
     parent::log("Database Update: UPDATE `" . $pf . "currencies` SET `symbol_left` = '&euro;' where `code` = 'EUR'");
     
     $lC_Database->simpleQuery("UPDATE `" . $pf . "currencies` SET `symbol_left` = '&pound;' where `code` = 'GBP'");
     parent::log("Database Update: UPDATE `" . $pf . "currencies` SET `symbol_left` = '&pound;' where `code` = 'GBP'");      
+    $lC_Database->simpleQuery("INSERT IGNORE INTO `" . $pf . "configuration_group` (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES (10, 'Sessions', 'Session settings', 10, 1)");
+    parent::log("Database Update: INSERT IGNORE INTO `" . $pf . "configuration_group` (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES (10, 'Sessions', 'Session settings', 10, 1)");
+
+    if (!defined('SESSION_LIFETIME')) {
+      $lC_Database->simpleQuery("INSERT INTO `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('Session Lifetime', 'SESSION_LIFETIME', 3600, 'The amount of time a user is logged in for after the last action in seconds.', 10, 0, now(), now(), NULL, NULL);");
+      parent::log("Database Update: INSERT INTO `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('Session Lifetime', 'SESSION_LIFETIME', 3600, 'The amount of time a user is logged in for after the last action in seconds.', 10, 0, now(), now(), NULL, NULL);");
+    }
+    
+    if (!defined('SESSION_FORCE_COOKIES')) {
+      $lC_Database->simpleQuery("INSERT INTO `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('Force Cookie Use', 'SESSION_FORCE_COOKIES', -1, 'Force the use cookies to handle sessions.', 10, 0, now(), now(), 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))');");
+      parent::log("Database Update: INSERT INTO `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('Force Cookie Use', 'SESSION_FORCE_COOKIES', -1, 'Force the use cookies to handle sessions.', 10, 0, now(), now(), 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))');");
+    }  
+    
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "orders_products` ADD COLUMN `products_sku` VARCHAR(255) DEFAULT NULL AFTER `products_model`");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "orders_products` ADD COLUMN `products_sku` VARCHAR(255) DEFAULT NULL AFTER `products_model`");
+     
   }
 }  
 ?>

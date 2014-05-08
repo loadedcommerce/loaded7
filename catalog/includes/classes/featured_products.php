@@ -33,29 +33,33 @@ class lC_Featured_products {
     }
     
     $output = '';      
-    foreach ($Qfresults as $featured) {
-      $Qfeatured = $lC_Database->query('select p.products_id, p.products_price, p.products_tax_class_id, p.products_quantity, pd.products_name, pd.products_keyword, pd.products_description, i.image from :table_products p left join :table_products_images i on (p.products_id = i.products_id and i.default_flag = :default_flag), :table_products_description pd where p.products_id = :products_id and p.products_status = 1 and p.products_id = pd.products_id and pd.language_id = :language_id');
-      $Qfeatured->bindTable(':table_products', TABLE_PRODUCTS);
-      $Qfeatured->bindTable(':table_products_images', TABLE_PRODUCTS_IMAGES);
-      $Qfeatured->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
-      $Qfeatured->bindInt(':products_id', $featured);
-      $Qfeatured->bindInt(':default_flag', 1);
-      $Qfeatured->bindInt(':language_id', $lC_Language->getID());
-      $Qfeatured->execute();      
-      
-      while ( $Qfeatured->next() ) {
-        $output .= '<div class="content-featured-products-listing-container">';
-        $output .= '  <div class="content-featured-products-listing-name">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $Qfeatured->value('products_keyword')), $Qfeatured->value('products_name')) . '</div>' . "\n";
-        $output .= '  <div class="content-featured-products-listing-description">' . lc_clean_html($Qfeatured->value('products_description')) . '</div>' . "\n";
-        $output .= '  <div class="content-featured-products-listing-price">' . $lC_Currencies->displayPrice($Qfeatured->value('products_price'), $Qfeatured->valueInt('products_tax_class_id')) . '</div>' . "\n";
-        $output .= '  <div class="content-featured-products-listing-image">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $Qfeatured->value('products_keyword')), $lC_Image->show($Qfeatured->value('image'), $Qfeatured->value('products_name'))) . '</div>' . "\n";
-        if (DISABLE_ADD_TO_CART == 1 && $Qfeatured->valueInt('products_quantity') < 1) {
-          $output .= '  <div class="content-featured-products-listing-buy-now"><button type="button" class="content-featured-products-listing-buy-now-button" disabled>' . $lC_Language->get('out_of_stock') . '</button></div>' . "\n"; 
-        } else {
-          $output .= '  <div class="content-featured-products-listing-buy-now"><button type="button" onclick="document.location.href=\'' . lc_href_link(basename($_SERVER['SCRIPT_FILENAME']), $Qfeatured->value('products_keyword') . '&' . lc_get_all_get_params(array('action', 'new')) . '&action=cart_add') . '\'" class="content-featured-products-listing-buy-now-button">' . $lC_Language->get('button_buy_now') . '</button></div>' . "\n"; 
+    if( $Qf->numberOfRows() > 0 ){
+      foreach ($Qfresults as $featured) {
+        $Qfeatured = $lC_Database->query('select p.products_id, p.products_price, p.products_tax_class_id, p.products_quantity, pd.products_name, pd.products_keyword, pd.products_description, i.image from :table_products p left join :table_products_images i on (p.products_id = i.products_id and i.default_flag = :default_flag), :table_products_description pd where p.products_id = :products_id and p.products_status = 1 and p.products_id = pd.products_id and pd.language_id = :language_id');
+        $Qfeatured->bindTable(':table_products', TABLE_PRODUCTS);
+        $Qfeatured->bindTable(':table_products_images', TABLE_PRODUCTS_IMAGES);
+        $Qfeatured->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
+        $Qfeatured->bindInt(':products_id', $featured);
+        $Qfeatured->bindInt(':default_flag', 1);
+        $Qfeatured->bindInt(':language_id', $lC_Language->getID());
+        $Qfeatured->execute();      
+
+        while ( $Qfeatured->next() ) {
+          $output .= '<div class="content-featured-products-listing-container">';
+          $output .= '  <div class="content-featured-products-listing-name">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $Qfeatured->value('products_keyword')), $Qfeatured->value('products_name')) . '</div>' . "\n";
+          $output .= '  <div class="content-featured-products-listing-description">' . lc_clean_html($Qfeatured->value('products_description')) . '</div>' . "\n";
+          $output .= '  <div class="content-featured-products-listing-price">' . $lC_Currencies->displayPrice($Qfeatured->value('products_price'), $Qfeatured->valueInt('products_tax_class_id')) . '</div>' . "\n";
+          $output .= '  <div class="content-featured-products-listing-image">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $Qfeatured->value('products_keyword')), $lC_Image->show($Qfeatured->value('image'), $Qfeatured->value('products_name'))) . '</div>' . "\n";
+          if (DISABLE_ADD_TO_CART == 1 && $Qfeatured->valueInt('products_quantity') < 1) {
+            $output .= '  <div class="content-featured-products-listing-buy-now"><button type="button" class="content-featured-products-listing-buy-now-button" disabled>' . $lC_Language->get('out_of_stock') . '</button></div>' . "\n"; 
+          } else {
+            $output .= '  <div class="content-featured-products-listing-buy-now"><button type="button" onclick="document.location.href=\'' . lc_href_link(basename($_SERVER['SCRIPT_FILENAME']), $Qfeatured->value('products_keyword') . '&' . lc_get_all_get_params(array('action', 'new')) . '&action=cart_add') . '\'" class="content-featured-products-listing-buy-now-button">' . $lC_Language->get('button_buy_now') . '</button></div>' . "\n"; 
+          }
+          $output .= '</div>' . "\n";
         }
-        $output .= '</div>' . "\n";
       }
+    } else {
+      $output .= '<div class="content-specials-listing-name">' . $lC_Language->get('text_no_featured_products') . '</div>';
     }
     
     return $output;

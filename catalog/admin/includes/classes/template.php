@@ -212,6 +212,23 @@ class lC_Template_Admin extends lC_Template {
              
     return $html;
   }
+  /**
+  * Shows the Catalogo from Branding Manager
+  *
+  * 
+  * @access public
+  */
+  public function getBrandingImage() {
+    global $lC_Database, $lC_Language;
+    
+    $QbrandingImage = $lC_Database->query('select site_image from :table_branding_data');
+    $QbrandingImage->bindTable(':table_branding_data', TABLE_BRANDING_DATA);
+    $QbrandingImage->execute();
+    
+    $image = $QbrandingImage->toArray();
+    
+    return $image['site_image'];
+  } 
   
 }
 ?>

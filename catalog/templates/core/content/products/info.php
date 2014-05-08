@@ -8,9 +8,11 @@
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: info.php v1.0 2013-08-08 datazen $
 */
+$error = (isset($_GET['error']) && $_GET['error'] != NULL) ? preg_replace('/[^A-Za-z0-9\_\s]/', '', urldecode($_GET['error'])) : NULL;
 ?>
 <!--content/products/info.php start-->
 <div class="row">
+  <?php if ( $error != NULL ) echo '<div class="message-stack-container alert alert-danger margin-bottom mid-margin-right with-padding">' . $error . '</div>' . "\n"; ?>
   <div class="col-sm-4 col-lg-4 clearfix">
     <div class="large-margin-top no-margin-bottom text-center">
       <a data-toggle="modal" href="#popup-image-modal" title="<?php echo $lC_Product->getTitle(); ?>"><img class="img-responsive" src="<?php echo $lC_Image->getAddress($lC_Product->getImage(), 'large'); ?>" title="<?php echo $lC_Product->getTitle(); ?>" alt="<?php echo $lC_Product->getTitle(); ?>" /></a>
@@ -135,7 +137,7 @@
   if ( $lC_Product->hasSubProducts($lC_Product->getID()) === false) {
     ?>    
     <div id="qpb-message"></div>
-    <div class="relative clear-both clearfix">
+    <div class="relative clear-both clearfix buy-btn-div">
       <div class="display-inline">
         <div class="col-sm-8 col-lg-8 align-right mid-margin-top">
           <div class="form-group">
@@ -159,6 +161,28 @@
   }
   ?>
 </div>
+<?php
+  if (STOCK_CHECK == 1 && DISABLE_ADD_TO_CART == 1) { 
+?>
+<!-- low qoh modal start -->
+<div class="modal fade" id="lowqoh">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title"><?php echo $lC_Language->get('text_low_qoh_title'); ?></h4>
+      </div>
+      <div class="modal-body">
+        <p><?php echo $lC_Language->get('text_low_qoh_modal'); ?></p>
+        <p align="right"><button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $lC_Language->get('button_close'); ?></button></p>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- low qoh modal end -->
+<?php
+  } 
+?>
 <script>
 $(document).ready(function() {
   var buyNowDisabled = '<?php echo (STOCK_CHECK == '1' && DISABLE_ADD_TO_CART == '1' && $lC_ShoppingCart->isInStock($lC_Product->getID()) === false) ? '1' : '0';  ?>';
@@ -182,6 +206,10 @@ function refreshPrice() {
   // disable checkout button until ajax finishes loading
   var href = $('#btn-buy-now').attr('onclick');
   $('#btn-buy-now').attr('onclick', '');    
+  $('.message-stack-container').delay(5000).slideUp();    
+    
+  var stockCheck = '<?php echo STOCK_CHECK; ?>'   
+  var disableAddToCart = '<?php echo DISABLE_ADD_TO_CART; ?>'   
     
   var group = '<?php echo DEFAULT_CUSTOMERS_GROUP_ID; ?>';
   var id = '<?php echo $lC_Product->getID(); ?>';
@@ -202,6 +230,16 @@ function refreshPrice() {
         $('#qpb-message').html('<div class=""><div class="col-sm-4 col-lg-4"></div><div class="col-sm-8 col-lg-8" style="padding:0 15px;"><div class="alert alert-warning small-margin-bottom"><span class="text-left"><i class="fa fa-caret-right"></i> Buy ' + data.qpbData.nextBreak + ' for <b>' + currencySymbolLeft + data.qpbData.nextPrice + '</b> each and <b><i>save ' + data.qpbData.youSave + '</span></i></b></span></div></div></div>');
       }
       $('#btn-buy-now').attr('onclick', href);
+      if (stockCheck == true) {
+        if (disableAddToCart == true) {
+          if (data.qoh < $("#quantity").val()) {
+            $('#lowqoh').modal();
+            $("#btn-buy-now").attr('disabled', 'disabled');
+          } else {
+            $("#btn-buy-now").removeAttr('disabled');
+    }
+        }
+      }
     }
   );  
 }

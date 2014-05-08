@@ -240,7 +240,7 @@ if (!function_exists('lc_email')) {
 
     $lC_Mail = new lC_Mail($to_name, $to_email_address, $from_name, $from_email_address, $subject);
     if (EMAIL_USE_HTML == '1') {
-      $lC_Mail->setBodyHTML($body);
+      $lC_Mail->setBodyHTML(lc_nl2p($body));
     } else {
       $lC_Mail->setBodyPlain($body);
     }
@@ -597,4 +597,32 @@ if (!function_exists('lc_get_country_data')) {
     return $data;
   }
 }
+
+/**
+ * Returns string with newline formatting converted into HTML paragraphs.
+ *
+ * @author Michael Tomasello <miketomasello@gmail.com>
+ * @copyright Copyright (c) 2007, Michael Tomasello
+ * @license http://www.opensource.org/licenses/bsd-license.html BSD License
+ * 
+ * @param string $string String to be formatted.
+ * @param boolean $line_breaks When true, single-line line-breaks will be converted to HTML break tags.
+ * @param boolean $xml When true, an XML self-closing tag will be applied to break tags (<br />).
+ * @return string
+ */
+ 
+ if (!function_exists('lc_nl2p')) {
+   function lc_nl2p($string, $line_breaks = true, $xml = true){
+     // Remove existing HTML formatting to avoid double-wrapping things
+     $string = str_replace(array('<p>', '</p>', '<br>', '<br />'), '', $string);
+     
+     // It is conceivable that people might still want single line-breaks
+     // without breaking into a new paragraph.
+     if ($line_breaks == true){
+       return '<p>'.preg_replace(array("/([\n]{2,})/i", "/([^>])\n([^<])/i"), array("</p>\n<p>", '<br'.($xml == true ? ' /' : '').'>'), trim($string)).'</p>';
+     } else {
+       return '<p>'.preg_replace("/([\n]{1,})/i", "</p>\n<p>", trim($string)).'</p>';
+     }
+   }
+ }
 ?>

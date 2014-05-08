@@ -21,7 +21,7 @@ class lC_Products_Products extends lC_Template {
     global $lC_Database, $lC_Services, $lC_Session, $lC_Language, $lC_Breadcrumb, $lC_Product, $lC_Image, $lC_Currencies, $cPath_array;
     
     $template_code = (isset($_SESSION['template']['code']) && $_SESSION['template']['code'] != NULL) ? $_SESSION['template']['code'] : 'default';
-                                 
+                 
     if (empty($_GET) === false) {
       $id = false;
 
@@ -39,6 +39,7 @@ class lC_Products_Products extends lC_Template {
         $lC_Product = new lC_Product($id);
         $lC_Product->incrementCounter();
 
+        if ( strtotime($lC_Product->getDateAvailable()) <= strtotime(lC_Datetime::getShort()) ) {
         $this->addPageTags('description', substr(strip_tags($lC_Product->getDescription()),0,300));
         $this->addPageTags('keywords', $lC_Product->getTitle());
         $this->addPageTags('keywords', $lC_Product->getModel());
@@ -53,10 +54,12 @@ class lC_Products_Products extends lC_Template {
         $this->addOGPTags('url', lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword(), 'NONSSL',false,true,true));
         $this->addOGPTags('image', HTTP_SERVER . DIR_WS_CATALOG . 'templates/' . $template_code . '/images/logo.png');
         $this->addOGPTags('image', HTTP_SERVER . DIR_WS_CATALOG . $lC_Image->getAddress($lC_Product->getImage(), 'large'));
-        foreach ( $lC_Product->getImages() as $key => $value ) {
-          if ($value['default_flag'] == true) continue;
-          if(file_exists(DIR_FS_CATALOG . $lC_Image->getAddress($value['image'], 'popup'))){
-            $this->addOGPTags('image', HTTP_SERVER . DIR_WS_CATALOG . $lC_Image->getAddress($value['image'], 'large'));
+        if ($lC_Product->getImages() != '') {
+          foreach ( $lC_Product->getImages() as $key => $value ) {
+            if ($value['default_flag'] == true) continue;
+            if (file_exists(DIR_FS_CATALOG . $lC_Image->getAddress($value['image'], 'popup'))) {
+              $this->addOGPTags('image', HTTP_SERVER . DIR_WS_CATALOG . $lC_Image->getAddress($value['image'], 'large'));
+            }
           }
         }
       
@@ -87,6 +90,10 @@ class lC_Products_Products extends lC_Template {
         }
 
         $this->_page_title = $lC_Product->getTitle();
+      } else {
+        $this->_page_title = $lC_Language->get('product_not_found_heading');
+          $this->_page_contents = 'info_not_available.php';
+        }
       } else {
         $this->_page_title = $lC_Language->get('product_not_found_heading');
         $this->_page_contents = 'info_not_found.php';

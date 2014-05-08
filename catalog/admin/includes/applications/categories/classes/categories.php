@@ -246,11 +246,6 @@ class lC_Categories_Admin {
 
     $lC_Database->startTransaction();
 
-    /*echo '<pre>';
-    print_r($data);
-    echo '<pre>';
-    die('after action');*/
-        
     if ( is_numeric($id) ) {
       $Qcat = $lC_Database->query('update :table_categories set categories_image = :categories_image, parent_id = :parent_id, sort_order = :sort_order, categories_mode = :categories_mode, categories_link_target = :categories_link_target, categories_custom_url = :categories_custom_url, categories_status = :categories_status, categories_visibility_nav = :categories_visibility_nav, categories_visibility_box = :categories_visibility_box, last_modified = now() where categories_id = :categories_id');
       $Qcat->bindInt(':categories_id', $id);
@@ -272,11 +267,6 @@ class lC_Categories_Admin {
     $Qcat->bindInt(':categories_visibility_box', $data['box']);
     $Qcat->setLogging($_SESSION['module'], $id);
     $Qcat->execute();
-    
-    //echo '<pre>';
-    //print_r($Qcat);
-    //echo '<pre>';
-    //die('after categories table execute');
     
     if ( !$lC_Database->isError()) {
       $category_id = (is_numeric($id)) ? $id : $lC_Database->nextID();

@@ -9,7 +9,7 @@
 */
 class lC_Actions_cart_add {
   function execute() {
-    global $lC_Session, $lC_ShoppingCart, $lC_Product;
+    global $lC_Session, $lC_ShoppingCart, $lC_Product, $lC_Language;
 
     if ( !isset($lC_Product) ) {
       $id = false;
@@ -36,7 +36,8 @@ class lC_Actions_cart_add {
           if ( $lC_Product->variantExists($_POST['variants']) ) {
             $lC_ShoppingCart->add($lC_Product->getProductVariantID($_POST['variants']), $quantity);
           } else {
-            lc_redirect(lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword()));
+
+            lc_redirect(lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword() . '&error=' . urlencode($lC_Language->get('variant_combo_not_available'))));
 
             return false;
           }

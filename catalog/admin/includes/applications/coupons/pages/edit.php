@@ -78,8 +78,8 @@
           <div class="field-drop button-height black-inputs">
             <div>
               <label for="type_reward" class="label"><b><?php echo $lC_Language->get('label_reward'); ?></b></label>
-              <input type="radio" name="type" value="T" id="type_1" class="switch tiny mid-margin-right small-margin-left<?php if (isset($cInfo)) { echo ($cInfo->get('type') == 'T' || $cInfo->get('type') == 'R') ? ' checked' : null; } else { echo ' checked'; } ?>" onchange="updateRewardField($(this).val());">
-              <input type="text" onfocus="this.select();" name="reward" id="reward" value="<?php echo (isset($cInfo) ? $cInfo->get('reward') : null); ?>" class="input">
+              <input type="radio" name="type" id="type_1" class="switch tiny mid-margin-right small-margin-left<?php if (isset($cInfo)) { echo ($cInfo->get('type') == 'T' || $cInfo->get('type') == 'R') ? ' checked' : null; } else { echo ' checked'; } ?>" onchange="updateRewardField($(this).val());">
+              <input type="text" onblur="setType(this.value);" onfocus="this.select();" name="reward" id="reward" value="<?php echo (isset($cInfo) ? $cInfo->get('reward') : null); ?>" class="input">
               <span class="input-info mid-margin-left"><?php echo $lC_Language->get('text_price_or_percent'); ?></span>
               <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_price_or_percent'), null, 'info-spot on-left grey margin-left'); ?>
             </div>
@@ -100,15 +100,9 @@
             <span class="small-margin-left upsellinfo" upselltitle="<?php echo $lC_Language->get('text_free_product_upsell_title'); ?>" upselldesc="<?php echo $lC_Language->get('text_free_product_upsell_desc'); ?>"><?php echo lc_go_pro(); ?></span>
             <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_free_product'), null, 'info-spot on-left grey margin-left'); ?>
             </div -->
-            <input type="hidden" name="type" id="type" value="<?php echo $type; ?>" />
+            <input type="hidden" name="type" id="type" value="<?php echo (isset($cInfo) ? $cInfo->get('type') : null); ?>" />
           </div>
         </fieldset>
-        <script>
-          function updateReward(val) {
-            $('#reward').val("");
-            $('#type').val(val);
-          }
-        </script>
       </div>
       <div class="new-row-mobile twelve-columns twelve-columns-mobile" id="limits">
         <fieldset class="fieldset fields-list">
