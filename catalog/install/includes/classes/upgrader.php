@@ -4607,8 +4607,10 @@ class lC_LocalUpgrader extends lC_Upgrader {
       
       // TRUNCATE ADMINS TABLE IN TARGET DB
       
-      $tQry = $target_db->query('truncate table ' . TABLE_ADMINISTRATORS);
-      $tQry->execute();
+      if ($switch != -1) {
+        $tQry = $target_db->query('truncate table ' . TABLE_ADMINISTRATORS);
+        $tQry->execute();
+      }
       
       // END TRUNCATE ADMINS TABLE IN TARGET DB
 
@@ -4636,20 +4638,20 @@ class lC_LocalUpgrader extends lC_Upgrader {
                           , 'access_goup_id' => $sQry->value($map['access_goup_id'])
                            ); 
                            
-          $tQry = $target_db->query('INSERT INTO :table_admin (id, 
-                                                               user_name, 
-                                                               user_password, 
-                                                               first_name, 
-                                                               last_name, 
-                                                               image, 
-                                                               access_group_id) 
-                                                       VALUES (:id, 
-                                                               :user_name, 
-                                                               :user_password, 
-                                                               :first_name, 
-                                                               :last_name, 
-                                                               :image, 
-                                                               :access_group_id)');
+          $tQry = $target_db->query((($switch != -1) ? 'INSERT' : 'INSERT IGNORE') . ' INTO :table_admin (id, 
+                                                                                                          user_name, 
+                                                                                                          user_password, 
+                                                                                                          first_name, 
+                                                                                                          last_name, 
+                                                                                                          image, 
+                                                                                                          access_group_id) 
+                                                                                                  VALUES (:id, 
+                                                                                                          :user_name, 
+                                                                                                          :user_password, 
+                                                                                                          :first_name, 
+                                                                                                          :last_name, 
+                                                                                                          :image, 
+                                                                                                          :access_group_id)');
           
           $tQry->bindTable(':table_admin', TABLE_ADMINISTRATORS);
           $tQry->bindInt  (':id'             , $admin['id']);
@@ -4676,8 +4678,10 @@ class lC_LocalUpgrader extends lC_Upgrader {
 
       // LOAD ADMIN GROUPS FROM SOURCE DB
       
-      $tQry = $target_db->query('truncate table ' . TABLE_ADMINISTRATORS_GROUPS);
-      $tQry->execute();
+      if ($switch != -1) {
+        $tQry = $target_db->query('truncate table ' . TABLE_ADMINISTRATORS_GROUPS);
+        $tQry->execute();
+      }
 
       $sQry = $source_db->query('SELECT * FROM admin_groups');
       $sQry->execute();
@@ -4693,14 +4697,14 @@ class lC_LocalUpgrader extends lC_Upgrader {
                                 , 'last_modified' => "0000-00-00 00:00:00"
                                  ); 
           
-          $tQry = $target_db->query('INSERT INTO :table_admins_groups (id, 
-                                                                       name, 
-                                                                       date_added, 
-                                                                       last_modified) 
-                                                               VALUES (:id, 
-                                                                       :name, 
-                                                                       now(), 
-                                                                       now())');
+          $tQry = $target_db->query((($switch != -1) ? 'INSERT' : 'INSERT IGNORE') . ' INTO :table_admins_groups (id, 
+                                                                                                                  name, 
+                                                                                                                  date_added, 
+                                                                                                                  last_modified) 
+                                                                                                          VALUES (:id, 
+                                                                                                                  :name, 
+                                                                                                                  now(), 
+                                                                                                                  now())');
           
           $tQry->bindTable(':table_admins_groups', TABLE_ADMINISTRATORS_GROUPS);
           $tQry->bindInt  (':id'  , $admin_group['id']);
