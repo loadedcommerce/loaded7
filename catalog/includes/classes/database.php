@@ -280,9 +280,7 @@ class lC_Database {
   }
 
   public function getMicroTime() {
-    list($usec, $sec) = explode(' ', microtime());
-
-    return ((float)$usec + (float)$sec);
+    return ((float)microtime(true));
   }
 }
 
