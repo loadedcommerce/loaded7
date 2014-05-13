@@ -634,6 +634,21 @@ class lC_Template {
     return implode("\n", $this->_javascript_blocks);
   }
   /**
+  * Cleans OGP tags and restrict OGP description to 300 characters
+  *
+  * @access private
+  * @return string
+  */  
+  public function cleanOGPTags($data){
+    $string = lc_clean_html($data); //clean html tags if any    
+    $string = str_replace(array("\r\n", "\r", "\n", "'", "\"", "," , ";", "<", ">"), "", $string); // remove unwanted characters
+    if (strlen($string) > 300) {
+      $stringCut = substr($string, 0, 300); // truncate string
+      $string = substr($stringCut, 0, strrpos($stringCut, ' ')); // make sure it ends in a word
+    }
+    return $string;    
+  }
+  /**
   * Returns OGP tags to add to the page head
   *
   * @access private
@@ -645,7 +660,7 @@ class lC_Template {
     foreach ($this->_ogp_tags as $key => $values) {
         for ($i=0; $i<=sizeof($values); $i++){
             if(!empty($values[$i])){
-                $tag_string .= '<meta property="og:' . $key . '" content="' . str_replace(array("\r\n", "\r", "\n"), "", $values[$i]) . '" />' . "\n";
+                $tag_string .= '<meta property="og:' . $key . '" content="' . $this->cleanOGPTags($values[$i]) . '" />' . "\n";
             }
         }
     }
