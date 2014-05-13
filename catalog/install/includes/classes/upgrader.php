@@ -3459,7 +3459,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
     $source_db = new $class($s_db['DB_SERVER'], $s_db['DB_SERVER_USERNAME'], $s_db['DB_SERVER_PASSWORD']);
       
     if ($source_db->isError() === false) {
-    $source_db->selectDatabase($s_db['DB_DATABASE']);
+      $source_db->selectDatabase($s_db['DB_DATABASE']);
     }
       
     if ($source_db->isError()) {
@@ -3551,6 +3551,11 @@ class lC_LocalUpgrader extends lC_Upgrader {
         $tQry->bindValue(':orders_status_name', $orders_stat['orders_status_name']);
         $tQry->execute();
         $cnt++;
+        
+        if ($target_db->isError()) {
+          $this->_msg = $target_db->getError();
+          return false;
+        }
       }
       
       $sQry->freeResult();
@@ -3606,6 +3611,11 @@ class lC_LocalUpgrader extends lC_Upgrader {
         $tQry->execute();
 
         $cnt++;
+        
+        if ($target_db->isError()) {
+          $this->_msg = $target_db->getError();
+          return false;
+        }
       }
       
       $sQry->freeResult();
@@ -3674,6 +3684,11 @@ class lC_LocalUpgrader extends lC_Upgrader {
         $tQry->execute();
         
         $cnt++;
+        
+        if ($target_db->isError()) {
+          $this->_msg = $target_db->getError();
+          return false;
+        }
       }
       
       $sQry->freeResult();
@@ -3731,6 +3746,11 @@ class lC_LocalUpgrader extends lC_Upgrader {
         $tQry->execute();
 
         $cnt++;
+        
+        if ($target_db->isError()) {
+          $this->_msg = $target_db->getError();
+          return false;
+        }
       }
       
       $sQry->freeResult();
@@ -4096,6 +4116,11 @@ class lC_LocalUpgrader extends lC_Upgrader {
         $tQry->execute();
 
         $cnt++;
+        
+        if ($target_db->isError()) {
+          $this->_msg = $target_db->getError();
+          return false;
+        }
 
       }
       
@@ -4174,17 +4199,19 @@ class lC_LocalUpgrader extends lC_Upgrader {
 
     // TRUNCATE PRODUCT VARIANTS TABLES IN TARGET DB
     
-    $tQry = $target_db->query('truncate table ' . TABLE_PRODUCTS_VARIANTS_GROUPS);
-    $tQry->execute();
-    
-    $tQry = $target_db->query('truncate table ' . TABLE_PRODUCTS_VARIANTS_VALUES);
-    $tQry->execute();
-    
-    $tQry = $target_db->query('truncate table ' . TABLE_PRODUCTS_SIMPLE_OPTIONS);
-    $tQry->execute();
-    
-    $tQry = $target_db->query('truncate table ' . TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
-    $tQry->execute();
+    if ($switch != -1) {
+      $tQry = $target_db->query('truncate table ' . TABLE_PRODUCTS_VARIANTS_GROUPS);
+      $tQry->execute();
+      
+      $tQry = $target_db->query('truncate table ' . TABLE_PRODUCTS_VARIANTS_VALUES);
+      $tQry->execute();
+      
+      $tQry = $target_db->query('truncate table ' . TABLE_PRODUCTS_SIMPLE_OPTIONS);
+      $tQry->execute();
+      
+      $tQry = $target_db->query('truncate table ' . TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
+      $tQry->execute();
+    }
   
     // END TRUNCATE PRODUCT VARIANTS TABLES IN TARGET DB
     
@@ -4245,16 +4272,17 @@ class lC_LocalUpgrader extends lC_Upgrader {
                        , 'module'       => $module
                         ); 
                                  
-        $tQry = $target_db->query('INSERT INTO :table_products_variants_groups (id, 
-                                                                                languages_id, 
-                                                                                title, 
-                                                                                sort_order, 
-                                                                                module) 
-                                                                        VALUES (:id, 
-                                                                                :languages_id, 
-                                                                                :title, 
-                                                                                :sort_order, 
-                                                                                :module)');
+        $tQry = $target_db->query((($switch != -1) ? 'INSERT' : 'INSERT IGNORE') . ' INTO :table_products_variants_groups (id, 
+                                                                                                                           languages_id, 
+                                                                                                                           title, 
+                                                                                                                           sort_order, 
+                                                                                                                           module) 
+                                                                                                                   VALUES (:id, 
+                                                                                                                           :languages_id, 
+                                                                                                                           :title, 
+                                                                                                                           :sort_order, 
+                                                                                                                           :module) 
+                                                                                              ON DUPLICATE KEY UPDATE id = :update_id');
 
         $tQry->bindTable(':table_products_variants_groups', TABLE_PRODUCTS_VARIANTS_GROUPS);
         $tQry->bindInt  (':id'          , $group['id']);
@@ -4262,6 +4290,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
         $tQry->bindValue(':title'       , $group['title']);
         $tQry->bindInt  (':sort_order'  , $group['sort_order']);
         $tQry->bindValue(':module'      , $group['module']);
+        $tQry->bindInt  (':update_id'   , $group['id']);
         $tQry->execute();
         
         if ($target_db->isError()) {
@@ -4315,7 +4344,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
         $tQry->bindInt  (':products_variants_groups_id', $group['products_variants_groups_id']);
         $tQry->bindValue(':title'                      , $group['title']);
         $tQry->bindInt  (':sort_order'                 , $group['sort_order']);
-        $tQry->bindInt  (':update_id'                         , $group['id']);
+        $tQry->bindInt  (':update_id'                  , $group['id']);
         $tQry->execute();
         
         if ($target_db->isError()) {
