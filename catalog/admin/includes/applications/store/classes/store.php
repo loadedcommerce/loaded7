@@ -13,6 +13,7 @@ global $lC_Vqmod;
 require_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/classes/addons.php'));
 require_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/classes/transport.php'));
 require_once($lC_Vqmod->modCheck(DIR_FS_ADMIN . 'includes/applications/updates/classes/updates.php'));
+require_once($lC_Vqmod->modCheck(DIR_FS_ADMIN . 'includes/applications/languages/classes/languages.php'));
 
 if (!class_exists('lC_Store_Admin')) {
   class lC_Store_Admin { 
@@ -341,7 +342,7 @@ if (!class_exists('lC_Store_Admin')) {
     */
     public static function install($key) {
       global $lC_Database, $lC_Language, $lC_Vqmod, $lC_Addons;
-
+              
       $isTemplate = (strstr($key, 'lC_Template_')) ? true : false;
       if ($isTemplate) {
         $key = str_replace('lC_Template_', '', $key);
@@ -358,16 +359,23 @@ if (!class_exists('lC_Store_Admin')) {
 
         return true;
 
-      } else { // is addon
+      } else { // is addon or language
 
         if ( !file_exists(DIR_FS_CATALOG . 'addons/' . $key . '/controller.php') ) {
           // get the addon phar from the store
-          self::getAddonPhar($key);
-          
+          self::getAddonPhar($key);   
+
+          $phar = new Phar(DIR_FS_WORK . 'addons/' . $key . '.phar', 0);
+          $meta = $phar->getMetadata();
+         
           // apply the addon phar 
           if (file_exists(DIR_FS_WORK . 'addons/' . $key . '.phar')) {
             lC_Updates_Admin::applyPackage(DIR_FS_WORK . 'addons/' . $key . '.phar');
           }
+          
+          if ($meta['type'] == 'language') {
+            return true;            
+          }          
         }
 
         // sanity check to see if the object is already installed

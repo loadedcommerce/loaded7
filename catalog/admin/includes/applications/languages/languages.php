@@ -53,8 +53,13 @@ class lC_Application_Languages extends lC_Template_Admin {
     if ( !empty($_GET['action']) ) {
       switch ( $_GET['action'] ) {
         case 'import':
-          if ( lC_Languages_Admin::import($_POST['language_import'], $_POST['import_type']) ) {
-          } else {
+          $lang = (isset($_GET['language_import']) && $_GET['language_import'] != NULL) ? $_GET['language_import'] : $_POST['language_import'];
+          $type = (isset($_GET['import_type']) && $_GET['import_type'] != NULL) ? $_GET['import_type'] : $_POST['import_type'];
+          
+          try {
+            lC_Languages_Admin::import($lang, $type);
+           } catch ( Exception $e ) {
+
             $_SESSION['error'] = true;
             $_SESSION['errmsg'] = $lC_Language->get('ms_error_action_not_performed');
           }
