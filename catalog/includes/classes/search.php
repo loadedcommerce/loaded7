@@ -193,7 +193,7 @@ class lC_Search extends lC_Products {
       $Qlisting->bindTable(':table_product_attributes', TABLE_PRODUCT_ATTRIBUTES);
     }
 
-    $Qlisting->appendQuery('where p.products_status = 1 and p.products_id = pd.products_id and pd.language_id = :language_id');
+    $Qlisting->appendQuery('where p.products_status = 1 and p.is_subproduct != 1 and p.products_id = pd.products_id and pd.language_id = :language_id');
     $Qlisting->bindInt(':language_id', $lC_Language->getID());
 
     if ($this->hasCategory()) {
