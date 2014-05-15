@@ -135,7 +135,7 @@ if(defined('EDITOR_UPLOADCARE_PUBLIC_KEY') && EDITOR_UPLOADCARE_PUBLIC_KEY != ''
   
   if ($lC_Template->hasPageHeader()) {
     include($lC_Vqmod->modCheck('templates/default/header.php'));
-  }
+  }  
   ?>
   
   <div id="mainMessageContainer" style="display:none;">

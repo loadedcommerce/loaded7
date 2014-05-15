@@ -23,7 +23,7 @@
     <definition>
       <key>button_go_shopping</key>
       <value><![CDATA[Go Shopping]]></value>
-      <group>general</group>
+      <group>general</group>                                            
     </definition>
     <definition>
       <key>text_contact</key>
@@ -1846,9 +1846,14 @@ Note: If you did not request this action via our password forgotten page, please
     </definition>  
     <definition>
       <key>variant_combo_not_available</key>
-      <value><![CDATA[Not available in this combination. Please select another combination for your order.]]></value>
+      <value><![CDATA[Sorry, we don't have that combination. Please select another combination for your order.]]></value>
       <group>products</group>
-    </definition>     
+    </definition>   
+    <definition>
+      <key>variant_combo_out_of_stock</key>
+      <value><![CDATA[Sorry, this combination is out of stock. Please select another combination for your order.]]></value>
+      <group>products</group>
+    </definition>       
     <definition>
       <key>breadcrumb_new_products</key>
       <value><![CDATA[New Products]]></value>

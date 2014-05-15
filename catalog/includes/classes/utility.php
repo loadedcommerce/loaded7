@@ -469,7 +469,8 @@ class utility {
     
     $Qcheck->freeResult();    
     
-    if ($isPro && file_exists(DIR_FS_CATALOG . 'addons/Loaded_7_Pro/controller.php')) {
+    //if ($isPro && file_exists(DIR_FS_CATALOG . 'addons/Loaded_7_Pro/controller.php')) {
+    if ($isPro) {
       return true;
     } 
     
