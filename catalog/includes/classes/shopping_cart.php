@@ -151,7 +151,7 @@ class lC_ShoppingCart {
 
     $_delete_array = array();
 
-    $Qproducts = $lC_Database->query('select sc.item_id, sc.products_id, sc.quantity, sc.meta_data, sc.date_added, p.parent_id, p.products_price, p.products_model, p.products_tax_class_id, p.products_weight, p.products_weight_class, p.products_status from :table_shopping_carts sc, :table_products p where sc.customers_id = :customers_id and sc.products_id = p.products_id order by sc.date_added desc');
+    $Qproducts = $lC_Database->query('select sc.item_id, sc.products_id, sc.quantity, sc.meta_data, sc.date_added, p.parent_id, p.products_price, p.products_model, p.products_sku, p.products_tax_class_id, p.products_weight, p.products_weight_class, p.products_status from :table_shopping_carts sc, :table_products p where sc.customers_id = :customers_id and sc.products_id = p.products_id order by sc.date_added desc');
     $Qproducts->bindTable(':table_shopping_carts', TABLE_SHOPPING_CARTS);
     $Qproducts->bindTable(':table_products', TABLE_PRODUCTS);
     $Qproducts->bindInt(':customers_id', $lC_Customer->getID());
@@ -183,6 +183,7 @@ class lC_ShoppingCart {
                                                                   'id' => $Qproducts->valueInt('products_id'),
                                                                   'parent_id' => $Qproducts->valueInt('parent_id'),
                                                                   'model' => $Qproducts->value('products_model'),
+                                                                  'sku' => $Qproducts->value('products_sku'),
                                                                   'name' => $Qdesc->value('products_name'),
                                                                   'keyword' => $Qdesc->value('products_keyword'),
                                                                   'description' => $Qdesc->value('products_description'),
@@ -312,7 +313,7 @@ class lC_ShoppingCart {
       return false;
     }
     
-    $Qproduct = $lC_Database->query('select p.parent_id, p.products_price, p.products_tax_class_id, p.products_model, p.products_weight, p.products_weight_class, p.products_status, p.is_subproduct, i.image from :table_products p left join :table_products_images i on (p.products_id = i.products_id and i.default_flag = :default_flag) where p.products_id = :products_id');
+    $Qproduct = $lC_Database->query('select p.*, i.image from :table_products p left join :table_products_images i on (p.products_id = i.products_id and i.default_flag = :default_flag) where p.products_id = :products_id');
     $Qproduct->bindTable(':table_products', TABLE_PRODUCTS);
     $Qproduct->bindTable(':table_products_images', TABLE_PRODUCTS_IMAGES);
     $Qproduct->bindInt(':default_flag', 1);
@@ -405,6 +406,7 @@ class lC_ShoppingCart {
                                            'parent_id' => $Qproduct->valueInt('parent_id'),
                                            'name' => $desc['products_name'],
                                            'model' => $Qproduct->value('products_model'),
+                                           'sku' => $Qproduct->value('products_sku'),
                                            'keyword' => $desc['products_keyword'],
                                            'tags' => $desc['products_tags'],
                                            'url' => $desc['products_url'],

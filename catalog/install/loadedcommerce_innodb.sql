@@ -476,6 +476,7 @@ CREATE TABLE lc_orders_products (
   orders_id int(11) NOT NULL,
   products_id int(11) NOT NULL,
   products_model varchar(255) DEFAULT NULL,
+  products_sku varchar(255) DEFAULT NULL,
   products_name varchar(255) NOT NULL,
   products_price decimal(15,4) NOT NULL DEFAULT '0.0000',
   products_tax decimal(7,4) NOT NULL DEFAULT '0.0000',

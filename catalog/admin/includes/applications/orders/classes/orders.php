@@ -381,8 +381,12 @@ class lC_Orders_Admin {
     // build the product string  
     $result['orderProducts'] = ''; 
     foreach ( $lC_Order->getProducts() as $products ) {
+      
+      $skuModel = (isset($products['model']) && $products['model'] != NULL) ? $products['model'] : NULL;
+      if ($skuModel == NULL) $skuModel = (isset($products['sku']) && $products['sku'] != NULL) ? $products['sku'] : NULL;
+      
       $result['orderProducts'] .= '<tr class="bbottom-grey">
-                                     <td valign="top" align="left" class="orders-products-listing-td hide-below-480">' . $products['model'] . '</td>
+                                     <td valign="top" align="left" class="orders-products-listing-td hide-below-480">' . $skuModel . '</td>
                                      <td valign="top" align="left" class="orders-products-listing-td">' . $products['name'];
       if ( isset($products['attributes']) && is_array($products['attributes']) && ( sizeof($products['attributes']) > 0 ) ) {
         foreach ( $products['attributes'] as $attributes ) {
@@ -395,7 +399,7 @@ class lC_Orders_Admin {
           $result['orderProducts'] .= '<br /><nobr>&nbsp;&nbsp;- <span class="small"><i>' . $val['group_title'] . ': ' . $val['value_title'] . '</i></span></nobr>';
         }
       }
-            
+      
       $result['orderProducts'] .= '</td>
                                      <td valign="top" align="right" class="orders-products-listing-td hide-below-480">' . $products['quantity'] . '</td>
                                      <td valign="top" align="right" class="orders-products-listing-td hide-below-480">' . $lC_Currencies->format($products['price'] * $products['quantity'], $lC_Order->getCurrency(), $lC_Order->getCurrencyValue()) . '</td>
