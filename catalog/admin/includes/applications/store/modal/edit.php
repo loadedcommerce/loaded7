@@ -13,15 +13,28 @@
 #editAddon { padding-bottom:20px; }
 </style>
 <script>
-function editAddon(id, name) {
+function editAddon(code, name, id) {
+  mask();
   var accessLevel = '<?php echo $_SESSION['admin']['access'][$lC_Template->getModule()]; ?>';
   if (parseInt(accessLevel) < 3) {
     $.modal.alert('<?php echo $lC_Language->get('ms_error_no_access');?>');
     return false;
   }
-  var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=getFormData&name=NAME'); ?>';
-  $.getJSON(jsonLink.replace('NAME', id),
+  // check if template or language and redirect accordingly
+  if (name == 'templates') {
+    var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'templates&action=edit&code=CODE&id=ID'); ?>";
+    $(location).attr('href',url.replace('CODE', code).replace('ID', id));    
+    return;
+  }
+  if (name == 'languages') {
+    var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'languages&action=edit&code=CODE&id=ID'); ?>";
+    $(location).attr('href',url.replace('CODE', code).replace('ID', id));
+    return;    
+  }
+  var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=getFormData&code=CODE'); ?>';
+  $.getJSON(jsonLink.replace('CODE', code),
     function (data) {
+      unmask();
       if (data.rpcStatus == -10) { // no session
         var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
         $(location).attr('href',url);
@@ -57,7 +70,7 @@ function editAddon(id, name) {
               click:    function(win) {
                 var nvp = $("#mEdit").serialize();
                 var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=saveAddon&name=NAME&NVP'); ?>'
-                $.getJSON(jsonLink.replace('NAME', id).replace('NVP', nvp),
+                $.getJSON(jsonLink.replace('NAME', code).replace('NVP', nvp),
                   function (rdata) {
                     if (rdata.rpcStatus == -10) { // no session
                       var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";

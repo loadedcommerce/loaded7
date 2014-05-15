@@ -25,6 +25,7 @@ button_copy = Copy
 button_create_order = Create Order
 button_delete = Delete
 button_done = Done
+button_edit = Edit
 button_execute = Execute
 button_export = Export
 button_go = Global

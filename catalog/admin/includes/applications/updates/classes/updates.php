@@ -410,11 +410,11 @@ class lC_Updates_Admin {
 
         $phar = new Phar(DIR_FS_WORK . 'addons/' . $pharFile);    
         $meta = $phar->getMetadata();
-        
-        $pharType = ($meta['type'] != '') ? $meta['type'] : 'addon';
+
+        $pharCode = str_replace('.phar', '', $pharFile);
+        if ($meta['type'] != '') $pharType = $meta['type'];
 
         // reset the log
-        $pharCode = str_replace('.phar', '', $pharFile);
         if ( file_exists(DIR_FS_WORK . 'logs/addon-' . $pharCode . '.txt') && is_writable(DIR_FS_WORK . 'logs/addon-' . $pharCode . '.txt') ) {
           unlink(DIR_FS_WORK . 'logs/addon-' . $pharCode . '.txt');
         }        
