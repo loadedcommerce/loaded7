@@ -359,14 +359,14 @@ class lC_CategoryTree {
       foreach ($categories as $category_id => $info) {
         if ($id == $category_id) {
           return array('id' => $id,
-            'name' => $info['name'],
-            'item_id' => $info['item_id'],
-            'query' => $info['query'],
-            'permalink' => $info['permalink'],
-            'parent_id' => $parent,
-            'image' => $info['image'],
-            'status' => $info['status'],
-            'count' => $info['count']
+                       'name' => $info['name'],
+                       'item_id' => $info['item_id'],
+                       'query' => $info['query'],
+                       'permalink' => $info['permalink'],
+                       'parent_id' => $parent,
+                       'image' => $info['image'],
+                       'status' => $info['status'],
+                       'count' => $info['count']
           );
         }
       }
