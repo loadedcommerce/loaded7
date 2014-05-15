@@ -43,7 +43,7 @@ global $lC_Language, $pInfo, $tax_class_array;
           <span id="invControlButtons" class="button-group upsellwrapper">
             <label for="ic_radio_1" class="oicb button blue-active<?php echo (isset($pInfo) && ($pInfo->getInt('has_children') == 1 || $pInfo->getInt('has_subproducts') == 1) ? '' : ' active'); ?>">
               <input type="radio" name="inventory_control_radio_group" id="ic_radio_1" value="1" />
-              <?php echo $lC_Language->get('text_simple'); ?>
+              <?php echo $lC_Language->get('text_single_sku'); ?>
             </label>
             <label upselltitle="<?php echo $lC_Language->get('text_multi_sku'); ?>" upselldesc="<?php echo $lC_Language->get('text_multi_sku_desc'); ?>" for="ic_radio_2" class="upsellinfo disabled oicb button red-active<?php echo (isset($pInfo) && ($pInfo->getInt('has_children') == 1 || $pInfo->getInt('has_subproducts') == 1) ? ' active' : ''); ?>">
               <input type="radio" name="inventory_control_radio_group" id="ic_radio_2" value="2" />

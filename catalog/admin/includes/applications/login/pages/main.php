@@ -251,6 +251,45 @@ $(document).ready(function() {
   * Register
   */
   $('#form-activate-pro').submit(function(event) {
+    // Added for iconcube check to support Pro & B2B Versions and Paid Addons
+    var ioncubeCheck = <?php echo json_encode($ioncube_check); ?>;    
+    if (ioncubeCheck.installed != false) {
+      if (ioncubeCheck.valid != true) {
+        $('#activate-pro').addClass('disabled');
+        $('#buy-pro').removeClass('disabled');
+        $.modal({
+          title: '<?php echo $lC_Language->get('ms_error_ioncube'); ?>',
+          width: 320,
+          content: '<p class="big-message align-left">' +
+                   '  <span class="big-message-icon icon-warning icon-orange"></span>' +
+                   '  <strong><?php echo $lC_Language->get('ms_error_ioncube_invalid_title'); ?><br></strong>' +
+                   '  <p class="large-margin-top align-left with-small-padding">' +
+                   '    <?php echo $lC_Language->get('ms_error_ioncube_invalid_text'); ?>' +
+                   '  </p>' +
+                   '</p>'
+        });
+        event.preventDefault();
+        return false;
+      } 
+    } else {
+      $('#activate-pro').addClass('disabled');
+      $('#buy-pro').removeClass('disabled');
+      $.modal({
+        title: '<?php echo $lC_Language->get('ms_error_ioncube'); ?>',
+        width: 300,
+        content: '<p class="big-message align-left">' +
+                 '  <span class="big-message-icon icon-warning icon-orange"></span>' +
+                 '  <strong><?php echo $lC_Language->get('ms_error_ioncube_not_installed'); ?><br></strong>' +
+                 '  <p class="large-margin-top align-left with-small-padding">' +
+                 '    <?php echo $lC_Language->get('ms_error_ioncube_not_installed_text'); ?>' +
+                 '  </p>' +
+                 '</p>'
+      });
+      event.preventDefault();
+      return false;
+    }
+    // END - Added for iconcube check to support Pro & B2B Versions and Paid Addons
+    
     // Values
     var serial = $.trim($('#activation_serial').val());
 

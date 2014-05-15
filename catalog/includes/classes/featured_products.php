@@ -28,38 +28,23 @@ class lC_Featured_products {
     $Qf->bindTable(':table_featured_products', TABLE_FEATURED_PRODUCTS);
     $Qf->execute();
     
-    $Qfresults = array();
-    
     while ( $Qf->next() ) {
       $Qfresults[] = $Qf->valueInt('products_id');
     }
     
     $output = '';      
-    foreach ($Qfresults as $featured) {
-      $Qfeatured = $lC_Database->query('select p.products_id, p.products_price, p.products_tax_class_id, p.products_quantity, pd.products_name, pd.products_keyword, pd.products_description, i.image from :table_products p left join :table_products_images i on (p.products_id = i.products_id and i.default_flag = :default_flag), :table_products_description pd where p.products_id = :products_id and p.products_status = 1 and p.products_id = pd.products_id and pd.language_id = :language_id');
-      $Qfeatured->bindTable(':table_products', TABLE_PRODUCTS);
-      $Qfeatured->bindTable(':table_products_images', TABLE_PRODUCTS_IMAGES);
-      $Qfeatured->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
-      $Qfeatured->bindInt(':products_id', $featured);
-      $Qfeatured->bindInt(':default_flag', 1);
-      $Qfeatured->bindInt(':language_id', $lC_Language->getID());
-      $Qfeatured->execute();      
-      
-      while ( $Qfeatured->next() ) {
-        $lC_Product = new lC_Product($Qfeatured->valueInt('products_id'));
-        
-        $Qcode = $lC_Database->query('select id from :table_templates_boxes where code = :code');
-        $Qcode->bindTable(':table_templates_boxes', TABLE_TEMPLATES_BOXES);
-        $Qcode->bindValue(':code', 'date_available');
-        $Qcode->execute();
-        
-        $Qdate = $lC_Database->query('select value from :table_product_attributes where id = :id and products_id = :products_id');
-        $Qdate->bindTable(':table_product_attributes', TABLE_PRODUCT_ATTRIBUTES);
-        $Qdate->bindValue(':id', $Qcode->value('id'));
-        $Qdate->bindValue(':products_id', $Qfeatured->valueInt('products_id'));
-        $Qdate->execute(); 
-        
-        if ( strtotime($lC_Product->getDateAvailable()) <= strtotime(lC_Datetime::getShort()) ) {
+    if( $Qf->numberOfRows() > 0 ){
+      foreach ($Qfresults as $featured) {
+        $Qfeatured = $lC_Database->query('select p.products_id, p.products_price, p.products_tax_class_id, p.products_quantity, pd.products_name, pd.products_keyword, pd.products_description, i.image from :table_products p left join :table_products_images i on (p.products_id = i.products_id and i.default_flag = :default_flag), :table_products_description pd where p.products_id = :products_id and p.products_status = 1 and p.products_id = pd.products_id and pd.language_id = :language_id');
+        $Qfeatured->bindTable(':table_products', TABLE_PRODUCTS);
+        $Qfeatured->bindTable(':table_products_images', TABLE_PRODUCTS_IMAGES);
+        $Qfeatured->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
+        $Qfeatured->bindInt(':products_id', $featured);
+        $Qfeatured->bindInt(':default_flag', 1);
+        $Qfeatured->bindInt(':language_id', $lC_Language->getID());
+        $Qfeatured->execute();      
+
+        while ( $Qfeatured->next() ) {
           $output .= '<div class="content-featured-products-listing-container">';
           $output .= '  <div class="content-featured-products-listing-name">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $Qfeatured->value('products_keyword')), $Qfeatured->value('products_name')) . '</div>' . "\n";
           $output .= '  <div class="content-featured-products-listing-description">' . lc_clean_html($Qfeatured->value('products_description')) . '</div>' . "\n";
@@ -73,6 +58,8 @@ class lC_Featured_products {
           $output .= '</div>' . "\n";
         }
       }
+    } else {
+      $output .= '<div class="content-specials-listing-name">' . $lC_Language->get('text_no_featured_products') . '</div>';
     }
     
     return $output;

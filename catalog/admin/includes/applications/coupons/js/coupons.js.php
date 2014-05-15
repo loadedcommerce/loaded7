@@ -39,18 +39,30 @@ $(document).ready(function() {
     $('.selectContainer').hide();
   }
   
- $("#expires_date").click(function(){
-   var Sdate = $("#start_date").val();
-   var dSplit = Sdate.split("/");
-   var Smonth = dSplit[0]-1;
-   var Sday = dSplit[1];
-   var Syear = dSplit[2];
-   $('#expires_date').glDatePicker({ startDate: new Date(Syear, Smonth, Sday), allowOld:false });
- });
+  $("#expires_date").click(function(){
+    var Sdate = $("#start_date").val();
+    var dSplit = Sdate.split("/");
+    var Smonth = dSplit[0]-1;
+    var Sday = dSplit[1];
+    var Syear = dSplit[2];
+    $('#expires_date').glDatePicker({ startDate: new Date(Syear, Smonth, Sday), allowOld:false });
+  });
+  
   $('.datepicker').glDatePicker({ zIndex: 100 });
   $('#start_date').glDatePicker({ startDate: new Date(), allowOld:false });
   
 });
+  
+function setType(val) {
+  var v = val.search(/%/);
+  if (v > 0) { 
+    var type = "T"
+  } else { 
+    var type = "R"
+  } 
+  $('#reward').attr('value', val);
+  $('#type').val(type);
+}
 
 function updateRewardField(val) {
   $('#reward').val("");

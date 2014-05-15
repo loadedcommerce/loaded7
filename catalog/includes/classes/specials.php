@@ -103,25 +103,11 @@ class lC_Specials {
     $Qspecials->bindInt(':default_flag', 1);
     $Qspecials->bindInt(':language_id', $lC_Language->getID());
     $Qspecials->setBatchLimit((isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : 1), MAX_DISPLAY_SPECIAL_PRODUCTS);
-    $Qspecials->execute();
+    $Qspecials->execute();     
     
     $output = '';
-    
-    while ( $Qspecials->next() ) {
-      $lC_Product = new lC_Product($Qspecials->valueInt('products_id'));
-      
-      $Qcode = $lC_Database->query('select id from :table_templates_boxes where code = :code');
-      $Qcode->bindTable(':table_templates_boxes', TABLE_TEMPLATES_BOXES);
-      $Qcode->bindValue(':code', 'date_available');
-      $Qcode->execute();
-      
-      $Qdate = $lC_Database->query('select value from :table_product_attributes where id = :id and products_id = :products_id');
-      $Qdate->bindTable(':table_product_attributes', TABLE_PRODUCT_ATTRIBUTES);
-      $Qdate->bindValue(':id', $Qcode->value('id'));
-      $Qdate->bindValue(':products_id', $Qspecials->valueInt('products_id'));
-      $Qdate->execute(); 
-      
-      if ( strtotime($lC_Product->getDateAvailable()) <= strtotime(lC_Datetime::getShort()) ) {
+    if( $Qspecials->numberOfRows() > 0 ){
+      while ( $Qspecials->next() ) {
         $output .= '<div class="content-specials-listing-container">';
         $output .= '  <div class="content-specials-listing-name">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $Qspecials->value('products_keyword')), $Qspecials->value('products_name')) . '</div>' . "\n";
         $output .= '  <div class="content-specials-listing-description">' . lc_clean_html($Qspecials->value('products_description')) . '</div>' . "\n";
@@ -134,8 +120,10 @@ class lC_Specials {
         }
         $output .= '</div>' . "\n";
       }
+    } else {
+      $output .= '<div class="content-specials-listing-name">' . $lC_Language->get('text_no_specials') . '</div>';
     }
-    
+
     return $output;
   }    
 

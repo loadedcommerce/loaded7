@@ -1334,6 +1334,10 @@
 }
 
 @media (max-width: 479px) {
+  body {
+    overflow-x: hidden !important; 
+  }
+
   #loaded7 .show-on-mobile {
     display: block;
   }
@@ -1448,4 +1452,22 @@
   #loaded7 .mobile-expand {
     margin: 0 -10px;
   } 
+  
+  .row {
+    margin-right: -8px;
+    margin-left: -8px;
+  }
+
+  #loaded7 .product-listing-module-pagination {
+    text-align: center !important;
+    margin-bottom:10px;
+  }
+  
+  #loaded7 .product-listing-module-pagination .pull-left{
+    float:none !important;
+  }
+  
+  #loaded7 .product-listing-module-pagination .pull-right{
+    float:none !important;
+  }
 }

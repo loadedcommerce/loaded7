@@ -206,11 +206,12 @@ class lC_Order {
     $Qstatus->execute();
 
     foreach ($lC_ShoppingCart->getProducts() as $products) {
-      $Qproducts = $lC_Database->query('insert into :table_orders_products (orders_id, products_id, products_model, products_name, products_price, products_tax, products_quantity, products_simple_options_meta_data) values (:orders_id, :products_id, :products_model, :products_name, :products_price, :products_tax, :products_quantity, :products_simple_options_meta_data)');
+      $Qproducts = $lC_Database->query('insert into :table_orders_products (orders_id, products_id, products_model, products_sku, products_name, products_price, products_tax, products_quantity, products_simple_options_meta_data) values (:orders_id, :products_id, :products_model, :products_sku, :products_name, :products_price, :products_tax, :products_quantity, :products_simple_options_meta_data)');
       $Qproducts->bindTable(':table_orders_products', TABLE_ORDERS_PRODUCTS);
       $Qproducts->bindInt(':orders_id', $insert_id);
       $Qproducts->bindInt(':products_id', lc_get_product_id($products['id']));
       $Qproducts->bindValue(':products_model', $products['model']);
+      $Qproducts->bindValue(':products_sku', $products['sku']);
       $Qproducts->bindValue(':products_name', $products['name']);
       $Qproducts->bindValue(':products_price', $products['price']);
       $Qproducts->bindValue(':products_tax', $lC_Tax->getTaxRate($products['tax_class_id']));
@@ -398,11 +399,12 @@ class lC_Order {
       $Qpd->execute();     
            
       foreach ($lC_ShoppingCart->getProducts() as $products) {
-        $Qproducts = $lC_Database->query('insert into :table_orders_products (orders_id, products_id, products_model, products_name, products_price, products_tax, products_quantity, products_simple_options_meta_data) values (:orders_id, :products_id, :products_model, :products_name, :products_price, :products_tax, :products_quantity, :products_simple_options_meta_data)');
+        $Qproducts = $lC_Database->query('insert into :table_orders_products (orders_id, products_id, products_model, products_sku, products_name, products_price, products_tax, products_quantity, products_simple_options_meta_data) values (:orders_id, :products_id, :products_model, :products_sku, :products_name, :products_price, :products_tax, :products_quantity, :products_simple_options_meta_data)');
         $Qproducts->bindTable(':table_orders_products', TABLE_ORDERS_PRODUCTS);
         $Qproducts->bindInt(':orders_id', $order_id);
         $Qproducts->bindInt(':products_id', lc_get_product_id($products['id']));
         $Qproducts->bindValue(':products_model', $products['model']);
+        $Qproducts->bindValue(':products_sku', $products['sku']);
         $Qproducts->bindValue(':products_name', $products['name']);
         $Qproducts->bindValue(':products_price', $products['price']);
         $Qproducts->bindValue(':products_tax', $lC_Tax->getTaxRate($products['tax_class_id']));
@@ -532,13 +534,16 @@ class lC_Order {
                      $lC_Language->get('email_order_products') . "\n" .
                      $lC_Language->get('email_order_separator') . "\n";
 
-      $Qproducts = $lC_Database->query('select orders_products_id, products_model, products_name, products_price, products_tax, products_quantity from :table_orders_products where orders_id = :orders_id order by orders_products_id');
+      $Qproducts = $lC_Database->query('select orders_products_id, products_model, products_sku, products_name, products_price, products_tax, products_quantity from :table_orders_products where orders_id = :orders_id order by orders_products_id');
       $Qproducts->bindTable(':table_orders_products', TABLE_ORDERS_PRODUCTS);
       $Qproducts->bindInt(':orders_id', $id);
       $Qproducts->execute();
       
       while ($Qproducts->next()) {
-        $email_order .= $Qproducts->valueInt('products_quantity') . ' x ' . $Qproducts->value('products_name') . ' (' . $Qproducts->value('products_model') . ') = ' . $lC_Currencies->displayPriceWithTaxRate($Qproducts->value('products_price'), $Qproducts->value('products_tax'), $Qproducts->valueInt('products_quantity'), false, $Qorder->value('currency'), $Qorder->value('currency_value')) . "\n";
+        $skuModel = ($Qproducts->value('products_model') != NULL) ? $Qproducts->value('products_model') : NULL;
+        if ($skuModel == NULL) $skuModel == ($Qproducts->value('products_sku') != NULL) ? $Qproducts->value('products_sku') : NULL;
+      
+        $email_order .= $Qproducts->valueInt('products_quantity') . ' x ' . $Qproducts->value('products_name') . ' (' . $skuModel . ') = ' . $lC_Currencies->displayPriceWithTaxRate($Qproducts->value('products_price'), $Qproducts->value('products_tax'), $Qproducts->valueInt('products_quantity'), false, $Qorder->value('currency'), $Qorder->value('currency_value')) . "\n";
 
         $Qvariants = $lC_Database->query('select group_title, value_title from :table_orders_products_variants where orders_id = :orders_id and orders_products_id = :orders_products_id order by id');
         $Qvariants->bindTable(':table_orders_products_variants', TABLE_ORDERS_PRODUCTS_VARIANTS);
@@ -847,7 +852,7 @@ class lC_Order {
                            'country_iso3' => $Qorder->value('billing_country_iso3'),
                            'format' => $Qorder->value('billing_address_format'));
 
-    $Qproducts = $lC_Database->query('select orders_products_id, products_id, products_name, products_model, products_price, products_tax, products_quantity from :table_orders_products where orders_id = :orders_id');
+    $Qproducts = $lC_Database->query('select orders_products_id, products_id, products_name, products_model, products_sku, products_price, products_tax, products_quantity from :table_orders_products where orders_id = :orders_id');
     $Qproducts->bindTable(':table_orders_products', TABLE_ORDERS_PRODUCTS);
     $Qproducts->bindInt(':orders_id', $order_id);
     $Qproducts->execute();
@@ -861,6 +866,7 @@ class lC_Order {
                                       'id' => $Qproducts->valueInt('products_id'),
                                       'name' => $Qproducts->value('products_name'),
                                       'model' => $Qproducts->value('products_model'),
+                                      'sku' => $Qproducts->value('products_sku'),
                                       'tax' => $Qproducts->value('products_tax'),
                                       'price' => $Qproducts->value('products_price'));
 

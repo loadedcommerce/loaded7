@@ -9,13 +9,7 @@
   @version    $Id: main.php v1.0 2013-08-08 datazen $
 */
 ?>
-<!-- Main content -->
-<section role="main" id="main">
-  <noscript class="message black-gradient simpler"><?php echo $lC_Language->get('ms_error_javascript_not_enabled_warning'); ?></noscript>
-  <hgroup id="main-title" class="thin">
-    <h1><?php echo $lC_Template->getPageTitle(); ?></h1>
-  </hgroup>
-  <style>
+<style scoped="scoped">
   .dataColFiles { text-align: left; } 
   .dataColSize { text-align: left; } 
   .dataColPerms { text-align: left; } 
@@ -24,8 +18,21 @@
   .dataColWrite { text-align: center; } 
   .dataColLast { text-align: left; }  
   .dataColAction { text-align: right; }
-  </style>
-  <div class="with-padding-no-top">
+</style>
+<!-- Main content -->
+<section role="main" id="main">
+  <noscript class="message black-gradient simpler"><?php echo $lC_Language->get('ms_error_javascript_not_enabled_warning'); ?></noscript>
+  <hgroup id="main-title" class="thin">
+    <h1><?php echo $lC_Template->getPageTitle(); ?></h1>
+  </hgroup>
+  <div id="breadCrumbContainer">
+    <div class="breadCrumbHolder">
+      <div id="breadCrumb0" class="breadCrumb">
+        <?php echo $breadcrumb_string; ?>
+      </div>
+    </div>
+  </div>
+  <div class="with-padding">
     <form name="batch" id="batch" action="#" method="post">
     <table border="0" width="100%" cellspacing="0" cellpadding="0" class="table responsive-table" id="dataTable">
       <thead>
@@ -86,9 +93,5 @@
     </div>
   </div>
 </section>
-<?php 
-  if (isset($_SESSION['error'])) unset($_SESSION['error']);
-  if (isset($_SESSION['errmsg'])) unset($_SESSION['errmsg']); 
-  $lC_Template->loadModal($lC_Template->getModule()); 
-?>
+<?php $lC_Template->loadModal($lC_Template->getModule()); ?>
 <!-- End main content -->

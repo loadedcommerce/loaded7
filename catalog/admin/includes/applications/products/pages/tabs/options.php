@@ -16,12 +16,11 @@ global $lC_Language, $pInfo;
       <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
         <div class="twelve-columns no-margin-bottom">
           <div class="strong"><?php echo $lC_Language->get('text_inventory_control'); ?><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_inventory_control'), null, 'info-spot on-right grey margin-left'); ?></div>
-          
           <div id="optionsInvControlButtons" class="upsellwrapper button-group small-margin-top">
             <!-- lc_options_inventory_control begin -->
             <label for="ioc_radio_1" class="oicb button blue-active<?php echo (isset($pInfo) && ($pInfo->getInt('has_children') == 1 || $pInfo->getInt('has_subproducts') == 1) ? '' : ' active'); ?>">
               <input type="radio" name="inventory_option_control_radio_group" id="ioc_radio_1" value="1" />
-              <?php echo $lC_Language->get('text_simple'); ?>
+              <?php echo $lC_Language->get('text_single_sku'); ?>
             </label>
             <label upselltitle="<?php echo $lC_Language->get('text_multi_sku'); ?>" upselldesc="<?php echo $lC_Language->get('text_multi_sku_desc'); ?>" for="ioc_radio_2" class="upsellinfo disabled oicb button red-active<?php echo (isset($pInfo) && ($pInfo->getInt('has_children') == 1 || $pInfo->getInt('has_subproducts') == 1) ? ' active' : ''); ?>">
               <input type="radio" name="inventory_option_control_radio_group" id="ioc_radio_2" value="2" />
@@ -47,7 +46,7 @@ global $lC_Language, $pInfo;
     <div id="simpleOptionsContainer" class="twelve-columns">
       <fieldset class="fieldset">
         <legend class="legend"><?php echo $lC_Language->get('text_simple_options'); ?></legend>
-        <span class="float-right" style="margin:-46px 0px 4px 0;"><a class="button icon-plus-round green-gradient glossy compact" href="javascript:void(0)" onclick="addSimpleOption();"><?php echo $lC_Language->get('button_add'); ?></a></span>
+        <span class="float-right" style="margin:-46px 25px 4px 0;"><a class="button icon-plus-round green-gradient compact" href="javascript:void(0)" onclick="addSimpleOption();"><?php echo $lC_Language->get('button_setup'); ?></a></span>
         <table width="100%" style="margin-top:-8px;" id="simpleOptionsTable" class="simple-table">
           <thead>
             <tr>

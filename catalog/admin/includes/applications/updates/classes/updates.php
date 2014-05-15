@@ -217,7 +217,7 @@ class lC_Updates_Admin {
   * @return mixed
   */ 
   public static function getPackageInfo($key = null) {
-    $phar_can_open = true;
+    $phar_can_open = true;                                          
 
     try {
       $phar = new Phar(DIR_FS_WORK . 'updates/update.phar', 0);
@@ -390,7 +390,7 @@ class lC_Updates_Admin {
 
     $meta = array();
     $pro_hart = array();
-
+    
     try {
       if ($pharWithPath == null) {
         $pharFile = 'update.phar';
@@ -410,9 +410,11 @@ class lC_Updates_Admin {
 
         $phar = new Phar(DIR_FS_WORK . 'addons/' . $pharFile);    
         $meta = $phar->getMetadata();
-        
-        // reset the log
+
         $pharCode = str_replace('.phar', '', $pharFile);
+        if ($meta['type'] != '') $pharType = $meta['type'];
+
+        // reset the log
         if ( file_exists(DIR_FS_WORK . 'logs/addon-' . $pharCode . '.txt') && is_writable(DIR_FS_WORK . 'logs/addon-' . $pharCode . '.txt') ) {
           unlink(DIR_FS_WORK . 'logs/addon-' . $pharCode . '.txt');
         }        
@@ -449,7 +451,7 @@ class lC_Updates_Admin {
           
           $file = substr($iteration->getPathName(), $pos+6);
           
-          if (version_compare($meta['compatibility'], '7.002.0.0') != -1 || $pharType == 'template' || $pharWithPath == null) {
+          if (version_compare($meta['compatibility'], '7.002.0.0') != -1 || $pharType == 'template' || $pharType == 'language' || $pharWithPath == null) {
             $directory = realpath(DIR_FS_CATALOG) . '/';
           } else {
             $directory = realpath(DIR_FS_CATALOG) . '/addons/' . $pharCode . '/';

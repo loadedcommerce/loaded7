@@ -55,7 +55,7 @@ class lC_Boxes_whats_new extends lC_Modules {
       
       $this->_content = '';
       if (empty($data['display_image']) === false) {
-        $this->_content = '<li class="box-whats-new-image">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $data['keyword']), $lC_Image->show($data['display_image'], $data['name'], 'class="box-whats-new-image-src"')) . '</li>';
+        $this->_content = '<li class="box-whats-new-image"><div class="thumbnail">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $data['keyword']), $lC_Image->show($data['display_image'], $data['name'], 'class="box-whats-new-image-src"')) . '</div></li>';
       }
       $this->_content .= '<li class="box-whats-new-name">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $data['keyword']), $data['name']) . '</li>';
       $this->_content .= '<li class="box-whats-new-price pricing-row">' . $data['display_price'] . '</li>';

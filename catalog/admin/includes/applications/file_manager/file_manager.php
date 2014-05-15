@@ -25,7 +25,7 @@ class lC_Application_File_manager extends lC_Template_Admin {
   * Class constructor
   */
   function __construct() {
-    global $lC_Language;
+    global $lC_Language, $breadcrumb_string;
 
     $this->_page_title = $lC_Language->get('heading_title');
 
@@ -40,9 +40,8 @@ class lC_Application_File_manager extends lC_Template_Admin {
     } elseif ( isset($_GET['goto']) ) {
       $_SESSION['fm_directory'] = LC_ADMIN_FILE_MANAGER_ROOT_PATH . '/' . urldecode($_GET['goto']);
     }
-
     $_SESSION['fm_directory'] = realpath($_SESSION['fm_directory']);
-
+    
     if ( ( substr($_SESSION['fm_directory'], 0, strlen(LC_ADMIN_FILE_MANAGER_ROOT_PATH)) != LC_ADMIN_FILE_MANAGER_ROOT_PATH ) || !is_dir($_SESSION['fm_directory']) ) {
       $_SESSION['fm_directory'] = LC_ADMIN_FILE_MANAGER_ROOT_PATH;
     }
@@ -103,6 +102,22 @@ class lC_Application_File_manager extends lC_Template_Admin {
           break;
       }
     }
+    
+    // setup the breadcrumb
+    $breadcrumb_array = array(lc_link_object(lc_href_link_admin(FILENAME_DEFAULT, $this->_module . '&goto='), $lC_Language->get('text_top')));
+    $path = explode("/", substr(str_replace(LC_ADMIN_FILE_MANAGER_ROOT_PATH, '', $_SESSION['fm_directory']), 1));
+    
+    foreach ($path as $key => $value) {
+      $goto_path .= $value . '/';
+      $breadcrumb_array[] = lc_link_object(lc_href_link_admin(FILENAME_DEFAULT, $this->_module . '&goto=' . $goto_path), $value);
+    }
+    
+    // build the breadcrumb html string 
+    $breadcrumb_string = '<ul class="fm-breadcrumb">';
+    foreach ($breadcrumb_array as $key => $value) {
+      $breadcrumb_string .= '<li>' . $value . '</li>';
+    }  
+    $breadcrumb_string .= '</ul>';
   }
 }
 ?>

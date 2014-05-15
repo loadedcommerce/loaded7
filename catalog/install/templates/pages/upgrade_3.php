@@ -32,9 +32,9 @@ switch($_POST['upgradeMethod']){
 	
 	default:
 	{
-		echo '<pre>';
-//		print_r($_POST);
-		echo '</pre>';
+		//echo '<pre>';
+    //print_r($_POST);
+		//echo '</pre>';
 	}
 	break;
 }
@@ -377,6 +377,21 @@ function prepareWork() {
           </p> 
         </div>      
       </div> 
+      <div class="field-block button-height large-margin-left large-margin-right">
+        <label for="IMPORT_CURRENCIES" class="label"><b><?php echo $lC_Language->get('param_import_currencies'); ?></b></label>
+        <div style="display:block; padding:0px 20px 0px 0px"> 
+          <p id="pBoxContainer_currencies" style="height:25px; padding-top:5px;">   
+            <img style="display:none;" id="img_copy_tick_currencies" class="tick" src="images/tick.png" align="right" />
+            <img style="display:none;" id="img_copy_progress_currencies" class="progress" src="images/ajax-loader-1.gif" align="right" />
+            <img style="display:none;" id="img_copy_cross_currencies" class="cross" src="images/cross.png" align="right" />
+          </p> 
+        </div>      
+        <div id="eBox_currencies" style="display:none; margin: 0px 0px 0px -190px; padding: 0px 10px 10px 0px;"> 
+          <p class="message icon-warning red-gradient">   
+            <span id="eBoxContents_currencies"></span>
+          </p> 
+        </div>      
+      </div> 
     </div>
     <div id="buttonContainer" class="large-margin-top margin-right" style="float:right; display:none;">
       <a id="btn_continue" href="javascript://" onclick="$('#mBox').hide(); $('#pBox').hide();$('#upgradeForm').submit();" class="button">
@@ -404,9 +419,7 @@ function prepareWork() {
   ?>  
 </form>
 <script>
-
 $(document).ready(function() {
-
 	$('#pBoxContents').html('UPGRADE IN PROGRESS');
   $('#pBox').show();
   var _rslt = ""; 
@@ -468,6 +481,7 @@ $(document).ready(function() {
                     $('#eBoxContents_orders').html(_rslt);
                     $('#eBox_customer_orders').show();
                   }
+                  
                   $('#img_copy_progress_cds').show();
                   setTimeout(function() {
                     _rslt = doImport('_cds'); 
@@ -485,6 +499,7 @@ $(document).ready(function() {
                         $('#eBoxContents_administrators').html(_rslt);
                         $('#eBox_customer_administrators').show();
                       }
+                      
                       $('#img_copy_progress_newsletter').show();
                       setTimeout(function() {
                         _rslt = doImport('_newsletter'); 
@@ -493,6 +508,7 @@ $(document).ready(function() {
                           $('#eBoxContents_newsletter').html(_rslt);
                           $('#eBox_customer_newsletter').show();
                         }
+                        
                         $('#img_copy_progress_banners').show();
                         setTimeout(function() {
                           _rslt = doImport('_banners'); 
@@ -510,6 +526,7 @@ $(document).ready(function() {
                               $('#eBoxContents_configuration').html(_rslt);
                               $('#eBox_customer_configuration').show();
                             }
+                            
                             $('#img_copy_progress_coupons').show();
                             setTimeout(function() {
                               _rslt = doImport('_coupons'); 
@@ -518,6 +535,7 @@ $(document).ready(function() {
                                 $('#eBoxContents_coupons').html(_rslt);
                                 $('#eBox_customer_coupons').show();
                               }
+                              
                               $('#img_copy_progress_taxclasses').show();
                               setTimeout(function() {
                                 _rslt = doImport('_taxclasses'); 
@@ -526,6 +544,7 @@ $(document).ready(function() {
                                   $('#eBoxContents_taxclasses').html(_rslt);
                                   $('#eBox_customer_taxclasses').show();
                                 }
+                                
                                 $('#img_copy_progress_languages').show();
                                 setTimeout(function() {
                                   _rslt = doImport('_languages'); 
@@ -535,28 +554,37 @@ $(document).ready(function() {
                                     $('#eBox_languages').show();
                                   }
                                   
-                                  //DONE
-                                  $('#pBox').hide();
+                                  $('#img_copy_progress_currencies').show();
+                                  setTimeout(function() {
+                                    _rslt = doImport('_currencies'); 
+                                    if(_rslt === ""){  }
+                                    else { _err = true ; _errmsg = _errmsg + '<p>' + _rslt; 
+                                      $('#eBoxContents_currencies').html(_rslt);
+                                      $('#eBox_currencies').show();
+                                    }
                                   
-                                  if(_err === false){
-                                    $('#mBoxSuccessContents').html('UPGRADE COMPLETE');
-                                    $('#mBoxSuccess').show();
+                                    // DONE
+                                    $('#pBox').hide();
+                                    
+                                    if (_err === false) {
+                                      $('#mBoxSuccessContents').html('UPGRADE COMPLETE');
+                                      $('#mBoxSuccess').show();
 
-                                    $("#upgradeForm").attr("action", "upgrade.php?step=4");
-                                    $('#btn_continue').show();
-                                    $('#btn_retry').hide();
-                                  }
-                                  else{
-                                    $('#mBoxContents').html('<?php echo $lC_Language->get('upgrade_step3_page_errfound'); ?>');
-                                    $('#mBox').show();
+                                      $("#upgradeForm").attr("action", "upgrade.php?step=4");
+                                      $('#btn_continue').show();
+                                      $('#btn_retry').hide();
+                                    } else {
+                                      $('#mBoxContents').html('<?php echo $lC_Language->get('upgrade_step3_page_errfound'); ?>');
+                                      $('#mBox').show();
 
-                                    $("#upgradeForm").attr("action", "upgrade.php?step=3");
-                                    $('#btn_continue').hide();
-                                    $('#btn_retry').show();
-                                  }
+                                      $("#upgradeForm").attr("action", "upgrade.php?step=3");
+                                      $('#btn_continue').hide();
+                                      $('#btn_retry').show();
+                                    }
+                                    
+                                    $('#buttonContainer').show();                                  
                                   
-                                  $('#buttonContainer').show();                                  
-                                
+                                  }, 3000);
                                 }, 3000);  
                               }, 3000);                                 
                             }, 3000);                              
@@ -573,59 +601,56 @@ $(document).ready(function() {
       }, 3000);
     });
   }, 3000);
-
 });
   
-  
-	var doImport = function(datatype){
-		var _success = false;
-		var _emsg = "";
-	  $.ajax({
- 		 					url: "rpc.php?action=import"+datatype,
- 		 					type: 'POST',
- 		 					data : $("form").serialize(),
- 		 					async : false, 
-  						cache: false,
-  						beforeSend : function() { 
-  							$("#img_copy_progress"+datatype).show();
-  							$("#img_copy_cross"+datatype).hide();
-  							$("#img_copy_tick"+datatype).hide();
-						 	},
-    					success : function(data) {                          
-  							$("#img_copy_progress"+datatype).hide();
-  							$("#img_copy_cross"+datatype).hide();
-  							$("#img_copy_tick"+datatype).show();
-  							
-	    		    		var result = /\[\[([^|]*?)(?:\|([^|]*?)){0,1}\]\]/.exec(data);
-	    		    		result.shift();
-									
-	    		    		if (result[0] == '1') {
-  									$("#img_copy_progress"+datatype).hide();
-  									$("#img_copy_cross"+datatype).hide();
-  									$("#img_copy_tick"+datatype).show();
-									} else {
-  									$("#img_copy_progress"+datatype).hide();
-  									$("#img_copy_cross"+datatype).show();
-  									$("#img_copy_tick"+datatype).hide();
-  									
-										_success = false;
-										_emsg = result[1];
-  									$('body').clearQueue();
-	    		    		}
-  							
-    					  // Que up next ajax call
-    					  $('body').dequeue();
-    					},
-    					error : function(){
-  							$("#img_copy_progress"+datatype).hide();
-  							$("#img_copy_cross"+datatype).show();
-  							$("#img_copy_tick"+datatype).hide();
+var doImport = function(datatype){
+  var _success = false;
+  var _emsg = "";
+  $.ajax({
+    url: "rpc.php?action=import"+datatype,
+    type: 'POST',
+    data : $("form").serialize(),
+    async : false, 
+    cache: false,
+    beforeSend : function() { 
+      $("#img_copy_progress"+datatype).show();
+      $("#img_copy_cross"+datatype).hide();
+      $("#img_copy_tick"+datatype).hide();
+    },
+    success : function(data) {                          
+      $("#img_copy_progress"+datatype).hide();
+      $("#img_copy_cross"+datatype).hide();
+      $("#img_copy_tick"+datatype).show();
 
-								_success = false;
-    					  $('body').clearQueue();
-    					}
-	  });
-	  return _emsg;
-	};
-		
+      var result = /\[\[([^|]*?)(?:\|([^|]*?)){0,1}\]\]/.exec(data);
+      result.shift();
+
+      if (result[0] == '1') {
+        $("#img_copy_progress"+datatype).hide();
+        $("#img_copy_cross"+datatype).hide();
+        $("#img_copy_tick"+datatype).show();
+      } else {
+        $("#img_copy_progress"+datatype).hide();
+        $("#img_copy_cross"+datatype).show();
+        $("#img_copy_tick"+datatype).hide();
+
+        _success = false;
+        _emsg = result[1];
+        $('body').clearQueue();
+      }
+
+      // Que up next ajax call
+      $('body').dequeue();
+    },
+    error : function(){
+      $("#img_copy_progress"+datatype).hide();
+      $("#img_copy_cross"+datatype).show();
+      $("#img_copy_tick"+datatype).hide();
+
+      _success = false;
+      $('body').clearQueue();
+    }
+  });
+  return _emsg;
+};
 </script>

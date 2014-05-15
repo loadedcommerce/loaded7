@@ -14,7 +14,16 @@
   <div class="col-sm-12 col-lg-12 large-margin-bottom">  
     <h1 class="no-margin-top"><?php echo $lC_Language->get('text_checkout'); ?></h1>
     <?php 
-    if ( $lC_MessageStack->size('checkout_confirmation') > 0 ) echo '<div class="message-stack-container alert alert-danger small-margin-bottom">' . $lC_MessageStack->get('checkout_confirmation') . '</div>' . "\n"; 
+    if(isset($_SESSION['coupon_msg']) && $_SESSION['coupon_msg'] != '') {
+      $lC_MessageStack->add('shopping_cart', $_SESSION['coupon_msg'], 'success');
+      unset($_SESSION['coupon_msg']);
+      if ( $lC_MessageStack->size('shopping_cart') > 0 ) echo '<div class="message-stack-container alert alert-success small-margin-bottom">' . $lC_MessageStack->get('shopping_cart') . '</div>' . "\n"; 
+    }
+    if(isset($_SESSION['remove_coupon_msg']) && $_SESSION['remove_coupon_msg'] != '') {
+      $lC_MessageStack->add('shopping_cart', $_SESSION['remove_coupon_msg'], 'warning');
+      unset($_SESSION['remove_coupon_msg']);
+      if ( $lC_MessageStack->size('shopping_cart') > 0 ) echo '<div class="message-stack-container alert alert-warning small-margin-bottom">' . $lC_MessageStack->get('shopping_cart') . '</div>' . "\n"; 
+    }  
     ?>
     <div id="content-checkout-shipping-container">
       <div class="panel panel-default no-margin-bottom">
@@ -105,15 +114,20 @@
                     if ( (STOCK_CHECK == '1') && !$lC_ShoppingCart->isInStock($products['item_id']) ) {
                       echo '<span class="text-danger small-margin-left">' . STOCK_MARK_PRODUCT_OUT_OF_STOCK . '</span>' . "\n";
                     }
-                    echo '<br /><span class="confirmation-products-listing-model">' . $lC_Language->get('listing_model_heading') . ': ' . $products['model'] . '</span>';
+                    if (!empty($products['model'])) {
+                      echo '<div class="small">- ' . $lC_Language->get('listing_model_heading') . ': ' . $products['model'] . '</div>' . "\n";
+                    }
+                    if (!empty($products['sku'])) {
+                      echo '<div class="small">- ' . $lC_Language->get('listing_sku_heading') . ': ' . $products['sku'] . '</div>' . "\n";
+                    }                     
                     if ( $lC_ShoppingCart->isVariant($products['item_id']) ) {
                       foreach ( $lC_ShoppingCart->getVariant($products['item_id']) as $variant) {
-                        echo '<br /><small>- ' . $variant['group_title'] . ': ' . $variant['value_title'] . '</small>' . "\n";
+                        echo '<div class="small">- ' . $variant['group_title'] . ': ' . $variant['value_title'] . '</div>' . "\n";
                       }
                     }
                     if ( $lC_ShoppingCart->hasSimpleOptions($products['item_id']) ) {
                       foreach ( $lC_ShoppingCart->getSimpleOptions($products['item_id']) as $option) {
-                        echo '<br /><small>- ' . $option['group_title'] . ': ' . $option['value_title'] . '</small>' . "\n";
+                        echo '<div class="small">- ' . $option['group_title'] . ': ' . $option['value_title'] . '</div>' . "\n";
                       }
                     }                        
                     echo '</td>' . "\n";
@@ -131,15 +145,20 @@
                 <div id="content-checkout-confirmation-order-totals-left" class="col-sm-5 col-lg-5"></div>
                 <div id="content-checkout-confirmation-order-totals-right" class="col-sm-7 col-lg-7">
                   <?php
-                  foreach ($lC_ShoppingCart->getOrderTotals() as $module) {   
-                    ?>
-                    <div class="clearfix">
-                      <span class="pull-left ot-<?php echo strtolower(str_replace('_', '-', $module['code'])); ?>"><?php echo strip_tags($module['title']); ?></span>
-                      <span class="pull-right ot-<?php echo strtolower(str_replace('_', '-', $module['code'])); ?>"><?php echo strip_tags($module['text']); ?></span>                
-                    </div>                    
-                    <?php
-                  }
-                  ?>     
+                  foreach ($lC_ShoppingCart->getOrderTotals() as $module) {  
+                    $title = (strstr($module['title'], '(')) ? substr($module['title'], 0, strpos($module['title'], '(')) . ':' : $module['title'];
+                    $class = str_replace(':', '', $title);
+                    $class = 'ot-' . strtolower(str_replace(' ', '-', $class));
+                 ?>
+                 <div class="clearfix">
+                 <?php echo '<div class="clearfix">' .
+                           '  <span class="pull-left ' . $class . '">' . $title . '</span>' .
+                           '  <span class="pull-right ' . $class . '">' . $module['text'] . '</span>' .'</div>';  
+                 ?> 
+                 </div>  
+                 <?php
+                   }
+                 ?>      
                 </div>
               </div>              
               <?php         
@@ -162,7 +181,7 @@
               <?php
               if ($lC_Customer->isLoggedOn() !== false) {
                 if (defined('MODULE_SERVICES_INSTALLED') && in_array('coupons', explode(';', MODULE_SERVICES_INSTALLED)) && 
-                    defined('SERVICE_COUPONS_DISPLAY_ON_CART_PAGE') && SERVICE_COUPONS_DISPLAY_ON_CART_PAGE == '1') {
+                    defined('SERVICE_COUPONS_DISPLAY_ON_CART_PAGE') && SERVICE_COUPONS_DISPLAY_ON_CONFIRMATION_PAGE == '1') {
                   ?>
                   <div class="well">
                     <h3 class="no-margin-top"><?php echo $lC_Language->get('text_coupon_code_heading'); ?></h3>
