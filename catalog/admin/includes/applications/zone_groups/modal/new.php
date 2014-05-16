@@ -62,7 +62,7 @@ function newGroup() {
             if (bValid) {
 
               $("#zNew :input").each(function(index, elm){
-                $(elm).val($(elm).val().replace( /%/g, "&#37;" ));
+                $(elm).val($(elm).val().replace( /%/g, "#164;" ));
                 $(elm).val($(elm).val().replace( /@/g, "&#64;" ));
               });
 
