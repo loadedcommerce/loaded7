@@ -73,7 +73,8 @@ function editGroup(id) {
                 if (bValid) {
                   
                   $("#zEdit :input").each(function(index, elm){
-                    $(elm).val($(elm).val().replace( /%/g, "#164;" ));
+                    $(elm).val($(elm).val().replace( /%/g, "&#37;" ));
+                    $(elm).val($(elm).val().replace( /@/g, "&#64;" ));
                   });
 
                   var nvp = $("#zEdit").serialize();
