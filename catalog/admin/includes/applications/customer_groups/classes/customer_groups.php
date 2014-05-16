@@ -151,7 +151,7 @@ class lC_Customer_groups_Admin {
     }
 
     foreach ( $lC_Language->getAll() as $l ) {
-      $group_name = str_replace('&#37;','%',$data['name'][$l['id']]);
+      $group_name = str_replace('#164;','%',$data['name'][$l['id']]);
       $group_name = str_replace('&#64;','@',$data['name'][$l['id']]);
       $Qgroups = $lC_Database->query('insert into :table_customers_groups (customers_group_id, language_id, customers_group_name) values (:customers_group_id, :language_id, :customers_group_name)');
       $Qgroups->bindTable(':table_customers_groups', TABLE_CUSTOMERS_GROUPS);
