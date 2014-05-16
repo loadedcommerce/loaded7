@@ -36,7 +36,7 @@ class lC_Products_import_export_Admin {
         $QtotalsSQL .= TABLE_CATEGORIES;
         break;
       case 'options':
-      $QtotalsSQL .= TABLE_PRODUCTS_VARIANTS;
+      $QtotalsSQL .= TABLE_PRODUCTS_VARIANTS_VALUES;
       break;
     }
 
