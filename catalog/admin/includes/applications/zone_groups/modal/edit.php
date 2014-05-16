@@ -71,6 +71,11 @@ function editGroup(id) {
                   }
                 }).form();
                 if (bValid) {
+                  
+                  $("#zEdit :input").each(function(index, elm){
+                    $(elm).val($(elm).val().replace( /%/g, "#164;" ));
+                  });
+
                   var nvp = $("#zEdit").serialize();
                   var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=saveGroup&zid=ZID&BATCH'); ?>'
                   $.getJSON(jsonLink.replace('ZID', id).replace('BATCH', nvp),
