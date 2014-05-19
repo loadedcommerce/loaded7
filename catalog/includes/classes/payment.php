@@ -7,7 +7,9 @@
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: payment.php v1.0 2013-08-08 datazen $
 */
-require_once(DIR_FS_CATALOG . 'includes/classes/addons.php');
+global $lC_Vqmod;
+    
+require_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/classes/addons.php'));
 
 class lC_Payment {
   var $selected_module;
