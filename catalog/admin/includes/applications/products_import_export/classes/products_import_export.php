@@ -7,10 +7,12 @@
   @copyright  Template built on Developr theme by DisplayInline http://themeforest.net/user/displayinline under Extended license 
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: products_import_export.php v1.0 2013-12-01 resultsonlyweb $
-*/ 
-include_once('includes/classes/category_tree.php');
-include_once('includes/applications/products/classes/products.php');
-include_once('includes/applications/categories/classes/categories.php');
+*/
+global $lC_Vqmod;
+ 
+include_once($lC_Vqmod->modCheck('includes/classes/category_tree.php'));
+include_once($lC_Vqmod->modCheck('includes/applications/products/classes/products.php'));
+include_once($lC_Vqmod->modCheck('includes/applications/categories/classes/categories.php'));
 
 class lC_Products_import_export_Admin {
  /*
@@ -34,7 +36,7 @@ class lC_Products_import_export_Admin {
         $QtotalsSQL .= TABLE_CATEGORIES;
         break;
       case 'options':
-      $QtotalsSQL .= TABLE_PRODUCTS_VARIANTS;
+      $QtotalsSQL .= TABLE_PRODUCTS_VARIANTS_VALUES;
       break;
     }
 

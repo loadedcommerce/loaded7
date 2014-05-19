@@ -78,6 +78,10 @@ function editGroup(id) {
                   }
                 }).form();
                 if (bValid) {
+                  $("#osEdit :input").each(function(index, elm){
+                    $(elm).val($(elm).val().replace( /%/g, "&#37;" ));
+                    $(elm).val($(elm).val().replace( /@/g, "&#64;" ));
+                  });
                   var nvp = $("#osEdit").serialize();
                   var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=saveGroup&cgid=CGID&BATCH'); ?>'
                   $.getJSON(jsonLink.replace('CGID', parseInt(id)).replace('BATCH', nvp),
