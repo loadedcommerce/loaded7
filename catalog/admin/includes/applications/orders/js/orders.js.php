@@ -418,9 +418,8 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
              '  <div id="section_editProduct">'+
              '    <form name="editProductForm" id="editProductForm" autocomplete="off" action="" method="post">'+               
              '      <p class="button-height inline-label">'+
-             '        <label for="product" class="label"><?php echo $lC_Language->get('text_products'); ?>'+
-             '          <?php echo lc_draw_pull_down_menu('product', null, null, 'class="input with-small-padding mid-margin-top" id="editProduct" onchange="updateEditProduct();"'); ?>'+
-             '        </label>'+
+             '        <label for="product" class="label"><?php echo $lC_Language->get('text_products'); ?></label>'+
+             '        <?php echo lc_draw_pull_down_menu('product', null, null, 'class="input with-small-padding mid-margin-top" id="editProduct" onchange="updateEditProduct();"'); ?>'+
              '      </p>'+
              //'      <p class="button-height inline-label">'+
              //'        <label for="taxClass" class="label"><?php //echo $lC_Language->get('text_tax_class'); ?>'+
@@ -428,14 +427,12 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
              //'        </label>'+
              //'      </p>'+
              '      <p class="button-height inline-label">'+
-             '        <label for="price" class="label"><?php echo $lC_Language->get('text_price'); ?>'+
+             '        <label for="price" class="label"><?php echo $lC_Language->get('text_price'); ?></label>'+
              '        <?php echo lc_draw_input_field('price', null, 'class="input mid-margin-top" id="editPrice"'); ?>'+
-             '        </label>'+
              '      </p>'+
              '      <p class="button-height inline-label">'+
-             '        <label for="quantity" class="label"><?php echo $lC_Language->get('text_quantity'); ?>'+
+             '        <label for="quantity" class="label"><?php echo $lC_Language->get('text_quantity'); ?></label>'+
              '        <?php echo lc_draw_input_field('quantity', null, 'class="input mid-margin-top" id="editQuantity"'); ?>'+
-             '        </label>'+
              '      </p>'+               
              '    </form>'+
              '  </div>'+               

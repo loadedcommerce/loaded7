@@ -477,7 +477,7 @@ TD { height:19px; }
       ?>
     </div>
     <div id="phpInfo" class="large-margin-top" style="display:none;">
-      <style type="text/css" scoped="scoped">
+      <style scoped="scoped">
         #phpinfo { background-color: #eeeeee; color: #000000; }
         #phpinfo pre { margin: 0px; font-family: monospace; }
         #phpinfo a:link { color: #000099; text-decoration: none; }

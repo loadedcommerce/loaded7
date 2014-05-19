@@ -29,9 +29,9 @@ class lC_Application_Products_Actions_save extends lC_Application_Products {
 
       $data = array('id' => (isset($_POST['products_id'])) ? $_POST['products_id'] : 0,
                     'quantity' => (isset($_POST['products_quantity']) && $has_variants === false) ? $_POST['products_quantity'] : 0,
-                    'cost' => (is_numeric($_POST['products_cost'])) ? $_POST['products_cost'] : 0,
-                    'price' => number_format($_POST['products_price'], DECIMAL_PLACES),
-                    'msrp' => (is_numeric($_POST['products_msrp'])) ? $_POST['products_msrp'] : 0,
+                    'cost' => number_format((is_numeric($_POST['products_cost']) ? $_POST['products_cost'] : 0), DECIMAL_PLACES, '.', ''),
+                    'price' => number_format((is_numeric($_POST['products_price']) ? $_POST['products_price'] : 0), DECIMAL_PLACES, '.', ''),
+                    'msrp' => number_format((is_numeric($_POST['products_msrp']) ? $_POST['products_msrp'] : 0), DECIMAL_PLACES, '.', ''),
                     'weight' => $_POST['products_weight'],
                     'weight_class' => (isset($_POST['products_weight_class'])) ? $_POST['products_weight_class'] : '',
                     'status' => (isset($_POST['products_status']) && $_POST['products_status'] == 'on') ? true : false,

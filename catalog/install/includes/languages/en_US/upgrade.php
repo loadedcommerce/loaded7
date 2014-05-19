@@ -16,6 +16,7 @@ text_installation = This web-based installation routine will correctly setup and
 text_successful_installation = The installation and configuration was successful!
 text_go_to_shop_after_cfg_file_is_saved = Please visit your store after the configuration file has been saved:
 text_go = Go
+text_legend_database = Database
 
 param_database_server = Database Host
 param_database_server_description = The address of the database server in the form of a hostname or IP address.
@@ -205,18 +206,25 @@ upgrade_step1_err_nopass 		= The existing store file (admin/includes/configure.p
 upgrade_step1_err_nodb 			= The existing store file (admin/includes/configure.php) missing the value of DB_DATABASE
 upgrade_step1_err_noimage		= The existing store file (admin/includes/configure.php) missing the value of DIR_WS_IMAGES
 
+upgrade_step1_method_title = Upgrade Method
+upgrade_step1_method_description = To run an upgrade for the first time or completely overwrite previous data choose <strong>Create New Database</strong>. To Re-run an upgrade and preserve previous configuration data choose <strong>Re-run existing upgrade</strong>.
+
 upgrade_step2_page_title = New Database Settings
-upgrade_step2_page_desc = Please enter settings of the new database. The new database must be empty. The installer will copy your existing data to this new database .
+upgrade_step2_page_desc = Please enter settings of the new database. The new database must be empty. The installer will copy your existing data to this new database.
 
 upgrade_step2_page_title_success = New Database Settings
-upgrade_step2_page_desc_success = Successfully connected to the database server .
+upgrade_step2_page_desc_success = Successfully connected to the database server.
+upgrade_step2_page_retry_text = <strong>Create New Database</strong> will delete all data on the loaded 7 installation and repopulate tables with imported and fresh installation values. Choose this option if you are running the upgrade for the first time.<br /><br /><strong>Re-run Existing Upgrade</strong> will preserve all the existing data and only adds new records from the source store. Choose this option if you have run the upgrader once already and want to bring over new data (customers, orders, products) from your live store.
 
 upgrade_step3_page_title = Database Import
-upgrade_step3_page_desc = The installer will copy the existing database to the new database and convert the data to work with Loaded7 . This may take a few minutes. Please do not close the browser, press the back button or navigate away from this page .
-upgrade_step3_page_errfound = ERROR(S) FOUND . Please correct to proceed
+upgrade_step3_page_desc = The installer will copy the existing database to the new database and convert the data to work with Loaded7. This may take a few minutes. Please do not close the browser, press the back button or navigate away from this page.
+upgrade_step3_page_errfound = ERROR(S) FOUND. Please correct to proceed
 
 upgrade_step4_page_title = Image Import
-upgrade_step4_page_desc = The installer will copy the existing images to the new database and convert the data to work with Loaded7 . This may take a few minutes. Please do not close the browser, press the back button or navigate away from this page .
+upgrade_step4_page_desc = The installer will copy the existing images to the new database and convert the data to work with Loaded7. This may take a few minutes. Please do not close the browser, press the back button or navigate away from this page.
+
+upgrade_step2_create_db = Create New Database
+upgrade_step2_upgrade_db = Re-run Existing Upgrade
 
 upgrade_step4_label_import_product_images = Product Images
 upgrade_step4_label_import_categ_images = Category Images

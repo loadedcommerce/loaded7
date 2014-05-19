@@ -107,7 +107,7 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
         define('DB_TABLE_PREFIX', $db['DB_TABLE_PREFIX']);
         include('../includes/database_tables.php');
 
-/* HPDL
+        /* HPDL
         $services = array('banner',
                           'breadcrumb',
                           'category_path',
@@ -122,11 +122,11 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
                           'simple_counter',
                           'specials',
                           'whos_online');
-*/
+        */
         $services = array('output_compression',
                           'session',
                           'language',
-//                          'debug',
+                          // 'debug',
                           'currencies',
                           'core',
                           'simple_counter',
@@ -206,18 +206,18 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
         include('includes/classes/shipping.php');
         include('includes/classes/order_total.php');
 
-   //     include('../admin/includes/modules/payment/cod.php');
-   //     $module = new lC_Payment_cod();
-   //     $module->install();
+        // include('../admin/includes/modules/payment/cod.php');
+        // $module = new lC_Payment_cod();
+        // $module->install();
 
-  //      $Qupdate = $lC_Database->query('update :table_configuration set configuration_value = 1 where configuration_key = :configuration_key');
-  //      $Qupdate->bindTable(':table_configuration', TABLE_CONFIGURATION);
-  //      $Qupdate->bindValue(':configuration_key', 'MODULE_PAYMENT_COD_STATUS');
-  //      $Qupdate->execute();
+        // $Qupdate = $lC_Database->query('update :table_configuration set configuration_value = 1 where configuration_key = :configuration_key');
+        // $Qupdate->bindTable(':table_configuration', TABLE_CONFIGURATION);
+        // $Qupdate->bindValue(':configuration_key', 'MODULE_PAYMENT_COD_STATUS');
+        // $Qupdate->execute();
 
-    //    include('../admin/includes/modules/shipping/flat.php');
-    //    $module = new lC_Shipping_flat();
-    //    $module->install();
+        // include('../admin/includes/modules/shipping/flat.php');
+        // $module = new lC_Shipping_flat();
+        // $module->install();
 
         include('../admin/includes/applications/modules_order_total/classes/modules_order_total.php');    
 
@@ -353,57 +353,21 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
       break;
       
       // START IMPORT FUNCTIONS
-      
-      case 'import_products':
-      {
-
-				require_once("includes/classes/upgrader.php");
-				$upgrader = UpgraderFactory::create($_POST['UPGRADE_METHOD']);
-				$upgrader->setConnectDetails($_POST);
-				$rslt = $upgrader->importProducts();
-				
-				if($rslt == false){
-					echo '[[0|'.$upgrader->displayMessage().']]';
-					return false;
-				}
-
-				echo '[[1]]';
-				return true;
-      }
-      exit;
-      break;
 
       case 'import_categories':
       {
+        
+        $upgrader = UpgraderFactory::create($_POST['upgrade_method']); 
+        $upgrader->setConnectDetails($_POST);
+        $rslt = $upgrader->importCategories($_POST['db_switch']);
+        
+        if ($rslt == false) {
+          echo '[[0|'.$upgrader->displayMessage().']]';
+          return false;
+        }
 
-				$upgrader = UpgraderFactory::create($_POST['UPGRADE_METHOD']); 
-				$upgrader->setConnectDetails($_POST);
-				$rslt = $upgrader->importCategories();
-				
-				if($rslt == false){
-					echo '[[0|'.$upgrader->displayMessage().']]';
-					return false;
-				}
-
-				echo '[[1]]';
-				return false;
-      }
-      exit;
-      break;
-
-      case 'import_attributes':
-      {
-				$upgrader = UpgraderFactory::create($_POST['UPGRADE_METHOD']); 
-				$upgrader->setConnectDetails($_POST);
-				$rslt = $upgrader->importAttributes();
-				
-				if($rslt == false){
-					echo '[[0|'.$upgrader->displayMessage().']]';
-					return false;
-				}
-
-				echo '[[1]]';
-				return true;
+        echo '[[1]]';
+        return false;
       }
       exit;
       break;
@@ -411,11 +375,48 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
       case 'import_customers':
       {
       
-				$upgrader = UpgraderFactory::create($_POST['UPGRADE_METHOD']); 
+        $upgrader = UpgraderFactory::create($_POST['upgrade_method']); 
+        $upgrader->setConnectDetails($_POST);
+        $rslt = $upgrader->importCustomers($_POST['db_switch']);
+        
+        if ($rslt == false) {
+          echo '[[0|'.$upgrader->displayMessage().']]';
+          return false;
+        }
+
+        echo '[[1]]';
+        return true;
+      }
+      exit;
+      break;
+
+      case 'import_customer_groups':
+      {
+        require_once("includes/classes/upgrader.php");
+        $upgrader = UpgraderFactory::create($_POST['upgrade_method']);
+        $upgrader->setConnectDetails($_POST);
+        $rslt = $upgrader->importCustomerGroups($_POST['db_switch']);
+        
+        if ($rslt == false) {
+          echo '[[0|'.$upgrader->displayMessage().']]';
+          return false;
+        }
+
+        echo '[[1]]';
+        return true;
+      }
+      exit;
+      break;
+      
+      case 'import_products':
+      {
+
+				require_once("includes/classes/upgrader.php");
+				$upgrader = UpgraderFactory::create($_POST['upgrade_method']);
 				$upgrader->setConnectDetails($_POST);
-				$rslt = $upgrader->importCustomers();
+				$rslt = $upgrader->importProducts($_POST['db_switch']);
 				
-				if($rslt == false){
+				if ($rslt == false) {
 					echo '[[0|'.$upgrader->displayMessage().']]';
 					return false;
 				}
@@ -426,14 +427,13 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
       exit;
       break;
 
-      case 'import_customer_groups':
+      case 'import_attributes':
       {
-				require_once("includes/classes/upgrader.php");
-				$upgrader = UpgraderFactory::create($_POST['UPGRADE_METHOD']);
+				$upgrader = UpgraderFactory::create($_POST['upgrade_method']); 
 				$upgrader->setConnectDetails($_POST);
-				$rslt = $upgrader->importCustomerGroups();
+				$rslt = $upgrader->importAttributes($_POST['db_switch']);
 				
-				if($rslt == false){
+				if ($rslt == false) {
 					echo '[[0|'.$upgrader->displayMessage().']]';
 					return false;
 				}
@@ -447,11 +447,11 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
       case 'import_orders':
       {
 				require_once("includes/classes/upgrader.php");
-				$upgrader = UpgraderFactory::create($_POST['UPGRADE_METHOD']);
+				$upgrader = UpgraderFactory::create($_POST['upgrade_method']);
 				$upgrader->setConnectDetails($_POST);
-				$rslt = $upgrader->importOrders();
+				$rslt = $upgrader->importOrders($_POST['db_switch']);
 				
-				if($rslt == false){
+				if ($rslt == false) {
 					echo '[[0|'.$upgrader->displayMessage().']]';
 					return false;
 				}
@@ -465,59 +465,15 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
       case 'import_cds':
       {
 				require_once("includes/classes/upgrader.php");
-				$upgrader = UpgraderFactory::create($_POST['UPGRADE_METHOD']);
+				$upgrader = UpgraderFactory::create($_POST['upgrade_method']);
 				$upgrader->setConnectDetails($_POST);
-				$rslt = $upgrader->importPages();
+				$rslt = $upgrader->importPages($_POST['db_switch']);
 				
-				if($rslt == false){
+				if ($rslt == false) {
 					echo '[[0|'.$upgrader->displayMessage().']]';
 					return false;
 				}
 
-				echo '[[1]]';
-				return true;
-      }
-      exit;
-      break;
-
-      case 'import_images':
-      {
-
-				require_once("includes/classes/upgrader.php");
-				$upgrader = UpgraderFactory::create($_POST['UPGRADE_METHOD']);
-				$upgrader->setConnectDetails($_POST);
-	
-				// $target_img_dir = str_replace("install", "", getcwd()).'images/products/originals/';
-        // $upgrader->rrmdir($target_img_dir);
-
-				$rslt = $upgrader->importImages();
-				
-				if($rslt == false){
-					echo '[[0|'.$upgrader->displayMessage().']]';
-					return false;
-				}
-				echo '[[1]]';
-				return true;
-      }
-      exit;
-      break;
-
-      case 'import_category_images':
-      {
-
-				require_once("includes/classes/upgrader.php");
-				$upgrader = UpgraderFactory::create($_POST['UPGRADE_METHOD']);
-				$upgrader->setConnectDetails($_POST);
-	
-        // $target_img_dir = str_replace("install", "", getcwd()).'images/categories/';
-        // $upgrader->rrmdir($target_img_dir);
-
-				$rslt = $upgrader->importCategoryImages();
-				
-				if($rslt == false){
-					echo '[[0|'.$upgrader->displayMessage().']]';
-					return false;
-				}
 				echo '[[1]]';
 				return true;
       }
@@ -527,11 +483,11 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
       case 'import_administrators':
       {
 				require_once("includes/classes/upgrader.php");
-				$upgrader = UpgraderFactory::create($_POST['UPGRADE_METHOD']);
+				$upgrader = UpgraderFactory::create($_POST['upgrade_method']);
 				$upgrader->setConnectDetails($_POST);
-				$rslt = $upgrader->importAdministrators();
+				$rslt = $upgrader->importAdministrators($_POST['db_switch']);
 				
-				if($rslt == false){
+				if ($rslt == false) {
 					echo '[[0|'.$upgrader->displayMessage().']]';
 					return false;
 				}
@@ -545,11 +501,11 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
       case 'import_newsletter':
       {
 				require_once("includes/classes/upgrader.php");
-				$upgrader = UpgraderFactory::create($_POST['UPGRADE_METHOD']);
+				$upgrader = UpgraderFactory::create($_POST['upgrade_method']);
 				$upgrader->setConnectDetails($_POST);
-				$rslt = $upgrader->importNewsletter();
+				$rslt = $upgrader->importNewsletter($_POST['db_switch']);
 				
-				if($rslt == false){
+				if ($rslt == false) {
 					echo '[[0|'.$upgrader->displayMessage().']]';
 					return false;
 				}
@@ -563,11 +519,11 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
       case 'import_banners':
       {
 				require_once("includes/classes/upgrader.php");
-				$upgrader = UpgraderFactory::create($_POST['UPGRADE_METHOD']);
+				$upgrader = UpgraderFactory::create($_POST['upgrade_method']);
 				$upgrader->setConnectDetails($_POST);
-				$rslt = $upgrader->importBanners();
+				$rslt = $upgrader->importBanners($_POST['db_switch']);
 				
-				if($rslt == false){
+				if ($rslt == false) {
 					echo '[[0|'.$upgrader->displayMessage().']]';
 					return false;
 				}
@@ -580,12 +536,11 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
       
       case 'import_configuration':
       {
-				require_once("includes/classes/upgrader.php");
-				$upgrader = UpgraderFactory::create($_POST['UPGRADE_METHOD']);
+        require_once("includes/classes/upgrader.php");
+				$upgrader = UpgraderFactory::create($_POST['upgrade_method']);
 				$upgrader->setConnectDetails($_POST);
-				$rslt = $upgrader->importConfiguration();
-				
-				if($rslt == false){
+        $rslt = $upgrader->importConfiguration($_POST['db_switch']);
+				if ($rslt == false) {
 					echo '[[0|'.$upgrader->displayMessage().']]';
 					return false;
 				}
@@ -599,11 +554,11 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
       case 'import_coupons':
       {
 				require_once("includes/classes/upgrader.php");
-				$upgrader = UpgraderFactory::create($_POST['UPGRADE_METHOD']);
+				$upgrader = UpgraderFactory::create($_POST['upgrade_method']);
 				$upgrader->setConnectDetails($_POST);
-				$rslt = $upgrader->importCoupons();
+				$rslt = $upgrader->importCoupons($_POST['db_switch']);
 				
-				if($rslt == false){
+				if ($rslt == false) {
 					echo '[[0|'.$upgrader->displayMessage().']]';
 					return false;
 				}
@@ -617,11 +572,11 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
       case 'import_taxclasses':
       {
         require_once("includes/classes/upgrader.php");
-        $upgrader = UpgraderFactory::create($_POST['UPGRADE_METHOD']);
+        $upgrader = UpgraderFactory::create($_POST['upgrade_method']);
         $upgrader->setConnectDetails($_POST);
-        $rslt = $upgrader->importTaxClassesRates();
+        $rslt = $upgrader->importTaxClassesRates($_POST['db_switch']);
         
-        if($rslt == false){
+        if ($rslt == false) {
           echo '[[0|'.$upgrader->displayMessage().']]';
           return false;
         }
@@ -635,11 +590,11 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
       case 'import_languages':
       {
         require_once("includes/classes/upgrader.php");
-        $upgrader = UpgraderFactory::create($_POST['UPGRADE_METHOD']);
+        $upgrader = UpgraderFactory::create($_POST['upgrade_method']);
         $upgrader->setConnectDetails($_POST);
-        $rslt = $upgrader->importLanguages();
+        $rslt = $upgrader->importLanguages($_POST['db_switch']);
         
-        if($rslt == false){
+        if ($rslt == false) {
           echo '[[0|'.$upgrader->displayMessage().']]';
           return false;
         }
@@ -653,15 +608,59 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
       case 'import_currencies':
       {
         require_once("includes/classes/upgrader.php");
-        $upgrader = UpgraderFactory::create($_POST['UPGRADE_METHOD']);
+        $upgrader = UpgraderFactory::create($_POST['upgrade_method']);
         $upgrader->setConnectDetails($_POST);
-        $rslt = $upgrader->importCurrencies();
+        $rslt = $upgrader->importCurrencies($_POST['db_switch']);
         
-        if($rslt == false){
+        if ($rslt == false) {
           echo '[[0|'.$upgrader->displayMessage().']]';
           return false;
         }
         
+        echo '[[1]]';
+        return true;
+      }
+      exit;
+      break;
+
+      case 'import_images':
+      {
+
+        require_once("includes/classes/upgrader.php");
+        $upgrader = UpgraderFactory::create($_POST['upgrade_method']);
+        $upgrader->setConnectDetails($_POST);
+  
+        // $target_img_dir = str_replace("install", "", getcwd()).'images/products/originals/';
+        // $upgrader->rrmdir($target_img_dir);
+
+        $rslt = $upgrader->importImages();
+        
+        if ($rslt == false) {
+          echo '[[0|'.$upgrader->displayMessage().']]';
+          return false;
+        }
+        echo '[[1]]';
+        return true;
+      }
+      exit;
+      break;
+
+      case 'import_category_images':
+      {
+
+        require_once("includes/classes/upgrader.php");
+        $upgrader = UpgraderFactory::create($_POST['upgrade_method']);
+        $upgrader->setConnectDetails($_POST);
+  
+        // $target_img_dir = str_replace("install", "", getcwd()).'images/categories/';
+        // $upgrader->rrmdir($target_img_dir);
+
+        $rslt = $upgrader->importCategoryImages();
+        
+        if ($rslt == false) {
+          echo '[[0|'.$upgrader->displayMessage().']]';
+          return false;
+        }
         echo '[[1]]';
         return true;
       }

@@ -675,7 +675,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
   *  returns : true or false  
   *
   */
-  public function importProducts() {
+  public function importProducts($switch = null) {
 
     $s_db = $this->_sDB;
     $t_db = $this->_tDB;
@@ -1817,12 +1817,12 @@ class lC_LocalUpgrader extends lC_Upgrader {
   *  returns : true or false  
   *
   */
-  public function importCategories() {
-      
+  public function importCategories($switch = null) {
+    
     $s_db = $this->_sDB;
     $t_db = $this->_tDB;
     $map = $this->_data_mapping['categories'];
-          
+    
     if (!defined('DB_TABLE_PREFIX')) define('DB_TABLE_PREFIX', $t_db['DB_PREFIX']);
 
     // CONNNECT TO SOURCE DB
@@ -2167,7 +2167,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
   *  returns : true or false  
   *
   */
-  public function importPages() {
+  public function importPages($switch = null) {
   
     $s_db = $this->_sDB;
     $t_db = $this->_tDB;
@@ -2631,7 +2631,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
   *  returns : true or false  
   *
   */
-  public function importCustomers() {
+  public function importCustomers($switch = null) {
   
     $s_db = $this->_sDB;
     $t_db = $this->_tDB;
@@ -3254,7 +3254,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
       
   } // end importCategoryImages
   
-  function saveToProductsImages($target_db, $pid, $image, $sort, $default_flag = 1){
+  public function saveToProductsImages($target_db, $pid, $image, $sort, $default_flag = 1) {
   
     $image = end(explode('/', $image));
     
@@ -3291,7 +3291,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
   *  returns : true or false  
   *
   */
-  public function importCustomerGroups() {
+  public function importCustomerGroups($switch = null) {
     global $lC_Language;
     
     $s_db = $this->_sDB;
@@ -3443,7 +3443,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
   *  returns : true or false  
   *
   */
-  public function importOrders() {
+  public function importOrders($switch = null) {
     
     $s_db = $this->_sDB;
     $t_db = $this->_tDB;
@@ -3459,7 +3459,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
     $source_db = new $class($s_db['DB_SERVER'], $s_db['DB_SERVER_USERNAME'], $s_db['DB_SERVER_PASSWORD']);
       
     if ($source_db->isError() === false) {
-    $source_db->selectDatabase($s_db['DB_DATABASE']);
+      $source_db->selectDatabase($s_db['DB_DATABASE']);
     }
       
     if ($source_db->isError()) {
@@ -3551,6 +3551,11 @@ class lC_LocalUpgrader extends lC_Upgrader {
         $tQry->bindValue(':orders_status_name', $orders_stat['orders_status_name']);
         $tQry->execute();
         $cnt++;
+        
+        if ($target_db->isError()) {
+          $this->_msg = $target_db->getError();
+          return false;
+        }
       }
       
       $sQry->freeResult();
@@ -3606,6 +3611,11 @@ class lC_LocalUpgrader extends lC_Upgrader {
         $tQry->execute();
 
         $cnt++;
+        
+        if ($target_db->isError()) {
+          $this->_msg = $target_db->getError();
+          return false;
+        }
       }
       
       $sQry->freeResult();
@@ -3674,6 +3684,11 @@ class lC_LocalUpgrader extends lC_Upgrader {
         $tQry->execute();
         
         $cnt++;
+        
+        if ($target_db->isError()) {
+          $this->_msg = $target_db->getError();
+          return false;
+        }
       }
       
       $sQry->freeResult();
@@ -3731,6 +3746,11 @@ class lC_LocalUpgrader extends lC_Upgrader {
         $tQry->execute();
 
         $cnt++;
+        
+        if ($target_db->isError()) {
+          $this->_msg = $target_db->getError();
+          return false;
+        }
       }
       
       $sQry->freeResult();
@@ -4096,6 +4116,11 @@ class lC_LocalUpgrader extends lC_Upgrader {
         $tQry->execute();
 
         $cnt++;
+        
+        if ($target_db->isError()) {
+          $this->_msg = $target_db->getError();
+          return false;
+        }
 
       }
       
@@ -4129,7 +4154,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
   *  returns : true or false  
   *
   */
-  public function importAttributes() {
+  public function importAttributes($switch = null) {
     
     $s_db = $this->_sDB;
     $t_db = $this->_tDB;
@@ -4174,17 +4199,19 @@ class lC_LocalUpgrader extends lC_Upgrader {
 
     // TRUNCATE PRODUCT VARIANTS TABLES IN TARGET DB
     
-    $tQry = $target_db->query('truncate table ' . TABLE_PRODUCTS_VARIANTS_GROUPS);
-    $tQry->execute();
-    
-    $tQry = $target_db->query('truncate table ' . TABLE_PRODUCTS_VARIANTS_VALUES);
-    $tQry->execute();
-    
-    $tQry = $target_db->query('truncate table ' . TABLE_PRODUCTS_SIMPLE_OPTIONS);
-    $tQry->execute();
-    
-    $tQry = $target_db->query('truncate table ' . TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
-    $tQry->execute();
+    if ($switch != -1) {
+      $tQry = $target_db->query('truncate table ' . TABLE_PRODUCTS_VARIANTS_GROUPS);
+      $tQry->execute();
+      
+      $tQry = $target_db->query('truncate table ' . TABLE_PRODUCTS_VARIANTS_VALUES);
+      $tQry->execute();
+      
+      $tQry = $target_db->query('truncate table ' . TABLE_PRODUCTS_SIMPLE_OPTIONS);
+      $tQry->execute();
+      
+      $tQry = $target_db->query('truncate table ' . TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
+      $tQry->execute();
+    }
   
     // END TRUNCATE PRODUCT VARIANTS TABLES IN TARGET DB
     
@@ -4245,16 +4272,17 @@ class lC_LocalUpgrader extends lC_Upgrader {
                        , 'module'       => $module
                         ); 
                                  
-        $tQry = $target_db->query('INSERT INTO :table_products_variants_groups (id, 
-                                                                                languages_id, 
-                                                                                title, 
-                                                                                sort_order, 
-                                                                                module) 
-                                                                        VALUES (:id, 
-                                                                                :languages_id, 
-                                                                                :title, 
-                                                                                :sort_order, 
-                                                                                :module)');
+        $tQry = $target_db->query((($switch != -1) ? 'INSERT' : 'INSERT IGNORE') . ' INTO :table_products_variants_groups (id, 
+                                                                                                                           languages_id, 
+                                                                                                                           title, 
+                                                                                                                           sort_order, 
+                                                                                                                           module) 
+                                                                                                                   VALUES (:id, 
+                                                                                                                           :languages_id, 
+                                                                                                                           :title, 
+                                                                                                                           :sort_order, 
+                                                                                                                           :module) 
+                                                                                              ON DUPLICATE KEY UPDATE id = :update_id');
 
         $tQry->bindTable(':table_products_variants_groups', TABLE_PRODUCTS_VARIANTS_GROUPS);
         $tQry->bindInt  (':id'          , $group['id']);
@@ -4262,6 +4290,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
         $tQry->bindValue(':title'       , $group['title']);
         $tQry->bindInt  (':sort_order'  , $group['sort_order']);
         $tQry->bindValue(':module'      , $group['module']);
+        $tQry->bindInt  (':update_id'   , $group['id']);
         $tQry->execute();
         
         if ($target_db->isError()) {
@@ -4315,7 +4344,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
         $tQry->bindInt  (':products_variants_groups_id', $group['products_variants_groups_id']);
         $tQry->bindValue(':title'                      , $group['title']);
         $tQry->bindInt  (':sort_order'                 , $group['sort_order']);
-        $tQry->bindInt  (':update_id'                         , $group['id']);
+        $tQry->bindInt  (':update_id'                  , $group['id']);
         $tQry->execute();
         
         if ($target_db->isError()) {
@@ -4388,7 +4417,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
     foreach ($simple_options as $option) {
       $Qchk = $target_db->query('SELECT id from :table_products_simple_options WHERE options_id = :options_id and products_id = :products_id limit 1');
       
-      $Qchk->bindTable(':products_simple_options', TABLE_PRODUCTS_SIMPLE_OPTIONS);
+      $Qchk->bindTable(':table_products_simple_options', TABLE_PRODUCTS_SIMPLE_OPTIONS);
       
       $Qchk->bindInt  (':options_id' , $option['options_id']);
       $Qchk->bindInt  (':products_id', $option['products_id']);
@@ -4564,7 +4593,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
   *  returns : true or false  
   *
   */
-  public function importAdministrators() {
+  public function importAdministrators($switch = null) {
     
       $s_db = $this->_sDB;
       $t_db = $this->_tDB;
@@ -4607,8 +4636,10 @@ class lC_LocalUpgrader extends lC_Upgrader {
       
       // TRUNCATE ADMINS TABLE IN TARGET DB
       
-      $tQry = $target_db->query('truncate table ' . TABLE_ADMINISTRATORS);
-      $tQry->execute();
+      if ($switch != -1) {
+        $tQry = $target_db->query('truncate table ' . TABLE_ADMINISTRATORS);
+        $tQry->execute();
+      }
       
       // END TRUNCATE ADMINS TABLE IN TARGET DB
 
@@ -4636,20 +4667,20 @@ class lC_LocalUpgrader extends lC_Upgrader {
                           , 'access_goup_id' => $sQry->value($map['access_goup_id'])
                            ); 
                            
-          $tQry = $target_db->query('INSERT INTO :table_admin (id, 
-                                                               user_name, 
-                                                               user_password, 
-                                                               first_name, 
-                                                               last_name, 
-                                                               image, 
-                                                               access_group_id) 
-                                                       VALUES (:id, 
-                                                               :user_name, 
-                                                               :user_password, 
-                                                               :first_name, 
-                                                               :last_name, 
-                                                               :image, 
-                                                               :access_group_id)');
+          $tQry = $target_db->query((($switch != -1) ? 'INSERT' : 'INSERT IGNORE') . ' INTO :table_admin (id, 
+                                                                                                          user_name, 
+                                                                                                          user_password, 
+                                                                                                          first_name, 
+                                                                                                          last_name, 
+                                                                                                          image, 
+                                                                                                          access_group_id) 
+                                                                                                  VALUES (:id, 
+                                                                                                          :user_name, 
+                                                                                                          :user_password, 
+                                                                                                          :first_name, 
+                                                                                                          :last_name, 
+                                                                                                          :image, 
+                                                                                                          :access_group_id)');
           
           $tQry->bindTable(':table_admin', TABLE_ADMINISTRATORS);
           $tQry->bindInt  (':id'             , $admin['id']);
@@ -4676,8 +4707,10 @@ class lC_LocalUpgrader extends lC_Upgrader {
 
       // LOAD ADMIN GROUPS FROM SOURCE DB
       
-      $tQry = $target_db->query('truncate table ' . TABLE_ADMINISTRATORS_GROUPS);
-      $tQry->execute();
+      if ($switch != -1) {
+        $tQry = $target_db->query('truncate table ' . TABLE_ADMINISTRATORS_GROUPS);
+        $tQry->execute();
+      }
 
       $sQry = $source_db->query('SELECT * FROM admin_groups');
       $sQry->execute();
@@ -4693,14 +4726,14 @@ class lC_LocalUpgrader extends lC_Upgrader {
                                 , 'last_modified' => "0000-00-00 00:00:00"
                                  ); 
           
-          $tQry = $target_db->query('INSERT INTO :table_admins_groups (id, 
-                                                                       name, 
-                                                                       date_added, 
-                                                                       last_modified) 
-                                                               VALUES (:id, 
-                                                                       :name, 
-                                                                       now(), 
-                                                                       now())');
+          $tQry = $target_db->query((($switch != -1) ? 'INSERT' : 'INSERT IGNORE') . ' INTO :table_admins_groups (id, 
+                                                                                                                  name, 
+                                                                                                                  date_added, 
+                                                                                                                  last_modified) 
+                                                                                                          VALUES (:id, 
+                                                                                                                  :name, 
+                                                                                                                  now(), 
+                                                                                                                  now())');
           
           $tQry->bindTable(':table_admins_groups', TABLE_ADMINISTRATORS_GROUPS);
           $tQry->bindInt  (':id'  , $admin_group['id']);
@@ -4739,7 +4772,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
   *  returns : true or false  
   *
   */
-  public function importNewsletter() {
+  public function importNewsletter($switch = null) {
     
     $s_db = $this->_sDB;
     $t_db = $this->_tDB;
@@ -4882,7 +4915,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
   *  returns : true or false  
   *
   */
-  public function importBanners() {
+  public function importBanners($switch = null) {
     
     $s_db = $this->_sDB;
     $t_db = $this->_tDB;
@@ -5108,13 +5141,13 @@ class lC_LocalUpgrader extends lC_Upgrader {
   *  returns : true or false  
   *
   */
-  public function importConfiguration() {
+  public function importConfiguration($switch = null) {
     
     return true; // temporarily disable this function until we decide to include configuration from older version of the cart 
     
     $s_db = $this->_sDB;
     $t_db = $this->_tDB;
-            
+    
     if (!defined('DB_TABLE_PREFIX')) define('DB_TABLE_PREFIX', $t_db['DB_PREFIX']);
 
     // CONNNECT TO SOURCE DB
@@ -5153,11 +5186,13 @@ class lC_LocalUpgrader extends lC_Upgrader {
     
     // TRUNCATE CONFIG TABLE IN TARGET DB
     
-    $tQry = $target_db->query('truncate table ' . TABLE_CONFIGURATION);
-    $tQry->execute();
+    if ($switch != -1) {
+      $tQry = $target_db->query('truncate table ' . TABLE_CONFIGURATION);
+      $tQry->execute();
 
-    $tQry = $target_db->query('truncate table ' . TABLE_CONFIGURATION_GROUP);
-    $tQry->execute();
+      $tQry = $target_db->query('truncate table ' . TABLE_CONFIGURATION_GROUP);
+      $tQry->execute();
+    }
                 
     // END TRUNCATE CONFIG TABLE IN TARGET DB
 
@@ -5191,29 +5226,30 @@ class lC_LocalUpgrader extends lC_Upgrader {
                          , 'set_function'              => $sQry->value($map['set_function'])
                           ); 
 
-        $tQry = $target_db->query('INSERT INTO :table_configuration (configuration_id, 
-                                                                     configuration_title, 
-                                                                     configuration_key, 
-                                                                     configuration_value, 
-                                                                     configuration_description, 
-                                                                     configuration_group_id, 
-                                                                     sort_order, 
-                                                                     last_modified, 
-                                                                     date_added, 
-                                                                     use_function, 
-                                                                     set_function) 
-                                                             VALUES (:configuration_id, 
-                                                                     :configuration_title, 
-                                                                     :configuration_key, 
-                                                                     :configuration_value, 
-                                                                     :configuration_description, 
-                                                                     :configuration_group_id, 
-                                                                     :sort_order, 
-                                                                     :last_modified, 
-                                                                     :date_added, 
-                                                                     :use_function, 
-                                                                     :set_function)');
-        
+        $tQry = $target_db->query((($switch != -1) ? 'INSERT' : 'INSERT IGNORE') . ' INTO :table_configuration (configuration_id, 
+                                                                                                                configuration_title, 
+                                                                                                                configuration_key, 
+                                                                                                                configuration_value, 
+                                                                                                                configuration_description, 
+                                                                                                                configuration_group_id, 
+                                                                                                                sort_order, 
+                                                                                                                last_modified, 
+                                                                                                                date_added, 
+                                                                                                                use_function, 
+                                                                                                                set_function) 
+                                                                                                        VALUES (:configuration_id, 
+                                                                                                                :configuration_title, 
+                                                                                                                :configuration_key, 
+                                                                                                                :configuration_value, 
+                                                                                                                :configuration_description, 
+                                                                                                                :configuration_group_id, 
+                                                                                                                :sort_order, 
+                                                                                                                :last_modified, 
+                                                                                                                :date_added, 
+                                                                                                                :use_function, 
+                                                                                                                :set_function)');
+                                                                         
+                                        
         $tQry->bindTable(':table_configuration', TABLE_CONFIGURATION);
         $tQry->bindInt  (':configuration_id'         , $config['configuration_id']);
         $tQry->bindValue(':configuration_title'      , $config['configuration_title']);
@@ -5265,20 +5301,20 @@ class lC_LocalUpgrader extends lC_Upgrader {
     // END LOAD CONFIGURATION GROUP FROM SOURCE DB
 
     // LOAD CONFIGURATION GROUP TO TARGET DB
-      
+    
     $iCnt = 0;
     foreach ($configuration_group as $group) {
       
-      $tQry = $target_db->query('INSERT INTO :table_configuration_group (configuration_group_id, 
-                                                                         configuration_group_title, 
-                                                                         configuration_group_description, 
-                                                                         sort_order, 
-                                                                         visible) 
-                                                                 VALUES (:configuration_group_id, 
-                                                                         :configuration_group_title, 
-                                                                         :configuration_group_description, 
-                                                                         :sort_order, 
-                                                                         :visible)');
+      $tQry = $target_db->query((($switch != -1) ? 'INSERT' : 'INSERT IGNORE') . ' INTO :table_configuration_group (configuration_group_id, 
+                                                                                                                    configuration_group_title, 
+                                                                                                                    configuration_group_description, 
+                                                                                                                    sort_order, 
+                                                                                                                    visible) 
+                                                                                                            VALUES (:configuration_group_id, 
+                                                                                                                    :configuration_group_title, 
+                                                                                                                    :configuration_group_description, 
+                                                                                                                    :sort_order, 
+                                                                                                                    :visible)');
 
       $tQry->bindTable(':table_configuration_group', TABLE_CONFIGURATION_GROUP);
       $tQry->bindInt  (':configuration_group_id'         , $group['configuration_group_id']);
@@ -5316,7 +5352,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
   *  returns : true or false  
   *
   */
-  public function importCoupons() {
+  public function importCoupons($switch = null) {
     
     $s_db = $this->_sDB;
     $t_db = $this->_tDB;
@@ -5628,7 +5664,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
   *  returns : true or false  
   *
   */
-  public function importTaxClassesRates() {
+  public function importTaxClassesRates($switch = null) {
     
     $s_db = $this->_sDB;
     $t_db = $this->_tDB;
@@ -5836,7 +5872,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
   *  returns : true or false  
   *
   */
-  public function importLanguages() {
+  public function importLanguages($switch = null) {
     
     $s_db = $this->_sDB;
     $t_db = $this->_tDB;
@@ -6016,34 +6052,34 @@ class lC_LocalUpgrader extends lC_Upgrader {
     
     if (isset($languages) && !empty($languages)) {  
       foreach ($languages as $language) {
-        $tQry = $target_db->query('INSERT INTO :table_languages (languages_id, 
-                                                                 name, 
-                                                                 code, 
-                                                                 locale, 
-                                                                 charset, 
-                                                                 date_format_short, 
-                                                                 date_format_long, 
-                                                                 time_format, 
-                                                                 text_direction, 
-                                                                 currencies_id, 
-                                                                 numeric_separator_decimal, 
-                                                                 numeric_separator_thousands, 
-                                                                 parent_id, 
-                                                                 sort_order) 
-                                                         VALUES (:languages_id, 
-                                                                 :name, 
-                                                                 :code, 
-                                                                 :locale, 
-                                                                 :charset, 
-                                                                 :date_format_short, 
-                                                                 :date_format_long, 
-                                                                 :time_format, 
-                                                                 :text_direction, 
-                                                                 :currencies_id, 
-                                                                 :numeric_separator_decimal, 
-                                                                 :numeric_separator_thousands, 
-                                                                 :parent_id, 
-                                                                 :sort_order)');
+        $tQry = $target_db->query((($switch != -1) ? 'INSERT' : 'INSERT IGNORE') . ' INTO :table_languages (languages_id, 
+                                                                                                            name, 
+                                                                                                            code, 
+                                                                                                            locale, 
+                                                                                                            charset, 
+                                                                                                            date_format_short, 
+                                                                                                            date_format_long, 
+                                                                                                            time_format, 
+                                                                                                            text_direction, 
+                                                                                                            currencies_id, 
+                                                                                                            numeric_separator_decimal, 
+                                                                                                            numeric_separator_thousands, 
+                                                                                                            parent_id, 
+                                                                                                            sort_order) 
+                                                                                                    VALUES (:languages_id, 
+                                                                                                            :name, 
+                                                                                                            :code, 
+                                                                                                            :locale, 
+                                                                                                            :charset, 
+                                                                                                            :date_format_short, 
+                                                                                                            :date_format_long, 
+                                                                                                            :time_format, 
+                                                                                                            :text_direction, 
+                                                                                                            :currencies_id, 
+                                                                                                            :numeric_separator_decimal, 
+                                                                                                            :numeric_separator_thousands, 
+                                                                                                            :parent_id, 
+                                                                                                            :sort_order)');
                                                                       
         $tQry->bindTable(':table_languages', TABLE_LANGUAGES);
         $tQry->bindInt  (':languages_id',                $language['languages_id']);
@@ -6075,7 +6111,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
 
         if ($igQry->numberOfRows() > 0) {
           while ( $igQry->next() ) {
-            $igiQry = $target_db->query('INSERT INTO :table_products_images_groups (id, language_id, title, code, size_width, size_height, force_size) VALUES (:id, :language_id, :title, :code, :size_width, :size_height, :force_size)');
+            $igiQry = $target_db->query((($switch != -1) ? 'INSERT' : 'INSERT IGNORE') . ' INTO :table_products_images_groups (id, language_id, title, code, size_width, size_height, force_size) VALUES (:id, :language_id, :title, :code, :size_width, :size_height, :force_size)');
             $igiQry->bindTable(':table_products_images_groups', TABLE_PRODUCTS_IMAGES_GROUPS);
             $igiQry->bindInt(':id', $igQry->valueInt('id'));
             $igiQry->bindInt(':language_id', $language['languages_id']);
@@ -6103,7 +6139,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
 
         if ($otsQry->numberOfRows() > 0) {
           while ( $otsQry->next() ) {
-            $otsiQry = $target_db->query('insert into :table_orders_transactions_status (id, language_id, status_name) values (:id, :language_id, :status_name)');
+            $otsiQry = $target_db->query((($switch != -1) ? 'INSERT' : 'INSERT IGNORE') . ' INTO :table_orders_transactions_status (id, language_id, status_name) VALUES (:id, :language_id, :status_name)');
             $otsiQry->bindTable(':table_orders_transactions_status', TABLE_ORDERS_TRANSACTIONS_STATUS);
             $otsiQry->bindInt(':id', $otsQry->valueInt('id'));
             $otsiQry->bindInt(':language_id', $language['languages_id']);
@@ -6127,7 +6163,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
 
         if ($saQry->numberOfRows() > 0) {
           while ( $saQry->next() ) {
-            $saiQry = $target_db->query('insert into :table_shipping_availability (id, languages_id, title, css_key) values (:id, :languages_id, :title, :css_key)');
+            $saiQry = $target_db->query((($switch != -1) ? 'INSERT' : 'INSERT IGNORE') . ' INTO :table_shipping_availability (id, languages_id, title, css_key) VALUES (:id, :languages_id, :title, :css_key)');
             $saiQry->bindTable(':table_shipping_availability', TABLE_SHIPPING_AVAILABILITY);
             $saiQry->bindInt(':id', $saQry->valueInt('id'));
             $saiQry->bindInt(':languages_id', $language['languages_id']);
@@ -6152,7 +6188,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
 
         if ($wcQry->numberOfRows() > 0) {
           while ( $wcQry->next() ) {
-            $wciQry = $target_db->query('insert into :table_weight_classes (weight_class_id, weight_class_key, language_id, weight_class_title) values (:weight_class_id, :weight_class_key, :language_id, :weight_class_title)');
+            $wciQry = $target_db->query((($switch != -1) ? 'INSERT' : 'INSERT IGNORE') . ' INTO :table_weight_classes (weight_class_id, weight_class_key, language_id, weight_class_title) VALUES (:weight_class_id, :weight_class_key, :language_id, :weight_class_title)');
             $wciQry->bindTable(':table_weight_classes', TABLE_WEIGHT_CLASS);
             $wciQry->bindInt(':weight_class_id', $wcQry->valueInt('weight_class_id'));
             $wciQry->bindValue(':weight_class_key', $wcQry->value('weight_class_key'));
@@ -6182,16 +6218,16 @@ class lC_LocalUpgrader extends lC_Upgrader {
             $vgnQry->bindInt(':language_id', $language['languages_id']);
             $vgnQry->execute();
             
-            $tQry = $target_db->query('INSERT INTO :table_products_variants_groups (id, 
-                                                                                    languages_id, 
-                                                                                    title, 
-                                                                                    sort_order, 
-                                                                                    module) 
-                                                                            VALUES (:id, 
-                                                                                    :languages_id, 
-                                                                                    :title, 
-                                                                                    :sort_order, 
-                                                                                    :module)');
+            $tQry = $target_db->query((($switch != -1) ? 'INSERT' : 'INSERT IGNORE') . ' INTO :table_products_variants_groups (id, 
+                                                                                                                               languages_id, 
+                                                                                                                               title, 
+                                                                                                                               sort_order, 
+                                                                                                                               module) 
+                                                                                                                       VALUES (:id, 
+                                                                                                                               :languages_id, 
+                                                                                                                               :title, 
+                                                                                                                               :sort_order, 
+                                                                                                                               :module)');
 
             $tQry->bindTable(':table_products_variants_groups', TABLE_PRODUCTS_VARIANTS_GROUPS);
             
@@ -6234,16 +6270,16 @@ class lC_LocalUpgrader extends lC_Upgrader {
             $vvnQry->bindInt(':language_id', $language['languages_id']);
             $vvnQry->execute(); 
             
-            $tQry = $target_db->query('INSERT INTO :table_products_variants_values (id, 
-                                                                                    languages_id, 
-                                                                                    products_variants_groups_id, 
-                                                                                    title, 
-                                                                                    sort_order) 
-                                                                            VALUES (:id, 
-                                                                                    :languages_id, 
-                                                                                    :products_variants_groups_id, 
-                                                                                    :title, 
-                                                                                    :sort_order)');
+            $tQry = $target_db->query((($switch != -1) ? 'INSERT' : 'INSERT IGNORE') . ' INTO :table_products_variants_values (id, 
+                                                                                                                               languages_id, 
+                                                                                                                               products_variants_groups_id, 
+                                                                                                                               title, 
+                                                                                                                               sort_order) 
+                                                                                                                       VALUES (:id, 
+                                                                                                                               :languages_id, 
+                                                                                                                               :products_variants_groups_id, 
+                                                                                                                               :title, 
+                                                                                                                               :sort_order)');
 
             $tQry->bindTable(':table_products_variants_values', TABLE_PRODUCTS_VARIANTS_VALUES);
             $tQry->bindInt  (':id'                            , $vvQry->value('id'));
@@ -6302,7 +6338,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
     $tQry->execute();
     
     $source_db->disconnect();  
-    $target_db->disconnect();  
+    $target_db->disconnect();
     
     return true;
       
@@ -6316,7 +6352,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
   *  returns : true or false  
   *
   */
-  public function importCurrencies() {
+  public function importCurrencies($switch = null) {
     
     $s_db = $this->_sDB;
     $t_db = $this->_tDB;
