@@ -27,7 +27,7 @@ require('includes/application_top.php');
     ?>
   </head>
   <body>    
-    <form id="iredirect" name="iredirect" method="post" target="_top" action="<?php echo lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL'); ?>">
+    <form id="iredirect" name="iredirect" method="post" target="_top" action="<?php echo lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL', null, null, true); ?>">
       <?php echo $postString; ?>
     </form>
     <script>
