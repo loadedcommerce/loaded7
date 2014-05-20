@@ -20,6 +20,7 @@ global $lC_Template;
       "sAjaxSource": dataTableDataURL.replace('MEDIA', $.template.mediaQuery.name),
       "sPaginationType": paginationType,
       "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+      "iDisplayLength": 25,
       "aoColumns": [{ "sWidth": "20%", "bSortable": true, "sClass": "dataColDate" },
                     { "sWidth": "80%", "bSortable": true, "sClass": "dataColMessage" }]
     });

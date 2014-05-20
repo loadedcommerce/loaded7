@@ -20,6 +20,7 @@ if ( !empty($_GET[$lC_Template->getModule()]) && is_numeric($_GET[$lC_Template->
         "sAjaxSource": dataTableDataURL.replace('MEDIA', $.template.mediaQuery.name),
         "sPaginationType": paginationType,
         "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+        "iDisplayLength": 25,
         "aoColumns": [{ "sWidth": "10px", "bSortable": false, "sClass": "hide-on-mobile-portrait dataColCheck" },
                       { "sWidth": "60%", "bSortable": true, "sClass": "dataColZone" },
                       { "sWidth": "20%", "bSortable": false, "sClass": "hide-on-mobile-portrait dataColCode" },

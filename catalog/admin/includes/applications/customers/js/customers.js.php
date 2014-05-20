@@ -23,6 +23,7 @@ $cSearch = (isset($_GET['cID']) && $_GET['cID'] != null ? '&cSearch=' . $_GET['c
       "sAjaxSource": dataTableDataURL.replace('MEDIA', $.template.mediaQuery.name),
       "sPaginationType": paginationType,
       "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+      "iDisplayLength": 25,
       "aoColumns": [{ "sWidth": "10px", "bSortable": false, "sClass": "hide-on-mobile dataColCheck" },
                     { "sWidth": "10px", "bSortable": false, "sClass": "hide-on-mobile dataColIcon" },
                     { "sWidth": "22%", "bSortable": true, "sClass": "dataColLast" },
