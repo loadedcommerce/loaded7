@@ -41,6 +41,7 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
           "sAjaxSource": dataTableDataURL.replace('FILTER', filter).replace('MEDIA', $.template.mediaQuery.name),
           "sPaginationType": paginationType,     
           "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]], 
+          "iDisplayLength": 25,
           "aaSorting": [[1,'desc']],
           "bDestroy": true,
           "aoColumns": [{ "sWidth": "10px", "bSortable": false, "sClass": "dataColCheck hide-on-mobile" },
