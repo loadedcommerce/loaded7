@@ -85,6 +85,13 @@ class Loaded_7_B2B extends Loaded_7_Pro {
     
     $lC_Database->simpleQuery("delete from " . TABLE_CONFIGURATION . " where configuration_key = 'ADDONS_SYSTEM_" . strtoupper($this->_code) . "_STATUS'");
     $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('Enable AddOn', 'ADDONS_SYSTEM_" . strtoupper($this->_code) . "_STATUS', '1', 'Do you want to enable this addon?', '6', '0', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))', now())");
+    
+    if ($this->_isConfigInstalled('B2B_SETTINGS_ALLOW_SELF_REGISTER') === false) {
+      $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('', 'B2B_SETTINGS_ALLOW_SELF_REGISTER', '1', '', '6', '0', '', '', now())");
+    }
+    if ($this->_isConfigInstalled('B2B_SETTINGS_GUEST_CATALOG_ACCESS') === false) {
+      $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('', 'B2B_SETTINGS_GUEST_CATALOG_ACCESS', '4', '', '6', '0', '', '', now())");
+    }
   }
  /**
   * Return the configuration parameter keys an an array
@@ -98,8 +105,27 @@ class Loaded_7_B2B extends Loaded_7_Pro {
     }
 
     return $this->_keys;
+  }
+ /**
+  * Check if the config key is already in the database
+  *
+  * @access protected
+  * @return boolean
+  */  
+  protected function _isConfigInstalled($key) {
+    global $lC_Database;
+    
+    $Qcfg = $lC_Database->query('select configuration_id from :table_configuration where configuration_key = :configuration_key');
+    $Qcfg->bindTable(':table_configuration', TABLE_CONFIGURATION);
+    $Qcfg->bindValue(':configuration_key', $key);
+    $Qcfg->execute();    
+    
+    $status = ($Qcfg->numberOfRows() > 0) ? true : false;
+    
+    $Qcfg->freeResult();
+    
+    return $status;
   } 
-  
  /**
   * Check if the Pro addon is active
   *
