@@ -83,7 +83,6 @@ $lC_ObjectInfo = new lC_ObjectInfo(lc_get_system_information());
       </fieldset>
     </div>    
     
-    
     <div class="new-row twelve-columns-tablet">
       <p class="align-center">
         <span>
