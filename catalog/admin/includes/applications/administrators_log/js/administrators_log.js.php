@@ -19,6 +19,7 @@ $(document).ready(function() {
     "sAjaxSource": dataTableDataURL.replace('MEDIA', $.template.mediaQuery.name),
     "sPaginationType": paginationType, 
     "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+    "iDisplayLength": 25,
     "aoColumns": [{ "sWidth": "25%", "bSortable": true, "sClass": "dataColModule" },
                   { "sWidth": "10%", "bSortable": true, "sClass": "dataColId hide-on-tablet" }, 
                   { "sWidth": "15%", "bSortable": true, "sClass": "dataColType hide-on-mobile-portrait" },
