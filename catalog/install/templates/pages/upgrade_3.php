@@ -7,7 +7,7 @@
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: upgrade_3.php v1.0 2013-08-08 datazen $
 */
-switch($_POST['upgradeMethod']){
+switch ($_POST['upgrade_method']) {
 	case 'R':
 	{
 		$www_location = 'http://' . $_SERVER['HTTP_HOST'];
@@ -35,18 +35,19 @@ switch($_POST['upgradeMethod']){
 		//echo '<pre>';
     //print_r($_POST);
 		//echo '</pre>';
+    //die();
 	}
 	break;
 }
 ?>
-<script type="text/css">
+<style scoped="scoped">
 	.importstatus { 
 		height: 20px;
 	}
-	.step_err_msg{
+	.step_err_msg {
 		margin: 0px 0px 0px -190px; padding: 0px 10px 10px 0px;
-	}
-</script>
+	} 
+</style>
 <script language="javascript" type="text/javascript" src="../includes/javascript/xmlhttp/xmlhttp.js"></script>
 <script language="javascript" type="text/javascript" src="../includes/javascript/xmlhttp/autocomplete.js"></script>
 <script language="javascript" type="text/javascript">
@@ -138,13 +139,11 @@ function prepareWork() {
     <li class="hide-on-mobile"><span class="wizard-step">4</span><?php echo $lC_Language->get('upgrade_nav_text_4'); ?></li>
     <li class="hide-on-mobile"><span class="wizard-step">5</span><?php echo $lC_Language->get('upgrade_nav_text_5'); ?></li>
   </ul>
-
   <fieldset class="wizard-fieldset fields-list current active">
     <div class="field-block margin-bottom" style="padding-left:20px;">
       <h4><?php echo $lC_Language->get('upgrade_step3_page_title'); ?></h4>
       <p><?php echo $lC_Language->get('upgrade_step3_page_desc'); ?></p>
     </div>
-    
     <div id="pBox" style="display:none; padding: 0px 20px 10px;">
       <p class="message blue-gradient align-center">  
         <span class="stripes animated"></span>
@@ -152,19 +151,16 @@ function prepareWork() {
         <span class="block-arrow bottom"></span>
       </p>      
     </div>
-    
     <div id="mBox" style="display:none; padding:0px 20px 10px"> 
       <p class="message icon-warning red-gradient align-center">   
         <span id="mBoxContents"></span>
       </p> 
-    </div>      
-    
+    </div>
     <div id="mBoxSuccess" style="display:none; padding:0px 20px 10px"> 
       <p class="message green-gradient align-center">   
         <span id="mBoxSuccessContents"></span>
       </p> 
-    </div>      
-    
+    </div>
     <div class="with-padding">  
       <div class="field-block button-height large-margin-left large-margin-right">
         <label for="IMPORT_CATEGORIES" class="label"><b><?php echo $lC_Language->get('param_import_categories'); ?></b></label>
@@ -270,8 +266,7 @@ function prepareWork() {
     	      <span id="eBoxContents_cds"></span>
     	    </p> 
     	  </div>      
-      </div> 
-
+      </div>
       <div class="field-block button-height large-margin-left large-margin-right">
         <label for="IMPORT_ADMIN" class="label"><b><?php echo $lC_Language->get('param_import_admin'); ?></b></label>
     	  <div style="display:block; padding:0px 20px 0px 0px"> 
@@ -431,8 +426,7 @@ $(document).ready(function() {
       $('#img_copy_progress_categories').show();
       setTimeout(function() {
         _rslt = doImport('_categories'); 
-        if(_rslt === ""){  }
-        else { _err = true ; _errmsg = _errmsg + '<p>' + _rslt; 
+        if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
           $('#eBoxContents_categories').html(_rslt);
           $('#eBox_categories').show();
         }
@@ -440,8 +434,7 @@ $(document).ready(function() {
         $('#img_copy_progress_customers').show();
         setTimeout(function() {
           _rslt = doImport('_customers'); 
-          if(_rslt === ""){  }
-          else { _err = true ; _errmsg = _errmsg + '<p>' + _rslt; 
+          if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
             $('#eBoxContents_customers').html(_rslt);
             $('#eBox_customers').show();
           }
@@ -449,8 +442,7 @@ $(document).ready(function() {
           $('#img_copy_progress_customer_groups').show();
           setTimeout(function() {
             _rslt = doImport('_customer_groups'); 
-            if(_rslt === ""){  }
-            else { _err = true ; _errmsg = _errmsg + '<p>' + _rslt; 
+            if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
               $('#eBoxContents_customer_groups').html(_rslt);
               $('#eBox_customer_groups').show();
             }
@@ -458,8 +450,7 @@ $(document).ready(function() {
             $('#img_copy_progress_products').show();
             setTimeout(function() {
               _rslt = doImport('_products'); 
-              if(_rslt === ""){  }
-              else { _err = true ; _errmsg = _errmsg + '<p>' + _rslt; 
+              if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
                 $('#eBoxContents_products').html(_rslt);
                 $('#eBox_products').show();
               }
@@ -467,8 +458,7 @@ $(document).ready(function() {
               $('#img_copy_progress_attributes').show();
               setTimeout(function() {
                 _rslt = doImport('_attributes'); 
-                if(_rslt === ""){  }
-                else { _err = true ; _errmsg = _errmsg + '<p>' + _rslt; 
+                if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
                   $('#eBoxContents_attributes').html(_rslt);
                   $('#eBox_attributes').show();
                 }
@@ -476,8 +466,7 @@ $(document).ready(function() {
                 $('#img_copy_progress_orders').show();
                 setTimeout(function() {
                   _rslt = doImport('_orders'); 
-                  if(_rslt === ""){  }
-                  else { _err = true ; _errmsg = _errmsg + '<p>' + _rslt; 
+                  if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
                     $('#eBoxContents_orders').html(_rslt);
                     $('#eBox_customer_orders').show();
                   }
@@ -485,8 +474,7 @@ $(document).ready(function() {
                   $('#img_copy_progress_cds').show();
                   setTimeout(function() {
                     _rslt = doImport('_cds'); 
-                    if(_rslt === ""){  }
-                    else { _err = true ; _errmsg = _errmsg + '<p>' + _rslt; 
+                    if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
                       $('#eBoxContents_cds').html(_rslt);
                       $('#eBox_customer_cds').show();
                     }
@@ -494,8 +482,7 @@ $(document).ready(function() {
                     $('#img_copy_progress_administrators').show();
                     setTimeout(function() {
                       _rslt = doImport('_administrators'); 
-                      if(_rslt === ""){  }
-                      else { _err = true ; _errmsg = _errmsg + '<p>' + _rslt; 
+                      if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
                         $('#eBoxContents_administrators').html(_rslt);
                         $('#eBox_customer_administrators').show();
                       }
@@ -503,8 +490,7 @@ $(document).ready(function() {
                       $('#img_copy_progress_newsletter').show();
                       setTimeout(function() {
                         _rslt = doImport('_newsletter'); 
-                        if(_rslt === ""){  }
-                        else { _err = true ; _errmsg = _errmsg + '<p>' + _rslt; 
+                        if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
                           $('#eBoxContents_newsletter').html(_rslt);
                           $('#eBox_customer_newsletter').show();
                         }
@@ -512,8 +498,7 @@ $(document).ready(function() {
                         $('#img_copy_progress_banners').show();
                         setTimeout(function() {
                           _rslt = doImport('_banners'); 
-                          if(_rslt === ""){  }
-                          else { _err = true ; _errmsg = _errmsg + '<p>' + _rslt; 
+                          if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
                             $('#eBoxContents_banners').html(_rslt);
                             $('#eBox_customer_banners').show();
                           }
@@ -521,8 +506,7 @@ $(document).ready(function() {
                           $('#img_copy_progress_configuration').show();
                           setTimeout(function() {
                             _rslt = doImport('_configuration'); 
-                            if(_rslt === ""){  }
-                            else { _err = true ; _errmsg = _errmsg + '<p>' + _rslt; 
+                            if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
                               $('#eBoxContents_configuration').html(_rslt);
                               $('#eBox_customer_configuration').show();
                             }
@@ -530,8 +514,7 @@ $(document).ready(function() {
                             $('#img_copy_progress_coupons').show();
                             setTimeout(function() {
                               _rslt = doImport('_coupons'); 
-                              if(_rslt === ""){  }
-                              else { _err = true ; _errmsg = _errmsg + '<p>' + _rslt; 
+                              if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
                                 $('#eBoxContents_coupons').html(_rslt);
                                 $('#eBox_customer_coupons').show();
                               }
@@ -539,8 +522,7 @@ $(document).ready(function() {
                               $('#img_copy_progress_taxclasses').show();
                               setTimeout(function() {
                                 _rslt = doImport('_taxclasses'); 
-                                if(_rslt === ""){  }
-                                else { _err = true ; _errmsg = _errmsg + '<p>' + _rslt; 
+                                if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
                                   $('#eBoxContents_taxclasses').html(_rslt);
                                   $('#eBox_customer_taxclasses').show();
                                 }
@@ -548,8 +530,7 @@ $(document).ready(function() {
                                 $('#img_copy_progress_languages').show();
                                 setTimeout(function() {
                                   _rslt = doImport('_languages'); 
-                                  if(_rslt === ""){  }
-                                  else { _err = true ; _errmsg = _errmsg + '<p>' + _rslt; 
+                                  if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
                                     $('#eBoxContents_languages').html(_rslt);
                                     $('#eBox_languages').show();
                                   }
@@ -557,8 +538,7 @@ $(document).ready(function() {
                                   $('#img_copy_progress_currencies').show();
                                   setTimeout(function() {
                                     _rslt = doImport('_currencies'); 
-                                    if(_rslt === ""){  }
-                                    else { _err = true ; _errmsg = _errmsg + '<p>' + _rslt; 
+                                    if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
                                       $('#eBoxContents_currencies').html(_rslt);
                                       $('#eBox_currencies').show();
                                     }
@@ -595,15 +575,15 @@ $(document).ready(function() {
                   }, 3000);                     
                 }, 3000);                  
               }, 3000);                
-            }, 3000);              
-          }, 3000);            
+            }, 3000);             
+          }, 3000);             
         }, 3000);          
       }, 3000);
     });
   }, 3000);
 });
   
-var doImport = function(datatype){
+var doImport = function(datatype) {
   var _success = false;
   var _emsg = "";
   $.ajax({

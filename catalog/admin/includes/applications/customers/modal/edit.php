@@ -439,7 +439,6 @@ function saveAddress(save) {
   var companyMin = '<?php echo ACCOUNT_COMPANY; ?>';
   var addressMin = '<?php echo ACCOUNT_STREET_ADDRESS; ?>';
   var suburbMin = '<?php echo ACCOUNT_SUBURB; ?>';
-  var postcodeMin = '<?php echo ACCOUNT_POST_CODE; ?>';
   var cityMin = '<?php echo ACCOUNT_CITY; ?>';
   var telephoneMin = '<?php echo ACCOUNT_TELEPHONE; ?>';
   var faxMin = '<?php echo ACCOUNT_FAX; ?>';
@@ -451,7 +450,6 @@ function saveAddress(save) {
       ab_company: { minlength: companyMin },
       ab_street_address: { minlength: addressMin, required: true },
       ab_suburb: { minlength: suburbMin },
-      ab_postcode: { minlength: postcodeMin, required: true },
       ab_city: { minlength: cityMin, required: true },
       ab_state: { required: true },
       ab_telephone: { minlength: telephoneMin, required: true },
@@ -534,7 +532,6 @@ function editAddress(id, primary) {
         $("#ab_street_address").val(data.street_address);
         $("#ab_suburb").val(data.suburb);
         $("#ab_city").val(data.city);
-        $("#ab_postcode").val(data.postcode);
         $("#ab_telephone").val(data.telephone_number);
         $("#ab_fax").val(data.fax_number);
         if (primary == 'false') {
