@@ -128,7 +128,7 @@ class lC_Checkout_Payment_address extends lC_Template {
           $Qzone = $lC_Database->query('select zone_id from :table_zones where zone_country_id = :zone_country_id and zone_code like :zone_code');
           $Qzone->bindTable(':table_zones', TABLE_ZONES);
           $Qzone->bindInt(':zone_country_id', $_POST['country']);
-          $Qzone->bindValue(':zone_code', preg_replace('/[^A-Z\s]/', '', $_POST['state']));
+          $Qzone->bindValue(':zone_code', preg_replace('/[^A-Za-z\s]/', '', $_POST['state']));
           $Qzone->execute();
 
           if ($Qzone->numberOfRows() === 1) {
@@ -137,7 +137,7 @@ class lC_Checkout_Payment_address extends lC_Template {
             $Qzone = $lC_Database->query('select zone_id from :table_zones where zone_country_id = :zone_country_id and zone_name like :zone_name');
             $Qzone->bindTable(':table_zones', TABLE_ZONES);
             $Qzone->bindInt(':zone_country_id', $_POST['country']);
-            $Qzone->bindValue(':zone_name', preg_replace('/[^A-Z\s]/', '', $_POST['state']) . '%');
+            $Qzone->bindValue(':zone_name', preg_replace('/[^A-Za-z\s]/', '', $_POST['state']) . '%');
             $Qzone->execute();
 
             if ($Qzone->numberOfRows() === 1) {
@@ -154,7 +154,7 @@ class lC_Checkout_Payment_address extends lC_Template {
           }
         }
       }
-
+      
       if ( (is_numeric($_POST['country']) === false) || ($_POST['country'] < 1) ) {
         $lC_MessageStack->add('checkout_address', $lC_Language->get('field_customer_country_error'));
       }
@@ -170,7 +170,7 @@ class lC_Checkout_Payment_address extends lC_Template {
           $lC_MessageStack->add('checkout_address', sprintf($lC_Language->get('field_customer_fax_number_error'), ACCOUNT_FAX));
         }
       }
-
+      
       if ($lC_MessageStack->size('checkout_address') === 0) {
         $Qab = $lC_Database->query('insert into :table_address_book (customers_id, entry_gender, entry_company, entry_firstname, entry_lastname, entry_street_address, entry_suburb, entry_postcode, entry_city, entry_state, entry_country_id, entry_zone_id, entry_telephone, entry_fax) values (:customers_id, :entry_gender, :entry_company, :entry_firstname, :entry_lastname, :entry_street_address, :entry_suburb, :entry_postcode, :entry_city, :entry_state, :entry_country_id, :entry_zone_id, :entry_telephone, :entry_fax)');
         $Qab->bindTable(':table_address_book', TABLE_ADDRESS_BOOK);
