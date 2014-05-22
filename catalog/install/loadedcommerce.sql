@@ -153,6 +153,7 @@ CREATE TABLE lc_categories (
   categories_visibility_box tinyint(1) DEFAULT '1',
   date_added datetime DEFAULT NULL,
   last_modified datetime DEFAULT NULL,
+  access_levels VARCHAR(255) NOT NULL DEFAULT '',
   PRIMARY KEY (categories_id),
   KEY idx_categories_parent_id (parent_id)
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
@@ -303,6 +304,14 @@ CREATE TABLE lc_customers (
   PRIMARY KEY (customers_id)
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
+DROP TABLE IF EXISTS lc_customers_access;
+CREATE TABLE lc_customers_access (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  level varchar(128) NOT NULL DEFAULT '',
+  `status` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (id)
+) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+
 DROP TABLE IF EXISTS lc_customers_groups;
 CREATE TABLE lc_customers_groups (
   customers_group_id int(11) NOT NULL AUTO_INCREMENT,
@@ -317,6 +326,7 @@ CREATE TABLE lc_customers_groups_data (
   id int(11) NOT NULL AUTO_INCREMENT,
   customers_group_id int(11) NOT NULL DEFAULT '1',
   baseline_discount decimal(5,2) NOT NULL DEFAULT '0.00',
+  customers_access_levels VARCHAR(255) NOT NULL DEFAULT '',
   PRIMARY KEY (id)
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
@@ -595,6 +605,7 @@ CREATE TABLE lc_products (
   products_ordered int(11) NOT NULL DEFAULT '0',
   has_children int(11) DEFAULT NULL,
   is_subproduct TINYINT(1) NOT NULL DEFAULT '0',
+  access_levels VARCHAR(255) NOT NULL DEFAULT '',
   PRIMARY KEY (products_id),
   KEY idx_products_date_added (products_date_added)
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
