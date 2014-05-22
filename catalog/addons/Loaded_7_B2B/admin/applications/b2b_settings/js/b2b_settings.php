@@ -10,7 +10,5 @@
 ?>
 <script>
 $(document).ready(function() {  
-  alert('here');
-  $('.guest-catalog-access-slider').slider();
 });
 </script>
