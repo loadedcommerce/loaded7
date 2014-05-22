@@ -55,8 +55,32 @@ class lC_B2b_settings_Admin {
   }
   
   public static function getCustomerAccessMembers($id) {
+    global $lC_Database;
+
+    $groups = array();
     
-    return array('members' => rand(1, 100));
+    $Qgroups = $lC_Database->query('select customers_group_id, customers_access_levels from :table_customers_groups_data');
+    $Qgroups->bindTable(':table_customers_groups_data', TABLE_CUSTOMERS_GROUPS_DATA);
+    $Qgroups->execute();
+    
+    while($Qgroups->next()) {
+      $levelsArr = explode(';', $Qgroups->value('customers_access_levels'));  
+      if (in_array($id, $levelsArr)) $groups[] = $Qgroups->value('customers_group_id');
+    }
+    
+    $cnt = 0;
+    foreach($groups as $key => $cgID) {
+      $Qcustomers = $lC_Database->query('select count(*) as total from :table_customers where customers_group_id = :customers_group_id');
+      $Qcustomers->bindTable(':table_customers', TABLE_CUSTOMERS);
+      $Qcustomers->bindInt(':customers_group_id', $cgID);
+      $Qcustomers->execute();      
+      
+      $cnt = $cnt + $Qcustomers->valueInt('total'); 
+      
+      $Qcustomers->freeResult();
+    }
+    
+    return array('members' => $cnt);
   }
  /*
   * Returns the b2b_settings information
