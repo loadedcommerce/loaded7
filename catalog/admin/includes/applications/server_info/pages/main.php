@@ -77,7 +77,7 @@ $lC_ObjectInfo = new lC_ObjectInfo(lc_get_system_information());
     </div>
 
     <div class="six-columns twelve-columns-tablet">
-      <fieldset class="fieldset">
+      <fieldset class="fieldset large-margin-right">
         <legend class="legend"><?php echo $lC_Language->get('heading_legend_hooks_running'); ?></legend>    
         <ul class="list spaced hooks-list"><?php echo lC_Server_info_Admin::checkHooks(); ?></p>    
       </fieldset>
