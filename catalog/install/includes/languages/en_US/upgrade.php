@@ -144,7 +144,10 @@ param_import_tax = TAX CLASSES/RATES
 param_import_tax_description = importing Tax Class and Rate data  
 
 param_import_languages = LANGUAGE DATA  
-param_import_tax_description = importing main Langaues table data 
+param_import_tax_description = importing main Langaues table data  
+
+param_import_currencies = CURRENCIES  
+param_import_currencies_description = importing Currencies table data 
 
 rpc_upgrade_success = import completed
 rpc_upgrade_inprogress = import in progress

@@ -23,12 +23,15 @@ class lC_Application_Login extends lC_Template_Admin {
   * Class constructor
   */
   public function __construct() {
-    global $lC_Language, $lC_Api;
+    global $lC_Language, $lC_Api, $ioncube_check;
 
     $this->_page_title = $lC_Language->get('heading_title');
     $this->_has_wrapper = false;
     $this->_has_header = false;
     $this->_has_footer = false;
+    
+    // added for ioncube check
+    $ioncube_check = utility::ioncubeCheck();
   }
 }
 ?>

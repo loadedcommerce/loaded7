@@ -490,6 +490,7 @@ CREATE TABLE lc_orders_products (
   orders_id int(11) NOT NULL,
   products_id int(11) NOT NULL,
   products_model varchar(255) DEFAULT NULL,
+  products_sku varchar(255) DEFAULT NULL,
   products_name varchar(255) NOT NULL,
   products_price decimal(15,4) NOT NULL DEFAULT '0.0000',
   products_tax decimal(7,4) NOT NULL DEFAULT '0.0000',
@@ -712,6 +713,7 @@ CREATE TABLE lc_products_variants (
   products_id int(10) unsigned NOT NULL,
   products_variants_values_id int(10) unsigned NOT NULL,
   default_combo tinyint(3) unsigned DEFAULT NULL,
+  default_visual int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (products_id,products_variants_values_id)
 ) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
@@ -1191,6 +1193,8 @@ INSERT INTO lc_configuration (configuration_id, configuration_title, configurati
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(177, 'Maximum Entries To Display', 'MODULE_CONTENT_FEATURED_PRODUCTS_MAX_DISPLAY', '10', 'Maximum number of featured products to display', 6, 0, now(), now(), NULL, NULL);
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(178, 'Cache Contents', 'MODULE_CONTENT_FEATURED_PRODUCTS_CACHE', '1440', 'Number of minutes to keep the contents cached (0 = no cache)', 6, 0, now(), now(), NULL, NULL);
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(179, 'Top Information Category', 'BOX_INFORMATION_PAGES_ROOT_CATEGORY', 2, 'Select the Top Category of the Information Pages Infobox', 6, 0, now(), now(), 'lc_cfg_set_info_pages_top_category(BOX_INFORMATION_PAGES_ROOT_CATEGORY)', 'lc_cfg_set_info_pages_top_category');
+INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(180, 'Session Lifetime', 'SESSION_LIFETIME', 3600, 'The amount of time a user is logged in for after the last action.', 10, 0, now(), now(), NULL, NULL);
+INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(181, 'Force Cookie Use', 'SESSION_FORCE_COOKIES', -1, 'Force the use cookies to handle sessions.', 10, 0, now(), now(), 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))');
 
 INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(1, 'My Store', 'General information about my store', 1, 1);
 INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(2, 'Minimum Values', 'The minimum values for functions / data', 2, 1);
@@ -1201,6 +1205,7 @@ INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_
 INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(7, 'Shipping/Packaging', 'Shipping options available at my store', 7, 1);
 INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(8, 'Product Listing', 'Product Listing    configuration options', 8, 1);
 INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(9, 'Stock', 'Stock configuration options', 9, 1);
+INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(10, 'Sessions', 'Session configuration options', 10, 1);
 INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(12, 'E-Mail Options', 'General setting for E-Mail transport and HTML E-Mails', 12, 1);
 INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(13, 'Download', 'Downloadable products options', 13, 1);
 INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(16, 'Regulations', 'Regulation options', 16, 1);

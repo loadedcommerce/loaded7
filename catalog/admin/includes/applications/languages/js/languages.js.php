@@ -34,12 +34,12 @@ if (!empty($_GET['group'])) { // definition listing
       $('#dataTable_length').hide();
       $('#actionText').hide();
       $('.on-mobile').show();
-    }     
+    } 
     var error = '<?php echo $_SESSION['error']; ?>';
     if (error) {
       var errmsg = '<?php echo $_SESSION['errmsg']; ?>';
       $.modal.alert(errmsg);
-    }
+    }        
   });
 </script>
 <?php
@@ -101,11 +101,17 @@ $(document).ready(function() {
     $('#dataTable_length').hide();
     $('#actionText').hide();
     $('.on-mobile').show();
-  }    
+  }   
   var error = '<?php echo $_SESSION['error']; ?>';
   if (error) {
     var errmsg = '<?php echo $_SESSION['errmsg']; ?>';
     $.modal.alert(errmsg);
+  }   
+  var action = '<?php echo ((isset($_GET['action']) && $_GET['action'] != NULL) ? $_GET['action'] : ''); ?>';
+  if (action == 'edit') {
+    var id = '<?php echo ((isset($_GET['id']) && $_GET['id'] != NULL) ? $_GET['id'] : ''); ?>';
+    editLanguage(id);
+    return;
   }
 });
 </script>

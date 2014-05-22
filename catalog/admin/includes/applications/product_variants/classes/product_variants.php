@@ -27,9 +27,10 @@ class lC_Product_variants_Admin {
 
     $result = array('aaData' => array());
     while ( $Qgroups->next() ) {
-      $Qentries = $lC_Database->query('select count(*) as total from :table_products_variants_values where products_variants_groups_id = :products_variants_groups_id');
+      $Qentries = $lC_Database->query('select count(*) as total from :table_products_variants_values where products_variants_groups_id = :products_variants_groups_id and  languages_id = :languages_id');
       $Qentries->bindTable(':table_products_variants_values', TABLE_PRODUCTS_VARIANTS_VALUES);
       $Qentries->bindInt(':products_variants_groups_id', $Qgroups->valueInt('id'));
+      $Qentries->bindInt(':languages_id', $lC_Language->getID());
       $Qentries->execute();
 
       $check = '<td><input class="batch" type="checkbox" name="batch[]" value="' . $Qgroups->valueInt('id') . '" id="' . $Qgroups->valueInt('id') . '"></td>';

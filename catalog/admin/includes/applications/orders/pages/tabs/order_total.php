@@ -10,44 +10,34 @@
 */
 ?>
 <div id="section_orders_totals">
-  <h3 class="show-below-768 margin-left margin-top no-margin-bottom"><?php echo $lC_Language->get('text_order_totals'); ?></h3>
-  <div class="columns with-padding">
+  <h3 class="show-below-768 margin-left margin-top"><?php echo $lC_Language->get('text_order_totals'); ?></h3>
+  <div class="columns with-padding no-margin-bottom">
+    <?php 
+      echo lc_draw_hidden_field('action_order_total', '', 'id="action_order_total"');
+    ?>
     <div class="new-row-mobile twelve-columns twelve-columns-mobile no-margin-bottom">
-      <div class="columns">
-        <div class="new-row-mobile twelve-columns twelve-columns-mobile no-margin-bottom">
-          <div class="columns">
-            <div class="new-row-mobile five-columns twelve-columns-mobile mid-margin-bottom">
-              <span class="icon-list icon-anthracite">
-                <strong class="small-margin-left">
-                  <?php echo $lC_Language->get('text_order_totals'); ?>
-                </strong>
-              </span>
-            </div>
-            <div class="new-row-mobile seven-columns twelve-columns-mobile no-margin-bottom">
-              <span class="button-group mid-margin-bottom">
-                <a href="javascript:void(0);" onclick="addOrderTotal(<?php echo $_GET[$lC_Template->getModule()]; ?>, '<?php echo $lC_Currencies->getSymbolLeft(); ?>');">
-                  <button type="button" class="button glossy">
-                    <span class="button-icon green-gradient">
-                      <span class="icon-plus"></span>
-                    </span>
-                    <?php echo $lC_Language->get('text_add_item'); ?>            
-                  </button>
-                </a>
-              </span>
-              <?php 
-                echo lc_draw_hidden_field('action_order_total', '', 'id="action_order_total"');
-              ?>
-            </div>
-          </div>
-        </div>
-        <div class="new-row-mobile twelve-columns twelve-columns-mobile no-margin-bottom">
-          <div class="columns">
-            <?php
-              echo lC_Orders_Admin::getOrderTotalsList($_GET[$lC_Template->getModule()]);
-            ?>
-          </div>
-        </div>
-      </div>
-    </div> 
+      <span class="icon-list icon-anthracite">
+        <strong class="small-margin-left">
+          <?php echo $lC_Language->get('text_order_totals'); ?>
+        </strong>
+      </span>
+    </div>
+    <div class="new-row-mobile twelve-columns twelve-columns-mobile mid-margin-bottom align-right">
+      <span class="mid-margin-bottom">
+        <a href="javascript:void(0);" onclick="addOrderTotal(<?php echo $_GET[$lC_Template->getModule()]; ?>, '<?php echo $lC_Currencies->getSymbolLeft(); ?>');">
+          <button type="button" class="button icon-plus-round green-gradient compact">
+            <?php echo $lC_Language->get('text_add_item'); ?>            
+          </button>
+        </a>
+        <a href="javascript:void(0);" onclick="saveOrderTotal('<?php echo $_GET[$lC_Template->getModule()]; ?>');">
+          <button type="button" class="button icon-tick green-gradient compact">
+            <?php echo $lC_Language->get('text_save'); ?>
+          </button>
+        </a>&nbsp;&nbsp;&nbsp;
+      </span>
+    </div>
+    <?php
+      echo lC_Orders_Admin::getOrderTotalsList($_GET[$lC_Template->getModule()]);
+    ?>
   </div>
 </div>

@@ -13,6 +13,7 @@ global $lC_Vqmod;
 require_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/classes/addons.php'));
 require_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/classes/transport.php'));
 require_once($lC_Vqmod->modCheck(DIR_FS_ADMIN . 'includes/applications/updates/classes/updates.php'));
+require_once($lC_Vqmod->modCheck(DIR_FS_ADMIN . 'includes/applications/languages/classes/languages.php'));
 
 if (!class_exists('lC_Store_Admin')) {
   class lC_Store_Admin { 
@@ -56,11 +57,14 @@ if (!class_exists('lC_Store_Admin')) {
           $title = '<div style="position:relative;"><strong>' . str_replace(' ', '&nbsp;', $addon['title']) . '</strong><br />' . lc_image('../images/stars_' . $addon['rating'] . '.png', sprintf($lC_Language->get('rating_from_5_stars'), $addon['rating']), null, null, 'class="mid-margin-top small-margin-bottom no-margin-left"') . $mobileEnabled . $inCloud . $featured . '<br /><small>' . str_replace(' ', '&nbsp;', $addon['author']) . $upsell . '</small>';
           $desc = ($media != 'tablet-portrait' && $media != 'tablet-landscape') ? substr($addon['description'], 0, 300) . '...' : null;     
 
-          if ($addon['installed'] == '1') { 
-            $bg = ($addon['enabled'] == '1') ? ' green-gradient' : ' silver-gradient'; 
-            $action = '<button onclick="editAddon(\'' . $addon['code'] . '\',\'' . urlencode($addon['type']) . '\');" class="button icon-gear glossy' . $bg . '">Setup</button><div class="mid-margin-top"><a href="#"><!-- span class="icon-search">More Info</span --></a></div>';
+          //check if template or language
+          $tlID = self::_isInstalled($addon['code'], $addon['type']);
+          
+          if ($addon['installed'] == '1' || $tlID) { 
+            $bg = ($addon['enabled'] == '1' || $tlID) ? ' green-gradient' : ' silver-gradient'; 
+            $action = '<button onclick="editAddon(\'' . $addon['code'] . '\',\'' . urlencode($addon['type']) . '\',\'' . $tlID . '\');" class="button icon-gear glossy' . $bg . '">' . $lC_Language->get('button_setup') . '</button><div class="mid-margin-top"><a href="#"><!-- span class="icon-search">More Info</span --></a></div>';
           } else {  
-            $action = '<button onclick="installAddon(\'' . $addon['code'] . '\',\'' . urlencode($addon['type']) . '\');" class="button icon-download orange-gradient glossy">Install</button><div class="mid-margin-top"><a href="#"><!-- span class="icon-search">More Info</span --></a></div>';
+            $action = '<button onclick="installAddon(\'' . $addon['code'] . '\',\'' . urlencode($addon['type']) . '\');" class="button icon-download orange-gradient glossy">' . $lC_Language->get('button_install') . '</button><div class="mid-margin-top"><a href="#"><!-- span class="icon-search">More Info</span --></a></div>';
           }
           if ($isInternal != NULL) $action .= $isInternal;
 
@@ -69,6 +73,47 @@ if (!class_exists('lC_Store_Admin')) {
       } 
 
       return $result;
+    }
+    /*
+    * Checks to see if the template or language addon is installed
+    *
+    * @access protected
+    * @return boolean
+    */    
+    protected static function _isInstalled($key, $type) {
+      global $lC_Database;
+      
+      $id = false;
+      switch ($type) {
+        case 'templates' :
+          $code = end(explode('_', $key));
+          $Qchk = $lC_Database->query('select id from :table_templates where code = :code');
+          $Qchk->bindTable(':table_templates', TABLE_TEMPLATES);
+          $Qchk->bindValue(':code', $code);
+          $Qchk->execute(); 
+          
+          if ($Qchk->numberOfRows() > 0) {
+            $id = $Qchk->valueInt('id');
+            if (!file_exists(DIR_FS_CATALOG . 'templates/' . $code . '.php')) $id = false;
+          }
+          break;
+          
+        case 'languages' :
+          $Qchk = $lC_Database->query('select languages_id from :table_languages where code = :code');
+          $Qchk->bindTable(':table_languages', TABLE_LANGUAGES);
+          $Qchk->bindValue(':code', $key);
+          $Qchk->execute(); 
+          
+          if ($Qchk->numberOfRows() > 0) {
+            $id = $Qchk->valueInt('languages_id');
+            if (!file_exists(DIR_FS_CATALOG . 'includes/languages/' . $key . '.xml')) $id = false;
+          }        
+          break;
+          
+        default:
+      }
+      
+      return $id;
     }
     /*
     * Return the addon information
@@ -341,7 +386,7 @@ if (!class_exists('lC_Store_Admin')) {
     */
     public static function install($key) {
       global $lC_Database, $lC_Language, $lC_Vqmod, $lC_Addons;
-
+              
       $isTemplate = (strstr($key, 'lC_Template_')) ? true : false;
       if ($isTemplate) {
         $key = str_replace('lC_Template_', '', $key);
@@ -358,16 +403,23 @@ if (!class_exists('lC_Store_Admin')) {
 
         return true;
 
-      } else { // is addon
+      } else { // is addon or language
 
         if ( !file_exists(DIR_FS_CATALOG . 'addons/' . $key . '/controller.php') ) {
           // get the addon phar from the store
-          self::getAddonPhar($key);
-          
+          self::getAddonPhar($key);   
+
+          $phar = new Phar(DIR_FS_WORK . 'addons/' . $key . '.phar', 0);
+          $meta = $phar->getMetadata();
+         
           // apply the addon phar 
           if (file_exists(DIR_FS_WORK . 'addons/' . $key . '.phar')) {
             lC_Updates_Admin::applyPackage(DIR_FS_WORK . 'addons/' . $key . '.phar');
           }
+          
+          if ($meta['type'] == 'language') {
+            return true;            
+          }          
         }
 
         // sanity check to see if the object is already installed

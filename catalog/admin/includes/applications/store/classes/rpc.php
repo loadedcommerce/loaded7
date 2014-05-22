@@ -33,7 +33,7 @@ class lC_Store_Admin_rpc {
   * @return json
   */
   public static function getFormData() {
-    $result = lC_Store_Admin::getData($_GET['name']);     
+    $result = lC_Store_Admin::getData($_GET['code']);     
     $result['rpcStatus'] = RPC_STATUS_SUCCESS;
 
     echo json_encode($result);

@@ -199,7 +199,7 @@ class lC_Success {
   */
   public static function getOrderProducts($_oID) {
     global $lC_Database;
-  
+
     $QorderProducts = $lC_Database->query('select * from :table_orders_products where orders_id = :orders_id order by orders_products_id asc');
     $QorderProducts->bindTable(':table_orders_products', TABLE_ORDERS_PRODUCTS);
     $QorderProducts->bindInt(':orders_id', $_oID);
@@ -210,7 +210,9 @@ class lC_Success {
                                        'quantity' => $QorderProducts->valueInt('products_quantity'),
                                        'name' => $QorderProducts->value('products_name'),
                                        'model' => $QorderProducts->value('products_model'),
+                                       'sku' => $QorderProducts->value('products_sku'),
                                        'price' => $QorderProducts->value('products_price'),
+                                       'tax' => $QorderProducts->value('products_tax'),
                                        'options' => unserialize($QorderProducts->value('products_simple_options_meta_data')));
     }
     

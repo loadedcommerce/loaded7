@@ -54,10 +54,12 @@ class lC_Products_Products extends lC_Template {
         $this->addOGPTags('url', lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword(), 'NONSSL',false,true,true));
         $this->addOGPTags('image', HTTP_SERVER . DIR_WS_CATALOG . 'templates/' . $template_code . '/images/logo.png');
         $this->addOGPTags('image', HTTP_SERVER . DIR_WS_CATALOG . $lC_Image->getAddress($lC_Product->getImage(), 'large'));
-        foreach ( $lC_Product->getImages() as $key => $value ) {
-          if ($value['default_flag'] == true) continue;
-          if(file_exists(DIR_FS_CATALOG . $lC_Image->getAddress($value['image'], 'popup'))){
-            $this->addOGPTags('image', HTTP_SERVER . DIR_WS_CATALOG . $lC_Image->getAddress($value['image'], 'large'));
+        if ($lC_Product->getImages() != '') {
+          foreach ( $lC_Product->getImages() as $key => $value ) {
+            if ($value['default_flag'] == true) continue;
+            if (file_exists(DIR_FS_CATALOG . $lC_Image->getAddress($value['image'], 'popup'))) {
+              $this->addOGPTags('image', HTTP_SERVER . DIR_WS_CATALOG . $lC_Image->getAddress($value['image'], 'large'));
+            }
           }
         }
       

@@ -20,7 +20,7 @@
       }
     ?>
   </div>
-  
+  <div class="clearfix"></div>
   <div class="content-product-listing-div">
     <?php 
     if (PRODUCT_LIST_FILTER == '1') echo lC_Template_output::getManufacturerFilter();

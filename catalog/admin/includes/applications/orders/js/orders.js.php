@@ -890,11 +890,11 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
       );
     }
 
-    var result = '<div class="with-small-padding" id="addedOrderTotalRow_' + type + '">' + 
+    var result = '<div class="with-small-padding align-right" id="addedOrderTotalRow_' + type + '">' + 
                  '  <span class="icon-list icon-anthracite">&nbsp;' +
-                 '    <input type="text" id="title_' + type + '" name="title_' + type + '" value="' + title + '" style="width:30%;">' +
+                 '    <input type="text" id="title_' + type + '" name="title_' + type + '" value="' + title + '" class="input with-small-padding" style="width:30%;margin-left:-4px;margin-right:-4px;">' +
                  '  </span>&nbsp;&nbsp;' +
-                 '  <input type="text" id = "value_' + type + '" name="value_' + type + '" value="' + currencySymbolLeft + num_value + '" style="width:10%;text-align:right;min-width:65px;" onkeyup="updateGrandTotal(\'' + currencySymbolLeft + '\');">&nbsp;&nbsp;' +
+                 '  <input type="text" id = "value_' + type + '" name="value_' + type + '" value="' + currencySymbolLeft + num_value + '" class="input with-small-padding" style="width:10%;text-align:right;min-width:65px;" onkeyup="updateGrandTotal(\'' + currencySymbolLeft + '\');">&nbsp;&nbsp;' +
                  '  <a href="javascript:void(0);" onclick="removeOrderTotalRow(' + oID + ', \'' + type + '\', \'' + currencySymbolLeft + '\')" class="icon-minus-round icon-red with-tooltip" title="remove"></a>' +
                  '</div>';
 
