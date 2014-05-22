@@ -9,6 +9,9 @@
   @version    $Id: main.php v1.0 2013-08-08 datazen $
 */
 $lC_ObjectInfo = new lC_ObjectInfo(lc_get_system_information());
+//echo "<pre>";
+//print_r(lC_Server_info_Admin::getAddons());
+//echo "</pre>";
 ?>
 <!-- Main content -->
 <section role="main" id="main">
@@ -17,7 +20,7 @@ $lC_ObjectInfo = new lC_ObjectInfo(lc_get_system_information());
     <h1><?php echo $lC_Template->getPageTitle(); ?></h1>
   </hgroup>
   <style>
-  LABEL { width: 30% !important; } 
+  LABEL { width: 30% !important; }
   </style>
   <div class="columns small-margin-left">
 
@@ -65,6 +68,22 @@ $lC_ObjectInfo = new lC_ObjectInfo(lc_get_system_information());
         <span><?php echo 'PHP: ' . $lC_ObjectInfo->get('php') . ' / Zend: ' . $lC_ObjectInfo->get('zend') . ' (' . lc_link_object(lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=phpInfo'), $lC_Language->get('more_information'), 'target="_blank"') . ')'; ?></span>
       </p>          
     </div>
+    
+    <div class="new-row six-columns twelve-columns-tablet">
+      <fieldset class="fieldset">
+        <legend class="legend"><?php echo $lC_Language->get('heading_legend_addons_running'); ?></legend>    
+        <ul class="list spaced addons-list"><?php echo lC_Server_info_Admin::listAddons(); ?></ul>    
+      </fieldset>
+    </div>
+
+    <div class="six-columns twelve-columns-tablet">
+      <fieldset class="fieldset">
+        <legend class="legend"><?php echo $lC_Language->get('heading_legend_hooks_running'); ?></legend>    
+        <ul class="list spaced hooks-list"><?php echo lC_Server_info_Admin::checkHooks(); ?></p>    
+      </fieldset>
+    </div>    
+    
+    
     <div class="new-row twelve-columns-tablet">
       <p class="align-center">
         <span>

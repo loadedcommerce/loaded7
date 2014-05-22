@@ -7,6 +7,9 @@
 
 heading_title = Server Information
 
+heading_legend_addons_running = Addons Currently Running
+heading_legend_hooks_running = Hooks Currently Running
+
 field_server_host = Server Host:
 field_server_operating_system = Server OS:
 field_server_date = Server Date:
@@ -21,3 +24,5 @@ field_installation_id = Installation ID:
 
 more_information = more info
 no_installation_id = UNREGISTERED COPY
+cached_file_exists = cached file exists
+cached_file_not_exists = cached file DOES NOT exist
