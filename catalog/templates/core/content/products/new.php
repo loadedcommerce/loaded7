@@ -25,7 +25,7 @@
     <?php 
     $lC_Products = new lC_Products();
     $lC_Products->setSortBy('date_added', '-');
-    $Qlisting = $lC_Products->execute(MODULE_CONTENT_NEW_PRODUCTS_MAX_DISPLAY);    
+    $Qlisting = $lC_Products->execute(NEW_PRODUCTS_PER_PAGE_DISPLAY);    
     
     if (PRODUCT_LIST_FILTER == '1') echo lC_Template_output::getManufacturerFilter();
   
