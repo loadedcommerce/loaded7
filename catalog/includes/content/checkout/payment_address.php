@@ -206,7 +206,7 @@ class lC_Checkout_Payment_address extends lC_Template {
           }
 
           $lC_ShoppingCart->setBillingAddress($address_book_id);
-          $lC_ShoppingCart->resetBillingMethod();
+          //$lC_ShoppingCart->resetBillingMethod();
 
           lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment', 'SSL'));
         } else {
