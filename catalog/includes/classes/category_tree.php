@@ -81,7 +81,7 @@ class lC_CategoryTree {
       while ( $Qcategories->next() ) {
         // added to grab permalink if exists
         $Qpermalink = $lC_Database->query('select item_id, query, permalink from :table_permalinks where item_id = :item_id and language_id = :language_id and type = 1 limit 1');
-        $Qpermalink->bindTable(':table_permalinks', 'lc_permalinks');
+        $Qpermalink->bindTable(':table_permalinks', TABLE_PERMALINKS);
         $Qpermalink->bindInt(':item_id', $Qcategories->valueInt('categories_id'));
         $Qpermalink->bindInt(':language_id', $lC_Language->getID());
         $Qpermalink->execute();
