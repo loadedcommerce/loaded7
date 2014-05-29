@@ -284,7 +284,9 @@ TD { padding: 5px 0 0 5px; }
                   <!-- VQMOD-hookpoint; DO NOT MODIFY OR REMOVE THE LINE BELOW -->
                   <p class="margin-left"><input type="checkbox" class="checkbox small-margin-right" disabled> <?php echo $lC_Language->get('access_levels_registered'); ?></p><p class="margin-left"><input type="checkbox" class="checkbox small-margin-right" disabled> <?php echo $lC_Language->get('access_levels_wholesale'); ?></p><p class="margin-left"><input type="checkbox" class="checkbox small-margin-right" disabled> <?php echo $lC_Language->get('access_levels_dealer'); ?></p>
                 </div>
-                <div class="six-columns twelve-columns-mobile"></div>
+                <!-- VQMOD-hookpoint; DO NOT MODIFY OR REMOVE THE LINE BELOW -->
+                <div id="edit-category-relationship-right-div" class="six-columns twelve-columns-mobile">
+                </div>
               </div>
             </fieldset>
           </div>

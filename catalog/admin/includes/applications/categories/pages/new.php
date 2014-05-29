@@ -262,7 +262,7 @@ TD { padding: 5px 0 0 5px; }
               <div class="columns no-margin-bottom">
                 <div class="six-columns twelve-columns-mobile upsellwrapper">
                   <p class="small-margin-bottom">
-                    <label class="label strong" for="categories_access_levels"><?php echo $lC_Language->get('field_access'); ?></label>
+                    <label class="label anthracite" for="categories_access_levels"><b><?php echo $lC_Language->get('field_access'); ?></b></label>
                     <!-- VQMOD-hookpoint; DO NOT MODIFY OR REMOVE THE LINE BELOW -->
                     <span class="upsellinfo" upselltitle="<?php echo $lC_Language->get('text_access_levels_upsell_title'); ?>" upselldesc="<?php echo $lC_Language->get('text_access_levels_upsell_desc'); ?>"><?php echo lc_go_b2b(); ?></span>  
                     <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_categories_access_levels'), null, 'on-right grey large-margin-left'); ?>  
@@ -270,7 +270,9 @@ TD { padding: 5px 0 0 5px; }
                   <!-- VQMOD-hookpoint; DO NOT MODIFY OR REMOVE THE LINE BELOW -->
                   <p class="margin-left"><input type="checkbox" class="checkbox small-margin-right" disabled> <?php echo $lC_Language->get('access_levels_registered'); ?></p><p class="margin-left"><input type="checkbox" class="checkbox small-margin-right" disabled> <?php echo $lC_Language->get('access_levels_wholesale'); ?></p><p class="margin-left"><input type="checkbox" class="checkbox small-margin-right" disabled> <?php echo $lC_Language->get('access_levels_dealer'); ?></p>
                 </div>
-                <div class="six-columns twelve-columns-mobile"></div>
+                <!-- VQMOD-hookpoint; DO NOT MODIFY OR REMOVE THE LINE BELOW -->
+                <div id="new-category-relationship-right-div" class="six-columns twelve-columns-mobile">
+                </div>
               </div>
             </fieldset>
           </div>          

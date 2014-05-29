@@ -37,6 +37,8 @@ class lC_Application_Categories_Actions_save extends lC_Application_Categories {
                         
           // access levels
           if (isset($_POST['access_levels'])) $data['access_levels'] = $_POST['access_levels'];                        
+          if (isset($_POST['sync_all_products'])) $data['sync_all_products'] = $_POST['sync_all_products'];                        
+          if (isset($_POST['sync_all_children'])) $data['sync_all_children'] = $_POST['sync_all_children'];                        
           
          /*
           * Save the category information
