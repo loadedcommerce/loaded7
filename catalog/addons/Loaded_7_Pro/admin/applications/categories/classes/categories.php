@@ -13,7 +13,6 @@ global $lC_Vqmod;
 if (!defined('DIR_FS_ADMIN')) return false;
 
 include_once($lC_Vqmod->modCheck(DIR_FS_ADMIN . 'includes/applications/categories/classes/categories.php'));
-include_once($lC_Vqmod->modCheck(DIR_FS_ADMIN . 'includes/classes/category_tree.php'));
 
 class lC_Categories_Admin_Pro extends lC_Categories_Admin {
  /*
@@ -31,11 +30,6 @@ class lC_Categories_Admin_Pro extends lC_Categories_Admin {
 
     $error = false;
     
-echo "<pre>";
-print_r($data);
-echo "</pre>";
-die('00');    
-
     $lC_Database->startTransaction();
       
     $levels = '';
