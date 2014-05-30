@@ -112,6 +112,7 @@ text_common = Common
 text_custom_link  = Custom Link
 text_drag_drop_to_replace = Drag & Drop or&nbsp;
 text_edit_category = Edit Category
+text_edit_access = Edit Access
 text_faq = FAQ
 text_move_category = Move Category
 text_new_category = New Category

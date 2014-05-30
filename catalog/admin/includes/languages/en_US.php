@@ -180,6 +180,7 @@ ms_error_check_invalid_input = Some field(s) are invalid.  Check all tabs.
 ms_error_nothing_to_delete = You have not selected anything to delete!
 ms_error_nothing_to_copy = You have not selected anything to copy!
 ms_error_nothing_to_move = You have not selected anything to move!
+ms_error_nothing_to_change = You have not selected anything to change!
 ms_error_no_access = You do not have the access level required for this operation!
 ms_error_javascript_not_enabled_for_upload = Please enable JavaScript to use ajax file uploader.
 ms_error_javascript_not_enabled_warning = Your browser does not support JavaScript! Some features won't work as expected.

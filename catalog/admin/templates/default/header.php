@@ -23,7 +23,6 @@
   </div>
 </header>
 <?php
-echo '[' . utility::isB2B() . ']<br>';
 if ( $lC_MessageStack->size('header') > 0 ) {
   echo $lC_MessageStack->get('header');
 }

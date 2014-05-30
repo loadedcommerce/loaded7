@@ -66,9 +66,10 @@
     </table>
     <div class="selectContainer">
       <select <?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? NULL : 'onchange="doSelectFunction(this);"'); ?> name="selectAction" id="selectAction" class="select blue-gradient glossy<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? ' disabled' : NULL); ?>">
-        <option value="0" selected="selected">With Selected</option>
-        <option value="move">Move</option>
-        <option value="delete">Delete</option>
+        <option value="0" selected="selected"><?php echo $lC_Language->get('text_with_selected'); ?></option>
+        <option value="access"><?php echo $lC_Language->get('text_edit_access'); ?></option>
+        <option value="move"><?php echo $lC_Language->get('text_move'); ?></option>
+        <option value="delete"><?php echo $lC_Language->get('text_delete'); ?></option>
       </select>
     </div>
     </form>
