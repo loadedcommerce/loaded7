@@ -549,7 +549,7 @@ class lC_Addons_Admin extends lC_Addons {
       $class = $nameArr[count($nameArr)-2];
 
       if (file_exists($ao['path'])) {
-        if (class_exists($class)) { 
+        if (isset($aoData)) { 
         } else {
           include_once($lC_Vqmod->modCheck($ao['path']));
           $aoData = new $class();
