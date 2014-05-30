@@ -4033,7 +4033,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
       while ($sQry->next()) {
         $orders_products_id = $sQry->value($map['orders_products_id']);
         
-        // ADDED FOR ORDERS SIMPLE OPTIONS META DATA
+        // ADDED FOR ORDERS SIMPLE OPTIONS META DATA FIX
         
         $products_simple_options_meta_data = array();
         
@@ -4067,7 +4067,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
           }
         }
         
-        // END ADDED FOR ORDERS SIMPLE OPTIONS META DATA
+        // END ADDED FOR ORDERS SIMPLE OPTIONS META DATA FIX
                     
         $orders_product  = array(
                                    'orders_products_id'                => $orders_products_id
