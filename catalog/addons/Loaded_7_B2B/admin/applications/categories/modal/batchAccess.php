@@ -8,6 +8,8 @@
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: batchAccess.php v1.0 2013-08-08 datazen $
 */
+if (file_exists(DIR_FS_CATALOG . 'addons/Loaded_7_B2B/admin/applications/customer_groups/classes/customer_groups.php')) include_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'addons/Loaded_7_B2B/admin/applications/customer_groups/classes/customer_groups.php'));
+
 global $lC_Language, $lC_Template;
 ?>
 <script>
@@ -26,16 +28,18 @@ function batchAccess() {
     $(".select option:first").attr('selected','selected');
     return false;
   }
+  
   $.modal({
     content: '<div id="batchAccess">'+
-             '  <div id="batchAccessConfirm">'+
-             '    <p id="batchAccessConfirmMessage"><?php echo $lC_Language->get('introduction_batch_delete_categories'); ?>'+
-             '      <p><b>' + decodeURI(name.replace(/\+/g, '%20')) + '</b></p>'+
-             '    </p>'+
+             '  <div id="batchAccessConfirm" class="margin-bottom">'+
+             '    <form name="batch-access-edit" id="batch-access-edit" method="post">'+
+             '      <p><?php echo $lC_Language->get('introduction_batch_edit_access'); ?></p>'+
+             '      <p id="batchAccessConfirmMessage"><?php echo lC_Customer_groups_b2b_Admin::getCustomerAccessLevelsHtml('categories'); ?></p>'+
+             '    </form>'+
              '  </div>'+
              '</div>',
-    title: '<?php echo $lC_Language->get('modal_heading_batch_delete_categories'); ?>',
-    width: 300,
+    title: '<?php echo $lC_Language->get('modal_heading_batch_access_levels_override'); ?>',
+    width: 400,
     actions: {
       'Close' : {
         color: 'red',
@@ -47,11 +51,12 @@ function batchAccess() {
         classes:  'glossy',
         click:    function(win) { win.closeModal(); }
       },
-      '<?php echo $lC_Language->get('button_delete'); ?>': {
+      '<?php echo $lC_Language->get('button_apply'); ?>': {
         classes:  'blue-gradient glossy',
         click:    function(win) {
-          var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $_GET[$lC_Template->getModule()] . '&action=batchAccess&BATCH'); ?>';
-          $.getJSON(jsonLink.replace('BATCH', values),
+          var access = $("#batch-access-edit").serialize();
+          var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $_GET[$lC_Template->getModule()] . '&action=batchEditAccess&addon=Loaded_7_Pro&BATCH&ACCESS'); ?>';
+          $.getJSON(jsonLink.replace('BATCH', values).replace('ACCESS', access),
             function (data) {
               if (data.rpcStatus == -10) { // no session
                 var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
@@ -71,4 +76,12 @@ function batchAccess() {
     buttonsLowPadding: true
   });
 }
+function checkAllLevels(e) {
+  var checked = $(e).is(":checked");
+  $('.levels').prop('checked', checked);
+}
+
+$(document).ready(function() {  
+  if ($('.levels:checked').length == $('.levels').length) $('#check_all_levels').prop('checked', true);
+});
 </script>

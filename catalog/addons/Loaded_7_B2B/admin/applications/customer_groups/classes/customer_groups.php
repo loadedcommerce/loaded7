@@ -139,11 +139,11 @@ class lC_Customer_groups_b2b_Admin extends lC_Customer_groups_Admin {
     $html = '<style> .field-block + .field-block { border:none; } .field-block .label, .field-drop .label { float: left; margin: 0 0 0 -200px; text-align: left; width: 180px; } </style>' .                   
             '<div class="button-height field-block">' .
             '  <label for="sync_all_products" class="label"><b>' . $lC_Language->get('text_sync_all_products') . '</b></label>' .
-            '  <input id="sync_all_products" name="sync_all_products" type="checkbox" class="switch wider" checked="checked" data-text-off="' . $lC_Language->get('text_no_sync') . '" data-text-on="' . $lC_Language->get('text_sync') . '" />' . lc_show_info_bubble($lC_Language->get('info_bubble_sync_products'), null, 'info-spot on-left grey margin-left margin-right') . 
+            '  <input id="sync_all_products" name="sync_all_products" type="checkbox" class="switch wide" checked="checked" data-text-off="' . $lC_Language->get('text_no_sync') . '" data-text-on="' . $lC_Language->get('text_sync') . '" />' . lc_show_info_bubble($lC_Language->get('info_bubble_sync_products'), null, 'info-spot on-left grey margin-left margin-right') . 
             '</div>' .                   
             '<div class="button-height field-block no-margin-top">' .
             '  <label for="sync_all_children" class="label"><b>' . $lC_Language->get('text_sync_all_children') . '</b></label>' .
-            '  <input id="sync_all_children" name="sync_all_children" type="checkbox" class="switch wider" checked="checked" data-text-off="' . $lC_Language->get('text_no_sync') . '" data-text-on="' . $lC_Language->get('text_sync') . '" />' . lc_show_info_bubble($lC_Language->get('info_bubble_sync_children'), null, 'info-spot on-left grey margin-left margin-right') .
+            '  <input id="sync_all_children" name="sync_all_children" type="checkbox" class="switch wide" checked="checked" data-text-off="' . $lC_Language->get('text_no_sync') . '" data-text-on="' . $lC_Language->get('text_sync') . '" />' . lc_show_info_bubble($lC_Language->get('info_bubble_sync_children'), null, 'info-spot on-left grey margin-left margin-right') .
             '</div>'; 
             
     return $html;

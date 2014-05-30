@@ -13,8 +13,9 @@
 */
 global $lC_Vqmod;
 
-require_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/classes/transport.php'));
-include_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'addons/Loaded_7_Pro/admin/applications/products/classes/products.php'));
+if (file_exists(DIR_FS_CATALOG . 'includes/classes/transport.php')) include_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/classes/transport.php'));
+if (file_exists(DIR_FS_CATALOG . 'addons/Loaded_7_Pro/admin/applications/products/classes/products.php')) include_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'addons/Loaded_7_Pro/admin/applications/products/classes/products.php'));
+if (file_exists(DIR_FS_CATALOG . 'addons/Loaded_7_Pro/admin/applications/categories/classes/categories.php')) include_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'addons/Loaded_7_Pro/admin/applications/categories/classes/categories.php'));
 
 class Loaded_7_Pro extends lC_Addon { // your addon must extend lC_Addon
   /*
@@ -50,7 +51,7 @@ class Loaded_7_Pro extends lC_Addon { // your addon must extend lC_Addon
    /**
     * The addon version
     */     
-    $this->_version = '1.1.0';
+    $this->_version = '1.1.1';
    /**
     * The Loaded 7 core compatibility version
     */     

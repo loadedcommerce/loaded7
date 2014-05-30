@@ -14,7 +14,7 @@ if (!defined('DIR_FS_ADMIN')) return false;
 
 include_once($lC_Vqmod->modCheck(DIR_FS_ADMIN . 'includes/applications/categories/classes/categories.php'));
 
-class lC_Categories_Admin_Pro extends lC_Categories_Admin {
+class lC_Categories_pro_Admin extends lC_Categories_Admin {
  /*
   * Save the category record
   *

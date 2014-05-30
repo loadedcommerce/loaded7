@@ -67,6 +67,7 @@ introduction_delete_category = Please verify the removal of this category and it
 introduction_move_category = Please select which parent this category should be moved to.
 introduction_batch_delete_categories = Please verify the removal of the selected categories and their sub-categories.
 introduction_batch_move_categories = Please choose which parent the selected categories should be moved to.
+introduction_batch_edit_access = Please choose which access levels to assign to the selected entries.
 
 link_to_specials = Link To: Specials
 link_to_featured = Link To: Featured Products
@@ -82,6 +83,7 @@ modal_heading_delete_category = Delete Category
 modal_heading_move_category = Move Category
 modal_heading_batch_delete_categories = Batch Delete Categories
 modal_heading_batch_move_categories = Batch Move Categories
+modal_heading_batch_access_levels_override = Batch Edit Access Levels Override
  
 ms_error_nothing_to_move = You have not selected anything to move!
 ms_error_image_directory_not_writable = Error: The directory containing the category images is not writable: %s

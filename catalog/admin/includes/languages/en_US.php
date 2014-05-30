@@ -13,6 +13,7 @@ batch_results_number_of_entries = Displaying <b>%d</b> to <b>%d</b> (of <b>%d</b
 button_active = Active
 button_add = Add
 button_add_new = Add New
+button_apply = Apply
 button_approve = Approve
 button_back = Back
 button_back_to_list = Back to List

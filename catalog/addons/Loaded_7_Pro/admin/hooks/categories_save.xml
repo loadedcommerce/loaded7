@@ -7,7 +7,7 @@
   <file name="includes/applications/categories/actions/save.php">
     <operation info="Use Pro Class">
       <search position="replace"><![CDATA[$id = lC_Categories_Admin::save((isset($_GET['categories']) && is_numeric($_GET['categories']) ? $_GET['categories'] : null), $data);]]></search>         
-      <add><![CDATA[$id = lC_Categories_Admin_Pro::save((isset($_GET['categories']) && is_numeric($_GET['categories']) ? $_GET['categories'] : null), $data);]]></add>
+      <add><![CDATA[$id = lC_Categories_pro_Admin::save((isset($_GET['categories']) && is_numeric($_GET['categories']) ? $_GET['categories'] : null), $data);]]></add>
     </operation>  
   </file> 
 </modification>

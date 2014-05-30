@@ -9,8 +9,10 @@
 */
 global $lC_Vqmod;
 
-include_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'addons/Loaded_7_Pro/controller.php'));
-include_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'addons/Loaded_7_B2B/classes/product.php'));
+if (file_exists(DIR_FS_CATALOG . 'addons/Loaded_7_Pro/controller.php')) include_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'addons/Loaded_7_Pro/controller.php'));
+if (file_exists(DIR_FS_CATALOG . 'addons/Loaded_7_B2B/classes/product.php')) include_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'addons/Loaded_7_B2B/classes/product.php'));
+if (file_exists(DIR_FS_CATALOG . 'addons/Loaded_7_B2B/admin/applications/customer_groups/classes/customer_groups.php')) include_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'addons/Loaded_7_B2B/admin/applications/customer_groups/classes/customer_groups.php'));
+if (file_exists(DIR_FS_CATALOG . 'addons/Loaded_7_B2B/admin/applications/categories/classes/categories.php')) include_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'addons/Loaded_7_B2B/admin/applications/categories/classes/categories.php'));
 
 class Loaded_7_B2B extends Loaded_7_Pro { 
   /*

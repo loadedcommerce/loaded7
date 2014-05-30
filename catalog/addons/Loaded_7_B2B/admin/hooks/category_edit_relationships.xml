@@ -15,7 +15,7 @@
     </operation> 
     <operation info="Access Relationships">
       <search position="after"><![CDATA[<div id="edit-category-relationship-right-div" class="six-columns twelve-columns-mobile">]]></search>         
-      <add><![CDATA[<?php echo lC_Categories_Admin_Pro::getProductRelatedHtml($_GET['categories']); ?>]]></add>
+      <add><![CDATA[<?php echo lC_Categories_pro_Admin::getProductRelatedHtml($_GET['categories']); ?>]]></add>
     </operation>           
   </file>   
 </modification>
