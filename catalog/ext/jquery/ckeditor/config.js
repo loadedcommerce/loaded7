@@ -76,5 +76,5 @@ CKEDITOR.editorConfig = function( config ) {
   // allow inline div and styles
   config.extraAllowedContent = 'p(*)[*]{*};div(*){*}[*];span(*)[*]{*}';
 
-  config.enterMode = CKEDITOR.ENTER_BR;
+  //config.enterMode = CKEDITOR.ENTER_BR;
 };
