@@ -56,7 +56,6 @@ class output {
           if (array_key_exists($key, $access)) continue;
           $access[$key] = $value;  
         }
-        
     }
 
     $output = '';

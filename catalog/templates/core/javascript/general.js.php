@@ -8,6 +8,7 @@
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: general.js.php v1.0 2013-08-08 datazen $
 */
+global $lC_Customer;
 ?>
 <script><!--
 $(document).ready(function() {

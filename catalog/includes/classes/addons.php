@@ -28,10 +28,11 @@ class lC_Addons {
     }
   } 
   
-  public function getAddons($flag = '') {
+  public function getAddons($flag = '') {   
     if (!is_array($this->_data)) {
       $this->_initialize();
     }
+    
     if ($flag == 'enabled') {
       $dArr = array();
       foreach($this->_data as $ao => $aoData) {
@@ -46,7 +47,7 @@ class lC_Addons {
   }
   
   // private methods
-  private function _initialize() {
+  protected function _initialize() {
     global $lC_Vqmod;
     
     $lC_DirectoryListing = new lC_DirectoryListing(DIR_FS_CATALOG . 'addons');
@@ -59,33 +60,33 @@ class lC_Addons {
     $lC_Addons_data = array();
     foreach ( $lC_DirectoryListing->getFiles() as $addon ) { 
       $ao = utility::cleanArr($addon);  
-
-      if ($ao['name'] != 'controller.php') continue;
       
+      if ($ao['name'] != 'controller.php') continue;
+
       $nameArr = explode('/', $ao['path']);
       $class = $nameArr[count($nameArr)-2];
 
       if (file_exists($ao['path'])) {
-        if (class_exists($class)) { 
+        if (isset($aoData)) { 
         } else {
           include_once($lC_Vqmod->modCheck($ao['path']));
-          $GLOBALS[$class] = new $class();
-        }         
+          $aoData = new $class();
+        } 
         
-        $_SESSION['lC_Addons_data'][$class] = array('type' => $GLOBALS[$class]->getAddonType(),
-                                                    'title' => $GLOBALS[$class]->getAddonTitle(),
-                                                    'description' => $GLOBALS[$class]->getAddonDescription(),
-                                                    'rating' => $GLOBALS[$class]->getAddonRating(),
-                                                    'author' => $GLOBALS[$class]->getAddonAuthor(),
-                                                    'authorWWW' => $GLOBALS[$class]->getAddonAuthorWWW(),
-                                                    'thumbnail' => $GLOBALS[$class]->getAddonThumbnail(),
-                                                    'version' => $GLOBALS[$class]->getAddonVersion(),
-                                                    'compatibility' => $GLOBALS[$class]->getCompatibility(),
-                                                    'installed' => $GLOBALS[$class]->isInstalled(),
-                                                    'mobile' => $GLOBALS[$class]->isMobileEnabled(),
-                                                    'enabled' => $GLOBALS[$class]->isEnabled());  
+        $_SESSION['lC_Addons_data'][$class] = array('type' => $aoData->getAddonType(),
+                                                    'title' => $aoData->getAddonTitle(),
+                                                    'description' => $aoData->getAddonDescription(),
+                                                    'rating' => $aoData->getAddonRating(),
+                                                    'author' => $aoData->getAddonAuthor(),
+                                                    'authorWWW' => $aoData->getAddonAuthorWWW(),
+                                                    'thumbnail' => $aoData->getAddonThumbnail(),
+                                                    'version' => $aoData->getAddonVersion(),
+                                                    'compatibility' => $aoData->getCompatibility(),
+                                                    'installed' => $aoData->isInstalled(),
+                                                    'mobile' => $aoData->isMobileEnabled(),
+                                                    'enabled' => $aoData->isEnabled());  
         
-        if ($GLOBALS[$class]->isEnabled()) $enabled .= $addon['path'] . ';';
+        if ($aoData->isEnabled()) $enabled .= $addon['path'] . ';';
       }
     }   
        

@@ -7,5 +7,6 @@
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: application_bottom.php v1.0 2013-08-08 datazen $
 */   
+// VQMOD-hookpoint; DO NOT MODIFY OR REMOVE THE LINE BELOW
 $lC_Services->stopServices();
 ?>

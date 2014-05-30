@@ -8,6 +8,10 @@
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: login.php v1.0 2013-08-08 datazen $
 */
+global $lC_Vqmod;
+
+include_once($lC_Vqmod->modCheck('includes/applications/login/classes/login.php')); 
+
 class lC_Application_Login extends lC_Template_Admin {
  /*
   * Protected variables

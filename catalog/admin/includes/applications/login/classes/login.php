@@ -284,6 +284,21 @@ class lC_Login_Admin {
       $cnt++;
     }
   }
+ /*
+  * Get the Pro/B2B Version Tag
+  *
+  * @access public
+  * @return string
+  */   
+  public static function getProVersionTag() {
+    global $lC_Language;
+    
+    if (utility::isB2B()) {   
+      return '<small class="tag orange-gradient mid-margin-left mid-margin-right">B2B</small>' . $lC_Language->get('text_version') . ' ' . utility::getB2BVersion();    
+    } else {
+      return '<small class="tag red-gradient mid-margin-left mid-margin-right">PRO</small>' . $lC_Language->get('text_version') . ' ' . utility::getProVersion();    
+    }
+  }  
  /**
   * Check to see if it's time to re-check validity; once per day
   *  

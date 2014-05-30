@@ -79,9 +79,9 @@ $error = (isset($_GET['error']) && $_GET['error'] != NULL) ? preg_replace('/[^A-
       <?php 
       if ( $lC_Product->hasSubProducts($lC_Product->getID()) === false) {
         ?>
-        <div class="content-products-info-price-container clearfix">
-          <span class="content-products-info-price pull-left lt-blue"><?php echo $lC_Product->getPriceFormated(true); ?></span>
-          <span class="content-products-info-avail with-padding-no-top-bottom"><?php echo $availability ?></span>
+        <div class="content-products-info-price-container">
+          <span class="content-products-info-price pull-left lt-blue pricing-row clearfix margin-right"><?php echo $lC_Product->getPriceFormated(true); ?></span>
+          <span class="content-products-info-avail clearfix"><?php echo $availability ?></span>
         </div>
         <?php
       }

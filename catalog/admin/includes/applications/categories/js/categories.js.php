@@ -134,6 +134,8 @@ function doSelectFunction(e) {
     batchDelete();
   } else if (e.value == 'move') {
     batchMove();
+  } else if (e.value == 'access') {
+    batchAccess();
   }
 }
 

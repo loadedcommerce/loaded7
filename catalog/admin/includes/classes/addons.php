@@ -549,16 +549,16 @@ class lC_Addons_Admin extends lC_Addons {
       $class = $nameArr[count($nameArr)-2];
 
       if (file_exists($ao['path'])) {
-        if (class_exists($class)) { 
+        if (isset($aoData)) { 
         } else {
           include_once($lC_Vqmod->modCheck($ao['path']));
-          $GLOBALS[$class] = new $class();
+          $aoData = new $class();
         }         
         
-        if ($GLOBALS[$class]->isAutoInstall()) {
-          if (defined('ADDONS_' . strtoupper($GLOBALS[$class]->getAddonType()) . '_' . strtoupper($class) . '_STATUS')) {
-            $isInstalled = $GLOBALS[$class]->isInstalled();
-            $isEnabled = $GLOBALS[$class]->isEnabled();            
+        if ($aoData->isAutoInstall()) {
+          if (defined('ADDONS_' . strtoupper($aoData->getAddonType()) . '_' . strtoupper($class) . '_STATUS')) {
+            $isInstalled = $aoData->isInstalled();
+            $isEnabled = $aoData->isEnabled();            
           } else {
             if (class_exists('lC_Store_Admin')) { 
             } else {
@@ -570,22 +570,22 @@ class lC_Addons_Admin extends lC_Addons {
             $isEnabled = true;
           }
         } else {
-          $isInstalled = $GLOBALS[$class]->isInstalled();
-          $isEnabled = $GLOBALS[$class]->isEnabled();
+          $isInstalled = $aoData->isInstalled();
+          $isEnabled = $aoData->isEnabled();
         }
         
-        $_SESSION['lC_Addons_Admin_data'][$class] = array('type' => $GLOBALS[$class]->getAddonType(),
-                                                          'title' => self::_getLanguageDefinition($GLOBALS[$class]->getAddonTitle(), $class),
-                                                          'description' => self::_getLanguageDefinition($GLOBALS[$class]->getAddonDescription(), $class),
-                                                          'rating' => $GLOBALS[$class]->getAddonRating(),
-                                                          'author' => $GLOBALS[$class]->getAddonAuthor(),
-                                                          'authorWWW' => $GLOBALS[$class]->getAddonAuthorWWW(),
-                                                          'thumbnail' => $GLOBALS[$class]->getAddonThumbnail(),
-                                                          'version' => $GLOBALS[$class]->getAddonVersion(),
-                                                          'compatibility' => $GLOBALS[$class]->getCompatibility(),
+        $_SESSION['lC_Addons_Admin_data'][$class] = array('type' => $aoData->getAddonType(),
+                                                          'title' => self::_getLanguageDefinition($aoData->getAddonTitle(), $class),
+                                                          'description' => self::_getLanguageDefinition($aoData->getAddonDescription(), $class),
+                                                          'rating' => $aoData->getAddonRating(),
+                                                          'author' => $aoData->getAddonAuthor(),
+                                                          'authorWWW' => $aoData->getAddonAuthorWWW(),
+                                                          'thumbnail' => $aoData->getAddonThumbnail(),
+                                                          'version' => $aoData->getAddonVersion(),
+                                                          'compatibility' => $aoData->getCompatibility(),
                                                           'installed' => $isInstalled,
-                                                          'mobile' => $GLOBALS[$class]->isMobileEnabled(),
-                                                          'auto_install' => $GLOBALS[$class]->isAutoInstall(),
+                                                          'mobile' => $aoData->isMobileEnabled(),
+                                                          'auto_install' => $aoData->isAutoInstall(),
                                                           'enabled' => $isEnabled);         
         
         if ($isEnabled) $enabled .= $addon['path'] . ';';

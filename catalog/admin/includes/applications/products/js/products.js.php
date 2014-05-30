@@ -99,7 +99,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
         } 
       }
       ?> 
-      setActiveTab();   
+      setActiveTab();  
     });
     <?php if ($pInfo) { ?>
     /**

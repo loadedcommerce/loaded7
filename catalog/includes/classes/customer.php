@@ -17,7 +17,7 @@ class lC_Customer {
   public function lC_Customer() {
     if (isset($_SESSION['lC_Customer_data']) && is_array($_SESSION['lC_Customer_data']) && isset($_SESSION['lC_Customer_data']['id']) && is_numeric($_SESSION['lC_Customer_data']['id'])) {
       $this->setIsLoggedOn(true);
-      $this->_data =& $_SESSION['lC_Customer_data'];
+      $this->_data = $_SESSION['lC_Customer_data'];
     }
   }
 
@@ -30,12 +30,25 @@ class lC_Customer {
     return false;
   }
   
-  public function getCustomerGroup() {
+  public function getCustomerGroup($id = null) {
+    global $lC_Database;
+    
     if (isset($this->_data['customers_group']) && is_numeric($this->_data['customers_group'])) {
-      return $this->_data['customers_group'];
+      $result = $this->_data['customers_group'];
+    } else if (is_numeric($id)) {
+      $Qcg = $lC_Database->query('select customers_group_id from :table_customers where customers_id = :customers_id limit 1');
+      $Qcg->bindTable(':table_customers', TABLE_CUSTOMERS);
+      $Qcg->bindInt(':customers_id', $id);
+      $Qcg->execute();
+            
+      $result = $Qcg->valueInt('customers_group_id');
+      
+      $Qcg->freeResult();
     } else {
-      return DEFAULT_CUSTOMERS_GROUP_ID;
+      $result = DEFAULT_CUSTOMERS_GROUP_ID;
     }
+    
+    return $result;
   }    
   
   public function getBaselineDiscount($id = null) {

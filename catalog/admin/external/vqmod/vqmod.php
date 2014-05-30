@@ -39,8 +39,8 @@ final class VQMod {
     $this->vqCachePath = 'includes/work/cache/vqmod/';
     $this->modCache = 'includes/work/cache/vqmoda.cache';    
     $this->directorySeparator = defined('DIRECTORY_SEPARATOR') ? DIRECTORY_SEPARATOR : '/';
-    $this->protectedFilelist = DIR_FS_ADMIN . 'external/vqmod/vqprotect.txt';
-    $this->pathReplaces = DIR_FS_ADMIN . 'external/vqmod/pathReplaces.php';
+    $this->protectedFilelist = 'external/vqmod/avqprotect.txt';
+    $this->pathReplaces = 'external/vqmod/apathReplaces.php';
 
     if(!$path){
       $path = dirname(dirname(__FILE__));

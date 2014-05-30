@@ -8,19 +8,19 @@
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: edit.php v1.0 2013-08-08 datazen $
 */
-  if ( is_numeric($_GET[$lC_Template->getModule()]) ) {
-    $cInfo = lC_Categories_Admin::get($_GET[$lC_Template->getModule()]);
-  }                                                                     
-  
-  $assignedCategoryTree = new lC_CategoryTree();
-  $assignedCategoryTree->setBreadcrumbUsage(false);
-  $assignedCategoryTree->setSpacerString('&nbsp;', 5);
+if ( is_numeric($_GET[$lC_Template->getModule()]) ) {
+  $cInfo = lC_Categories_Admin::get($_GET[$lC_Template->getModule()]);
+}                                                                     
+
+$assignedCategoryTree = new lC_CategoryTree();
+$assignedCategoryTree->setBreadcrumbUsage(false);
+$assignedCategoryTree->setSpacerString('&nbsp;', 5);
 ?>
 <style scoped="scoped">
-  .qq-upload-drop-area { min-height: 100px; top: -200px; }
-  .qq-upload-drop-area span { margin-top:-16px; }
-  LABEL { font-weight:bold; }
-  TD { padding: 5px 0 0 5px; }
+.qq-upload-drop-area { min-height: 100px; top: -200px; }
+.qq-upload-drop-area span { margin-top:-16px; }
+TD { padding: 5px 0 0 5px; }
+.legend { font-weight:bold; font-size: 1.1em; }
 </style>
 <!-- Main content -->
 <section role="main" id="main">
@@ -34,11 +34,11 @@
   </hgroup>
   <div class="with-padding-no-top">
     <form name="category" id="category" class="dataForm" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '=' . (isset($cInfo) ? $cInfo['categories_id'] : '') . '&cid=' . $_GET['cid'] . '&action=save'); ?>" method="post" enctype="multipart/form-data">
-      <div id="category_tabs" class="side-tabs">
+      <div id="category_tabs" class="side-tabs main-tabs">
         <ul class="tabs">
           <li class="active"><?php echo lc_link_object('#section_general_content', $lC_Language->get('section_general')); ?></li>
           <li id="tabHeaderSectionDataContent"><?php echo lc_link_object('#section_data_content', $lC_Language->get('section_data')); ?></li>
-          <!--<li><?php echo lc_link_object('#section_categories_content', $lC_Language->get('section_categories')); ?></li>-->
+          <li><?php echo lc_link_object('#section_relationships', $lC_Language->get('section_relationships')); ?></li>
         </ul>
         <div class="clearfix tabs-content">
           <div id="section_general_content">
@@ -269,32 +269,27 @@
                 </div>
               </div>
             </fieldset>
+          </div>
+          <div id="section_relationships" class="with-padding"> 
             <fieldset class="fieldset">
-              <legend class="legend"><?php echo $lC_Language->get('field_access_settings'); ?></legend>
+              <legend class="legend"><?php echo $lC_Language->get('field_access_levels_override'); ?></legend>
               <div class="columns no-margin-bottom">
                 <div class="six-columns twelve-columns-mobile upsellwrapper">
-                  <p class="margin-bottom">
-                    <label class="label" for="categories_access_levels"><?php echo $lC_Language->get('field_access_levels'); ?></label>
+                  <p class="small-margin-bottom">
+                    <label class="label strong" for="categories_access_levels"><?php echo $lC_Language->get('field_access'); ?></label>
+                    <!-- VQMOD-hookpoint; DO NOT MODIFY OR REMOVE THE LINE BELOW -->
                     <span class="upsellinfo" upselltitle="<?php echo $lC_Language->get('text_access_levels_upsell_title'); ?>" upselldesc="<?php echo $lC_Language->get('text_access_levels_upsell_desc'); ?>"><?php echo lc_go_b2b(); ?></span>  
-                    <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_categories_access_levels'), null, 'on-left grey large-margin-left'); ?>  
+                    <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_categories_access_levels'), null, 'on-right grey large-margin-left'); ?>  
                   </p>
-                  <p class="margin-left">
-                    <input type="checkbox" class="checkbox small-margin-right" disabled> <?php echo $lC_Language->get('access_levels_registered'); ?>
-                  </p>
-                  <p class="margin-left">
-                    <input type="checkbox" class="checkbox small-margin-right" disabled> <?php echo $lC_Language->get('access_levels_wholesale'); ?>
-                  </p>
-                  <p class="margin-left">
-                    <input type="checkbox" class="checkbox small-margin-right" disabled> <?php echo $lC_Language->get('access_levels_dealer'); ?>
-                  </p>
+                  <!-- VQMOD-hookpoint; DO NOT MODIFY OR REMOVE THE LINE BELOW -->
+                  <p class="margin-left"><input type="checkbox" class="checkbox small-margin-right" disabled> <?php echo $lC_Language->get('access_levels_registered'); ?></p><p class="margin-left"><input type="checkbox" class="checkbox small-margin-right" disabled> <?php echo $lC_Language->get('access_levels_wholesale'); ?></p><p class="margin-left"><input type="checkbox" class="checkbox small-margin-right" disabled> <?php echo $lC_Language->get('access_levels_dealer'); ?></p>
                 </div>
-                <div class="six-columns twelve-columns-mobile"></div>
+                <!-- VQMOD-hookpoint; DO NOT MODIFY OR REMOVE THE LINE BELOW -->
+                <div id="edit-category-relationship-right-div" class="six-columns twelve-columns-mobile">
+                </div>
               </div>
             </fieldset>
           </div>
-          <!--<div id="section_categories_content" class="with-padding"> 
-            Relationships (Later Phase)
-          </div>-->
         </div>
       </div>
       <?php echo lc_draw_hidden_field('sort_order', $cInfo['sort_order']); ?>

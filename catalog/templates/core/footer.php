@@ -82,7 +82,7 @@
       }
     ?>
     <span class="float-right">
-      <img style="border:0;width:88px;height:31px" alt="HTML5 Validator" src="http://upload.wikimedia.org/wikipedia/commons/b/bb/W3C_HTML5_certified.png">
+      <img style="border:0;width:88px;height:31px" alt="HTML5 Validator" src="https://upload.wikimedia.org/wikipedia/commons/b/bb/W3C_HTML5_certified.png">
     </span>
   </p>       
 </div>

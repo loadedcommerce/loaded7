@@ -275,7 +275,7 @@ class lC_Updates_Admin_run_after extends lC_Updates_Admin {
        
     $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "products_variants` ADD `default_visual` INT( 11 ) DEFAULT '0' AFTER `default_combo`");  
     parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "products_variants` ADD `default_visual` INT( 11 ) DEFAULT '0' AFTER `default_combo`");  
-       
+    
     $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "products_variants_values` ADD `visual` VARCHAR( 1024 ) DEFAULT NULL AFTER `title`");  
     parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "products_variants_values` ADD `visual` VARCHAR( 1024 ) DEFAULT NULL AFTER `title`");  
     
@@ -320,19 +320,49 @@ class lC_Updates_Admin_run_after extends lC_Updates_Admin {
     parent::log("Database Update: UPDATE `" . $pf . "currencies` SET `symbol_left` = '&euro;' where `code` = 'EUR'");
     
     $lC_Database->simpleQuery("UPDATE `" . $pf . "currencies` SET `symbol_left` = '&pound;' where `code` = 'GBP'");
-    parent::log("Database Update: UPDATE `" . $pf . "currencies` SET `symbol_left` = '&pound;' where `code` = 'GBP'");      
+    parent::log("Database Update: UPDATE `" . $pf . "currencies` SET `symbol_left` = '&pound;' where `code` = 'GBP'");  
     $lC_Database->simpleQuery("INSERT IGNORE INTO `" . $pf . "configuration_group` (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES (10, 'Sessions', 'Session settings', 10, 1)");
     parent::log("Database Update: INSERT IGNORE INTO `" . $pf . "configuration_group` (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES (10, 'Sessions', 'Session settings', 10, 1)");
 
     if (!defined('SESSION_LIFETIME')) {
       $lC_Database->simpleQuery("INSERT INTO `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('Session Lifetime', 'SESSION_LIFETIME', 3600, 'The amount of time a user is logged in for after the last action in seconds.', 10, 0, now(), now(), NULL, NULL);");
       parent::log("Database Update: INSERT INTO `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('Session Lifetime', 'SESSION_LIFETIME', 3600, 'The amount of time a user is logged in for after the last action in seconds.', 10, 0, now(), now(), NULL, NULL);");
-    }
+    
+    $lC_Database->simpleQuery("CREATE TABLE IF NOT EXISTS `" . $pf . "customers_access` (id int(11) NOT NULL AUTO_INCREMENT, `level` varchar(128) NOT NULL DEFAULT '', `status` tinyint(1) NOT NULL DEFAULT '0', PRIMARY KEY (id)) ENGINE=" . $engine . " CHARACTER SET utf8 COLLATE utf8_general_ci");   
+    parent::log("Database Update: CREATE TABLE IF NOT EXISTS `" . $pf . "customers_access` (id int(11) NOT NULL AUTO_INCREMENT, `level` varchar(128) NOT NULL DEFAULT '', `status` tinyint(1) NOT NULL DEFAULT '0', PRIMARY KEY (id)) ENGINE=" . $engine . " CHARACTER SET utf8 COLLATE utf8_general_ci");   
+    
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "customers_groups_data` ADD `customers_access_levels` VARCHAR(255) NOT NULL DEFAULT '';");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "customers_groups_data` ADD `customers_access_levels` VARCHAR(255) NOT NULL DEFAULT '';");
+
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "customers_groups_data` ADD `hidden_products_notification` TINYINT(1) NOT NULL DEFAULT '0';");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "customers_groups_data` ADD `hidden_products_notification` TINYINT(1) NOT NULL DEFAULT '0';");
+    
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "customers_groups_data` ADD `taxable` TINYINT(1) NOT NULL DEFAULT '0';");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "customers_groups_data` ADD `taxable` TINYINT(1) NOT NULL DEFAULT '0';");
+    
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "customers_groups_data` ADD `payment_modules` VARCHAR(255) NOT NULL DEFAULT '';");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "customers_groups_data` ADD `payment_modules` VARCHAR(255) NOT NULL DEFAULT '';");
+        
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "customers_groups_data` ADD `shipping_modules` VARCHAR(255) NOT NULL DEFAULT '';");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "customers_groups_data` ADD `shipping_modules` VARCHAR(255) NOT NULL DEFAULT '';");
+    
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "products` ADD `access_levels` VARCHAR(255) NOT NULL DEFAULT '';");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "products` ADD `access_levels` VARCHAR(255) NOT NULL DEFAULT '';");
+    
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "categories` ADD `access_levels` VARCHAR(255) NOT NULL DEFAULT '';");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "categories` ADD `access_levels` VARCHAR(255) NOT NULL DEFAULT '';");
+
+    $lC_Database->simpleQuery("INSERT IGNORE INTO `" . $pf . "customers_access` (id, level, status) VALUES (1, 'Guest', 1)");
+    parent::log("Database Update: INSERT IGNORE INTO `" . $pf . "customers_access` (id, level, status) VALUES (1, 'Guest', 1)");
+
+    $lC_Database->simpleQuery("INSERT IGNORE INTO `" . $pf . "customers_access` (id, level, status) VALUES (2, 'Registered', 1)");
+    parent::log("Database Update: INSERT IGNORE INTO `" . $pf . "customers_access` (id, level, status) VALUES (2, 'Registered', 1)");
+  }
     
     if (!defined('SESSION_FORCE_COOKIES')) {
       $lC_Database->simpleQuery("INSERT INTO `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('Force Cookie Use', 'SESSION_FORCE_COOKIES', -1, 'Force the use cookies to handle sessions.', 10, 0, now(), now(), 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))');");
       parent::log("Database Update: INSERT INTO `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('Force Cookie Use', 'SESSION_FORCE_COOKIES', -1, 'Force the use cookies to handle sessions.', 10, 0, now(), now(), 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))');");
-    }  
+}  
     
     $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "orders_products` ADD COLUMN `products_sku` VARCHAR(255) DEFAULT NULL AFTER `products_model`");
     parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "orders_products` ADD COLUMN `products_sku` VARCHAR(255) DEFAULT NULL AFTER `products_model`");

@@ -23,7 +23,7 @@
     <definition>
       <key>button_go_shopping</key>
       <value><![CDATA[Go Shopping]]></value>
-      <group>general</group>
+      <group>general</group>                                            
     </definition>
     <definition>
       <key>text_contact</key>
@@ -2929,7 +2929,7 @@ Your friend, %s, thought that you would be interested in %s from %s.]]></value>
       <key>text_admin_session_active</key>
       <value><![CDATA[ADMIN SESSION ACTIVE]]></value>
       <group>general</group>
-    </definition>
+    </definition>     
     <definition>
       <key>text_low_qoh_title</key>
       <value><![CDATA[Insufficient Stock]]></value>
