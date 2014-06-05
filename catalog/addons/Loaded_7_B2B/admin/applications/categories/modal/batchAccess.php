@@ -55,7 +55,7 @@ function batchAccess() {
         classes:  'blue-gradient glossy',
         click:    function(win) {
           var access = $("#batch-access-edit").serialize();
-          var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $_GET[$lC_Template->getModule()] . '&action=batchEditAccess&addon=Loaded_7_Pro&BATCH&ACCESS'); ?>';
+          var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $_GET[$lC_Template->getModule()] . '&action=batchEditAccess&addon=Loaded_7_B2B&BATCH&ACCESS'); ?>';
           $.getJSON(jsonLink.replace('BATCH', values).replace('ACCESS', access),
             function (data) {
               if (data.rpcStatus == -10) { // no session
