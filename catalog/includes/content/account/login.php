@@ -56,7 +56,7 @@ class lC_Account_Login extends lC_Template {
         $Qupdate->bindInt(':customers_id', $lC_Customer->getID());
         $Qupdate->execute();
         
-        if ($lC_ShoppingCart->hasContents() === false) {
+        if ($lC_ShoppingCart->hasContents() === true) {
           $lC_ShoppingCart->synchronizeWithDatabase();
         }
 
