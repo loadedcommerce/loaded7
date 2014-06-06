@@ -7,7 +7,7 @@
   <file name="includes/applications/products/actions/save.php">
     <operation info="Extend Products Save 1">
       <search position="before"><![CDATA[class lC_Application_Products_Actions_save extends lC_Application_Products {]]></search>         
-      <add><![CDATA[global $lC_Vqmod; if (file_exists(DIR_FS_CATALOG . 'addons/Loaded_7_B2B/admin/applications/categories/classes/categories.php')) include_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'addons/Loaded_7_B2B/admin/applications/categories/classes/categories.php')); if (file_exists(DIR_FS_CATALOG . 'addons/Loaded_7_Pro/admin/applications/products/classes/products.php')) include_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'addons/Loaded_7_Pro/admin/applications/products/classes/products.php'));]]></add>
+      <add><![CDATA[global $lC_Vqmod; if (file_exists(DIR_FS_CATALOG . 'addons/Loaded_7_B2B/admin/applications/products/classes/products.php')) include_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'addons/Loaded_7_B2B/admin/applications/products/classes/products.php')); if (file_exists(DIR_FS_CATALOG . 'addons/Loaded_7_Pro/admin/applications/products/classes/products.php')) include_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'addons/Loaded_7_Pro/admin/applications/products/classes/products.php'));]]></add>
     </operation>   
     <operation info="Extend Products Save 2">
       <search position="replace"><![CDATA[$id = (int)lC_Products_Admin::save((isset($_GET[$this->_module]) && is_numeric($_GET[$this->_module]) ? $_GET[$this->_module] : null), $data);]]></search>   
