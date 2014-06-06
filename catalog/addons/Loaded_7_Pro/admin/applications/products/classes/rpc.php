@@ -21,7 +21,7 @@ class lC_Products_Admin_rpc {
   * @return json
   */
   public static function getComboRowData() {
-    $result = lC_Products_Admin_Pro::getComboRowData($_GET);
+    $result = lC_Products_pro_Admin::getComboRowData($_GET);
     $result['rpcStatus'] = RPC_STATUS_SUCCESS;
 
     echo json_encode($result);

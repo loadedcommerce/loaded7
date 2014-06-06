@@ -38,7 +38,7 @@ global $lC_Language, $pInfo;
 	      <th scope="col" class="align-right" width="50px"><?php echo $lC_Language->get('table_heading_action'); ?></th>
 	    </tr>
 	  </thead>
-	  <tbody id="comboOptionsTbody" class="sorted_combo_table"><?php echo ((isset($pInfo)) ? lC_Products_Admin_Pro::getComboOptionsContent($pInfo->get('variants')) : null); ?></tbody>
+	  <tbody id="comboOptionsTbody" class="sorted_combo_table"><?php echo ((isset($pInfo)) ? lC_Products_pro_Admin::getComboOptionsContent($pInfo->get('variants')) : null); ?></tbody>
 	</table>       	
 </div>
 

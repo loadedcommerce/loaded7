@@ -18,11 +18,11 @@ global $lC_Language, $lC_Currencies, $pInfo;
   </span>
 </div> 
 <div id="qty_breaks_pricing_container" class="field-drop button-height black-inputs" style="display:none;">
-  <?php echo lC_Products_Admin_Pro::getQPBPricingContent(); ?>
+  <?php echo lC_Products_pro_Admin::getQPBPricingContent(); ?>
 </div>
 <script>   
 $(document).ready(function() {
-  var hasQPB = '<?php echo (isset($pInfo) && lC_Products_Admin_Pro::hasQPBPricing($pInfo->get('products_id')) === true) ? 1 : 0; ?>';
+  var hasQPB = '<?php echo (isset($pInfo) && lC_Products_pro_Admin::hasQPBPricing($pInfo->get('products_id')) === true) ? 1 : 0; ?>';
   if (hasQPB == 1) {
     $('#qpb-switch').click();
   }      

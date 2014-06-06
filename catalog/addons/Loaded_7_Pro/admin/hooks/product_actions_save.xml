@@ -7,11 +7,11 @@
   <file name="includes/applications/products/actions/save.php">
     <operation info="Extend Products Save 1">
       <search position="before"><![CDATA[class lC_Application_Products_Actions_save extends lC_Application_Products {]]></search>         
-      <add><![CDATA[if (file_exists(DIR_FS_CATALOG . 'addons/Loaded_7_Pro/admin/applications/products/classes/products.php')) include_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'addons/Loaded_7_Pro/admin/applications/products/classes/products.php'));]]></add>
+      <add><![CDATA[global $lC_Vqmod; if (file_exists(DIR_FS_CATALOG . 'addons/Loaded_7_B2B/admin/applications/categories/classes/categories.php')) include_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'addons/Loaded_7_B2B/admin/applications/categories/classes/categories.php')); if (file_exists(DIR_FS_CATALOG . 'addons/Loaded_7_Pro/admin/applications/products/classes/products.php')) include_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'addons/Loaded_7_Pro/admin/applications/products/classes/products.php'));]]></add>
     </operation>   
     <operation info="Extend Products Save 2">
-      <search position="replace"><![CDATA[lC_Products_Admin::save]]></search>   
-      <add><![CDATA[lC_Products_Admin_Pro::save]]></add>
+      <search position="replace"><![CDATA[$id = (int)lC_Products_Admin::save((isset($_GET[$this->_module]) && is_numeric($_GET[$this->_module]) ? $_GET[$this->_module] : null), $data);]]></search>   
+      <add><![CDATA[if (utility::isB2B() === true) { $id = (int)lC_Products_b2b_Admin::save((isset($_GET[$this->_module]) && is_numeric($_GET[$this->_module]) ? $_GET[$this->_module] : null), $data); } else { $id = (int)lC_Products_pro_Admin::save((isset($_GET[$this->_module]) && is_numeric($_GET[$this->_module]) ? $_GET[$this->_module] : null), $data); }]]></add>
     </operation>      
   </file>   
 </modification>

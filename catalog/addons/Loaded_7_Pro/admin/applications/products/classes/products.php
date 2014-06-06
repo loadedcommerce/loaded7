@@ -15,7 +15,7 @@ if (!defined('DIR_FS_ADMIN')) return false;
 include_once($lC_Vqmod->modCheck(DIR_FS_ADMIN . 'includes/applications/products/classes/products.php'));
 include_once($lC_Vqmod->modCheck(DIR_FS_ADMIN . 'includes/applications/customer_groups/classes/customer_groups.php'));
 
-class lC_Products_Admin_Pro extends lC_Products_Admin {
+class lC_Products_pro_Admin extends lC_Products_Admin {
  /*
   * Save the product
   *
@@ -414,7 +414,7 @@ class lC_Products_Admin_Pro extends lC_Products_Admin {
         $content .= '<div class="subproducts-pricing-container">' .    
                     '  <div class="big-text underline margin-top" style="padding-bottom:8px;">' . $lC_Language->get('text_sub_products') . '</div>' .
                     '  <table class="simple-table subproducts-pricing-table">' .
-                    '    <tbody id="tbody-subproducts-pricing-' . $value['customers_group_id'] . '">' . lC_Products_Admin_Pro::getSubProductsPricingTbody($pInfo, $value['customers_group_id']) . '</tbody>' .
+                    '    <tbody id="tbody-subproducts-pricing-' . $value['customers_group_id'] . '">' . lC_Products_pro_Admin::getSubProductsPricingTbody($pInfo, $value['customers_group_id']) . '</tbody>' .
                     '  </table>' .        
                     '</div>';        
         
@@ -424,7 +424,7 @@ class lC_Products_Admin_Pro extends lC_Products_Admin {
         $content .= '<div id="combo-options-pricing-container-' . $value['customers_group_id'] . '">' .    
                     '  <div class="big-text underline margin-top" style="padding-bottom:8px;">' . $lC_Language->get('text_combo_options') . '</div>' .
                     '  <table class="simple-table combo-options-pricing-table">' .
-                    '    <tbody id="tbody-combo-options-pricing-' . $value['customers_group_id'] . '">' . lC_Products_Admin_Pro::getComboOptionsPricingTbody($pInfo, $value['customers_group_id']) . '</tbody>' .
+                    '    <tbody id="tbody-combo-options-pricing-' . $value['customers_group_id'] . '">' . lC_Products_pro_Admin::getComboOptionsPricingTbody($pInfo, $value['customers_group_id']) . '</tbody>' .
                     '  </table>' .         
                     '</div>';         
       } 
