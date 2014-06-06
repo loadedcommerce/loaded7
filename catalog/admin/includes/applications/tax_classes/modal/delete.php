@@ -24,11 +24,11 @@ function deleteClass(id, name) {
         $(location).attr('href',url);
       }
       if (data.rpcStatus != 1) {
-        alert('<?php echo $lC_Language->get('ms_error_retrieving_data'); ?>');
+        $.modal.alert('<?php echo $lC_Language->get('ms_error_retrieving_data'); ?>');
         return false;
       }
       if (data.tcData.total_tax_rates > 0) {
-        alert('<?php echo $lC_Language->get('delete_warning_tax_class_in_use'); ?> ' + data.tcData.total_tax_rates + ' <?php echo $lC_Language->get('delete_warning_tax_class_in_use_end'); ?>');
+        $.modal.alert('<?php echo $lC_Language->get('delete_warning_tax_class_in_use'); ?> ' + data.tcData.total_tax_rates + ' <?php echo $lC_Language->get('delete_warning_tax_class_in_use_end'); ?>');
         return false;
       }
       $.modal({
