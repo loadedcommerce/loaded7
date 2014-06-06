@@ -32,6 +32,7 @@ CKEDITOR.editorConfig = function( config ) {
     { name: 'paragraph', groups: [ 'list' ], items: [ 'NumberedList', 'BulletedList' ] },
     { name: 'links', groups: ['links','insert'], items: [ 'Link', 'Unlink', '-', 'HorizontalRule', 'Image', 'tliyoutube' ] },
     { name: 'clipboard', groups: [ 'clipboard', 'basicstyles' ], items: [  'PasteFromWord', '-', 'RemoveFormat' ] },
+    { name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ 'Source' ] }
   ];
 
   // The Standard toolbar groups arrangement.
