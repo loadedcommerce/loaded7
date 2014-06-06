@@ -1151,7 +1151,7 @@ Note: If you did not request this action via our password forgotten page, please
     </definition>
     <definition>
       <key>hide_address_form</key>
-      <value><![CDATA[Hide Address Form]]></value>
+      <value><![CDATA[Cancel Add Address]]></value>
       <group>checkout</group>
     </definition>
     <definition>
