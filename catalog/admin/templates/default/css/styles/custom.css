@@ -1051,6 +1051,7 @@ select.error { border: 2px solid red !important; }
   }
   #main-title {
     padding: 43px 20px 21px;
+    margin: 35px 0 -25px 0;
   }
   .hide-below-768 { display: none; }
   .show-below-768 { display: block; }
@@ -1131,7 +1132,7 @@ select.error { border: 2px solid red !important; }
   }
   .branding-extra-line { margin-left: 0px; }
   #order_quick_info h4 { margin:0px 0px -10px;text-align:center; }
-  #buttons-menu-div-listing { padding: 5px; }
+  #buttons-menu-div-listing { padding: 5px; margin-top: -30px; }
 }  
   
 @media screen and (max-width: 319px) {
