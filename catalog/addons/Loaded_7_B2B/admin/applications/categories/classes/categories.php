@@ -158,10 +158,6 @@ class lC_Categories_b2b_Admin extends lC_Categories_pro_Admin {
   public static function batchEditAccess($data) {
     global $lC_Database, $lC_CategoryTree;
 
-error_reporting(E_ALL);    
-ini_set('display_errors', 1);
-
-    
     $levels = '';
     if (is_array($data['access_levels'])) {
       foreach ($data['access_levels'] as $key => $val) {
