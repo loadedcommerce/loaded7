@@ -53,11 +53,25 @@ class lC_Products_b2b_Admin extends lC_Products_pro_Admin {
       }
       $levels = substr($levels, 0, -1);
     }  
-echo '[' . $levels . ']<br>';    
+    
+    $lC_Database->startTransaction();
+
     foreach ( $data['batch'] as $products_id ) {
-echo '[' . $products_id . ']<br>';
+      $Qproduct = $lC_Database->query('update :table_products set `access_levels` = :access_levels where `products_id` = :products_id');
+      $Qproduct->bindTable(':table_products', TABLE_PRODUCTS);
+      $Qproduct->bindInt(':products_id', $products_id);
+      $Qproduct->bindvalue(':access_levels', $levels);
+      $Qproduct->setLogging($_SESSION['module'], $products_id);
+      $Qproduct->execute(); 
     }       
-die('33');
-    return true;
+    
+    if ( !$lC_Database->isError() ) {
+      $lC_Database->commitTransaction();
+      return true;
+    }
+
+    $lC_Database->rollbackTransaction();
+
+    return false;
   }  
 }

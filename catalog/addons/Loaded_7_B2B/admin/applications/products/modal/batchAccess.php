@@ -34,7 +34,7 @@ function batchAccess() {
              '  <div id="batchAccessConfirm" class="margin-bottom">'+
              '    <form name="batch-access-edit" id="batch-access-edit" method="post">'+
              '      <p><?php echo $lC_Language->get('introduction_batch_edit_access'); ?></p>'+
-             '      <p id="batchAccessConfirmMessage"><?php echo lC_Customer_groups_b2b_Admin::getCustomerAccessLevelsHtml('categories'); ?></p>'+
+             '      <p id="batchAccessConfirmMessage"><?php echo lC_Customer_groups_b2b_Admin::getCustomerAccessLevelsHtml('products'); ?></p>'+
              '    </form>'+
              '  </div>'+
              '</div>',
@@ -66,6 +66,7 @@ function batchAccess() {
                 $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
                 return false;
               }
+              modalMessage('<?php echo $lC_Language->get('text_access_levels_updated'); ?>');
               oTable.fnReloadAjax();
             }
           );

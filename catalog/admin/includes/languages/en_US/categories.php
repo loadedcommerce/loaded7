@@ -103,6 +103,7 @@ table_heading_mode = Mode
 table_heading_sort_order = Sort Order
 table_heading_action = Action
  
+text_access_levels_updated = Access Levels Updated
 text_b2b = B2B
 text_product_category = Product Category (Default)
 text_info_category = Information Category
@@ -137,7 +138,7 @@ text_thumbnail_image = Thumbnail Image
 text_to_parent = to which parent category?
 text_toggle_html_editor = Toggle HTML Editor 
 text_top_category = -- Top --
-text_visibility = Visibility
+text_visibility = Visibility     
 
 text_html_content_file_upsell_title = HTML Content File
 text_html_content_file_upsell_desc = HTML Content File Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet.

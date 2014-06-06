@@ -66,6 +66,7 @@ function batchAccess() {
                 $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
                 return false;
               }
+              modalMessage('<?php echo $lC_Language->get('text_access_levels_updated'); ?>');
               oTable.fnReloadAjax();
             }
           );

@@ -104,6 +104,7 @@ introduction_delete_product = Please verify the removal of this product.
 introduction_batch_copy_products = Please choose which category the selected products should be copied to.
 introduction_batch_delete_products = Please verify the removal of the selected products.
 introduction_is_variant = Will the new product have variants? (eg. size, color, etc.)
+introduction_batch_edit_access = Please choose which access levels to assign to the selected entries.
 
 modal_heading_new_product = New Product
 modal_heading_edit_product = Edit Product
@@ -118,6 +119,7 @@ modal_heading_batch_copy_products = Batch Copy Products
 modal_heading_product_type = Product Type
 modal_heading_new_simple_option = New Simple Option
 modal_heading_new_combo_option = New Multi SKU Option Set
+modal_heading_batch_access_levels_override = Batch Edit Access Levels Override
 
 ms_error_image_directory_not_writable = Error: The product images directory is not writable: %s
 ms_error_image_directory_non_existant = Error: The product images directory does not exist: %s
@@ -188,6 +190,7 @@ table_heading_qoh = QOH
 table_heading_base_price = Base Price
 table_heading_img = Image
 
+text_access_levels_updated = Access Levels Updated
 text_additional_images = Additional Images
 text_add_handling_fee = Add Handling Fee
 text_all = All

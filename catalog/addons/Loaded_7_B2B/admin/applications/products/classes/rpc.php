@@ -12,7 +12,7 @@ if (!defined('DIR_FS_CATALOG')) return false;
 
 require_once(DIR_FS_CATALOG . 'addons/Loaded_7_B2B/admin/applications/products/classes/products.php');
 
-class lC_Categories_Admin_rpc { 
+class lC_Products_Admin_rpc { 
  /*
   * Batch delete product access
   *
