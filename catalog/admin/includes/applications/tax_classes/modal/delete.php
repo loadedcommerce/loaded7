@@ -13,7 +13,7 @@
 function deleteClass(id, name) {
   var accessLevel = '<?php echo $_SESSION['admin']['access'][$lC_Template->getModule()]; ?>';
   if (parseInt(accessLevel) < 4) {
-    $.modal.alert('<?php echo $lC_Language->get('ms_error_no_access');?>');
+  $.modal.alert('<?php echo $lC_Language->get('ms_error_no_access');?>');
     return false;
   }
   var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=getFormData&tcid=TCID'); ?>';
