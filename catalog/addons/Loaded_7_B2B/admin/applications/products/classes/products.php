@@ -33,6 +33,12 @@ class lC_Products_b2b_Admin extends lC_Products_pro_Admin {
     
     $products_id = lC_Products_pro_Admin::save($id, $data);   
    
+echo '[' . $products_id . ']<br>';
+echo "<pre>";
+print_r($data);
+echo "</pre>";
+die('77');   
+   
     return $products_id; 
   }
 }
