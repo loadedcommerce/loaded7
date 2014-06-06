@@ -21,7 +21,7 @@ CKEDITOR.editorConfig = function( config ) {
     { name: 'styles', items: [ 'FontSize' ] },
     { name: 'basicstyles', groups: [ 'basicstyles', 'colors' ], items: [ 'Bold', 'Italic', 'Underline', '-', 'TextColor' ] },
     { name: 'paragraph', groups: [ 'list' ], items: [ 'NumberedList', 'BulletedList' ] },
-    { name: 'links', groups: ['links','insert'], items: [ 'Link', 'Unlink', '-', 'HorizontalRule', 'Image', 'tliyoutube' ] },
+    { name: 'links', groups: ['links','insert'], items: [ 'Link', 'Unlink', '-', 'HorizontalRule', 'Image', 'tliyoutube', 'Slideshow' ] },
     { name: 'clipboard', groups: [ 'clipboard', 'basicstyles' ], items: [  'PasteFromWord', '-', 'RemoveFormat' ] },
   ];
 
@@ -30,7 +30,7 @@ CKEDITOR.editorConfig = function( config ) {
     { name: 'styles', items: [ 'FontSize' ] },
     { name: 'basicstyles', groups: [ 'basicstyles', 'colors' ], items: [ 'Bold', 'Italic', 'Underline', '-', 'TextColor' ] },
     { name: 'paragraph', groups: [ 'list' ], items: [ 'NumberedList', 'BulletedList' ] },
-    { name: 'links', groups: ['links','insert'], items: [ 'Link', 'Unlink', '-', 'HorizontalRule', 'Image', 'tliyoutube' ] },
+    { name: 'links', groups: ['links','insert'], items: [ 'Link', 'Unlink', '-', 'HorizontalRule', 'Image', 'tliyoutube', 'Slideshow'  ] },
     { name: 'clipboard', groups: [ 'clipboard', 'basicstyles' ], items: [  'PasteFromWord', '-', 'RemoveFormat' ] },
     { name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ 'Source' ] }
   ];
@@ -42,7 +42,7 @@ CKEDITOR.editorConfig = function( config ) {
     { name: 'colors', items: [ 'TextColor', 'BGColor' ] },
     { name: 'paragraph', groups: [ 'list', 'indent', 'align' ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote' ] },
     { name: 'links', groups: ['links'], items: [ 'Link', 'Unlink', 'Anchor' ] },
-    { name: 'insert',  groups: ['table','insert'], items: [  'Image', 'Flash', 'Table', 'tliyoutube', 'HorizontalRule', 'SpecialChar' ] },
+    { name: 'insert',  groups: ['table','insert'], items: [  'Image', 'Flash', 'Table', 'tliyoutube', 'HorizontalRule', 'SpecialChar', 'Slideshow'  ] },
     { name: 'clipboard', groups: [ 'clipboard' ], items: [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'RemoveFormat' ] },
     { name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ 'Source' ] },
     { name: 'tools', items: [ 'Maximize' ] },
@@ -76,6 +76,8 @@ CKEDITOR.editorConfig = function( config ) {
  
   // allow inline div and styles
   config.extraAllowedContent = 'p(*)[*]{*};div(*){*}[*];span(*)[*]{*}';
+  config.enterMode = CKEDITOR.ENTER_BR;
 
-  //config.enterMode = CKEDITOR.ENTER_BR;
+  config.filebrowserImageBrowseUrl = '../ext/jquery/ckeditor/kcfinder/browse.php?opener=ckeditor&type=images';
+  config.filebrowserImageUploadUrl = '../ext/jquery/ckeditor/kcfinder/upload.php?opener=ckeditor&type=images';
 };
