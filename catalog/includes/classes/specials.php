@@ -110,7 +110,7 @@ class lC_Specials {
       while ( $Qspecials->next() ) {
         $output .= '<div class="content-specials-listing-container">';
         $output .= '  <div class="content-specials-listing-name">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $Qspecials->value('products_keyword')), $Qspecials->value('products_name')) . '</div>' . "\n";
-        $output .= '  <div class="content-specials-listing-description">' . lc_clean_html($Qspecials->value('products_description')) . '</div>' . "\n";
+        $output .= '  <div class="content-specials-listing-description">' . ((strlen(lc_clean_html($Qspecials->value('products_description'))) > 65) ? substr(lc_clean_html($Qspecials->value('products_description')), 0, 62) . '...' : lc_clean_html($Qspecials->value('products_description'))) . '</div>' . "\n";
         $output .= '  <div class="content-specials-listing-price"><s>' . $lC_Currencies->displayPrice($Qspecials->value('products_price'), $Qspecials->valueInt('products_tax_class_id')) . '</s> <span class="product-special-price">' . $lC_Currencies->displayPrice($Qspecials->value('specials_new_products_price'), $Qspecials->valueInt('products_tax_class_id')) . '</span></div>' . "\n";
         $output .= '  <div class="content-specials-listing-image">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $Qspecials->value('products_keyword')), $lC_Image->show($Qspecials->value('image'), $Qspecials->value('products_name'))) . '</div>' . "\n";
         if (DISABLE_ADD_TO_CART == 1 && $Qspecials->valueInt('products_quantity') < 1) {
