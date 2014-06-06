@@ -11,7 +11,7 @@
     </operation> 
     <operation info="Enable SubProducts and Combo Options">
       <search position="replace"><![CDATA[<?php echo lC_Products_Admin::getOptionsPricingContent(); ?>]]></search>         
-      <add><![CDATA[<?php echo lC_Products_Admin_Pro::getOptionsPricingContent(); ?>]]></add>
+      <add><![CDATA[<?php echo lC_Products_pro_Admin::getOptionsPricingContent(); ?>]]></add>
     </operation>        
   </file>   
 </modification>
