@@ -39,9 +39,9 @@ class lC_Coupons {
 
         $name = $cInfo['name'];
         $discount = $this->_calculate($cInfo);
-        if(isset($this->_contents) &&  is_array($this->_contents)) {
+        /*if(isset($this->_contents) &&  is_array($this->_contents)) {
           unset($this->_contents);
-        }
+        }*/
 
         $this->_contents[$code] = array('title' => $name . ' (' . $code . ')',
                                         'total' => $discount); 
