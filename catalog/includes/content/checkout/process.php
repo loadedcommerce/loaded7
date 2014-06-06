@@ -81,6 +81,8 @@ class lC_Checkout_Process extends lC_Template {
     if (isset($_SESSION['PPEC_PROCESS'])) unset($_SESSION['PPEC_PROCESS']);
     if (isset($_SESSION['PPEC_PAYDATA'])) unset($_SESSION['PPEC_PAYDATA']);
 
+    if (isset($_SESSION['SelectedShippingMethodCost'])) unset($_SESSION['SelectedShippingMethodCost']);
+
     lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'success', 'SSL'));
   }
 }

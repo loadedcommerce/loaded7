@@ -117,6 +117,7 @@ class lC_Checkout_Shipping extends lC_Template {
             $lC_ShoppingCart->resetShippingMethod();
           } else {
             $lC_ShoppingCart->setShippingMethod($quote);
+            $_SESSION['SelectedShippingMethodCost'] = $quote['cost'];
             lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment', 'SSL'));
           }
         } else {
