@@ -33,12 +33,31 @@ class lC_Products_b2b_Admin extends lC_Products_pro_Admin {
     
     $products_id = lC_Products_pro_Admin::save($id, $data);   
    
-echo '[' . $products_id . ']<br>';
-echo "<pre>";
-print_r($data);
-echo "</pre>";
-die('77');   
-   
     return $products_id; 
   }
+ /*
+  * Batch update the category access levels
+  *
+  * @param integer $category_id The parent category id
+  * @param string  $levels      The access levels
+  * @access public
+  * @return boolean
+  */  
+  public static function batchEditAccess($data) {
+    global $lC_Database;
+
+    $levels = '';
+    if (is_array($data['access_levels'])) {
+      foreach ($data['access_levels'] as $key => $val) {
+        $levels .= $key . ';';
+      }
+      $levels = substr($levels, 0, -1);
+    }  
+echo '[' . $levels . ']<br>';    
+    foreach ( $data['batch'] as $products_id ) {
+echo '[' . $products_id . ']<br>';
+    }       
+die('33');
+    return true;
+  }  
 }

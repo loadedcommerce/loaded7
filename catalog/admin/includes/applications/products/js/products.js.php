@@ -823,7 +823,9 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
         batchDelete();
       } else if (e.value == 'copy') {
         batchCopy();
-      }
+      } else if (e.value == 'access') {
+        batchAccess();
+      }        
     }
 
     function updateProductFilter(filter) {
