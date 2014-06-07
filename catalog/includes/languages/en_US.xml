@@ -2957,12 +2957,12 @@ Your friend, %s, thought that you would be interested in %s from %s.]]></value>
     </definition>
     <definition>
       <key>info_permissions_heading</key>
-      <value><![CDATA[Thank you for your interest in this product]]></value>
+      <value><![CDATA[Thank you for your interest!]]></value>
       <group>general</group>
     </definition> 
     <definition>
       <key>info_permissions_text</key>
-      <value><![CDATA[It is not available for purchase without an approved account. If you are interested in opening an approved account please <a href="info.php?contact">contact us</a>]]></value>
+      <value><![CDATA[This item is not available for purchase without an approved account. If you are interested in opening an approved account please <a href="info.php?contact">contact us</a>]]></value>
       <group>general</group>
     </definition>        
   </definitions>  
