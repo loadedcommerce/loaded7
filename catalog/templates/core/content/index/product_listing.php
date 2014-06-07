@@ -7,7 +7,7 @@
   @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: product_listing.php v1.0 2013-08-08 datazen $
-*/                          
+*/  
 ?>
 <!--content/index/product_listing.php start-->
 <div class="row">
