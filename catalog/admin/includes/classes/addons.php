@@ -540,6 +540,7 @@ class lC_Addons_Admin extends lC_Addons {
     $lC_DirectoryListing->setStats(true);
       
     $enabled = '';
+   
     foreach ( $lC_DirectoryListing->getFiles() as $addon ) { 
       
       $ao = utility::cleanArr($addon);  
@@ -549,12 +550,12 @@ class lC_Addons_Admin extends lC_Addons {
       $class = $nameArr[count($nameArr)-2];
 
       if (file_exists($ao['path'])) {
-        if (isset($aoData)) { 
-        } else {
+      //  if (isset($aoData)) { 
+      //  } else {
           include_once($lC_Vqmod->modCheck($ao['path']));
           $aoData = new $class();
-        }         
-        
+      //  }  
+
         if ($aoData->isAutoInstall()) {
           if (defined('ADDONS_' . strtoupper($aoData->getAddonType()) . '_' . strtoupper($class) . '_STATUS')) {
             $isInstalled = $aoData->isInstalled();

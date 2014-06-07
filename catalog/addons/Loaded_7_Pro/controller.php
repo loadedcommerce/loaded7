@@ -62,15 +62,15 @@ class Loaded_7_Pro extends lC_Addon { // your addon must extend lC_Addon
     $this->_thumbnail = lc_image(DIR_WS_CATALOG . 'addons/' . $this->_code . '/images/loaded7_pro.png', $this->_title);
    /**
     * The addon enable/disable switch
-    */ 
-    if (defined('INSTALLATION_ID') && INSTALLATION_ID != '') {
+    */   
+    if (defined('INSTALLATION_ID') && INSTALLATION_ID != '') {  
       if ($this->_timeToCheck() === true) {
         $this->_enabled = $this->_validateSerial(INSTALLATION_ID);
         if ($this->_enabled) $this->_updateLastChecked();
       } else {
         $this->_enabled = (defined('ADDONS_SYSTEM_' . strtoupper($this->_code) . '_STATUS') && @constant('ADDONS_SYSTEM_' . strtoupper($this->_code) . '_STATUS') == '1') ? true : false;
       }
-      if (!$this->_enabled) {
+      if (!$this->_enabled) { 
         $lC_Database->simpleQuery("update " . TABLE_CONFIGURATION . " set configuration_value = '0' where configuration_key = 'ADDONS_SYSTEM_" . strtoupper($this->_code) . "_STATUS'");
       } else {
         $lC_Database->simpleQuery("update " . TABLE_CONFIGURATION . " set configuration_value = '1' where configuration_key = 'ADDONS_SYSTEM_" . strtoupper($this->_code) . "_STATUS'");

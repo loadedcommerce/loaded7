@@ -386,7 +386,7 @@ if (!class_exists('lC_Store_Admin')) {
     */
     public static function install($key) {
       global $lC_Database, $lC_Language, $lC_Vqmod, $lC_Addons;
-              
+                                           
       $isTemplate = (strstr($key, 'lC_Template_')) ? true : false;
       if ($isTemplate) {
         $key = str_replace('lC_Template_', '', $key);
@@ -410,7 +410,7 @@ if (!class_exists('lC_Store_Admin')) {
           self::getAddonPhar($key);   
 
           $phar = new Phar(DIR_FS_WORK . 'addons/' . $key . '.phar', 0);
-          $meta = $phar->getMetadata();
+          $meta = $phar->getMetadata();   
          
           // apply the addon phar 
           if (file_exists(DIR_FS_WORK . 'addons/' . $key . '.phar')) {
@@ -432,7 +432,7 @@ if (!class_exists('lC_Store_Admin')) {
         if ($Qchk->numberOfRows() > 0) $okToInstall = false;
 
         $Qchk->freeResult();
-
+            
         if ( file_exists(DIR_FS_CATALOG . 'addons/' . $key . '/controller.php') && $okToInstall === true) {
           include_once(DIR_FS_CATALOG . 'addons/' . $key . '/controller.php');
 
@@ -440,7 +440,7 @@ if (!class_exists('lC_Store_Admin')) {
           $addon = new $addon();
 
           $modules_group = $addon->getAddonType() . '|' . $key;
-
+                      
           $addon->install();
 
           $code = $addon->getAddonType(); 

@@ -165,25 +165,26 @@ class lC_Categories_b2b_Admin extends lC_Categories_pro_Admin {
       }
       $levels = substr($levels, 0, -1);
     }  
-    
+        
     $syncAllProducts = (isset($data['sync_all_products']) && $data['sync_all_products'] == 'on') ? true: false; 
     $syncAllChildren = (isset($data['sync_all_children']) && $data['sync_all_children'] == 'on') ? true: false;
       
-    if ($syncAllProducts || $syncAllChildren) {
-      
-      foreach ( $data['batch'] as $category_id ) {
+    foreach ( $data['batch'] as $category_id ) {
 
+      self::_updateCategoryAccessLevels($category_id, $levels);
+      
+      if ($syncAllProducts || $syncAllChildren) {
         // get the children categories
         $lC_CategoryTree = new lC_CategoryTree_Admin();
         $catArr = $lC_CategoryTree->getArray($category_id);
-         
+
         foreach ($catArr as $value) {
           $catID = end(explode('_', $value['id']));     
           if ($syncAllChildren) self::_updateCategoryAccessLevels($catID, $levels);
           if ($syncAllProducts) self::_updateProductAccessLevels($catID, $levels);
         } 
-      }       
-    }        
+      }
+    }       
 
     return true;
   }

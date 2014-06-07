@@ -114,7 +114,7 @@ class Loaded_7_B2B extends Loaded_7_Pro {
   * @access protected
   * @return boolean
   */  
-  protected function _isConfigInstalled($key) {
+  private function _isConfigInstalled($key) {
     global $lC_Database;
     
     $Qcfg = $lC_Database->query('select configuration_id from :table_configuration where configuration_key = :configuration_key');

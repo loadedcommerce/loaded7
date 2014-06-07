@@ -41,7 +41,7 @@
         <!-- Tabs -->
         <ul class="tabs">
           <li class="active"><a href="#customers"><?php echo $lC_Language->get('heading_customers'); ?></a></li>
-          <li><a href="#products"><?php echo $lC_Language->get('heading_products'); ?></a></li>
+          <!-- li><a href="#products"><?php echo $lC_Language->get('heading_products'); ?></a></li -->
         </ul>
         <!-- Content -->
         <div class="tabs-content">
@@ -102,9 +102,9 @@
             </div>
           </div>
           
-          <div id="products" class="with-padding">
+          <!-- div id="products" class="with-padding">
             <p>Coming Soon ...</p>
-          </div>        
+          </div -->        
           
         </div>
       </div> 
