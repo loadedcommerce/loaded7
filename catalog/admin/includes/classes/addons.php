@@ -135,8 +135,8 @@ class lC_Addons_Admin extends lC_Addons {
   */
   public static function loadAdminModuleModals($module) {
     global $lC_Vqmod;
-    
-    foreach (self::getAdminAddons('enabled') as $addon => $val) {
+                       
+    foreach (self::getAdminAddons('enabled') as $addon => $val) {    
       if ( is_dir(DIR_FS_CATALOG . 'addons/' . $addon . '/admin/applications/' . $module . '/modal') ) {
         if ( ($files = @scandir(DIR_FS_CATALOG . 'addons/' . $addon . '/admin/applications/' . $module . '/modal')) && (count($files) > 2) ) {
           $modalPath = DIR_FS_CATALOG . 'addons/' . $addon . '/admin/applications/' . $module . '/modal';
@@ -151,12 +151,11 @@ class lC_Addons_Admin extends lC_Addons {
               }
             }
           }    
-          return true;
         }
       }
     }
     
-    return false;
+    return true;
   }  
  /*
   * Determine if the module has page script

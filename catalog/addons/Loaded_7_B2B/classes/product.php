@@ -19,8 +19,10 @@ class lC_Product_b2b extends lC_Product {
   * @return array
   */
   public static function hasProductAccess($products_id, $customers_group_id) {
-    global $lC_Database;
+    global $lC_Database, $lC_Customer; 
     
+    $guestAccess = (defined('B2B_SETTINGS_GUEST_CATALOG_ACCESS') && B2B_SETTINGS_GUEST_CATALOG_ACCESS > 0) ? (int)B2B_SETTINGS_GUEST_CATALOG_ACCESS : 0;
+
     // get the access levels for the group
     $Qcg = $lC_Database->query('select customers_access_levels from :table_customers_groups_data where customers_group_id = :customers_group_id limit 1');
     $Qcg->bindTable(':table_customers_groups_data', TABLE_CUSTOMERS_GROUPS_DATA);
@@ -53,8 +55,13 @@ class lC_Product_b2b extends lC_Product {
         }
       }
     }
+    
+    $guestAccess = $valid;
+    if (!$lC_Customer->isLoggedOn()) {
+      $guestAccess = (defined('B2B_SETTINGS_GUEST_CATALOG_ACCESS') && B2B_SETTINGS_GUEST_CATALOG_ACCESS > 0) ? (int)B2B_SETTINGS_GUEST_CATALOG_ACCESS : 0;
+    }
 
-    return $valid;
+    return $guestAccess;
   }  
  /*
   * Check to see if category has restricted accesa

@@ -517,13 +517,13 @@ class lC_Product {
     $pData = $this->getPriceInfo($this->getID(), 1, array());
     
     if (isset($pData['qpbData']['listing']) && empty($pData['qpbData']['listing']) === false) {
-      $result = $pData['qpbData']['listing'];
+      $priceFormattedResult = $pData['qpbData']['listing'];
     } else {
-      $result = $pData['formatted'];
+      $priceFormattedResult = $pData['formatted'];
     }
-    
-    
-    return $result;
+
+    // VQMOD-hookpoint; DO NOT MODIFY OR REMOVE THE LINE BELOW
+    return $priceFormattedResult;
     
     /*
     if (($with_special === true) && $lC_Services->isStarted('specials') && ($new_price = $lC_Specials->getPrice($this->_data['id'])))  {
