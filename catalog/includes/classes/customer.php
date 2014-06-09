@@ -51,6 +51,28 @@ class lC_Customer {
     return $result;
   }    
   
+  public function getCustomerGroupAccess($id = null) {
+    global $lC_Database;
+    
+    if ($this->isLoggedOn() === false) { 
+      $result = '1';
+    } else {
+      if ($id == null) $id = DEFAULT_CUSTOMERS_GROUP_ID;
+      
+      $Qcg = $lC_Database->query('select customers_access_levels from :table_customers_groups_data where customers_group_id = :customers_group_id limit 1');
+      $Qcg->bindTable(':table_customers_groups_data', TABLE_CUSTOMERS_GROUPS_DATA);
+      $Qcg->bindInt(':customers_groups_id', $id);
+      $Qcg->execute();
+              
+      $result = $Qcg->value('customers_access_levels');
+        
+      $Qcg->freeResult();
+    
+    }
+    
+    return $result;    
+  }
+  
   public function getBaselineDiscount($id = null) {
     if (isset($this->_data['baseline_discount']) && is_numeric($this->_data['baseline_discount'])) {
       return $this->_data['baseline_discount'];
@@ -60,8 +82,6 @@ class lC_Customer {
       $Qcg->bindInt(':customers_group_id', $id);
       $Qcg->execute(); 
       
-if ($lC_Database->isError()) die($lC_Database->getError());
-           
       if ($Qcg->numberOfRows() > 0) {
         $discount = $Qcg->valueDecimal('baseline_discount');
         $Qcg->freeResult();

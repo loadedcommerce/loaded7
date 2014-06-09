@@ -19,18 +19,31 @@ $(document).ready(function() {
   if (isB2B == 1) {
     if (isGuest == 1) {
       if (custAccess == 33) { // view catalog
-  //      $('.pricing-row').empty();
-  //      $('.buy-btn-div').empty();
-  //      $('.content-products-info-price').remove();
-  //      $('.ships24hours').addClass('pull-left margin-bottom margin-left');
+        $('.pricing-row').empty();
+        $('.buy-btn-div').empty();
+        $('.content-products-info-price').remove();
+        $('.ships24hours').addClass('pull-left margin-bottom margin-left');
       } else if (custAccess == 66) { // see pricing
-  //      $('.buy-btn-div').empty();
+        $('.buy-btn-div').empty();
       }  
     }
     if (allowCreateAccount == 0) {
-  //    $('.create-account-div').empty();
+      $('.create-account-div').empty();
     }
-  //  $('.page-results').hide();
+    $('.page-results').hide();
   } 
+  
+  var gAccess = ('<?php echo $lC_Customer->getCustomerGroupAccess($lC_Customer->getID()); ?>').split(';');
+  $(".box-categories-ul-top li a").each(function(){
+    var cAccess = $(this).attr('access').split(';');
+    $ok = false;
+    $.each(cAccess, function(i, val) {
+      if ($.inArray(val, gAccess) != -1) {
+        $ok = true;
+        return;  
+      }
+    });
+    if (!$ok) $(this).closest('li').hide();
+  });
 });  
 //--></script>
