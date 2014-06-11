@@ -458,10 +458,20 @@ class utility {
   * @return boolean
   */
   public static function isPro() {
-    if (file_exists(DIR_FS_CATALOG . 'addons/Loaded_7_Pro/controller.php')) {
-      if (defined('ADDONS_SYSTEM_LOADED_7_PRO_STATUS') && ADDONS_SYSTEM_LOADED_7_PRO_STATUS == '1') {
-        return true;
-      }
+    global $lC_Database;
+
+    $Qcheck = $lC_Database->query('select configuration_value from :table_configuration where configuration_key = :configuration_key limit 1');
+    $Qcheck->bindTable(':table_configuration', TABLE_CONFIGURATION);
+    $Qcheck->bindValue(':configuration_key', 'ADDONS_SYSTEM_LOADED_7_PRO_STATUS');
+    $Qcheck->execute(); 
+  
+    $isPro = (($Qcheck->value('configuration_value') == '1') ? true : false);  
+    
+    $Qcheck->freeResult();    
+    
+    //if ($isPro && file_exists(DIR_FS_CATALOG . 'addons/Loaded_7_Pro/controller.php')) {
+    if ($isPro) {
+      return true;
     } 
     
     return false;
@@ -476,12 +486,48 @@ class utility {
     global $lC_Addons;
 
     if (!isset($lC_Addons)) $lC_Addons = new lC_Addons;
-    
     $aoArr = $lC_Addons->getAddons('enabled');
-
+         
     return $aoArr['Loaded_7_Pro']['version'];
   }  
+ /**
+  * Check if the B2B product is installed
+  *
+  * @access public
+  * @return boolean
+  */
+  public static function isB2B() {
+    global $lC_Database;
+
+    $Qcheck = $lC_Database->query('select configuration_value from :table_configuration where configuration_key = :configuration_key limit 1');
+    $Qcheck->bindTable(':table_configuration', TABLE_CONFIGURATION);
+    $Qcheck->bindValue(':configuration_key', 'ADDONS_SYSTEM_LOADED_7_B2B_STATUS');
+    $Qcheck->execute(); 
   
+    $isB2B = (($Qcheck->value('configuration_value') == '1') ? true : false);  
+    
+    $Qcheck->freeResult();    
+    
+    if ($isB2B && file_exists(DIR_FS_CATALOG . 'addons/Loaded_7_B2B/controller.php')) {
+      return true;
+    } 
+    
+    return false;
+  }
+ /**
+  * Get the B2B version
+  *
+  * @access public
+  * @return boolean
+  */
+  public static function getB2BVersion() {
+    global $lC_Addons;
+
+    if (!isset($lC_Addons)) $lC_Addons = new lC_Addons;
+    $aoArr = $lC_Addons->getAddons('enabled');
+         
+    return $aoArr['Loaded_7_B2B']['version'];
+  }  
  /**
   * Detect browser type
   *  

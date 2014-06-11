@@ -22,6 +22,7 @@ if ($lC_Customer->isLoggedOn() === false) {
   }
 }
 
+// VQMOD-hookpoint; DO NOT MODIFY OR REMOVE THE LINE BELOW
 $lC_Language->load('account');
 
 if ($lC_Services->isStarted('breadcrumb')) {

@@ -19,8 +19,8 @@
       <li><?php echo lc_link_object(lc_href_link(FILENAME_DEFAULT, 'cPath=2_5'), $lC_Language->get('text_terms_conditions')); ?></li>
       <li><?php echo lc_link_object(lc_href_link(FILENAME_INFO, 'cookie'), $lC_Language->get('info_cookie_usage_heading')); ?></li>
       <li><?php echo lc_link_object(lc_href_link(FILENAME_INFO, 'ssl_check'), $lC_Language->get('breadcrumb_ssl_check')); ?></li>
-      <li><?php echo lc_link_object(lc_href_link(FILENAME_INFO, 'contact'), $lC_Language->get('box_information_contact')); ?></li>
-      <li><?php echo lc_link_object(lc_href_link(FILENAME_INFO, 'sitemap'), $lC_Language->get('box_information_sitemap')); ?></li>
+      <li><?php echo lc_link_object(lc_href_link(FILENAME_INFO, 'contact'), $lC_Language->get('text_contact')); ?></li>
+      <li><?php echo lc_link_object(lc_href_link(FILENAME_INFO, 'sitemap'), $lC_Language->get('text_sitemap')); ?></li>
     </ul>
     <div class="button-set clearfix">
       <form action="<?php echo lc_href_link(FILENAME_PRODUCTS, 'new', 'AUTO'); ?>" method="post"><button onclick="$(this).closest('form').submit();" class="pull-right btn btn-lg btn-primary" type="submit"><?php echo $lC_Language->get('button_go_shopping'); ?></button></form>

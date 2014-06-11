@@ -78,7 +78,7 @@ if ( empty($_GET) && $_GET['action'] != 'validateLogin') {
   
   if ($action != 'search' && $action != 'productSearch') {
     
-    if ( file_exists('includes/applications/' . $_module . '/classes/' . $class . '.php') && !isset($_GET['addon']) ) {
+    if ( file_exists('includes/applications/' . $_module . '/classes/' . $class . '.php') && !isset($_GET['addon']) ) {  
       include($lC_Vqmod->modCheck('includes/applications/' . $_module . '/classes/' . $class . '.php'));
       if ( method_exists('lC_' . ucfirst($_module) . '_Admin_' . $class, $action) ) {
         call_user_func(array('lC_' . ucfirst($_module) . '_Admin_' . $class, $action));
@@ -87,7 +87,7 @@ if ( empty($_GET) && $_GET['action'] != 'validateLogin') {
         echo json_encode(array('rpcStatus' => RPC_STATUS_METHOD_NONEXISTENT . ': lC_' . ucfirst($_module) . '_Admin_' . $class . ' ' . $stat));
         exit;
       }
-    } else if (isset($_GET['addon']) && empty($_GET['addon']) === false) { //addons
+    } else if (isset($_GET['addon']) && empty($_GET['addon']) === false) { //addons  
       if ( file_exists(DIR_FS_CATALOG . 'addons/' . $_GET['addon'] . '/admin/applications/' . $_module . '/classes/' . $class . '.php')) {
         include($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'addons/' . $_GET['addon'] . '/admin/applications/' . $_module . '/classes/' . $class . '.php'));
         if ( method_exists('lC_' . ucfirst($_module) . '_Admin_' . $class, $action) ) {

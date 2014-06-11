@@ -53,6 +53,7 @@ class lC_Content_upcoming_products extends lC_Modules {
       
       $this->_content = '';
       while ($Qupcoming->next()) {
+        // VQMOD-hookpoint; DO NOT MODIFY OR REMOVE THE LINE BELOW
         $lC_Product = new lC_Product($Qupcoming->valueInt('products_id'));
 
         $this->_content .= '<div class="content-upcoming-products-container">' . "\n" . 
@@ -61,7 +62,7 @@ class lC_Content_upcoming_products extends lC_Modules {
         if ($lC_Product->hasImage()) {
           $this->_content .= '<div class="content-upcoming-products-image">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword()), $lC_Image->show($lC_Product->getImage(), $lC_Product->getTitle(), 'class="content-upcoming-products-image-src"', 'small')) . '</div>' . "\n";
         }
-        $this->_content .= '<div class="content-upcoming-products-price">' . $lC_Product->getPriceFormated(true) . '</div>' . "\n" . 
+        $this->_content .= '<div class="content-upcoming-products-price pricing-row">' . $lC_Product->getPriceFormated(true) . '</div>' . "\n" . 
                            '<div class="content-upcoming-products-date">' . $Qupcoming->value('date_expected') . '</div>' . "\n" .
                            '</div>' . "\n";
       }

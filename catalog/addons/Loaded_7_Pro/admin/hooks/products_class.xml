@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+  <id>Products Class</id>
+  <version>1.0.0</version>
+  <vqmver>2.3.2</vqmver>
+  <author>loadedcommerce.com</author>
+  <file name="includes/applications/products/classes/products.php">
+    <operation info="Show Pro Product Listing Icons">
+      <search position="replace"><![CDATA[$icons = lC_Products_Admin::getlistingIcons($Qproducts->valueInt('products_id'));]]></search>         
+      <add><![CDATA[$icons = lC_Products_pro_Admin::getlistingIcons($Qproducts->valueInt('products_id'));]]></add>
+    </operation>  
+    <operation info="Show Pro Product Listing Pricing">
+      <search position="replace"><![CDATA[$price = lC_Products_Admin::getProductsListingPrice($Qproducts->toArray());]]></search>         
+      <add><![CDATA[$price = lC_Products_pro_Admin::getProductsListingPrice($Qproducts->toArray());]]></add>
+    </operation>  
+    <operation info="Show Pro Product Listing Qty">
+      <search position="replace"><![CDATA[$products_quantity = lC_Products_Admin::getProductsListingQty($Qproducts->toArray());]]></search>         
+      <add><![CDATA[$products_quantity = lC_Products_pro_Admin::getProductsListingQty($Qproducts->toArray());]]></add>
+    </operation>  
+    <operation info="Extend Products Save 1">
+      <search position="before"><![CDATA[class lC_Products_Admin {]]></search>         
+      <add><![CDATA[global $lC_Vqmod; if (file_exists(DIR_FS_CATALOG . 'addons/Loaded_7_B2B/admin/applications/product/classes/products.php')) include_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'addons/Loaded_7_B2B/admin/applications/products/classes/products.php')); if (file_exists(DIR_FS_CATALOG . 'addons/Loaded_7_Pro/admin/applications/products/classes/products.php')) include_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'addons/Loaded_7_Pro/admin/applications/products/classes/products.php'));]]></add>
+    </operation>                
+  </file> 
+</modification>

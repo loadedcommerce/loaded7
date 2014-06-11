@@ -39,6 +39,7 @@ class lC_Boxes_whats_new extends lC_Modules {
       $Qnew->executeRandomMulti();
 
       if ( $Qnew->numberOfRows() ) {
+        // VQMOD-hookpoint; DO NOT MODIFY OR REMOVE THE LINE BELOW
         $lC_Product = new lC_Product($Qnew->valueInt('products_id'));
 
         $data = $lC_Product->getData();
@@ -57,8 +58,8 @@ class lC_Boxes_whats_new extends lC_Modules {
         $this->_content = '<li class="box-whats-new-image"><div class="thumbnail">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $data['keyword']), $lC_Image->show($data['display_image'], $data['name'], 'class="box-whats-new-image-src"')) . '</div></li>';
       }
       $this->_content .= '<li class="box-whats-new-name">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $data['keyword']), $data['name']) . '</li>';
-      $this->_content .= '<li class="box-whats-new-price">' . $data['display_price'] . '</li>';
-      $this->_content .= '<li class="box-whats-new-buy-now"><button onclick="window.location.href=\'' . lc_href_link(FILENAME_PRODUCTS, $data['products_keyword'] . '&action=cart_add') . '\'" title="" type="button">' . $lC_Language->get('button_buy_now') . '</button>';
+      $this->_content .= '<li class="box-whats-new-price pricing-row">' . $data['display_price'] . '</li>';
+      $this->_content .= '<li class="box-whats-new-buy-now pricing-row buy-btn-div"><button onclick="window.location.href=\'' . lc_href_link(FILENAME_PRODUCTS, $data['products_keyword'] . '&action=cart_add') . '\'" title="" type="button">' . $lC_Language->get('button_buy_now') . '</button>';
     }
   }
 
