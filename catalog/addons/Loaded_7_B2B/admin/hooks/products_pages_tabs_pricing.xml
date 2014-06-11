@@ -12,6 +12,10 @@
     <operation info="Groups Pricing">
       <search position="replace"><![CDATA[lC_Products_Admin::getGroupPricingContent]]></search>         
       <add><![CDATA[lC_Products_b2b_Admin::getGroupPricingContent]]></add>
-    </operation>        
+    </operation>    
+    <operation info="Groups Pricing">
+      <search position="replace"><![CDATA[lC_Products_Admin::getSpecialPricingContent]]></search>         
+      <add><![CDATA[lC_Products_b2b_Admin::getSpecialPricingContent]]></add>
+    </operation>         
   </file>   
 </modification>
