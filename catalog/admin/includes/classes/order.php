@@ -246,9 +246,9 @@ class lC_Order {
 
   protected function _getProduct($oid, $pid) {
     global $lC_Database;
-    $Qproduct = $lC_Database->query('select products_id, products_name, products_model, products_sku, products_price, products_tax, products_quantity, products_simple_options_meta_data from :table_orders_products where orders_products_id = :orders_products_id and orders_id = :orders_id limit 1');
+    $Qproduct = $lC_Database->query('select products_id, products_name, products_model, products_sku, products_price, products_tax, products_quantity, products_simple_options_meta_data from :table_orders_products where products_id = :products_id and orders_id = :orders_id limit 1');
     $Qproduct->bindTable(':table_orders_products', TABLE_ORDERS_PRODUCTS);
-    $Qproduct->bindInt(':orders_products_id', $pid);
+    $Qproduct->bindInt(':products_id', $pid);
     $Qproduct->bindInt(':orders_id', $oid);
     $Qproduct->execute();
     while ($Qproduct->next()) {
