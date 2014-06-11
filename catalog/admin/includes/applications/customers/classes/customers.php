@@ -833,16 +833,16 @@ class lC_Customers_Admin {
   * @return string
   */
   private static function fnColumnToField($i) {
-   if ( $i == 0 )
-    return "c.customers_id";
-   else if ( $i == 1 )
-    return "c.customers_lastname";
-   else if ( $i == 2 )
-    return "c.customers_firstname";
-   else if ( $i == 3 )
-    return "c.customers_group_id";
-   else if ( $i == 4 )
-    return "c.date_account_created";
+    if ( $i == 0 )
+      return "c.customers_id";
+    else if ( $i == 1 )
+      return "c.customers_lastname";
+    else if ( $i == 2 )
+      return "c.customers_firstname";
+    else if ( $i == 5 )
+      return "c.customers_group_id";
+    else if ( $i == 6 )
+      return "c.date_account_created";
   }
 }
 ?>
