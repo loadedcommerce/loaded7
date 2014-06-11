@@ -4759,3 +4759,10 @@ a:link {
 
 .padding{ padding-bottom:25px;padding-top:8px;}
 /*order_total  page*/
+
+/*order id was not visible with iphone-portrait-320 width */
+@media only screen and (max-width: 320px) {
+  #main-title h1 {
+    padding-top: 50px;
+   }
+ }

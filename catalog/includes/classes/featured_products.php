@@ -47,7 +47,7 @@ class lC_Featured_products {
         while ( $Qfeatured->next() ) {
           $output .= '<div class="content-featured-products-listing-container">';
           $output .= '  <div class="content-featured-products-listing-name">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $Qfeatured->value('products_keyword')), $Qfeatured->value('products_name')) . '</div>' . "\n";
-          $output .= '  <div class="content-featured-products-listing-description">' . lc_clean_html($Qfeatured->value('products_description')) . '</div>' . "\n";
+          $output .= '  <div class="content-featured-products-listing-description">' . ((strlen(lc_clean_html($Qfeatured->value('products_description'))) > 65) ? substr(lc_clean_html($Qfeatured->value('products_description')), 0, 62) . '...' : lc_clean_html($Qfeatured->value('products_description'))) . '</div>' . "\n";
           $output .= '  <div class="content-featured-products-listing-price">' . $lC_Currencies->displayPrice($Qfeatured->value('products_price'), $Qfeatured->valueInt('products_tax_class_id')) . '</div>' . "\n";
           $output .= '  <div class="content-featured-products-listing-image">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $Qfeatured->value('products_keyword')), $lC_Image->show($Qfeatured->value('image'), $Qfeatured->value('products_name'))) . '</div>' . "\n";
           if (DISABLE_ADD_TO_CART == 1 && $Qfeatured->valueInt('products_quantity') < 1) {

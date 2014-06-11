@@ -99,9 +99,9 @@ TD { padding: 5px 0 0 5px; }
                           </label>
                           <div style="margin-bottom:-6px;"></div>
                           <?php echo lc_draw_textarea_field('categories_description[' . $l['id'] . ']', null, null, 10, 'id="ckEditorCategoriesDescription_' . $l['id'] . '" style="width:97%;" class="input full-width autoexpanding"'); ?>
-                          <?php if(ENABLE_EDITOR == '1') { ?>
+                         <!--  <?php if(ENABLE_EDITOR == '1') { ?>
                             <span class="float-right small-margin-top small-margin-right"><?php echo '<a href="javascript:toggleEditor();">' . $lC_Language->get('text_toggle_html_editor') . '</a>'; ?></span>
-                            <?php } ?>
+                            <?php } ?> -->
                         </p>
                         <br />
                         <p class="button-height block-label">

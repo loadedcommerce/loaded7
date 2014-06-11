@@ -60,6 +60,12 @@ function newGroup() {
               }
             }).form();
             if (bValid) {
+
+              $("#zNew :input").each(function(index, elm){
+                $(elm).val($(elm).val().replace( /%/g, "&#37;" ));
+                $(elm).val($(elm).val().replace( /@/g, "&#64;" ));
+              });
+
               var nvp = $("#zNew").serialize();
               var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=saveGroup&BATCH'); ?>'
               $.getJSON(jsonLink.replace('BATCH', nvp),

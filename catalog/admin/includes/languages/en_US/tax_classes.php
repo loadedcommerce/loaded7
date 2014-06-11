@@ -41,8 +41,8 @@ total_products = %s Products
 introduction_new_tax_class = Please fill in the following information for the new tax class.
 introduction_edit_tax_class = Please make the necessary changes to the following tax class.
 introduction_delete_tax_class = Please verify the removal of this tax class and its tax rate entries.
-delete_warning_tax_class_in_use = Warning: This tax class cannot be deleted as it is currently assigned to
-delete_warning_tax_class_in_use_end = products.
+delete_warning_tax_class_in_use = Warning: This tax class cannot be deleted as it has 
+delete_warning_tax_class_in_use_end = Tax Rate(s) assigned.
 introduction_batch_delete_tax_classes = Please verify the removal of the selected tax classes and their tax rate entries.
 batch_delete_warning_tax_class_in_use = Warning: The following tax classes could not be deleted as they are currently assigned to products.
 

@@ -833,11 +833,11 @@ class lC_ShoppingCart {
   }
 
   public function getShippingMethod($key = null) {
-    if ( empty($key) ) {
+    if ( empty($key) || !isset($this->_shipping_method["$key"]) ) {
       return $this->_shipping_method;
     }
 
-    return $this->_shipping_method[$key];
+    return $this->_shipping_method["$key"];
   }
 
   public function resetShippingMethod() {
@@ -1014,7 +1014,7 @@ class lC_ShoppingCart {
   }
 
   private function _calculate($set_shipping = true, $generate_id = true) {
-    global $lC_Currencies, $lC_Tax, $lC_Weight, $lC_Shipping, $lC_Database, $lC_OrderTotal, $lC_Services, $lC_Coupons, $lC_Vqmod;
+    global $lC_Currencies, $lC_Tax, $lC_Weight, $lC_Shipping, $lC_Database, $lC_OrderTotal, $lC_Services, $lC_Coupons, $lC_Vqmod, $lC_Customer;
 
     $this->_sub_total = 0;
     $this->_total = 0;
@@ -1033,8 +1033,10 @@ class lC_ShoppingCart {
         $products_weight = $lC_Weight->convert($data['weight'], $data['weight_class_id'], SHIPPING_WEIGHT_UNIT);
         $this->_weight += $products_weight * $data['quantity'];
 
-        $tax = $lC_Tax->getTaxRate($data['tax_class_id'], $this->getTaxingAddress('country_id'), $this->getTaxingAddress('zone_id'));
-        $tax_description = $lC_Tax->getTaxRateDescription($data['tax_class_id'], $this->getTaxingAddress('country_id'), $this->getTaxingAddress('zone_id'));
+        if ( $lC_Customer->isLoggedOn() ) {
+          $tax = $lC_Tax->getTaxRate($data['tax_class_id'], $this->getTaxingAddress('country_id'), $this->getTaxingAddress('zone_id'));
+          $tax_description = $lC_Tax->getTaxRateDescription($data['tax_class_id'], $this->getTaxingAddress('country_id'), $this->getTaxingAddress('zone_id'));
+        }
 
         $shown_price = $lC_Currencies->addTaxRateToPrice($data['price'], $tax, $data['quantity']);
 
