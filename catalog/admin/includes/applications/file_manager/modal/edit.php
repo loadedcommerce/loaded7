@@ -70,12 +70,12 @@ function editEntry(id, name) {
                 invalidHandler: function() {
                 }
               }).form();
-              if (bValid) {              
-                var nvp = $("#editEntry").serialize(); 
-                var link = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=saveEntry&fid=FID&dir=DIR&BATCH'); ?>'  
-                var jsonLink = link.replace('FID', id).replace('DIR', data.target);
-                $.getJSON(jsonLink.replace('BATCH', nvp),         
+              if (bValid) {  
+                var contentEdit = document.getElementById('contentsEdit').value;
+                $.post('<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule(). '&action=saveEntry');?>',
+                  {fid: id, contents : contentEdit, dir: data.target},                      
                   function (rdata) {
+                    var rdata = jQuery.parseJSON( rdata ); 
                     if (rdata.rpcStatus == -10) { // no session
                       var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";     
                       $(location).attr('href',url);
