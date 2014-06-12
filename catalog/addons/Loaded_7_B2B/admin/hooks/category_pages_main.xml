@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+  <id>Enable B2B Features</id>
+  <version>1.0.0</version>
+  <vqmver>2.3.2</vqmver>
+  <author>loadedcommerce.com</author>
+  <file name="includes/applications/categories/pages/main.php">  
+    <operation info="Access Relationships">
+      <search position="after"><![CDATA[<option value="0" selected="selected"><?php echo $lC_Language->get('text_with_selected'); ?></option>]]></search>         
+      <add><![CDATA[<option value="access"><?php echo $lC_Language->get('text_edit_access'); ?></option>]]></add>
+    </operation>              
+  </file>   
+</modification>

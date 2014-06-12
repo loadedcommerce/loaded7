@@ -10,7 +10,7 @@
 */
 global $lC_Vqmod;
 
-require($lC_Vqmod->modCheck('includes/applications/updates/classes/updates.php'));
+require_once($lC_Vqmod->modCheck('includes/applications/updates/classes/updates.php'));
 
 class lC_Application_Updates extends lC_Template_Admin {
   /*

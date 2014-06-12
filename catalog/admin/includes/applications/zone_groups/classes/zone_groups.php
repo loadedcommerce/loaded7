@@ -110,8 +110,11 @@ class lC_Zone_groups_Admin {
       $Qzone = $lC_Database->query('insert into :table_geo_zones (geo_zone_name, geo_zone_description, date_added) values (:geo_zone_name, :geo_zone_description, now())');
     }
 
+    $zone_name = str_replace('&#37;','%',$data['zone_name']); 
+    $zone_name = str_replace('&#64;','@',$zone_name); 
+
     $Qzone->bindTable(':table_geo_zones', TABLE_GEO_ZONES);
-    $Qzone->bindValue(':geo_zone_name', $data['zone_name']);
+    $Qzone->bindValue(':geo_zone_name', $zone_name);
     $Qzone->bindValue(':geo_zone_description', $data['zone_description']);
     $Qzone->setLogging($_SESSION['module'], $id);
     $Qzone->execute();

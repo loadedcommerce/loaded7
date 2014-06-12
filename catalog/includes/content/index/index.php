@@ -113,8 +113,9 @@ class lC_Index_Index extends lC_Template {
           $Qparent->bindInt(':parent_id', $current_category_id);
           $Qparent->execute();
 
+          // VQMOD-hookpoint; DO NOT MODIFY OR REMOVE THE LINE BELOW
           $this->_page_contents = 'category_listing.php';
-          
+         
           $this->_process();
         }
         // ogp tags

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+  <id>Enable Multi SKU Inv Control</id>
+  <version>1.0.0</version>
+  <vqmver>2.3.2</vqmver>
+  <author>loadedcommerce.com</author>
+  <file name="includes/applications/products/pages/tabs/data.php">
+    <operation info="Enable Multi SKU Inv Control-1">
+      <search position="replace"><![CDATA[<label upselltitle="<?php echo $lC_Language->get('text_multi_sku'); ?>" upselldesc="<?php echo $lC_Language->get('text_multi_sku_desc'); ?>" for="ic_radio_2" class="upsellinfo disabled oicb button red-active<?php echo (isset($pInfo) && ($pInfo->getInt('has_children') == 1 || $pInfo->getInt('has_subproducts') == 1) ? ' active' : ''); ?>">]]></search>         
+      <add><![CDATA[<label for="ic_radio_2" class="oicb button red-active<?php echo (isset($pInfo) && ($pInfo->getInt('has_children') == 1 || $pInfo->getInt('has_subproducts') == 1) ? ' active' : ''); ?>">]]></add>
+    </operation>   
+    <operation info="Enable Multi SKU Inv Control-2">
+      <search position="replace"><![CDATA[<?php echo $lC_Language->get('text_multi_sku') . '<span class="small-margin-left float-right">' . lc_go_pro() . '</span>'; ?>]]></search>   
+      <add><![CDATA[<?php echo $lC_Language->get('text_multi_sku'); ?>]]></add>
+    </operation>      
+  </file>   
+</modification>

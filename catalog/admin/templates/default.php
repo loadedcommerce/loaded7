@@ -135,7 +135,7 @@ if(defined('EDITOR_UPLOADCARE_PUBLIC_KEY') && EDITOR_UPLOADCARE_PUBLIC_KEY != ''
   
   if ($lC_Template->hasPageHeader()) {
     include($lC_Vqmod->modCheck('templates/default/header.php'));
-  }
+  }  
   ?>
   
   <div id="mainMessageContainer" style="display:none;">
@@ -152,7 +152,7 @@ if(defined('EDITOR_UPLOADCARE_PUBLIC_KEY') && EDITOR_UPLOADCARE_PUBLIC_KEY != ''
     <a href="#" id="open-shortcuts"><span class="icon-thumbs"></span></a>
     <?php
   }
-  
+
   // load the main content
   if ($lC_Template->isAuthorized($lC_Template->getModule())) {
     if (lC_Addons_Admin::hasAdminPage($lC_Template->getModule(), $lC_Template->getPageContentsFilename())) {

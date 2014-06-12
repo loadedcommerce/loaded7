@@ -43,11 +43,11 @@ $(document).ready(function() {
              '  <div class="thumbnail align-center large-padding-top">'+ imageContent +
              '    <div class="caption">' +
              '      <h3 class="content-also-purchased-products-text-name small-margin-top no-margin-bottom">' + nameContent + '</h3>' +
-             '      <div class="row">' +
+             '      <div class="row pricing-row">' +
              '        <div class="col-sm-6 col-lg-6 no-padding-right">' +
              '          <p class="lead no-margin-bottom">' + priceContent + '</p>' +
              '        </div>' +
-             '        <div class="col-sm-6 col-lg-6 margin-top">' + buttonContent + '</div>' +
+             '        <div class="col-sm-6 col-lg-6 margin-top buy-btn-div">' + buttonContent + '</div>' +
              '      </div>' +
              '    </div>' +
              '  </div>' +

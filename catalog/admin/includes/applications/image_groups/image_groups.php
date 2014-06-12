@@ -10,7 +10,7 @@
 */
 global $lC_Vqmod;
 
-require($lC_Vqmod->modCheck('includes/applications/image_groups/classes/image_groups.php'));
+require_once($lC_Vqmod->modCheck('includes/applications/image_groups/classes/image_groups.php'));
 
 class lC_Application_Image_groups extends lC_Template_Admin {
  /*

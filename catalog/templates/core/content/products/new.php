@@ -25,7 +25,7 @@
     <?php 
     $lC_Products = new lC_Products();
     $lC_Products->setSortBy('date_added', '-');
-    $Qlisting = $lC_Products->execute(MODULE_CONTENT_NEW_PRODUCTS_MAX_DISPLAY);    
+    $Qlisting = $lC_Products->execute(NEW_PRODUCTS_PER_PAGE_DISPLAY);    
     
     if (PRODUCT_LIST_FILTER == '1') echo lC_Template_output::getManufacturerFilter();
   
@@ -33,7 +33,7 @@
       ?>
       <!-- PAGINATION-->
       <div class="product-listing-module-pagination margin-bottom">
-        <div class="pull-left large-margin-bottom"><?php echo $Qlisting->getBatchTotalPages($lC_Language->get('result_set_number_of_products')); ?></div>
+        <div class="pull-left large-margin-bottom page-results"><?php echo $Qlisting->getBatchTotalPages($lC_Language->get('result_set_number_of_products')); ?></div>
         <div class="pull-right large-margin-bottom no-margin-top">
           <ul class="pagination">
             <?php echo $Qlisting->getBatchPageLinks('page', lc_get_all_get_params(array('page', 'info', 'x', 'y')), false); ?>
@@ -64,7 +64,7 @@
       ?>
       <!-- PAGINATION-->
       <div class="product-listing-module-pagination">
-        <div class="pull-left"><?php echo $Qlisting->getBatchTotalPages($lC_Language->get('result_set_number_of_products')); ?></div>
+        <div class="pull-left page-results"><?php echo $Qlisting->getBatchTotalPages($lC_Language->get('result_set_number_of_products')); ?></div>
         <div class="pull-right no-margin-bottom no-margin-top">
           <ul class="pagination">
             <?php echo $Qlisting->getBatchPageLinks('page', lc_get_all_get_params(array('page', 'info', 'x', 'y')), false); ?>
@@ -109,11 +109,11 @@ $(document).ready(function() {
              '    <div class="caption">' +
              '      <h3 style="line-height:1.1;">' + nameContent + '</h3>' +
              '      <p class="">' + descContent + '</p>' +
-             '      <div class="row">' +
+             '      <div class="row pricing-row">' +
              '        <div class="col-sm-6 col-lg-6">' +
              '          <p class="lead small-margin-bottom">' + priceContent + '</p>' +
              '        </div>' +
-             '        <div class="col-sm-6 col-lg-6 no-margin-left product-listing-module-buy-now a">' + buttonContent + '</div>' +
+             '        <div class="col-sm-6 col-lg-6 no-margin-left product-listing-module-buy-now buy-btn-div">' + buttonContent + '</div>' +
              '      </div>' +
              '    </div>' +
              '  </div>' +

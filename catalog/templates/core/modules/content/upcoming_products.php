@@ -41,7 +41,7 @@ $(document).ready(function() {
              '  <div class="thumbnail align-center large-padding-top">'+ imageContent +
              '    <div class="caption">' +
              '      <h3 class="content-upcoming-products-text-name small-margin-top">' + nameContent + '</h3>' +
-             '      <div class="row">';
+             '      <div class="row pricing-row">';
     if (mediaType == 'desktop') {
       output += '        <div class="col-sm-6 col-lg-6">' +
                 '          <p class="lead content-upcoming-products-text-price">' + priceContent + '</p>' +

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+  <id>Hook in B2B Features</id>
+  <version>1.0.0</version>
+  <vqmver>2.3.2</vqmver>
+  <author>loadedcommerce.com</author>
+  <file name="includes/modules/content/also_purchased_products.php">
+    <operation info="Product Restrictions">
+      <search position="before"><![CDATA[$this->_content .= '<div class="content-also-purchased-products-container">' . "\n";]]></search>         
+      <add><![CDATA[global $lC_Customer; if (!lC_Product_b2b::hasProductAccess($lC_Product->getID(), $lC_Customer->getCustomerGroup($lC_Customer->getID()))) continue;]]></add>
+    </operation>  
+  </file> 
+</modification>

@@ -7,7 +7,9 @@
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: template.php v1.0 2013-08-08 datazen $
 */
-include_once(DIR_FS_CATALOG . 'includes/classes/BarcodeQR.php');
+global $lC_Vqmod;
+
+include_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/classes/BarcodeQR.php'));
 
 class lC_Template {
   /**
@@ -281,8 +283,8 @@ class lC_Template {
     }
 
     $tag_string .= '<title>' . $tag_parts_title . '</title>' . "\n";
-    $tag_string .= '<meta name="description" content="' . $tag_parts_description . '">' . "\n";
-    $tag_string .= '<meta name="keywords" content="' . $tag_parts_keywords . '">' . "\n";
+    $tag_string .= '<meta name="description" content="' . $this->cleanMetaTags($tag_parts_description) . '">' . "\n";
+    $tag_string .= '<meta name="keywords" content="' . $this->cleanMetaTags($tag_parts_keywords) . '">' . "\n";
     $tag_string .= '<meta name="generator" content="' . $this->_page_tags['generator'][0] . '">' . "\n";
 
     return $tag_string;
@@ -617,7 +619,7 @@ class lC_Template {
   *
   * @access private
   */
-  private function _getJavascriptPhpFilenames() {
+  private function _getJavascriptPhpFilenames() { 
     foreach ($this->_javascript_php_filenames as $filename) {
       if ( file_exists($filename) ) {
         include($filename);
@@ -633,6 +635,7 @@ class lC_Template {
   private function _getJavascriptBlocks() {
     return implode("\n", $this->_javascript_blocks);
   }
+
   /**
   * Returns OGP tags to add to the page head
   *
@@ -645,7 +648,7 @@ class lC_Template {
     foreach ($this->_ogp_tags as $key => $values) {
         for ($i=0; $i<=sizeof($values); $i++){
             if(!empty($values[$i])){
-                $tag_string .= '<meta property="og:' . $key . '" content="' . str_replace(array("\r\n", "\r", "\n"), "", $values[$i]) . '" />' . "\n";
+                $tag_string .= '<meta property="og:' . $key . '" content="' . $this->cleanMetaTags($values[$i]) . '" />' . "\n";
             }
         }
     }
@@ -1005,6 +1008,21 @@ class lC_Template {
     }
 
     return $html;
+  }
+  /**
+  * Cleans OGP and Meta tags and restrict OGP and Meta description to 300 characters
+  *
+  * @access private
+  * @return string
+  */  
+  public function cleanMetaTags($data){
+    $string = lc_clean_html($data); //clean html tags if any    
+    $string = str_replace(array("\r\n", "\r", "\n", "'", "\"", ";", "<", ">"), "", $string); // remove unwanted characters
+    if (strlen($string) > 300) {
+      $stringCut = substr($string, 0, 300); // truncate string
+      $string = substr($stringCut, 0, strrpos($stringCut, ' ')); // make sure it ends in a word
+    }
+    return $string;    
   }
 }
 ?>

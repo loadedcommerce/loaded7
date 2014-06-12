@@ -1,5 +1,5 @@
 <?php
-//error_reporting(0);
+error_reporting(0);
 /**
  * VQMod
  * @description Main Object used

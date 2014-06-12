@@ -69,7 +69,7 @@ class lC_Products_Admin {
     /* Filtering */
     $sWhere = " WHERE p.parent_id = 0 ";
     if ($_GET['sSearch'] != "") {
-      $sWhere .= " and (pd.products_name LIKE '%" . $_GET['sSearch'] . "%' or p.products_model LIKE '%" . $_GET['sSearch'] . "%' or p.products_sku LIKE '%" . $_GET['sSearch'] . "%')";
+      $sWhere .= " and (pd.products_name LIKE '%" . $_GET['sSearch'] . "%' or p.products_model LIKE '%" . $_GET['sSearch'] . "%' or p.products_sku LIKE '%" . $_GET['sSearch'] . "%'  or p.products_id = '" . $_GET['sSearch'] . "')"; 
     } 
 
     /* Main Listing Query */

@@ -63,7 +63,7 @@ class lC_CategoryTree {
   */
 
   public function __construct() {
-    global $lC_Database, $lC_Cache, $lC_Language;
+    global $lC_Database, $lC_Cache, $lC_Language, $lC_Customer;
 
     if ( SERVICES_CATEGORY_PATH_CALCULATE_PRODUCT_COUNT == '1' ) {
       $this->_show_total_products = true;
@@ -72,7 +72,7 @@ class lC_CategoryTree {
     if ( $lC_Cache->read('category_tree-' . $lC_Language->getCode(), 720) ) {
       $this->_data = $lC_Cache->getCache();
     } else {
-      $Qcategories = $lC_Database->query('select c.categories_id, c.categories_image, c.parent_id, c.categories_mode, c.categories_link_target, c.categories_custom_url, c.categories_status, c.categories_visibility_nav, c.categories_visibility_box, cd.categories_name, cd.categories_menu_name from :table_categories c, :table_categories_description cd where c.categories_status = 1 and c.categories_id = cd.categories_id and cd.language_id = :language_id order by c.parent_id, c.sort_order, cd.categories_name, cd.categories_menu_name');
+      $Qcategories = $lC_Database->query('select c.categories_id, c.categories_image, c.parent_id, c.categories_mode, c.categories_link_target, c.categories_custom_url, c.categories_status, c.categories_visibility_nav, c.categories_visibility_box, c.access_levels, cd.categories_name, cd.categories_menu_name from :table_categories c, :table_categories_description cd where c.categories_status = 1 and c.categories_id = cd.categories_id and cd.language_id = :language_id order by c.parent_id, c.sort_order, cd.categories_name, cd.categories_menu_name');
       $Qcategories->bindTable(':table_categories', TABLE_CATEGORIES);
       $Qcategories->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
       $Qcategories->bindInt(':language_id', $lC_Language->getID());
@@ -81,11 +81,11 @@ class lC_CategoryTree {
       while ( $Qcategories->next() ) {
         // added to grab permalink if exists
         $Qpermalink = $lC_Database->query('select item_id, query, permalink from :table_permalinks where item_id = :item_id and language_id = :language_id and type = 1 limit 1');
-        $Qpermalink->bindTable(':table_permalinks', 'lc_permalinks');
+        $Qpermalink->bindTable(':table_permalinks', TABLE_PERMALINKS);
         $Qpermalink->bindInt(':item_id', $Qcategories->valueInt('categories_id'));
         $Qpermalink->bindInt(':language_id', $lC_Language->getID());
         $Qpermalink->execute();
-
+   
         $this->_data[$Qcategories->valueInt('parent_id')][$Qcategories->valueInt('categories_id')] = array('item_id' => $Qpermalink->valueInt('item_id'), 
                                                                                                            'name' => $Qcategories->value('categories_name'),
                                                                                                            'menu_name' => $Qcategories->value('categories_menu_name'),
@@ -98,10 +98,11 @@ class lC_CategoryTree {
                                                                                                            'custom_url' => $Qcategories->value('categories_custom_url'),
                                                                                                            'status' => $Qcategories->valueInt('categories_status'),
                                                                                                            'nav' => $Qcategories->valueInt('categories_visibility_nav'),
-                                                                                                           'box' => $Qcategories->valueInt('categories_visibility_box')
+                                                                                                           'box' => $Qcategories->valueInt('categories_visibility_box'),
+                                                                                                           'access_levels' => $Qcategories->value('access_levels')
                                                                                                            );
       }
-
+      
       if ( $this->_show_total_products === true ) {
         $this->_calculateProductTotals();
       }
@@ -177,9 +178,9 @@ class lC_CategoryTree {
           }
 
           if ($category['custom_url']) {
-            $result .= str_repeat($this->spacer_string, $this->spacer_multiplier * $level) . $this->bullet_string . lc_link_object(lc_href_link($category['custom_url']), $link_title, ($category['link_target'] === 1) ? 'target="_blank"' : '');
+            $result .= str_repeat($this->spacer_string, $this->spacer_multiplier * $level) . $this->bullet_string . lc_link_object(lc_href_link($category['custom_url']), $link_title, ($category['link_target'] === 1) ? 'target="_blank" access="' . $category['access_levels'] . '"' : 'access="' . $category['access_levels'] . '"');
           } else {
-            $result .= str_repeat($this->spacer_string, $this->spacer_multiplier * $level) . $this->bullet_string . lc_link_object(lc_href_link(FILENAME_DEFAULT, 'cPath=' . $category_link), $link_title, ($category['link_target'] === 1) ? 'target="_blank"' : '');
+            $result .= str_repeat($this->spacer_string, $this->spacer_multiplier * $level) . $this->bullet_string . lc_link_object(lc_href_link(FILENAME_DEFAULT, 'cPath=' . $category_link), $link_title, ($category['link_target'] === 1) ? 'target="_blank" access="' . $category['access_levels'] . '"' : 'access="' . $category['access_levels'] . '"');
           }
 
           if ( $level === 0 ) {

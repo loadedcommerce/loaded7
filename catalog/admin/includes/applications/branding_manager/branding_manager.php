@@ -8,7 +8,7 @@
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: branding_manager.php v1.0 2013-08-08 datazen $
 */ 
-require('includes/applications/branding_manager/classes/branding_manager.php');
+require_once('includes/applications/branding_manager/classes/branding_manager.php');
 
 class lC_Application_Branding_manager extends lC_Template_Admin {
  /*
