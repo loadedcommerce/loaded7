@@ -41,9 +41,9 @@ class lC_Customers_Admin {
     if (isset($_GET['iSortCol_0'])) {
       $sOrder = " ORDER BY ";
       for ($i=0 ; $i < (int)$_GET['iSortingCols'] ; $i++ ) {
-        $sOrder .= lC_Customers_Admin::fnColumnToField($_GET['iSortCol_'.$i] ) . " " . $_GET['sSortDir_'.$i] .", ";
+        $sOrder .= lC_Customers_Admin::fnColumnToField($_GET['iSortCol_'.$i]) . " " . $_GET['sSortDir_'.$i] .", ";
       }
-      $sOrder = substr_replace( $sOrder, "", -2 );
+      $sOrder = substr_replace($sOrder, "", -2);
     }
 
     /* Filtering */
@@ -113,7 +113,7 @@ class lC_Customers_Admin {
       
       $Qcustomers_orders = $lC_Database->query("SELECT count(*) as order_count 
                                          from :table_orders 
-                                         where customers_id = '".$Qcustomers->valueInt('customers_id')."'");
+                                         where customers_id = '" . $Qcustomers->valueInt('customers_id') . "'");
       $Qcustomers_orders->bindTable(':table_orders', TABLE_ORDERS);
       $Qcustomers_orders->execute();
       
@@ -832,13 +832,15 @@ class lC_Customers_Admin {
   * @access private
   * @return string
   */
-  private static function fnColumnToField($i) {
+  private static function fnColumnToField($i = null, $c = null) {
     if ( $i == 0 )
       return "c.customers_id";
     else if ( $i == 1 )
       return "c.customers_lastname";
     else if ( $i == 2 )
       return "c.customers_firstname";
+    else if ( $i == 3 )
+      return "c.customers_email_address";
     else if ( $i == 5 )
       return "c.customers_group_id";
     else if ( $i == 6 )
