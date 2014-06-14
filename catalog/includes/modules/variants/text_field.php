@@ -56,7 +56,7 @@ class lC_Variants_text_field extends lC_Variants_Abstract {
                       <input type="text" class="form-control display-inline two-third-width mid-margin-left mid-margin-right float-right" name="simple_options[' . $data['group_id'] . '][' . $field['id'] . ']" id="variants_' . $data['group_id'] . '_' . $i . '">
                     </div>';
       }
-    }
+    }   
 
     return $string;
   }

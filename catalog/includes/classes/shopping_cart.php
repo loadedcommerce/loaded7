@@ -311,7 +311,7 @@ class lC_ShoppingCart {
 
     if ( !is_numeric($product_id) ) {
       return false;
-    }
+    }  
     
     $Qproduct = $lC_Database->query('select p.*, i.image from :table_products p left join :table_products_images i on (p.products_id = i.products_id and i.default_flag = :default_flag) where p.products_id = :products_id');
     $Qproduct->bindTable(':table_products', TABLE_PRODUCTS);
@@ -423,6 +423,8 @@ class lC_ShoppingCart {
         if (isset($_POST['simple_options']) && empty($_POST['simple_options']) === false) {
           
           foreach($_POST['simple_options'] as $options_id => $values_id) {
+            
+            if (is_array($values_id)) $values_id = key($values_id); // for text fields 
                      
             $QsimpleOptionsValues = $lC_Database->query('select price_modifier from :table_products_simple_options_values where options_id = :options_id and values_id = :values_id and customers_group_id = :customers_group_id');
             $QsimpleOptionsValues->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
@@ -435,20 +437,28 @@ class lC_ShoppingCart {
             $Qvariants->bindTable(':table_products_variants_groups', TABLE_PRODUCTS_VARIANTS_GROUPS);
             $Qvariants->bindTable(':table_products_variants_values', TABLE_PRODUCTS_VARIANTS_VALUES);
             $Qvariants->bindInt(':options_id', $options_id);
-            $Qvariants->bindInt(':values_id', $options_id);
+            $Qvariants->bindInt(':values_id', $values_id);
             $Qvariants->bindInt(':languages_id', $lC_Language->getID());
             $Qvariants->bindInt(':languages_id', $lC_Language->getID());
             $Qvariants->execute();
             
+            if ($Qvariants->value('module') == 'file_upload') {
+              $group_title = 'File';
+              $value_title = $_FILES['simple_options']['name'][$options_id];
+            } else {
+              $group_title = $Qvariants->value('group_title');
+              $value_title = $Qvariants->value('value_title');
+            } 
+            
             $this->_contents[$item_id]['simple_options'][] = array('value_id' => $values_id,
                                                                    'group_id' => $options_id,
-                                                                   'group_title' => $Qvariants->value('group_title'),
-                                                                   'value_title' => $Qvariants->value('value_title'),
+                                                                   'group_title' => $group_title,
+                                                                   'value_title' => $value_title,
                                                                    'price_modifier' => $QsimpleOptionsValues->valueDecimal('price_modifier'));
             $QsimpleOptionsValues->freeResult();                      
             $Qvariants->freeResult();                      
           }
-        }                                             
+        } 
                                            
         if ( $lC_Customer->isLoggedOn() ) {
           $Qnew = $lC_Database->query('insert into :table_shopping_carts (customers_id, item_id, products_id, quantity, meta_data, date_added) values (:customers_id, :item_id, :products_id, :quantity, :meta_data, :date_added)');
@@ -555,6 +565,9 @@ class lC_ShoppingCart {
   public function update($item_id, $quantity) {
     global $lC_Database, $lC_Customer, $lC_Services;
 
+echo '[' . $item_id . ']<br>';;
+die('44');    
+    
     if ( !is_numeric($quantity) ) {
       $quantity = $this->getQuantity($item_id);
     }
