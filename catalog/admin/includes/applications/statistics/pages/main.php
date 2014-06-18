@@ -264,7 +264,7 @@
       </tbody>
       <tfoot>
         <tr>
-          <th colspan="10">&nbsp;</th>
+          <th colspan="11">&nbsp;</th>
         </tr>
       </tfoot>
     </table>

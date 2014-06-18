@@ -97,10 +97,16 @@ class lC_Statistics_Inventory_Cost_Margin extends lC_Statistics {
     }       
 
     
+
+    
     while($breakout_qry->next()) {
       if($breakoutType == 'product_sku'){ 
-        
-        $breakout      = $breakout_qry->value('sku');
+        if($breakout_qry->value('sku') == NULL) {
+          $product_sku = $breakout_qry->value('id');  
+        }else {
+          $product_sku = $breakout_qry->value('sku');
+        }
+        $breakout      = $product_sku;
         $numOfProduct  = $breakout_qry->value('-');
         $qohTotal      = $breakout_qry->value('qohTotal');
         $costTotal     = $breakout_qry->value('costTotal');

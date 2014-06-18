@@ -79,8 +79,8 @@ class lC_Statistics_Customer_Orders extends lC_Statistics {
                $ids .= $query->value('orders_status_id').",";
              }
              $ids = substr($ids, 0, -1);
-             $this->_resultset->appendQuery(' and o.orders_status IN ( :orders_status )');     
-             $this->_resultset->bindValue(':orders_status', $ids);
+             $this->_resultset->appendQuery(' and o.orders_status IN ('. $ids .')');     
+             //$this->_resultset->bindValue(':orders_status', $ids);
 
             break;
 
