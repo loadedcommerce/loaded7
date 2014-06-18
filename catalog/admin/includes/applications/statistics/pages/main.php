@@ -78,7 +78,7 @@
     return $return_arr;
   }
   
-    $arr_time_span = array(
+   /* $arr_time_span = array(
                          array('id' => 'daily',
                                'text' => $lC_Language->get('text_daily')),
                          array('id' => 'monthly',
@@ -87,7 +87,7 @@
                                'text' => $lC_Language->get('text_quarterly')),
                          array('id' => 'annually',
                                'text' => $lC_Language->get('text_annually'))
-                         );
+                         );*/
     $arr_summary = array(
                        array('id' => 'summary',
                              'text' => $lC_Language->get('text_summary')),
@@ -105,7 +105,7 @@
     $manufacturer_dropdown = lc_draw_pull_down_menu('manufacturer', $manufacturer_arr, null, 'class="input with-small-padding small-margin-bottom"') . '&nbsp;';
     $supplier_dropdown     = lc_draw_pull_down_menu('supplier', $supplier_arr, null, 'class="input with-small-padding small-margin-bottom"') . '&nbsp;';
     $order_status_dropdown = lc_draw_pull_down_menu('order_status', $order_status_arr, null, 'class="input with-small-padding small-margin-bottom"') . '&nbsp;';          
-    $time_span_dropdown    = lc_draw_pull_down_menu('time_span', $arr_time_span, null, 'class="green-gradient select expandable-list small-margin-bottom"') . '&nbsp;';
+    //$time_span_dropdown    = lc_draw_pull_down_menu('time_span', $arr_time_span, null, 'class="green-gradient select expandable-list small-margin-bottom"') . '&nbsp;';
     $summary_dropdown      = lc_draw_pull_down_menu('summary', $arr_summary, null, 'class="green-gradient select expandable-list"') . '&nbsp;';
 
     $start_date_input = '<span id="sales_report_start_date" class="input small-margin-right">
