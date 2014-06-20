@@ -77,11 +77,14 @@ $(document).on('change', '.btn-file :file', function() {
 
 $(document).ready( function() {
   $('.btn-file :file').on('fileselect', function(event, numFiles, label, id) {
-    if (numFiles > 0) {
-      icon = id.replace('_options_', '_options_remove_');
+    icon = id.replace('_options_upload_', '_options_remove_');
+    icon2 = id.replace('variants_upload_', 'variants_remove_');
+    if (numFiles > 0) {  
       $('#' + icon).removeClass('hidden');
+      $('#' + icon2).removeClass('hidden');
     } else {
       $('#' + icon).addClass('hidden');
+      $('#' + icon2).addClass('hidden');
     }
   });
 });

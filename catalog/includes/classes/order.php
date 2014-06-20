@@ -204,6 +204,29 @@ class lC_Order {
     $Qstatus->bindInt(':customer_notified', '0');
     $Qstatus->bindValue(':comments', '');
     $Qstatus->execute();
+    
+    // check for file upload and add to comments
+    if (isset($_SESSION['file_upload'])) {
+         
+      $comments = '';
+      if (is_array($_SESSION['file_upload'][0]) && empty($_SESSION['file_upload'][0]) === false) {
+        foreach($_SESSION['file_upload'] as $file) {
+          $comments .= '<div class="margin-left margin-bottom"><span class="icon-newspaper icon-size2 margin-right"></span><a target="_blank" href="' . DIR_WS_CATALOG . 'pub/' . $_SESSION['file_upload']['name'] . '">' . $_SESSION['file_upload']['name'] . '</a></div>';
+        }
+      } else {
+        $comments = '<div class="margin-left margin-bottom"><span class="icon-newspaper icon-size2 margin-right"></span><a target="_blank" href="' . DIR_WS_CATALOG . 'pub/' . $_SESSION['file_upload']['name'] . '">' . $_SESSION['file_upload']['name'] . '</a></div>';
+      }
+      
+      $Qstatus = $lC_Database->query('insert into :table_orders_status_history (orders_id, orders_status_id, date_added, customer_notified, comments) values (:orders_id, :orders_status_id, now(), :customer_notified, :comments)');
+      $Qstatus->bindTable(':table_orders_status_history', TABLE_ORDERS_STATUS_HISTORY);
+      $Qstatus->bindInt(':orders_id', $insert_id);
+      $Qstatus->bindInt(':orders_status_id', 98); // file upload
+      $Qstatus->bindInt(':customer_notified', '0');
+      $Qstatus->bindValue(':comments', $comments);
+      $Qstatus->execute();      
+      
+      
+    }
 
     foreach ($lC_ShoppingCart->getProducts() as $products) {
       $Qproducts = $lC_Database->query('insert into :table_orders_products (orders_id, products_id, products_model, products_sku, products_name, products_price, products_tax, products_quantity, products_simple_options_meta_data) values (:orders_id, :products_id, :products_model, :products_sku, :products_name, :products_price, :products_tax, :products_quantity, :products_simple_options_meta_data)');

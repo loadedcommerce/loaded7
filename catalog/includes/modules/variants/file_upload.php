@@ -44,11 +44,11 @@ class lC_Variants_file_upload extends lC_Variants_Abstract {
         $group_id = $val['group_id'];
         $group_title = $val['group_title'];       
                     
-        $string .= '        <div id="simple_options_div_' . $group_id . '_' . $val['value_id'] . '" class="radio no-margin-top small-margin-bottom mid-margin-left">' .
+        $string .= '        <div id="simple_options_div_' . $group_id . '_' . $val['value_id'] . '" class="no-margin-top small-margin-bottom small-padding-left small-margin-left">' .
                    '         <label>' .
-                   '           <input type="file" class="file-inputs btn-primary btn-file" data-filename-placement="inside" title="' . $val['value_title'] . '" default="' . $val['value_title'] . '" name="simple_options[' . $group_id . ']" value="' . $val['value_id'] . '[img]" modifier="' . $val['price_modifier'] . '" onchange="refreshPrice();" id="simple_options_' . $group_id . '_' . $val['value_id'] . '_img">' .
+                   '           <input type="file" class="file-inputs btn-primary btn-file" data-filename-placement="inside" title="' . $val['value_title'] . '" default="' . $val['value_title'] . '" name="simple_options_upload" value="' . $val['value_id'] . '" modifier="' . $val['price_modifier'] . '" onchange="refreshPrice();" id="simple_options_upload_' . $val['value_id'] . '">' .
                    '           <input type="hidden" name="simple_options[' . $group_id . ']" value="' . $val['value_id'] . '" modifier="' . $val['price_modifier'] . '" id="simple_options_' . $group_id . '_' . $val['value_id'] . '">' .
-                   '         </label><i id="simple_options_remove_' . $group_id . '_' . $val['value_id'] . '" class="fa fa-times small-margin-left red hidden" style="cursor:pointer;" onclick="removeFileUploadRow(\'simple_options_div_' . $group_id . '_' . $val['value_id'] . '\');"></i>' .
+                   '         </label><i id="simple_options_remove_' . $val['value_id'] . '" class="fa fa-times margin-left red hidden" style="cursor:pointer;" onclick="removeFileUploadRow(\'simple_options_upload_' . $val['value_id'] . '\');"></i>' .
                    '       </div>';
         $cnt++;
       }                 
@@ -62,12 +62,15 @@ class lC_Variants_file_upload extends lC_Variants_Abstract {
 
       $string = '';
       $i = 0;
+
       foreach ( $data['data'] as $field ) {
         $i++;
-        $string .= '<div class="form-group margin-left">
-                      <label class="label-control">' . $field['text'] . '</label>
-                      <input type="file" class="form-control display-inline two-third-width mid-margin-left mid-margin-right float-right" name="simple_options[' . $data['group_id'] . '][' . $field['id'] . ']" id="variants_' . $data['group_id'] . '_' . $i . '">
-                    </div>';
+        $string .= '       <div id="variants_div_' . $data['group_id'] . '_' . $field['id'] . '" class="form-group margin-left">' .
+                   '         <label class="label-control" style="width:29%;">' . $data['title'] . '</label>' .  
+                   '           <input type="file" class="file-inputs btn-primary btn-file mid-margin-left" data-filename-placement="inside" title="' . $field['text'] . '" default="' . $field['text'] . '" name="variants_upload" value="' . $field['id'] . '" onchange="refreshPrice();" id="variants_upload_' . $field['id'] . '">' .
+                   '           <input type="hidden" name="variants[' . $data['group_id'] . ']" value="' . $field['id'] . '" id="variants_' . $data['group_id'] . '_' . $field['id'] . '">' .
+                   '         </label><i id="variants_remove_' . $field['id'] . '" class="fa fa-times margin-left red hidden" style="cursor:pointer;" onclick="removeFileUploadRow(\'variants_upload_' . $field['id'] . '\');"></i>' .
+                   '       </div>';        
       } 
     }             
 

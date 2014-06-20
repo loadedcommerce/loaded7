@@ -90,12 +90,12 @@ $oID = lC_Success::getOrderID($lC_Customer->getID());
                       echo '<div class="small">- ' . $lC_Language->get('listing_sku_heading') . ': ' . $products['sku'] . '</div>' . "\n";
                     }                    
                     if ( lC_Success::isVariant($products['id']) === true ) {
-                      foreach ( lC_Success::getVariants($products['id']) as $variant) {
+                      foreach ( lC_Success::getVariants($products['id'], $oID) as $variant) {
                         echo '<div class="small">- ' . $variant['group_title'] . ': ' . $variant['value_title'] . '</div>' . "\n";
                       }
                     }
                     if ( is_array($products['options']) && empty($products['options']) === false ) {
-                      foreach ( $products['options'] as $key => $val) {
+                      foreach ( $products['options'] as $key => $option) {
                         echo '<div class="small">- ' . $option['group_title'] . ': ' . $option['value_title'] . '</div>' . "\n";
                       }
                     }                        

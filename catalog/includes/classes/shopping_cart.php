@@ -7,6 +7,10 @@
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: shopping_cart.php v1.0 2013-08-08 datazen $
 */
+global $lC_Vqmod;
+
+include_once($lC_Vqmod->modCheck('includes/classes/upload.php'));
+
 class lC_ShoppingCart {
   private $_contents = array();
   private $_sub_total = 0;
@@ -424,7 +428,10 @@ class lC_ShoppingCart {
           
           foreach($_POST['simple_options'] as $options_id => $values_id) {
             
-            if (is_array($values_id)) $values_id = key($values_id); // for text fields 
+            if (is_array($values_id)) {
+              $text_value = current($values_id); // for text fields
+              $values_id = key($values_id);  
+            }
                      
             $QsimpleOptionsValues = $lC_Database->query('select price_modifier from :table_products_simple_options_values where options_id = :options_id and values_id = :values_id and customers_group_id = :customers_group_id');
             $QsimpleOptionsValues->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
@@ -443,8 +450,23 @@ class lC_ShoppingCart {
             $Qvariants->execute();
             
             if ($Qvariants->value('module') == 'file_upload') {
-              $group_title = 'File';
-              $value_title = $_FILES['simple_options']['name'][$options_id];
+              $group_title = $lC_Language->get('text_label_file');
+              $value_title = $_FILES['simple_options_upload']['name'];
+
+              // upload the file
+              $image = new upload('simple_options_upload', realpath('pub'));
+
+              if ( $image->exists() ) {
+                if ( $image->parse() && $image->save() ) {
+                  // success
+                  $_SESSION['file_upload'] = $_FILES['simple_options_upload']; 
+                  $value_title = $image->filename;
+                }
+              }
+              
+            } else if  ($Qvariants->value('module') == 'text_field') {
+              $group_title = $Qvariants->value('group_title');
+              $value_title = $text_value;              
             } else {
               $group_title = $Qvariants->value('group_title');
               $value_title = $Qvariants->value('value_title');
@@ -486,6 +508,33 @@ class lC_ShoppingCart {
             $group_title = lC_Variants::getGroupTitle($Qvariant->value('module'), $Qvariant->toArray());
             $value_title = lC_Variants::getValueTitle($Qvariant->value('module'), $Qvariant->toArray());
             $has_custom_value = lC_Variants::hasCustomValue($Qvariant->value('module'));
+            
+            if ($Qvariant->value('module') == 'file_upload') {
+              $group_title = $lC_Language->get('text_label_file');
+              $value_title = $_FILES['variants_upload']['name'];
+
+              // upload the file
+              $image = new upload('variants_upload', realpath('pub'));
+
+              if ( $image->exists() ) {
+                if ( $image->parse() && $image->save() ) {
+                  // success
+                  $_SESSION['file_upload'] = $_FILES['variants_upload']; 
+                  $value_title = $image->filename;
+                }
+              }
+              
+            } else if  ($Qvariant->value('module') == 'text_field') {
+              $group_title = $Qvariant->value('group_title');
+              
+              if (is_array($_POST['variants'][$Qvariant->valueInt('group_id')])) {
+                $value_title = current($_POST['variants'][$Qvariant->valueInt('group_id')]); // for text fields
+              }              
+
+            } else {
+              $group_title = $Qvariant->value('group_title');
+              $value_title = $Qvariant->value('value_title');
+            }             
 
             $this->_contents[$item_id]['variants'][] = array('group_id' => $Qvariant->valueInt('group_id'),
                                                              'value_id' => $Qvariant->valueInt('value_id'),
@@ -505,7 +554,6 @@ class lC_ShoppingCart {
             }
           }
         }
-
       }
       
       $this->_cleanUp();
@@ -565,9 +613,6 @@ class lC_ShoppingCart {
   public function update($item_id, $quantity) {
     global $lC_Database, $lC_Customer, $lC_Services;
 
-echo '[' . $item_id . ']<br>';;
-die('44');    
-    
     if ( !is_numeric($quantity) ) {
       $quantity = $this->getQuantity($item_id);
     }

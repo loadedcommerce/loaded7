@@ -310,7 +310,7 @@
             </legend>
             <table width="100%" cellpadding="0" cellspacing="0">
               <tbody>
-                          <?php echo lC_Orders_Admin::getOrderComments($oInfo->get('oID')); ?>
+              <?php echo lC_Orders_Admin::getOrderComments($oInfo->get('oID')); ?>
               </tbody>
             </table>
           </fieldset>
