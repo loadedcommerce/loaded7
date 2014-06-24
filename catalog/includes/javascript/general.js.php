@@ -275,5 +275,7 @@ $("#qrcode-tooltip").click(function(){
       $('#qr-message').show('500');
     }
   );
-})
+});
+
+
 </script>
