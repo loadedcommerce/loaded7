@@ -131,8 +131,8 @@ function newFileRow(numFiles, label, id, title, htitle, groupID, valueID, modifi
 };
 
 function removeFileUploadRow(id) {
-  var len = $('#file_upload_container div').length;
   $('#file_upload_div_' + id).remove();
+  var len = $('#file_upload_container div').length;
   if (len == 0) document.location.href = document.location.href;
 }
 

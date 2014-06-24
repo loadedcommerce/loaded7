@@ -462,7 +462,8 @@ class lC_ShoppingCart {
             if (strstr($Qvariants->value('module'), 'file_upload')) {
                            
               $group_title = (is_array($_FILES['simple_options_upload']['name']) && count($_FILES['simple_options_upload']['name']) > 2) ? $lC_Language->get('text_label_files') : $lC_Language->get('text_label_file');
-              $value_title = (is_array($_FILES['simple_options_upload']['name'])) ? substr(implode(', ', $_FILES['simple_options_upload']['name']), 0, -2) : $_FILES['simple_options_upload']['name'];
+              $value_title = (is_array($_FILES['simple_options_upload']['name'])) ? implode(', ', $_FILES['simple_options_upload']['name']) : $_FILES['simple_options_upload']['name'];
+              if (substr($value_title, -2) == ', ') $value_title = substr($value_title, 0, -2);              
 
               if (is_array($_FILES['simple_options_upload']['name'])) {
                 $filesArr = $_FILES;
@@ -531,7 +532,8 @@ class lC_ShoppingCart {
             
             if (strstr($Qvariant->value('module'), 'file_upload')) {
               $group_title = (is_array($_FILES['variants_upload']['name']) && count($_FILES['variants_upload']['name']) > 2) ? $lC_Language->get('text_label_files') : $lC_Language->get('text_label_file');
-              $value_title = (is_array($_FILES['variants_upload']['name'])) ? substr(implode(', ', $_FILES['variants_upload']['name']), 0, -2) : $_FILES['variants_upload']['name'];
+              $value_title = (is_array($_FILES['variants_upload']['name'])) ? implode(', ', $_FILES['variants_upload']['name']) : $_FILES['variants_upload']['name'];
+              if (substr($value_title, -2) == ', ') $value_title = substr($value_title, 0, -2);
 
               if (is_array($_FILES['variants_upload']['name'])) {
                 $filesArr = $_FILES;
