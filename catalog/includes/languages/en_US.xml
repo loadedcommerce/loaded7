@@ -2959,6 +2959,11 @@ Your friend, %s, thought that you would be interested in %s from %s.]]></value>
       <key>text_label_file</key>
       <value><![CDATA[File]]></value>
       <group>general</group>
-    </definition>    
+    </definition>   
+    <definition>
+      <key>text_label_files</key>
+      <value><![CDATA[Files]]></value>
+      <group>general</group>
+    </definition>      
   </definitions>  
 </language>

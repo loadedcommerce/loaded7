@@ -5,9 +5,9 @@
   @copyright  Copyright 2003-2014 Loaded Commerce, LLC
   @copyright  Portions Copyright 2003 osCommerce
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
-  @version    $Id: file_upload.php v1.0 2013-08-08 datazen $
+  @version    $Id: multiple_file_upload.php v1.0 2013-08-08 datazen $
 */
-class lC_Variants_file_upload extends lC_Variants_Abstract {
+class lC_Variants_multiple_file_upload extends lC_Variants_Abstract {
   const ALLOW_MULTIPLE_VALUES = false;
   const HAS_CUSTOM_VALUE = true;
 
@@ -46,7 +46,7 @@ class lC_Variants_file_upload extends lC_Variants_Abstract {
                     
         $string .= '        <div id="file_upload_div_' . $cnt . '" class="no-margin-top small-margin-bottom small-padding-left small-margin-left">' .
                    '         <label>' .
-                   '           <input type="file" htitle="" group-id="' . $group_id . '" value-id="' . $val['value_id'] . '" class="file-inputs btn-primary btn-file" data-filename-placement="inside" title="' . $val['value_title'] . '" default="' . $val['value_title'] . '" name="simple_options_upload[]" value="' . $val['value_id'] . '" modifier="' . $val['price_modifier'] . '" onchange="refreshPrice();" id="simple_options_upload_' . $cnt . '">' .
+                   '           <input type="file" htitle="" group-id="' . $group_id . '" value-id="' . $val['value_id'] . '" class="file-inputs btn-primary btn-file" data-filename-placement="inside" title="' . $val['value_title'] . '" default="' . $val['value_title'] . '" name="simple_options_upload[]" value="' . $val['value_id'] . '" modifier="' . $val['price_modifier'] . '" onchange="refreshPrice();" id="simple_options_mupload_' . $cnt . '">' .
                    '           <input type="hidden" name="simple_options[' . $group_id . '][' . $val['value_id'] . '][]" value="' . $val['value_id'] . '" modifier="' . $val['price_modifier'] . '" id="simple_options_' . $cnt . '">' .
                    '         </label><i id="simple_options_remove_' . $cnt . '" class="fa fa-times margin-left red hidden" style="cursor:pointer;" onclick="removeFileUploadRow(\'' . $cnt . '\');"></i>' .
                    '       </div>';
@@ -65,7 +65,7 @@ class lC_Variants_file_upload extends lC_Variants_Abstract {
       foreach ( $data['data'] as $field ) {
         $string .= '       <div id="file_upload_div_' . $cnt . '" class="form-group margin-left">' .
                    '         <label class="label-control" style="width:29%;">' . $data['title'] . '</label>' . 
-                   '         <input type="file" htitle="' . $data['title'] . '" modifier="variant" group-id="' . $data['group_id'] . '" value-id="' . $field['id'] . '" class="file-inputs btn-primary btn-file mid-margin-left" data-filename-placement="inside" title="' . $field['text'] . '" default="' . $field['text'] . '" name="variants_upload[]" value="' . $field['id'] . '" onchange="refreshPrice();" id="variants_upload_' . $cnt . '">' .
+                   '         <input type="file" htitle="' . $data['title'] . '" modifier="variant" group-id="' . $data['group_id'] . '" value-id="' . $field['id'] . '" class="file-inputs btn-primary btn-file mid-margin-left" data-filename-placement="inside" title="' . $field['text'] . '" default="' . $field['text'] . '" name="variants_upload[]" value="' . $field['id'] . '" onchange="refreshPrice();" id="variants_mupload_' . $cnt . '">' .
                    '         <input type="hidden" name="variants[' . $data['group_id'] . ']" value="' . $field['id'] . '" id="variants_' . $data['group_id'] . '_' . $field['id'] . '">' .
                    '         <i id="variants_remove_' . $cnt . '" class="fa fa-times margin-left red hidden" style="cursor:pointer;" onclick="removeFileUploadRow(\'' . $cnt . '\');"></i>' .
                    '       </div>';        

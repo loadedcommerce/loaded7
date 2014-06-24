@@ -207,11 +207,11 @@ class lC_Order {
     
     // check for file upload and add to comments
     if (isset($_SESSION['file_upload'])) {
-         
       $comments = '';
-      if (is_array($_SESSION['file_upload'][0]) && empty($_SESSION['file_upload'][0]) === false) {
-        foreach($_SESSION['file_upload'] as $file) {
-          $comments .= '<div class="margin-left margin-bottom"><span class="icon-newspaper icon-size2 margin-right"></span><a target="_blank" href="' . DIR_WS_CATALOG . 'pub/' . $_SESSION['file_upload']['name'] . '">' . $_SESSION['file_upload']['name'] . '</a></div>';
+      if (is_array($_SESSION['file_upload']['name']) && empty($_SESSION['file_upload']['name']) === false) {
+        foreach($_SESSION['file_upload']['name'] as $file) {
+          if ($file == '') continue;
+          $comments .= '<div class="margin-left margin-bottom"><span class="icon-newspaper icon-size2 margin-right"></span><a target="_blank" href="' . DIR_WS_CATALOG . 'pub/' . $file . '">' . $file . '</a></div>';
         }
       } else {
         $comments = '<div class="margin-left margin-bottom"><span class="icon-newspaper icon-size2 margin-right"></span><a target="_blank" href="' . DIR_WS_CATALOG . 'pub/' . $_SESSION['file_upload']['name'] . '">' . $_SESSION['file_upload']['name'] . '</a></div>';
@@ -224,8 +224,6 @@ class lC_Order {
       $Qstatus->bindInt(':customer_notified', '0');
       $Qstatus->bindValue(':comments', $comments);
       $Qstatus->execute();      
-      
-      
     }
 
     foreach ($lC_ShoppingCart->getProducts() as $products) {

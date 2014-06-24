@@ -118,7 +118,7 @@ class lC_Success {
     if ( $Qvariant->numberOfRows() > 0 ) {
       while ( $Qvariant->next() ) {
       
-        if ($Qvariant->value('module') == 'file_upload') {
+        if (strstr($Qvariant->value('module'), 'file_upload')) {
           $Qopv = $lC_Database->query('select opv.value_title from :table_orders_products_variants opv left join :table_orders_products op on (op.orders_products_id = opv.orders_products_id) where opv.orders_id = :orders_id and op.products_id = :products_id and opv.group_title like :group_title limit 1');
           $Qopv->bindTable(':table_orders_products_variants', TABLE_ORDERS_PRODUCTS_VARIANTS);
           $Qopv->bindTable(':table_orders_products', TABLE_ORDERS_PRODUCTS);

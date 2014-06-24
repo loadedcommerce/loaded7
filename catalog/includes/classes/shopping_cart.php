@@ -79,7 +79,7 @@ class lC_ShoppingCart {
 
     if ( !$lC_Customer->isLoggedOn() ) {
       return false;
-    }
+    }                                       
 
     foreach ( $this->_contents as $item_id => $data ) {
       $db_action = 'check';
@@ -88,12 +88,11 @@ class lC_ShoppingCart {
         foreach ( $data['variants'] as $variant ) {
           if ( $variant['has_custom_value'] === true ) {
             $db_action = 'insert';
-
             break;
           }
         }
       }
-
+      
       if ( $db_action == 'check' ) {
         $Qproduct = $lC_Database->query('select item_id, meta_data, quantity from :table_shopping_carts where customers_id = :customers_id and products_id = :products_id');
         $Qproduct->bindTable(':table_shopping_carts', TABLE_SHOPPING_CARTS);
@@ -149,7 +148,17 @@ class lC_ShoppingCart {
         }
       }
     }
-
+    
+    // store simple options
+    foreach ( $this->_contents as $item_id => $data ) {
+      $simple_options = array();
+      if ( isset($data['simple_options']) ) {
+        foreach ( $data['simple_options'] as $key => $option ) {
+          $simple_options[$item_id][] = $option;
+        }
+      }
+    }    
+    
     // reset per-session cart contents, but not the database contents
     $this->reset();
 
@@ -163,7 +172,7 @@ class lC_ShoppingCart {
 
     while ( $Qproducts->next() ) {
       if ( $Qproducts->valueInt('products_status') === 1 ) {
-        $Qdesc = $lC_Database->query('select products_name, products_keyword, products_description from :table_products_description where products_id = :products_id and language_id = :language_id');
+        $Qdesc = $lC_Database->query('select products_name, products_keyword, products_tags, products_url, products_description from :table_products_description where products_id = :products_id and language_id = :language_id');
         $Qdesc->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
         $Qdesc->bindInt(':products_id', ($Qproducts->valueInt('parent_id') > 0) ? $Qproducts->valueInt('parent_id') : $Qproducts->valueInt('products_id'));
         $Qdesc->bindInt(':language_id', $lC_Language->getID());
@@ -181,15 +190,17 @@ class lC_ShoppingCart {
           if ( $new_price = $lC_Specials->getPrice($Qproducts->valueInt('products_id')) ) {
             $price = $new_price;
           }
-        }     
+        }       
 
         $this->_contents[$Qproducts->valueInt('item_id')] = array('item_id' => $Qproducts->valueInt('item_id'),
                                                                   'id' => $Qproducts->valueInt('products_id'),
                                                                   'parent_id' => $Qproducts->valueInt('parent_id'),
+                                                                  'name' => $Qdesc->value('products_name'),
                                                                   'model' => $Qproducts->value('products_model'),
                                                                   'sku' => $Qproducts->value('products_sku'),
-                                                                  'name' => $Qdesc->value('products_name'),
                                                                   'keyword' => $Qdesc->value('products_keyword'),
+                                                                  'tags' => $Qdesc->value('products_tags'),
+                                                                  'url' => $Qdesc->value('products_url'),
                                                                   'description' => $Qdesc->value('products_description'),
                                                                   'image' => ($Qimage->numberOfRows() === 1) ? $Qimage->value('image') : '',
                                                                   'price' => $price,
@@ -199,8 +210,8 @@ class lC_ShoppingCart {
                                                                   'date_added' => lC_DateTime::getShort($Qproducts->value('date_added')),
                                                                   'weight_class_id' => $Qproducts->valueInt('products_weight_class'));
 
-                                                                  
-        $this->_contents[$Qproducts->valueInt('item_id')]['simple_options'] = unserialize($Qproducts->value('meta_data'));                                                                    
+        // simple options
+        $this->_contents[$Qproducts->valueInt('item_id')]['simple_options'] = (strlen($Qproducts->value('meta_data')) > 2) ? $Qproducts->value('meta_data') : $simple_options[$Qproducts->valueInt('item_id')];
 
         if ( $Qproducts->valueInt('parent_id') > 0 ) {
           $Qcheck = $lC_Database->query('select products_status from :table_products where products_id = :products_id');
@@ -238,10 +249,10 @@ class lC_ShoppingCart {
                 }
 
                 $this->_contents[$Qproducts->valueInt('item_id')]['variants'][] = array('group_id' => $Qvariant->valueInt('group_id'),
-                  'value_id' => $Qvariant->valueInt('value_id'),
-                  'group_title' => $group_title,
-                  'value_title' => $value_title,
-                  'has_custom_value' => $has_custom_value);
+                                                                                        'value_id' => $Qvariant->valueInt('value_id'),
+                                                                                        'group_title' => $group_title,
+                                                                                        'value_title' => $value_title,
+                                                                                        'has_custom_value' => $has_custom_value);
               }
             } else {
               $_delete_array[] = $Qproducts->valueInt('item_id');
@@ -425,7 +436,6 @@ class lC_ShoppingCart {
 
         // simple options
         if (isset($_POST['simple_options']) && empty($_POST['simple_options']) === false) {
-          
           foreach($_POST['simple_options'] as $options_id => $values_id) {
             
             if (is_array($values_id)) {
@@ -449,19 +459,29 @@ class lC_ShoppingCart {
             $Qvariants->bindInt(':languages_id', $lC_Language->getID());
             $Qvariants->execute();
             
-            if ($Qvariants->value('module') == 'file_upload') {
-              $group_title = $lC_Language->get('text_label_file');
-              $value_title = $_FILES['simple_options_upload']['name'];
+            if (strstr($Qvariants->value('module'), 'file_upload')) {
+                           
+              $group_title = (is_array($_FILES['simple_options_upload']['name']) && count($_FILES['simple_options_upload']['name']) > 2) ? $lC_Language->get('text_label_files') : $lC_Language->get('text_label_file');
+              $value_title = (is_array($_FILES['simple_options_upload']['name'])) ? substr(implode(', ', $_FILES['simple_options_upload']['name']), 0, -2) : $_FILES['simple_options_upload']['name'];
 
-              // upload the file
-              $image = new upload('simple_options_upload', realpath('pub'));
+              if (is_array($_FILES['simple_options_upload']['name'])) {
+                $filesArr = $_FILES;
+                $_SESSION['file_upload'] = $_FILES['simple_options_upload'];
+                foreach($filesArr['simple_options_upload']['name'] as $key => $file) {
+                  $_FILES = array('simple_options_upload' => array('name' => $file,
+                                                                   'type' => $filesArr['simple_options_upload']['type'][$key],
+                                                                   'tmp_name' => $filesArr['simple_options_upload']['tmp_name'][$key],
+                                                                   'error' => $filesArr['simple_options_upload']['error'][$key],
+                                                                   'size' => $filesArr['simple_options_upload']['size'][$key]));
+                  // upload the file
+                  $image = new upload('simple_options_upload', realpath('pub'));
 
-              if ( $image->exists() ) {
-                if ( $image->parse() && $image->save() ) {
-                  // success
-                  $_SESSION['file_upload'] = $_FILES['simple_options_upload']; 
-                  $value_title = $image->filename;
-                }
+                  if ( $image->exists() ) {
+                    if ( $image->parse() && $image->save() ) {
+                      // success
+                    }
+                  } 
+                }  
               }
               
             } else if  ($Qvariants->value('module') == 'text_field') {
@@ -509,32 +529,36 @@ class lC_ShoppingCart {
             $value_title = lC_Variants::getValueTitle($Qvariant->value('module'), $Qvariant->toArray());
             $has_custom_value = lC_Variants::hasCustomValue($Qvariant->value('module'));
             
-            if ($Qvariant->value('module') == 'file_upload') {
-              $group_title = $lC_Language->get('text_label_file');
-              $value_title = $_FILES['variants_upload']['name'];
+            if (strstr($Qvariant->value('module'), 'file_upload')) {
+              $group_title = (is_array($_FILES['variants_upload']['name']) && count($_FILES['variants_upload']['name']) > 2) ? $lC_Language->get('text_label_files') : $lC_Language->get('text_label_file');
+              $value_title = (is_array($_FILES['variants_upload']['name'])) ? substr(implode(', ', $_FILES['variants_upload']['name']), 0, -2) : $_FILES['variants_upload']['name'];
 
-              // upload the file
-              $image = new upload('variants_upload', realpath('pub'));
+              if (is_array($_FILES['variants_upload']['name'])) {
+                $filesArr = $_FILES;
+                $_SESSION['file_upload'] = $_FILES['variants_upload'];
+                foreach($filesArr['variants_upload']['name'] as $key => $file) {
+                  $_FILES = array('variants_upload' => array('name' => $file,
+                                                                   'type' => $filesArr['variants_upload']['type'][$key],
+                                                                   'tmp_name' => $filesArr['variants_upload']['tmp_name'][$key],
+                                                                   'error' => $filesArr['variants_upload']['error'][$key],
+                                                                   'size' => $filesArr['variants_upload']['size'][$key]));
+                  // upload the file
+                  $image = new upload('variants_upload', realpath('pub'));
 
-              if ( $image->exists() ) {
-                if ( $image->parse() && $image->save() ) {
-                  // success
-                  $_SESSION['file_upload'] = $_FILES['variants_upload']; 
-                  $value_title = $image->filename;
-                }
+                  if ( $image->exists() ) {
+                    if ( $image->parse() && $image->save() ) {
+                      // success
+                    }
+                  } 
+                }  
               }
               
             } else if  ($Qvariant->value('module') == 'text_field') {
               $group_title = $Qvariant->value('group_title');
-              
-              if (is_array($_POST['variants'][$Qvariant->valueInt('group_id')])) {
-                $value_title = current($_POST['variants'][$Qvariant->valueInt('group_id')]); // for text fields
-              }              
-
             } else {
               $group_title = $Qvariant->value('group_title');
               $value_title = $Qvariant->value('value_title');
-            }             
+            }            
 
             $this->_contents[$item_id]['variants'][] = array('group_id' => $Qvariant->valueInt('group_id'),
                                                              'value_id' => $Qvariant->valueInt('value_id'),
