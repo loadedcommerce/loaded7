@@ -10,7 +10,7 @@
 */
 global $lC_Vqmod;
 
-require($lC_Vqmod->modCheck('includes/applications/orders_status/classes/orders_status.php'));
+require_once($lC_Vqmod->modCheck('includes/applications/orders_status/classes/orders_status.php'));
 
 class lC_Application_Orders_status extends lC_Template_Admin {
  /*

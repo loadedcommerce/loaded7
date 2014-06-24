@@ -10,7 +10,7 @@
 */
 global $lC_Vqmod;
 
-require($lC_Vqmod->modCheck('includes/applications/store/classes/store.php'));
+require_once($lC_Vqmod->modCheck('includes/applications/store/classes/store.php'));
 
 class lC_Application_Store extends lC_Template_Admin {
   /*

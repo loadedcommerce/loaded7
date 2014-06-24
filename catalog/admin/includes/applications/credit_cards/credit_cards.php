@@ -10,7 +10,7 @@
 */
 global $lC_Vqmod;
 
-require($lC_Vqmod->modCheck('includes/applications/credit_cards/classes/credit_cards.php'));
+require_once($lC_Vqmod->modCheck('includes/applications/credit_cards/classes/credit_cards.php'));
 
 class lC_Application_Credit_cards extends lC_Template_Admin {
  /*
