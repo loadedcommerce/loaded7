@@ -61,8 +61,8 @@
                   }                  
                   if ( (STOCK_CHECK == '1') && ($lC_ShoppingCart->isInStock($products['item_id']) === false) ) {
                     echo '<span class="warning">' . STOCK_MARK_PRODUCT_OUT_OF_STOCK . '</span>' . "\n";
-                  }
-                  if ( $lC_ShoppingCart->isVariant($products['item_id']) ) {
+                  }    
+                  if ( $lC_ShoppingCart->isVariant($products['item_id']) ) { 
                     foreach ( $lC_ShoppingCart->getVariant($products['item_id']) as $variant) {
                       echo '<div class="small">- ' . $variant['group_title'] . ': ' . $variant['value_title'] . '</div>' . "\n";
                     }

@@ -463,16 +463,18 @@ class lC_Orders_Admin {
     $result['orderStatusHistoryData'] = '';
     $oshcnt = 0; 
     foreach ( $lC_Order->getStatusHistory() as $status_history ) {
+      
       $result['orderStatusHistory'] .= '<tr>
                                           <td align="left" valign="top">' . lC_DateTime::getShort($status_history['date_added'], true) . '</td>
                                           <td align="left" valign="top">' . $status_history['status'] . '</td>
-                                          <td align="left" valign="top">' . nl2br($status_history['comment']) . '</td>
+                                          <td align="left" valign="top">' . (substr($status_history['comment'], 0, 1) == '<') ? $status_history['comment'] : nl2br($status_history['comment']) . '</td>
                                           <td align="center" valign="top"><span class="' . (($status_history['customer_notified'] === 1) ? 'icon-tick icon-green' : 'icon-cross icon-red') . '"><span></td>
                                         </tr>';
+                                        
       // enhanced order admin additions
       $result['orderStatusHistoryData'][$oshcnt]['date_added'] = lC_DateTime::getShort($status_history['date_added'], false);
       $result['orderStatusHistoryData'][$oshcnt]['status'] = $status_history['status'];
-      $result['orderStatusHistoryData'][$oshcnt]['comment'] = nl2br($status_history['comment']);
+      $result['orderStatusHistoryData'][$oshcnt]['comment'] = (substr($status_history['comment'], 0, 1) == '<') ? $status_history['comment'] : nl2br($status_history['comment']);
       $result['orderStatusHistoryData'][$oshcnt]['customer_notified'] = $status_history['customer_notified'];
       $result['orderStatusHistoryData'][$oshcnt]['admin_name'] = $status_history['admin_name'];
       $result['orderStatusHistoryData'][$oshcnt]['admin_image'] = $status_history['admin_image'];
@@ -653,11 +655,14 @@ class lC_Orders_Admin {
       // build and return the udpated status history
       $history = '';
       $result = array();
+      
       foreach ( $lC_Order->getStatusHistory() as $status_history ) {
+       
+        
         $history .= '<tr>
                        <td align="left" valign="top">' . lC_DateTime::getShort($status_history['date_added'], true) . '</td>
                        <td align="left" valign="top">' . $status_history['status'] . '</td>
-                       <td align="left" valign="top">' . nl2br($status_history['comment']) . '</td>
+                       <td align="left" valign="top">' . (substr($status_history['comment'], 0, 1) == '<') ? $status_history['comment'] : nl2br($status_history['comment']) . '</td>
                        <td align="center" valign="top"><span class="' . (($status_history['customer_notified'] === 1) ? 'icon-tick icon-green' : 'icon-cross icon-red') . '"><span></td>
                      </tr>';
       }
@@ -705,13 +710,25 @@ class lC_Orders_Admin {
     if (is_array($data['orderStatusHistoryData'])) {
       foreach ($data['orderStatusHistoryData'] as $oshData) {
         if ($oshData['comment'] != '') {
+          
+          $tagColor = ' green-bg';
+          $tagText = $lC_Language->get('text_order_comment');
+          
+          if ($oshData['admin_id'] != null) {
+            $tagColor = ($oshData['append_comment'] == 1) ? ' orange-bg' : ' anthracite-bg';
+            $tagText = (($oshData['append_comment'] == 1) ? $lC_Language->get('text_customer_message') : $lC_Language->get('text_admin_note'));
+          } else if (strstr($oshData['comment'], 'icon-newspaper')) {  // is a file upload
+            $tagColor = ' blue-bg';
+            $tagText = $lC_Language->get('text_files_uploaded');
+          }
+          
           $ocData .= '<div class="with-small-padding bbottom-anthracite' . (($oshData['admin_id'] == null) ? ' silver-bg' : (($oshData['append_comment'] == 1) ? '' : ' grey-bg')) . '">
                         <div class="small-margin-top">
-                          <span class="float-right with-min-padding small-margin-right' . (($oshData['admin_id'] == null) ? ' green-bg' : (($oshData['append_comment'] == 1) ? ' orange-bg' : ' anthracite-bg')) . '">' . (($oshData['admin_id'] == null) ? $lC_Language->get('text_order_comment') : (($oshData['append_comment'] == 1) ? $lC_Language->get('text_customer_message') : $lC_Language->get('text_admin_note'))) . '</span>
+                          <span class="float-right with-min-padding small-margin-right' . $tagColor . '">' . $tagText . '</span>
                           <span class="small-margin-left float-left">
-                            ' . (($oshData['admin_image'] != '' && file_exists('images/avatar/' . $oshData['admin_image'])) ? '<img src="images/avatar/' . $oshData['admin_image'] . '" width="24" title="Status Update by ' . $oshData['admin_name'] . '" alt="Comment by ' . $oshData['admin_name'] . '" />' : '<span class="icon-user icon-size2 icon-anthracite small-margin-left small-margin-right" title="Status Update by ' . $oshData['admin_name'] . '"></span>') . '
+                            ' . (($oshData['admin_image'] != '' && file_exists('images/avatar/' . $oshData['admin_image'])) ? '<img src="images/avatar/' . $oshData['admin_image'] . '" width="24" title="' . $lC_Language->get('text_status_update_by') . ' ' . $oshData['admin_name'] . '" alt="' . $lC_Language->get('text_comment_by') . ' ' . $oshData['admin_name'] . '" />' : '<span class="icon-user icon-size2 icon-anthracite small-margin-left small-margin-right" title="' . $lC_Language->get('text_status_update_by') . ' ' . $oshData['admin_name'] . '"></span>') . '
                           </span>
-                          <span class="anthracite mid-margin-left">' . (($oshData['admin_id'] != null) ? $oshData['admin_name'] : $lC_Language->get('text_customer_comment')) . '</span><small class="anthracite small-margin-left">' . $oshData['date_added'] . '</small><span class="anthracite mid-margin-left">(' . $oshData['status'] . ')</span>
+                          <span class="anthracite mid-margin-left">' . (($oshData['admin_id'] != null) ? $oshData['admin_name'] : $lC_Language->get('text_customer_comment')) . '</span><small class="anthracite small-margin-left">' . $oshData['date_added'] . '</small><span class="anthracite mid-margin-left">' . (($oshData['status'] != null) ? '(' . $oshData['status'] . ')' : '') . '</span>
                         </div>
                         <p class="with-small-padding margin-left-order-comments">' . $oshData['comment'] . '</p>
                       </div>';
@@ -734,13 +751,25 @@ class lC_Orders_Admin {
     
     if (is_array($data['orderStatusHistoryData'])) {
       foreach ($data['orderStatusHistoryData'] as $oshData) {
+
+        $tagColor = ' green-bg';
+        $tagText = $lC_Language->get('text_order_comment');
+        
+        if ($oshData['admin_id'] != null) {
+          $tagColor = ($oshData['append_comment'] == 1) ? ' orange-bg' : ' anthracite-bg';
+          $tagText = (($oshData['append_comment'] == 1) ? $lC_Language->get('text_customer_message') : $lC_Language->get('text_admin_note'));
+        } else if (strstr($oshData['comment'], 'icon-newspaper')) {  // is a file upload
+          $tagColor = ' blue-bg';
+          $tagText = $lC_Language->get('text_files_uploaded');
+        }        
+        
         $osHistory .= '<div class="with-small-padding bbottom-anthracite' . (($oshData['admin_id'] == null) ? ' silver-bg' : (($oshData['append_comment'] == 1) ? '' : ' grey-bg')) . '">
                         <div class="small-margin-top">
-                          <span class="float-right with-min-padding small-margin-right' . (($oshData['admin_id'] == null) ? ' green-bg' : (($oshData['append_comment'] == 1) ? ' orange-bg' : ' anthracite-bg')) . '">' . (($oshData['admin_id'] == null) ? $lC_Language->get('text_order_comment') : (($oshData['append_comment'] == 1) ? $lC_Language->get('text_customer_message') : $lC_Language->get('text_admin_note'))) . '</span>
+                          <span class="float-right with-min-padding small-margin-right' . $tagColor . '">' . $tagText . '</span>
                           <span class="small-margin-left float-left">
                             ' . (($oshData['admin_image'] != '' && file_exists('images/avatar/' . $oshData['admin_image'])) ? '<img src="images/avatar/' . $oshData['admin_image'] . '" width="24" title="Status Update by ' . $oshData['admin_name'] . '" alt="Comment by ' . $oshData['admin_name'] . '" />' : '<span class="icon-user icon-size2 icon-anthracite small-margin-left small-margin-right" title="Status Update by ' . $oshData['admin_name'] . '"></span>') . '
                           </span>
-                          <span class="anthracite mid-margin-left">' . $oshData['admin_name'] . '</span><small class="anthracite small-margin-left">' . $oshData['date_added'] . '</small><span class="anthracite mid-margin-left">(' . $oshData['status'] . ')</span>
+                          <span class="anthracite mid-margin-left">' . $oshData['admin_name'] . '</span><small class="anthracite small-margin-left">' . $oshData['date_added'] . '</small><span class="anthracite mid-margin-left">' . (($oshData['status'] != null) ? '(' . $oshData['status'] . ')' : '') . '</span>
                         </div>
                         <p class="with-small-padding margin-left-order-comments">' . $oshData['comment'] . '</p>
                       </div>';

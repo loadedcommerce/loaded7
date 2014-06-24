@@ -21,8 +21,8 @@
     .dataColAction { text-align: right; }
     .store-type-selected{ color: #ff9f00 !important; font-size: 1.2em; }
   </style>
-  <div class="with-padding">
-    <!-- main panel -->
+  <div class="with-padding">  
+    <!-- main panel -->     
     <div class="content-panel margin-bottom">
       <!-- menu nav panel -->
       <div class="panel-navigation silver-gradient">
