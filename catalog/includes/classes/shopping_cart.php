@@ -463,11 +463,15 @@ class lC_ShoppingCart {
                            
               $group_title = (is_array($_FILES['simple_options_upload']['name']) && count($_FILES['simple_options_upload']['name']) > 2) ? $lC_Language->get('text_label_files') : $lC_Language->get('text_label_file');
               $value_title = (is_array($_FILES['simple_options_upload']['name'])) ? implode(', ', $_FILES['simple_options_upload']['name']) : $_FILES['simple_options_upload']['name'];
-              if (substr($value_title, -2) == ', ') $value_title = substr($value_title, 0, -2);              
+              if (substr($value_title, -2) == ', ') $value_title = substr($value_title, 0, -2); 
+              $value_title = str_replace(', ,', ', ', $value_title);      
+              
+              if ($value_title == '') $group_title = '';       
 
               if (is_array($_FILES['simple_options_upload']['name'])) {
                 $filesArr = $_FILES;
                 $_SESSION['file_upload'] = $_FILES['simple_options_upload'];
+
                 foreach($filesArr['simple_options_upload']['name'] as $key => $file) {
                   $_FILES = array('simple_options_upload' => array('name' => $file,
                                                                    'type' => $filesArr['simple_options_upload']['type'][$key],
@@ -482,7 +486,7 @@ class lC_ShoppingCart {
                       // success
                     }
                   } 
-                }  
+                } 
               }
               
             } else if  ($Qvariants->value('module') == 'text_field') {

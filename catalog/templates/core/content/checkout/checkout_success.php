@@ -91,12 +91,12 @@ $oID = lC_Success::getOrderID($lC_Customer->getID());
                     }                    
                     if ( lC_Success::isVariant($products['id']) === true ) {
                       foreach ( lC_Success::getVariants($products['id'], $oID) as $variant) {
-                        echo '<div class="small">- ' . $variant['group_title'] . ': ' . $variant['value_title'] . '</div>' . "\n";
+                        if ($variant['group_title'] != '') echo '<div class="small">- ' . $variant['group_title'] . ': ' . $variant['value_title'] . '</div>' . "\n";
                       }
                     }
                     if ( is_array($products['options']) && empty($products['options']) === false ) {
                       foreach ( $products['options'] as $key => $option) {
-                        echo '<div class="small">- ' . $option['group_title'] . ': ' . $option['value_title'] . '</div>' . "\n";
+                        if ($option['group_title'] != '') echo '<div class="small">- ' . $option['group_title'] . ': ' . $option['value_title'] . '</div>' . "\n";
                       }
                     }                        
                     echo '</td>' . "\n";

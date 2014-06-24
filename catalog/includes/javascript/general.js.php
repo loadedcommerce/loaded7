@@ -100,39 +100,39 @@ function newFileRow(numFiles, label, id, title, htitle, groupID, valueID, modifi
   if (numFiles > 0) {  
     $('#' + icon).removeClass('hidden');
     $('#' + icon2).removeClass('hidden');
-    $('#' + id).parent('a').removeClass('btn-primary').addClass('btn-success');
+    $('#' + id).parent('a').removeClass('btn-primary').addClass('btn-success').addClass('disabled').attr('onclick', 'return false;');
   } else {
     $('#' + icon).addClass('hidden');
     $('#' + icon2).addClass('hidden');
-    $('#' + id).parent('a').removeClass('btn-success').addClass('btn-primary');
+    $('#' + id).parent('a').removeClass('btn-success').addClass('btn-primary').removeClass('disabled').removeAttr('onclick');
   }
 
   if (id.indexOf("mupload") != -1) { // multiple file upload  
     var cnt = parseInt(id.split('_').slice(-1)[0]) + 1;
     
     if (modifier == 'variant') {
-      var row = '<div id="file_upload_div_' + cnt + '" class="form-group margin-left">'+
+      var row = '<div id="file_upload_div_' + groupID + '_' + valueID + '_' + cnt + '" class="form-group margin-left">'+
                 '  <label class="label-control" style="width:29%;">' + htitle + '</label>'+
-                '  <input type="file" htitle="' + htitle + '" modifier="variant" group-id="' +  groupID + '" value-id="' + valueID + '" class="file-input-' + cnt + ' file-inputs btn-primary btn-file mid-margin-left" data-filename-placement="inside" title="' + title + '" default="' + title + '" name="variants_upload[]" value="' + valueID + '" onchange="refreshPrice();" id="variants_mupload_' + cnt + '">'+
+                '  <input type="file" htitle="' + htitle + '" modifier="variant" group-id="' +  groupID + '" value-id="' + valueID + '" class="file-input-' + groupID + '_' + valueID + '_' + cnt + ' file-inputs btn-primary btn-file mid-margin-left" data-filename-placement="inside" title="' + title + '" default="' + title + '" name="variants_upload[]" value="' + valueID + '" onchange="refreshPrice();" id="variants_mupload_' + groupID + '_' + valueID + '_' + cnt + '">'+
                 '  <input type="hidden" name="variants[' + groupID + ']" value="' + valueID + '" id="variants_' + groupID + '_' + valueID + '">'+
-                '  <i id="variants_remove_' + cnt + '" class="fa fa-times margin-left red hidden" style="cursor:pointer;" onclick="removeFileUploadRow(\'' + cnt + '\');"></i>'+
+                '  <i id="variants_remove_' + groupID + '_' + valueID + '_' + cnt + '" class="fa fa-times margin-left red hidden" style="cursor:pointer;" onclick="removeFileUploadRow(\'file_upload_div_' + groupID + '_' + valueID + '_' + cnt + '\');"></i>'+
                 '</div>';
     } else {
-      var row = '<div id="file_upload_div_' + cnt + '" class="no-margin-top small-margin-bottom small-padding-left small-margin-left">'+
+      var row = '<div id="file_upload_div_' + groupID + '_' + valueID + '_' + cnt + '" class="no-margin-top small-margin-bottom small-padding-left small-margin-left">'+
                 '  <label>'+
-                '  <input type="file"  htitle="' + htitle + '" group-id="' + groupID + '" value-id="' + valueID + '" class="file-input-' + cnt + ' file-inputs btn-primary btn-file" data-filename-placement="inside" title="' + title + '" default="' + title + '" name="simple_options_upload[]" value="' + valueID + '" modifier="' + modifier + '" onchange="refreshPrice();" id="simple_options_mupload_' + cnt + '">'+
+                '  <input type="file"  htitle="' + htitle + '" group-id="' + groupID + '" value-id="' + valueID + '" class="file-input-' + groupID + '_' + valueID + '_' + cnt + ' file-inputs btn-primary btn-file" data-filename-placement="inside" title="' + title + '" default="' + title + '" name="simple_options_upload[]" value="' + valueID + '" modifier="' + modifier + '" onchange="refreshPrice();" id="simple_options_mupload_' + groupID + '_' + valueID + '_' + cnt + '">'+
                 '  <input type="hidden" name="simple_options[' + groupID + '][' + valueID + '][]" value="' + valueID + '" modifier="' + modifier + '" id="simple_options_' + cnt + '">'+
-                '</label><i id="simple_options_remove_' + cnt + '" class="fa fa-times margin-left red hidden" style="cursor:pointer;" onclick="removeFileUploadRow(\'' + cnt + '\');"></i>'+
+                '</label><i id="simple_options_remove_' + groupID + '_' + valueID + '_' + cnt + '" class="fa fa-times margin-left red hidden" style="cursor:pointer;" onclick="removeFileUploadRow(\'file_upload_div_' + groupID + '_' + valueID + '_' + cnt + '\');"></i>'+
                 '</div>';
     }
-    $('#file_upload_container').append(row);
-    $('.file-input-' + cnt).bootstrapFileInput();
+    $('#file_upload_container_' + groupID).append(row);
+    $('.file-input-' + groupID + '_' + valueID + '_' + cnt).bootstrapFileInput();
   }
 };
 
 function removeFileUploadRow(id) {
-  $('#file_upload_div_' + id).remove();
-  var len = $('#file_upload_container div').length;
+  $('#' + id).remove();
+  var len = $('*').hasClass('file-inputs');
   if (len == 0) document.location.href = document.location.href;
 }
 
