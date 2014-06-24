@@ -390,13 +390,13 @@ class lC_Orders_Admin {
                                      <td valign="top" align="left" class="orders-products-listing-td">' . $products['name'];
       if ( isset($products['attributes']) && is_array($products['attributes']) && ( sizeof($products['attributes']) > 0 ) ) {
         foreach ( $products['attributes'] as $attributes ) {
-          $result['orderProducts'] .= '<br /><nobr>&nbsp;&nbsp;- <span style="font-size:.9em;"><i>' . $attributes['option'] . ': ' . $attributes['value'] . '</i></span></nobr>';
+          if ($attributes['option'] != '') $result['orderProducts'] .= '<br /><nobr>&nbsp;&nbsp;- <span style="font-size:.9em;"><i>' . $attributes['option'] . ': ' . $attributes['value'] . '</i></span></nobr>';
         }
       }
       
       if ( isset($products['options']) && is_array($products['options']) && ( sizeof($products['options']) > 0 ) ) {
         foreach ( $products['options'] as $key => $val ) {
-          $result['orderProducts'] .= '<br /><nobr>&nbsp;&nbsp;- <span class="small"><i>' . $val['group_title'] . ': ' . $val['value_title'] . '</i></span></nobr>';
+          if ($val['group_title'] != '') $result['orderProducts'] .= '<br /><nobr>&nbsp;&nbsp;- <span class="small"><i>' . $val['group_title'] . ': ' . $val['value_title'] . '</i></span></nobr>';
         }
       }
       

@@ -47,7 +47,7 @@ $error = (isset($_GET['error']) && $_GET['error'] != NULL) ? preg_replace('/[^A-
   <?php
   if ( $lC_Product->hasSubProducts($lC_Product->getID()) === false) {
     ?>  
-    <form role="form" class="form-horizontal" name="cart_quantity" id="cart_quantity" action="<?php echo lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword() . '&action=cart_add&info=1'); ?>" method="post">
+    <form role="form" class="form-horizontal" name="cart_quantity" id="cart_quantity" action="<?php echo lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword() . '&action=cart_add&info=1'); ?>" method="post" enctype="multipart/form-data">
     <?php
   }
   ?>
