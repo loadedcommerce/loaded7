@@ -10,7 +10,7 @@
 */
   global $lC_Vqmod;
 
-  require($lC_Vqmod->modCheck('includes/applications/backup/classes/backup.php'));
+  require_once($lC_Vqmod->modCheck('includes/applications/backup/classes/backup.php'));
 
   class lC_Application_Backup extends lC_Template_Admin {
    /*
