@@ -17,6 +17,7 @@ button_approve = Approve
 button_back = Back
 button_back_to_list = Back to List
 button_backup = Backup
+button_buy_pro = Get the Pro Version
 button_cancel = Cancel
 button_clear_all = Clear All
 button_close = Close
@@ -370,6 +371,6 @@ text_yes = Yes
 text_no = No
 text_featured_product_expired = Featured Product has Expired!
 text_featured_product_no_expiration = No Expiration
-text_available_with_pro = Available free with the <span class="tag red-gradient glossy">PRO</span> edition
+text_available_with_pro = This feature available with the <span class="tag red-gradient glossy">PRO</span> edition
 text_free_with_pro_edition = <span class="tag red-gradient glossy">PRO</span> Free with Pro Edition
 error_specials_date = Error:  The specials expire date cannot be before the start date.

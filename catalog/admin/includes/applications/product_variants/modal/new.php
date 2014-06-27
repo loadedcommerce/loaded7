@@ -79,7 +79,7 @@ function newGroup() {
                   var module = $('#module').val();
                   var isPro = '<?php echo utility::isPro(); ?>';
                   if (isPro == false && (module == 'file_upload' || module == 'multiple_file_upload')) {
-                    $.modal.alert('<?php echo $lC_Language->get('text_available_with_pro'); ?>');
+                    $.modal.alert('<p class="align-center"><?php echo $lC_Language->get('text_available_with_pro'); ?></p><p class="align-center padding-top"><a target="_blank" href="http://loadedcommerce.com/pro/" class="button red-gradient glossy"><?php echo $lC_Language->get('button_buy_pro'); ?></a></p>');
                     return false;
                   }
                   
