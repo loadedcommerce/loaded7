@@ -67,6 +67,7 @@ class lC_Api {
     $registerArr['ver'] = utility::getVersion();
     
     $resultXML = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/' . $api_version . '/register/install/', 'method' => 'post', 'parameters' => $registerArr));
+    
     $newInstallationID = (preg_match("'<installationID[^>]*?>(.*?)</installationID>'i", $resultXML, $regs) == 1) ? $regs[1] : NULL;
     $products = (preg_match("'<products[^>]*?>(.*?)</products>'i", $resultXML, $regs) == 1) ? $regs[1] : NULL;
     
@@ -75,30 +76,6 @@ class lC_Api {
     } else {    
       return utility::arr2xml(array('error' => TRUE, 'message' => 'error processing the request'));
     }  
-  }
- /**
-  * Check to see if it's time to re-check installation validity
-  *  
-  * @access private      
-  * @return boolean
-  */   
-  private function _timeToCheck() {
-    global $lC_Database;
-
-    $check = (defined('INSTALLATION_ID') && INSTALLATION_ID != '') ? INSTALLATION_ID : NULL;
-    if ($check == NULL) return TRUE;
-    
-    $Qcheck = $lC_Database->query('select last_modified from :table_configuration where configuration_key = :configuration_key');
-    $Qcheck->bindTable(':table_configuration', TABLE_CONFIGURATION);
-    $Qcheck->bindValue(':configuration_key', 'INSTALLATION_ID');
-    $Qcheck->execute();  
-    
-    $today = substr(lC_DateTime::getShort(date("Y-m-d H:m:s")), 3, 2);
-    $check = substr(lC_DateTime::getShort($Qcheck->value('last_modified')), 3, 2);
-    
-    $Qcheck->freeResult();
-
-    return (((int)$today != (int)$check) ? TRUE : FALSE);   
   }    
 }
 ?>
