@@ -2955,5 +2955,37 @@ Your friend, %s, thought that you would be interested in %s from %s.]]></value>
       <value><![CDATA[You have removed your coupon]]></value>
       <group>general</group>
     </definition>
+    
+    <definition>
+      <key>text_social_share_facebook</key>
+      <value><![CDATA[Share on Facebook]]></value>
+      <group>general</group>
+    </definition>
+    <definition>
+      <key>text_social_share_twitter</key>
+      <value><![CDATA[Share on Twitter]]></value>
+      <group>general</group>
+    </definition>
+    <definition>
+      <key>text_social_share_google_plus</key>
+      <value><![CDATA[Share on Google+]]></value>
+      <group>general</group>
+    </definition>
+    <definition>
+      <key>text_social_share_linkedin</key>
+      <value><![CDATA[Share on LinkedIn]]></value>
+      <group>general</group>
+    </definition>
+    <definition>
+      <key>text_social_share_pinterest</key>
+      <value><![CDATA[Share on Pinterest]]></value>
+      <group>general</group>
+    </definition>
+    <definition>
+      <key>text_social_share_tumblr</key>
+      <value><![CDATA[Share on Tumblr]]></value>
+      <group>general</group>
+    </definition>
+    
   </definitions>  
 </language>

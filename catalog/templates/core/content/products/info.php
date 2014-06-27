@@ -64,47 +64,76 @@ $error = (isset($_GET['error']) && $_GET['error'] != NULL) ? preg_replace('/[^A-
       
       if ( PRODUCT_INFO_SOCIAL_SHARE_FACEBOOK == 1 || PRODUCT_INFO_SOCIAL_SHARE_TWITTER == 1 || PRODUCT_INFO_SOCIAL_SHARE_GOOGLE == 1 || PRODUCT_INFO_SOCIAL_SHARE_LINKED == 1 || PRODUCT_INFO_SOCIAL_SHARE_PIN == 1 || PRODUCT_INFO_SOCIAL_SHARE_TUMBLR == 1 ) { 
     ?>
+    <script>
+      function social_popup(url){
+        var myWindow = window.open(url, "Social Window", "width=600, height=400");
+      }
+    </script>
     <div class="social-container">
       <div class="menu-wrap">
         <?php if ( PRODUCT_INFO_SOCIAL_SHARE_FACEBOOK == 1 ) { ?>
         <div class="menu-item">
-          <span class="icon fa fa-facebook"></span>
-          <a class="text" href="#"><i class="fa fa-facebook" title="<?php echo $lC_Language->get('text_social_share_facebook'); ?>"></i></a>
+          <a href="javascript:void(0);" onclick="social_popup('https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode(HTTP_SERVER.$_SERVER['REQUEST_URI']); ?>');">
+            <span class="icon fa fa-facebook"></span>
+          </a>
+          <a href="javascript:void(0);" class="text" onclick="social_popup('https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode(HTTP_SERVER.$_SERVER['REQUEST_URI']); ?>');">
+            <i class="fa fa-facebook" title="<?php echo $lC_Language->get('text_social_share_facebook'); ?>"></i>
+          </a>
         </div>
         <?php } ?>
         <?php if ( PRODUCT_INFO_SOCIAL_SHARE_TWITTER == 1 ) { ?>
         <div class="menu-item">
-          <span class="icon fa fa-twitter"></span>
-          <a class="text" href="#"><i class="fa fa-twitter" title="<?php echo $lC_Language->get('text_social_share_twitter'); ?>"></i></a>
+          <a href="javascript:void(0);" onclick="social_popup('https://twitter.com/intent/tweet?text=<?php echo urlencode($lC_Product->getTitle()); ?>&url=<?php echo urlencode(HTTP_SERVER.$_SERVER['REQUEST_URI']); ?>');">
+            <span class="icon fa fa-twitter"></span>
+          </a>
+          <a href="javascript:void(0);" class="text" onclick="social_popup('https://twitter.com/intent/tweet?text=<?php echo urlencode($lC_Product->getTitle()); ?>&url=<?php echo urlencode(HTTP_SERVER.$_SERVER['REQUEST_URI']); ?>');">
+            <i class="fa fa-twitter" title="<?php echo $lC_Language->get('text_social_share_twitter'); ?>"></i>
+          </a>
         </div>
         <?php } ?>
         <?php if ( PRODUCT_INFO_SOCIAL_SHARE_GOOGLE == 1 ) { ?>
         <div class="menu-item">
-          <span class="icon fa fa-google-plus"></span>
-          <a class="text" href="#"><i class="fa fa-google-plus" title="<?php echo $lC_Language->get('text_social_share_google_plus'); ?>"></i></a>
+          <a href="javascript:void(0);" onclick="social_popup('https://plus.google.com/share?url=<?php echo urlencode(HTTP_SERVER.$_SERVER['REQUEST_URI']); ?>&gpsrc=frameless&btmpl=popup');">
+            <span class="icon fa fa-google-plus"></span>
+          </a>
+          <a href="javascript:void(0);" class="text" onclick="social_popup('https://plus.google.com/share?url=<?php echo urlencode(HTTP_SERVER.$_SERVER['REQUEST_URI']); ?>&gpsrc=frameless&btmpl=popup');">
+            <i class="fa fa-google-plus" title="<?php echo $lC_Language->get('text_social_share_google_plus'); ?>"></i>
+          </a>
         </div>
         <?php } ?>
         <?php if ( PRODUCT_INFO_SOCIAL_SHARE_LINKED == 1 ) { ?>
         <div class="menu-item">
-          <span class="icon fa fa-linkedin"></span>
-          <a class="text" href="#"><i class="fa fa-linkedin" title="<?php echo $lC_Language->get('text_social_share_linkedin'); ?>"></i></a>
+          <a href="javascript:void(0);" onclick="social_popup('https://www.linkedin.com/shareArticle?mini=true&url=<?php echo urlencode(HTTP_SERVER.$_SERVER['REQUEST_URI']); ?>');">
+            <span class="icon fa fa-linkedin"></span>
+          </a>
+          <a href="javascript:void(0);" class="text" onclick="social_popup('https://www.linkedin.com/shareArticle?mini=true&url=<?php echo urlencode(HTTP_SERVER.$_SERVER['REQUEST_URI']); ?>');">
+            <i class="fa fa-linkedin" title="<?php echo $lC_Language->get('text_social_share_linkedin'); ?>"></i>
+          </a>
         </div>
         <?php } ?>
         <?php if ( PRODUCT_INFO_SOCIAL_SHARE_PIN == 1 ) { ?>
         <div class="menu-item">
-          <span class="icon fa fa-pinterest"></span>
-          <a class="text" href="#"><i class="fa fa-pinterest" title="<?php echo $lC_Language->get('text_social_share_pinterest'); ?>"></i></a>
+          <a href="javascript:void(0);" onclick="social_popup('https://www.pinterest.com/join/?next=/pin/create/button/?url=<?php echo urlencode(HTTP_SERVER.$_SERVER['REQUEST_URI']); ?>');">
+            <span class="icon fa fa-pinterest"></span>
+          </a>
+          <a href="javascript:void(0);" class="text" onclick="social_popup('https://www.pinterest.com/join/?next=/pin/create/button/?url=<?php echo urlencode(HTTP_SERVER.$_SERVER['REQUEST_URI']); ?>');">
+            <i class="fa fa-pinterest" title="<?php echo $lC_Language->get('text_social_share_pinterest'); ?>"></i>
+          </a>
         </div>
         <?php } ?>
         <?php if ( PRODUCT_INFO_SOCIAL_SHARE_TUMBLR == 1 ) { ?>
         <div class="menu-item">
-          <span class="icon fa fa-tumblr"></span>
-          <a class="text" href="#"><i class="fa fa-tumblr" title="<?php echo $lC_Language->get('text_social_share_tumblr'); ?>"></i></a>
+          <a href="javascript:void(0);" onclick="social_popup('http://www.tumblr.com/share/link/?url=<?php echo urlencode(HTTP_SERVER.$_SERVER['REQUEST_URI']); ?>&name=<?php echo urlencode($lC_Product->getTitle()); ?>');">
+            <span class="icon fa fa-tumblr"></span>
+          </a>
+          <a href="javascript:void(0);" class="text" onclick="social_popup('http://www.tumblr.com/share/link/?url=<?php echo urlencode(HTTP_SERVER.$_SERVER['REQUEST_URI']); ?>&name=<?php echo urlencode($lC_Product->getTitle()); ?>');">
+            <i class="fa fa-tumblr" title="<?php echo $lC_Language->get('text_social_share_tumblr'); ?>"></i>
+          </a>
         </div>
         <?php } ?>
       </div>
     </div> 
-    <?php } ?>
+    <?php } ?> 
     <hr class="small-margin-top small-margin-bottom">
     <p class="content-products-info-desc"><?php echo ($lC_Product->getDescription() != null) ? $lC_Product->getDescription() : $lC_Language->get('no_description_available'); ?></p>
     <?php
