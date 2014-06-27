@@ -226,7 +226,7 @@ class lC_Login_Admin {
       $error = true;
       $errorMsg = preg_match("'<title[^>]*?>.*?</title>'si", $resultXML, $regs);
       $errorMsg = (is_array($regs)) ? strip_tags(end($regs)) : NULL;    
-      if ($errorMsg == '') $errorMsg = 'Resource Unavailable at https://ap.loadedcommerce.com/' . $api_version . '/check/serial/';
+      if ($errorMsg == '') $errorMsg = 'Resource Unavailable at https://api.loadedcommerce.com/' . $api_version . '/check/serial/';
         // log the error
         self::log('Error: ' . $errorMsg);
         // update last checked so we don't check until tomorrow
