@@ -325,8 +325,39 @@ class lC_Login_Admin {
     $check = substr(lC_DateTime::getShort($Qcheck->value('last_modified')), 3, 2);
     
     $Qcheck->freeResult();
+    
+    // update last checked
+    self::_updateLastCheckedDate($Qcheck->value('configuration_value'));
 
     return (((int)$today != (int)$check) ? TRUE : FALSE);   
-  }  
+  }
+ /**
+  * UJpdate the last checked date
+  *  
+  * @access private      
+  * @return boolean
+  */   
+  private static function _updateLastCheckedDate($id) {
+    global $lC_Database;   
+    
+    $error = false;
+    
+    $lC_Database->startTransaction();
+
+    $Qupdate = $lC_Database->query('update :table_configuration set configuration_title = :configuration_title, configuration_key = :configuration_key, configuration_value = :configuration_value, configuration_description = :configuration_description, configuration_group_id = :configuration_group_id, date_added = :date_added where configuration_key = :configuration_key and configuration_value = :configuration_value');
+    $Qupdate->bindTable(':table_configuration', TABLE_CONFIGURATION);
+    $Qupdate->bindValue(':configuration_key', 'INSTALLATION_ID');
+    $Qupdate->bindValue(':configuration_value', $id);
+    $Qupdate->execute();     
+    
+    if ( !$lC_Database->isError() ) {
+      $lC_Database->commitTransaction();
+      return true;
+    }
+
+    $lC_Database->rollbackTransaction();
+
+    return false;    
+  }
 }
 ?>

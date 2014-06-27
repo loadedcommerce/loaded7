@@ -64,9 +64,9 @@ class transport {
 
     $result = trim(call_user_func(array($driver, 'execute'), $parameters));
     
-    if (strlen($result) == 0) {
-      $result = self::getResponse($parameters, 'stream');
-    }
+ //   if (strlen($result) == 0) {
+ //     $result = self::getResponse($parameters, 'stream');
+ //   }
     
     return $result;
   }
