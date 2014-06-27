@@ -332,7 +332,7 @@ class lC_Login_Admin {
     return (((int)$today != (int)$check) ? TRUE : FALSE);   
   }
  /**
-  * UJpdate the last checked date
+  * Update the last checked date
   *  
   * @access private      
   * @return boolean
