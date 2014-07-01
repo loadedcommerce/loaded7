@@ -69,7 +69,7 @@ class lC_File_manager_Admin_rpc {
   * @return json
   */   
   public static function saveEntry() {
-    $result = lC_File_manager_Admin::saveFile($_GET['fid'], $_GET['contents'], $_GET['dir']); 
+    $result = lC_File_manager_Admin::saveFile($_POST['fid'], $_POST['contents'], $_POST['dir']); 
         
     $return = array();
     if ($result == true) $return = array('rpcStatus' => RPC_STATUS_SUCCESS);
