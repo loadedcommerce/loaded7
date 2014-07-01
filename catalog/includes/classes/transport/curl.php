@@ -57,6 +57,7 @@ if (!class_exists('curl')) {
       $result = curl_exec($curl);
 
       $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+      $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
       curl_close($curl);
       
@@ -65,6 +66,11 @@ if (!class_exists('curl')) {
       } else {
         list($headers, $body) = explode("\r\n\r\n", $result, 2);
       }
+      
+      if  ($http_code > 299)  {  // there was some sort of error
+        // log the error
+        self::log('cURL Error: (' . $http_code . ') requesting ' . $parameters['url']);
+      }      
 
       return $body;
     }
@@ -77,6 +83,18 @@ if (!class_exists('curl')) {
     public static function canUse() {
       return function_exists('curl_init');
     }
+   /**
+    * Make a log entry
+    *  
+    * @param string $message  The message to log
+    * @access protected      
+    * @return void
+    */ 
+    protected static function log($message) {
+      if ( is_writable(DIR_FS_WORK . 'logs') ) {
+        file_put_contents(DIR_FS_WORK . 'logs/curl_errors.txt', '[' . lC_DateTime::getNow('d-M-Y H:i:s') . '] ' . $message . "\n", FILE_APPEND);
+      }
+    }    
   }
 }
 ?>
