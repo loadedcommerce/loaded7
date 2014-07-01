@@ -25,6 +25,7 @@ function newZone() {
                '    <form name="zNew" id="zNew" autocomplete="off" action="" method="post">'+
                '      <p><?php echo $lC_Language->get('introduction_new_zone'); ?></p>'+
                '      <p class="button-height inline-label">'+
+               '      <input type="hidden" name="countries" value="<?php echo $_GET["countries"];?>">'+
                '        <label for="zone_name" class="label"><?php echo $lC_Language->get('field_zone_name'); ?></label>'+
                '        <?php echo lc_draw_input_field('zone_name', null, 'class="input full-width"'); ?>'+
                '      </p>'+
