@@ -586,9 +586,7 @@ if (!class_exists('lC_Store_Admin')) {
       $response = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/' . $api_version . '/get/' . $key . '?type=addon&ver=' . utility::getVersion() . '&ref=' . urlencode($_SERVER['SCRIPT_FILENAME']), 'method' => 'get', 'timeout' => 10));
 
       if (strlen($response) == 0) {
-        ini_set('default_socket_timeout', 10); // set the timeout to 10 seconds
         $response = file_get_contents('https://api.loadedcommerce.com/' . $api_version . '/get/' . $key . '?type=addon&ver=' . utility::getVersion() . '&ref=' . urlencode($_SERVER['SCRIPT_FILENAME']));
-        ini_set('default_socket_timeout', 0); // set the timeout back to server default
       }
 
       return file_put_contents(DIR_FS_WORK . 'addons/' . $key . '.phar', $response);    

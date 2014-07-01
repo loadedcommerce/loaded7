@@ -196,9 +196,7 @@ class lC_Updates_Admin {
     if ($link == null) $link = 'https://api.loadedcommerce.com/' . $api_version . '/get/' . str_replace(".", "", $version) . '?ver=' . utility::getVersion() . '&ref=' . urlencode($_SERVER['SCRIPT_FILENAME']);
     if ($type != null) $link .= '&type=' . $type;
     
-    ini_set('default_socket_timeout', 10); // set the timeout to 10 seconds
     $response = file_get_contents($link);
-    ini_set('default_socket_timeout', 0); // reset the timeout back to server default
 
     return file_put_contents(DIR_FS_WORK . 'updates/update.phar', $response);
   } 
