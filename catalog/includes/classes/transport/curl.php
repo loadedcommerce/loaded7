@@ -27,9 +27,13 @@ if (!class_exists('curl')) {
                             CURLOPT_FRESH_CONNECT => true,
                             CURLOPT_FOLLOWLOCATION => false);
 
+      if ( !empty($parameters['timeout']) ) {
+        $curl_options[CURLOPT_TIMEOUT] = $parameters['timeout'];
+      }
+      
       if ( !empty($parameters['header']) ) {
         $curl_options[CURLOPT_HTTPHEADER] = $parameters['header'];
-      }
+      }      
 
       if ( !empty($parameters['certificate']) ) {
         $curl_options[CURLOPT_SSLCERT] = $parameters['certificate'];

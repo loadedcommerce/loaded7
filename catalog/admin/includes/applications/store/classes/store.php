@@ -8,6 +8,8 @@
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: store.php v1.0 2013-08-08 datazen $
 */
+ini_set('error_reporting', 0);
+
 global $lC_Vqmod;
 
 require_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/classes/addons.php'));
@@ -250,7 +252,7 @@ if (!class_exists('lC_Store_Admin')) {
       $request['checksum'] = $checksum;
 
       $api_version = (defined('API_VERSION') && API_VERSION != NULL) ? API_VERSION : '1_0';
-      $resultXML = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/' . $api_version . '/store/types/?ref=' . $_SERVER['SCRIPT_FILENAME'], 'method' => 'post', 'parameters' => $request));
+      $resultXML = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/' . $api_version . '/store/types/?ref=' . $_SERVER['SCRIPT_FILENAME'], 'method' => 'post', 'parameters' => $request, 'timeout' => 10));
 
       $types = utility::xml2arr($resultXML);     
 
@@ -275,7 +277,7 @@ if (!class_exists('lC_Store_Admin')) {
       $request['instID'] = INSTALLATION_ID;
 
       $api_version = (defined('API_VERSION') && API_VERSION != NULL) ? API_VERSION : '1_0';
-      $resultXML = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/' . $api_version . '/store/addons/?ref=' . $_SERVER['SCRIPT_FILENAME'], 'method' => 'post', 'parameters' => $request));
+      $resultXML = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/' . $api_version . '/store/addons/?ref=' . $_SERVER['SCRIPT_FILENAME'], 'method' => 'post', 'parameters' => $request, 'timeout' => 10));
 
       $available = utility::xml2arr($resultXML);  
 
@@ -581,10 +583,12 @@ if (!class_exists('lC_Store_Admin')) {
       $pubkey = file_get_contents(DIR_FS_WORK . 'addons/update.phar.pubkey');
       file_put_contents(DIR_FS_WORK . 'addons/' . $key . '.phar.pubkey', $pubkey);      
       
-      $response = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/' . $api_version . '/get/' . $key . '?type=addon&ver=' . utility::getVersion() . '&ref=' . urlencode($_SERVER['SCRIPT_FILENAME']), 'method' => 'get'));
+      $response = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/' . $api_version . '/get/' . $key . '?type=addon&ver=' . utility::getVersion() . '&ref=' . urlencode($_SERVER['SCRIPT_FILENAME']), 'method' => 'get', 'timeout' => 10));
 
       if (strlen($response) == 0) {
+        ini_set('default_socket_timeout', 10); // set the timeout to 10 seconds
         $response = file_get_contents('https://api.loadedcommerce.com/' . $api_version . '/get/' . $key . '?type=addon&ver=' . utility::getVersion() . '&ref=' . urlencode($_SERVER['SCRIPT_FILENAME']));
+        ini_set('default_socket_timeout', 0); // set the timeout back to server default
       }
 
       return file_put_contents(DIR_FS_WORK . 'addons/' . $key . '.phar', $response);    
