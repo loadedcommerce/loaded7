@@ -113,7 +113,7 @@ class lC_Updates_Admin {
       
     $result = array('entries' => array());
     $api_version = (defined('API_VERSION') && API_VERSION != NULL) ? API_VERSION : '1_0';
-    $versions = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/' . $api_version . '/updates/available/?ref=' . $_SERVER['SCRIPT_FILENAME'], 'method' => 'get'));
+    $versions = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/' . $api_version . '/updates/available/?ref=' . $_SERVER['SCRIPT_FILENAME'], 'method' => 'get', 'timeout' => 10));
     $versions_array = utility::xml2arr($versions); 
 
     $counter = 0;
