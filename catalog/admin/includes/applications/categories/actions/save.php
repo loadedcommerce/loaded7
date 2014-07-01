@@ -19,7 +19,6 @@ class lC_Application_Categories_Actions_save extends lC_Application_Categories {
     if ( isset($_POST['subaction']) && ($_POST['subaction'] == 'confirm') ) {
       switch ( $_GET['action'] ) {
         case 'save':
-          
           $data = array('image' => (isset($_POST['categories_image']) ? $_POST['categories_image'] : null),
                         'parent_id' => $_POST['parent_id'],
                         'sort_order' => $_POST['sort_order'],
@@ -35,7 +34,12 @@ class lC_Application_Categories_Actions_save extends lC_Application_Categories {
                         'description' =>  $_POST['categories_description'],
                         'permalink' =>  $_POST['categories_permalink'],
                         'tags' =>  $_POST['categories_tags']);
-         
+                        
+          // access levels
+          if (isset($_POST['access_levels'])) $data['access_levels'] = $_POST['access_levels'];                        
+          if (isset($_POST['sync_all_products'])) $data['sync_all_products'] = $_POST['sync_all_products'];                        
+          if (isset($_POST['sync_all_children'])) $data['sync_all_children'] = $_POST['sync_all_children'];                        
+          
          /*
           * Save the category information
           *
@@ -44,7 +48,7 @@ class lC_Application_Categories_Actions_save extends lC_Application_Categories {
           * @access public
           * @return boolean
           */         
-          $id = (int)lC_Categories_Admin::save((isset($_GET['categories']) && is_numeric($_GET['categories']) ? $_GET['categories'] : null), $data);
+          $id = lC_Categories_Admin::save((isset($_GET['categories']) && is_numeric($_GET['categories']) ? $_GET['categories'] : null), $data);
 
           if ( is_numeric($id) ) {
             if ( empty($_POST['save_close']) ) {

@@ -355,20 +355,20 @@ if (!class_exists('lC_Store_Admin')) {
         $class = substr($ao['name'], 0, strpos($ao['name'], '/'));   
         if (file_exists(DIR_FS_CATALOG . 'addons/' . $ao['name'])) {
           include_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'addons/' . $ao['name']));
-          $GLOBALS[$class] = new $class();
+          $aoData = new $class();
           $addon['code'] = substr($ao['name'], 0, strpos($ao['name'], '/'));
-          $addon['type'] = $GLOBALS[$class]->getAddonType();
-          $addon['title'] = $GLOBALS[$class]->getAddonTitle();
-          $addon['description'] = $GLOBALS[$class]->getAddonDescription();
-          $addon['rating'] = $GLOBALS[$class]->getAddonRating();
-          $addon['author'] = $GLOBALS[$class]->getAddonAuthor();
-          $addon['authorWWW'] = $GLOBALS[$class]->getAddonAuthorWWW();
-          $addon['thumbnail'] = $GLOBALS[$class]->getAddonThumbnail();
-          $addon['version'] = $GLOBALS[$class]->getAddonVersion();
-          $addon['compatibility'] = $GLOBALS[$class]->getCompatibility();
-          $addon['installed'] = $GLOBALS[$class]->isInstalled();
-          $addon['mobile'] = $GLOBALS[$class]->isMobileEnabled();
-          $addon['enabled'] = $GLOBALS[$class]->isEnabled();
+          $addon['type'] = $aoData->getAddonType();
+          $addon['title'] = $aoData->getAddonTitle();
+          $addon['description'] = $aoData->getAddonDescription();
+          $addon['rating'] = $aoData->getAddonRating();
+          $addon['author'] = $aoData->getAddonAuthor();
+          $addon['authorWWW'] = $aoData->getAddonAuthorWWW();
+          $addon['thumbnail'] = $aoData->getAddonThumbnail();
+          $addon['version'] = $aoData->getAddonVersion();
+          $addon['compatibility'] = $aoData->getCompatibility();
+          $addon['installed'] = $aoData->isInstalled();
+          $addon['mobile'] = $aoData->isMobileEnabled();
+          $addon['enabled'] = $aoData->isEnabled();
           $addons[] = $addon;
         }
       }
@@ -386,7 +386,7 @@ if (!class_exists('lC_Store_Admin')) {
     */
     public static function install($key) {
       global $lC_Database, $lC_Language, $lC_Vqmod, $lC_Addons;
-              
+                                           
       $isTemplate = (strstr($key, 'lC_Template_')) ? true : false;
       if ($isTemplate) {
         $key = str_replace('lC_Template_', '', $key);
@@ -410,7 +410,7 @@ if (!class_exists('lC_Store_Admin')) {
           self::getAddonPhar($key);   
 
           $phar = new Phar(DIR_FS_WORK . 'addons/' . $key . '.phar', 0);
-          $meta = $phar->getMetadata();
+          $meta = $phar->getMetadata();   
          
           // apply the addon phar 
           if (file_exists(DIR_FS_WORK . 'addons/' . $key . '.phar')) {
@@ -432,7 +432,7 @@ if (!class_exists('lC_Store_Admin')) {
         if ($Qchk->numberOfRows() > 0) $okToInstall = false;
 
         $Qchk->freeResult();
-
+            
         if ( file_exists(DIR_FS_CATALOG . 'addons/' . $key . '/controller.php') && $okToInstall === true) {
           include_once(DIR_FS_CATALOG . 'addons/' . $key . '/controller.php');
 
@@ -440,7 +440,7 @@ if (!class_exists('lC_Store_Admin')) {
           $addon = new $addon();
 
           $modules_group = $addon->getAddonType() . '|' . $key;
-
+                      
           $addon->install();
 
           $code = $addon->getAddonType(); 

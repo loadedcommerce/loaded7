@@ -222,13 +222,27 @@ class lC_Login_Admin {
     
     $resultArr = utility::xml2arr($resultXML);
     
-    if (isset($resultArr['data']['valid']) && $resultArr['data']['valid'] == '1') {
-      $result['rpcStatus'] = '1';
-      // make sure the products for this serial have been downloaded from the cloud
-      $products = (is_array($resultArr['data']['products'])) ? $resultArr['data']['products']['line_0'] : $resultArr['data']['products'];
-      if (isset($products) && empty($products) === false) self::verifyProductsAreDownloaded($products);
+    if (count($resultArr) == 0) {  // there was an error with the api
+      $error = true;
+      $errorMsg = preg_match("'<title[^>]*?>.*?</title>'si", $resultXML, $regs);
+      $errorMsg = (is_array($regs)) ? strip_tags(end($regs)) : NULL;    
+      if ($errorMsg == '') $errorMsg = 'Resource Unavailable at https://api.loadedcommerce.com/' . $api_version . '/check/serial/';
+        // log the error
+        self::log('Error: ' . $errorMsg);
+        // update last checked so we don't check until tomorrow
+        self::updateLastCheckedDate();
+        // send ok to enter admin
+        $resultArr['data']['valid'] = true;
+        $result['rpcStatus'] = true;      
     } else {
-      $result['rpcStatus'] = $resultArr['data']['rpcStatus'];  
+      if (isset($resultArr['data']['valid']) && $resultArr['data']['valid'] == '1') {
+        $result['rpcStatus'] = '1';
+        // make sure the products for this serial have been downloaded from the cloud
+        $products = (is_array($resultArr['data']['products'])) ? $resultArr['data']['products']['line_0'] : $resultArr['data']['products'];
+        if (isset($products) && empty($products) === false) self::verifyProductsAreDownloaded($products);
+      } else {
+        $result['rpcStatus'] = $resultArr['data']['rpcStatus'];  
+      }
     }
     
     return $result;
@@ -244,9 +258,21 @@ class lC_Login_Admin {
     $apiCheck = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/' . $api_version . '/updates/available/?ver=' . utility::getVersion() . '&ref=' . $_SERVER['SCRIPT_FILENAME'], 'method' => 'get'));
     $versions = utility::xml2arr($apiCheck);
     
-    if ($versions == null) {
-      $file = @fopen(DIR_FS_WORK . 'apinocom.tmp', "w");
-      @fclose($file);
+    $error = false;
+    if (count($versions) == 0) {  // there was an error with the api
+      $error = true;
+      $errorMsg = preg_match("'<title[^>]*?>.*?</title>'si", $versions, $regs);
+      $errorMsg = (is_array($regs)) ? strip_tags(end($regs)) : NULL;    
+      if ($errorMsg == '') $errorMsg = 'Resource Unavailable at https://api.loadedcommerce.com/' . $api_version . '/updates/available/?ver=' . utility::getVersion() . '&ref=' . $_SERVER['SCRIPT_FILENAME'];
+      $error = true;
+      // log the error
+      self::log('Error: ' . $errorMsg);
+    }    
+    
+    if ($versions == null || $error) { // set the error flag
+      if ( is_writable(DIR_FS_WORK) ) {
+        file_put_contents(DIR_FS_WORK . 'apinocom.tmp', '[' . lC_DateTime::getNow('d-M-Y H:i:s') . '] ' . $errorMsg . "\n", FILE_APPEND);
+      }      
     }
   }  
  /*
@@ -284,6 +310,21 @@ class lC_Login_Admin {
       $cnt++;
     }
   }
+ /*
+  * Get the Pro/B2B Version Tag
+  *
+  * @access public
+  * @return string
+  */   
+  public static function getProVersionTag() {
+    global $lC_Language;
+    
+    if (utility::isB2B()) {   
+      return '<small class="tag orange-gradient mid-margin-left mid-margin-right">B2B</small>' . $lC_Language->get('text_version') . ' ' . utility::getB2BVersion();    
+    } else {
+      return '<small class="tag red-gradient mid-margin-left mid-margin-right">PRO</small>' . $lC_Language->get('text_version') . ' ' . utility::getProVersion();    
+    }
+  }  
  /**
   * Check to see if it's time to re-check validity; once per day
   *  
@@ -293,11 +334,11 @@ class lC_Login_Admin {
   private static function _timeToCheck() {
     global $lC_Database;
 
-    $check = (defined('INSTALLATION_ID') && INSTALLATION_ID != '') ? INSTALLATION_ID : NULL;
-    if ($check == NULL) return TRUE;
+    $serial = (defined('INSTALLATION_ID') && INSTALLATION_ID != '') ? INSTALLATION_ID : NULL;
+    if ($serial == NULL) return TRUE;
     
-    if (defined('ADDONS_SYSTEM_LOADED_7_PRO_STATUS') && !file_exists(DIR_FS_CATALOG . 'addons/Loaded_7_Pro/controller.php')) return TRUE;
-    if (defined('ADDONS_SYSTEM_LOADED_7_B2B_STATUS') && !file_exists(DIR_FS_CATALOG . 'addons/Loaded_7_B2B/controller.php')) return TRUE;
+//    if (defined('ADDONS_SYSTEM_LOADED_7_PRO_STATUS') && !file_exists(DIR_FS_CATALOG . 'addons/Loaded_7_Pro/controller.php')) return TRUE;
+//    if (defined('ADDONS_SYSTEM_LOADED_7_B2B_STATUS') && !file_exists(DIR_FS_CATALOG . 'addons/Loaded_7_B2B/controller.php')) return TRUE;
     
     $Qcheck = $lC_Database->query('select * from :table_configuration where configuration_key = :configuration_key limit 1');
     $Qcheck->bindTable(':table_configuration', TABLE_CONFIGURATION);
@@ -310,8 +351,51 @@ class lC_Login_Admin {
     $check = substr(lC_DateTime::getShort($Qcheck->value('last_modified')), 3, 2);
     
     $Qcheck->freeResult();
+    
+    // update last checked
+    if ($serial != NULL) self::updateLastCheckedDate($serial);
 
     return (((int)$today != (int)$check) ? TRUE : FALSE);   
+  }
+ /**
+  * Update the last checked date
+  *  
+  * @access private      
+  * @return boolean
+  */   
+  public static function updateLastCheckedDate() {
+    global $lC_Database;   
+    
+    $error = false;
+    
+    $lC_Database->startTransaction();
+
+    $Qupdate = $lC_Database->query('update :table_configuration set last_modified = :last_modified where configuration_key = :configuration_key');
+    $Qupdate->bindTable(':table_configuration', TABLE_CONFIGURATION);
+    $Qupdate->bindValue(':configuration_key', 'INSTALLATION_ID');
+    $Qupdate->bindValue(':last_modified', @date("Y-m-d H:m:s"));   
+    $Qupdate->execute();     
+    
+    if ( !$lC_Database->isError() ) {
+      $lC_Database->commitTransaction();
+      return true;
+    }
+
+    $lC_Database->rollbackTransaction();
+
+    return false;    
+  }
+ /**
+  * Make a log entry
+  *  
+  * @param string $message  The message to log
+  * @access protected      
+  * @return void
+  */ 
+  protected static function log($message) {
+    if ( is_writable(DIR_FS_WORK . 'logs') ) {
+      file_put_contents(DIR_FS_WORK . 'logs/api_errors.txt', '[' . lC_DateTime::getNow('d-M-Y H:i:s') . '] ' . $message . "\n", FILE_APPEND);
+    }
   }  
 }
 ?>

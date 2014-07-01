@@ -9,7 +9,7 @@
 */
 class lC_Actions_cart_add {
   function execute() {
-    global $lC_Session, $lC_ShoppingCart, $lC_Product, $lC_Language;
+    global $lC_Session, $lC_ShoppingCart, $lC_Product, $lC_Language, $lC_Customer;
 
     if ( !isset($lC_Product) ) {
       $id = false;
@@ -28,8 +28,9 @@ class lC_Actions_cart_add {
     }
 
     if ( isset($lC_Product) ) {
+
+      // VQMOD-hookpoint; DO NOT MODIFY OR REMOVE THE LINE BELOW
       $quantity = (isset($_POST['quantity']) && !empty($_POST['quantity'])) ? (int)$_POST['quantity'] : 1;
-      
       
       if ( $lC_Product->hasVariants() ) {
         if ( isset($_POST['variants']) && is_array($_POST['variants']) && !empty($_POST['variants']) ) {

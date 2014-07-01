@@ -21,7 +21,7 @@ global $lC_Language, $product_categories_array, $assignedCategoryTree;
               foreach ($assignedCategoryTree->getArray() as $value) {
                 if ($value['mode'] == 'category') {
                   echo '<tr>' . "\n" .
-                       '  <td width="30px" class="cat_rel_td">' . lc_draw_checkbox_field('categories[]', $value['id'], in_array($value['id'], $product_categories_array), 'class="checkbox" id="categories_' . $value['id'] . '"') . '</td>' . "\n" .
+                       '  <td width="30px" class="cat_rel_td">' . lc_draw_checkbox_field('categories[]', $value['id'], in_array($value['id'], $product_categories_array), 'class="input" id="categories_' . $value['id'] . '"') . '</td>' . "\n" .
                        '  <td class="cat_rel_td"><a href="#" onclick="document.product.categories_' . $value['id'] . '.checked=!document.product.categories_' . $value['id'] . '.checked;">' . $value['title'] . '</a></td>' . "\n" .
                        '</tr>' . "\n";
                 }
@@ -33,4 +33,7 @@ global $lC_Language, $product_categories_array, $assignedCategoryTree;
     </table>
     <br />
   </fieldset>
+  <?php
+  // VQMOD-hookpoint; DO NOT MODIFY OR REMOVE THIS LINE
+  ?>
 </div>

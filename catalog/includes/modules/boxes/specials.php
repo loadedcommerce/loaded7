@@ -44,6 +44,7 @@ class lC_Boxes_specials extends lC_Modules {
         $data = array();
 
         if ($Qspecials->numberOfRows()) {
+          // VQMOD-hookpoint; DO NOT MODIFY OR REMOVE THE LINE BELOW
           $data = $Qspecials->toArray();
 
           $data['products_price'] = '<s>' . $lC_Currencies->displayPrice($Qspecials->valueDecimal('products_price'), $Qspecials->valueInt('products_tax_class_id')) . '</s>&nbsp;<span class="box-specials-price">' . $lC_Currencies->displayPrice($Qspecials->valueDecimal('specials_new_products_price'), $Qspecials->valueInt('products_tax_class_id')) . '</span>';
@@ -59,8 +60,8 @@ class lC_Boxes_specials extends lC_Modules {
           $this->_content = '<li class="box-specials-image">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $data['products_keyword']), $lC_Image->show($data['image'], $data['products_name'], 'class="box-specials-image-src"')) . '</li>';
         }
         $this->_content .= '<li class="box-specials-name">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $data['products_keyword']), $data['products_name']) . '</li>';
-        $this->_content .= '<li class="box-products-price">' . $data['products_price'] . '</li>';
-        $this->_content .= '<li class="box-specials-buy-now"><button onclick="window.location.href=\'' . lc_href_link(FILENAME_PRODUCTS, $data['products_keyword'] . '&action=cart_add') . '\'" title="" type="button">' . $lC_Language->get('button_buy_now') . '</button>';
+        $this->_content .= '<li class="box-products-price pricing-row">' . $data['products_price'] . '</li>';
+        $this->_content .= '<li class="box-specials-buy-now pricing-row buy-btn-div"><button onclick="window.location.href=\'' . lc_href_link(FILENAME_PRODUCTS, $data['products_keyword'] . '&action=cart_add') . '\'" title="" type="button">' . $lC_Language->get('button_buy_now') . '</button>';
       }
     }
   }

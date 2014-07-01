@@ -37,9 +37,9 @@ class lC_Content_new_products extends lC_Modules {
 
     $data = array();
 
-    if ( (MODULE_CONTENT_NEW_PRODUCTS_CACHE > 0) && $lC_Cache->read('new_products-' . $lC_Language->getCode() . '-' . $lC_Currencies->getCode() . '-' . $current_category_id, MODULE_CONTENT_NEW_PRODUCTS_CACHE) ) {
-      $data = $lC_Cache->getCache();
-    } else {
+  //  if ( (MODULE_CONTENT_NEW_PRODUCTS_CACHE > 0) && $lC_Cache->read('new_products-' . $lC_Language->getCode() . '-' . $lC_Currencies->getCode() . '-' . $current_category_id, MODULE_CONTENT_NEW_PRODUCTS_CACHE) ) {
+  //    $data = $lC_Cache->getCache();
+  //  } else {
       if ( $current_category_id < 1 ) {
         $Qproducts = $lC_Database->query('select products_id from :table_products where products_status = :products_status and parent_id = :parent_id order by products_date_added desc limit :max_display_new_products');
       } else {
@@ -56,6 +56,7 @@ class lC_Content_new_products extends lC_Modules {
       $Qproducts->execute();
 
       while ( $Qproducts->next() ) {
+        // VQMOD-hookpoint; DO NOT MODIFY OR REMOVE THE LINE BELOW
         $lC_Product = new lC_Product($Qproducts->valueInt('products_id'));
 
         $data[$lC_Product->getID()] = $lC_Product->getData();
@@ -64,7 +65,7 @@ class lC_Content_new_products extends lC_Modules {
       }
 
       $lC_Cache->write($data);
-    }
+ //   }
 
     if ( !empty($data) ) {
 
@@ -74,12 +75,13 @@ class lC_Content_new_products extends lC_Modules {
         $this->_content .= '  <div class="content-new-products-image">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $product['keyword']), $lC_Image->show($product['display_image'], $product['name'], 'class="content-new-products-image-src"'))  . '</div>' . "\n" . 
                            '  <div class="content-new-products-name">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $product['keyword']), $product['name'])  . '</div>' . "\n" . 
                            '  <div class="content-new-products-desc">' . ((strlen(lc_clean_html($product['description'])) > 65) ? substr(lc_clean_html($product['description']), 0, 62) . '...' : lc_clean_html($product['description'])) . '</div>' . "\n" . 
-                           '  <div class="content-new-products-price">' . $product['display_price']. '</div>' . "\n" .
-                           '  <div class="content-new-products-button"><button class="content-new-products-add-button" onclick="window.location.href=\'' . lc_href_link(FILENAME_PRODUCTS, $product['keyword'] . '&action=cart_add') . '\'" type="button">' . $lC_Language->get('new_products_button_buy_now') . '</button></div>' . "\n";
+                           '  <div class="content-new-products-price pricing-row">' . $product['display_price']. '</div>' . "\n" .
+                           '  <div class="content-new-products-button pricing-row buy-btn-div"><button class="content-new-products-add-button" onclick="window.location.href=\'' . lc_href_link(FILENAME_PRODUCTS, $product['keyword'] . '&action=cart_add') . '\'" type="button">' . $lC_Language->get('new_products_button_buy_now') . '</button></div>' . "\n";
         $this->_content .= '</div>' . "\n";
       }
     }
   }
+  
  /*
   * Install the module
   *

@@ -35,7 +35,7 @@
           </div> 
         </div>
       </div>
-      <div class="col-sm-6 col-lg-6 margin-top">
+      <div class="col-sm-6 col-lg-6 margin-top create-account-div">
         <div class="well no-padding-top">
           <h3><?php echo $lC_Language->get('login_new_customer_heading'); ?></h3>
           <p><?php echo $lC_Language->get('login_new_customer_text'); ?></p>    
