@@ -30,7 +30,11 @@ if (!class_exists('stream')) {
 
       $context = stream_context_create($options);
 
-      return file_get_contents($parameters['url'], false, $context);
+      if (isset($paramters['timeout'])) ini_set('default_socket_timeout', (int)$paramters['timeout']); // set the timeout
+      $result = file_get_contents($parameters['url'], false, $context);
+      ini_set('default_socket_timeout', 0); // reset timeout back to server limit
+      
+      return $result;
     }
     /**
     * Is Stream available 

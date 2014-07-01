@@ -7,6 +7,8 @@
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: api.php v1.0 2013-08-08 datazen $
 */
+ini_set('error_reporting', 0);
+
 require_once(DIR_FS_ADMIN . 'includes/applications/server_info/classes/server_info.php');
 require_once(DIR_FS_CATALOG . 'includes/classes/transport.php'); 
 
@@ -66,7 +68,7 @@ class lC_Api {
     $api_version = (defined('API_VERSION') && API_VERSION != NULL) ? API_VERSION : '1_0';
     $registerArr['ver'] = utility::getVersion();
     
-    $resultXML = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/' . $api_version . '/register/install/', 'method' => 'post', 'parameters' => $registerArr));
+    $resultXML = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/' . $api_version . '/register/install/', 'method' => 'post', 'parameters' => $registerArr, 'timeout' => 10));
     
     $newInstallationID = (preg_match("'<installationID[^>]*?>(.*?)</installationID>'i", $resultXML, $regs) == 1) ? $regs[1] : NULL;
     $products = (preg_match("'<products[^>]*?>(.*?)</products>'i", $resultXML, $regs) == 1) ? $regs[1] : NULL;

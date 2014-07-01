@@ -218,7 +218,7 @@ class lC_Login_Admin {
     $validateArr['checksum'] = $checksum;
     
     $api_version = (defined('API_VERSION') && API_VERSION != NULL) ? API_VERSION : '1_0';
-    $resultXML = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/' . $api_version . '/check/serial/', 'method' => 'post', 'parameters' => $validateArr));  
+    $resultXML = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/' . $api_version . '/check/serial/', 'method' => 'post', 'parameters' => $validateArr, 'timeout' => 10));  
     
     $resultArr = utility::xml2arr($resultXML);
     
@@ -255,7 +255,7 @@ class lC_Login_Admin {
   */ 
   public static function apiCheck() {
     $api_version = (defined('API_VERSION') && API_VERSION != NULL) ? API_VERSION : '1_0';
-    $apiCheck = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/' . $api_version . '/updates/available/?ver=' . utility::getVersion() . '&ref=' . $_SERVER['SCRIPT_FILENAME'], 'method' => 'get'));
+    $apiCheck = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/' . $api_version . '/updates/available/?ver=' . utility::getVersion() . '&ref=' . $_SERVER['SCRIPT_FILENAME'], 'method' => 'get', 'timeout' => 10));
     $versions = utility::xml2arr($apiCheck);
     
     $error = false;

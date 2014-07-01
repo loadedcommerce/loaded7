@@ -126,8 +126,9 @@ $(document).ready(function() {
     $('#mainMessageContainer').css('margin', '50px 273px 0 84px');    
   }
   
-  // check for updates and show notification if necessary 
-  if (module == 'index') {   
+  // check for updates and show notification if necessary only on login
+  var referer = '<?php echo $_SERVER['HTTP_REFERER']; ?>';
+  if (referer.indexOf('index.php?login') != -1) {   
     var title = '<?php echo lc_link_object(lc_href_link_admin(FILENAME_DEFAULT, 'updates'), $lC_Language->get('update_message_title'), 'style="color:white;"'); ?>';
     var uData = <?php echo json_encode(lC_Updates_Admin::hasUpdatesAvailable()); ?>;
     if (uData.hasUpdates) {
