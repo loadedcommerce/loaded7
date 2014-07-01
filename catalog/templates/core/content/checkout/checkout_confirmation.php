@@ -122,12 +122,12 @@
                     }                     
                     if ( $lC_ShoppingCart->isVariant($products['item_id']) ) {
                       foreach ( $lC_ShoppingCart->getVariant($products['item_id']) as $variant) {
-                        echo '<div class="small">- ' . $variant['group_title'] . ': ' . $variant['value_title'] . '</div>' . "\n";
+                        if ($variant['group_title'] != '') echo '<div class="small">- ' . $variant['group_title'] . ': ' . $variant['value_title'] . '</div>' . "\n";
                       }
                     }
                     if ( $lC_ShoppingCart->hasSimpleOptions($products['item_id']) ) {
                       foreach ( $lC_ShoppingCart->getSimpleOptions($products['item_id']) as $option) {
-                        echo '<div class="small">- ' . $option['group_title'] . ': ' . $option['value_title'] . '</div>' . "\n";
+                        if ($option['group_title'] != '') echo '<div class="small">- ' . $option['group_title'] . ': ' . $option['value_title'] . '</div>' . "\n";
                       }
                     }                        
                     echo '</td>' . "\n";

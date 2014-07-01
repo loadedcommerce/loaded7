@@ -53,10 +53,10 @@ class lC_Variants_text_field extends lC_Variants_Abstract {
         $i++;
         $string .= '<div class="form-group margin-left">
                       <label class="label-control">' . $field['text'] . '</label>
-                      <input type="text" class="form-control display-inline two-third-width mid-margin-left mid-margin-right float-right" name="simple_options[' . $data['group_id'] . '][' . $field['id'] . ']" id="variants_' . $data['group_id'] . '_' . $i . '">
+                      <input type="text" class="form-control display-inline two-third-width mid-margin-left mid-margin-right float-right" name="variants[' . $data['group_id'] . '][' . $field['id'] . ']" id="variants_' . $data['group_id'] . '_' . $i . '">
                     </div>';
       }
-    }
+    }   
 
     return $string;
   }

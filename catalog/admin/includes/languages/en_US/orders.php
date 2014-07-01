@@ -186,3 +186,6 @@ text_no_coupons_exist = No Coupons Exist
 text_no_shipping_methods_exist = No Shipping Methods Exist
 text_order_total_tax = Tax
 text_no_tax_rate_exist = No Tax Rates Avilable
+text_files_uploaded = Files Uploaded
+text_status_update_by = Status Update by
+text_comment_by = Comment by

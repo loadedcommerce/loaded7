@@ -103,7 +103,7 @@ class lC_Success {
   * @access public
   * @return array
   */
-  public static function getVariants($_pID) {
+  public static function getVariants($_pID, $_oID) {
     global $lC_Database, $lC_Language;
     
     $Qvariant = $lC_Database->query('select pvg.id as group_id, pvg.title as group_title, pvg.module, pvv.id as value_id, pvv.title as value_title from :table_products_variants pv, :table_products_variants_values pvv, :table_products_variants_groups pvg where pv.products_id = :products_id and pv.products_variants_values_id = pvv.id and pvv.languages_id = :languages_id and pvv.products_variants_groups_id = pvg.id and pvg.languages_id = :languages_id');
@@ -112,15 +112,49 @@ class lC_Success {
     $Qvariant->bindTable(':table_products_variants_groups', TABLE_PRODUCTS_VARIANTS_GROUPS);
     $Qvariant->bindInt(':products_id', $_pID);
     $Qvariant->bindInt(':languages_id', $lC_Language->getID());
-    $Qvariant->bindInt(':languages_id', $lC_Language->getID());
-    $Qvariant->execute();
+    $Qvariant->bindInt(':languages_id', $lC_Language->getID());  
+    $Qvariant->execute();                                        
     
     if ( $Qvariant->numberOfRows() > 0 ) {
       while ( $Qvariant->next() ) {
+      
+        if (strstr($Qvariant->value('module'), 'file_upload')) {
+          $Qopv = $lC_Database->query('select opv.value_title from :table_orders_products_variants opv left join :table_orders_products op on (op.orders_products_id = opv.orders_products_id) where opv.orders_id = :orders_id and op.products_id = :products_id and opv.group_title like :group_title limit 1');
+          $Qopv->bindTable(':table_orders_products_variants', TABLE_ORDERS_PRODUCTS_VARIANTS);
+          $Qopv->bindTable(':table_orders_products', TABLE_ORDERS_PRODUCTS);
+          $Qopv->bindInt(':orders_id', $_oID);
+          $Qopv->bindInt(':products_id', $_pID);
+          $Qopv->bindValue(':group_title', '%' . $lC_Language->get('text_label_file') . '%');
+          $Qopv->execute();
+          
+          $group_title = $lC_Language->get('text_label_file');
+          $value_title = $Qopv->value('value_title'); 
+          
+          $Qopv->freeResult();
+          
+        } else if  ($Qvariant->value('module') == 'text_field') { 
+          $Qopv = $lC_Database->query('select opv.value_title from :table_orders_products_variants opv left join :table_orders_products op on (op.orders_products_id = opv.orders_products_id) where opv.orders_id = :orders_id and op.products_id = :products_id and opv.group_title like :group_title limit 1');
+          $Qopv->bindTable(':table_orders_products_variants', TABLE_ORDERS_PRODUCTS_VARIANTS);
+          $Qopv->bindTable(':table_orders_products', TABLE_ORDERS_PRODUCTS);
+          $Qopv->bindInt(':orders_id', $_oID);
+          $Qopv->bindInt(':products_id', $_pID);
+          $Qopv->bindValue(':group_title', '%' . $Qvariant->value('group_title') . '%');
+          $Qopv->execute();
+          
+          $group_title = $Qvariant->value('group_title');
+          $value_title = $Qopv->value('value_title'); 
+          
+          $Qopv->freeResult();
+          
+        } else {
+          $group_title = $Qvariant->value('group_title');
+          $value_title = $Qvariant->value('value_title');
+        }      
+        
         $variants_array[] = array('group_id' => $Qvariant->valueInt('group_id'),
                                   'value_id' => $Qvariant->valueInt('value_id'),
-                                  'group_title' => $Qvariant->value('group_title'),
-                                  'value_title' => $Qvariant->value('value_title'));
+                                  'group_title' => $group_title,
+                                  'value_title' => $value_title);
       }
     }
     

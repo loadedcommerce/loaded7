@@ -366,6 +366,19 @@ class lC_Updates_Admin_run_after extends lC_Updates_Admin {
     
     $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "orders_products` ADD COLUMN `products_sku` VARCHAR(255) DEFAULT NULL AFTER `products_model`");
     parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "orders_products` ADD COLUMN `products_sku` VARCHAR(255) DEFAULT NULL AFTER `products_model`");
+    
+    $lC_Database->simpleQuery("INSERT IGNORE INTO `" . $pf . "configuration_group` (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES (22, 'File Uploads', 'File Upload Settings', 13, 1)");
+    parent::log("Database Update: INSERT IGNORE INTO `" . $pf . "configuration_group` (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES (22, 'File Uploads', 'File Upload Settings', 13, 1)");
+    
+    if (!defined('PRODUCT_MODULES_FILE_UPLOAD_TYPES')) {
+      $lC_Database->simpleQuery("INSERT INTO `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('Allowed File Types', 'PRODUCT_MODULES_FILE_UPLOAD_TYPES', '.zip,.pdf,.png,.gif,.jpg,.tiff,.gzip,.gz', 'Enter the allowed file upload extensions in a comma delimited format.', 22, 0, now(), now(), NULL, NULL);");
+      parent::log("Database Update: INSERT INTO `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('Allowed File Types', 'PRODUCT_MODULES_FILE_UPLOAD_TYPES', '.zip,.pdf,.png,.gif,.jpg,.tiff,.gzip,.gz', 'Enter the allowed file upload extensions in a comma delimited format.', 22, 0, now(), now(), NULL, NULL);");
+    } 
+    
+    if (!defined('PRODUCT_MODULES_FILE_UPLOAD_MAX_SIZE')) {
+      $lC_Database->simpleQuery("INSERT INTO `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('Maximum Upload File Size', 'PRODUCT_MODULES_FILE_UPLOAD_MAX_SIZE', '10', 'Enter the maximum size allowed for file uploads.', 22, 0, now(), now(), NULL, NULL);");
+      parent::log("Database Update: INSERT INTO `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('Maximum Upload File Size', 'PRODUCT_MODULES_FILE_UPLOAD_MAX_SIZE', '10', 'Enter the maximum size (in MB) allowed for file uploads.', 22, 0, now(), now(), NULL, NULL);");
+    }         
      
   }
 }  

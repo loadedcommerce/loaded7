@@ -255,6 +255,7 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
       
       <!-- Core JS -->
       <script src="ext/bootstrap/js/bootstrap-datepicker.js"></script>
+      <script src="ext/bootstrap/js/bootstrap-fileinput.js"></script>
       <script src="ext/jquery/jquery.loadmask.js"></script>
       
       <?php 

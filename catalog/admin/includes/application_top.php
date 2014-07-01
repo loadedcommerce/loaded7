@@ -157,7 +157,7 @@ require($lC_Vqmod->modCheck('includes/classes/object_info.php'));
 require($lC_Vqmod->modCheck('../includes/classes/mail.php'));
 
 // file uploading class
-require($lC_Vqmod->modCheck('includes/classes/upload.php'));
+require($lC_Vqmod->modCheck('../includes/classes/upload.php'));
 
 // api class
 require($lC_Vqmod->modCheck('includes/classes/api.php'));

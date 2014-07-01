@@ -2965,5 +2965,15 @@ Your friend, %s, thought that you would be interested in %s from %s.]]></value>
       <value><![CDATA[This item is not available for purchase without an approved account. If you are interested in opening an approved account please <a href="info.php?contact">contact us</a>]]></value>
       <group>general</group>
     </definition>        
+    <definition>
+      <key>text_label_file</key>
+      <value><![CDATA[File]]></value>
+      <group>general</group>
+    </definition>   
+    <definition>
+      <key>text_label_files</key>
+      <value><![CDATA[Files]]></value>
+      <group>general</group>
+    </definition>      
   </definitions>  
 </language>
