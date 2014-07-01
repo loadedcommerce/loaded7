@@ -25,7 +25,7 @@
           <tbody>
             <tr>
               <!--<td class="align-right pad-5 width-25 bold grey"><?php echo $lC_Language->get('text_name'); ?></td>-->
-              <td class="align-left mid-padding-left small-padding-top"><?php echo $oInfo->get('customerAddress'); ?></td>
+              <td class="align-left mid-padding-left small-padding-top"><?php echo $oInfo->get('customerAddress').'<br><br><strong class="small-margin-left">IP ADDR : '.$oInfo->get('customerIP'); ?></strong></td>
             </tr>
             <!--<tr>
               <td class="align-right pad-5 width-33 bold grey"><?php echo $lC_Language->get('text_company_name'); ?></td>
