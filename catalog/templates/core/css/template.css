@@ -707,6 +707,10 @@
 #loaded7 .pr_gallery li:hover {
   border:1px solid #f0ad4e; 
 }
+
+#loaded7 span.active-cpath {
+  font-weight: bold; 
+}
   
 /********************************************************/
 /*                7. Error classes                      */

@@ -24,18 +24,19 @@ class lC_Boxes_categories extends lC_Modules {
 
   function initialize() {
     global $lC_CategoryTree, $cPath;
-
+    
     $lC_CategoryTree->reset();
     // added to control maximum level of categories infobox if desired
     if (isset($_SESSION['setCategoriesMaximumLevel']) && $_SESSION['setCategoriesMaximumLevel'] != '') {
       $lC_CategoryTree->setMaximumLevel($_SESSION['setCategoriesMaximumLevel']);
     }
-    $lC_CategoryTree->setCategoryPath($cPath, '', '');
+    $lC_CategoryTree->setCategoryPath($cPath, '<span class="active-cpath">', '</span>');
     $lC_CategoryTree->setParentGroupStringTop('<ul class="box-categories-ul-top">', '</ul>');
     $lC_CategoryTree->setParentGroupString('<ul class="box-categories-ul">', '</ul>');
     $lC_CategoryTree->setChildStringWithChildren('<li>', '</li>');
     $lC_CategoryTree->setUseAria(true);
     $lC_CategoryTree->setShowCategoryProductCount((BOX_CATEGORIES_SHOW_PRODUCT_COUNT == '1') ? true : false);
+    //$lC_CategoryTree->setRootCategoryID(BOX_CATEGORIES_ROOT_CATEGORY);
 
     $this->_content = $lC_CategoryTree->getTree();
     
