@@ -270,10 +270,13 @@ class lC_Login_Admin {
     }    
     
     if ($versions == null || $error) { // set the error flag
-      if ( is_writable(DIR_FS_WORK) ) {
-        file_put_contents(DIR_FS_WORK . 'apinocom.tmp', '[' . lC_DateTime::getNow('d-M-Y H:i:s') . '] ' . $errorMsg . "\n", FILE_APPEND);
-      }      
+      return false;
+    //  if ( is_writable(DIR_FS_WORK) ) {
+    //    file_put_contents(DIR_FS_WORK . 'apinocom.tmp', '[' . lC_DateTime::getNow('d-M-Y H:i:s') . '] ' . $errorMsg . "\n", FILE_APPEND);
+    //  }      
     }
+    
+    return true;
   }  
  /*
   * Download the product PHARs

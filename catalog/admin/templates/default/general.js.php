@@ -130,16 +130,30 @@ $(document).ready(function() {
   var referer = '<?php echo $_SERVER['HTTP_REFERER']; ?>';
   if (referer.indexOf('index.php?login') != -1) {   
     // do an api health check first
-    function apiHealthCheck(callback) {
+    function apiHealthCheck() {
       var jsonLink = '<?php echo lc_href_link_admin('rpc.php', 'index' . '&action=apiHealthCheck'); ?>';
       $.getJSON(jsonLink,
         function (data) {
-          callback(data.rpcStatus);
+          if (data.rpcStatus != 1) {          
+
+            var text = '<?php echo $lC_Language->get('text_api_health_check'); ?>';
+            api = $.modal({
+                    title: '<?php echo $lC_Language->get('text_api_com_issue'); ?>',
+                    content: '<?php echo $lC_Language->get('text_api_com_issue_warnings'); ?>',
+                    buttons: {
+                      '<?php echo $lC_Language->get('button_understood'); ?>': {
+                        classes:  'glossy big full-width',
+                        click:    function(win) { win.closeModal(); }
+                      }
+                    }
+                  });
+            $(api);
+            
+          }
         }
       );
     }    
-    
-    var ok = apiHealthCheck();
+    apiHealthCheck();
     
     var title = '<?php echo lc_link_object(lc_href_link_admin(FILENAME_DEFAULT, 'updates'), $lC_Language->get('update_message_title'), 'style="color:white;"'); ?>';
     var uData = <?php echo json_encode(lC_Updates_Admin::hasUpdatesAvailable()); ?>;
@@ -459,19 +473,6 @@ $(document).ready(function() {
     });  
   }
   
-  // added for api communication health check
-  if (module == 'index') {
-    var apiNoCom = '<?php echo (file_exists('../includes/work/apinocom.tmp')) ? '1' : '0'; ?>';
-    if (apiNoCom == '1' && isLoggedIn == '1' && module != 'login') {
-      _apiHealthCheckAlert();
-      var jsonLink = '<?php echo lc_href_link_admin('rpc.php', 'index' . '&action=removeApiTmp'); ?>';
-      $.getJSON(jsonLink,
-        function (data) {
-          return true;
-        }
-      );
-    }
-  }
   setTimeout(function() {
     $("#dataTable_length").find('select').addClass("input with-small-padding");
   }, 700);
@@ -480,21 +481,6 @@ $(document).ready(function() {
     $(".productSearchInput").parents().eq(4).find('[type=button]').attr('disabled', true);  
   });     
 });
-
-function _apiHealthCheckAlert() {
-  var text = '<?php echo $lC_Language->get('text_api_health_check'); ?>';
-  api = $.modal({
-          title: '<?php echo $lC_Language->get('text_api_com_issue'); ?>',
-          content: '<?php echo $lC_Language->get('text_api_com_issue_warnings'); ?>',
-          buttons: {
-            '<?php echo $lC_Language->get('button_understood'); ?>': {
-              classes:  'glossy big full-width',
-              click:    function(win) { win.closeModal(); }
-            }
-          }
-        });
-  $(api);
-}
 
 function _resizeImages() {
   var text = '<?php echo $lC_Language->get('text_resize_images'); ?>';
