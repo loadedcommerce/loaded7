@@ -135,7 +135,6 @@ $(document).ready(function() {
       $.getJSON(jsonLink,
         function (data) {
           if (data.rpcStatus != 1) {          
-
             var text = '<?php echo $lC_Language->get('text_api_health_check'); ?>';
             api = $.modal({
                     title: '<?php echo $lC_Language->get('text_api_com_issue'); ?>',
@@ -148,7 +147,6 @@ $(document).ready(function() {
                     }
                   });
             $(api);
-            
           }
         }
       );
