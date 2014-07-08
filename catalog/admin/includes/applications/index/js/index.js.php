@@ -8,14 +8,8 @@
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: index.js.php v1.0 2013-08-08 datazen $
 */
-?>
-<script>
-
-// Favicon count
-//Tinycon.setBubble(2);
-</script>
-<?php
 global $lC_Language;
+
 require_once($lC_Vqmod->modCheck('includes/applications/index/classes/index.php')); 
 ?>
 <!-- Charts library -->

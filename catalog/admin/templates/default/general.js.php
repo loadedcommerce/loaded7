@@ -129,6 +129,18 @@ $(document).ready(function() {
   // check for updates and show notification if necessary only on login
   var referer = '<?php echo $_SERVER['HTTP_REFERER']; ?>';
   if (referer.indexOf('index.php?login') != -1) {   
+    // do an api health check first
+    function apiHealthCheck(callback) {
+      var jsonLink = '<?php echo lc_href_link_admin('rpc.php', 'index' . '&action=apiHealthCheck'); ?>';
+      $.getJSON(jsonLink,
+        function (data) {
+          callback(data.rpcStatus);
+        }
+      );
+    }    
+    
+    var ok = apiHealthCheck();
+    
     var title = '<?php echo lc_link_object(lc_href_link_admin(FILENAME_DEFAULT, 'updates'), $lC_Language->get('update_message_title'), 'style="color:white;"'); ?>';
     var uData = <?php echo json_encode(lC_Updates_Admin::hasUpdatesAvailable()); ?>;
     if (uData.hasUpdates) {

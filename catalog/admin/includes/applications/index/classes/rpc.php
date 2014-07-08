@@ -15,6 +15,7 @@ require_once($lC_Vqmod->modCheck('includes/applications/orders/classes/orders.ph
 require_once($lC_Vqmod->modCheck('includes/applications/products/classes/products.php')); 
 require_once($lC_Vqmod->modCheck('includes/classes/category_tree.php'));
 require_once($lC_Vqmod->modCheck('includes/applications/administrators_log/classes/administrators_log.php'));
+require_once($lC_Vqmod->modCheck('includes/applications/login/classes/login.php'));
 
 class lC_Index_Admin_rpc {
 
@@ -273,6 +274,18 @@ class lC_Index_Admin_rpc {
     
     echo json_encode($result);
   }  
-  
+ /*
+  * perform an API health check
+  *
+  * @access public
+  * @return json
+  */
+  public static function apiHealthCheck() {
+    lC_Login_Admin::apiCheck();
+    
+    $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+    
+    echo json_encode($result);
+  }  
 }
 ?>
