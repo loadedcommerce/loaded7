@@ -549,11 +549,8 @@ class lC_Addons_Admin extends lC_Addons {
       $class = $nameArr[count($nameArr)-2];
 
       if (file_exists($ao['path'])) {
-      //  if (isset($aoData)) { 
-      //  } else {
-          include_once($lC_Vqmod->modCheck($ao['path']));
-          $aoData = new $class();
-      //  }  
+        include_once($lC_Vqmod->modCheck($ao['path']));
+        $aoData = new $class();
 
         if ($aoData->isAutoInstall()) {
           if (defined('ADDONS_' . strtoupper($aoData->getAddonType()) . '_' . strtoupper($class) . '_STATUS')) {

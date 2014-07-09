@@ -34,7 +34,7 @@ class lC_Addons {
     }
     
     if ($flag == 'enabled') {
-      $dArr = array();
+      $dArr = array();      
       foreach($this->_data as $ao => $aoData) {
         if ($aoData['enabled'] == true) $dArr[$ao] = $aoData;
       } 
@@ -62,16 +62,13 @@ class lC_Addons {
       $ao = utility::cleanArr($addon);  
       
       if ($ao['name'] != 'controller.php') continue;
-
+      
       $nameArr = explode('/', $ao['path']);
       $class = $nameArr[count($nameArr)-2];
 
       if (file_exists($ao['path'])) {
-        if (isset($aoData)) { 
-        } else {
-          include_once($lC_Vqmod->modCheck($ao['path']));
-          $aoData = new $class();
-        } 
+        include_once($lC_Vqmod->modCheck($ao['path']));
+        $aoData = new $class();
         
         $_SESSION['lC_Addons_data'][$class] = array('type' => $aoData->getAddonType(),
                                                     'title' => $aoData->getAddonTitle(),
@@ -89,7 +86,7 @@ class lC_Addons {
         if ($aoData->isEnabled()) $enabled .= $addon['path'] . ';';
       }
     }   
-       
+
     if ($enabled != '') $enabled = substr($enabled, 0, -1);
     if (!file_exists(DIR_FS_WORK . 'cache/addons.cache')) {
       file_put_contents(DIR_FS_WORK . 'cache/addons.cache', serialize($enabled));
