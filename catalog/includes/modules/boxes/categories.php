@@ -36,7 +36,7 @@ class lC_Boxes_categories extends lC_Modules {
     $lC_CategoryTree->setChildStringWithChildren('<li>', '</li>');
     $lC_CategoryTree->setUseAria(true);
     $lC_CategoryTree->setShowCategoryProductCount((BOX_CATEGORIES_SHOW_PRODUCT_COUNT == '1') ? true : false);
-    //$lC_CategoryTree->setRootCategoryID(BOX_CATEGORIES_ROOT_CATEGORY);
+    $lC_CategoryTree->setRootCategoryID(BOX_CATEGORIES_ROOT_CATEGORY);
 
     $this->_content = $lC_CategoryTree->getTree();
     
@@ -47,12 +47,14 @@ class lC_Boxes_categories extends lC_Modules {
 
     parent::install();
 
-    $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('Show Product Count', 'BOX_CATEGORIES_SHOW_PRODUCT_COUNT', '1', 'Show the amount of products each category has', '6', '0', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))', now())");
+    $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('Show Product Count', 'BOX_CATEGORIES_SHOW_PRODUCT_COUNT', '-1', 'Show the amount of products each category has', '6', '0', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))', now())");
+    $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) values ('Top Category', 'BOX_CATEGORIES_ROOT_CATEGORY', 0, 'Select the Top Category of the Categories Infobox', 6, 0, now(), now(), 'lc_cfg_set_categories_top_category(BOX_CATEGORIES_ROOT_CATEGORY)', 'lc_cfg_set_categories_top_category')");
   }
 
   function getKeys() {
     if (!isset($this->_keys)) {
-      $this->_keys = array('BOX_CATEGORIES_SHOW_PRODUCT_COUNT');
+      $this->_keys = array('BOX_CATEGORIES_SHOW_PRODUCT_COUNT',
+                           'BOX_CATEGORIES_ROOT_CATEGORY');
     }
 
     return $this->_keys;
