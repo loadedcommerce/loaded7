@@ -488,10 +488,6 @@ class utility {
     if (!isset($lC_Addons)) $lC_Addons = new lC_Addons;
     $aoArr = $lC_Addons->getAddons('enabled');
          
-echo "<pre>";
-print_r($aoArr);
-echo "</pre>";
-die('44');         
     return $aoArr['Loaded_7_Pro']['version'];
   }  
  /**
