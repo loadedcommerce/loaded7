@@ -26,10 +26,18 @@ class lC_Boxes_categories extends lC_Modules {
     global $lC_CategoryTree, $cPath;
     
     $lC_CategoryTree->reset();
-    // added to control maximum level of categories infobox if desired
-    if (isset($_SESSION['setCategoriesMaximumLevel']) && $_SESSION['setCategoriesMaximumLevel'] != '') {
-      $lC_CategoryTree->setMaximumLevel($_SESSION['setCategoriesMaximumLevel']);
-    }
+    if (BOX_CATEGORIES_MAX_LEVEL == 'None') {
+      $bcml = 1;
+    } else if (BOX_CATEGORIES_MAX_LEVEL == 'All') {
+      $bcml = 0;
+    } else if (BOX_CATEGORIES_MAX_LEVEL == '1') {
+      $bcml = 2;
+    } else if (BOX_CATEGORIES_MAX_LEVEL == '2') {
+      $bcml = 3;
+    } else if (BOX_CATEGORIES_MAX_LEVEL == '3') {
+      $bcml = 4;
+    }    
+    $lC_CategoryTree->setMaximumLevel($bcml);
     $lC_CategoryTree->setCategoryPath($cPath, '<span class="active-cpath">', '</span>');
     $lC_CategoryTree->setParentGroupStringTop('<ul class="box-categories-ul-top">', '</ul>');
     $lC_CategoryTree->setParentGroupString('<ul class="box-categories-ul">', '</ul>');
@@ -49,12 +57,14 @@ class lC_Boxes_categories extends lC_Modules {
 
     $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('Show Product Count', 'BOX_CATEGORIES_SHOW_PRODUCT_COUNT', '-1', 'Show the amount of products each category has', '6', '0', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))', now())");
     $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) values ('Top Category', 'BOX_CATEGORIES_ROOT_CATEGORY', 0, 'Select the Top Category of the Categories Infobox', 6, 0, now(), now(), 'lc_cfg_set_categories_top_category(BOX_CATEGORIES_ROOT_CATEGORY)', 'lc_cfg_set_categories_top_category')");
+    $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) values ('Expand Menu Item', 'BOX_CATEGORIES_MAX_LEVEL', '2', 'How many levels to expand the category tree.', 6, 0, now(), now(), null, 'lc_cfg_set_boolean_value(array(''None'', ''1'', ''2'', ''3'', ''All''))')");
   }
 
   function getKeys() {
     if (!isset($this->_keys)) {
       $this->_keys = array('BOX_CATEGORIES_SHOW_PRODUCT_COUNT',
-                           'BOX_CATEGORIES_ROOT_CATEGORY');
+                           'BOX_CATEGORIES_ROOT_CATEGORY',
+                           'BOX_CATEGORIES_MAX_LEVEL');
     }
 
     return $this->_keys;

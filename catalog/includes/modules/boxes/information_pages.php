@@ -28,7 +28,7 @@ class lC_Boxes_information_pages extends lC_Modules {
     $lC_CategoryTree->reset();
     // added to control maximum level of information_pages infobox if desired
     if (isset($_SESSION['setInformationPagesMaximumLevel']) && $_SESSION['setInformationPagesMaximumLevel'] != '') {
-      $lC_CategoryTree->setMaximumLevel($_SESSION['setInformationPagesMaximumLevel']);
+      $lC_CategoryTree->setMaximumLevel(BOX_INFORMATION_MAX_LEVEL);
     }
     $lC_CategoryTree->setCategoryPath($cPath, '', '');
     $lC_CategoryTree->setParentGroupStringTop('<ul class="box-information_pages-ul-top">', '</ul>');
