@@ -7,7 +7,7 @@
   <file name="includes/modules/variants/file_upload.php">
     <operation info="File Upload">
       <search position="replace"><![CDATA[$string = '';]]></search>         
-      <add><![CDATA[if (file_exists(DIR_FS_CATALOG . 'includes/modules/variants/file_upload.php')) include_once(DIR_FS_CATALOG . 'includes/modules/variants/file_upload.php');]]></add>
+      <add><![CDATA[if (file_exists(DIR_FS_CATALOG . 'addons/Loaded_7_Pro/admin/inc/modules_variants_file_upload.inc.php')) include_once(DIR_FS_CATALOG . 'addons/Loaded_7_Pro/admin/inc/modules_variants_file_upload.inc.php');]]></add>
     </operation>        
   </file> 
 </modification>
