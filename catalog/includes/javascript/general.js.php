@@ -1,15 +1,15 @@
 <?php
 /**
-  @package    catalog::javascript
-  @author     Loaded Commerce
-  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
-  @copyright  Portions Copyright 2003 osCommerce
-  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
-  @version    $Id: general.js.php v1.0 2013-08-08 datazen $
+@package    catalog::javascript
+@author     Loaded Commerce
+@copyright  Copyright 2003-2014 Loaded Commerce, LLC
+@copyright  Portions Copyright 2003 osCommerce
+@license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+@version    $Id: general.js.php v1.0 2013-08-08 datazen $
 */
 global $lC_Template, $lC_Language, $lC_Vqmod, $lC_Session; 
 ?>
-<script><!--
+<script>
 $(document).ready(function() {
 
   function setMaintenanceMode(s) {
@@ -62,32 +62,31 @@ $(document).ready(function() {
     }
   ?>
   $(":contains('<?php echo addslashes($lC_Language->get('out_of_stock')); ?>')").closest('button').removeClass("btn-success").addClass("btn-default");
-
 });
 
 $(window).resize(function() {
 
-  var type = _setMediaType();
-  var width = '';
+    var type = _setMediaType();
+    var width = '';
 
-  // reset the payment iframe width
-  if (type == 'mobile-portrait') {
-    width = '254px';
-  } else if (type == 'mobile-landscape') {
-    width = '414px';
-  } else if (type == 'small-tablet-portrait') {
-    width = '490px';
-  } else if (type == 'small-tablet-landscape') {
-    width = '410px';
-  } else if (type == 'tablet-portrait') {
-    width = '390px';
-  } else if (type == 'tablet-landscape') {
-    width = '450px';
-  } else {
-    width = '478px';
-  }
+    // reset the payment iframe width
+    if (type == 'mobile-portrait') {
+      width = '254px';
+    } else if (type == 'mobile-landscape') {
+      width = '414px';
+    } else if (type == 'small-tablet-portrait') {
+      width = '490px';
+    } else if (type == 'small-tablet-landscape') {
+      width = '410px';
+    } else if (type == 'tablet-portrait') {
+      width = '390px';
+    } else if (type == 'tablet-landscape') {
+      width = '450px';
+    } else {
+      width = '478px';
+    }
 
-  $('#pmtFrame').css('width', width);
+    $('#pmtFrame').css('width', width);
 });
 
 function _setMediaType() {
@@ -162,13 +161,13 @@ function addCoupon() {
         }       
         return false;
       }
-        url = window.location.href;
-        if(data.rpcMessage != '') {     
-          //url = window.location.href+'&msg='+data.rpcMessage;
-          //url.replace("/&msg=/g", '&msg='+data.rpcMessage);   
-         }
-        window.location.href = url;
-      }
+      url = window.location.href;
+      if(data.rpcMessage != '') {     
+        //url = window.location.href+'&msg='+data.rpcMessage;
+        //url.replace("/&msg=/g", '&msg='+data.rpcMessage);   
+       }
+      window.location.href = url;
+    }
   );  
 }
 
@@ -181,8 +180,8 @@ function removeCoupon(code) {
         alert('<?php echo addslashes($lC_Language->get('ms_error_action_not_performed')); ?>');
         return false;
       }
-        url = window.location.href;        
-        window.location.href = url;       
+      url = window.location.href;        
+      window.location.href = url;       
     }
   );  
 }
@@ -276,5 +275,7 @@ $("#qrcode-tooltip").click(function(){
       $('#qr-message').show('500');
     }
   );
-})
-//--></script>
+});
+
+
+</script>

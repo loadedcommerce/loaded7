@@ -263,7 +263,7 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
       if (file_exists('includes/javascript/general.js.php')) {
         $lC_Template->addJavascriptPhpFilename('includes/javascript/general.js.php'); 
       }
-      // template specific js 
+      // template specific js
       if (file_exists('templates/' . $lC_Template->getCode() . '/javascript/general.js.php')) {
         $lC_Template->addJavascriptPhpFilename('templates/' . $lC_Template->getCode() . '/javascript/general.js.php'); 
       }
