@@ -62,11 +62,11 @@ function validateQPBPoint(e) {
     });
   }
   
-  _addNewQPBRow(e);
+  var parts = $(e).attr('id').split('_');
+  _addNewQPBRow(parts);
 }
 
-function _addNewQPBRow(e) {
-  var parts = $(e).attr('id').split('_');
+function _addNewQPBRow(parts) {
   var group = parseInt(parts[4]);
   var id = parseInt(parts[5]) + 1;
   var symbol = '<?php echo $lC_Currencies->getSymbolLeft(); ?>';
@@ -74,7 +74,7 @@ function _addNewQPBRow(e) {
   if( $('#products_qty_break_point_' + group + '_' + parts[5]).val() == '' ) return false;
   if( $('#products_qty_break_point_' + group + '_' + id).length > 0 && $('#products_qty_break_point_' + group + '_' + id).val() == '') return false;
 
-  row = '<div class="new-row-mobile twelve-columns small-margin-top">' +
+  row = '<div class="new-row-mobile twelve-columns small-margin-top" id="products_qty_break_point_div_' + group + '_' + id + '">' +
         '  <div class="inputs" style="display:inline; padding:8px 0;">' +
         '    <span class="mid-margin-left no-margin-right">#</span>' +                  
         '    <input type="text" onblur="validateQPBPoint(this);" onfocus="this+select();" name="products_qty_break_point[' + group + '][' + id + ']" id="products_qty_break_point_' + group + '_' + id + '" value="" class="input-unstyled small-margin-right" style="width:60px;" />' +
@@ -84,10 +84,17 @@ function _addNewQPBRow(e) {
         '    <span class="mid-margin-left no-margin-right">' + symbol + '</span>' +
         '    <input type="text" onblur="validateQPBPrice(this);" onfocus="this+select();" name="products_qty_break_price[' + group + '][' + id + ']" id="products_qty_break_price_' + group + '_' + id + '" value="" class="input-unstyled small-margin-right" style="width:60px;" />' +
         '  </div>' + 
-        '  <small class="input-info mid-margin-left no-wrap">Price</small>' + 
+        '  <small class="input-info mid-margin-left no-wrap">Price</small><span onclick="removeQPBRow(\'products_qty_break_point_div_' + group + '_' + id + '\');" class="margin-left icon-cross icon-red icon-size2 cursor-pointer"></span>' + 
         '</div>';      
               
   $('#qpbContainer').append(row);  
+}
+
+function removeQPBRow(id) {
+  $('#' + id).remove();
+  var id2 = id.replace('_div', '');
+  parts = id.split('_');
+  _addNewQPBRow(parts);  
 }
     
 function validateQPBPrice(e) {

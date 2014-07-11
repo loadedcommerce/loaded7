@@ -648,7 +648,7 @@ class lC_Products_Admin_Pro extends lC_Products_Admin {
   private static function _getNewQPBPricingRow($group, $cnt, $data = array()) {
     global $lC_Currencies;
 
-    $content = '  <div class="new-row-mobile twelve-columns small-margin-top">' .
+    $content = '  <div class="new-row-mobile twelve-columns small-margin-top" id="products_qty_break_point_div_' . $group . '_' . $cnt . '">' .
                '    <div class="inputs" style="display:inline; padding:8px 0;">' .
                '      <span class="mid-margin-left no-margin-right">#</span>' .                  
                '      <input type="text" onblur="validateQPBPoint(this);" onfocus="this.select();" name="products_qty_break_point[' . $group . '][' . $cnt . ']" id="products_qty_break_point_' . $group . '_' . $cnt . '" value="' . $data['qty_break'] . '" class="input-unstyled small-margin-right" style="width:60px;" />' .
@@ -658,7 +658,7 @@ class lC_Products_Admin_Pro extends lC_Products_Admin {
                '      <span class="mid-margin-left no-margin-right">' . $lC_Currencies->getSymbolLeft() . '</span>' .
                '      <input type="text" onblur="validateQPBPrice(this);" onfocus="this.select();" name="products_qty_break_price[' . $group . '][' . $cnt . ']" id="products_qty_break_price_' . $group . '_' . $cnt . '" value="' . (($data['qty_break'] != null) ? number_format($data['price_break'], DECIMAL_PLACES) : null) . '" class="input-unstyled small-margin-right" style="width:60px;" />' .
                '    </div>' . 
-               '    <small class="input-info mid-margin-left no-wrap">Price</small>' . 
+               '    <small class="input-info mid-margin-left no-wrap">Price</small><span onclick="removeQPBRow(\'products_qty_break_point_div_' . $group . '_' . $cnt . '\');" class="margin-left icon-cross icon-red icon-size2 cursor-pointer"></span>' . 
                '  </div>'; 
                  
     return $content;
