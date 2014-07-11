@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+  <id>Multiple File Upload</id>
+  <version>1.0.0</version>
+  <vqmver>2.3.2</vqmver>
+  <author>loadedcommerce.com</author>
+  <file name="includes/modules/variants/multiple_file_upload.php">
+    <operation info="Multiple File Upload">
+      <search position="replace"><![CDATA[$string = '';]]></search>         
+      <add><![CDATA[if (file_exists(DIR_FS_CATALOG . 'includes/modules/variants/multiple_file_upload.php')) include_once(DIR_FS_CATALOG . 'includes/modules/variants/multiple_file_upload.php');]]></add>
+    </operation>        
+  </file> 
+</modification>
