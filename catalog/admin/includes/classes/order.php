@@ -46,7 +46,6 @@ class lC_Order {
                                'country_title' => $Qorder->value('customers_country'),
                                'country_iso2' => $Qorder->value('customers_country_iso2'),
                                'country_iso3' => $Qorder->value('customers_country_iso3'),
-                               'customers_ip_address' => $Qorder->valueProtected('customers_ip_address'),
                                'format' => $Qorder->value('customers_address_format'),
                                'telephone' => $Qorder->valueProtected('customers_telephone'),
                                'email_address' => $Qorder->valueProtected('customers_email_address'));
@@ -248,9 +247,9 @@ class lC_Order {
 
   protected function _getProduct($oid, $pid) {
     global $lC_Database;
-    $Qproduct = $lC_Database->query('select products_id, products_name, products_model, products_sku, products_price, products_tax, products_quantity, products_simple_options_meta_data from :table_orders_products where products_id = :products_id and orders_id = :orders_id limit 1');
+    $Qproduct = $lC_Database->query('select products_id, products_name, products_model, products_sku, products_price, products_tax, products_quantity, products_simple_options_meta_data from :table_orders_products where orders_products_id = :orders_products_id and orders_id = :orders_id limit 1');
     $Qproduct->bindTable(':table_orders_products', TABLE_ORDERS_PRODUCTS);
-    $Qproduct->bindInt(':products_id', $pid);
+    $Qproduct->bindInt(':orders_products_id', $pid);
     $Qproduct->bindInt(':orders_id', $oid);
     $Qproduct->execute();
     while ($Qproduct->next()) {

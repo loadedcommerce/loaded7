@@ -342,10 +342,9 @@ class lC_Orders_Admin {
     if ( !$lC_Order->isValid() ) {
       return array('error' => true, 'errmsg' => sprintf(ERROR_ORDER_DOES_NOT_EXIST, $id));
     }    
-  
+   
     $result['oID'] = $id;
     $result['customerId'] = $lC_Order->getCustomer('id');
-    $result['customerIP'] = $lC_Order->getCustomer('customers_ip_address');
     $result['customerAddress'] = lC_Address::format($lC_Order->getCustomer(), '<br />');
     $result['deliveryAddress'] = lC_Address::format($lC_Order->getDelivery(), '<br />');
     $result['billingAddress'] = lC_Address::format($lC_Order->getBilling(), '<br />');
