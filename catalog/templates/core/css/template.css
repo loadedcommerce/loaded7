@@ -706,6 +706,14 @@
 
 #loaded7 .pr_gallery li:hover {
   border:1px solid #f0ad4e; 
+} 
+
+#loaded7 .box-product-categories-ul {
+  margin: 0 0 10px 0; 
+} 
+
+#loaded7 .box-product-categories-ul li {
+  margin: 10px 0 10px; 
 }
 
 #loaded7 span.active-cpath {
