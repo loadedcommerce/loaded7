@@ -18,11 +18,14 @@ function lc_cfg_set_info_pages_top_category($default = 0, $key = null) {
     
   $categories = array('0' => $lC_Language->get('top_category'));
   foreach ( $lC_CategoryTree->getArray() as $value ) {
-    $cid = explode('_', $value['id']);
-    $count = count($cid);
-    $cid = end($cid);
-    $acArr = lC_Categories_Admin::getAllChildren($id);
-    $categories[$cid] = str_repeat("&nbsp;&nbsp;&nbsp;&nbsp;", $count-1) . ' ' . $value['title'];
+    // added switch for only category mode categories in selection dropdown.
+    if ($value['mode'] == 'info_category') {
+      $cid = explode('_', $value['id']);
+      $count = count($cid);
+      $cid = end($cid);
+      $acArr = lC_Categories_Admin::getAllChildren($id);
+      $categories[$cid] = str_repeat("&nbsp;&nbsp;&nbsp;&nbsp;", $count-1) . ' ' . $value['title'];
+    }
   }
   
   $css_class = 'class="input with-small-padding mid-margin-top"';
