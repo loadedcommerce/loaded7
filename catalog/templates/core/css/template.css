@@ -708,12 +708,12 @@
   border:1px solid #f0ad4e; 
 } 
 
-#loaded7 .box-product-categories-ul {
-  margin: 0 0 10px 0; 
+#loaded7 .list-unstyled {
+  margin: 0 0 6px 0; 
 } 
 
-#loaded7 .box-product-categories-ul li {
-  margin: 10px 0 10px; 
+#loaded7 .list-unstyled li {
+  margin: 6px 0 6px; 
 }
 
 #loaded7 span.active-cpath {
