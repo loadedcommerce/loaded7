@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+  <id>Hook in B2B Features</id>
+  <version>1.0.0</version>
+  <vqmver>2.3.2</vqmver>
+  <author>loadedcommerce.com</author>
+  <file name="includes/classes/product.php">
+    <operation info="Product Restrictions">
+      <search position="before"><![CDATA[return $priceFormattedResult;]]></search>         
+      <add><![CDATA[global $lC_Vqmod, $lC_Customer; if (file_exists(DIR_FS_CATALOG . 'addons/Loaded_7_B2B/classes/product.php')) include_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'addons/Loaded_7_B2B/classes/product.php')); if (lC_Product_b2b::hasProductAccess($id, $lC_Customer->getCustomerGroup($id)) < 66) $priceFormattedResult = '';]]></add>
+    </operation>  
+  </file> 
+</modification>
