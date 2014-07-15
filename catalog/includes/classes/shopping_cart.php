@@ -519,7 +519,7 @@ class lC_ShoppingCart {
           $Qnew->execute();
         }
 
-        if ( $Qproduct->valueInt('parent_id') > 0 ) {
+        //if ( $Qproduct->valueInt('parent_id') > 0 ) {
           $Qvariant = $lC_Database->query('select pvg.id as group_id, pvg.title as group_title, pvg.module, pvv.id as value_id, pvv.title as value_title from :table_products_variants pv, :table_products_variants_values pvv, :table_products_variants_groups pvg where pv.products_id = :products_id and pv.products_variants_values_id = pvv.id and pvv.languages_id = :languages_id and pvv.products_variants_groups_id = pvg.id and pvg.languages_id = :languages_id');
           $Qvariant->bindTable(':table_products_variants', TABLE_PRODUCTS_VARIANTS);
           $Qvariant->bindTable(':table_products_variants_values', TABLE_PRODUCTS_VARIANTS_VALUES);
@@ -583,7 +583,7 @@ class lC_ShoppingCart {
               $Qnew->execute();
             }
           }
-        }
+        //}
       }
       
       $this->_cleanUp();
