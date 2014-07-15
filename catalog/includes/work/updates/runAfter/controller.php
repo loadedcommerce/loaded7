@@ -375,10 +375,22 @@ class lC_Updates_Admin_run_after extends lC_Updates_Admin {
       parent::log("Database Update: INSERT INTO `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('Allowed File Types', 'PRODUCT_MODULES_FILE_UPLOAD_TYPES', '.zip,.pdf,.png,.gif,.jpg,.tiff,.gzip,.gz', 'Enter the allowed file upload extensions in a comma delimited format.', 22, 0, now(), now(), NULL, NULL);");
     } 
     
-    if (!defined('PRODUCT_MODULES_FILE_UPLOAD_MAX_SIZE')) {
+    if (!defined('PRODUCT_MODULES_FILE_UPLOAD_MAX_SIZE')) {      
       $lC_Database->simpleQuery("INSERT INTO `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('Maximum Upload File Size', 'PRODUCT_MODULES_FILE_UPLOAD_MAX_SIZE', '10', 'Enter the maximum size allowed for file uploads.', 22, 0, now(), now(), NULL, NULL);");
       parent::log("Database Update: INSERT INTO `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('Maximum Upload File Size', 'PRODUCT_MODULES_FILE_UPLOAD_MAX_SIZE', '10', 'Enter the maximum size (in MB) allowed for file uploads.', 22, 0, now(), now(), NULL, NULL);");
-    }         
+    } 
+    
+    if (utility::isB2B) {
+      if (!defined('B2B_SETTINGS_ALLOW_SELF_REGISTER')) {
+        $lC_Database->simpleQuery("insert into `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('', 'B2B_SETTINGS_ALLOW_SELF_REGISTER', '1', '', '6', '0', '', '', now())");
+        parent::log("Database Update: insert into `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('', 'B2B_SETTINGS_ALLOW_SELF_REGISTER', '1', '', '6', '0', '', '', now())");
+      }
+      
+      if (!defined('B2B_SETTINGS_GUEST_CATALOG_ACCESS')) {
+        $lC_Database->simpleQuery("insert into `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('', 'B2B_SETTINGS_GUEST_CATALOG_ACCESS', '4', '', '6', '0', '', '', now())");
+        parent::log("Database Update: insert into `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('', 'B2B_SETTINGS_GUEST_CATALOG_ACCESS', '4', '', '6', '0', '', '', now())");
+      }
+    }
      
   }
 }  
