@@ -69,67 +69,33 @@ $error = (isset($_GET['error']) && $_GET['error'] != NULL) ? preg_replace('/[^A-
         var myWindow = window.open(url, "Social Window", "width=600, height=400");
       }
     </script>
+    <style>
+    </style>
     <div class="social-container">
-      <div class="menu-wrap">
+      <div class="social_wrap list-inline no-print">
         <?php if ( PRODUCT_INFO_SOCIAL_SHARE_FACEBOOK == 1 ) { ?>
-        <div class="menu-item">
-          <a href="javascript:void(0);" onclick="social_popup('https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode(HTTP_SERVER.$_SERVER['REQUEST_URI']); ?>');">
-            <span class="icon fa fa-facebook"></span>
-          </a>
-          <a href="javascript:void(0);" class="text" onclick="social_popup('https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode(HTTP_SERVER.$_SERVER['REQUEST_URI']); ?>');">
-            <i class="fa fa-facebook" title="<?php echo $lC_Language->get('text_social_share_facebook'); ?>"></i>
-          </a>
-        </div>
+        <button onclick="social_popup('https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode(HTTP_SERVER . $_SERVER['REQUEST_URI']); ?>');" class="btn btn-default btn-facebook" type="button">
+        <i class="fa fa-facebook"></i><span class="hide-on-mobile hide-on-tablet icon-facebook-text"><?php echo $lC_Language->get('text_social_share_facebook'); ?></span></button>
         <?php } ?>
         <?php if ( PRODUCT_INFO_SOCIAL_SHARE_TWITTER == 1 ) { ?>
-        <div class="menu-item">
-          <a href="javascript:void(0);" onclick="social_popup('https://twitter.com/intent/tweet?text=<?php echo urlencode($lC_Product->getTitle()); ?>&url=<?php echo urlencode(HTTP_SERVER.$_SERVER['REQUEST_URI']); ?>');">
-            <span class="icon fa fa-twitter"></span>
-          </a>
-          <a href="javascript:void(0);" class="text" onclick="social_popup('https://twitter.com/intent/tweet?text=<?php echo urlencode($lC_Product->getTitle()); ?>&url=<?php echo urlencode(HTTP_SERVER.$_SERVER['REQUEST_URI']); ?>');">
-            <i class="fa fa-twitter" title="<?php echo $lC_Language->get('text_social_share_twitter'); ?>"></i>
-          </a>
-        </div>
+        <button onclick="social_popup('https://twitter.com/intent/tweet?text=<?php echo urlencode($lC_Product->getTitle()); ?>&url=<?php echo urlencode(HTTP_SERVER . $_SERVER['REQUEST_URI']); ?>');" class="btn btn-default btn-twitter" type="button">
+        <i class="fa fa-twitter"></i><span class="hide-on-mobile hide-on-tablet icon-twitter-text"><?php echo $lC_Language->get('text_social_share_twitter'); ?></span></button>
         <?php } ?>
         <?php if ( PRODUCT_INFO_SOCIAL_SHARE_GOOGLE == 1 ) { ?>
-        <div class="menu-item">
-          <a href="javascript:void(0);" onclick="social_popup('https://plus.google.com/share?url=<?php echo urlencode(HTTP_SERVER.$_SERVER['REQUEST_URI']); ?>&gpsrc=frameless&btmpl=popup');">
-            <span class="icon fa fa-google-plus"></span>
-          </a>
-          <a href="javascript:void(0);" class="text" onclick="social_popup('https://plus.google.com/share?url=<?php echo urlencode(HTTP_SERVER.$_SERVER['REQUEST_URI']); ?>&gpsrc=frameless&btmpl=popup');">
-            <i class="fa fa-google-plus" title="<?php echo $lC_Language->get('text_social_share_google_plus'); ?>"></i>
-          </a>
-        </div>
+        <button onclick="social_popup('https://plus.google.com/share?url=<?php echo urlencode(HTTP_SERVER . $_SERVER['REQUEST_URI']); ?>&gpsrc=frameless&btmpl=popup');" class="btn btn-default btn-google-plus" type="button">
+        <i class="fa fa-google-plus"></i><span class="hide-on-mobile hide-on-tablet icon-google-plus-text"><?php echo $lC_Language->get('text_social_share_google_plus'); ?></span></button>
         <?php } ?>
         <?php if ( PRODUCT_INFO_SOCIAL_SHARE_LINKED == 1 ) { ?>
-        <div class="menu-item">
-          <a href="javascript:void(0);" onclick="social_popup('https://www.linkedin.com/shareArticle?mini=true&url=<?php echo urlencode(HTTP_SERVER.$_SERVER['REQUEST_URI']); ?>');">
-            <span class="icon fa fa-linkedin"></span>
-          </a>
-          <a href="javascript:void(0);" class="text" onclick="social_popup('https://www.linkedin.com/shareArticle?mini=true&url=<?php echo urlencode(HTTP_SERVER.$_SERVER['REQUEST_URI']); ?>');">
-            <i class="fa fa-linkedin" title="<?php echo $lC_Language->get('text_social_share_linkedin'); ?>"></i>
-          </a>
-        </div>
+        <button onclick="social_popup('https://www.linkedin.com/shareArticle?mini=true&url=<?php echo urlencode(HTTP_SERVER . $_SERVER['REQUEST_URI']); ?>');" class="btn btn-default btn-pinterest" type="button">
+        <i class="fa fa-linkedin"></i><span class="hide-on-mobile hide-on-tablet icon-linkedin-text"><?php echo $lC_Language->get('text_social_share_linkedin'); ?></span></button>
         <?php } ?>
         <?php if ( PRODUCT_INFO_SOCIAL_SHARE_PIN == 1 ) { ?>
-        <div class="menu-item">
-          <a href="javascript:void(0);" onclick="social_popup('https://www.pinterest.com/join/?next=/pin/create/button/?url=<?php echo urlencode(HTTP_SERVER.$_SERVER['REQUEST_URI']); ?>');">
-            <span class="icon fa fa-pinterest"></span>
-          </a>
-          <a href="javascript:void(0);" class="text" onclick="social_popup('https://www.pinterest.com/join/?next=/pin/create/button/?url=<?php echo urlencode(HTTP_SERVER.$_SERVER['REQUEST_URI']); ?>');">
-            <i class="fa fa-pinterest" title="<?php echo $lC_Language->get('text_social_share_pinterest'); ?>"></i>
-          </a>
-        </div>
+        <button onclick="social_popup('https://www.pinterest.com/join/?next=/pin/create/button/?url=<?php echo urlencode(HTTP_SERVER.$_SERVER['REQUEST_URI']); ?>');" class="btn btn-default btn-pinterest" type="button">
+        <i class="fa fa-pinterest"></i><span class="hide-on-mobile hide-on-tablet icon-pinterest-text"><?php echo $lC_Language->get('text_social_share_pinterest'); ?></span></button>
         <?php } ?>
         <?php if ( PRODUCT_INFO_SOCIAL_SHARE_TUMBLR == 1 ) { ?>
-        <div class="menu-item">
-          <a href="javascript:void(0);" onclick="social_popup('http://www.tumblr.com/share/link/?url=<?php echo urlencode(HTTP_SERVER.$_SERVER['REQUEST_URI']); ?>&name=<?php echo urlencode($lC_Product->getTitle()); ?>');">
-            <span class="icon fa fa-tumblr"></span>
-          </a>
-          <a href="javascript:void(0);" class="text" onclick="social_popup('http://www.tumblr.com/share/link/?url=<?php echo urlencode(HTTP_SERVER.$_SERVER['REQUEST_URI']); ?>&name=<?php echo urlencode($lC_Product->getTitle()); ?>');">
-            <i class="fa fa-tumblr" title="<?php echo $lC_Language->get('text_social_share_tumblr'); ?>"></i>
-          </a>
-        </div>
+        <button onclick="social_popup('http://www.tumblr.com/share/link/?url=<?php echo urlencode(HTTP_SERVER.$_SERVER['REQUEST_URI']); ?>&name=<?php echo urlencode($lC_Product->getTitle()); ?>');" class="btn btn-default btn-tumblr" type="button">
+        <i class="fa fa-tumblr"></i><span class="hide-on-mobile hide-on-tablet icon-tumblr-text"><?php echo $lC_Language->get('text_social_share_tumblr'); ?></span></button>
         <?php } ?>
       </div>
     </div> 

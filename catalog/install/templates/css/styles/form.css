@@ -1551,8 +1551,8 @@ input:-moz-placeholder {
 	/* Fields list */
 	.fieldset.fields-list,
 	.wizard-fieldset.fields-list {
-		background-image: url(../../img/fieldset-bg.gif);
-		background-repeat: repeat-y;
+		/*background-image: url(../../img/fieldset-bg.gif);
+		background-repeat: repeat-y;*/
 	}
 	.field-block {
 		padding: 0 30px 0 230px;
