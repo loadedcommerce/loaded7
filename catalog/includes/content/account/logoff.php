@@ -35,6 +35,8 @@ class lC_Account_Logoff extends lC_Template {
     $lC_ShoppingCart->reset();
     $lC_Coupons->reset();
     $lC_Customer->reset();
+    lC_Cache::clearAll();
+    
 	if (isset($_SESSION['admin_login']) && $_SESSION['admin_login'] === TRUE) unset($_SESSION['admin_login']); 
   }
 }

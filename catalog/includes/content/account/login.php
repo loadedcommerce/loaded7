@@ -62,6 +62,8 @@ class lC_Account_Login extends lC_Template {
 
         $lC_NavigationHistory->removeCurrentPage();
 
+        lC_Cache::clearAll();
+        
         if ($lC_NavigationHistory->hasSnapshot()) {
           $lC_NavigationHistory->redirectToSnapshot();
         } else {
