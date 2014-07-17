@@ -30,20 +30,6 @@ $(document).ready(function() {
     if (allowCreateAccount == 0) {
       $('.create-account-div').empty();
     }
-    $('.page-results').hide();
   } 
-  
-  var gAccess = ('<?php echo $lC_Customer->getCustomerGroupAccess($lC_Customer->getID()); ?>').split(';');
-  $(".box-categories-ul-top li a").each(function(){
-    var cAccess = $(this).attr('access').split(';');
-    $ok = false;
-    $.each(cAccess, function(i, val) {
-      if ($.inArray(val, gAccess) != -1) {
-        $ok = true;
-        return;  
-      }
-    });
-    if (!$ok) $(this).closest('li').hide();
-  });
 });  
 //--></script>
