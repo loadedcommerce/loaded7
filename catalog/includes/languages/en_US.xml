@@ -19,6 +19,21 @@
       <key>my_account</key>
       <value><![CDATA[My Account]]></value>
       <group>general</group>
+    </definition> 
+    <definition>
+      <key>text_new_arrivals</key>
+      <value><![CDATA[New Arrivals]]></value>
+      <group>general</group>
+    </definition> 
+    <definition>
+      <key>text_customer_service</key>
+      <value><![CDATA[Customer Service]]></value>
+      <group>general</group>
+    </definition> 
+    <definition>
+      <key>text_our_office</key>
+      <value><![CDATA[Our Office]]></value>
+      <group>general</group>
     </definition>
     <definition>
       <key>button_go_shopping</key>
