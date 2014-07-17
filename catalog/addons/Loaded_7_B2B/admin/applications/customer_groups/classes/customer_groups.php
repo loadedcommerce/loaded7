@@ -10,7 +10,9 @@
 */
 global $lC_Vqmod;
 
-require_once($lC_Vqmod->modCheck('includes/applications/customer_groups/classes/customer_groups.php'));
+if (!defined('DIR_FS_ADMIN')) return false;
+
+require_once($lC_Vqmod->modCheck(DIR_FS_ADMIN . 'includes/applications/customer_groups/classes/customer_groups.php'));
 
 class lC_Customer_groups_b2b_Admin extends lC_Customer_groups_Admin {
   
