@@ -77,7 +77,7 @@ class lC_Products {
   }
 
   function &execute($max_entries = MAX_DISPLAY_SEARCH_RESULTS) {
-    global $lC_Database, $lC_Language, $lC_CategoryTree, $lC_Image;
+    global $lC_Database, $lC_Language, $lC_CategoryTree, $lC_Image, $lC_Customer;
     
     $sqlQuery = 'select SQL_CALC_FOUND_ROWS distinct p.products_id from :table_products p left join :table_product_attributes pa on (p.products_id = pa.products_id) left join :table_templates_boxes tb on (pa.id = tb.id and tb.code = "manufacturers"), :table_products_description pd';
 
@@ -118,6 +118,10 @@ class lC_Products {
       $Qlisting->appendQuery('and pa.id = tb.id and pa.value = :manufacturers_id');
       $Qlisting->bindInt(':manufacturers_id', $this->_manufacturer);
     }
+    
+    if (utility::isB2B()) {
+      $Qlisting->appendQuery('and LOCATE(' . $lC_Customer->getCustomerGroupAccess() . ', p.access_levels) > 0');
+    }    
 
     $Qlisting->appendQuery('order by');
 

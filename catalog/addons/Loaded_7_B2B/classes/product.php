@@ -23,8 +23,8 @@ class lC_Product_b2b extends lC_Product {
 
     $valid = false;
     
-    if ($lC_Customer->isLoggedOn === false) $customers_group_id = 0;
-
+    if ($lC_Customer->isLoggedOn() === false) $customers_group_id = 0;
+    
     if ($customers_group_id > 0) {  // not guest
     
       // get the access levels for the group
@@ -61,15 +61,14 @@ class lC_Product_b2b extends lC_Product {
           }
         }
       }        
-
     } else {
       $guestAccess = (defined('B2B_SETTINGS_GUEST_CATALOG_ACCESS') && B2B_SETTINGS_GUEST_CATALOG_ACCESS > 0) ? (int)B2B_SETTINGS_GUEST_CATALOG_ACCESS : 0;
       
       if ($guestAccess > 0) {
-        // get the category access levels
+        // get the access levels
         $Qproduct = $lC_Database->query('select access_levels from :table_products where products_id = :products_id limit 1');
         $Qproduct->bindTable(':table_products', TABLE_PRODUCTS);
-        $Qproduct->bindInt(':categories_id', $products_id);
+        $Qproduct->bindInt(':products_id', $products_id);
         $Qproduct->execute(); 
         
         $product_access_levels = explode(';', $Qproduct->value('access_levels'));  

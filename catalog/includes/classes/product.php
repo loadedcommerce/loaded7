@@ -289,6 +289,10 @@ class lC_Product {
     return $this->_data['tags'];
   }
   
+  public function getAccessLevels() {
+    return $this->_data['access_levels'];
+  }  
+  
   // ######## PRICING - ALL PRICING TO COME FROM HERE #########//
   public function getPriceInfo($product_id, $customers_group_id = 1, $data) {
     global $lC_Specials, $lC_Database, $lC_Language, $lC_Customer, $lC_Services, $lC_Currencies, $lC_ShoppingCart, $lC_Tax;

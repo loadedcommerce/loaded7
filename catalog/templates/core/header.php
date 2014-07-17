@@ -230,4 +230,8 @@ if (isset($_SESSION['admin_login']) && $_SESSION['admin_login'] === TRUE) echo '
     </script>
   </div>
 </div>
+<?php
+  global $lC_Customer;
+  echo 'group[' . $lC_Customer->getCustomerGroup() . ' - ' . $lC_Customer->getCustomerGroupName($lC_Customer->getCustomerGroup())  . '] access[' . $lC_Customer->getCustomerGroupAccess() . ']<br>';
+?>
 <!--header.php end-->
