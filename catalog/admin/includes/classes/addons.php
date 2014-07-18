@@ -571,9 +571,14 @@ class lC_Addons_Admin extends lC_Addons {
           $isEnabled = $aoData->isEnabled();
         }
         
+        // language definitions
+        if (file_exists(DIR_FS_CATALOG . 'addons/' . $class . '/languages/' . $lC_Language->getCode() . '.xml')) {
+          $lC_Language->injectAddonDefinitions(DIR_FS_CATALOG . 'addons/' . $class . '/languages/' . $lC_Language->getCode() . '.xml', $lC_Language->getCode());
+        }
+        
         $_SESSION['lC_Addons_Admin_data'][$class] = array('type' => $aoData->getAddonType(),
-                                                          'title' => self::_getLanguageDefinition($aoData->getAddonTitle(), $class),
-                                                          'description' => self::_getLanguageDefinition($aoData->getAddonDescription(), $class),
+                                                          'title' => ((strpos($aoData->getAddonTitle(), '_') > 0) ? $lC_Language->get($aoData->getAddonTitle()) : $aoData->getAddonTitle()),
+                                                          'description' => ((strpos($aoData->getAddonDescription(), '_') > 0) ? $lC_Language->get($aoData->getAddonDescription()) : $aoData->getAddonDescription()),
                                                           'rating' => $aoData->getAddonRating(),
                                                           'author' => $aoData->getAddonAuthor(),
                                                           'authorWWW' => $aoData->getAddonAuthorWWW(),
@@ -587,8 +592,8 @@ class lC_Addons_Admin extends lC_Addons {
         
         if ($isEnabled) $enabled .= $addon['path'] . ';';
       }
-    }   
-       
+    } 
+
     if ($enabled != '') $enabled = substr($enabled, 0, -1);
     if (!file_exists(DIR_FS_WORK . 'cache/addons.cache')) {
       file_put_contents(DIR_FS_WORK . 'cache/addons.cache', serialize($enabled));
@@ -615,32 +620,6 @@ class lC_Addons_Admin extends lC_Addons {
     }
     
     $Qchk->freeResult();   
-  } 
- /*
-  * Retrieve a addon language definition value
-  *
-  * @param string $key    The language key
-  * @param string $class  The addon class
-  * @access private
-  * @return string
-  */   
-  private static function _getLanguageDefinition($key, $class) {
-    global $lC_Language;
-
-    $langValue = '';
-    if (file_exists(DIR_FS_CATALOG . 'addons/' . $class . '/languages/' . $lC_Language->getCode() . '.xml')) {
-      $lC_XML = new lC_XML(file_get_contents(DIR_FS_CATALOG . 'addons/' . $class . '/languages/' . $lC_Language->getCode() . '.xml'));
-      $definitions = $lC_XML->toArray();
-
-      foreach ($definitions['language']['definitions']['definition'] as $def) {
-        if ($def['key'] == $key) {
-          $langValue = $def['value'];
-          break;
-        }
-      }
-      
-      return $langValue;
-    }    
-  }   
+  }    
 }
 ?>

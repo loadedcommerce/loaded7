@@ -360,8 +360,8 @@ if (!class_exists('lC_Store_Admin')) {
           $aoData = new $class();
           $addon['code'] = substr($ao['name'], 0, strpos($ao['name'], '/'));
           $addon['type'] = $aoData->getAddonType();
-          $addon['title'] = self::_getLanguageDefinition($aoData->getAddonTitle(), $class);
-          $addon['description'] = self::_getLanguageDefinition($aoData->getAddonDescription(), $class);
+          $addon['title'] = $aoData->getAddonTitle();
+          $addon['description'] = $aoData->getAddonDescription();
           $addon['rating'] = $aoData->getAddonRating();
           $addon['author'] = $aoData->getAddonAuthor();
           $addon['authorWWW'] = $aoData->getAddonAuthorWWW();
@@ -617,33 +617,7 @@ if (!class_exists('lC_Store_Admin')) {
     */  
     private static function _usortAddonsByRating($a, $b) {
       return $a['rating'] == $b['rating'] ? 0 : $a['rating'] > $b['rating'] ? -1 : 1;
-    } 
-   /*
-    * Retrieve a addon language definition value
-    *
-    * @param string $key    The language key
-    * @param string $class  The addon class
-    * @access private
-    * @return string
-    */   
-    private static function _getLanguageDefinition($key, $class) {
-      global $lC_Language;
-
-      $langValue = '';
-      if (file_exists(DIR_FS_CATALOG . 'addons/' . $class . '/languages/' . $lC_Language->getCode() . '.xml')) {
-        $lC_XML = new lC_XML(file_get_contents(DIR_FS_CATALOG . 'addons/' . $class . '/languages/' . $lC_Language->getCode() . '.xml'));
-        $definitions = $lC_XML->toArray();
-
-        foreach ($definitions['language']['definitions']['definition'] as $def) {
-          if ($def['key'] == $key) {
-            $langValue = $def['value'];
-            break;
-          }
-        }
-        
-        return $langValue;
-      }    
-    }    
+    }     
   } 
 }
 ?>
