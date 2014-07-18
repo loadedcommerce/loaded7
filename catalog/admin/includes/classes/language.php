@@ -43,10 +43,59 @@ class lC_Language_Admin extends lC_Language {
       }
 
       $contents = file('includes/languages/' . $language_code . '/' . $filename);
-    }
+    }   
+    
+    $this->_inject($contents);
 
+    unset($contents);
+
+    $this->injectAddonDefinitions($language_code);
+  }
+
+  
+  public function injectAddonDefinitions($language_code) {
+    global $lC_Addons;
+      
+    if ($language_code == null) $language_code = 'en_US';
+    
+    // inject the addons language defines
+    if (isset($lC_Addons)) {
+      $aoArr = $lC_Addons->getAddons();
+      if (is_array($aoArr)) {
+        foreach ($aoArr as $ao => $aoData) {
+          
+          // load tha main lang file
+          if (file_exists(DIR_FS_CATALOG . 'addons/' . $ao . '/admin/languages/' . $language_code . '.php')) {
+            $contents = file(DIR_FS_CATALOG . 'addons/' . $ao . '/admin/languages/' . $language_code . '.php');
+            $this->_inject($contents);
+          }
+          
+          unset($contents);
+
+          // load all the module lang files
+          $lC_DirectoryListing = new lC_DirectoryListing(DIR_FS_CATALOG . 'addons/' . $ao . '/admin/languages/' . $language_code);
+          $lC_DirectoryListing->setIncludeDirectories(false);
+          $lC_DirectoryListing->setRecursive(true);
+          $lC_DirectoryListing->setStats(true);
+
+          $moduleFiles = $lC_DirectoryListing->getFiles(); 
+          
+          foreach ( $moduleFiles as $file ) {
+            if (file_exists($file['path'])) {
+              $contents = file($file['path']);
+              $this->_inject($contents);
+              unset($contents);
+            }            
+          }
+        }
+      }      
+    }    
+  }
+  
+  private function _inject($contents) {
+    
     $ini_array = array();
-
+    
     foreach ( $contents as $line ) {
       $line = trim($line);
 
@@ -68,22 +117,10 @@ class lC_Language_Admin extends lC_Language {
 
     unset($contents);
 
-    $this->_definitions = array_merge($this->_definitions, $ini_array);
-
-    // inject the addons language defines
-    if (isset($lC_Addons)) {
-      $aoArr = $lC_Addons->getAddons();
-      if (is_array($aoArr)) {
-        foreach ($aoArr as $ao => $aoData) {
-          $file = DIR_FS_CATALOG . 'addons/' . $ao . '/languages/' . $language_code . '.xml';
-          if (file_exists($file)) {
-            $this->injectAddonDefinitions($file, $language_code);
-          }
-        }
-      }
-    }
+    $this->_definitions = array_merge($this->_definitions, $ini_array);    
   }
-
+  
+  
   public function injectDefinitions($file, $language_code = null) {
     if ( is_null($language_code) ) {
       $language_code = $this->_code;

@@ -825,9 +825,11 @@ class lC_Products_Admin {
     // product attributes
     if ( $error === false ) {
       if ( isset($data['attributes']) && !empty($data['attributes']) ) {
+
         foreach ( $data['attributes'] as $attributes_id => $value ) {
+
           if ( is_array($value) ) {
-          } elseif ( !empty($value) ) {
+          } elseif ( !empty($value) && $value != 'NULL') {
             $Qcheck = $lC_Database->query('select id from :table_product_attributes where products_id = :products_id and id = :id limit 1');
             $Qcheck->bindTable(':table_product_attributes', TABLE_PRODUCT_ATTRIBUTES);
             $Qcheck->bindInt(':products_id', $products_id);
@@ -838,7 +840,7 @@ class lC_Products_Admin {
               $Qattribute = $lC_Database->query('update :table_product_attributes set value = :value where products_id = :products_id and id = :id');
             } else {
               $Qattribute = $lC_Database->query('insert into :table_product_attributes (id, products_id, languages_id, value) values (:id, :products_id, :languages_id, :value)');
-              $Qattribute->bindInt(':languages_id', 0);
+              $Qattribute->bindInt(':languages_id', $lC_Language->getID());
             }
             
             $Qattribute->bindTable(':table_product_attributes', TABLE_PRODUCT_ATTRIBUTES);
@@ -855,6 +857,7 @@ class lC_Products_Admin {
         }
       }
     }
+ 
 
     // simple options
     if ( $error === false ) {
