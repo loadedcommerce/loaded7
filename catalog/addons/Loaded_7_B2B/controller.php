@@ -93,6 +93,9 @@ class Loaded_7_B2B extends Loaded_7_Pro {
 
     $lC_Database->simpleQuery("delete from " . TABLE_CONFIGURATION . " where configuration_key = 'B2B_SETTINGS_GUEST_CATALOG_ACCESS'");
     $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('', 'B2B_SETTINGS_GUEST_CATALOG_ACCESS', '4', '', '6', '0', '', '', now())");
+   
+    // po number addition 
+    $lC_Database->simpleQuery("CREATE TABLE IF NOT EXISTS `" . DB_TABLE_PREFIX . "Purchase_Orders_Service` (`po_number_id` int(11) NOT NULL AUTO_INCREMENT, `po_number` varchar(255) NOT NULL, `orders_id` int(11) NOT NULL, `po_number_status` int(1) NOT NULL DEFAULT '1', PRIMARY KEY (`po_number_id`)) ");
   }
  /**
   * Return the configuration parameter keys an an array

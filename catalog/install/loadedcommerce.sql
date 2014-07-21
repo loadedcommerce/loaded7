@@ -746,6 +746,15 @@ CREATE TABLE lc_product_attributes (
   KEY idx_pa_products_id (products_id)
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
+DROP TABLE IF EXISTS lc_purchase_orders_service;
+CREATE TABLE lc_purchase_orders_service (
+`po_number_id` int(11) NOT NULL AUTO_INCREMENT,  
+`po_number` varchar(255) NOT NULL,
+`orders_id` int(11) NOT NULL,
+`po_number_status` int(1) NOT NULL DEFAULT '1',
+PRIMARY KEY (`po_number_id`)
+) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+
 DROP TABLE IF EXISTS lc_reviews;
 CREATE TABLE lc_reviews (
   reviews_id int(11) NOT NULL AUTO_INCREMENT,
