@@ -4775,6 +4775,14 @@ a:link {
   padding-top:18px;
   padding-bottom:18px;
 }
+/*inventory_cost_margin reports  page*/
+.back-color { 
+		background-color:#FFCC99; 
+		height:30px; 
+		padding-left:30px; 
+		padding-top:18px;
+    padding-bottom:18px;
+		}
 .padding-align { padding-right:10px; }
 .glyphicon {
   position: relative;

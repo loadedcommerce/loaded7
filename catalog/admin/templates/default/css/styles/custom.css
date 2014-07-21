@@ -915,6 +915,12 @@ select.error { border: 2px solid red !important; }
   word-break: break-all;
 }
 
+div.DTTT_container {
+  margin-right: 0.5em;
+  margin-top: 0.8em;
+  margin-bottom: 0 !important;
+}
+
 /* needed for custom media query settings */
 @media screen and (min-width: 1200px) {
   #menu header .headerInner {
