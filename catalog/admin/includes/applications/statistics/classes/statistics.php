@@ -74,6 +74,20 @@ class lC_Statistics_Admin {
         $result['aaData'][] = array("$col[0]", "$col[1]", "$col[2]", "$col[3]");
       } else if ($columns == 5) {
         $result['aaData'][] = array("$col[0]", "$col[1]", "$col[2]", "$col[3]", "$col[4]");
+      } else if ($columns == 6) {
+        $result['aaData'][] = array("$col[0]", "$col[1]", "$col[2]", "$col[3]", "$col[4]", "$col[5]");
+      } else if ($columns == 7) {
+        $result['aaData'][] = array("$col[0]", "$col[1]", "$col[2]", "$col[3]", "$col[4]", "$col[5]", "$col[6]");
+      } else if ($columns == 8) {
+        $result['aaData'][] = array("$col[0]", "$col[1]", "$col[2]", "$col[3]", "$col[4]", "$col[5]", "$col[6]", "$col[7]");
+      } else if ($columns == 9) {
+        $result['aaData'][] = array("$col[0]", "$col[1]", "$col[2]", "$col[3]", "$col[4]", "$col[5]", "$col[6]", "$col[7]", "$col[8]");
+      } else if ($columns == 10) {
+        $result['aaData'][] = array("$col[0]", "$col[1]", "$col[2]", "$col[3]", "$col[4]", "$col[5]", "$col[6]", "$col[7]", "$col[8]", "$col[9]");
+      } else if ($columns == 11) {
+        $result['aaData'][] = array("$col[0]", "$col[1]", "$col[2]", "$col[3]", "$col[4]", "$col[5]", "$col[6]", "$col[7]", "$col[8]", "$col[9]", "$col[10]");
+      } else if ($columns == 12) {
+        $result['aaData'][] = array("$col[0]", "$col[1]", "$col[2]", "$col[3]", "$col[4]", "$col[5]", "$col[6]", "$col[7]", "$col[8]", "$col[9]", "$col[10]", "$col[11]");
       }
     }
     $result['total'] = $cnt; 

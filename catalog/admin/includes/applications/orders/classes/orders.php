@@ -46,7 +46,7 @@ class lC_Orders_Admin {
     $QresultTotal->freeResult();      
     
     /* Paging */
-    $sLimit = " LIMIT 0,25 ";
+    $sLimit = "";
     if (isset($_GET['iDisplayStart'])) {
       if ($_GET['iDisplayLength'] != -1) {
         $sLimit = " LIMIT " . $_GET['iDisplayStart'] . ", " . $_GET['iDisplayLength'];
@@ -381,25 +381,21 @@ class lC_Orders_Admin {
     // build the product string  
     $result['orderProducts'] = ''; 
     foreach ( $lC_Order->getProducts() as $products ) {
-      
-      $skuModel = (isset($products['model']) && $products['model'] != NULL) ? $products['model'] : NULL;
-      if ($skuModel == NULL) $skuModel = (isset($products['sku']) && $products['sku'] != NULL) ? $products['sku'] : NULL;
-      
       $result['orderProducts'] .= '<tr class="bbottom-grey">
-                                     <td valign="top" align="left" class="orders-products-listing-td hide-below-480">' . $skuModel . '</td>
+                                     <td valign="top" align="left" class="orders-products-listing-td hide-below-480">' . $products['model'] . '</td>
                                      <td valign="top" align="left" class="orders-products-listing-td">' . $products['name'];
       if ( isset($products['attributes']) && is_array($products['attributes']) && ( sizeof($products['attributes']) > 0 ) ) {
         foreach ( $products['attributes'] as $attributes ) {
-          if ($attributes['option'] != '') $result['orderProducts'] .= '<br /><nobr>&nbsp;&nbsp;- <span style="font-size:.9em;"><i>' . $attributes['option'] . ': ' . $attributes['value'] . '</i></span></nobr>';
+          $result['orderProducts'] .= '<br /><nobr>&nbsp;&nbsp;- <span style="font-size:.9em;"><i>' . $attributes['option'] . ': ' . $attributes['value'] . '</i></span></nobr>';
         }
       }
       
       if ( isset($products['options']) && is_array($products['options']) && ( sizeof($products['options']) > 0 ) ) {
         foreach ( $products['options'] as $key => $val ) {
-          if ($val['group_title'] != '') $result['orderProducts'] .= '<br /><nobr>&nbsp;&nbsp;- <span class="small"><i>' . $val['group_title'] . ': ' . $val['value_title'] . '</i></span></nobr>';
+          $result['orderProducts'] .= '<br /><nobr>&nbsp;&nbsp;- <span class="small"><i>' . $val['group_title'] . ': ' . $val['value_title'] . '</i></span></nobr>';
         }
       }
-      
+            
       $result['orderProducts'] .= '</td>
                                      <td valign="top" align="right" class="orders-products-listing-td hide-below-480">' . $products['quantity'] . '</td>
                                      <td valign="top" align="right" class="orders-products-listing-td hide-below-480">' . $lC_Currencies->format($products['price'] * $products['quantity'], $lC_Order->getCurrency(), $lC_Order->getCurrencyValue()) . '</td>
@@ -463,18 +459,16 @@ class lC_Orders_Admin {
     $result['orderStatusHistoryData'] = '';
     $oshcnt = 0; 
     foreach ( $lC_Order->getStatusHistory() as $status_history ) {
-      
       $result['orderStatusHistory'] .= '<tr>
                                           <td align="left" valign="top">' . lC_DateTime::getShort($status_history['date_added'], true) . '</td>
                                           <td align="left" valign="top">' . $status_history['status'] . '</td>
-                                          <td align="left" valign="top">' . (substr($status_history['comment'], 0, 1) == '<') ? $status_history['comment'] : nl2br($status_history['comment']) . '</td>
+                                          <td align="left" valign="top">' . nl2br($status_history['comment']) . '</td>
                                           <td align="center" valign="top"><span class="' . (($status_history['customer_notified'] === 1) ? 'icon-tick icon-green' : 'icon-cross icon-red') . '"><span></td>
                                         </tr>';
-                                        
       // enhanced order admin additions
       $result['orderStatusHistoryData'][$oshcnt]['date_added'] = lC_DateTime::getShort($status_history['date_added'], false);
       $result['orderStatusHistoryData'][$oshcnt]['status'] = $status_history['status'];
-      $result['orderStatusHistoryData'][$oshcnt]['comment'] = (substr($status_history['comment'], 0, 1) == '<') ? $status_history['comment'] : nl2br($status_history['comment']);
+      $result['orderStatusHistoryData'][$oshcnt]['comment'] = nl2br($status_history['comment']);
       $result['orderStatusHistoryData'][$oshcnt]['customer_notified'] = $status_history['customer_notified'];
       $result['orderStatusHistoryData'][$oshcnt]['admin_name'] = $status_history['admin_name'];
       $result['orderStatusHistoryData'][$oshcnt]['admin_image'] = $status_history['admin_image'];
@@ -655,14 +649,11 @@ class lC_Orders_Admin {
       // build and return the udpated status history
       $history = '';
       $result = array();
-      
       foreach ( $lC_Order->getStatusHistory() as $status_history ) {
-       
-        
         $history .= '<tr>
                        <td align="left" valign="top">' . lC_DateTime::getShort($status_history['date_added'], true) . '</td>
                        <td align="left" valign="top">' . $status_history['status'] . '</td>
-                       <td align="left" valign="top">' . (substr($status_history['comment'], 0, 1) == '<') ? $status_history['comment'] : nl2br($status_history['comment']) . '</td>
+                       <td align="left" valign="top">' . nl2br($status_history['comment']) . '</td>
                        <td align="center" valign="top"><span class="' . (($status_history['customer_notified'] === 1) ? 'icon-tick icon-green' : 'icon-cross icon-red') . '"><span></td>
                      </tr>';
       }
@@ -710,25 +701,13 @@ class lC_Orders_Admin {
     if (is_array($data['orderStatusHistoryData'])) {
       foreach ($data['orderStatusHistoryData'] as $oshData) {
         if ($oshData['comment'] != '') {
-          
-          $tagColor = ' green-bg';
-          $tagText = $lC_Language->get('text_order_comment');
-          
-          if ($oshData['admin_id'] != null) {
-            $tagColor = ($oshData['append_comment'] == 1) ? ' orange-bg' : ' anthracite-bg';
-            $tagText = (($oshData['append_comment'] == 1) ? $lC_Language->get('text_customer_message') : $lC_Language->get('text_admin_note'));
-          } else if (strstr($oshData['comment'], 'icon-newspaper')) {  // is a file upload
-            $tagColor = ' blue-bg';
-            $tagText = $lC_Language->get('text_files_uploaded');
-          }
-          
           $ocData .= '<div class="with-small-padding bbottom-anthracite' . (($oshData['admin_id'] == null) ? ' silver-bg' : (($oshData['append_comment'] == 1) ? '' : ' grey-bg')) . '">
                         <div class="small-margin-top">
-                          <span class="float-right with-min-padding small-margin-right' . $tagColor . '">' . $tagText . '</span>
+                          <span class="float-right with-min-padding small-margin-right' . (($oshData['admin_id'] == null) ? ' green-bg' : (($oshData['append_comment'] == 1) ? ' orange-bg' : ' anthracite-bg')) . '">' . (($oshData['admin_id'] == null) ? $lC_Language->get('text_order_comment') : (($oshData['append_comment'] == 1) ? $lC_Language->get('text_customer_message') : $lC_Language->get('text_admin_note'))) . '</span>
                           <span class="small-margin-left float-left">
-                            ' . (($oshData['admin_image'] != '' && file_exists('images/avatar/' . $oshData['admin_image'])) ? '<img src="images/avatar/' . $oshData['admin_image'] . '" width="24" title="' . $lC_Language->get('text_status_update_by') . ' ' . $oshData['admin_name'] . '" alt="' . $lC_Language->get('text_comment_by') . ' ' . $oshData['admin_name'] . '" />' : '<span class="icon-user icon-size2 icon-anthracite small-margin-left small-margin-right" title="' . $lC_Language->get('text_status_update_by') . ' ' . $oshData['admin_name'] . '"></span>') . '
+                            ' . (($oshData['admin_image'] != '' && file_exists('images/avatar/' . $oshData['admin_image'])) ? '<img src="images/avatar/' . $oshData['admin_image'] . '" width="24" title="Status Update by ' . $oshData['admin_name'] . '" alt="Comment by ' . $oshData['admin_name'] . '" />' : '<span class="icon-user icon-size2 icon-anthracite small-margin-left small-margin-right" title="Status Update by ' . $oshData['admin_name'] . '"></span>') . '
                           </span>
-                          <span class="anthracite mid-margin-left">' . (($oshData['admin_id'] != null) ? $oshData['admin_name'] : $lC_Language->get('text_customer_comment')) . '</span><small class="anthracite small-margin-left">' . $oshData['date_added'] . '</small><span class="anthracite mid-margin-left">' . (($oshData['status'] != null) ? '(' . $oshData['status'] . ')' : '') . '</span>
+                          <span class="anthracite mid-margin-left">' . (($oshData['admin_id'] != null) ? $oshData['admin_name'] : $lC_Language->get('text_customer_comment')) . '</span><small class="anthracite small-margin-left">' . $oshData['date_added'] . '</small><span class="anthracite mid-margin-left">(' . $oshData['status'] . ')</span>
                         </div>
                         <p class="with-small-padding margin-left-order-comments">' . $oshData['comment'] . '</p>
                       </div>';
@@ -751,25 +730,13 @@ class lC_Orders_Admin {
     
     if (is_array($data['orderStatusHistoryData'])) {
       foreach ($data['orderStatusHistoryData'] as $oshData) {
-
-        $tagColor = ' green-bg';
-        $tagText = $lC_Language->get('text_order_comment');
-        
-        if ($oshData['admin_id'] != null) {
-          $tagColor = ($oshData['append_comment'] == 1) ? ' orange-bg' : ' anthracite-bg';
-          $tagText = (($oshData['append_comment'] == 1) ? $lC_Language->get('text_customer_message') : $lC_Language->get('text_admin_note'));
-        } else if (strstr($oshData['comment'], 'icon-newspaper')) {  // is a file upload
-          $tagColor = ' blue-bg';
-          $tagText = $lC_Language->get('text_files_uploaded');
-        }        
-        
         $osHistory .= '<div class="with-small-padding bbottom-anthracite' . (($oshData['admin_id'] == null) ? ' silver-bg' : (($oshData['append_comment'] == 1) ? '' : ' grey-bg')) . '">
                         <div class="small-margin-top">
-                          <span class="float-right with-min-padding small-margin-right' . $tagColor . '">' . $tagText . '</span>
+                          <span class="float-right with-min-padding small-margin-right' . (($oshData['admin_id'] == null) ? ' green-bg' : (($oshData['append_comment'] == 1) ? ' orange-bg' : ' anthracite-bg')) . '">' . (($oshData['admin_id'] == null) ? $lC_Language->get('text_order_comment') : (($oshData['append_comment'] == 1) ? $lC_Language->get('text_customer_message') : $lC_Language->get('text_admin_note'))) . '</span>
                           <span class="small-margin-left float-left">
                             ' . (($oshData['admin_image'] != '' && file_exists('images/avatar/' . $oshData['admin_image'])) ? '<img src="images/avatar/' . $oshData['admin_image'] . '" width="24" title="Status Update by ' . $oshData['admin_name'] . '" alt="Comment by ' . $oshData['admin_name'] . '" />' : '<span class="icon-user icon-size2 icon-anthracite small-margin-left small-margin-right" title="Status Update by ' . $oshData['admin_name'] . '"></span>') . '
                           </span>
-                          <span class="anthracite mid-margin-left">' . $oshData['admin_name'] . '</span><small class="anthracite small-margin-left">' . $oshData['date_added'] . '</small><span class="anthracite mid-margin-left">' . (($oshData['status'] != null) ? '(' . $oshData['status'] . ')' : '') . '</span>
+                          <span class="anthracite mid-margin-left">' . $oshData['admin_name'] . '</span><small class="anthracite small-margin-left">' . $oshData['date_added'] . '</small><span class="anthracite mid-margin-left">(' . $oshData['status'] . ')</span>
                         </div>
                         <p class="with-small-padding margin-left-order-comments">' . $oshData['comment'] . '</p>
                       </div>';
@@ -959,7 +926,7 @@ class lC_Orders_Admin {
     return $tData;
   }
   
-  public static function getOrderStatusArray() {
+ /* public static function getOrderStatusArray() {
     global $lC_Language, $lC_Database;
     
     // build the order status array
@@ -980,7 +947,7 @@ class lC_Orders_Admin {
     }
     
     return $orderStatusArray;
-  }      
+  }  */    
 
   public static function getOrdersProducts($id) {
     global $lC_Language, $lC_Database;
@@ -1335,6 +1302,7 @@ class lC_Orders_Admin {
     $Qtotals->execute();
     
     while ($Qtotals->next()) {
+
       $str_flag = ($Qtotals->value('class') == 'coupon') ? ' - ' : '' ;  
 
       if ($Qtotals->value('class') == 'total') {
@@ -1342,21 +1310,42 @@ class lC_Orders_Admin {
       } else {
         $total += $Qtotals->value('value');
       }
-      $result .= '  <div class="with-small-padding align-right" id="addedOrderTotalRow_' . $Qtotals->value('class') . '">' . 
+      $result .= '  <div class="with-small-padding" id="addedOrderTotalRow_' . $Qtotals->value('class') . '">' . 
                  '    <span class="icon-list icon-anthracite">&nbsp;' .
-                        lc_draw_input_field("title_" . $Qtotals->value('class'), $Qtotals->value('title'), ' style="width:30%;" class="input with-small-padding"') . 
+                        lc_draw_input_field("title_" . $Qtotals->value('class'), $Qtotals->value('title'), ' style="width:30%;"') . 
                  '    </span>&nbsp;&nbsp;' . 
-                        lc_draw_input_field("value_" . $Qtotals->value('class'), $str_flag.$lC_Currencies->format($Qtotals->value('value')), ' id="value_'. $Qtotals->value('class'). '"  class="input with-small-padding" style="width:10%;text-align:right;min-width:65px;" onkeyup="updateGrandTotal(\''.$lC_Currencies->getSymbolLeft().'\');"') . '&nbsp;&nbsp;' .
+                      lc_draw_input_field("value_" . $Qtotals->value('class'), $str_flag.$lC_Currencies->format($Qtotals->value('value')), ' id = "value_'. $Qtotals->value('class'). '"  style="width:10%;text-align:right;min-width:65px;" onkeyup="updateGrandTotal(\''.$lC_Currencies->getSymbolLeft().'\');"') . '&nbsp;&nbsp;' .
                  '    <a href="javascript:void(0);" onclick="removeOrderTotal(' . $oID . ', \'' . $Qtotals->value('class') . '\',\''.$lC_Currencies->getSymbolLeft().'\')" class="icon-minus-round icon-red with-tooltip" title="remove"></a>' . 
-                 '  </div>';
+                 '  </div>';    
+      
+
+       
     }
     $result .= '  <div id="addedOrderTotal"></div>' . 
                '</div>'; 
                   
     if ($result != '') {
-      $result .=  '<div class="new-row-mobile twelve-columns twelve-columns-mobile align-right">' .
-                  '  <strong class="small-margin-left">' . $lC_Language->get('text_grand_total') . '</strong>' .
-                  '  <span class="margin-right" id="id_grand_total">' . $lC_Currencies->format(str_replace(',','',number_format($total, DECIMAL_PLACES))) . '&nbsp;&nbsp;</span>' .
+      $result .=  '<div class="new-row-mobile twelve-columns twelve-columns-mobile no-margin-bottom">' .
+                  '  <div class="columns">' .
+                  '    <div class="new-row-mobile five-columns twelve-columns-mobile mid-margin-bottom align-right">' .
+                  '      <span class="icon-anthracite">' .
+                  '        <strong class="small-margin-left">' . $lC_Language->get('text_grand_total') . '</strong>' .
+                  '      </span>' .
+                  '      <span class="mid-margin-right" id="id_grand_total">' . $lC_Currencies->format(str_replace(',','',number_format($total, DECIMAL_PLACES))) . '</span>' .
+                  '    </div>' .
+                  '    <div class="new-row-mobile seven-columns twelve-columns-mobile no-margin-bottom">' .
+                  '      <span class="button-group mid-margin-bottom">' .
+                  '        <a href="javascript:void(0);" onclick="saveOrderTotal(' . $oID . ');">' .
+                  '          <button type="button" class="button glossy">' .
+                  '            <span class="button-icon green-gradient">' .
+                  '              <span class="icon-plus"></span>' .
+                  '            </span>' .
+                                $lC_Language->get('text_save') .             
+                  '          </button>' .
+                  '        </a>' .
+                  '      </span>' .
+                  '    </div>' .
+                  '  </div>' .
                   '</div>';   
     }
 
@@ -1602,5 +1591,55 @@ class lC_Orders_Admin {
 
     return $data;
   }
+   public static function getOrderStatusArray() {
+    global $lC_Language, $lC_Database;
+    
+    // build the order status array
+    $orders_status_type_array = array();
+    $Qstatuses_type = $lC_Database->query('select distinct(orders_status_type) as orders_status_type from :table_orders_status where language_id = :language_id');
+    $Qstatuses_type->bindTable(':table_orders_status', TABLE_ORDERS_STATUS);
+    $Qstatuses_type->bindInt(':language_id', $lC_Language->getID());
+    $Qstatuses_type->execute();
+
+     
+
+    
+    while ($Qstatuses_type->next()) {
+      $orderStatusType_Array[$Qstatuses_type->value('orders_status_type')] = $Qstatuses_type->value('orders_status_type');
+    }
+    
+
+    $orderStatusTypeArray[] = array('id' => -1, 'text' => $lC_Language->get('text_status_type'));
+    foreach($orderStatusType_Array as $id => $text) {
+          $orderStatusTypeArray[] = array('id' => $id, 'text' => ' - '.$text);
+    }
+     
+     
+
+    // build the order status array
+    $orders_status_array = array();
+    $Qstatuses = $lC_Database->query('select orders_status_id, orders_status_name from :table_orders_status where language_id = :language_id');
+    $Qstatuses->bindTable(':table_orders_status', TABLE_ORDERS_STATUS);
+    $Qstatuses->bindInt(':language_id', $lC_Language->getID());
+    $Qstatuses->execute();
+    
+    while ($Qstatuses->next()) {
+      $orders_status_array[$Qstatuses->valueInt('orders_status_id')] = $Qstatuses->value('orders_status_name');
+    }
+    
+    $orderStatusArray = array();
+    $orderStatusArray[] = array('id' => 0, 'text' => $lC_Language->get('text_all'));
+
+    $orderStatusArray = array_merge($orderStatusArray,$orderStatusTypeArray);
+    $orderStatusArray[] = array('id' => -2, 'text' => $lC_Language->get('text_statuses'));
+
+   
+
+    foreach($orders_status_array as $id => $text) {
+      $orderStatusArray[] = array('id' => $id, 'text' => ' - '.$text);
+    }
+    
+    return $orderStatusArray;
+  }    
 }
 ?>
