@@ -7,9 +7,6 @@
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: product.php v1.0 2013-08-08 datazen $
 */
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
 global $lC_Vqmod;
 
 require_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/classes/order.php'));
