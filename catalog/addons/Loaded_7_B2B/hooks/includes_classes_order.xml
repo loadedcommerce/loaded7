@@ -7,7 +7,7 @@
   <file name="includes/classes/order.php">
     <operation info="PO Mod 1">
       <search position="before"><![CDATA[lC_Order::sendEmail($order_id);]]></search>         
-      <add><![CDATA[if (utility::isB2B()) {  global $lC_Vqmod;  include_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'addons/Loaded_7_B2N/classes/order.php'));  lC_Order_b2b::insertPONumber($order_id, $_POST['po_number']);}]]></add>
+      <add><![CDATA[if (utility::isB2B()) {  global $lC_Vqmod;  include_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'addons/Loaded_7_B2B/classes/order.php'));  lC_Order_b2b::insertPONumber($order_id, $_POST['po_number']);}]]></add>
     </operation>  
   </file> 
 </modification>

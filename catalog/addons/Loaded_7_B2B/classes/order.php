@@ -9,9 +9,9 @@
 */
 global $lC_Vqmod;
 
-require_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/classes/order.php'));
+//require_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/classes/order.php'));
 
-class lC_Order_b2b extends lC_Order {
+class lC_Order_b2b {
  /*
   * Insert the purchase order number
   *
