@@ -27,7 +27,7 @@
 				<?php					
 					//Purchase Orders Service Module(PO) START					
 					if (utility::isB2B()) {	
-					$po_number = lC_Order_l7p::retrive_PO_number($oID);					
+					$po_number = lC_Order_b2b::retrievePONumber($oID);					
 					if($po_number != '') {
 					?>
 						<div class="well relative clearfix small-padding-top small-padding-bottom"> 

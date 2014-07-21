@@ -70,7 +70,7 @@ class lC_Checkout_Process extends lC_Template {
 
     $lC_Payment->process();
    
-    $lC_ShoppingCart->reset(true);
+    $lC_ShoppingCart->reset(true);  
 
     // unregister session variables used during checkout
     if (isset($_SESSION['comments'])) unset($_SESSION['comments']);
