@@ -12,7 +12,7 @@
       <add><![CDATA[
 					//Purchase Orders Service Module(PO) START	
 					if (utility::isB2B()) {		
-						require_once($lC_Vqmod->modCheck('addons/purchase_orders_service/classes/order.php'));
+						require_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'addons/Loaded_7_B2B/classes/order.php'));
 					}
 					//Purchase Orders Service Module(PO) End
       ]]></add>
