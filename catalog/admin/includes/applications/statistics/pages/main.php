@@ -205,18 +205,37 @@ function get_dropdown_list_array($type) {
     <h1><?php if ( empty($_GET['module']) ) { echo $lC_Template->getPageTitle(); } else { echo $lC_Statistics->_title; } ?></h1>
   </hgroup>
   <style scoped="scoped">
-    .dataCol1 { text-align: left; } 
-    .dataCol2 { text-align: left; } 
-    .dataCol3 { text-align: left; }  
-    .dataCol4 { text-align: left; }  
-    .dataCol5 { text-align: left; }
-    .dataCol5 { text-align: left; }
+    .dataCol1 { text-align: right; } 
+    .dataCol2 { text-align: right; } 
+    .dataCol3 { text-align: right; }  
+    .dataCol4 { text-align: right; }  
+    .dataCol5 { text-align: right; }
+    .dataCol6 { text-align: right; }
+    .dataCol7 { text-align: right; }
+    .dataCol8 { text-align: right; }
+    .dataCol9 { text-align: right; }
+    .dataCol10 { text-align: right; }
+    .dataCol11 { text-align: right; }
     .dataTables_info { position:absolute; bottom:42px; color:#4c4c4c; }
     .dataTables_length { float: right; }
     .selectContainer { position:absolute; bottom:29px; left:30px }
     .sorting:before { width: 0; margin-left: 0; }
     .breakout-wrapper { line-height: 24px; }
     #statusSelectorContainer { position:relative !important; left:0; top:0; margin-bottom:5px; }
+    .sales-tax-year-total-row { color:red; font-weight:bold; }
+    .stytr-row {
+      -webkit-background-size: 100% 100%;
+      -moz-background-size: 100% 100%;
+      -o-background-size: 100% 100%;
+      background-size: 100% 100%;
+      background: -webkit-gradient(linear, left top, left bottom, from(#efeff4), to(#d6dadf));
+      background: -webkit-linear-gradient(top, #efeff4, #d6dadf);
+      background: -moz-linear-gradient(top, #efeff4, #d6dadf);
+      background: -ms-linear-gradient(top, #efeff4, #d6dadf);
+      background: -o-linear-gradient(top, #efeff4, #d6dadf);
+      background: linear-gradient(top, #efeff4, #d6dadf);
+    }
+    
     @media screen and (min-width: 480px) and (max-width: 767px) {
       #statusSelectorContainer {
         margin-bottom: 40px;

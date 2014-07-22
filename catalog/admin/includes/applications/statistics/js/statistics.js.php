@@ -25,7 +25,7 @@ if($_GET['module'] == 'sales_tax_report') {
 
 ?>
 <script src="../ext/jquery/DataTables/media/js/jquery.dataTables.tableTools.min.js"></script>
-  <script>
+<script>
   $(document).ready(function() {
     updateList();
     //$("span.hide-on-mobile").parent().hide();
@@ -154,62 +154,82 @@ if($_GET['module'] == 'sales_tax_report') {
     var paginationType = ($.template.mediaQuery.isSmallerThan('tablet-portrait')) ? 'two_button' : 'full_numbers';           
     var dataTableDataURL = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&module=' . $_GET['module'] . '&month=' . (int)$_GET['month'] . '&action=getListing&media=MEDIA&statusID=STATUSID&manufacturerID=MANUFACTURERID&supplierID=SUPPLIERID&timeSpan=TIMESPAN&startDate=STARTDATE&expiresDate=EXPIRESDATE&breakoutType=BREAKOUTTYPE'); ?>';
     var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&module=' . $_GET['module'] . '&month=' . (int)$_GET['month'] . '&action=getListing&media=MEDIA&statusID=STATUSID&manufacturerID=MANUFACTURERID&supplierID=SUPPLIERID&timeSpan=TIMESPAN&startDate=STARTDATE&expiresDate=EXPIRESDATE&breakoutType=BREAKOUTTYPE'); ?>';
-    $.getJSON(jsonLink.replace('STATUSID', statusFilter).replace('MANUFACTURERID', manufacturerFilter).replace('SUPPLIERID', supplierFilter).replace('TIMESPAN', timespanFilter).replace('STARTDATE', startDateFilter).replace('EXPIRESDATE',
-      expiresDateFilter).replace('BREAKOUTTYPE', breakoutFilter),
-      function (data) {
-        if (data.rpcStatus == -10) { // no session
-          var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
-          $(location).attr('href', url);
-        }
-        if (data.rpcStatus != 1) {
-          alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
-          return false;
-        }
+    $.getJSON(jsonLink.replace('STATUSID', statusFilter).replace('MANUFACTURERID', manufacturerFilter).replace('SUPPLIERID', supplierFilter).replace('TIMESPAN', timespanFilter).replace('STARTDATE', startDateFilter).replace('EXPIRESDATE', expiresDateFilter).replace('BREAKOUTTYPE', breakoutFilter),
+    function (data) {
+      if (data.rpcStatus == -10) { // no session
+        var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
+        $(location).attr('href', url);
+      }
+      if (data.rpcStatus != 1) {
+        alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
+        return false;
+      }
 
-        oTable = $('#dataTable').dataTable({
-          "bPaginate": false,
-          "sDom": 'rt',
-          "bInfo" : false,
-          "bProcessing": true,
-          "sAjaxSource": dataTableDataURL.replace('STATUSID', statusFilter).replace('MANUFACTURERID', manufacturerFilter).replace('SUPPLIERID', supplierFilter).replace('TIMESPAN', timespanFilter).replace('STARTDATE', startDateFilter).replace('EXPIRESDATE', expiresDateFilter).replace('BREAKOUTTYPE', breakoutFilter).replace('MEDIA', $.template.mediaQuery.name),
-          "sPaginationType": paginationType,    
-          "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]], 
-          "aaSorting": [<?php echo $Sorting;?>],
-          "bDestroy": true,
-          "aoColumns": aoCols,
-              "sDom": 'T<"top"f>rt<"bottom"ilp>',
-              "oTableTools": { 
-                "sSwfPath": "../ext/jquery/DataTables/media/swf/copy_csv_xls_pdf.swf",
-                "aButtons": [ 
-                            /*"copy",
-                            "xls",*/
-                            "csv",
-                            "pdf",
-                            "print",
-                          ]
-              },
-        });
-        $('#dataTable').responsiveTable();
-
-        
-        setTimeout('hideElements()', 500); // because of server-side processing we need to delay for race condition
-           
-        if ($.template.mediaQuery.isSmallerThan('tablet-portrait')) {
-          $('#main-title > h1').attr('style', 'font-size:1.8em;');
-          $('#main-title').attr('style', 'padding: 0 0 0 20px;');
-          $('#dataTable_info').attr('style', 'position: absolute; bottom: 42px; color:#4c4c4c;');
-          $('#dataTable_length').hide();
-          $('#actionText').hide();
-          $('.on-mobile').show();
-          $('.selectContainer').hide();
-        }       
-        var error = '<?php echo $_SESSION['error']; ?>';
-        if (error) {
-          var errmsg = '<?php echo $_SESSION['errmsg']; ?>';
-          $.modal.alert(errmsg);
-        }       
+      oTable = $('#dataTable').dataTable({
+        "bPaginate": false,
+        "sDom": 'rt',
+        "bInfo": false,
+        "bProcessing": true,
+        "sAjaxSource": dataTableDataURL.replace('STATUSID', statusFilter).replace('MANUFACTURERID', manufacturerFilter).replace('SUPPLIERID', supplierFilter).replace('TIMESPAN', timespanFilter).replace('STARTDATE', startDateFilter).replace('EXPIRESDATE', expiresDateFilter).replace('BREAKOUTTYPE', breakoutFilter).replace('MEDIA', $.template.mediaQuery.name),
+        "sPaginationType": paginationType,    
+        "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]], 
+        "iDisplayLength": 25,
+        "aaSorting": [<?php echo $Sorting;?>],
+        "bDestroy": true,
+        "aoColumns": aoCols,
+        "sDom": 'T<"top"f>rt<"bottom"ilp>',
+        "oTableTools": { 
+          "sSwfPath": "../ext/jquery/DataTables/media/swf/copy_csv_xls_pdf.swf",
+          "aButtons": [ 
+                       /*"copy",
+                       "xls",*/
+                       "csv",
+                       "pdf",
+                       "print",
+                      ]
+        },
       });
-       $('.datepicker').glDatePicker({ zIndex: 100 });  
+      $('#dataTable').responsiveTable(); 
+      
+      // because of server-side processing we need to delay for race condition
+      setTimeout('hideElements()', 500);
+         
+      if ($.template.mediaQuery.isSmallerThan('tablet-portrait')) {
+        $('#main-title > h1').attr('style', 'font-size:1.8em;');
+        $('#main-title').attr('style', 'padding: 0 0 0 20px;');
+        $('#dataTable_info').attr('style', 'position: absolute; bottom: 42px; color:#4c4c4c;');
+        $('#dataTable_length').hide();
+        $('#actionText').hide();
+        $('.on-mobile').show();
+        $('.selectContainer').hide();
+      }       
+      var error = '<?php echo $_SESSION['error']; ?>';
+      if (error) {
+        var errmsg = '<?php echo $_SESSION['errmsg']; ?>';
+        $.modal.alert(errmsg);
+      }       
+    });
+    $('.datepicker').glDatePicker({ zIndex: 100 });  
+  }
+  
+  function hideElements() {  
+    if ($.template.mediaQuery.name === 'mobile-portrait') { 
+      $('.hide-on-mobile-portrait').hide();
+      $('.hide-on-mobile').hide();
+    } else if ($.template.mediaQuery.name === 'mobile-landscape') {  
+      $('.hide-on-mobile-portrait').hide();
+      $('.hide-on-mobile-landscape').hide();
+      $('.hide-on-mobile').hide();
+    } else if ($.template.mediaQuery.name === 'tablet-portrait') {  
+      $('.hide-on-tablet-portrait').hide();    
+      $('.hide-on-tablet').hide();              
+    } else if ($.template.mediaQuery.name === 'tablet-landscape') {  
+      $('.hide-on-tablet-portrait').hide();
+      $('.hide-on-tablet-landscape').hide();      
+      $('.hide-on-tablet').hide();      
+    } 
+  
+    $("span.stytr").closest("tr").addClass("stytr-row");    
   }
 </script>
 <?php

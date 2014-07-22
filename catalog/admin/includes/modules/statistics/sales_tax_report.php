@@ -46,6 +46,8 @@ class lC_Statistics_Sales_Tax_Report extends lC_Statistics {
   protected function _setHeader() {
     global $lC_Language;
 
+    $lC_Language->loadIniFile('modules/statistics/sales_tax_report.php');
+
     $this->_header = array($lC_Language->get('statistics_sales_tax_table_heading_srno'),
                            $lC_Language->get('statistics_sales_tax_table_heading_month'),
                            $lC_Language->get('statistics_sales_tax_table_heading_year'),
@@ -79,13 +81,13 @@ class lC_Statistics_Sales_Tax_Report extends lC_Statistics {
 
     // create extra column so totals are comprehensively correct
     $class_val_subtotal = 'sub_total';
-    $class_val_tax = 'tax';
+    $class_val_tax =      'tax';
     $class_val_shiphndl = 'shipping';
     $class_val_loworder = 'low_order_fee';
-    $class_val_total = 'total';
+    $class_val_total =    'total';
 
     /****************  check for extra class ***************/
-    $extra_class_query_raw = $lC_Database->query('select value from :table_orders_total ot where ot.class<>:class and ot.class<>:class and ot.class<>:class and ot.class<>:class and ot.class<>:class '); 
+    $extra_class_query_raw = $lC_Database->query('select value from :table_orders_total ot where ot.class <> :class and ot.class <> :class and ot.class <> :class and ot.class <> :class and ot.class <> :class '); 
     
     $extra_class_query_raw->bindValue(':class', $class_val_subtotal);
     $extra_class_query_raw->bindValue(':class', $class_val_tax);
@@ -111,7 +113,7 @@ class lC_Statistics_Sales_Tax_Report extends lC_Statistics {
         case 'Pending': 
         case 'Approved':
         case 'Rejected':
-          $query = $lC_Database->query('select orders_status_id, orders_status_name from :table_orders_status where orders_status_type = "' . $_GET['statusID'] . '"' );
+          $query = $lC_Database->query('select orders_status_id, orders_status_name from :table_orders_status where orders_status_type = "' . $_GET['statusID'] . '"');
           $query->bindTable(':table_orders_status', TABLE_ORDERS_STATUS);
           $query->bindInt(':language_id', $lC_Language->getID());   
           $query->execute();          
@@ -149,6 +151,7 @@ class lC_Statistics_Sales_Tax_Report extends lC_Statistics {
 
     $num_rows = $this->_resultset->numberOfRows();
     $srno = 0;
+    
     while ($this->_resultset->next()) {
       $row_month = $this->_resultset->value('row_month');
       $month = $this->_resultset->value('i_month');
@@ -163,7 +166,7 @@ class lC_Statistics_Sales_Tax_Report extends lC_Statistics {
         $content = $day;  
         $head_year = $lC_Language->get('statistics_sales_tax_table_heading_year');
         $head_day = $lC_Language->get('statistics_sales_tax_table_heading_day');
-        $this->_header  = str_replace($head_year, $head_day, $this->_header );
+        $this->_header = str_replace($head_year, $head_day, $this->_header);
         $year_txt = $row_month;
       }
       
@@ -171,17 +174,17 @@ class lC_Statistics_Sales_Tax_Report extends lC_Statistics {
       $srno++;
 
       if ($rows > 1 && $year <> $last_row_year) {
-        $this->_data[] = array('<span style="color:red;font-weight:bold;">' . $srno . '</span>', // SrNo
-                               '<span style="color:red;font-weight:bold;">' . $year_txt . '</span>', // YEAR
-                               '<span style="color:red;font-weight:bold;">' . $last_row_year . '</span>', // YEAR
-                               '<span style="color:red;font-weight:bold;">' . $lC_Currencies->format($footer_gross) . '</span>', // GROSS INCOME
-                               '<span style="color:red;font-weight:bold;">' . $lC_Currencies->format($footer_sales) . '</span>', // TOTAL OF PRODUCT PRICE
-                               '<span style="color:red;font-weight:bold;">' . $lC_Currencies->format($footer_sales_nontaxed) . '</span>', // WITHOUT TAX PRODUCT PRICE
-                               '<span style="color:red;font-weight:bold;">' . $lC_Currencies->format($footer_sales_taxed) . '</span>', // WITH TAX PRODUCT PRICE
-                               '<span style="color:red;font-weight:bold;">' . $lC_Currencies->format($footer_tax_coll) . '</span>', // TAX ON PRODUCT
-                               '<span style="color:red;font-weight:bold;">' . $lC_Currencies->format($footer_shiphndl) . '</span>', // SHIPPING VALUE
-                               '<span style="color:red;font-weight:bold;">' . $lC_Currencies->format($footer_shipping_tax) . '</span>', // TAX ON SHIPPING
-                               '<span style="color:red;font-weight:bold;">' . $lC_Currencies->format($footer_other) . '</span>' // COUPON
+        $this->_data[] = array('<span class="sales-tax-year-total-row">' . $srno . '</span>', // SrNo
+                               '<span class="sales-tax-year-total-row stytr">' . $year_txt . '</span>', // YEAR
+                               '<span class="sales-tax-year-total-row">' . $last_row_year . '</span>', // YEAR
+                               '<span class="sales-tax-year-total-row">' . $lC_Currencies->format($footer_gross) . '</span>', // GROSS INCOME
+                               '<span class="sales-tax-year-total-row">' . $lC_Currencies->format($footer_sales) . '</span>', // TOTAL OF PRODUCT PRICE
+                               '<span class="sales-tax-year-total-row">' . $lC_Currencies->format($footer_sales_nontaxed) . '</span>', // WITHOUT TAX PRODUCT PRICE
+                               '<span class="sales-tax-year-total-row">' . $lC_Currencies->format($footer_sales_taxed) . '</span>', // WITH TAX PRODUCT PRICE
+                               '<span class="sales-tax-year-total-row">' . $lC_Currencies->format($footer_tax_coll) . '</span>', // TAX ON PRODUCT
+                               '<span class="sales-tax-year-total-row">' . $lC_Currencies->format($footer_shiphndl) . '</span>', // SHIPPING VALUE
+                               '<span class="sales-tax-year-total-row">' . $lC_Currencies->format($footer_shipping_tax) . '</span>', // TAX ON SHIPPING
+                               '<span class="sales-tax-year-total-row">' . $lC_Currencies->format($footer_other) . '</span>' // COUPON
                                );
         // clear footer totals
         $footer_gross = 0;
@@ -282,7 +285,7 @@ class lC_Statistics_Sales_Tax_Report extends lC_Statistics {
         if ($orders_status_ids <> '') { 
           $loworder_query_raw->appendQuery('and o.orders_status IN (' . $orders_status_ids . ')');
         }
-        if ($sel_month<>0) {
+        if ($sel_month <> 0) {
           $loworder_query_raw->appendQuery('and dayofmonth(o.date_purchased) = :row_day');
           $loworder_query_raw->bindInt(':row_day', $day);
         }
@@ -304,7 +307,7 @@ class lC_Statistics_Sales_Tax_Report extends lC_Statistics {
         if ($orders_status_ids <> '') { 
           $other_query_raw->appendQuery('and o.orders_status IN ('. $orders_status_ids .')');
         }
-        if ($sel_month<>0) {
+        if ($sel_month <> 0) {
           $other_query_raw->appendQuery('and dayofmonth(o.date_purchased) = :row_day');      $other_query_raw->bindInt(':row_day',$day);
         }
         $other_query_raw->bindValue(':class', $class_val_subtotal);
@@ -357,7 +360,7 @@ class lC_Statistics_Sales_Tax_Report extends lC_Statistics {
 
 
       $last_row_year = $year;
-      if ($rows==$num_rows) {
+      if ($rows == $num_rows) {
         $srno++;
         $this->_data[] = array('<span style="color:red;font-weight:bold;">' . $srno . '</span>', // YEAR
                                '<span style="color:red;font-weight:bold;">' . $year_txt . '</span>', // YEAR
