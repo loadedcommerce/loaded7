@@ -47,7 +47,7 @@ class lC_Customer {
       $Qcg->bindInt(':customers_group_id', $id);
       $Qcg->execute(); 
       
-if ($lC_Database->isError()) die($lC_Database->getError());
+      if ($lC_Database->isError()) die($lC_Database->getError());
            
       if ($Qcg->numberOfRows() > 0) {
         $discount = $Qcg->valueDecimal('baseline_discount');
@@ -222,7 +222,7 @@ if ($lC_Database->isError()) die($lC_Database->getError());
           $Qcg->bindInt(':language_id', $lC_Language->getID());
           $Qcg->execute();
 
-if ($lC_Database->isError()) die($lC_Database->getError());
+          if ($lC_Database->isError()) die($lC_Database->getError());
           
           if ($Qcg->numberOfRows() === 1) {
             $this->setGroupName($Qcg->value('customers_group_name'));
