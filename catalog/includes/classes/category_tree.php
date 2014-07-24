@@ -77,7 +77,7 @@ class lC_CategoryTree {
       $Qcategories->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
       $Qcategories->bindInt(':language_id', $lC_Language->getID());
 
-      if (utility::isB2B()) {
+      if (utility::isB2B() && !isset($_SESSION['admin'])) {
         $Qcategories->appendQuery('and LOCATE(' . $lC_Customer->getCustomerGroupAccess() . ', c.access_levels) > 0');
       }    
       
