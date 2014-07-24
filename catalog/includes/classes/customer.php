@@ -87,6 +87,25 @@ class lC_Customer {
     return $result;    
   }
   
+  public function getCustomerGroupAccessSql($id = null) {
+    
+    if ($id == null) $id = DEFAULT_CUSTOMERS_GROUP_ID;
+    
+    $levels = explode(';', $this->getCustomerGroupAccess($id));
+  
+    $result = '';
+    if (sizeof($levels) > 0) {
+      $result .= 'and ( ';
+      foreach ($levels as $key => $value) {
+        $result .= '(LOCATE(' . $value . ', p.access_levels) > 0) OR ';  
+      }
+      $result = substr($result, 0, -4);
+      $result .= ' )';
+    }
+
+    return $result;
+  }
+  
   public function getBaselineDiscount($id = null) {
     if (isset($this->_data['baseline_discount']) && is_numeric($this->_data['baseline_discount'])) {
       return $this->_data['baseline_discount'];

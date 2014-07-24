@@ -120,7 +120,7 @@ class lC_Products {
     }
     
     if (utility::isB2B()) {
-      $Qlisting->appendQuery('and LOCATE(' . $lC_Customer->getCustomerGroupAccess() . ', p.access_levels) > 0');
+      $Qlisting->appendQuery($lC_Customer->getCustomerGroupAccessSql());
     }    
 
     $Qlisting->appendQuery('order by');
