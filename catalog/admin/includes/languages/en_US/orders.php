@@ -132,6 +132,7 @@ text_sent = Sent
 text_mixed = Mixed
 text_same = Same
 text_customer = Customer
+text_order_ip_address = IP Address:
 text_payment = Payments
 text_information = Information
 text_shipping = Shipping
