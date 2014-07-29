@@ -58,7 +58,7 @@ class lC_Index_Index extends lC_Template {
       $cPath = end(explode("_", $cData['query']));
       $current_category_id = $cData['item_id'];
     } else {
-      $cPath = end(explode("_", $_GET['cPath']));
+      $cPath = $_GET['cPath'];
     }
     
     if (isset($cPath) && (empty($cPath) === false)) {

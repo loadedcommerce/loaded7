@@ -196,9 +196,9 @@ class lC_CategoryTree {
           if ( isset($this->_data[$category_id]) && (($this->max_level == '0') || ($this->max_level > $level+1)) ) {
             if ( $this->follow_cpath === true ) {
               // commented out below due to hindering the loading of the full category tree store side
-              //if ( in_array($category_id, $this->cpath_array) ) {
-              $result .= $this->_buildBranch($category_id, $level+1);
-              //}
+              if ( in_array($category_id, explode("_", $_GET['cPath'])) ) {
+                $result .= $this->_buildBranch($category_id, $level+1);
+              }
             } else {
               $result .= $this->_buildBranch($category_id, $level+1);
             }
@@ -275,7 +275,7 @@ class lC_CategoryTree {
   * @return string
   */
 
-  public function getTree($aria = 1) {
+  public function getTree($aria = 1) { 
     return $this->_start_string . $this->_buildBranch($this->root_category_id, null, $aria) . $this->_end_string;
   } 
 
