@@ -345,7 +345,11 @@ class lC_Orders_Admin {
    
     $result['oID'] = $id;
     $result['customerId'] = $lC_Order->getCustomer('id');
-    $result['customerAddress'] = lC_Address::format($lC_Order->getCustomer(), '<br />');
+    $result['customerAddress'] = lC_Address::format($lC_Order->getCustomer(), '<br />') . 
+                                 '<br />' . $lC_Order->getCustomer('email_address') . 
+                                 '<a target="_blank" href="mailto:' . $lC_Order->getCustomer('email_address') . '">' . 
+                                 '<span class="icon-mail mid-margin-left"></span></a>' . 
+                                 '<br />' . $lC_Order->getCustomer('telephone');
     $result['deliveryAddress'] = lC_Address::format($lC_Order->getDelivery(), '<br />');
     $result['billingAddress'] = lC_Address::format($lC_Order->getBilling(), '<br />');
     $result['paymentMethod'] = '<span>' . $lC_Order->getPaymentMethod() . '</span>';
@@ -372,6 +376,7 @@ class lC_Orders_Admin {
     }
     $result['orderTelephone'] = '<span>' . $lC_Order->getCustomer('telephone') . '</span>';
     $result['orderEmail'] = '<span>' . $lC_Order->getCustomer('email_address') . '</span>';
+    $result['orderIPAddress'] = '<span>' . $lC_Order->getCustomer('ip_address') . '</span>';
     $result['orderStatus'] = '<span>' . $lC_Order->getStatus() . '<br />' . ($lC_Order->getDateLastModified() > $lC_Order->getDateCreated() ? lC_DateTime::getShort($lC_Order->getDateLastModified(), true) : lC_DateTime::getShort($lC_Order->getDateCreated(), true)) . '</span>';
     $result['orderComments'] = '<span>' . $lC_Language->get('number_of_comments') . ' ' . $lC_Order->getNumberOfComments() . '</span>';
     $result['orderTotal'] = '<span>' . $lC_Order->getTotal() . '</span>';

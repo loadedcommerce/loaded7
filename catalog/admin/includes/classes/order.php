@@ -48,7 +48,8 @@ class lC_Order {
                                'country_iso3' => $Qorder->value('customers_country_iso3'),
                                'format' => $Qorder->value('customers_address_format'),
                                'telephone' => $Qorder->valueProtected('customers_telephone'),
-                               'email_address' => $Qorder->valueProtected('customers_email_address'));
+                               'email_address' => $Qorder->valueProtected('customers_email_address'),
+                               'ip_address' => $Qorder->valueProtected('customers_ip_address'));
 
       $this->_delivery = array('name' => $Qorder->valueProtected('delivery_name'),
                                'company' => $Qorder->valueProtected('delivery_company'),
