@@ -17,11 +17,13 @@
     if ( $lC_MessageStack->size('checkout_payment_address') > 0 ) echo '<div class="message-stack-container alert alert-danger small-margin-bottom">' . $lC_MessageStack->get('checkout_payment_address') . '</div>' . "\n"; 
     ?>
     <div id="content-checkout-payment-address-container">
+      <?php if (defined('SKIP_CHECKOUT_SHIPPING_PAGE') && SKIP_CHECKOUT_SHIPPING_PAGE != '1') { ?>
       <div class="panel panel-default no-margin-bottom">
         <div class="panel-heading cursor-pointer" onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'); ?>'">
           <h3 class="no-margin-top no-margin-bottom"><?php echo $lC_Language->get('box_ordering_steps_delivery'); ?></h3>
         </div>
       </div>
+      <?php } ?>
       <div class="clearfix panel panel-default no-margin-bottom">
         <div class="panel-heading">
           <h3 class="no-margin-top no-margin-bottom"><?php echo $lC_Language->get('box_ordering_steps_payment'); ?></h3>
@@ -29,12 +31,14 @@
         <div class="panel-body no-padding-bottom no-padding-top">
           <div class="row large-margin-top">
             <div class="col-sm-4 col-lg-4">
+              <?php if (defined('SKIP_CHECKOUT_SHIPPING_PAGE') && SKIP_CHECKOUT_SHIPPING_PAGE != '1') { ?>
               <div class="well relative no-padding-bottom">
                 <h4 class="no-margin-top"><?php echo $lC_Language->get('ship_to_address'); ?></h4>
                 <address>
                   <?php echo lC_Address::format($lC_ShoppingCart->getShippingAddress(), '<br />'); ?>
                 </address>
               </div>
+              <?php } ?>
               <div class="well">
                 <?php 
                 foreach ($lC_ShoppingCart->getOrderTotals() as $module) {   
@@ -52,8 +56,8 @@
               <form role="form" name="checkout_address" id="checkout_address" action="<?php echo lc_href_link(FILENAME_CHECKOUT, 'payment_address=process', 'SSL'); ?>" method="post">
                 <div class="clearfix">
                   <?php
-                  if (isset($_GET['payment_address']) && ($_GET['payment_address'] != 'process')) {
-                    if ($lC_Customer->hasDefaultAddress()) {
+                    if (isset($_GET['payment_address']) && ($_GET['payment_address'] != 'process')) {
+                      if ($lC_Customer->hasDefaultAddress()) {
                       ?>
                       <h3 class="no-margin-top"><?php echo $lC_Language->get('billing_address_title'); ?></h3>
                       <address class="pull-left half-width">
@@ -63,8 +67,8 @@
                         <div class="pull-right"><?php echo $lC_Language->get('selected_billing_destination'); ?></div>
                       </div>
                     <?php
-                    }
-                    if (lC_AddressBook::numberOfEntries() > 1) {
+                      }
+                      if (lC_AddressBook::numberOfEntries() > 1) {
                       ?>
                       <div class="clear-both clearfix">
                         <h3 class="no-margin-top"><?php echo $lC_Language->get('address_book_entries_title'); ?></h3>
@@ -90,12 +94,12 @@
                         ?>
                       </div>
                       <?php
-                    }
-                  } 
+                      }
+                    } 
                   ?>
                 </div>
                 <?php
-                if (lC_AddressBook::numberOfEntries() < MAX_ADDRESS_BOOK_ENTRIES) {
+                  if (lC_AddressBook::numberOfEntries() < MAX_ADDRESS_BOOK_ENTRIES) {
                   ?>
                   <div class="" id="checkoutBillingAddressDetails" style="display:none;">
                     <h3 class="no-margin-top"><?php echo $lC_Language->get('new_billing_address_title'); ?></h3>

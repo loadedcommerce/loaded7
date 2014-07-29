@@ -45,9 +45,9 @@ class lC_Checkout_Shipping extends lC_Template {
     }
 
     if ($lC_Customer->hasDefaultAddress() === false) {
-      if(isset($_GET['account_created'])){
+      if (isset($_GET['account_created'])) {
       lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'shipping_address&account_created=true', 'SSL'));
-    }else{
+    } else {
       lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'shipping_address', 'SSL'));
     }
     } else {
