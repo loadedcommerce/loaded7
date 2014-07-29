@@ -19,8 +19,8 @@
   .field-block-address { position: relative; left: 0; }
   .field-block-address-offset { margin-left: 0; }
   #section_orders_customer_content { margin: 0 -7px 0 -20px; }
-  .dataTables_filter { float: none; text-align: left; }
-  .dataTables_filter input { margin-top: 40px; }
+  .dataTables_filter { width: 100%; }
+  .dataTables_filter input { max-width: 200px; }
   #statusSelectorContainer { position:absolute; top:92px; left:15px; z-index:2; }
 }
   
@@ -29,7 +29,7 @@
   .field-block-address-offset { margin-left: 0; }
   #section_orders_customer_content { margin: 0 -10px 0 -20px; }
   .orders-print-packing-slip-button-text { display: none; }
-  .dataTables_filter { float: none; text-align: left; }
-  .dataTables_filter input { margin-top: 40px; }
+  .dataTables_filter { width: 100%; }
+  .dataTables_filter input { max-width: 200px; }
   #statusSelectorContainer { position:absolute; top:88px; left:15px; z-index:2; }
 }
