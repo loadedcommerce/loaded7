@@ -21,7 +21,7 @@ class lC_Index_Index extends lC_Template {
     global $lC_Database, $lC_Services, $lC_Language, $lC_Breadcrumb, $cPath, $cPath_array, $current_category_id, $lC_CategoryTree, $lC_Category, $lC_Session;
 
     $this->_page_title = sprintf($lC_Language->get('index_heading'), STORE_NAME);
-    $template_code = (isset($_SESSION['template']['code']) && $_SESSION['template']['code'] != NULL) ? $_SESSION['template']['code'] : 'default';
+    $template_code = (isset($_SESSION['template']['code']) && $_SESSION['template']['code'] != NULL) ? $_SESSION['template']['code'] : 'core';
     
     // attempting to match categories url capability to get data from permalink
     if (empty($_GET) === false) {
