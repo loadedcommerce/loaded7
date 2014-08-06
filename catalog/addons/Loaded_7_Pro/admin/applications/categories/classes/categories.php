@@ -13,6 +13,7 @@ global $lC_Vqmod;
 if (!defined('DIR_FS_ADMIN')) return false;
 
 include_once($lC_Vqmod->modCheck(DIR_FS_ADMIN . 'includes/applications/categories/classes/categories.php'));
+include_once($lC_Vqmod->modCheck(DIR_FS_ADMIN . 'includes/classes/category_tree.php'));
 
 class lC_Categories_pro_Admin extends lC_Categories_Admin {
  /*
@@ -29,7 +30,7 @@ class lC_Categories_pro_Admin extends lC_Categories_Admin {
     $category_id = parent::save($id, $data);
 
     return $category_id;
-  } 
+    }
  /*
   * Get related products/categories html
   *
