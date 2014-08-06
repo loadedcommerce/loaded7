@@ -59,6 +59,7 @@ class lC_Application_Products_Actions_save extends lC_Application_Products {
       
       // specials
       if ( isset($_POST['specials_pricing_switch']) && $_POST['specials_pricing_switch'] == 'on' ) {
+        if (is_array($_POST['products_special_pricing'])) $data['products_special_pricing'] = $_POST['products_special_pricing'];
         $data['specials_pricing_switch'] = 1;
         if ( isset($_POST['products_special_pricing_enable1']) ) $data['products_special_pricing_enable1'] = ($_POST['products_special_pricing_enable1'] == 'on' ? 1 : 0);
         if ( isset($_POST['products_special_price'][1]) ) $data['products_special_price1'] = $_POST['products_special_price'][1];
@@ -89,6 +90,9 @@ class lC_Application_Products_Actions_save extends lC_Application_Products {
       
       // access levels
       if (isset($_POST['access_levels'])) $data['access_levels'] = $_POST['access_levels'];
+      
+      // group pricing
+      if (isset($_POST['group_pricing'])) $data['group_pricing'] = $_POST['group_pricing'];     
 
       if ( $error === false ) {
         // the line below is used as a hook match point - do not not modify or remove
