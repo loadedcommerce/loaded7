@@ -668,6 +668,12 @@ CREATE TABLE lc_products_pricing (
   qty_break int(11) NOT NULL,
   price_break decimal(13,4) NOT NULL DEFAULT '0.0000',
   date_added datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  group_status tinyint(1) NOT NULL DEFAULT '0',
+  group_price decimal(15,4) NOT NULL DEFAULT '0.0000',
+  special_status tinyint(1) NOT NULL DEFAULT '0',
+  special_price decimal(15,4) NOT NULL DEFAULT '0.0000',
+  special_start datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  special_end datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   KEY idx_products_pricing_group_id (group_id),
   KEY idx_products_pricing_products_id (products_id)
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;

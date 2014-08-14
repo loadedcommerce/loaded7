@@ -394,6 +394,26 @@ class lC_Updates_Admin_run_after extends lC_Updates_Admin {
     }
 
     $lC_Database->simpleQuery("CREATE TABLE IF NOT EXISTS `" . $pf . "purchase_orders_service` (`po_number_id` int(11) NOT NULL AUTO_INCREMENT, `po_number` varchar(255) NOT NULL, `orders_id` int(11) NOT NULL, `po_number_status` int(1) NOT NULL DEFAULT '1', PRIMARY KEY (`po_number_id`)) ENGINE=" . $engine . " CHARACTER SET utf8 COLLATE utf8_general_ci"); 
+    parent::log("Database Update: CREATE TABLE IF NOT EXISTS `" . $pf . "purchase_orders_service` (`po_number_id` int(11) NOT NULL AUTO_INCREMENT, `po_number` varchar(255) NOT NULL, `orders_id` int(11) NOT NULL, `po_number_status` int(1) NOT NULL DEFAULT '1', PRIMARY KEY (`po_number_id`)) ENGINE=" . $engine . " CHARACTER SET utf8 COLLATE utf8_general_ci"); 
+    
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "products_pricing` ADD `group_status` TINYINT(1) NOT NULL DEFAULT '0'");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "products_pricing` ADD `group_status` TINYINT(1) NOT NULL DEFAULT '0'");
+
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "products_pricing` ADD `group_price` DECIMAL(15,4) NOT NULL DEFAULT '0.0000'");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "products_pricing` ADD `group_price` DECIMAL(15,4) NOT NULL DEFAULT '0.0000'");
+
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "products_pricing` ADD `special_status` TINYINT(1) NOT NULL DEFAULT '0'");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "products_pricing` ADD `special_status` TINYINT(1) NOT NULL DEFAULT '0'");
+
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "products_pricing` ADD `special_price` DECIMAL(15,4) NOT NULL DEFAULT '0.0000'");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "products_pricing` ADD `special_price` DECIMAL(15,4) NOT NULL DEFAULT '0.0000'");
+
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "products_pricing` ADD `special_start` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00'");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "products_pricing` ADD `special_start` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00'");
+
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "products_pricing` ADD `special_end` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00'");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "products_pricing` ADD `special_end` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00'");
+    
   }
 }  
 ?>
