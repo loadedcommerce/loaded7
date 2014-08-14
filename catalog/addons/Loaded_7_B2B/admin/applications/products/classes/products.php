@@ -29,19 +29,121 @@ class lC_Products_b2b_Admin extends lC_Products_pro_Admin {
   public static function save($id = null, $data) {
     global $lC_Database, $lC_Language;  
     
+    $products_id = lC_Products_pro_Admin::save($id, $data); 
+    
     $error = false;
     
-    $products_id = lC_Products_pro_Admin::save($id, $data);   
+    $lC_Database->startTransaction();    
     
-    // group pricing
-    if (isset($data['group_pricing']) && is_array($data['group_pricing'])) {
-    echo "<pre>";
-    print_r($data);
-    echo "</pre>";
-die('123');    
+    // remove all old pricing records
+    $Qpricing = $lC_Database->query('delete from :table_products_pricing where products_id = :products_id');
+    $Qpricing->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
+    $Qpricing->bindInt(':products_id', $products_id);
+    $Qpricing->setLogging($_SESSION['module'], $products_id);
+    $Qpricing->execute(); 
+    
+    if ( $lC_Database->isError() ) {
+      $error = true;
+    } else {      
+      // add qty price breaks
+      if (is_array($data['products_qty_break_point']) && !empty($data['products_qty_break_point'])) {
+        if ($products_id != null) {
+          // add the new records
+          foreach($data['products_qty_break_point'] as $group => $values) {
+            if (is_array($data['products_qty_break_point'][$group]) && $data['products_qty_break_point'][$group][1] != null) {          
+              foreach($values as $key => $val) {
+              
+                if ($val == -1) continue;
+                if ($data['products_qty_break_point'][$group][$key] == null) continue;
+                if ($data['products_qty_break_point'][$group][$key] == '0') continue;
+                
+                $Qpb = $lC_Database->query('insert into :table_products_pricing (products_id, group_id, tax_class_id, qty_break, price_break, date_added) values (:products_id, :group_id, :tax_class_id, :qty_break, :price_break, :date_added)');
+                $Qpb->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
+                $Qpb->bindInt(':products_id', $products_id );
+                $Qpb->bindInt(':group_id', $group);
+                $Qpb->bindInt(':tax_class_id', $data['tax_class_id'] );
+                $Qpb->bindValue(':qty_break', $data['products_qty_break_point'][$group][$key] );
+                $Qpb->bindValue(':price_break', $data['products_qty_break_price'][$group][$key] );
+                $Qpb->bindRaw(':date_added', 'now()');
+                $Qpb->setLogging($_SESSION['module'], $products_id);
+                $Qpb->execute();
+                
+                if ( $lC_Database->isError() ) { 
+                  $error = true;
+                  break 2;
+                }                
+              }
+            }
+          }
+          
+        }
+      }
     }
+    if ($error === false) {    
+      // add group pricing
+      if (is_array($data['group_pricing']) && !empty($data['group_pricing'])) {
+        if ($products_id != null) {
+          // add the new records
+          foreach($data['group_pricing'] as $group => $values) {
+            $Qgp = $lC_Database->query('insert into :table_products_pricing (products_id, group_id, tax_class_id, group_status, group_price, date_added) values (:products_id, :group_id, :tax_class_id, :group_status, :group_price, :date_added)');
+            $Qgp->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
+            $Qgp->bindInt(':products_id', $products_id );
+            $Qgp->bindInt(':group_id', $group);
+            $Qgp->bindInt(':tax_class_id', $data['tax_class_id'] );
+            $Qgp->bindValue(':group_status', (($values['enable'] == 'on') ? 1 : 0));
+            $Qgp->bindValue(':group_price', number_format($values['price'], DECIMAL_PLACES));
+            $Qgp->bindRaw(':date_added', 'now()');
+            $Qgp->setLogging($_SESSION['module'], $products_id);
+            $Qgp->execute(); 
+                
+            if ( $lC_Database->isError() ) {
+              $error = true;
+              break;
+            }                     
+          }
+        }      
+      }
+    }
+    
+    if ($error === false) {
+      // add special pricing
+      if (is_array($data['products_special_pricing']) && !empty($data['products_special_pricing'])) {
+        if ($products_id != null) {
+          // add the new records
+          foreach($data['products_special_pricing'] as $group => $values) {
+            $Qsp = $lC_Database->query('insert into :table_products_pricing (products_id, group_id, tax_class_id, special_status, special_price, special_start, special_end, date_added) values (:products_id, :group_id, :tax_class_id, :special_status, :special_price, :special_start, :special_end, :date_added)');
+            $Qsp->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
+            $Qsp->bindInt(':products_id', $products_id );
+            $Qsp->bindInt(':group_id', $group);
+            $Qsp->bindInt(':tax_class_id', $data['tax_class_id'] );
+            $Qsp->bindValue(':special_status', (($values['enable'] == 'on') ? 1 : 0));
+            $Qsp->bindValue(':special_price', number_format($values['price'], DECIMAL_PLACES));
+            $Qsp->bindRaw(':date_added', 'now()');
+            $Qsp->bindRaw(':special_start', "'" . ((strstr($values['start_date'], '/')) ? lC_DateTime::toDateTime($data['start_date']) : $data['start_date']) . "'");
+            $Qsp->bindRaw(':special_end', "'" . ((strstr($values['expires_date'], '/')) ? lC_DateTime::toDateTime($data['expires_date']) : $data['expires_date']) . "'");
+            $Qsp->setLogging($_SESSION['module'], $products_id);
+            $Qsp->execute();          
+            
+            if ( $lC_Database->isError() ) { 
+              $error = true;
+              break;
+            }            
+          }
+        }      
+      }   
+    } 
    
-    return $products_id; 
+    if ( $error === false ) {
+      $lC_Database->commitTransaction();
+      
+      lC_Cache::clear('categories');
+      lC_Cache::clear('category_tree');
+      lC_Cache::clear('also_purchased');
+      
+      return $products_id; // Return the products id for use with the save_close buttons
+    }
+    
+    $lC_Database->rollbackTransaction();
   }
  /*
   * Batch update the category access levels
@@ -89,23 +191,44 @@ die('123');
   * @return array
   */
   public static function getGroupPricingContent($base_price) {
-    global $lC_Language, $lC_Currencies;
+    global $lC_Language, $lC_Currencies, $lC_Database, $pInfo;
+    
+    $products_id = (isset($pInfo)) ? $pInfo->get('products_id') : null;
     
     $content = '';
     $groups = lC_Customer_groups_Admin::getAll();
+    
     foreach($groups['entries'] as $key => $value) {
-
-      $discount = round((float)$base_price * ((float)$value['baseline_discount'] * .01), DECIMAL_PLACES); 
-      $discounted_price = $base_price - $discount;
+      $group_status = 0;
+      if ($products_id != null) {    
+        $Qpricing = $lC_Database->query('select * from :table_products_pricing where products_id = :products_id and group_id = :group_id and group_status != :group_status order by qty_break asc');
+        $Qpricing->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
+        $Qpricing->bindInt(':products_id', $products_id);
+        $Qpricing->bindInt(':group_id', $value['customers_group_id']);
+        $Qpricing->bindInt(':group_status', -1);
+        $Qpricing->execute(); 
+        
+        $group_status = $Qpricing->valueInt('group_status');
+        $diff = (float)$base_price - $Qpricing->valueDecimal('group_price');
+        $discount_text = number_format(round(($diff / $base_price)  * 100, DECIMAL_PLACES), DECIMAL_PLACES); 
+        $discounted_price = $Qpricing->valueDecimal('group_price');
+      
+      } else {      
+        $discount = round((float)$base_price * ((float)$value['baseline_discount'] * .01), DECIMAL_PLACES); 
+        $discounted_price = $base_price - $discount;
+        $discount_text = number_format($value['baseline_discount'], DECIMAL_PLACES);
+      }
+      
+      $checked = ($group_status == 0) ? null : 'checked="checked"';
      
       $content .= '<div>' .
                   '  <label for="" class="label margin-right"><b>'. $value['customers_group_name'] .'</b></label>' .
-                  '  <input type="checkbox" name="group_pricing[' . $value['customers_group_id'] . '][enable]" class="switch medium margin-right" />' .
+                  '  <input type="checkbox" ' . $checked . ' name="group_pricing[' . $value['customers_group_id'] . '][enable]" class="switch medium margin-right" />' .
                   '    <div class="inputs grey" style="display:inline; padding:8px 0;">' .
                   '      <span class="mid-margin-left no-margin-right">' . $lC_Currencies->getSymbolLeft() . '</span>' .
-                  '      <input type="text" onchange="" onfocus="this.select();" name="group_pricing[' . $value['customers_group_id'] . '][price]" id="group_pricing_' . $value['customers_group_id'] . '_price" value="' . number_format($discounted_price, DECIMAL_PLACES) . '" class="input-unstyled small-margin-right grey" style="width:60px;"/>' .
+                  '      <input type="text" onfocus="this.select();" name="group_pricing[' . $value['customers_group_id'] . '][price]" id="group_pricing_' . $value['customers_group_id'] . '_price" value="' . number_format($discounted_price, DECIMAL_PLACES) . '" class="input-unstyled small-margin-right grey" style="width:60px;"/>' .
                   '    </div>' .
-                  '  <small class="input-info mid-margin-left no-wrap">' . $lC_Language->get('text_price') . '<span class="tag glossy mid-margin-left">-' . number_format($value['baseline_discount'], DECIMAL_PLACES) . '%</span></small>' . 
+                  '  <small class="input-info mid-margin-left no-wrap">' . $lC_Language->get('text_price') . '<span class="tag glossy mid-margin-left">-' . $discount_text . '%</span></small>' . 
                   '</div>';
     }
     

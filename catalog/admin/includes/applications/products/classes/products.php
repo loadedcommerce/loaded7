@@ -264,7 +264,6 @@ class lC_Products_Admin {
   public function getProductsListingQty($data) {
     return $data['products_quantity'];
   }  
-  
  /*
   * Returns the data used on the dialog forms
   *

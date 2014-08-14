@@ -565,10 +565,11 @@ class lC_Products_pro_Admin extends lC_Products_Admin {
 
     if ($group == null) $group = (defined('DEFAULT_CUSTOMERS_GROUP_ID') && DEFAULT_CUSTOMERS_GROUP_ID != null) ? (int)DEFAULT_CUSTOMERS_GROUP_ID : 1;
     
-    $Qpb = $lC_Database->query('select * from :table_products_pricing where products_id = :products_id and group_id = :group_id order by qty_break asc');
+    $Qpb = $lC_Database->query('select * from :table_products_pricing where products_id = :products_id and group_id = :group_id and qty_break != :qty_break order by qty_break asc');
     $Qpb->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
     $Qpb->bindInt(':products_id', $id);
     $Qpb->bindInt(':group_id', $group);
+    $Qpb->bindInt(':qty_break', -1);
     $Qpb->execute();
     
     $data = array();
