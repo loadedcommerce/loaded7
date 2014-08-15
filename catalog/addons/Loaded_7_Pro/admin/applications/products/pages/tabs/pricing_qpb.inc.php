@@ -85,7 +85,7 @@ function _addNewQPBRow(parts) {
         '  <small class="input-info mid-margin-left no-wrap">Price</small><span onclick="removeQPBRow(\'products_qty_break_point_div_' + group + '_' + id + '\');" class="margin-left icon-cross icon-red icon-size2 cursor-pointer"></span>' + 
         '</div>';      
               
-  $('#qpbContainer').append(row);  
+  $('#qpbContainer_' + group).append(row);  
 }
 
 function removeQPBRow(id) {

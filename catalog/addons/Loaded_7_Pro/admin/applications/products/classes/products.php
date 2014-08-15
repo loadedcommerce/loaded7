@@ -592,47 +592,55 @@ class lC_Products_pro_Admin extends lC_Products_Admin {
     
     $content = '';
     $groups = lC_Customer_groups_Admin::getAll();
+    $cnt = 1;
     foreach($groups['entries'] as $key => $value) {
 
-      if ($value['customers_group_id'] == DEFAULT_CUSTOMERS_GROUP_ID) { // locked to default for Pro
+      $show_line = false;
+      if (utility::isB2B()) {
+        if (count($groups > 1) && $cnt != count($groups) ) $show_line = true;
+      } else {
+        if ($value['customers_group_id'] != DEFAULT_CUSTOMERS_GROUP_ID) continue; // locked to default for Pro
+      }
     
-        $base = (isset($pInfo)) ? (float)$pInfo->get('products_price') : 0.00;
-        $special = (isset($pInfo)) ? (float)$pInfo->get('products_special_price') : 0.00;
+      $base = (isset($pInfo)) ? (float)$pInfo->get('products_price') : 0.00;
+      $special = (isset($pInfo)) ? (float)$pInfo->get('products_special_price') : 0.00;
 
-        $content .= '<label for="products_qty_breaks_pricing_enable' . $value['customers_group_id'] . '" class="label margin-right"><b>'. $value['customers_group_name'] .'</b></label>' .
+      $content .= '<label for="products_qty_breaks_pricing_enable' . $value['customers_group_id'] . '" class="label margin-right"><b>'. $value['customers_group_name'] .'</b></label>' .
+      
+                  '<div id="qpbContainer_' . $value['customers_group_id'] . '">' .
+                  '  <div class="new-row-mobile twelve-columns">' .
+                  '    <div class="inputs" style="display:inline; padding:8px 0;">' .
+                  '      <span class="mid-margin-left no-margin-right">#</span>' .                  
+                  '      <input type="text" onfocus="this.select();" name="products_qty_break_point[' . $value['customers_group_id'] . '][0]" id="products_qty_break_point_' . $value['customers_group_id'] . '_0" value="1" class="disabled input-unstyled small-margin-right" style="width:60px;" READONLY/>' .
+                  '    </div>' .         
+                  '    <small class="input-info mid-margin-left mid-margin-right no-wrap">Qty</small>' . 
+                  '    <div class="inputs" style="display:inline; padding:8px 0;">' .
+                  '      <span class="mid-margin-left no-margin-right">' . $lC_Currencies->getSymbolLeft() . '</span>' .
+                  '      <input type="text" onfocus="this.select();" name="products_qty_break_price[' . $value['customers_group_id'] . '][0]" id="products_qty_break_price_' . $value['customers_group_id'] . '_0" value="' . ((isset($pInfo)) ? number_format($pInfo->get('products_price'), DECIMAL_PLACES) : 0.00) . '" class="disabled input-unstyled small-margin-right" style="width:60px;" READONLY/>' .
+                  '    </div>' . 
+                  '    <small class="input-info mid-margin-left no-wrap">Price</small>' . 
+                  '  </div>';
+                  
+      if ( isset($pInfo) && self::hasQPBPricing($pInfo->get('products_id')) ) {
         
-                    '<div id="qpbContainer">' .
-                    '  <div class="new-row-mobile twelve-columns">' .
-                    '    <div class="inputs" style="display:inline; padding:8px 0;">' .
-                    '      <span class="mid-margin-left no-margin-right">#</span>' .                  
-                    '      <input type="text" onfocus="this.select();" name="products_qty_break_point[' . $value['customers_group_id'] . '][0]" id="products_qty_break_point_' . $value['customers_group_id'] . '_0" value="1" class="disabled input-unstyled small-margin-right" style="width:60px;" READONLY/>' .
-                    '    </div>' .         
-                    '    <small class="input-info mid-margin-left mid-margin-right no-wrap">Qty</small>' . 
-                    '    <div class="inputs" style="display:inline; padding:8px 0;">' .
-                    '      <span class="mid-margin-left no-margin-right">' . $lC_Currencies->getSymbolLeft() . '</span>' .
-                    '      <input type="text" onfocus="this.select();" name="products_qty_break_price[' . $value['customers_group_id'] . '][0]" id="products_qty_break_price_' . $value['customers_group_id'] . '_0" value="' . ((isset($pInfo)) ? number_format($pInfo->get('products_price'), DECIMAL_PLACES) : 0.00) . '" class="disabled input-unstyled small-margin-right" style="width:60px;" READONLY/>' .
-                    '    </div>' . 
-                    '    <small class="input-info mid-margin-left no-wrap">Price</small>' . 
-                    '  </div>';
+        $qpbData = self::getQPBPricing($pInfo->get('products_id'), $value['customers_group_id']);
+        
+        $cnt = 0;
+        foreach ($qpbData as $key => $val) {
+          $content .= self::_getNewQPBPricingRow($val['group_id'], $key+1, $val);
+          $cnt = $key+1;
+        }
+        // add a new row
+        $content .= self::_getNewQPBPricingRow($value['customers_group_id'], $cnt+1);
+      } else { // no qpb recorded, setup new
+        $content .= self::_getNewQPBPricingRow($value['customers_group_id'], 1);
+      }      
+      
+      $content .= '</div>';                
 
-                    
-        if ( isset($pInfo) && self::hasQPBPricing($pInfo->get('products_id')) ) {
-          
-          $qpbData = self::getQPBPricing($pInfo->get('products_id'), $value['customers_group_id']);
-          
-          $cnt = 0;
-          foreach ($qpbData as $key => $val) {
-            $content .= self::_getNewQPBPricingRow($val['group_id'], $key+1, $val);
-            $cnt = $key+1;
-          }
-          // add a new row
-          $content .= self::_getNewQPBPricingRow($value['customers_group_id'], $cnt+1);
-        } else { // no qpb recorded, setup new
-          $content .= self::_getNewQPBPricingRow($value['customers_group_id'], 1);
-        }      
-        
-        $content .= '</div>';                
-      } 
+      if ($show_line) $content .= '<hr style="width:300px;">';                  
+      
+      $cnt++;
     }
     
     return $content;

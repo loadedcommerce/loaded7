@@ -55,7 +55,7 @@ class lC_Products_b2b_Admin extends lC_Products_pro_Admin {
               
                 if ($val == -1) continue;
                 if ($data['products_qty_break_point'][$group][$key] == null) continue;
-                if ($data['products_qty_break_point'][$group][$key] == '0') continue;
+                if ($data['products_qty_break_point'][$group][$key] == '1') continue;  // do not save qty 1, base price is same
                 
                 $Qpb = $lC_Database->query('insert into :table_products_pricing (products_id, group_id, tax_class_id, qty_break, price_break, date_added) values (:products_id, :group_id, :tax_class_id, :qty_break, :price_break, :date_added)');
                 $Qpb->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
