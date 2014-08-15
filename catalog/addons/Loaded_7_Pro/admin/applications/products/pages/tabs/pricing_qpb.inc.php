@@ -22,10 +22,8 @@ global $lC_Language, $lC_Currencies, $pInfo;
 </div>
 <script>   
 $(document).ready(function() {
-  var hasQPB = '<?php echo (isset($pInfo) && lC_Products_pro_Admin::hasQPBPricing($pInfo->get('products_id')) === true) ? 1 : 0; ?>';
-  if (hasQPB == 1) {
-    $('#qpb-switch').click();
-  }      
+  var qpbPricingEnable = '<?php echo (isset($pInfo) && $pInfo->get('qpb_pricing_enable') == 1) ? 1 : 0; ?>';
+  if (qpbPricingEnable == 1) $('#qpb-switch').click();   
 });
   
 function validateQPBPoint(e) {

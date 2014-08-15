@@ -99,7 +99,14 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
         } 
       }
       ?> 
-      setActiveTab();  
+      setActiveTab(); 
+      
+      var groupPricingEnable = '<?php echo (isset($pInfo) && $pInfo->get('groups_pricing_enable') == 1) ? 1 : 0; ?>';
+      if (groupPricingEnable == 1) $('#groups_pricing_switch').click();
+  
+      var specialPricingEnable = '<?php echo (isset($pInfo) && $pInfo->get('specials_pricing_enable') == 1) ? 1 : 0; ?>';
+      if (specialPricingEnable == 1) $('#specials_pricing_switch').click();
+         
     });
     <?php if ($pInfo) { ?>
     /**

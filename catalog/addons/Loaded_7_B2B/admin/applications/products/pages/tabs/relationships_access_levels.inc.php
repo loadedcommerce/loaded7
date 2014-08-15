@@ -29,14 +29,5 @@ function checkAllLevels(e) {
 
 $(document).ready(function() {  
   if ($('.levels:checked').length == $('.levels').length) $('#check_all_levels').prop('checked', true);
-  
-  var groupPricingEnable = '<?php echo (isset($pInfo) && $pInfo->get('groups_pricing_enable') == 1) ? 1 : 0; ?>';
-  if (groupPricingEnable == 1) $('#groups_pricing_switch').click();
-  
-  var qpbPricingEnable = '<?php echo (isset($pInfo) && $pInfo->get('qpb_pricing_enable') == 1) ? 1 : 0; ?>';
-  if (qpbPricingEnable == 1) $('#qpb-switch').click();
-  
-  var specialPricingEnable = '<?php echo (isset($pInfo) && $pInfo->get('specials_pricing_enable') == 1) ? 1 : 0; ?>';
-  if (specialPricingEnable == 1) $('#specials_pricing_switch').click();
 });
 </script>
