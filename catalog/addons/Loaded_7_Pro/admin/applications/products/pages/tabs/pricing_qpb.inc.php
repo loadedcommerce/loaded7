@@ -12,7 +12,7 @@ global $lC_Language, $lC_Currencies, $pInfo;
 ?>
 <div class="field-block field-block-product button-height">
   <label for="qpb-switch" class="label"><b><?php echo $lC_Language->get('text_qty_break_pricing'); ?></b></label>
-  <input id="qpb-switch" type="checkbox" class="switch wider" onchange="togglePricingSection(this, 'qty_breaks_pricing_container');" data-text-off="<?php echo $lC_Language->get('slider_switch_disabled'); ?>" data-text-on="<?php echo $lC_Language->get('slider_switch_enabled'); ?>" /><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_pricing_qty_price_breaks'), null, 'info-spot on-left grey margin-left'); ?>
+  <input id="qpb-switch" name="qpb_pricing_switch" type="checkbox" class="switch wider" onchange="togglePricingSection(this, 'qty_breaks_pricing_container');" data-text-off="<?php echo $lC_Language->get('slider_switch_disabled'); ?>" data-text-on="<?php echo $lC_Language->get('slider_switch_enabled'); ?>" /><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_pricing_qty_price_breaks'), null, 'info-spot on-left grey margin-left'); ?>
   <span id="qty_breaks_number_of_break_points">
     <div onclick="togglePricingSection(this, 'qty_breaks_pricing_container');" style="cursor:pointer;" class="field-block-chevron-container float-right"><span id="qty_breaks_pricing_container_span" class="icon-chevron-thin-down icon-size2"></span></div>
   </span>

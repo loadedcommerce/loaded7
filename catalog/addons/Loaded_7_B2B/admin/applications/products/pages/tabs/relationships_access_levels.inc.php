@@ -11,12 +11,7 @@
 global $lC_Vqmod, $lC_Language, $pInfo;
 
 require_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'addons/Loaded_7_B2B/admin/applications/customer_groups/classes/customer_groups.php'));
-
-echo "<pre>";
-print_r($pInfo);
-echo "</pre>";
 ?>
-  
 <fieldset class="fieldset margin-top"> 
   <legend class="legend"><?php echo $lC_Language->get('section_access_levels_overrides'); ?></legend>
   <div class="columns ">
@@ -26,7 +21,6 @@ echo "</pre>";
    </div>
   </div>
 </fieldset>  
-
 <script>
 function checkAllLevels(e) {
   var checked = $(e).is(":checked");
@@ -36,9 +30,9 @@ function checkAllLevels(e) {
 $(document).ready(function() {  
   if ($('.levels:checked').length == $('.levels').length) $('#check_all_levels').prop('checked', true);
   
-  var hasGroupPricing = '<?php echo (isset($pInfo) && lC_Products_b2b_Admin::hasGroupPricing($pInfo->get('products_id')) === true) ? 1 : 0; ?>';
-  if (hasGroupPricing == 1) {
-    $('#specials_pricing_switc').click();
+  var groupPricingEnable = '<?php echo (isset($pInfo) && $pInfo->get('groups_pricing_enable') == 1) ? 1 : 0; ?>';
+  if (groupPricingEnable == 1) {
+    $('#groups_pricing_switch').click();
   }   
 });
 </script>
