@@ -44,7 +44,7 @@ class lC_Application_Products_Actions_save extends lC_Application_Products {
                     'products_tags' => $_POST['products_tags'],
                     'products_url' => $_POST['products_url'],
                     'has_children' => $has_variants);
-
+                    
       if ( isset($_POST['attributes']) ) $data['attributes'] = $_POST['attributes'];
       if ( isset($_POST['categories']) ) $data['categories'] = $_POST['categories'];
       if ( isset($_POST['localimages']) ) $data['localimages'] = $_POST['localimages'];
@@ -82,6 +82,7 @@ class lC_Application_Products_Actions_save extends lC_Application_Products {
       }  
       
       // qpb
+      $data['qpb_pricing_switch'] = (isset($_POST['qpb_pricing_switch']) && $_POST['qpb_pricing_switch'] == 'on') ? true : false;
       if (is_array($_POST['products_qty_break_point']) && $_POST['products_qty_break_point'][1] != NULL) $data['products_qty_break_point'] = $_POST['products_qty_break_point'];
       if (is_array($_POST['products_qty_break_price']) && $_POST['products_qty_break_price'][1] != NULL) $data['products_qty_break_price'] = $_POST['products_qty_break_price'];
       
@@ -92,6 +93,7 @@ class lC_Application_Products_Actions_save extends lC_Application_Products {
       if (isset($_POST['access_levels'])) $data['access_levels'] = $_POST['access_levels'];
       
       // group pricing
+      $data['groups_pricing_switch'] = (isset($_POST['groups_pricing_switch']) && $_POST['groups_pricing_switch'] == 'on') ? true : false;
       if (isset($_POST['group_pricing'])) $data['group_pricing'] = $_POST['group_pricing'];     
 
       if ( $error === false ) {

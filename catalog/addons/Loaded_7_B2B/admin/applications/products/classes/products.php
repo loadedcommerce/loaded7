@@ -109,6 +109,7 @@ class lC_Products_b2b_Admin extends lC_Products_pro_Admin {
       // add special pricing
       if (is_array($data['products_special_pricing']) && !empty($data['products_special_pricing'])) {
         if ($products_id != null) {
+          
           // add the new records
           foreach($data['products_special_pricing'] as $group => $values) {
             $Qsp = $lC_Database->query('insert into :table_products_pricing (products_id, group_id, tax_class_id, special_status, special_price, special_start, special_end, date_added) values (:products_id, :group_id, :tax_class_id, :special_status, :special_price, :special_start, :special_end, :date_added)');
@@ -119,8 +120,8 @@ class lC_Products_b2b_Admin extends lC_Products_pro_Admin {
             $Qsp->bindValue(':special_status', (($values['enable'] == 'on') ? 1 : 0));
             $Qsp->bindValue(':special_price', number_format($values['price'], DECIMAL_PLACES));
             $Qsp->bindRaw(':date_added', 'now()');
-            $Qsp->bindRaw(':special_start', "'" . ((strstr($values['start_date'], '/')) ? lC_DateTime::toDateTime($data['start_date']) : $data['start_date']) . "'");
-            $Qsp->bindRaw(':special_end', "'" . ((strstr($values['expires_date'], '/')) ? lC_DateTime::toDateTime($data['expires_date']) : $data['expires_date']) . "'");
+            $Qsp->bindRaw(':special_start', "'" . ((strstr($values['start_date'], '/')) ? lC_DateTime::toDateTime($values['start_date']) : $values['start_date']) . "'");
+            $Qsp->bindRaw(':special_end', "'" . ((strstr($values['expires_date'], '/')) ? lC_DateTime::toDateTime($values['expires_date']) : $values['expires_date']) . "'");
             $Qsp->setLogging($_SESSION['module'], $products_id);
             $Qsp->execute();          
             
@@ -235,41 +236,75 @@ class lC_Products_b2b_Admin extends lC_Products_pro_Admin {
     return $content;
   }
  /*
-  *  Return the product simple options accordian price listing content
+  *  Return the product specials price listing content
   *
   * @access public
   * @return array
   */
   public static function getSpecialPricingContent() {
-    global $lC_Language, $lC_Currencies, $pInfo;
+    global $lC_Language, $lC_Currencies, $lC_Database, $pInfo;
+    
+    $products_id = (isset($pInfo)) ? $pInfo->get('products_id') : null;
     
     $content = '';
     $groups = lC_Customer_groups_Admin::getAll();
+    
     foreach($groups['entries'] as $key => $value) {
+    
+      $special_status = 0;
       $base = (isset($pInfo)) ? (float)$pInfo->get('products_price') : 0.00;
-      $special = (isset($pInfo)) ? (float)$pInfo->get('products_special_price') : 0.00;
-      $discount = (isset($base) && $base > 0.00) ? round( ((($base - $special) / $base) * 100), DECIMAL_PLACES) : 0.00; 
-     
+
+      if ($products_id != null) {    
+        $Qpricing = $lC_Database->query('select * from :table_products_pricing where products_id = :products_id and group_id = :group_id and special_status != :special_status order by group_id asc');
+        $Qpricing->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
+        $Qpricing->bindInt(':products_id', $products_id);
+        $Qpricing->bindInt(':group_id', $value['customers_group_id']);
+        $Qpricing->bindInt(':special_status', -1);
+        $Qpricing->execute(); 
+        
+        $special_status = ($Qpricing->valueInt('special_status') == 1) ? ' checked' : '';
+        $special_price = number_format($Qpricing->valueDecimal('special_price'), DECIMAL_PLACES);
+        
+        $start_date_formatted = null;
+        if ($Qpricing->value('special_start') != null) {
+          $start_date_formatted = lC_DateTime::getShort($Qpricing->value('special_start'));
+        }
+        $expires_date_formatted = null;
+        if ($Qpricing->value('special_end') != null) {
+          $expires_date_formatted = lC_DateTime::getShort($Qpricing->value('special_end'));
+        }        
+        
+      } else {   
+        $special_status = (isset($pInfo) && $pInfo->get('products_special_status') != 0) ? ' checked' : null;  
+        $special_price = (isset($pInfo)) ? number_format($pInfo->get('products_special_price'), DECIMAL_PLACES) : 0.00;      
+        $start_date_formatted = (isset($pInfo)) ? lC_DateTime::getShort($pInfo->get('products_special_start_date')) : null;
+        $expires_date_formatted = (isset($pInfo)) ? lC_DateTime::getShort($pInfo->get('products_special_expires_date')) : null;
+      }
+      
+      $discount = (isset($base) && $base > 0.00) ? round( ((($base - $special_price) / $base) * 100), DECIMAL_PLACES) : 0.00; 
+      
+      $checked = ($special_status == 0) ? null : 'checked="checked"';
+
       $content .= '<label for="products_special_pricing_enable' . $value['customers_group_id'] . '" class="label margin-right"><b>'. $value['customers_group_name'] .'</b></label>' .
                   '<div class="columns">' .
                   '  <div class="new-row-mobile twelve-columns twelve-columns-mobile mid-margin-bottom">' .
-                  '    <input id="products_special_pricing_pricing_' . $value['customers_group_id'] . '_enable" name="products_special_pricing[' . $value['customers_group_id'] . '][enable]" type="checkbox" class="margin-right medium switch"' . (($pInfo->get('products_special_status') != 0) ? ' checked' : '') . ' />' .
+                  '    <input id="products_special_pricing_pricing_' . $value['customers_group_id'] . '_enable" name="products_special_pricing[' . $value['customers_group_id'] . '][enable]" type="checkbox" ' . $checked . ' class="margin-right medium switch"' . $special_status . ' />' .
                   '    <div class="inputs" style="display:inline; padding:8px 0;">' .
                   '      <span class="mid-margin-left no-margin-right">' . $lC_Currencies->getSymbolLeft() . '</span>' .
-                  '      <input type="text" onfocus="this.select();" onchange="updatePricingDiscountDisplay();" name="products_special_pricing[' . $value['customers_group_id'] . '][price]" id="products_special_pricing_' . $value['customers_group_id'] . '_price" value="' . number_format($pInfo->get('products_special_price'), DECIMAL_PLACES) . '" class="sprice input-unstyled small-margin-right" style="width:60px;" />' .
+                  '      <input type="text" onfocus="this.select();" onchange="updatePricingDiscountDisplay();" name="products_special_pricing[' . $value['customers_group_id'] . '][price]" id="products_special_pricing_' . $value['customers_group_id'] . '_price" value="' . $special_price . '" class="sprice input-unstyled small-margin-right" style="width:60px;" />' .
                   '    </div>' .
                   '    <small class="input-info mid-margin-left no-wrap">' . $lC_Language->get('text_special_price') . '<span class="disctag tag glossy mid-margin-left">-' . number_format($discount, DECIMAL_PLACES) . '%</span></small>' .
                   '  </div>' .
                   '  <div class="new-row-mobile twelve-columns twelve-columns-mobile">' .
                   '    <span class="nowrap margin-right">' .
                   '      <span class="input small-margin-top">' .
-                  '        <input name="products_special_pricing[' . $value['customers_group_id'] . '][start_date]" id="products_special_pricing_' . $value['customers_group_id'] . '_start_date" type="text" placeholder="Start" class="input-unstyled datepicker" value="' . $pInfo->get('products_special_start_date') . '" style="width:97px;" />' .
+                  '        <input name="products_special_pricing[' . $value['customers_group_id'] . '][start_date]" id="products_special_pricing_' . $value['customers_group_id'] . '_start_date" type="text" placeholder="Start" class="input-unstyled datepicker" value="' . $start_date_formatted . '" style="width:97px;" />' .
                   '      </span>' .
                   '      <span class="icon-calendar icon-size2 small-margin-left"></span>' .
                   '    </span>' .
                   '    <span class="nowrap">' .
                   '      <span class="input small-margin-top">' .
-                  '        <input name="products_special_pricing[' . $value['customers_group_id'] . '][expires_date]" id="products_special_pricing_' . $value['customers_group_id'] . '_expires_date" type="text" placeholder="End" class="input-unstyled datepicker" value="' . $pInfo->get('products_special_expires_date') . '" style="width:97px;" />' .
+                  '        <input name="products_special_pricing[' . $value['customers_group_id'] . '][expires_date]" id="products_special_pricing_' . $value['customers_group_id'] . '_expires_date" type="text" placeholder="End" class="input-unstyled datepicker" value="' . $expires_date_formatted . '" style="width:97px;" />' .
                   '      </span>' .
                   '      <span class="icon-calendar icon-size2 small-margin-left"></span>' .
                   '    </span>' .
