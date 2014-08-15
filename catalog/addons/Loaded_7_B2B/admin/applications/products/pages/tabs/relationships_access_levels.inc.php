@@ -31,5 +31,10 @@ function checkAllLevels(e) {
 
 $(document).ready(function() {  
   if ($('.levels:checked').length == $('.levels').length) $('#check_all_levels').prop('checked', true);
+  
+  var hasGroupPricing = '<?php echo (isset($pInfo) && lC_Products_b2b_Admin::hasGroupPricing($pInfo->get('products_id')) === true) ? 1 : 0; ?>';
+  if (hasGroupPricing == 1) {
+    $('#specials_pricing_switc').click();
+  }   
 });
 </script>

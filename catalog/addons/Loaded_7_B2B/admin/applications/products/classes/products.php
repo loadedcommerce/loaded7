@@ -279,4 +279,30 @@ class lC_Products_b2b_Admin extends lC_Products_pro_Admin {
     
     return $content;   
   }
+ /*
+  *  Determine if product has group pricing
+  *
+  * @param integer $id The product id
+  * @access public
+  * @return boolean
+  */   
+  public static function hasGroupPricing($id) {
+    global $lC_Database;
+
+    $Qgp = $lC_Database->query('select * from :table_products_pricing where products_id = :products_id and group_status = :group_status limit 1');
+    $Qgp->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
+    $Qgp->bindInt(':products_id', $id);
+    $Qgp->bindInt(':group_status', 1);
+    $Qgp->execute();
+    
+    $rows = $Qgp->numberOfRows();
+    
+    $Qgp->freeResult();
+    
+    if ( $rows > 0 ) {
+      return true;
+    }
+    
+    return false;
+  }  
 }

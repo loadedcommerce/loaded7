@@ -526,7 +526,6 @@ class lC_Products_pro_Admin extends lC_Products_Admin {
     
     return $result;     
   }   
-  
  /*
   *  Determine if product has qty price breaks
   *
@@ -537,9 +536,10 @@ class lC_Products_pro_Admin extends lC_Products_Admin {
   public static function hasQPBPricing($id) {
     global $lC_Database;
 
-    $Qpb = $lC_Database->query('select * from :table_products_pricing where products_id = :products_id limit 1');
+    $Qpb = $lC_Database->query('select * from :table_products_pricing where products_id = :products_id and qty_break != :qty_break limit 1');
     $Qpb->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
     $Qpb->bindInt(':products_id', $id);
+    $Qpb->bindInt(':qty_break', -1);
     $Qpb->execute();
     
     $rows = $Qpb->numberOfRows();

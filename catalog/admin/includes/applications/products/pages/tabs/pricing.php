@@ -24,8 +24,8 @@ global $lC_Language, $lC_Currencies, $pInfo;
     </div>
 
     <div class="field-block field-block-product button-height">
-      <label for="groups_pricing_container" class="label"><b><?php echo $lC_Language->get('text_group_pricing'); ?></b></label>
-      <input type="checkbox" class="switch wider" onchange="togglePricingSection(this, 'groups_pricing_container');" data-text-off="<?php echo $lC_Language->get('slider_switch_disabled'); ?>" data-text-on="<?php echo $lC_Language->get('slider_switch_preview'); ?>" /><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_pricing_group_pricing'), null, 'info-spot on-left grey margin-left'); ?>
+      <label for="groups_pricing_switch" class="label"><b><?php echo $lC_Language->get('text_group_pricing'); ?></b></label>
+      <input id="groups_pricing_switch" type="checkbox" class="switch wider" onchange="togglePricingSection(this, 'groups_pricing_container');" data-text-off="<?php echo $lC_Language->get('slider_switch_disabled'); ?>" data-text-on="<?php echo $lC_Language->get('slider_switch_preview'); ?>" /><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_pricing_group_pricing'), null, 'info-spot on-left grey margin-left'); ?>
       <div onclick="togglePricingSection(this, 'groups_pricing_container');" style="cursor:pointer;" class="field-block-chevron-container float-right"><span id="groups_pricing_container_span" class="icon-chevron-thin-down icon-size2"></span></div>
     </div>
     <div id="groups_pricing_container" class="field-drop button-height black-inputs" style="display:none;">
