@@ -8,9 +8,13 @@
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: relationships_access_levels.inc.php v1.0 2014-01-24 datazen $
 */
-global $lC_Vqmod, $lC_Language;
+global $lC_Vqmod, $lC_Language, $pInfo;
 
 require_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'addons/Loaded_7_B2B/admin/applications/customer_groups/classes/customer_groups.php'));
+
+echo "<pre>";
+print_r($pInfo);
+echo "</pre>";
 ?>
   
 <fieldset class="fieldset margin-top"> 

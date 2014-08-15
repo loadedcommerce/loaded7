@@ -606,6 +606,9 @@ CREATE TABLE lc_products (
   has_children int(11) DEFAULT NULL,
   is_subproduct TINYINT(1) NOT NULL DEFAULT '0',
   access_levels VARCHAR(255) NOT NULL DEFAULT '',
+  groups_pricing_enable tinyint(1) NOT NULL DEFAULT '0',
+  qpb_pricing_enable tinyint(1) NOT NULL DEFAULT '0',
+  specials_pricing_enable tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (products_id),
   KEY idx_products_date_added (products_date_added)
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;

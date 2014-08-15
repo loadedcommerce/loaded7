@@ -417,6 +417,15 @@ class lC_Updates_Admin_run_after extends lC_Updates_Admin {
     $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "products_pricing` CHANGE `qty_break` INT(11) NOT NULL DEFAULT '-1'");
     parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "products_pricing` CHANGE `qty_break` INT(11) NOT NULL DEFAULT '-1'");
     
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "products` ADD `groups_pricing_enable` TINYINT(1) NOT NULL DEFAULT '0'");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "products` ADD `groups_pricing_enable` TINYINT(1) NOT NULL DEFAULT '0'");
+    
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "products` ADD `qpb_pricing_enable` TINYINT(1) NOT NULL DEFAULT '0'");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "products` ADD `qpb_pricing_enable` TINYINT(1) NOT NULL DEFAULT '0'");
+    
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "products` ADD `specials_pricing_enable` TINYINT(1) NOT NULL DEFAULT '0'");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "products` ADD `specials_pricing_enable` TINYINT(1) NOT NULL DEFAULT '0'");
+
   }
 }  
 ?>
