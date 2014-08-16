@@ -92,6 +92,9 @@ class lC_Application_Products_Actions_save extends lC_Application_Products {
       // access levels
       if (isset($_POST['access_levels'])) $data['access_levels'] = $_POST['access_levels'];
       
+      // options pricing
+      if (isset($_POST['options_pricing'])) $data['options_pricing'] = $_POST['options_pricing'];
+      
       // group pricing
       $data['groups_pricing_switch'] = (isset($_POST['groups_pricing_switch']) && $_POST['groups_pricing_switch'] == 'on') ? true : false;
       if (isset($_POST['group_pricing'])) $data['group_pricing'] = $_POST['group_pricing'];     
