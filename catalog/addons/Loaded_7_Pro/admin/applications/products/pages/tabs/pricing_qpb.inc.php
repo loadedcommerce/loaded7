@@ -18,6 +18,7 @@ global $lC_Language, $lC_Currencies, $pInfo;
   </span>
 </div> 
 <div id="qty_breaks_pricing_container" class="field-drop button-height black-inputs" style="display:none;">
+  <p id="qpb-save-msg" class="message blue-gradient margin-bottom" style="display:none;"><span class="icon-info-round small-margin-right"><span></span></span>Pricing columns for new break points will appear in the Options Pricing section after saving.</p>
   <?php echo lC_Products_pro_Admin::getQPBPricingContent(); ?>
 </div>
 <script>   
@@ -93,7 +94,7 @@ function _addNewQPBRow(parts) {
   $('#qpbContainer_' + group).append(row);  
   
   if (hasOptions == true) {
-    $.modal.alert('Pricing columns for new break points will appear in the Options Pricing section after saving.');
+    $('#qpb-save-msg').slideDown();
   }  
 }
 

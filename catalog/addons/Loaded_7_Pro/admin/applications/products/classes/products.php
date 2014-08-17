@@ -648,35 +648,6 @@ class lC_Products_pro_Admin extends lC_Products_Admin {
     return $content;
   } 
  /*
-  * Generate qty price break column
-  *
-  * @param integer $group The customer group id
-  * @param integer $cnt   The product id
-  * @param array   $data  The product data
-  * @access private
-  * @return string                    
-  */
-  private static function _getNewQPBPricingCol($product_id, $group_id, $cnt, $data = array()) {
-    global $lC_Currencies, $pInfo; 
-    
-    if (isset($pInfo)) {
-      $default_value = (isset($data['price_break']) && empty($data['price_break']) === false) ? number_format($data['price_break'], DECIMAL_PLACES) : number_format(0, DECIMAL_PLACES);
-    } else {
-      $default_value = number_format(0, DECIMAL_PLACES);
-    }
-    $class = ($cnt == 0) ? null : 'qpb-opt';
-              
-    $content .= '  <td class="' . $class . '">' .
-                '    <div class="inputs" style="display:inline; padding:8px 0;">' .
-                '      <span class="mid-margin-left no-margin-right">' . $lC_Currencies->getSymbolLeft() . '</span>' .
-                '      <input type="text" class="input-unstyled" onfocus="$(this).select()" value="' . $default_value . '" id="options_pricing_' . $product_id . '_' . $group_id . '_' . $cnt . '" name="options_pricing[' . $product_id . '][' . $group_id . '][' . $cnt . ']">' .
-                '    </div>' .
-                '  </td>';     
-
-    return $content;
-  }  
-  
- /*
   * Generate qty price break row
   *
   * @param integer $group The customer group id
@@ -768,6 +739,7 @@ class lC_Products_pro_Admin extends lC_Products_Admin {
     
     $tbody = ''; 
     $cnt = 0; 
+    $bpArr = array();
     if (isset($pInfo) && $pInfo->get('has_children') == '1') {
       
       foreach ($pInfo->get('variants') as $product_id => $val) {       
@@ -788,6 +760,7 @@ class lC_Products_pro_Admin extends lC_Products_Admin {
                       '  <td>&nbsp;</td>' . 
                       '  <td class="strong" style="padding-left:30px !important">Qty 1</td>';
             foreach ($qpbData as $qkey => $qval) {
+              $bpArr[] = $qval['qty_break'];
               $tbody .= '  <td class="strong" style="padding-left:30px !important">Qty ' . $qval['qty_break'] . '</td>';          
             }
             $tbody .= '</tr>';
@@ -808,37 +781,11 @@ class lC_Products_pro_Admin extends lC_Products_Admin {
        //             '    </div>' .
        //             '  </td>';
 
-          if (isset($pInfo) && $hasQPBPricing) {
-            $qpboData = self::getQPBPricing($product_id, $customers_group_id);
-            if (is_array($qpboData) && empty($qpboData) === false) {
-              foreach ($qpboData as $key => $val) {
-                if ($val['parent_id'] == 0) continue;
-                $tbody .= self::_getNewQPBPricingCol($product_id, $val['group_id'], $val['qty_break'], $val);
-              }            
-            } else { // create blank inputs
-              if (!isset($qpbData)) $qpbData = self::getQPBPricing($pInfo->get('products_id'), $customers_group_id);
-              $tbody .= '  <td>' .
-                          '    <div class="inputs" style="display:inline; padding:8px 0;">' .
-                          '      <span class="mid-margin-left no-margin-right">' . $lC_Currencies->getSymbolLeft() . '</span>' .
-                          '      <input type="text" class="input-unstyled" onfocus="$(this).select()" value="' . number_format(0, DECIMAL_PLACES) . '" id="options_pricing_' . $product_id . '_' . $customers_group_id . '_0" name="options_pricing[' . $product_id . '][' . $customers_group_id . '][0]">' .
-                          '    </div>' .
-                          '  </td>';      
-              foreach ($qpbData as $qkey => $qval) { // create blank inputs
-                $tbody .= self::_getNewQPBPricingCol($product_id, $qval['group_id'], $qval['qty_break'], $qval, true);
-              } 
-            }
-          } else { // create blank inputs
-            if (!isset($qpbData)) $qpbData = self::getQPBPricing($pInfo->get('products_id'), $customers_group_id);
-            $tbody .= '  <td>' .
-                        '    <div class="inputs" style="display:inline; padding:8px 0;">' .
-                        '      <span class="mid-margin-left no-margin-right">' . $lC_Currencies->getSymbolLeft() . '</span>' .
-                        '      <input type="text" class="input-unstyled" onfocus="$(this).select()" value="' . number_format(0, DECIMAL_PLACES) . '" id="options_pricing_' . $product_id . '_' . $customers_group_id . '_0" name="options_pricing[' . $product_id . '][' . $customers_group_id . '][0]">' .
-                        '    </div>' .
-                        '  </td>';      
-            foreach ($qpbData as $qkey => $qval) { // create blank inputs
-              $tbody .= self::_getNewQPBPricingCol($product_id, $qval['group_id'], $qval['qty_break'], $qval, true);
-            }           
-          }                    
+   //       if (isset($pInfo) && $hasQPBPricing) {
+
+            $tbody .= self::_getNewQPBPricingCol($product_id, $customers_group_id, $bpArr);
+         
+   //       }                    
                     
           $tbody .= '</tr>';
           
@@ -848,7 +795,60 @@ class lC_Products_pro_Admin extends lC_Products_Admin {
     }    
 
     return $tbody;
-  }          
+  }  
+ /*
+  * Generate qty price break column
+  *
+  * @param integer $group The customer group id
+  * @param integer $cnt   The product id
+  * @param array   $data  The product data
+  * @access private
+  * @return string                    
+  */
+  private static function _getNewQPBPricingCol($product_id, $group_id, $bpArr) {
+    global $lC_Currencies, $lC_Database, $pInfo; 
+    
+    $content = '';
+    if (is_array($bpArr)) {
+    
+      $content .= '  <td>' .
+                  '    <div class="inputs" style="display:inline; padding:8px 0;">' .
+                  '      <span class="mid-margin-left no-margin-right">' . $lC_Currencies->getSymbolLeft() . '</span>' .
+                  '      <input type="text" class="input-unstyled" onfocus="$(this).select()" value="' . self::_getBasePrice($product_id) . '" id="options_pricing_' . $product_id . '_' . $group_id . '_1" name="options_pricing[' . $product_id . '][' . $group_id . '][1]">' .
+                  '    </div>' .
+                  '  </td>'; 
+                          
+      $cnt = 0;
+      reset($bpArr);
+      foreach($bpArr as $qty_break) {
+    
+        $Qpb = $lC_Database->query('select price_break from :table_products_pricing where products_id = :products_id and group_id = :group_id and qty_break = :qty_break limit 1');
+        $Qpb->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
+        $Qpb->bindInt(':products_id', $product_id);
+        $Qpb->bindInt(':group_id', $group_id);
+        $Qpb->bindInt(':qty_break', $qty_break);
+        $Qpb->execute();      
+      
+        if ($Qpb->numberOfRows() > 0) {
+          $default_value = number_format($Qpb->valueDecimal('price_break'), DECIMAL_PLACES);
+        } else {
+          $default_value = number_format(0, DECIMAL_PLACES);
+        }
+        
+        $Qpb-> freeResult();
+        
+        $content .= '  <td class="qpb-opt">' .
+                    '    <div class="inputs" style="display:inline; padding:8px 0;">' .
+                    '      <span class="mid-margin-left no-margin-right">' . $lC_Currencies->getSymbolLeft() . '</span>' .
+                    '      <input type="text" class="input-unstyled" onfocus="$(this).select()" value="' . $default_value . '" id="options_pricing_' . $product_id . '_' . $group_id . '_' . $qty_break . '" name="options_pricing[' . $product_id . '][' . $group_id . '][' . $qty_break . ']">' .
+                    '    </div>' .
+                    '  </td>';  
+        $cnt++;
+      } 
+    }  
+
+    return $content;
+  }  
  /*
   * Return the product simple options tbody content
   *
@@ -976,5 +976,29 @@ class lC_Products_pro_Admin extends lC_Products_Admin {
     }    
     
     return $tbody;
-  }     
+  }   
+ /*
+  *  Get the base product price
+  *
+  * @param integer $id The product id
+  * @access public
+  * @return boolean
+  */   
+  private static function _getBasePrice($products_id) {
+    global $lC_Database;
+
+    $Qproducts = $lC_Database->query('select products_price from :table_products where products_id = :products_id');
+    $Qproducts->bindTable(':table_products', TABLE_PRODUCTS);
+    $Qproducts->bindInt(':products_id', $products_id);
+    $Qproducts->execute();
+    
+    $result = 0;
+    if ($Qproducts->numberOfRows() > 0) {
+      $result = $Qproducts->valueDecimal('products_price');
+    }
+    
+    $Qproducts->freeResult();
+    
+    return number_format($result, DECIMAL_PLACES);
+  }
 }

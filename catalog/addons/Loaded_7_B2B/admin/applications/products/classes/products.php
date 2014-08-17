@@ -61,7 +61,7 @@ class lC_Products_b2b_Admin extends lC_Products_pro_Admin {
               
                 if ($val == -1) continue;
                 if ($data['products_qty_break_point'][$group][$key] == null) continue;
-                if ($data['products_qty_break_point'][$group][$key] == '1') continue;  // do not save qty 1, base price is same
+                if ((int)$data['products_qty_break_point'][$group][$key] == 1) continue;  // do not save qty 1, base price is same
                 
                 $price = (is_array($data['options_pricing']) && !empty($data['options_pricing'])) ? 0.00 : $data['products_qty_break_price'][$group][$key]; // for options support
                 
@@ -77,13 +77,15 @@ class lC_Products_b2b_Admin extends lC_Products_pro_Admin {
                 $Qpb->execute();
                 
                 if ( $lC_Database->isError() ) { 
+die($lC_Database->getError());              
+                  
                   $error = true;
                   break 2;
                 }                
               }
             }
           }
-          
+
           // add qpb for options
           if (is_array($data['options_pricing']) && !empty($data['options_pricing'])) {
             
@@ -92,24 +94,24 @@ class lC_Products_b2b_Admin extends lC_Products_pro_Admin {
             foreach($data['options_pricing'] as $product_id => $groups) {
               foreach($groups as $group_id => $data) {
                 foreach($data as $qty_break => $price) {
-                //  if ((float)$price > 0.00) {
-                    $Qpb2 = $lC_Database->query('insert into :table_products_pricing (products_id, parent_id, group_id, tax_class_id, qty_break, price_break, date_added) values (:products_id, :parent_id, :group_id, :tax_class_id, :qty_break, :price_break, :date_added)');
-                    $Qpb2->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
-                    $Qpb2->bindInt(':products_id', $product_id );
-                    $Qpb2->bindInt(':parent_id', $parent_id );
-                    $Qpb2->bindInt(':group_id', $group_id);
-                    $Qpb2->bindInt(':tax_class_id', $data['tax_class_id'] );
-                    $Qpb2->bindValue(':qty_break', $qty_break );
-                    $Qpb2->bindFloat(':price_break', number_format((float)$price, DECIMAL_PLACES) );
-                    $Qpb2->bindRaw(':date_added', 'now()');
-                    $Qpb2->setLogging($_SESSION['module'], $product_id);
-                    $Qpb2->execute();
-                    
-                    if ( $lC_Database->isError() ) { 
-                      $error = true;
-                      break 3;
-                    }                      
-                 // }
+                  $Qpb2 = $lC_Database->query('insert into :table_products_pricing (products_id, parent_id, group_id, tax_class_id, qty_break, price_break, date_added) values (:products_id, :parent_id, :group_id, :tax_class_id, :qty_break, :price_break, :date_added)');
+                  $Qpb2->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
+                  $Qpb2->bindInt(':products_id', $product_id );
+                  $Qpb2->bindInt(':parent_id', $parent_id );
+                  $Qpb2->bindInt(':group_id', $group_id);
+                  $Qpb2->bindInt(':tax_class_id', $data['tax_class_id'] );
+                  $Qpb2->bindValue(':qty_break', $qty_break );
+                  $Qpb2->bindFloat(':price_break', number_format((float)$price, DECIMAL_PLACES) );
+                  $Qpb2->bindRaw(':date_added', 'now()');
+                  $Qpb2->setLogging($_SESSION['module'], $product_id);
+                  $Qpb2->execute();
+                  
+                  if ( $lC_Database->isError() ) {
+die($lC_Database->getError());              
+                    $error = true;
+                    break 3;
+                  }   
+                  if ($qty_break == 1) self::_updateBasePrice($product_id, number_format((float)$price, DECIMAL_PLACES)); 
                 }  
               }  
             }
@@ -135,6 +137,8 @@ class lC_Products_b2b_Admin extends lC_Products_pro_Admin {
             $Qgp->execute(); 
                 
             if ( $lC_Database->isError() ) {
+die($lC_Database->getError());              
+              
               $error = true;
               break;
             }                     
@@ -164,6 +168,7 @@ class lC_Products_b2b_Admin extends lC_Products_pro_Admin {
             $Qsp->execute();          
             
             if ( $lC_Database->isError() ) { 
+die($lC_Database->getError());              
               $error = true;
               break;
             }            
@@ -287,6 +292,8 @@ class lC_Products_b2b_Admin extends lC_Products_pro_Admin {
     $content = '';
     $groups = lC_Customer_groups_Admin::getAll();
     
+    $has_options = (isset($pInfo) && (lC_Products_pro_Admin::hasComboOptions($products_id) || lC_Products_pro_Admin::hasSubProducts($products_id))) ? true : false;
+    
     foreach($groups['entries'] as $key => $value) {
     
       $special_status = 0;
@@ -326,13 +333,15 @@ class lC_Products_b2b_Admin extends lC_Products_pro_Admin {
       $content .= '<label for="products_special_pricing_enable' . $value['customers_group_id'] . '" class="label margin-right"><b>'. $value['customers_group_name'] .'</b></label>' .
                   '<div class="columns">' .
                   '  <div class="new-row-mobile twelve-columns twelve-columns-mobile mid-margin-bottom">' .
-                  '    <input id="products_special_pricing_pricing_' . $value['customers_group_id'] . '_enable" name="products_special_pricing[' . $value['customers_group_id'] . '][enable]" type="checkbox" ' . $checked . ' class="margin-right medium switch"' . $special_status . ' />' .
-                  '    <div class="inputs" style="display:inline; padding:8px 0;">' .
-                  '      <span class="mid-margin-left no-margin-right">' . $lC_Currencies->getSymbolLeft() . '</span>' .
-                  '      <input type="text" onfocus="this.select();" onchange="updatePricingDiscountDisplay();" name="products_special_pricing[' . $value['customers_group_id'] . '][price]" id="products_special_pricing_' . $value['customers_group_id'] . '_price" value="' . $special_price . '" class="sprice input-unstyled small-margin-right" style="width:60px;" />' .
-                  '    </div>' .
-                  '    <small class="input-info mid-margin-left no-wrap">' . $lC_Language->get('text_special_price') . '<span class="disctag tag glossy mid-margin-left">-' . number_format($discount, DECIMAL_PLACES) . '%</span></small>' .
-                  '  </div>' .
+                  '    <input id="products_special_pricing_pricing_' . $value['customers_group_id'] . '_enable" name="products_special_pricing[' . $value['customers_group_id'] . '][enable]" type="checkbox" ' . $checked . ' class="margin-right medium switch"' . $special_status . ' />';
+      if ($has_options === false) {                  
+        $content .= '    <div class="inputs" style="display:inline; padding:8px 0;">' .
+                    '      <span class="mid-margin-left no-margin-right">' . $lC_Currencies->getSymbolLeft() . '</span>' .
+                    '      <input type="text" onfocus="this.select();" onchange="updatePricingDiscountDisplay();" name="products_special_pricing[' . $value['customers_group_id'] . '][price]" id="products_special_pricing_' . $value['customers_group_id'] . '_price" value="' . $special_price . '" class="sprice input-unstyled small-margin-right" style="width:60px;" />' .
+                    '    </div>' .
+                    '    <small class="input-info mid-margin-left no-wrap">' . $lC_Language->get('text_special_price') . '<span class="disctag tag glossy mid-margin-left">-' . number_format($discount, DECIMAL_PLACES) . '%</span></small>';
+      }
+      $content .= '  </div>' .
                   '  <div class="new-row-mobile twelve-columns twelve-columns-mobile">' .
                   '    <span class="nowrap margin-right">' .
                   '      <span class="input small-margin-top">' .
@@ -377,5 +386,27 @@ class lC_Products_b2b_Admin extends lC_Products_pro_Admin {
     }
     
     return false;
+  }  
+ /*
+  *  Update main product price
+  *
+  * @param integer $id The product id
+  * @access public
+  * @return boolean
+  */   
+  private static function _updateBasePrice($products_id, $products_price) {
+    global $lC_Database;
+
+    $Qupdate = $lC_Database->query('update :table_products set products_price = :products_price where products_id = :products_id');
+    $Qupdate->bindTable(':table_products', TABLE_PRODUCTS);
+    $Qupdate->bindInt(':products_id', $products_id);
+    $Qupdate->bindFloat(':products_price', $products_price);
+    $Qupdate->execute();
+    
+    if ( $lC_Database->isError() ) {
+      return false;
+    }
+    
+    return true;
   }  
 }
