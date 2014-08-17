@@ -36,8 +36,9 @@ class lC_Products_b2b_Admin extends lC_Products_pro_Admin {
     $lC_Database->startTransaction();    
     
     // remove all old pricing records
-    $Qpricing = $lC_Database->query('delete from :table_products_pricing where products_id = :products_id');
+    $Qpricing = $lC_Database->query('delete from :table_products_pricing where products_id = :products_id or parent_id = :products_id');
     $Qpricing->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
+    $Qpricing->bindInt(':products_id', $products_id);
     $Qpricing->bindInt(':products_id', $products_id);
     $Qpricing->setLogging($_SESSION['module'], $products_id);
     $Qpricing->execute(); 
@@ -48,6 +49,7 @@ class lC_Products_b2b_Admin extends lC_Products_pro_Admin {
       // add qty price breaks
       if (is_array($data['products_qty_break_point']) && !empty($data['products_qty_break_point'])) {
         if ($products_id != null) {
+          
           // add the new records
           foreach($data['products_qty_break_point'] as $group => $values) {
             if (is_array($data['products_qty_break_point'][$group]) && $data['products_qty_break_point'][$group][1] != null) {          
@@ -57,13 +59,15 @@ class lC_Products_b2b_Admin extends lC_Products_pro_Admin {
                 if ($data['products_qty_break_point'][$group][$key] == null) continue;
                 if ($data['products_qty_break_point'][$group][$key] == '1') continue;  // do not save qty 1, base price is same
                 
+                $price = (is_array($data['options_pricing']) && !empty($data['options_pricing'])) ? 0.00 : $data['products_qty_break_price'][$group][$key]; // for options support
+                
                 $Qpb = $lC_Database->query('insert into :table_products_pricing (products_id, group_id, tax_class_id, qty_break, price_break, date_added) values (:products_id, :group_id, :tax_class_id, :qty_break, :price_break, :date_added)');
                 $Qpb->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
                 $Qpb->bindInt(':products_id', $products_id );
                 $Qpb->bindInt(':group_id', $group);
                 $Qpb->bindInt(':tax_class_id', $data['tax_class_id'] );
                 $Qpb->bindValue(':qty_break', $data['products_qty_break_point'][$group][$key] );
-                $Qpb->bindValue(':price_break', $data['products_qty_break_price'][$group][$key] );
+                $Qpb->bindValue(':price_break', $price );
                 $Qpb->bindRaw(':date_added', 'now()');
                 $Qpb->setLogging($_SESSION['module'], $products_id);
                 $Qpb->execute();
@@ -76,6 +80,36 @@ class lC_Products_b2b_Admin extends lC_Products_pro_Admin {
             }
           }
           
+          // add qpb for options
+          if (is_array($data['options_pricing']) && !empty($data['options_pricing'])) {
+            
+            $parent_id = $products_id;
+            
+            foreach($data['options_pricing'] as $product_id => $groups) {
+              foreach($groups as $group_id => $data) {
+                foreach($data as $qty_break => $price) {
+                  if ((float)$price > 0.00) {
+                    $Qpb2 = $lC_Database->query('insert into :table_products_pricing (products_id, parent_id, group_id, tax_class_id, qty_break, price_break, date_added) values (:products_id, :parent_id, :group_id, :tax_class_id, :qty_break, :price_break, :date_added)');
+                    $Qpb2->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
+                    $Qpb2->bindInt(':products_id', $product_id );
+                    $Qpb2->bindInt(':parent_id', $parent_id );
+                    $Qpb2->bindInt(':group_id', $group_id);
+                    $Qpb2->bindInt(':tax_class_id', $data['tax_class_id'] );
+                    $Qpb2->bindValue(':qty_break', $qty_break );
+                    $Qpb2->bindFloat(':price_break', number_format((float)$price, DECIMAL_PLACES) );
+                    $Qpb2->bindRaw(':date_added', 'now()');
+                    $Qpb2->setLogging($_SESSION['module'], $product_id);
+                    $Qpb2->execute();
+                    
+                    if ( $lC_Database->isError() ) { 
+                      $error = true;
+                      break 3;
+                    }                      
+                  }
+                }  
+              }  
+            }
+          }          
         }
       }
     }

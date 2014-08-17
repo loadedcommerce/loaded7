@@ -666,6 +666,7 @@ CREATE TABLE lc_products_notifications (
 DROP TABLE IF EXISTS lc_products_pricing;
 CREATE TABLE lc_products_pricing (
   products_id int(11) NOT NULL,
+  parent_id int(11) NOT NULL DEFAULT '0',
   group_id int(11) NOT NULL,
   tax_class_id int(11) NOT NULL,
   qty_break int(11) NOT NULL DEFAULT '-1',

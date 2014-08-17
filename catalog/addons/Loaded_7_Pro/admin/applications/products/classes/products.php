@@ -32,7 +32,7 @@ class lC_Products_pro_Admin extends lC_Products_Admin {
     $products_id = parent::save($id, $data);   
     
     $group = (defined('DEFAULT_CUSTOMERS_GROUP_ID') && DEFAULT_CUSTOMERS_GROUP_ID != null) ? (int)DEFAULT_CUSTOMERS_GROUP_ID : 1;    
-    
+                       
     // qty price breaks
     if (is_array($data['products_qty_break_point'][$group]) && $data['products_qty_break_point'][$group][1] != null) {
       if ($products_id != null) {
@@ -656,7 +656,7 @@ class lC_Products_pro_Admin extends lC_Products_Admin {
   * @param integer $cnt   The product id
   * @param array   $data  The product data
   * @access private
-  * @return string
+  * @return string                        $product_id, $val['group_id'], $val['qty_break'], $val
   */
   private static function _getNewQPBPricingCol($product_id, $group, $cnt, $data = array()) {
     global $lC_Currencies, $pInfo; 
@@ -800,12 +800,12 @@ class lC_Products_pro_Admin extends lC_Products_Admin {
             $default_value = (($customers_group_id == DEFAULT_CUSTOMERS_GROUP_ID) ? number_format($val['data']['price'], DECIMAL_PLACES) : number_format(0, DECIMAL_PLACES));
           }
           
-          $tbody .= '<tr class="trop-' . $val['qty_break'] . '">' .
-                    '  <td id="trop-name-td-' . $cnt . '" class="element">' . $title . '</td>' . 
+          $tbody .= '<tr class="trop-1">' .
+                    '  <td id="trop-name-td-1" class="element">' . $title . '</td>' . 
                     '  <td>' .
                     '    <div class="inputs' . $input_class . '" style="display:inline; padding:8px 0;">' .
                     '      <span class="mid-margin-left no-margin-right">' . $lC_Currencies->getSymbolLeft() . '</span>' .
-                    '      <input type="text" class="input-unstyled" onfocus="$(this).select()" value="' . $default_value . '" id="options_pricing_' . $product_id . '_' . $customers_group_id . '_' . $cnt . '" name="options_pricing[' . $product_id . '][' . $customers_group_id . '][' . $cnt . ']" ' . $readonly . '>' .
+                    '      <input type="text" class="input-unstyled" onfocus="$(this).select()" value="' . $default_value . '" id="options_pricing_' . $product_id . '_' . $customers_group_id . '_1" name="options_pricing[' . $product_id . '][' . $customers_group_id . '][1]" ' . $readonly . '>' .
                     '    </div>' .
                     '  </td>';
 
@@ -813,10 +813,8 @@ class lC_Products_pro_Admin extends lC_Products_Admin {
             
             if (!isset($qpbData)) $qpbData = self::getQPBPricing($pInfo->get('products_id'), $customers_group_id);
             
-            $cnt = 0;
             foreach ($qpbData as $key => $val) {
-              $tbody .= self::_getNewQPBPricingCol($product_id, $val['group_id'], $key+1, $val);
-              $cnt = $key+1;
+              $tbody .= self::_getNewQPBPricingCol($product_id, $val['group_id'], $val['qty_break'], $val);
             }            
             
           }                    
