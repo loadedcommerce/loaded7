@@ -43,13 +43,17 @@ class lC_Products_b2b_Admin extends lC_Products_pro_Admin {
     $Qpricing->setLogging($_SESSION['module'], $products_id);
     $Qpricing->execute(); 
     
+    $qpb_pricing_enabled = (isset($data['qpb_pricing_switch']) && $data['qpb_pricing_switch'] == 1) ? true : false;
+    $groups_pricing_enabled = (isset($data['groups_pricing_switch']) && $data['groups_pricing_switch'] == 1) ? true : false;
+    $specials_pricing_enabled = (isset($data['specials_pricing_switch']) && $data['specials_pricing_switch'] == 1) ? true : false;
+    
     if ( $lC_Database->isError() ) {
       $error = true;
     } else {      
       // add qty price breaks
       if (is_array($data['products_qty_break_point']) && !empty($data['products_qty_break_point'])) {
         if ($products_id != null) {
-          
+         
           // add the new records
           foreach($data['products_qty_break_point'] as $group => $values) {
             if (is_array($data['products_qty_break_point'][$group]) && $data['products_qty_break_point'][$group][1] != null) {          
@@ -67,7 +71,7 @@ class lC_Products_b2b_Admin extends lC_Products_pro_Admin {
                 $Qpb->bindInt(':group_id', $group);
                 $Qpb->bindInt(':tax_class_id', $data['tax_class_id'] );
                 $Qpb->bindValue(':qty_break', $data['products_qty_break_point'][$group][$key] );
-                $Qpb->bindValue(':price_break', $price );
+                $Qpb->bindFloat(':price_break', $price );
                 $Qpb->bindRaw(':date_added', 'now()');
                 $Qpb->setLogging($_SESSION['module'], $products_id);
                 $Qpb->execute();
@@ -88,7 +92,7 @@ class lC_Products_b2b_Admin extends lC_Products_pro_Admin {
             foreach($data['options_pricing'] as $product_id => $groups) {
               foreach($groups as $group_id => $data) {
                 foreach($data as $qty_break => $price) {
-                  if ((float)$price > 0.00) {
+                //  if ((float)$price > 0.00) {
                     $Qpb2 = $lC_Database->query('insert into :table_products_pricing (products_id, parent_id, group_id, tax_class_id, qty_break, price_break, date_added) values (:products_id, :parent_id, :group_id, :tax_class_id, :qty_break, :price_break, :date_added)');
                     $Qpb2->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
                     $Qpb2->bindInt(':products_id', $product_id );
@@ -105,7 +109,7 @@ class lC_Products_b2b_Admin extends lC_Products_pro_Admin {
                       $error = true;
                       break 3;
                     }                      
-                  }
+                 // }
                 }  
               }  
             }

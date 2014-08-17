@@ -23,7 +23,7 @@ global $lC_Language, $lC_Currencies, $pInfo;
 <script>   
 $(document).ready(function() {
   var qpbPricingEnable = '<?php echo (isset($pInfo) && $pInfo->get('qpb_pricing_enable') == 1) ? 1 : 0; ?>';
-  if (qpbPricingEnable == 1) $('#qpb-switch').click();   
+  if (qpbPricingEnable == 1) $('#qpb-switch').click(); 
 });
   
 function validateQPBPoint(e) {
@@ -33,7 +33,8 @@ function validateQPBPoint(e) {
   var prevID = (parseInt(prevArr[5]) > 0) ? parseInt(prevArr[5]) - 1 : 0;
   var prevIDText = prevArr[0] + '_' + prevArr[1] + '_' + prevArr[2] + '_point_' + prevArr[4] + '_' + prevID.toString();
   var prev = $('#' + prevIDText).val();
-  
+  var hasOptions = '<?php echo (isset($pInfo) && (lC_Products_pro_Admin::hasComboOptions($pInfo->get('products_id')) || lC_Products_pro_Admin::hasSubProducts($pInfo->get('products_id')))) ? true : false; ?>';
+
   if (parseInt(curr) <= parseInt(prev)) { 
     $.modal({
       content: '<div id="qpbMsg">'+
@@ -60,7 +61,7 @@ function validateQPBPoint(e) {
     });
   }
   
-  var parts = $(e).attr('id').split('_');
+  var parts = $(e).attr('id').split('_');   
   _addNewQPBRow(parts);
 }
 
@@ -68,6 +69,7 @@ function _addNewQPBRow(parts) {
   var group = parseInt(parts[4]);
   var id = parseInt(parts[5]) + 1;
   var symbol = '<?php echo $lC_Currencies->getSymbolLeft(); ?>';
+  var hasOptions = '<?php echo (isset($pInfo) && (lC_Products_pro_Admin::hasComboOptions($pInfo->get('products_id')) || lC_Products_pro_Admin::hasSubProducts($pInfo->get('products_id')))) ? true : false; ?>';
   
   if( $('#products_qty_break_point_' + group + '_' + parts[5]).val() == '' ) return false;
   if( $('#products_qty_break_point_' + group + '_' + id).length > 0 && $('#products_qty_break_point_' + group + '_' + id).val() == '') return false;
@@ -77,15 +79,22 @@ function _addNewQPBRow(parts) {
         '    <span class="mid-margin-left no-margin-right">#</span>' +                  
         '    <input type="text" onblur="validateQPBPoint(this);" onfocus="this+select();" name="products_qty_break_point[' + group + '][' + id + ']" id="products_qty_break_point_' + group + '_' + id + '" value="" class="input-unstyled small-margin-right" style="width:60px;" />' +
         '  </div>' +         
-        '  <small class="input-info mid-margin-left mid-margin-right no-wrap">Qty</small>' + 
-        '  <div class="inputs" style="display:inline; padding:8px 0;">' +
-        '    <span class="mid-margin-left no-margin-right">' + symbol + '</span>' +
-        '    <input type="text" onblur="validateQPBPrice(this);" onfocus="this+select();" name="products_qty_break_price[' + group + '][' + id + ']" id="products_qty_break_price_' + group + '_' + id + '" value="" class="input-unstyled small-margin-right" style="width:60px;" />' +
-        '  </div>' + 
-        '  <small class="input-info mid-margin-left no-wrap">Price</small><span onclick="removeQPBRow(\'products_qty_break_point_div_' + group + '_' + id + '\');" class="margin-left icon-cross icon-red icon-size2 cursor-pointer"></span>' + 
-        '</div>';      
+        '  <small class="input-info mid-margin-left mid-margin-right no-wrap">Qty</small>';
+  if (hasOptions == false) {
+    row += '  <div class="inputs" style="display:inline; padding:8px 0;">' +
+           '    <span class="mid-margin-left no-margin-right">' + symbol + '</span>' +
+           '    <input type="text" onblur="validateQPBPrice(this);" onfocus="this+select();" name="products_qty_break_price[' + group + '][' + id + ']" id="products_qty_break_price_' + group + '_' + id + '" value="" class="input-unstyled small-margin-right" style="width:60px;" />' +
+           '  </div>' +
+           '  <small class="input-info mid-margin-left no-wrap">Price</small>';
+  }
+  row += '  <span onclick="removeQPBRow(\'products_qty_break_point_div_' + group + '_' + id + '\');" class="margin-left icon-cross icon-red icon-size2 cursor-pointer"></span>';
+  row += '</div>';      
               
   $('#qpbContainer_' + group).append(row);  
+  
+  if (hasOptions == true) {
+    $.modal.alert('Pricing columns for new break points will appear in the Options Pricing section after saving.');
+  }  
 }
 
 function removeQPBRow(id) {

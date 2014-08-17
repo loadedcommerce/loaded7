@@ -583,11 +583,14 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
       var switchIsEnabled = $(e).parent('.switch').hasClass('checked');
       if (divIsOpen) {
         $('#' + section).slideUp('300');
+        $('.qpb-opt').hide(); // hide qpb options
       } else {
         if (switchIsEnabled && divIsOpen) {
           $('#' + section).slideUp('300');
+          $('.qpb-opt').hide(); // hide qpb options
         } else {
           $('#' + section).slideDown('300');
+          $('.qpb-opt').show(); // show qpb options
         }
       }
       
