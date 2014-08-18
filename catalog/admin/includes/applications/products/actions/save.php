@@ -95,6 +95,9 @@ class lC_Application_Products_Actions_save extends lC_Application_Products {
       // options pricing
       if (isset($_POST['options_pricing'])) $data['options_pricing'] = $_POST['options_pricing'];
       
+      // specials pricing
+      if (isset($_POST['specials_pricing'])) $data['specials_pricing'] = $_POST['specials_pricing'];      
+      
       // group pricing
       $data['groups_pricing_switch'] = (isset($_POST['groups_pricing_switch']) && $_POST['groups_pricing_switch'] == 'on') ? true : false;
       if (isset($_POST['group_pricing'])) $data['group_pricing'] = $_POST['group_pricing'];     

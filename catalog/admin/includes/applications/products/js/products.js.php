@@ -583,14 +583,22 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
       var switchIsEnabled = $(e).parent('.switch').hasClass('checked');
       if (divIsOpen) {
         $('#' + section).slideUp('300');
-        $('.qpb-opt').hide(); // hide qpb options
+        if (section == 'qty_breaks_pricing_container') $('.qpb-opt').hide(); // hide qpb options
+        if (section == 'qty_breaks_pricing_container') $('.special-price-div').show(); // show normal special price div
+        if (section == 'specials_pricing_container') $('.special-options').hide(); // hide qpb options
       } else {
         if (switchIsEnabled && divIsOpen) {
           $('#' + section).slideUp('300');
-          $('.qpb-opt').hide(); // hide qpb options
+          if (section == 'qty_breaks_pricing_container') $('.qpb-opt').hide(); // hide qpb options
+          if (section == 'qty_breaks_pricing_container') $('.special-price-div').show(); // show normal special price div
+          if (section == 'specials_pricing_container') $('.special-options').hide(); // hide qpb options
+
         } else {
           $('#' + section).slideDown('300');
-          $('.qpb-opt').show(); // show qpb options
+          if (section == 'qty_breaks_pricing_container') $('.qpb-opt').show(); // show qpb options
+          if (section == 'qty_breaks_pricing_container') $('.special-price-div').hide(); // hide normal special price div
+          if (section == 'specials_pricing_container') $('.special-options').show(); // hide qpb options
+
         }
       }
       

@@ -756,13 +756,19 @@ class lC_Products_pro_Admin extends lC_Products_Admin {
         if ((isset($title) && $title != NULL)) {
           if (isset($pInfo) && $hasQPBPricing && $cnt == 0) {
             $qpbData = self::getQPBPricing($pInfo->get('products_id'), $customers_group_id);
-            $tbody .= '<tr class="trop-0 qpb-opt">' .
+            $tbody .= '<tr class="trop-0">' .
                       '  <td>&nbsp;</td>' . 
-                      '  <td class="strong" style="padding-left:30px !important">Qty 1</td>';
+                      '  <td class="strong qpb-opt" style="padding-left:30px !important">Qty 1</td>';
             foreach ($qpbData as $qkey => $qval) {
               $bpArr[] = $qval['qty_break'];
-              $tbody .= '  <td class="strong" style="padding-left:30px !important">Qty ' . $qval['qty_break'] . '</td>';          
+              $tbody .= '  <td class="strong qpb-opt" style="padding-left:30px !important">Qty ' . $qval['qty_break'] . '</td>';          
             }
+            
+            // added for options w/special price
+            if (utility::isB2B()) {
+              $tbody .= '  <td class="strong red special-options qpb-opt" style="">Special Price</td>';
+            }
+            
             $tbody .= '</tr>';
           }
 
@@ -774,19 +780,14 @@ class lC_Products_pro_Admin extends lC_Products_Admin {
           
           $tbody .= '<tr class="trop-1">' .
                     '  <td id="trop-name-td-1" class="element">' . $title . '</td>';
-       //             '  <td>' .
-       //             '    <div class="inputs' . $input_class . '" style="display:inline; padding:8px 0;">' .
-       //             '      <span class="mid-margin-left no-margin-right">' . $lC_Currencies->getSymbolLeft() . '</span>' .
-       //             '      <input type="text" class="input-unstyled" onfocus="$(this).select()" value="' . $default_value . '" id="options_pricing_' . $product_id . '_' . $customers_group_id . '_1" name="options_pricing[' . $product_id . '][' . $customers_group_id . '][1]" ' . $readonly . '>' .
-       //             '    </div>' .
-       //             '  </td>';
 
-   //       if (isset($pInfo) && $hasQPBPricing) {
-
-            $tbody .= self::_getNewQPBPricingCol($product_id, $customers_group_id, $bpArr);
+          $tbody .= self::_getNewQPBPricingCol($product_id, $customers_group_id, $bpArr);
+          
+          // added for options w/special price
+          if (utility::isB2B()) {
+            $tbody .= self::_getNewSpecialPricingCol($product_id, $customers_group_id);
+          }          
          
-   //       }                    
-                    
           $tbody .= '</tr>';
           
           $cnt++;                    
@@ -796,6 +797,29 @@ class lC_Products_pro_Admin extends lC_Products_Admin {
 
     return $tbody;
   }  
+ /*
+  * Generate special price column
+  *
+  * @param integer $group The customer group id
+  * @param integer $cnt   The product id
+  * @param array   $data  The product data
+  * @access private
+  * @return string                    
+  */
+  private static function _getNewSpecialPricingCol($product_id, $group_id) {
+    global $lC_Currencies; 
+    
+    $content .= '  <td class="special-options qpb-opt">' .
+                '    <div class="inputs" style="display:inline; padding:8px 0; border:1px solid red;">' .
+                '      <span class="mid-margin-left no-margin-right red">' . $lC_Currencies->getSymbolLeft() . '</span>' .
+                '      <input type="text" class="input-unstyled red" onfocus="$(this).select()" value="' . self::_getSpecialOptionPrice($product_id, $group_id) . '" id="specials_pricing_' . $product_id . '_' . $group_id . '" name="specials_pricing[' . $product_id . '][' . $group_id . ']">' .
+                '    </div>' .
+                '  </td>';     
+                
+    return $content;                
+  }  
+  
+  
  /*
   * Generate qty price break column
   *
@@ -814,7 +838,7 @@ class lC_Products_pro_Admin extends lC_Products_Admin {
       $content .= '  <td>' .
                   '    <div class="inputs" style="display:inline; padding:8px 0;">' .
                   '      <span class="mid-margin-left no-margin-right">' . $lC_Currencies->getSymbolLeft() . '</span>' .
-                  '      <input type="text" class="input-unstyled" onfocus="$(this).select()" value="' . self::_getOptionPrice($product_id, $group_id, 1) . '" id="options_pricing_' . $product_id . '_' . $group_id . '_1" name="options_pricing[' . $product_id . '][' . $group_id . '][1]">' .
+                  '      <input type="text" class="input-unstyled" onfocus="$(this).select()" value="' . self::_getQPBOptionPrice($product_id, $group_id, 1) . '" id="options_pricing_' . $product_id . '_' . $group_id . '_1" name="options_pricing[' . $product_id . '][' . $group_id . '][1]">' .
                   '    </div>' .
                   '  </td>'; 
                           
@@ -978,13 +1002,13 @@ class lC_Products_pro_Admin extends lC_Products_Admin {
     return $tbody;
   }   
  /*
-  *  Get the options product price
+  *  Get the QPB options product price
   *
   * @param integer $id The product id
   * @access public
   * @return boolean
   */   
-  private static function _getOptionPrice($products_id, $group_id, $qty_break) {
+  private static function _getQPBOptionPrice($products_id, $group_id, $qty_break) {
     global $lC_Database;
     
     $Qproducts = $lC_Database->query('select price_break from :table_products_pricing where products_id = :products_id and group_id = :group_id and qty_break = :qty_break limit 1');
@@ -1003,4 +1027,32 @@ class lC_Products_pro_Admin extends lC_Products_Admin {
 
     return number_format($result, DECIMAL_PLACES);
   }
+  
+ /*
+  *  Get the special options product price
+  *
+  * @param integer $products_id The product id
+  * @param integer $group_id    The customer group id
+  * @access public
+  * @return boolean
+  */   
+  private static function _getSpecialOptionPrice($products_id, $group_id) {
+    global $lC_Database;               
+    
+    $Qproducts = $lC_Database->query('select special_price from :table_products_pricing where products_id = :products_id and group_id = :group_id and special_status = :special_status limit 1');
+    $Qproducts->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
+    $Qproducts->bindInt(':products_id', $products_id);
+    $Qproducts->bindInt(':group_id', $group_id);
+    $Qproducts->bindInt(':special_status', 1);
+    $Qproducts->execute();
+                 
+    $result = 0;
+    if ($Qproducts->numberOfRows() > 0) {
+      $result = $Qproducts->valueDecimal('special_price');
+    }
+    
+    $Qproducts->freeResult();
+
+    return number_format($result, DECIMAL_PLACES);
+  }  
 }

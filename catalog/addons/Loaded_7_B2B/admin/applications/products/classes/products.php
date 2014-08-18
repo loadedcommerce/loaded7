@@ -92,8 +92,8 @@ die($lC_Database->getError());
             $parent_id = $products_id;
 
             foreach($data['options_pricing'] as $product_id => $groups) {
-              foreach($groups as $group_id => $data) {
-                foreach($data as $qty_break => $price) {
+              foreach($groups as $group_id => $gdata) {
+                foreach($gdata as $qty_break => $price) {
                   $Qpb2 = $lC_Database->query('insert into :table_products_pricing (products_id, parent_id, group_id, tax_class_id, qty_break, price_break, date_added) values (:products_id, :parent_id, :group_id, :tax_class_id, :qty_break, :price_break, :date_added)');
                   $Qpb2->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
                   $Qpb2->bindInt(':products_id', $product_id );
@@ -111,7 +111,6 @@ die($lC_Database->getError());
                     $error = true;
                     break 3;
                   }   
-                //  if ($qty_break == 1) self::_updateBasePrice($product_id, number_format((float)$price, DECIMAL_PLACES)); 
                 }  
               }  
             }
@@ -154,6 +153,10 @@ die($lC_Database->getError());
           
           // add the new records
           foreach($data['products_special_pricing'] as $group => $values) {
+            
+            $start_date = (isset($values['start_date']) && empty($values['start_date']) === false) ? $values['start_date'] : '0000-00-00 00:00:00';
+            $expires_date = (isset($values['expires_date']) && empty($values['expires_date']) === false) ? $values['expires_date'] : '0000-00-00 00:00:00';
+            
             $Qsp = $lC_Database->query('insert into :table_products_pricing (products_id, group_id, tax_class_id, special_status, special_price, special_start, special_end, date_added) values (:products_id, :group_id, :tax_class_id, :special_status, :special_price, :special_start, :special_end, :date_added)');
             $Qsp->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
             $Qsp->bindInt(':products_id', $products_id );
@@ -162,8 +165,8 @@ die($lC_Database->getError());
             $Qsp->bindValue(':special_status', (($values['enable'] == 'on') ? 1 : 0));
             $Qsp->bindValue(':special_price', number_format($values['price'], DECIMAL_PLACES));
             $Qsp->bindRaw(':date_added', 'now()');
-            $Qsp->bindRaw(':special_start', "'" . ((strstr($values['start_date'], '/')) ? lC_DateTime::toDateTime($values['start_date']) : $values['start_date']) . "'");
-            $Qsp->bindRaw(':special_end', "'" . ((strstr($values['expires_date'], '/')) ? lC_DateTime::toDateTime($values['expires_date']) : $values['expires_date']) . "'");
+            $Qsp->bindRaw(':special_start', "'" . ((strstr($start_date, '/')) ? lC_DateTime::toDateTime($start_date) : $start_date) . "'");
+            $Qsp->bindRaw(':special_end', "'" . ((strstr($expires_date, '/')) ? lC_DateTime::toDateTime($expires_date) : $expires_date) . "'");
             $Qsp->setLogging($_SESSION['module'], $products_id);
             $Qsp->execute();          
             
@@ -176,6 +179,40 @@ die($lC_Database->getError());
         }      
       }   
     } 
+    
+    if ($error === false) {    
+      // add options special pricing
+      if (is_array($data['specials_pricing']) && !empty($data['specials_pricing'])) {
+        if ($products_id != null) {        
+          // add the new records
+          foreach($data['specials_pricing'] as $products_id => $val) {
+            foreach($val as $group_id => $special_price) {
+            
+              if ($special_price == null) continue;
+              
+              $Qgp = $lC_Database->query('insert into :table_products_pricing (products_id, parent_id, group_id, tax_class_id, special_status, special_price, date_added) values (:products_id, :parent_id, :group_id, :tax_class_id, :special_status, :special_price, :date_added)');
+              $Qgp->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
+              $Qgp->bindInt(':products_id', $products_id );
+              $Qgp->bindInt(':parent_id', $parent_id );
+              $Qgp->bindInt(':group_id', $group_id);
+              $Qgp->bindInt(':tax_class_id', $data['tax_class_id'] );
+              $Qgp->bindValue(':special_status', 1);
+              $Qgp->bindValue(':special_price', number_format($special_price, DECIMAL_PLACES));
+              $Qgp->bindRaw(':date_added', 'now()');
+              $Qgp->setLogging($_SESSION['module'], $products_id);
+              $Qgp->execute(); 
+                  
+              if ( $lC_Database->isError() ) {
+  die($lC_Database->getError());              
+                
+                $error = true;
+                break;
+              }                     
+            }
+          }      
+        }      
+      }
+    }    
    
     if ( $error === false ) {
       $lC_Database->commitTransaction();
@@ -311,19 +348,19 @@ die($lC_Database->getError());
         $special_price = number_format($Qpricing->valueDecimal('special_price'), DECIMAL_PLACES);
         
         $start_date_formatted = null;
-        if ($Qpricing->value('special_start') != null) {
+        if ($Qpricing->value('special_start') != null && $Qpricing->value('special_start') != '0000-00-00 00:00:00') {
           $start_date_formatted = lC_DateTime::getShort($Qpricing->value('special_start'));
         }
         $expires_date_formatted = null;
-        if ($Qpricing->value('special_end') != null) {
+        if ($Qpricing->value('special_end') != null && $Qpricing->value('special_end') != '0000-00-00 00:00:00') {
           $expires_date_formatted = lC_DateTime::getShort($Qpricing->value('special_end'));
         }        
         
       } else {   
         $special_status = (isset($pInfo) && $pInfo->get('products_special_status') != 0) ? ' checked' : null;  
         $special_price = (isset($pInfo)) ? number_format($pInfo->get('products_special_price'), DECIMAL_PLACES) : 0.00;      
-        $start_date_formatted = (isset($pInfo)) ? lC_DateTime::getShort($pInfo->get('products_special_start_date')) : null;
-        $expires_date_formatted = (isset($pInfo)) ? lC_DateTime::getShort($pInfo->get('products_special_expires_date')) : null;
+        $start_date_formatted = (isset($pInfo) && $pInfo->get('products_special_expires_date') != '0000-00-00 00:00:00') ? lC_DateTime::getShort($pInfo->get('products_special_start_date')) : null;
+        $expires_date_formatted = (isset($pInfo) && $pInfo->get('products_special_expires_date') != '0000-00-00 00:00:00') ? lC_DateTime::getShort($pInfo->get('products_special_expires_date')) : null;
       }
       
       $discount = (isset($base) && $base > 0.00) ? round( ((($base - $special_price) / $base) * 100), DECIMAL_PLACES) : 0.00; 
@@ -334,13 +371,13 @@ die($lC_Database->getError());
                   '<div class="columns">' .
                   '  <div class="new-row-mobile twelve-columns twelve-columns-mobile mid-margin-bottom">' .
                   '    <input id="products_special_pricing_pricing_' . $value['customers_group_id'] . '_enable" name="products_special_pricing[' . $value['customers_group_id'] . '][enable]" type="checkbox" ' . $checked . ' class="margin-right medium switch"' . $special_status . ' />';
-      if ($has_options === false) {                  
-        $content .= '    <div class="inputs" style="display:inline; padding:8px 0;">' .
+//      if ($has_options === false) {  
+        $content .= '    <div class="inputs special-price-div" style="display:inline; padding:8px 0; width:100px;">' .
                     '      <span class="mid-margin-left no-margin-right">' . $lC_Currencies->getSymbolLeft() . '</span>' .
                     '      <input type="text" onfocus="this.select();" onchange="updatePricingDiscountDisplay();" name="products_special_pricing[' . $value['customers_group_id'] . '][price]" id="products_special_pricing_' . $value['customers_group_id'] . '_price" value="' . $special_price . '" class="sprice input-unstyled small-margin-right" style="width:60px;" />' .
                     '    </div>' .
-                    '    <small class="input-info mid-margin-left no-wrap">' . $lC_Language->get('text_special_price') . '<span class="disctag tag glossy mid-margin-left">-' . number_format($discount, DECIMAL_PLACES) . '%</span></small>';
-      }
+                    '    <small class="input-info mid-margin-left no-wrap special-price-div" style="' . (($has_options === true) ? 'display:none;' : null) . '">' . $lC_Language->get('text_special_price') . '<span class="disctag tag glossy mid-margin-left">-' . number_format($discount, DECIMAL_PLACES) . '%</span></small>';
+//      }
       $content .= '  </div>' .
                   '  <div class="new-row-mobile twelve-columns twelve-columns-mobile">' .
                   '    <span class="nowrap margin-right">' .
@@ -386,27 +423,5 @@ die($lC_Database->getError());
     }
     
     return false;
-  }  
- /*
-  *  Update main product price
-  *
-  * @param integer $id The product id
-  * @access public
-  * @return boolean
-  */   
-  private static function _updateBasePrice($products_id, $products_price) {
-    global $lC_Database;
-
-    $Qupdate = $lC_Database->query('update :table_products set products_price = :products_price where products_id = :products_id');
-    $Qupdate->bindTable(':table_products', TABLE_PRODUCTS);
-    $Qupdate->bindInt(':products_id', $products_id);
-    $Qupdate->bindFloat(':products_price', $products_price);
-    $Qupdate->execute();
-    
-    if ( $lC_Database->isError() ) {
-      return false;
-    }
-    
-    return true;
-  }  
+  }   
 }
