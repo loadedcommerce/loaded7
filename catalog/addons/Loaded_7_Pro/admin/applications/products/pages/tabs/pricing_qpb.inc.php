@@ -92,6 +92,7 @@ function _addNewQPBRow(parts) {
   row += '</div>';      
               
   $('#qpbContainer_' + group).append(row);  
+  if (hasOptions) $('#products_qty_break_point_' + group + '_' + id).focus();
   
   if (hasOptions == true) {
     $('#qpb-save-msg').slideDown();

@@ -52,7 +52,7 @@ class lC_Products_b2b_Admin extends lC_Products_pro_Admin {
     } else {      
       // add qty price breaks
       if (is_array($data['products_qty_break_point']) && !empty($data['products_qty_break_point'])) {
-        if ($products_id != null) {
+        if ($products_id != null) {   
          
           // add the new records
           foreach($data['products_qty_break_point'] as $group => $values) {
@@ -83,14 +83,14 @@ die($lC_Database->getError());
                   break 2;
                 }                
               }
-            }
-          }
+            }    
+          }  
 
           // add qpb for options
           if (is_array($data['options_pricing']) && !empty($data['options_pricing'])) {
             
             $parent_id = $products_id;
-            
+
             foreach($data['options_pricing'] as $product_id => $groups) {
               foreach($groups as $group_id => $data) {
                 foreach($data as $qty_break => $price) {
@@ -111,7 +111,7 @@ die($lC_Database->getError());
                     $error = true;
                     break 3;
                   }   
-                  if ($qty_break == 1) self::_updateBasePrice($product_id, number_format((float)$price, DECIMAL_PLACES)); 
+                //  if ($qty_break == 1) self::_updateBasePrice($product_id, number_format((float)$price, DECIMAL_PLACES)); 
                 }  
               }  
             }
@@ -122,7 +122,7 @@ die($lC_Database->getError());
     if ($error === false) {    
       // add group pricing
       if (is_array($data['group_pricing']) && !empty($data['group_pricing'])) {
-        if ($products_id != null) {
+        if ($products_id != null) {        
           // add the new records
           foreach($data['group_pricing'] as $group => $values) {
             $Qgp = $lC_Database->query('insert into :table_products_pricing (products_id, group_id, tax_class_id, group_status, group_price, date_added) values (:products_id, :group_id, :tax_class_id, :group_status, :group_price, :date_added)');

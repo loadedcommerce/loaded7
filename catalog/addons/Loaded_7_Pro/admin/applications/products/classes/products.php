@@ -592,9 +592,8 @@ class lC_Products_pro_Admin extends lC_Products_Admin {
     
     $content = '';
     $groups = lC_Customer_groups_Admin::getAll();
-    $cnt = 1;
-
     foreach($groups['entries'] as $key => $value) {
+      $cnt = 0;
       $show_line = false;
       if (utility::isB2B()) {
         if (count($groups['entries'] > 1) && $cnt != count($groups['entries']) ) $show_line = true;
@@ -630,7 +629,8 @@ class lC_Products_pro_Admin extends lC_Products_Admin {
         $qpbData = self::getQPBPricing($pInfo->get('products_id'), $value['customers_group_id']);
         
         foreach ($qpbData as $key => $val) {
-          $content .= self::_getNewQPBPricingRow($val['group_id'], $key+1, $val);
+          $content .= self::_getNewQPBPricingRow($val['group_id'], $cnt+1, $val);
+          $cnt++;
         }
         // add a new row
         $content .= self::_getNewQPBPricingRow($value['customers_group_id'], $cnt+1);
@@ -814,7 +814,7 @@ class lC_Products_pro_Admin extends lC_Products_Admin {
       $content .= '  <td>' .
                   '    <div class="inputs" style="display:inline; padding:8px 0;">' .
                   '      <span class="mid-margin-left no-margin-right">' . $lC_Currencies->getSymbolLeft() . '</span>' .
-                  '      <input type="text" class="input-unstyled" onfocus="$(this).select()" value="' . self::_getBasePrice($product_id) . '" id="options_pricing_' . $product_id . '_' . $group_id . '_1" name="options_pricing[' . $product_id . '][' . $group_id . '][1]">' .
+                  '      <input type="text" class="input-unstyled" onfocus="$(this).select()" value="' . self::_getOptionPrice($product_id, $group_id, 1) . '" id="options_pricing_' . $product_id . '_' . $group_id . '_1" name="options_pricing[' . $product_id . '][' . $group_id . '][1]">' .
                   '    </div>' .
                   '  </td>'; 
                           
@@ -978,27 +978,29 @@ class lC_Products_pro_Admin extends lC_Products_Admin {
     return $tbody;
   }   
  /*
-  *  Get the base product price
+  *  Get the options product price
   *
   * @param integer $id The product id
   * @access public
   * @return boolean
   */   
-  private static function _getBasePrice($products_id) {
+  private static function _getOptionPrice($products_id, $group_id, $qty_break) {
     global $lC_Database;
-
-    $Qproducts = $lC_Database->query('select products_price from :table_products where products_id = :products_id');
-    $Qproducts->bindTable(':table_products', TABLE_PRODUCTS);
+    
+    $Qproducts = $lC_Database->query('select price_break from :table_products_pricing where products_id = :products_id and group_id = :group_id and qty_break = :qty_break limit 1');
+    $Qproducts->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
     $Qproducts->bindInt(':products_id', $products_id);
+    $Qproducts->bindInt(':group_id', $group_id);
+    $Qproducts->bindInt(':qty_break', $qty_break);
     $Qproducts->execute();
     
     $result = 0;
     if ($Qproducts->numberOfRows() > 0) {
-      $result = $Qproducts->valueDecimal('products_price');
+      $result = $Qproducts->valueDecimal('price_break');
     }
     
     $Qproducts->freeResult();
-    
+
     return number_format($result, DECIMAL_PLACES);
   }
 }
