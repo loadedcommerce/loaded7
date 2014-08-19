@@ -101,7 +101,7 @@ die($lC_Database->getError());
                   $Qpb2->bindInt(':group_id', $group_id);
                   $Qpb2->bindInt(':tax_class_id', $data['tax_class_id'] );
                   $Qpb2->bindValue(':qty_break', $qty_break );
-                  $Qpb2->bindFloat(':price_break', number_format((float)$price, DECIMAL_PLACES) );
+                  $Qpb2->bindFloat(':price_break', number_format($price, DECIMAL_PLACES) );
                   $Qpb2->bindRaw(':date_added', 'now()');
                   $Qpb2->setLogging($_SESSION['module'], $product_id);
                   $Qpb2->execute();
@@ -124,9 +124,11 @@ die($lC_Database->getError());
         if ($products_id != null) {        
           // add the new records
           foreach($data['group_pricing'] as $group => $values) {
-            $Qgp = $lC_Database->query('insert into :table_products_pricing (products_id, group_id, tax_class_id, group_status, group_price, date_added) values (:products_id, :group_id, :tax_class_id, :group_status, :group_price, :date_added)');
+            $Qgp = $lC_Database->query('insert into :table_products_pricing (products_id, qty_break, price_break, group_id, tax_class_id, group_status, group_price, date_added) values (:products_id, :qty_break, :price_break, :group_id, :tax_class_id, :group_status, :group_price, :date_added)');
             $Qgp->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
             $Qgp->bindInt(':products_id', $products_id );
+            $Qgp->bindInt(':qty_break', -1);
+            $Qgp->bindFloat(':price_break', number_format(0, DECIMAL_PLACES));
             $Qgp->bindInt(':group_id', $group);
             $Qgp->bindInt(':tax_class_id', $data['tax_class_id'] );
             $Qgp->bindValue(':group_status', (($values['enable'] == 'on') ? 1 : 0));
