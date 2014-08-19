@@ -818,8 +818,6 @@ class lC_Products_pro_Admin extends lC_Products_Admin {
                 
     return $content;                
   }  
-  
-  
  /*
   * Generate qty price break column
   *
@@ -977,24 +975,62 @@ class lC_Products_pro_Admin extends lC_Products_Admin {
     global $lC_Currencies;
     
     if ($customers_group_id == '') return false;  
-    $ok = (defined('ADDONS_SYSTEM_LOADED_7_PRO_STATUS') && ADDONS_SYSTEM_LOADED_7_PRO_STATUS == '1') ? true : false;
+    
+    $products_id = (isset($pInfo)) ? $pInfo->get('products_id') : null;
+    
+    $hasQPBPricing = self::hasQPBPricing($products_id);
+    
+    if (utility::isB2B()) {
+      $ok = true;
+      $input_class = null;
+      $readonly = null;
+    } else if (utility::isPro()) {
+      $ok = true;
+      $input_class = (($customers_group_id == DEFAULT_CUSTOMERS_GROUP_ID) ? null : ' disabled');
+      $readonly = (($customers_group_id == '1' && $ok) ? '' : ' READONLY');
+    }
     
     $tbody = ''; 
     $cnt = 0; 
+    $bpArr = array();
+
     if (isset($pInfo) && $pInfo->get('has_subproducts') == '1') {
       foreach ($pInfo->get('subproducts') as $key => $sub) {
         if ((isset($sub['products_name']) && $sub['products_name'] != NULL)) {
+          
+          if (isset($pInfo) && $hasQPBPricing && $cnt == 0) {
+            $qpbData = self::getQPBPricing($pInfo->get('products_id'), $customers_group_id);
+            $tbody .= '<tr class="trop-0">' .
+                      '  <td>&nbsp;</td>' . 
+                      '  <td class="strong qpb-opt second-td" style="padding-left:30px !important">Qty 1</td>';
+            foreach ($qpbData as $qkey => $qval) {
+              $bpArr[] = $qval['qty_break'];
+              $tbody .= '  <td class="strong qpb-opt" style="padding-left:30px !important">Qty ' . $qval['qty_break'] . '</td>';          
+            }
+            
+            // added for options w/special price
+            if (utility::isB2B()) {
+              $tbody .= '  <td class="strong red special-options" style="">Special Price</td>';
+            }
+            
+            $tbody .= '</tr>';
+          }
+          
+          $default_value = (isset($sub['products_price']) ? number_format($sub['products_price'], DECIMAL_PLACES) : number_format(0, DECIMAL_PLACES));
+          
+          $tbody .= '<tr class="trop-1">' .
+                    '  <td id="trop-name-td-1" class="element">' . $sub['products_name'] . '</td>';
 
-          $tbody .= '<tr class="trp-' . $cnt . '">' .
-                    '  <td id="name-td-' . $cnt . '" class="element">' . $sub['products_name'] . '</td>' . 
-                    '  <td>' .
-                    '    <div class="inputs' . (($customers_group_id == '1' || $ok) ? '' : ' disabled') . '" style="display:inline; padding:8px 0;">' .
-                    '      <span class="mid-margin-left no-margin-right">' . $lC_Currencies->getSymbolLeft() . '</span>' .
-                    '      <input type="text" class="input-unstyled" onfocus="$(this).select()" value="' . $sub['products_price'] . '" id="sub_products_price_' . $customers_group_id . '_' . $cnt . '" name="sub_products_price[' . $customers_group_id . '][' . $cnt . ']" ' . (($customers_group_id == '1' || $ok) ? '' : ' DISABLED') . '>' .
-                    '    </div>' .
-                    '  </td>' .
-                    '</tr>';
-          $cnt++;                    
+          $tbody .= self::_getNewQPBPricingCol($sub['products_id'], $customers_group_id, $bpArr);
+          
+          // added for options w/special price
+          if (utility::isB2B()) {
+            $tbody .= self::_getNewSpecialPricingCol($sub['products_id'], $customers_group_id);
+          }          
+         
+          $tbody .= '</tr>';
+          
+          $cnt++;          
         } 
       }
     }    

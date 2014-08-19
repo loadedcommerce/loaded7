@@ -583,8 +583,17 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
       var specialsEnabled = $('#specials_pricing_switch').parent('.switch').hasClass('checked');
       if (specialsEnabled) {
         var exists = $('*').hasClass('trop-0');
-        if (!exists) $('.options-table > tbody').prepend('<tr class="trop-0"><td>&nbsp;</td><td class="strong" style="padding-left:30px !important">&nbsp;</td><td class="strong red special-options" style="">Special Price</td>');          
-      }          
+        if (!exists) $('.options-table > tbody').prepend('<tr class="trop-0"><td>&nbsp;</td><td class="strong second-td" style="padding-left:30px !important">&nbsp;</td><td class="strong red special-options" style="">Special Price</td>');          
+      } 
+
+      var colCnt = $( "#tbody-subproducts-pricing-1 .trop-0 > td" ).filter(':visible').length;                                                                 
+      if (colCnt == 2) { 
+        $('.trop-0').prepend('<td class="fixme">&nbsp;</td>');
+      } else {
+        $('.fixme').remove();
+      }
+      
+         
     }
 
     // toggle section switches //
@@ -607,6 +616,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
       setTimeout(function() {  
         _updatePricingDivChevrons();
       }, 500);
+      
     }
     
     function validateForm(e) {
