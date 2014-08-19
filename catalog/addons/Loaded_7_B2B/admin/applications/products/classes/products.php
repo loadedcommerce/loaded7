@@ -159,9 +159,11 @@ die($lC_Database->getError());
             $start_date = (isset($values['start_date']) && empty($values['start_date']) === false) ? $values['start_date'] : '0000-00-00 00:00:00';
             $expires_date = (isset($values['expires_date']) && empty($values['expires_date']) === false) ? $values['expires_date'] : '0000-00-00 00:00:00';
             
-            $Qsp = $lC_Database->query('insert into :table_products_pricing (products_id, group_id, tax_class_id, special_status, special_price, special_start, special_end, date_added) values (:products_id, :group_id, :tax_class_id, :special_status, :special_price, :special_start, :special_end, :date_added)');
+            $Qsp = $lC_Database->query('insert into :table_products_pricing (products_id, qty_break, price_break, group_id, tax_class_id, special_status, special_price, special_start, special_end, date_added) values (:products_id, :qty_break, :price_break, :group_id, :tax_class_id, :special_status, :special_price, :special_start, :special_end, :date_added)');
             $Qsp->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
             $Qsp->bindInt(':products_id', $products_id );
+            $Qsp->bindInt(':qty_break', -1);
+            $Qsp->bindFloat(':price_break', number_format(0, DECIMAL_PLACES));
             $Qsp->bindInt(':group_id', $group);
             $Qsp->bindInt(':tax_class_id', $data['tax_class_id'] );
             $Qsp->bindValue(':special_status', (($values['enable'] == 'on') ? 1 : 0));
