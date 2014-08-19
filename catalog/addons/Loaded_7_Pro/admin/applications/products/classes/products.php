@@ -413,7 +413,7 @@ class lC_Products_pro_Admin extends lC_Products_Admin {
       if (isset($pInfo) && $pInfo->get('has_subproducts') == '1') {               
         $content .= '<div class="subproducts-pricing-container">' .    
                     '  <div class="big-text underline margin-top" style="padding-bottom:8px;">' . $lC_Language->get('text_sub_products') . '</div>' .
-                    '  <table class="simple-table subproducts-pricing-table">' .
+                    '  <table class="simple-table subproducts-pricing-table options-table">' .
                     '    <tbody id="tbody-subproducts-pricing-' . $value['customers_group_id'] . '">' . lC_Products_pro_Admin::getSubProductsPricingTbody($pInfo, $value['customers_group_id']) . '</tbody>' .
                     '  </table>' .        
                     '</div>';        
@@ -423,7 +423,7 @@ class lC_Products_pro_Admin extends lC_Products_Admin {
       if (isset($pInfo) && $pInfo->get('has_children') == '1') {
         $content .= '<div id="combo-options-pricing-container-' . $value['customers_group_id'] . '">' .    
                     '  <div class="big-text underline margin-top" style="padding-bottom:8px;">' . $lC_Language->get('text_combo_options') . '</div>' .
-                    '  <table class="simple-table combo-options-pricing-table">' .
+                    '  <table class="simple-table combo-options-pricing-table options-table">' .
                     '    <tbody id="tbody-combo-options-pricing-' . $value['customers_group_id'] . '">' . lC_Products_pro_Admin::getComboOptionsPricingTbody($pInfo, $value['customers_group_id']) . '</tbody>' .
                     '  </table>' .         
                     '</div>';         
@@ -766,7 +766,7 @@ class lC_Products_pro_Admin extends lC_Products_Admin {
             
             // added for options w/special price
             if (utility::isB2B()) {
-              $tbody .= '  <td class="strong red special-options qpb-opt" style="">Special Price</td>';
+              $tbody .= '  <td class="strong red special-options" style="">Special Price</td>';
             }
             
             $tbody .= '</tr>';
@@ -809,7 +809,7 @@ class lC_Products_pro_Admin extends lC_Products_Admin {
   private static function _getNewSpecialPricingCol($product_id, $group_id) {
     global $lC_Currencies; 
     
-    $content .= '  <td class="special-options qpb-opt">' .
+    $content .= '  <td class="special-options">' .
                 '    <div class="inputs" style="display:inline; padding:8px 0; border:1px solid red;">' .
                 '      <span class="mid-margin-left no-margin-right red">' . $lC_Currencies->getSymbolLeft() . '</span>' .
                 '      <input type="text" class="input-unstyled red" onfocus="$(this).select()" value="' . self::_getSpecialOptionPrice($product_id, $group_id) . '" id="specials_pricing_' . $product_id . '_' . $group_id . '" name="specials_pricing[' . $product_id . '][' . $group_id . ']">' .

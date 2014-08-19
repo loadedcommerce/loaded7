@@ -105,7 +105,11 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
       if (groupPricingEnable == 1) $('#groups_pricing_switch').click();
   
       var specialPricingEnable = '<?php echo (isset($pInfo) && $pInfo->get('specials_pricing_enable') == 1) ? 1 : 0; ?>';
-      if (specialPricingEnable == 1) $('#specials_pricing_switch').click();
+      if (specialPricingEnable == 1) { 
+        $('#specials_pricing_switch').click();
+      } else {
+        $('.special-options').hide();
+      }
          
     });
     <?php if ($pInfo) { ?>
@@ -574,33 +578,31 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
         $('#specials_pricing_container_span').removeClass(iconOpen).addClass(iconClose);
       } else {    
         $('#specials_pricing_container_span').removeClass(iconClose).addClass(iconOpen);
-      }    
+      }
+      
+      var specialsEnabled = $('#specials_pricing_switch').parent('.switch').hasClass('checked');
+      if (specialsEnabled) {
+        var exists = $('*').hasClass('trop-0');
+        if (!exists) $('.options-table > tbody').prepend('<tr class="trop-0"><td>&nbsp;</td><td class="strong" style="padding-left:30px !important">&nbsp;</td><td class="strong red special-options" style="">Special Price</td>');          
+      }          
     }
 
     // toggle section switches //
     function togglePricingSection(e, section) {
       var divIsOpen = $('#' + section).is(":visible");
       var switchIsEnabled = $(e).parent('.switch').hasClass('checked');
+      
       if (divIsOpen) {
         $('#' + section).slideUp('300');
         if (section == 'qty_breaks_pricing_container') $('.qpb-opt').hide(); // hide qpb options
         if (section == 'qty_breaks_pricing_container') $('.special-price-div').show(); // show normal special price div
         if (section == 'specials_pricing_container') $('.special-options').hide(); // hide qpb options
       } else {
-        if (switchIsEnabled && divIsOpen) {
-          $('#' + section).slideUp('300');
-          if (section == 'qty_breaks_pricing_container') $('.qpb-opt').hide(); // hide qpb options
-          if (section == 'qty_breaks_pricing_container') $('.special-price-div').show(); // show normal special price div
-          if (section == 'specials_pricing_container') $('.special-options').hide(); // hide qpb options
-
-        } else {
-          $('#' + section).slideDown('300');
-          if (section == 'qty_breaks_pricing_container') $('.qpb-opt').show(); // show qpb options
-          if (section == 'qty_breaks_pricing_container') $('.special-price-div').hide(); // hide normal special price div
-          if (section == 'specials_pricing_container') $('.special-options').show(); // hide qpb options
-
-        }
-      }
+        $('#' + section).slideDown('300');
+        if (section == 'qty_breaks_pricing_container') $('.qpb-opt').show(); // show qpb options
+        if (section == 'qty_breaks_pricing_container') { $('.special-price-div').hide(); } // hide normal special price div
+        if (section == 'specials_pricing_container') $('.special-options').show(); // hide special options dic
+     }
       
       setTimeout(function() {  
         _updatePricingDivChevrons();
