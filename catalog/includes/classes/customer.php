@@ -51,6 +51,21 @@ class lC_Customer {
     return $result;
   }    
   
+  public function getCustomerGroupName($id) {
+    global $lC_Database;
+    
+    $Qcg = $lC_Database->query('select customers_group_name from :table_customers_groups where customers_group_id = :customers_group_id limit 1');
+    $Qcg->bindTable(':table_customers_groups', TABLE_CUSTOMERS_GROUPS);
+    $Qcg->bindInt(':customers_group_id', $id);
+    $Qcg->execute();
+            
+    $result = $Qcg->value('customers_group_name');
+      
+    $Qcg->freeResult();
+    
+    return $result;
+  }  
+  
   public function getCustomerGroupAccess($id = null) {
     global $lC_Database;
     
@@ -61,16 +76,34 @@ class lC_Customer {
       
       $Qcg = $lC_Database->query('select customers_access_levels from :table_customers_groups_data where customers_group_id = :customers_group_id limit 1');
       $Qcg->bindTable(':table_customers_groups_data', TABLE_CUSTOMERS_GROUPS_DATA);
-      $Qcg->bindInt(':customers_groups_id', $id);
+      $Qcg->bindInt(':customers_group_id', $id);
       $Qcg->execute();
-              
+          
       $result = $Qcg->value('customers_access_levels');
         
       $Qcg->freeResult();
-    
     }
-    
+
     return $result;    
+  }
+  
+  public function getCustomerGroupAccessSql($id = null) {
+    
+    if ($id == null) $id = DEFAULT_CUSTOMERS_GROUP_ID;
+    
+    $levels = explode(';', $this->getCustomerGroupAccess($id));
+  
+    $result = '';
+    if (sizeof($levels) > 0) {
+      $result .= 'and ( ';
+      foreach ($levels as $key => $value) {
+        $result .= '(LOCATE(' . $value . ', p.access_levels) > 0) OR ';  
+      }
+      $result = substr($result, 0, -4);
+      $result .= ' )';
+    }
+
+    return $result;
   }
   
   public function getBaselineDiscount($id = null) {

@@ -606,6 +606,9 @@ CREATE TABLE lc_products (
   has_children int(11) DEFAULT NULL,
   is_subproduct TINYINT(1) NOT NULL DEFAULT '0',
   access_levels VARCHAR(255) NOT NULL DEFAULT '',
+  groups_pricing_enable tinyint(1) NOT NULL DEFAULT '0',
+  qpb_pricing_enable tinyint(1) NOT NULL DEFAULT '0',
+  specials_pricing_enable tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (products_id),
   KEY idx_products_date_added (products_date_added)
 ) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
@@ -663,11 +666,18 @@ CREATE TABLE lc_products_notifications (
 DROP TABLE IF EXISTS lc_products_pricing;
 CREATE TABLE lc_products_pricing (
   products_id int(11) NOT NULL,
+  parent_id int(11) NOT NULL DEFAULT '0',
   group_id int(11) NOT NULL,
   tax_class_id int(11) NOT NULL,
-  qty_break int(11) NOT NULL,
+  qty_break int(11) NOT NULL DEFAULT '-1',
   price_break decimal(13,4) NOT NULL DEFAULT '0.0000',
   date_added datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  group_status tinyint(1) NOT NULL DEFAULT '-1',
+  group_price decimal(15,4) NOT NULL DEFAULT '0.0000',
+  special_status tinyint(1) NOT NULL DEFAULT '-1',
+  special_price decimal(15,4) NOT NULL DEFAULT '0.0000',
+  special_start datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  special_end datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   KEY idx_products_pricing_group_id (group_id),
   KEY idx_products_pricing_products_id (products_id)
 ) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
@@ -744,6 +754,15 @@ CREATE TABLE lc_product_attributes (
   KEY idx_pa_id_products_id (id,products_id),
   KEY idx_pa_languages_id (languages_id),
   KEY idx_pa_products_id (products_id)
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+DROP TABLE IF EXISTS lc_purchase_orders_service;
+CREATE TABLE lc_purchase_orders_service (
+`po_number_id` int(11) NOT NULL AUTO_INCREMENT,  
+`po_number` varchar(255) NOT NULL,
+`orders_id` int(11) NOT NULL,
+`po_number_status` int(1) NOT NULL DEFAULT '1',
+PRIMARY KEY (`po_number_id`)
 ) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_reviews;

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+  <id>Hook in B2B Features</id>
+  <version>1.0.0</version>
+  <vqmver>2.3.2</vqmver>
+  <author>loadedcommerce.com</author>
+  <file name="includes/modules/content/upcoming_products.php">
+    <operation info="Product Restrictions">
+      <search position="before"><![CDATA[$lC_Product = new lC_Product($Qupcoming->valueInt('products_id'));]]></search>         
+      <add><![CDATA[global $lC_Customer; if (!lC_Product_b2b::hasProductAccess($Qupcoming->valueInt('products_id'), $lC_Customer->getCustomerGroup($lC_Customer->getID()))) continue;]]></add>
+    </operation>  
+  </file> 
+</modification>

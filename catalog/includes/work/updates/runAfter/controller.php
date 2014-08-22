@@ -7,6 +7,7 @@
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: controller.php v1.0 2013-08-08 datazen $
 */ 
+error_reporting(0);
 require_once('includes/applications/updates/classes/updates.php'); 
  
 class lC_Updates_Admin_run_after extends lC_Updates_Admin {
@@ -371,9 +372,9 @@ class lC_Updates_Admin_run_after extends lC_Updates_Admin {
     parent::log("Database Update: INSERT IGNORE INTO `" . $pf . "configuration_group` (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES (22, 'File Uploads', 'File Upload Settings', 13, 1)");
     
     if (!defined('PRODUCT_MODULES_FILE_UPLOAD_TYPES')) {
-      $lC_Database->simpleQuery("INSERT INTO `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('Allowed File Types', 'PRODUCT_MODULES_FILE_UPLOAD_TYPES', '.zip,.pdf,.png,.gif,.jpg,.tiff,.gzip,.gz', 'Enter the allowed file upload extensions in a comma delimited format.', 22, 0, now(), now(), NULL, NULL);");
-      parent::log("Database Update: INSERT INTO `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('Allowed File Types', 'PRODUCT_MODULES_FILE_UPLOAD_TYPES', '.zip,.pdf,.png,.gif,.jpg,.tiff,.gzip,.gz', 'Enter the allowed file upload extensions in a comma delimited format.', 22, 0, now(), now(), NULL, NULL);");
-    }
+      $lC_Database->simpleQuery("INSERT INTO `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('Allowed File Types', 'PRODUCT_MODULES_FILE_UPLOAD_TYPES', '.zip,.pdf,.png,.gif,.jpg,.tiff,.gzip,.gz', 'Enter the allowed file upload extensions in a comma delimited format.', 22, 0, now(), now(), NULL, NULL)");
+      parent::log("Database Update: INSERT INTO `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('Allowed File Types', 'PRODUCT_MODULES_FILE_UPLOAD_TYPES', '.zip,.pdf,.png,.gif,.jpg,.tiff,.gzip,.gz', 'Enter the allowed file upload extensions in a comma delimited format.', 22, 0, now(), now(), NULL, NULL)");
+    }    
     
     if (!defined('PRODUCT_MODULES_FILE_UPLOAD_TYPES')) {  
       $lC_Database->simpleQuery("INSERT IGNORE INTO `" . $pf . "configuration_group` (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES (22, 'Product Info Page', 'Settings specific to the product information page.', 22, 1);");
@@ -405,10 +406,58 @@ class lC_Updates_Admin_run_after extends lC_Updates_Admin {
     } 
     
     if (!defined('PRODUCT_MODULES_FILE_UPLOAD_MAX_SIZE')) {
-      $lC_Database->simpleQuery("INSERT INTO `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('Maximum Upload File Size', 'PRODUCT_MODULES_FILE_UPLOAD_MAX_SIZE', '10', 'Enter the maximum size allowed for file uploads.', 22, 0, now(), now(), NULL, NULL);");
-      parent::log("Database Update: INSERT INTO `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('Maximum Upload File Size', 'PRODUCT_MODULES_FILE_UPLOAD_MAX_SIZE', '10', 'Enter the maximum size (in MB) allowed for file uploads.', 22, 0, now(), now(), NULL, NULL);");
+      $lC_Database->simpleQuery("INSERT INTO `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('Maximum Upload File Size', 'PRODUCT_MODULES_FILE_UPLOAD_MAX_SIZE', '10', 'Enter the maximum size allowed for file uploads.', 22, 0, now(), now(), NULL, NULL)");
+      parent::log("Database Update: INSERT INTO `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('Maximum Upload File Size', 'PRODUCT_MODULES_FILE_UPLOAD_MAX_SIZE', '10', 'Enter the maximum size (in MB) allowed for file uploads.', 22, 0, now(), now(), NULL, NULL)");
     }         
      
+    if (utility::isB2B()) {
+      if (!defined('B2B_SETTINGS_ALLOW_SELF_REGISTER')) {
+        $lC_Database->simpleQuery("insert into `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('', 'B2B_SETTINGS_ALLOW_SELF_REGISTER', '1', '', '6', '0', '', '', now())");
+        parent::log("Database Update: insert into `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('', 'B2B_SETTINGS_ALLOW_SELF_REGISTER', '1', '', '6', '0', '', '', now())");
+  }
+      
+      if (!defined('B2B_SETTINGS_GUEST_CATALOG_ACCESS')) {
+        $lC_Database->simpleQuery("insert into `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('', 'B2B_SETTINGS_GUEST_CATALOG_ACCESS', '4', '', '6', '0', '', '', now())");
+        parent::log("Database Update: insert into `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('', 'B2B_SETTINGS_GUEST_CATALOG_ACCESS', '4', '', '6', '0', '', '', now())");
+}  
+    }
+
+    $lC_Database->simpleQuery("CREATE TABLE IF NOT EXISTS `" . $pf . "purchase_orders_service` (`po_number_id` int(11) NOT NULL AUTO_INCREMENT, `po_number` varchar(255) NOT NULL, `orders_id` int(11) NOT NULL, `po_number_status` int(1) NOT NULL DEFAULT '1', PRIMARY KEY (`po_number_id`)) ENGINE=" . $engine . " CHARACTER SET utf8 COLLATE utf8_general_ci"); 
+    parent::log("Database Update: CREATE TABLE IF NOT EXISTS `" . $pf . "purchase_orders_service` (`po_number_id` int(11) NOT NULL AUTO_INCREMENT, `po_number` varchar(255) NOT NULL, `orders_id` int(11) NOT NULL, `po_number_status` int(1) NOT NULL DEFAULT '1', PRIMARY KEY (`po_number_id`)) ENGINE=" . $engine . " CHARACTER SET utf8 COLLATE utf8_general_ci"); 
+    
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "products_pricing` ADD `group_status` TINYINT(1) NOT NULL DEFAULT '-1'");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "products_pricing` ADD `group_status` TINYINT(1) NOT NULL DEFAULT '-1'");
+
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "products_pricing` ADD `group_price` DECIMAL(15,4) NOT NULL DEFAULT '0.0000'");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "products_pricing` ADD `group_price` DECIMAL(15,4) NOT NULL DEFAULT '0.0000'");
+
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "products_pricing` ADD `special_status` TINYINT(1) NOT NULL DEFAULT '-1'");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "products_pricing` ADD `special_status` TINYINT(1) NOT NULL DEFAULT '-1'");
+
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "products_pricing` ADD `special_price` DECIMAL(15,4) NOT NULL DEFAULT '0.0000'");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "products_pricing` ADD `special_price` DECIMAL(15,4) NOT NULL DEFAULT '0.0000'");
+
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "products_pricing` ADD `special_start` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00'");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "products_pricing` ADD `special_start` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00'");
+
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "products_pricing` ADD `special_end` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00'");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "products_pricing` ADD `special_end` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00'");
+    
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "products_pricing` CHANGE `qty_break` INT(11) NOT NULL DEFAULT '-1'");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "products_pricing` CHANGE `qty_break` INT(11) NOT NULL DEFAULT '-1'");
+    
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "products` ADD `groups_pricing_enable` TINYINT(1) NOT NULL DEFAULT '0'");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "products` ADD `groups_pricing_enable` TINYINT(1) NOT NULL DEFAULT '0'");
+    
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "products` ADD `qpb_pricing_enable` TINYINT(1) NOT NULL DEFAULT '0'");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "products` ADD `qpb_pricing_enable` TINYINT(1) NOT NULL DEFAULT '0'");
+    
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "products` ADD `specials_pricing_enable` TINYINT(1) NOT NULL DEFAULT '0'");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "products` ADD `specials_pricing_enable` TINYINT(1) NOT NULL DEFAULT '0'");
+    
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "products_pricing` ADD `parent_id` TINYINT(1) NOT NULL DEFAULT '0' AFTER `products_id`");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "products_pricing` ADD `parent_id` TINYINT(1) NOT NULL DEFAULT '0' AFTER `products_id`");
+
   }
 }  
 ?>

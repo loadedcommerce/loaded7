@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+  <id>After VQMOD-001</id>
+  <version>1.0.0</version>
+  <vqmver>2.3.2</vqmver>
+  <author>loadedcommerce.com</author>
+	<file name="templates/core/content/account/receipt.php">
+    <operation info="PO Mod 1">
+      <search position="before"><![CDATA[
+				$order = new lC_Order($_GET['receipt']);
+      ]]></search> 
+      <add><![CDATA[	
+					//Purchase Orders Service Module(PO) START	
+					if (utility::isB2B()) {		
+					require_once($lC_Vqmod->modCheck('addons/purchase_orders_service/classes/order.php'));
+					}
+					//Purchase Orders Service Module(PO) End			
+      ]]></add>
+    </operation>
+  </file>	
+  <file name="templates/core/content/account/receipt.php">
+    <operation info="PO Mod 2">
+      <search position="after"><![CDATA[
+	      <div><strong><?php echo $lC_Language->get('receipt_payment_method_title'); ?></strong> <?php echo $order->info['payment_method']; ?></div> 
+      ]]></search> 
+      <add><![CDATA[	
+				<?php //Purchase Orders Service Module(PO) START					
+					if (utility::isB2B()) {	
+					$po_number = lC_Order_l7p::retrive_PO_number($_GET['receipt']);
+						if($po_number != '') {
+					?>
+					<div><strong><?php echo $lC_Language->get('text_po_number_title'); ?></strong> 
+						<?php echo $po_number; ?>
+					</div> 
+
+				<?php 
+						}
+					}
+				?>
+      ]]></add>
+    </operation>
+  </file>	
+</modification>
