@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+  <id>Hook in B2B Features</id>
+  <version>1.0.0</version>
+  <vqmver>2.3.2</vqmver>
+  <author>loadedcommerce.com</author>
+  <file name="includes/classes/order.php">
+    <operation info="PO Mod 1">
+      <search position="before"><![CDATA[lC_Order::sendEmail($order_id);]]></search>         
+      <add><![CDATA[if (utility::isB2B()) {  global $lC_Vqmod;  include_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'addons/Loaded_7_B2B/classes/order.php'));  lC_Order_b2b::insertPONumber($order_id, $_POST['po_number']);}]]></add>
+    </operation>  
+  </file> 
+</modification>

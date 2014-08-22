@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+  <id>Hook in B2B Features</id>
+  <version>1.0.0</version>
+  <vqmver>2.3.2</vqmver>
+  <author>loadedcommerce.com</author>
+  <file name="includes/application_bottom.php">
+    <operation info="Guest Access">
+      <search position="before"><![CDATA[$lC_Services->stopServices();]]></search>         
+      <add><![CDATA[if (defined('ADDONS_SYSTEM_LOADED_7_B2B_STATUS') && ADDONS_SYSTEM_LOADED_7_B2B_STATUS == 1) { if (defined('B2B_SETTINGS_GUEST_CATALOG_ACCESS') && B2B_SETTINGS_GUEST_CATALOG_ACCESS == 0) { $page = lc_sanitize_string(basename(key(array_slice($_GET, 0, 1)))); if ($lC_Customer->isLoggedOn() === false && $page != 'login') { if (defined('B2B_SETTINGS_ALLOW_SELF_REGISTER') && B2B_SETTINGS_ALLOW_SELF_REGISTER == 1 && $page != 'create') { $lC_NavigationHistory->setSnapshot(); lc_redirect(lc_href_link(FILENAME_ACCOUNT, 'login', 'SSL')); }}} if (file_exists('addons/Loaded_7_B2B/javascript/general.js.php')) { include_once('addons/Loaded_7_B2B/javascript/general.js.php'); }}]]></add>
+    </operation>  
+  </file> 
+</modification>
