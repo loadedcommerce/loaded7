@@ -315,6 +315,7 @@ if ($lC_Database->isError()) die($lC_Database->getError());
   public function setDefaultAddressID($id) {
     if (is_numeric($id) && ($id > 0)) {
       $this->_data['default_address_id'] = $id;
+      $_SESSION['lC_Customer_data']['default_address_id'] = $id; // fix for default_address_id
     } else {
       $this->_data['default_address_id'] = false;
     }
