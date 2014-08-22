@@ -17,6 +17,7 @@ heading_customers = Customers
 heading_products = Products
 heading_guest_access = Guest Access
 heading_access_group_levels = Access Group Levels
+heading_msrp_pricing = MSRP Pricing
 
 table_heading_id = ID
 table_heading_group = Access Level
@@ -31,6 +32,8 @@ label_status = Status
 label_active = Active
 label_registered = Registered
 label_new_access_level = New Access Level
+label_show_guest_only_msrp = Show Guest Only MSRP
+label_show_retail_only_msrp = Show Retail Only MSRP
 
 button_create_new = Create New
 
@@ -45,6 +48,7 @@ delete_error_customer_access_level_in_use_end = customers and cannot be removed.
 
 info_bubble_displays_create_account_form = Displays Create Account Form
 info_bubble_guest_catalog_access = Control Guest Access to the Catalog
+info_hides_purchase_prices = Hides Purchase Prices
 
 text_add_to_cart = Add to Cart
 text_members = Members

@@ -15,7 +15,7 @@ class lC_Product {
 
     if ( !empty($id) ) {
       if ( is_numeric($id) ) {
-        $Qproduct = $lC_Database->query('select products_id as id, parent_id, products_quantity as quantity, products_price as price, products_model as model, products_tax_class_id as tax_class_id, products_weight as weight, products_weight_class as weight_class_id, products_date_added as date_added, manufacturers_id, has_children, is_subproduct, access_levels from :table_products where products_id = :products_id and products_status = :products_status');
+        $Qproduct = $lC_Database->query('select products_id as id, parent_id, products_quantity as quantity, products_price as price, products_msrp as msrp, products_model as model, products_tax_class_id as tax_class_id, products_weight as weight, products_weight_class as weight_class_id, products_date_added as date_added, manufacturers_id, has_children, is_subproduct, access_levels from :table_products where products_id = :products_id and products_status = :products_status');
         $Qproduct->bindTable(':table_products', TABLE_PRODUCTS);
         $Qproduct->bindInt(':products_id', $id);
         $Qproduct->bindInt(':products_status', 1);
@@ -272,6 +272,10 @@ class lC_Product {
   public function getModel() {
     return $this->_data['model'];
   }
+  
+  public function getMSRP() {
+    return $this->_data['msrp'];
+  }  
 
   public function hasKeyword() {
     return (isset($this->_data['keyword']) && !empty($this->_data['keyword']));
@@ -390,6 +394,16 @@ class lC_Product {
     }
     
     $price = $price + $modTotal;
+    
+    // overrides
+    if (utility::isB2B) {
+      if (defined('B2B_SETTINGS_SHOW_GUEST_ONLY_MSRP') && B2B_SETTINGS_SHOW_GUEST_ONLY_MSRP == '1' && $lC_Customer->isLoggedOn() === false) {
+        $price = $this->getMSRP();
+      }
+      if (defined('B2B_SETTINGS_SHOW_RETAIL_ONLY_MSRP') && B2B_SETTINGS_SHOW_RETAIL_ONLY_MSRP == '1' && $lC_Customer->isLoggedOn() === true && $lC_Customer->getCustomerGroup() == DEFAULT_CUSTOMERS_GROUP_ID) {
+        $price = $this->getMSRP();
+      }      
+    }    
     
     $tax = 0;
     $taxRate = 0;

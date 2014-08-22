@@ -41,7 +41,7 @@
         <!-- Tabs -->
         <ul class="tabs">
           <li class="active"><a href="#customers"><?php echo $lC_Language->get('heading_customers'); ?></a></li>
-          <!-- li><a href="#products"><?php echo $lC_Language->get('heading_products'); ?></a></li -->
+          <li><a href="#products"><?php echo $lC_Language->get('heading_products'); ?></a></li>
         </ul>
         <!-- Content -->
         <div class="tabs-content">
@@ -102,9 +102,27 @@
             </div>
           </div>
           
-          <!-- div id="products" class="with-padding">
-            <p>Coming Soon ...</p>
-          </div -->        
+          <div id="products" class="with-padding">
+            <fieldset class="fieldset">
+              <legend class="legend"><?php echo $lC_Language->get('heading_msrp_pricing'); ?></legend>
+              <div class="columns no-margin-bottom">
+                <div class="new-row-mobile twelve-columns mid-margin-bottom small-padding-left">
+                  <p class="button-height inline-label">
+                    <label for="show_guest_only_msrp" class="label allow-self-register"><?php echo $lC_Language->get('label_show_guest_only_msrp'); ?></label>
+                    <?php 
+                    $checked = ((is_object($b2bInfo) && $b2bInfo->get('B2B_SETTINGS_SHOW_GUEST_ONLY_MSRP') == '1') ? 'checked="checked" ' : '');
+                    echo lc_draw_checkbox_field('show_guest_only_msrp',null, null, $checked . 'class="switch medium" data-text-on="' . strtoupper($lC_Language->get('button_yes')) . '" data-text-off="' . strtoupper($lC_Language->get('button_no')) . '"'); ?><span class="small margin-left"><?php echo $lC_Language->get('info_hides_purchase_prices'); ?></span>                
+                  </p>
+                  <p class="button-height inline-label">
+                    <label for="show_retail_only_msrp" class="label allow-self-register"><?php echo $lC_Language->get('label_show_retail_only_msrp'); ?></label>
+                    <?php 
+                    $checked = ((is_object($b2bInfo) && $b2bInfo->get('B2B_SETTINGS_SHOW_RETAIL_ONLY_MSRP') == '1') ? 'checked="checked" ' : '');
+                    echo lc_draw_checkbox_field('show_retail_only_msrp',null, null, $checked . 'class="switch medium" data-text-on="' . strtoupper($lC_Language->get('button_yes')) . '" data-text-off="' . strtoupper($lC_Language->get('button_no')) . '"'); ?><span class="small margin-left"><?php echo $lC_Language->get('info_hides_purchase_prices'); ?></span>                
+                  </p>                  
+                </div>
+              </div>
+            </fieldset>           
+          </div>        
           
         </div>
       </div> 

@@ -111,7 +111,23 @@ class lC_B2b_settings_Admin {
     
     $Qcfg->freeResult(); 
     
+    $Qcfg = $lC_Database->query('select configuration_value from :table_configuration where configuration_key = :configuration_key');
+    $Qcfg->bindTable(':table_configuration', TABLE_CONFIGURATION);
+    $Qcfg->bindValue(':configuration_key', 'B2B_SETTINGS_SHOW_GUEST_ONLY_MSRP');
+    $Qcfg->execute(); 
     
+    $data['B2B_SETTINGS_SHOW_GUEST_ONLY_MSRP'] = $Qcfg->value('configuration_value'); 
+    
+    $Qcfg->freeResult(); 
+    
+    $Qcfg = $lC_Database->query('select configuration_value from :table_configuration where configuration_key = :configuration_key');
+    $Qcfg->bindTable(':table_configuration', TABLE_CONFIGURATION);
+    $Qcfg->bindValue(':configuration_key', 'B2B_SETTINGS_SHOW_RETAIL_ONLY_MSRP');
+    $Qcfg->execute(); 
+    
+    $data['B2B_SETTINGS_SHOW_RETAIL_ONLY_MSRP'] = $Qcfg->value('configuration_value'); 
+    
+    $Qcfg->freeResult();         
     
     return $data;
   }   
