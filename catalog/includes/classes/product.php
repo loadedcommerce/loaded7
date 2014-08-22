@@ -307,7 +307,7 @@ class lC_Product {
     
     // initial price = base price    
     $base_price = $this->getBasePrice();
-    $price = (float)$base_price;
+    $price = (float)$base_price;   
     
     // options modifiers
     if (is_array($data['simple_options']) && count($data['simple_options']) > 0) {
@@ -334,7 +334,7 @@ class lC_Product {
       $special_price = $lC_Specials->getPrice($product_id);
       $price = ((float)$special_price < (float)$price) ? (float)$special_price : (float)$price;
     }       
-    
+
     // if has qty price breaks, adjust base price to break price
     $qpbText = '';
     if ($this->hasQtyPriceBreaks($product_id, $customers_group_id)) {
@@ -396,14 +396,14 @@ class lC_Product {
     $price = $price + $modTotal;
     
     // overrides
-    if (utility::isB2B) {
+    if (utility::isB2B() && $_GET['action'] != 'cart_add') {
       if (defined('B2B_SETTINGS_SHOW_GUEST_ONLY_MSRP') && B2B_SETTINGS_SHOW_GUEST_ONLY_MSRP == '1' && $lC_Customer->isLoggedOn() === false) {
         $price = $this->getMSRP();
       }
       if (defined('B2B_SETTINGS_SHOW_RETAIL_ONLY_MSRP') && B2B_SETTINGS_SHOW_RETAIL_ONLY_MSRP == '1' && $lC_Customer->isLoggedOn() === true && $lC_Customer->getCustomerGroup() == DEFAULT_CUSTOMERS_GROUP_ID) {
         $price = $this->getMSRP();
       }      
-    }    
+    } 
     
     $tax = 0;
     $taxRate = 0;
@@ -481,11 +481,14 @@ class lC_Product {
   */   
   public function hasQtyPriceBreaks($products_id, $customers_group_id = 1) {
     global $lC_Database;
-    
-    $Qpb = $lC_Database->query('select * from :table_products_pricing where products_id = :products_id and group_id = :group_id limit 1');
+                          
+    $Qpb = $lC_Database->query('select pp.* from :table_products p left join :table_products_pricing pp on (p.products_id = pp.products_id) where p.qpb_pricing_enable = :qpb_pricing_enable and pp.products_id = :products_id and pp.group_id = :group_id and pp.qty_break != :qty_break limit 1');
+    $Qpb->bindTable(':table_products', TABLE_PRODUCTS);
     $Qpb->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
     $Qpb->bindInt(':products_id', $products_id);
     $Qpb->bindInt(':group_id', $customers_group_id);
+    $Qpb->bindInt(':qpb_pricing_enable', 1);
+    $Qpb->bindInt(':qty_break', -1);
     $Qpb->execute();  
     
     $hasQPB = false;
