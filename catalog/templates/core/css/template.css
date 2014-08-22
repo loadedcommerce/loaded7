@@ -719,6 +719,61 @@
 #loaded7 span.active-cpath {
   font-weight: bold; 
 }
+
+/* product info page social sharing icons */
+#loaded7 .social_wrap {
+  margin-left: 0px;
+  margin-bottom: 15px;
+}
+
+#loaded7 .icon-facebook-text {
+  padding-left: 5px;
+}
+
+#loaded7 .icon-twitter-text {
+  padding-left: 5px;
+}
+
+#loaded7 .icon-google-plus-text {
+  padding-left: 5px;
+}
+
+#loaded7 .icon-linkedin-text {
+  padding-left: 5px;
+}
+
+#loaded7 .icon-pinterest-text {
+  padding-left: 5px;
+}
+
+#loaded7 .icon-tumblr-text {
+  padding-left: 5px;
+}
+
+#loaded7 .btn-google-plus i {
+  color: #E04B34;
+}
+
+#loaded7 .btn-twitter i {
+  color: #00AAF0;
+}
+
+#loaded7 .btn-facebook i {
+  color: #435F9F;
+}
+
+#loaded7 .btn-linkedin i {
+  color: #ffffff;
+}
+
+#loaded7 .btn-tumblr i {
+  color: #444444;
+  font-weight: bold;
+}
+
+#loaded7 .btn-pinterest i {
+  color: #CE1F21;
+}
   
 /********************************************************/
 /*                7. Error classes                      */
@@ -1176,6 +1231,13 @@
 }
 
 @media (min-width: 768px) and (max-width: 939px) {
+  #loaded7 .show-on-tablet {
+    display: block;
+  }
+
+  #loaded7 .hide-on-tablet {
+    display: none;
+  }
   .nav > li > a {
     padding: 10px 6px;
     font-size: 13px;
