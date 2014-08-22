@@ -600,7 +600,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
     function togglePricingSection(e, section) {
       var divIsOpen = $('#' + section).is(":visible");
       var switchIsEnabled = $(e).parent('.switch').hasClass('checked');
-      var hasOptions = '<?php echo ((isset($pInfo) && (lC_Products_pro_Admin::hasComboOptions($products_id) || lC_Products_pro_Admin::hasSubProducts($products_id))) ? 1 : 0); ?>';
+      var hasOptions = '<?php echo ((isset($pInfo) && (lC_Products_pro_Admin::hasComboOptions($pInfo->get('products_id')) || lC_Products_pro_Admin::hasSubProducts($pInfo->get('products_id')))) ? 1 : 0); ?>';
 
       if (divIsOpen) {
         $('#' + section).slideUp('300');
