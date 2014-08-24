@@ -72,10 +72,17 @@ class lC_CategoryTree {
     if ( $lC_Cache->read('category_tree-' . $lC_Language->getCode(), 720) ) {
       $this->_data = $lC_Cache->getCache();
     } else {
-      $Qcategories = $lC_Database->query('select c.categories_id, c.categories_image, c.parent_id, c.categories_mode, c.categories_link_target, c.categories_custom_url, c.categories_status, c.categories_visibility_nav, c.categories_visibility_box, c.access_levels, cd.categories_name, cd.categories_menu_name from :table_categories c, :table_categories_description cd where c.categories_status = 1 and c.categories_id = cd.categories_id and cd.language_id = :language_id order by c.parent_id, c.sort_order, cd.categories_name, cd.categories_menu_name');
+      $Qcategories = $lC_Database->query('select c.categories_id, c.categories_image, c.parent_id, c.categories_mode, c.categories_link_target, c.categories_custom_url, c.categories_status, c.categories_visibility_nav, c.categories_visibility_box, c.access_levels, cd.categories_name, cd.categories_menu_name from :table_categories c, :table_categories_description cd where c.categories_status = 1 and c.categories_id = cd.categories_id and cd.language_id = :language_id');
       $Qcategories->bindTable(':table_categories', TABLE_CATEGORIES);
       $Qcategories->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
       $Qcategories->bindInt(':language_id', $lC_Language->getID());
+
+      if (utility::isB2B() && !isset($_SESSION['admin'])) {
+        $Qcategories->appendQuery('and LOCATE(' . $lC_Customer->getCustomerGroupAccess() . ', c.access_levels) > 0');
+      }    
+      
+      $Qcategories->appendQuery('order by c.parent_id, c.sort_order, cd.categories_name, cd.categories_menu_name');
+
       $Qcategories->execute();
 
       while ( $Qcategories->next() ) {

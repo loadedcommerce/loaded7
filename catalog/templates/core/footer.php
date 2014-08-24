@@ -10,19 +10,17 @@
   */
 ?>
 <!--footer.php start-->
-
 <div id="footer" class="container">
   <hr>
   <div class="row">
     <div class="col-sm-3 col-lg-3">
-      <h4 class="line3 center standart-h4title"><span>New Arrivals</span></h4>
+      <h4 class="line3 center standart-h4title"><span><?php echo $lC_Language->get('text_new_arrivals'); ?></span></h4>
       <ul class="footer-links list-indent list-unstyled">
         <?php echo lC_Template_output::newArrivalsListing(); ?>
       </ul>
     </div>
-
     <div class="col-sm-3 col-lg-3">
-      <h4 class="line3 center standard-h4title"><span>Customer Service</span></h4>
+      <h4 class="line3 center standard-h4title"><span><?php echo $lC_Language->get('text_customer_service'); ?></span></h4>
       <ul class="footer-links list-indent list-unstyled">
         <li><a href="<?php echo lc_href_link(FILENAME_DEFAULT, 'cPath=2_3', 'AUTO'); ?>"><?php echo $lC_Language->get('text_shipping_returns'); ?></a></li>
         <li><a href="<?php echo lc_href_link(FILENAME_DEFAULT, 'cPath=2_4', 'AUTO'); ?>"><?php echo $lC_Language->get('text_privacy'); ?></a></li>                                              
@@ -30,10 +28,9 @@
         <li><a href="<?php echo lc_href_link(FILENAME_INFO, 'contact', 'SSL'); ?>"><?php echo $lC_Language->get('text_contact'); ?></a></li>
         <li><a href="<?php echo lc_href_link(FILENAME_INFO, 'sitemap', 'AUTO'); ?>"><?php echo $lC_Language->get('text_sitemap'); ?></a></li> 
       </ul>
-    </div> 
-
+    </div>
     <div class="col-sm-3 col-lg-3">
-      <h4 class="line3 center standard-h4title"><span>My Account</span></h4>
+      <h4 class="line3 center standard-h4title"><span><?php echo $lC_Language->get('my_account'); ?></span></h4>
       <ul class="footer-links list-indent list-unstyled">
         <li><a href="<?php echo lc_href_link(FILENAME_ACCOUNT, '', 'SSL'); ?>"><?php echo $lC_Language->get('text_sign_in'); ?></a></li>
         <li><a href="<?php echo lc_href_link(FILENAME_ACCOUNT, 'password', 'SSL'); ?>"><?php echo $lC_Language->get('text_my_password'); ?></a></li>
@@ -42,14 +39,12 @@
         <li><a href="<?php echo lc_href_link(FILENAME_ACCOUNT, 'notifications', 'SSL'); ?>"><?php echo $lC_Language->get('text_my_updates_alerts'); ?></a></li>
       </ul>
     </div>
-
     <div class="col-sm-3 col-lg-3 large-margin-bottom">
-      <h4 class="line3 center standard-h4title"><span>Our Office</span></h4>
+      <h4 class="line3 center standard-h4title"><span><?php echo $lC_Language->get('text_our_office'); ?></span></h4>
       <address class="margin-left">
         <strong><?php echo STORE_NAME; ?></strong><br>
         <?php echo nl2br(STORE_NAME_ADDRESS); ?><br>
       </address>
-
       <!-- QR Code -->
       <a id="qrcode-tooltip">
         <span style="cursor:pointer;">

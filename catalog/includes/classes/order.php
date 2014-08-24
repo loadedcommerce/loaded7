@@ -531,7 +531,7 @@ class lC_Order {
       $Qupdate->bindInt(':products_id', $Qproducts->valueInt('products_id'));
       $Qupdate->execute();
     }
-    
+
     lC_Order::sendEmail($order_id);
 
     unset($_SESSION['prepOrderID']);

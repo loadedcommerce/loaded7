@@ -186,6 +186,80 @@ function removeCoupon(code) {
   );  
 }
 
+/* FILE UPLOAD VARIANT MODULE */
+
+$(document).on('change', '.btn-file :file', function() {
+  var input = $(this),
+  numFiles = input.get(0).files ? input.get(0).files.length : 1,
+  label = input.val().replace(/\\/g, '/').replace(/.*\//, ''),
+  title = input.attr('default').replace(/\\/g, '/').replace(/.*\//, ''),
+  htitle = input.attr('htitle').replace(/\\/g, '/').replace(/.*\//, ''),
+  groupID = input.attr('group-id').replace(/\\/g, '/').replace(/.*\//, ''),
+  valueID = input.attr('value-id').replace(/\\/g, '/').replace(/.*\//, ''),
+  modifier = input.attr('modifier').replace(/\\/g, '/').replace(/.*\//, ''),
+  id = input.attr('id').replace(/\\/g, '/').replace(/.*\//, '');
+  
+  newFileRow(numFiles, label, id, title, htitle, groupID, valueID, modifier);
+});
+
+$(document).ready( function() {  
+  $('.file-inputs').bootstrapFileInput();
+  $('.btn-file :file').on('fileselect', function(event, numFiles, label, id, title, htitle, groupID, valueID, modifier) {
+    newFileRow(numFiles, label, id, title, htitle, groupID, valueID, modifier)
+  });
+});
+
+function newFileRow(numFiles, label, id, title, htitle, groupID, valueID, modifier) {
+
+  if (id.indexOf("mupload") != -1) { // multiple file upload
+    icon = id.replace('_options_mupload_', '_options_remove_');
+    icon2 = id.replace('variants_mupload_', 'variants_remove_');
+  } else {
+    icon = id.replace('_options_upload_', '_options_remove_');
+    icon2 = id.replace('variants_upload_', 'variants_remove_');
+  }
+  
+  if (numFiles > 0) {  
+    $('#' + icon).removeClass('hidden');
+    $('#' + icon2).removeClass('hidden');
+    $('#' + id).parent('a').removeClass('btn-primary').addClass('btn-success');
+  } else {
+    $('#' + icon).addClass('hidden');
+    $('#' + icon2).addClass('hidden');
+    $('#' + id).parent('a').removeClass('btn-success').addClass('btn-primary');
+  }
+
+  if (id.indexOf("mupload") != -1) { // multiple file upload  
+    var cnt = parseInt(id.split('_').slice(-1)[0]) + 1;
+    
+    if (modifier == 'variant') {
+      var row = '<div id="file_upload_div_' + cnt + '" class="form-group margin-left">'+
+                '  <label class="label-control" style="width:29%;">' + htitle + '</label>'+
+                '  <input type="file" htitle="' + htitle + '" modifier="variant" group-id="' +  groupID + '" value-id="' + valueID + '" class="file-input-' + cnt + ' file-inputs btn-primary btn-file mid-margin-left" data-filename-placement="inside" title="' + title + '" default="' + title + '" name="variants_upload[]" value="' + valueID + '" onchange="refreshPrice();" id="variants_mupload_' + cnt + '">'+
+                '  <input type="hidden" name="variants[' + groupID + ']" value="' + valueID + '" id="variants_' + groupID + '_' + valueID + '">'+
+                '  <i id="variants_remove_' + cnt + '" class="fa fa-times margin-left red hidden" style="cursor:pointer;" onclick="removeFileUploadRow(\'' + cnt + '\');"></i>'+
+                '</div>';
+    } else {
+      var row = '<div id="file_upload_div_' + cnt + '" class="no-margin-top small-margin-bottom small-padding-left small-margin-left">'+
+                '  <label>'+
+                '  <input type="file"  htitle="' + htitle + '" group-id="' + groupID + '" value-id="' + valueID + '" class="file-input-' + cnt + ' file-inputs btn-primary btn-file" data-filename-placement="inside" title="' + title + '" default="' + title + '" name="simple_options_upload[]" value="' + valueID + '" modifier="' + modifier + '" onchange="refreshPrice();" id="simple_options_mupload_' + cnt + '">'+
+                '  <input type="hidden" name="simple_options[' + groupID + '][' + valueID + '][]" value="' + valueID + '" modifier="' + modifier + '" id="simple_options_' + cnt + '">'+
+                '</label><i id="simple_options_remove_' + cnt + '" class="fa fa-times margin-left red hidden" style="cursor:pointer;" onclick="removeFileUploadRow(\'' + cnt + '\');"></i>'+
+                '</div>';
+    }
+    $('#file_upload_container').append(row);
+    $('.file-input-' + cnt).bootstrapFileInput();
+  }
+};
+
+function removeFileUploadRow(id) {
+  $('#file_upload_div_' + id).remove();
+  var len = $('#file_upload_container div').length;
+  if (len == 0) document.location.href = document.location.href;
+}
+
+/* FILE UPLOAD VARIANT MODULE /EOF */
+
 ;function print_r (array, return_val) {
   // http://kevin.vanzonneveld.net
   // +   original by: Michael White (http://getsprink.com)
