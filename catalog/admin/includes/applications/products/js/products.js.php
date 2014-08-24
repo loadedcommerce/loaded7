@@ -7,9 +7,18 @@
   @copyright  Template built on Developr theme by DisplayInline http://themeforest.net/user/displayinline under Extended license 
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: products.js.php v1.0 2013-08-08 datazen $
-*/
+*/                                                                             
 global $lC_Template, $lC_Language, $lC_Image, $pInfo;
 if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
+      
+  class lC_Products_pro_Admin {
+    public static function hasComboOptions() {} 
+  }      
+      
+  $has_options = false;
+  if (isset($pInfo) && method_exists('lC_Products_pro_Admin', "hasComboOptions") && method_exists('lC_Products_pro_Admin', "hasSubProducts")) {
+    $has_options = (lC_Products_pro_Admin::hasComboOptions($pInfo->get('products_id')) || lC_Products_pro_Admin::hasSubProducts($pInfo->get('products_id'))) ? 1 : 0; 
+  }
   ?>
   <script>
     $(document).ready(function() {
@@ -600,7 +609,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
     function togglePricingSection(e, section) {
       var divIsOpen = $('#' + section).is(":visible");
       var switchIsEnabled = $(e).parent('.switch').hasClass('checked');
-      var hasOptions = '<?php echo ((isset($pInfo) && (lC_Products_pro_Admin::hasComboOptions($pInfo->get('products_id')) || lC_Products_pro_Admin::hasSubProducts($pInfo->get('products_id')))) ? 1 : 0); ?>';
+      var hasOptions = '<?php echo $has_options; ?>';
 
       if (divIsOpen) {
         $('#' + section).slideUp('300');
