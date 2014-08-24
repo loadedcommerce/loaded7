@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+  <id>After VQMOD-001</id>
+  <version>1.0.0</version>
+  <vqmver>2.3.2</vqmver>
+  <author>loadedcommerce.com</author>
+  <file name="includes/content/checkout/process.php">
+    <operation info="Before VQMOD-001">
+      <search position="before"><![CDATA[
+	      $lC_Payment->process();
+      ]]></search> 
+	  
+      <add><![CDATA[
+		//Purchase Orders Service Module(PO) START	
+		if (utility::isB2B()) {	
+			require_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'addons/Loaded_7_B2B/classes/order.php'));
+		}
+    //Purchase Orders Service Module(PO) END
+      ]]></add>
+    </operation>
+  </file>	
+</modification>

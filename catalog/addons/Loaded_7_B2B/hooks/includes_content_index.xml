@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+  <id>Hook in B2B Features</id>
+  <version>1.0.0</version>
+  <vqmver>2.3.2</vqmver>
+  <author>loadedcommerce.com</author>
+  <file name="includes/content/index/index.php">
+    <operation info="Category Restrictions">
+      <search position="after"><![CDATA[$this->_page_contents = 'category_listing.php';]]></search>         
+      <add><![CDATA[global $lC_Vqmod, $lC_Customer, $lC_ShoppingCart; if (file_exists(DIR_FS_CATALOG . 'addons/Loaded_7_B2B/classes/product.php')) include_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'addons/Loaded_7_B2B/classes/product.php')); if (!lC_Product_b2b::hasCategoryAccess($current_category_id, $lC_Customer->getCustomerGroup($id))) { $this->_page_contents = 'category_not_found.php'; }]]></add>
+    </operation>  
+  </file> 
+</modification>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+  <id>Admin Orders Mods</id>
+  <version>1.0.0</version>
+  <vqmver>2.3.2</vqmver>
+  <author>loadedcommerce.com</author>	
+	<file name="includes/applications/orders/pages/edit.php">   
+    <operation info="PO Mod 1">
+      <search position="after"><![CDATA[
+	     <div class="tabs-content" id="orders_sections">
+      ]]></search> 	  
+      <add><![CDATA[			
+				<?php
+				//Purchase Orders Service Module(PO) START
+				if (utility::isB2B()) {
+          require_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'addons/Purchase_Orders_Service/classes/order.php'));
+					$po_number = lC_Order_b2b::retrievePONumber($_GET['orders']);
+					if($po_number != '') {
+				?>						
+					<div class = "margin-top margin-left">&nbsp;&nbsp;<span class="icon-list icon-anthracite"><strong class="small-margin-left"><?php echo $lC_Language->get('text_po_number_title'); ?></strong></span>&nbsp;:&nbsp;<?php echo $po_number; ?></div>	
+				<?php 
+					}
+				}
+				//Purchase Orders Service Module(PO) END
+				?>			
+      ]]></add>
+    </operation>
+  </file>
+</modification>

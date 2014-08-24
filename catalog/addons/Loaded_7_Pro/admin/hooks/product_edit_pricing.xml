@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+  <id>QPB Pricing</id>
+  <version>1.0.0</version>
+  <vqmver>2.3.2</vqmver>
+  <author>loadedcommerce.com</author>
+  <file name="includes/applications/products/pages/tabs/pricing.php">
+    <operation info="Enable QPB Pricing">
+      <search position="after"><![CDATA[<!--VQMOD PRICING-1 HOOK POINT - Do Not Change or Remove-->]]></search>         
+      <add><![CDATA[<?php if (file_exists(DIR_FS_CATALOG . 'addons/Loaded_7_Pro/admin/applications/products/pages/tabs/pricing_qpb.inc.php')) include_once(DIR_FS_CATALOG . 'addons/Loaded_7_Pro/admin/applications/products/pages/tabs/pricing_qpb.inc.php'); ?>]]></add>
+    </operation> 
+    <operation info="Enable SubProducts and Combo Options">
+      <search position="replace"><![CDATA[<?php echo lC_Products_Admin::getOptionsPricingContent(); ?>]]></search>         
+      <add><![CDATA[<?php echo lC_Products_pro_Admin::getOptionsPricingContent(); ?>]]></add>
+    </operation>        
+  </file>   
+</modification>

@@ -600,16 +600,17 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
     function togglePricingSection(e, section) {
       var divIsOpen = $('#' + section).is(":visible");
       var switchIsEnabled = $(e).parent('.switch').hasClass('checked');
-      
+      var hasOptions = '<?php echo ((isset($pInfo) && (lC_Products_pro_Admin::hasComboOptions($pInfo->get('products_id')) || lC_Products_pro_Admin::hasSubProducts($pInfo->get('products_id')))) ? 1 : 0); ?>';
+
       if (divIsOpen) {
         $('#' + section).slideUp('300');
         if (section == 'qty_breaks_pricing_container') $('.qpb-opt').hide(); // hide qpb options
-        if (section == 'qty_breaks_pricing_container') $('.special-price-div').show(); // show normal special price div
+        if (hasOptions == 1) if (section == 'qty_breaks_pricing_container') $('.special-price-div').show(); // show normal special price div
         if (section == 'specials_pricing_container') $('.special-options').hide(); // hide qpb options
       } else {
         $('#' + section).slideDown('300');
         if (section == 'qty_breaks_pricing_container') $('.qpb-opt').show(); // show qpb options
-        if (section == 'qty_breaks_pricing_container') { $('.special-price-div').hide(); } // hide normal special price div
+        if (hasOptions == 1) if (section == 'qty_breaks_pricing_container') { $('.special-price-div').hide(); } // hide normal special price div
         if (section == 'specials_pricing_container') $('.special-options').show(); // hide special options dic
      }
       
