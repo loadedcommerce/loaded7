@@ -110,14 +110,18 @@ die($lC_Database->getError());
 die($lC_Database->getError());              
                     $error = true;
                     break 3;
-                  }   
+                  } 
+                  
+                  // if qty_break = 1, also update products_price
+                  if ($qty_break == 1 && $price > 0.00) self::_updateProductPrice($product_id, number_format($price, DECIMAL_PLACES));
+                    
                 }  
               }  
             }
           }          
         }
       }
-    }
+    }   
     if ($error === false) {    
       // add group pricing
       if (is_array($data['group_pricing']) && !empty($data['group_pricing'])) {
@@ -427,5 +431,27 @@ die($lC_Database->getError());
     }
     
     return false;
+  }  
+ /*
+  *  Determine if product has group pricing
+  *
+  * @param integer $id The product id
+  * @access public
+  * @return boolean
+  */   
+  private static function _updateProductPrice($products_id, $products_price) {
+    global $lC_Database;
+
+    $Qupdate = $lC_Database->query('update :table_products set products_price = :products_price where products_id = :products_id');
+    $Qupdate->bindTable(':table_products', TABLE_PRODUCTS);
+    $Qupdate->bindInt(':products_id', $products_id);
+    $Qupdate->bindFloat(':products_price', $products_price);
+    $Qupdate->execute();
+    
+    if ( $lC_Database->isError() ) { 
+      return false;
+    } 
+
+    return true;
   }   
 }

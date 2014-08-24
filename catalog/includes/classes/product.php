@@ -971,8 +971,8 @@ class lC_Product {
   * @return array
   */ 
   public function parseSubProducts($data) {
-    global $lC_Image, $lC_Currencies, $lC_Language;
-    
+    global $lC_Image, $lC_Currencies, $lC_Language, $lC_Tax, $lC_ShoppingCart;
+
     $output = '';
     foreach ($data as $key => $value) {
       
@@ -983,6 +983,17 @@ class lC_Product {
       $img = (isset($value['image']) && empty($value['image']) === false) ? $lC_Image->getAddress($value['image'], 'small') : 'images/pixel_trans.gif';
       $height = (isset($value['image']) && empty($value['image']) === false) ? $lC_Image->getHeight('small') : 1;
       $hcss = (isset($value['image']) && empty($value['image']) === false) ? null : ' style="height:1px;" ';
+      $price = $value['products_price'];
+      
+      if (DISPLAY_PRICE_WITH_TAX == 1) {
+        $taxClassID = ($lC_ShoppingCart->getShippingMethod('tax_class_id') != NULL) ? $lC_ShoppingCart->getShippingMethod('tax_class_id') : $this->_data['tax_class_id']; 
+        $countryID = ($lC_ShoppingCart->getShippingAddress('country_id') != NULL) ? $lC_ShoppingCart->getShippingAddress('country_id') : STORE_COUNTRY;
+        $zoneID = ($lC_ShoppingCart->getShippingAddress('zone_id') != NULL) ? $lC_ShoppingCart->getShippingAddress('zone_id') : STORE_ZONE;
+        $taxRate = $lC_Tax->getTaxRate($taxClassID, $countryID, $zoneID);
+        $tax = $lC_Tax->calculate($value['products_price'], $taxRate);
+        $price = lc_round($value['products_price'] + $tax, DECIMAL_PLACES);
+      }
+            
       $output .= '<div class="row clear-both margin-bottom margin-top">' .
                  '  <div class="col-sm-8 col-lg-8">' .
                  '    <span class="subproduct-image pull-left margin-right">' . 
@@ -992,7 +1003,7 @@ class lC_Product {
                  ((isset($extra) && $extra != null) ? '<span class="subproduct-model small-margin-left no-margin-top"><small>' . $extra . '</small></span>' : null) .
                  '  </div>' .
                  '  <div class="col-sm-4 col-lg-4">' .
-                 '    <span class="subproduct-price lead">' . $lC_Currencies->format($value['products_price']) . '</span>' .
+                 '    <span class="subproduct-price lead">' . $lC_Currencies->format($price) . '</span>' .
                  '    <span class="subproduct-buy-now pull-right">' . 
                  '      <form method="post" action="' . lc_href_link(FILENAME_DEFAULT, $value['products_id'] . '&action=cart_add') . '"><button class="subproduct-buy-now-button btn btn-success" type="submit" onclick="$(this).closest(\'form\').submit();">Buy Now</button></form>' . 
                  '    </span>' .

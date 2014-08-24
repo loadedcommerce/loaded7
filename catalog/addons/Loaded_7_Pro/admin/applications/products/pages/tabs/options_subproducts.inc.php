@@ -158,7 +158,7 @@ function getSubProductsRows() {
               '  <td><input type="text" class="input half-width" onfocus="this.select();" tabindex="' + key + '2" name="sub_products_weight[' + key + ']" value="' + val.products_weight + '"></td>'+
               '  <td><input type="text" class="input half-width" onfocus="this.select();" tabindex="' + key + '3" name="sub_products_sku[' + key + ']" value="' + val.products_sku + '"></td>'+
               '  <td><input type="text" class="input half-width" onfocus="this.select();" tabindex="' + key + '4" name="sub_products_qoh[' + key + ']" value="' + val.products_quantity + '"></td>'+
-              '  <td style="white-space:nowrap;"><div class="inputs" style="display:inline; padding:8px 0;"><span class="mid-margin-left no-margin-right"><?php echo $lC_Currencies->getSymbolLeft(); ?></span><input type="text" class="input-unstyled" style="width:87%;" onchange="$(\'#sub_products_price_1_' + key + '\').val(this.value);" onfocus="this.select();" tabindex="' + key + '5" name="sub_products_price[' + key + ']" value="' + val.products_price + '"></div></td>'+
+              '  <td style="white-space:nowrap;"><div class="inputs" style="display:inline; padding:8px 0;"><span class="mid-margin-left no-margin-right"><?php echo $lC_Currencies->getSymbolLeft(); ?></span><input type="text" class="input-unstyled" style="width:87%;" onchange="$(\'#options_pricing_' + val.products_id + '_1_1\').val(this.value);" onfocus="this.select();" tabindex="' + key + '5" name="sub_products_price[' + key + ']" value="' + val.products_price + '"></div></td>'+
               '  <td class="align-center align-middle">'+
               '    <input style="display:none;" type="file" id="sub_products_image_' + key + '" name="sub_products_image[' + key + ']" onchange="setSubProductImage(\'' + key + '\');" multiple />'+
               '    <span class="icon-camera icon-size2 cursor-pointer with-tooltip ' + ((val.image != '' && val.image != null) ? 'icon-green' : 'icon-grey') + '" title="' + ((val.image != '' && val.image != null) ? val.image : null) + '" id="fileSelectButton-' + key + '" onclick="document.getElementById(\'sub_products_image_' + key + '\').click();"></span>'+
@@ -169,7 +169,7 @@ function getSubProductsRows() {
               '  </td>'+
               '</tr>';
   });            
-  $('#subProductsTable> tbody').append(output);
+  $('#subProductsTable > tbody').append(output);
 }
 
 function addSubProductsRow(include_price_row, e, key) {
