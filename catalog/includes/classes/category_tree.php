@@ -77,10 +77,6 @@ class lC_CategoryTree {
       $Qcategories->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
       $Qcategories->bindInt(':language_id', $lC_Language->getID());
 
-      if (utility::isB2B() && !isset($_SESSION['admin'])) {
-        $Qcategories->appendQuery('and LOCATE(' . $lC_Customer->getCustomerGroupAccess() . ', c.access_levels) > 0');
-      }    
-      
       $Qcategories->appendQuery('order by c.parent_id, c.sort_order, cd.categories_name, cd.categories_menu_name');
 
       $Qcategories->execute();
@@ -113,6 +109,26 @@ class lC_CategoryTree {
       if ( $this->_show_total_products === true ) {
         $this->_calculateProductTotals();
       }
+      
+      
+      if (utility::isB2B() && !isset($_SESSION['admin'])) {
+        $catArr = array();
+        $gAccess = explode(';', $lC_Customer->getCustomerGroupAccess());
+        foreach ($gAccess as $key => $gLevel) {
+          foreach ($this->_data as $parent_id => $data) {
+            $ok = false;
+            foreach ($data as $categories_id => $cData) {
+              $cAccess = explode(';', $cData['access_levels']);   
+              if (in_array($gLevel, $cAccess) || $cAccess[0] == '') {
+                $ok = true;
+                break;
+              }
+            }
+            if ($ok) $catArr[$parent_id] = $data; 
+          }
+        }
+        $this->_data = $catArr;
+      }       
 
       $lC_Cache->write($this->_data);
     }
