@@ -11,10 +11,6 @@
 global $lC_Template, $lC_Language, $lC_Image, $pInfo;
 if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
       
-  class lC_Products_pro_Admin {
-    public static function hasComboOptions() {} 
-  }      
-      
   $has_options = false;
   if (isset($pInfo) && method_exists('lC_Products_pro_Admin', "hasComboOptions") && method_exists('lC_Products_pro_Admin', "hasSubProducts")) {
     $has_options = (lC_Products_pro_Admin::hasComboOptions($pInfo->get('products_id')) || lC_Products_pro_Admin::hasSubProducts($pInfo->get('products_id'))) ? 1 : 0; 
