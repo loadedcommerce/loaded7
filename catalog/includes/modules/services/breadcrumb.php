@@ -15,7 +15,7 @@ class lC_Services_breadcrumb {
     include($lC_Vqmod->modCheck('includes/classes/breadcrumb.php'));
     $lC_Breadcrumb = new lC_Breadcrumb();
 
-    $template = (isset($_SESSION['template']['code'])) ? $_SESSION['template']['code'] : 'default';
+    $template = (isset($_SESSION['template']['code'])) ? $_SESSION['template']['code'] : 'core';
     $lC_Breadcrumb->add('<span id="breadcrumb-top">' . $lC_Language->get('text_home') . '</span>', lc_href_link(FILENAME_DEFAULT));
 
     return true;
