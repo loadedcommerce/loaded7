@@ -798,13 +798,13 @@ class lC_Orders_Admin {
     $lC_Currencies = new lC_Currencies();
     $lC_Tax = new lC_Tax_Admin();
     $lC_Order = new lC_Order($oid);
-
+    
     if ( !$lC_Order->isValid() ) {
       return array('error' => true, 'errmsg' => sprintf(ERROR_ORDER_DOES_NOT_EXIST, $id));
     }
     // build a single product string  
     $result['orderProduct'] = ''; 
-    foreach ( $lC_Order->getProduct($oid, $pid) as $product ) {
+    foreach ( $lC_Order->getProducts($oid, $pid) as $product ) {
       $result = $product;
       $tmpProduct = lC_Products_Admin::get($product['products_id']);
       $tmpTaxDetails = lC_Tax_classes_Admin::get($tmpProduct['products_tax_class_id']);
