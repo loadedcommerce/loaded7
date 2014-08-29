@@ -253,8 +253,14 @@ function newFileRow(numFiles, label, id, title, htitle, groupID, valueID, modifi
 };
 
 function removeFileUploadRow(id) {
-  $('#' + id).remove();
-  var len = $('*').hasClass('file-inputs');
+  if (id == 0) {
+    $('#upload-table').remove();  
+  } else {
+    $('#' + id).remove();
+  }
+  
+  // if no inputs, refresh the page
+  var len = $('.mupload-div').length;
   if (len == 0) document.location.href = document.location.href;
 }
 
