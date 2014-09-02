@@ -9,7 +9,7 @@
 */
 global $lC_Vqmod;
 
-require_once($lC_Vqmod->modCheck('../includes/classes/category_tree.php'));
+require_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/classes/category_tree.php'));
 
 class lC_CategoryTree_Admin extends lC_CategoryTree {
   protected $_show_total_products = true;
