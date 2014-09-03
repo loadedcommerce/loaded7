@@ -232,6 +232,17 @@ class lC_Product {
       while ( $Qcg->next() ) {
         $discount = $Qcg->valueDecimal('baseline_discount');
         $new_price = $this->_data['price'] - ($this->_data['price']*($discount/100));
+        
+        // check for an override
+        $Qov = $lC_Database->query('select group_price from :table_products_pricing where products_id = :products_id and group_id = :group_id and group_status = :group_status');
+        $Qov->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
+        $Qov->bindInt(':products_id', $this->_data['master_id']);
+        $Qov->bindInt(':group_id', (isset($_SESSION['lC_Customer_data']['customers_group_id'])? $_SESSION['lC_Customer_data']['customers_group_id'] : DEFAULT_CUSTOMERS_GROUP_ID));
+        $Qov->bindInt(':group_status', 1);        
+        $Qov->execute();
+        
+        if ($Qov->valueDecimal('group_price') > 0.00 && $Qov->valueDecimal('group_price') < $new_price) $new_price = $Qov->valueDecimal('group_price'); 
+        
         $this->_data['price'] = $new_price;
       }
     }
