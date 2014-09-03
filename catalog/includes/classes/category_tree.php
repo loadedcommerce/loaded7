@@ -109,22 +109,19 @@ class lC_CategoryTree {
       if ( $this->_show_total_products === true ) {
         $this->_calculateProductTotals();
       }
-      
-      
+         
       if (utility::isB2B() && !isset($_SESSION['admin'])) {
         $catArr = array();
         $gAccess = explode(';', $lC_Customer->getCustomerGroupAccess());
-        foreach ($gAccess as $key => $gLevel) {
-          foreach ($this->_data as $parent_id => $data) {
-            $ok = false;
-            foreach ($data as $categories_id => $cData) {
-              $cAccess = explode(';', $cData['access_levels']);   
-              if (in_array($gLevel, $cAccess) || $cAccess[0] == '') {
-                $ok = true;
+        foreach ($this->_data as $parent_id => $data) {
+          foreach ($data as $categories_id => $cData) { 
+            $cAccess = explode(';', $cData['access_levels']);                 
+            foreach ($gAccess as $key => $gLevel) {
+              if (in_array($gLevel, $cAccess)) {
+                $catArr[$parent_id][$categories_id] = $cData;
                 break;
               }
             }
-            if ($ok) $catArr[$parent_id] = $data; 
           }
         }
         $this->_data = $catArr;

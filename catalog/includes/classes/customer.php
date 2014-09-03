@@ -72,8 +72,8 @@ class lC_Customer {
     if ($this->isLoggedOn() === false) { 
       $result = '1';
     } else {
-      if (isset($this->_data['id']) && is_numeric($this->_data['id'])) {
-        $id = $this->_data['id'];
+      if (isset($this->_data['customers_group_id']) && is_numeric($this->_data['customers_group_id'])) {
+        $id = $this->_data['customers_group_id'];
       } else if ($id == null) { 
         $id = DEFAULT_CUSTOMERS_GROUP_ID;
       }
