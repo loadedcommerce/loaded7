@@ -136,7 +136,7 @@ class lC_Products {
 
     $Qlisting->setBatchLimit((isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : 1), $max_entries);     
     $Qlisting->execute();
-
+    
     return $Qlisting;
   }
 }

@@ -34,7 +34,7 @@ if ($Qlisting->numberOfRows() > 0) {
     // VQMOD-hookpoint; DO NOT MODIFY OR REMOVE THE LINE BELOW
     $lC_Product = new lC_Product($Qlisting->valueInt('products_id'));
     
-    if (utility::isB2B()) {
+    if (utility::isB2B() && $lC_Customer->isLoggedOn() === false) {
       $access = (defined('B2B_SETTINGS_GUEST_CATALOG_ACCESS') && B2B_SETTINGS_GUEST_CATALOG_ACCESS > 0) ? (int)B2B_SETTINGS_GUEST_CATALOG_ACCESS : 0;
       if ($access < 66) $show_price = false;
       if ($access < 99) $show_buy_now = false;
