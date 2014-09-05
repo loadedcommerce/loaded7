@@ -7,6 +7,7 @@
 
 statistics_sales_tax_report_title = Sales Tax Report
 
+statistics_sales_tax_table_heading_year = Year
 statistics_sales_tax_table_heading_month = Month
 statistics_sales_tax_table_heading_day = Day
 statistics_sales_tax_table_heading_gross_income = Gross Income
