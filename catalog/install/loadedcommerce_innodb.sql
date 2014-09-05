@@ -6214,8 +6214,8 @@ INSERT INTO lc_currencies (currencies_id, title, code, symbol_left, symbol_right
 INSERT INTO lc_customers_groups (customers_group_id, language_id, customers_group_name) VALUES(1, 1, 'Registered');
 INSERT INTO lc_customers_groups (customers_group_id, language_id, customers_group_name) VALUES(2, 1, 'Wholesale');
 
-INSERT INTO lc_customers_groups_data (customers_group_id, customers_access_levels) VALUES(1, 1, '1;2');
-INSERT INTO lc_customers_groups_data (customers_group_id, customers_access_levels) VALUES(2, 1, '1;2');
+INSERT INTO lc_customers_groups_data (customers_group_id, customers_access_levels) VALUES(1, '1;2');
+INSERT INTO lc_customers_groups_data (customers_group_id, customers_access_levels) VALUES(2, '1;2');
 
 INSERT INTO lc_languages (languages_id, `name`, code, locale, `charset`, date_format_short, date_format_long, time_format, text_direction, currencies_id, numeric_separator_decimal, numeric_separator_thousands, parent_id, sort_order) VALUES(1, 'English', 'en_US', 'en_US.UTF-8,en_US,english', 'utf-8', '%m/%d/%Y', '%A %B %d, %Y at %H:%M', '%H:%M:%S', 'ltr', 1, '.', ',', 0, 10);
 
