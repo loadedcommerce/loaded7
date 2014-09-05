@@ -412,7 +412,7 @@ class lC_Database_Result {
     if ($pos !== false) {
       $length = strlen($place_holder);
       $character_after_place_holder = substr($this->sql_query, $pos+$length, 1);
-      if (strstr($value,':') && (strlen($value) - strpos($value,':') > 2)) {
+      if (strstr($value,':') && (strlen($value) - strpos($value,':') > 3)) {
         $value = str_replace(':','&#x3a;',$value);
       }
       if (($character_after_place_holder === false) || preg_match('/[ ,)"]/', $character_after_place_holder)) {
