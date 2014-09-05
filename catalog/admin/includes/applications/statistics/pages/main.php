@@ -11,7 +11,7 @@
 require_once($lC_Vqmod->modCheck('includes/applications/orders/classes/orders.php'));
 require_once($lC_Vqmod->modCheck('includes/applications/manufacturers/classes/manufacturers.php'));
 
-$note = '<p class="message icon-speech orange-gradient">' . $lC_Language->get('text1') .  
+$note = '<p class="message icon-speech orange-gradient">&nbsp;' . $lC_Language->get('text1') .  '&nbsp;' . 
            '<span class="upsellinfo" upselltitle="' . $lC_Language->get('text_class_upsell_title') . '" upselldesc="' . $lC_Language->get('text_additional_images_upsell_desc') . '"></span>' .
            lc_go_pro() . $lC_Language->get('text2') .
            '<span class="upsellinfo" upselltitle="' . $lC_Language->get('text_class_upsell_title') . '" upselldesc="' . $lC_Language->get('text_class_upsell_desc') . '"></span>' .
