@@ -288,8 +288,9 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
         $("#editPrice").val(data.price);
         $("#editQuantity").val(data.quantity);
         $("#editProduct").empty();
-        $.each(data.productsArray, function(val, text) {          
-          var selected = (data.products_id == opid) ? 'selected="selected"' : '';
+        
+        $.each(data.productsArray, function(val, text) {
+          var selected = (text.products_id == opid) ? 'selected="selected"' : '';
           $("#editProduct").append(
             $("<option " + selected + "></option>").val(text.products_id).html(text.products_name)
           );
