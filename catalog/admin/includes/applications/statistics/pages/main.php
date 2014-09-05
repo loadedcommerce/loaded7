@@ -11,14 +11,12 @@
 require_once($lC_Vqmod->modCheck('includes/applications/orders/classes/orders.php'));
 require_once($lC_Vqmod->modCheck('includes/applications/manufacturers/classes/manufacturers.php'));
 
-$note = '<div class="back-color margin-top">
-           <span class="glyphicon glyphicon-exclamation-sign padding-align">' . $lC_Language->get('text_note') . '</span>' .
-           $lC_Language->get('text1') . 
+$note = '<div class="back-color margin-top"><p class="message icon-speech">' . $lC_Language->get('text1') .  
            '<span class="upsellinfo" upselltitle="' . $lC_Language->get('text_class_upsell_title') . '" upselldesc="' . $lC_Language->get('text_additional_images_upsell_desc') . '"></span>' .
            lc_go_pro() . $lC_Language->get('text2') .
            '<span class="upsellinfo" upselltitle="' . $lC_Language->get('text_class_upsell_title') . '" upselldesc="' . $lC_Language->get('text_class_upsell_desc') . '"></span>' .
            lc_go_pro() . $lC_Language->get('text3') . 
-        '</div>';
+        '</p></div>';
 
 $breakout = '<span class="breakout-wrapper">
                <span class="anthracite with-small-padding no-wrap" name="breakout_by" id="breakout_by">' . $lC_Language->get("text_breakout_by") . '</span>
