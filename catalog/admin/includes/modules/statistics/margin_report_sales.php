@@ -84,13 +84,13 @@ class lC_Statistics_Margin_Report_Sales extends lC_Statistics {
              }
              $ids = substr($ids, 0, -1);
              
-             $this->_resultset->appendQuery(' and o.orders_status IN ('. $ids .')');   //$this->_resultset->bindValue(':orders_status', $ids);
+             $this->_resultset->appendQuery(' and o.orders_status IN ( :orders_status )');   $this->_resultset->bindValue(':orders_status', $ids);
 
              break;
 
              default:
                if((int)$_GET['statusID'] > 0) {
-                  $this->_resultset->appendQuery(' and o.orders_status = :orders_status ');    $this->_resultset->bindInt(':orders_status', $_GET['statusID']);
+                  $this->_resultset->appendQuery(' and o.orders_status IN ( :orders_status )'); $this->_resultset->bindValue(':orders_status', $ids);
              }
         }
       }

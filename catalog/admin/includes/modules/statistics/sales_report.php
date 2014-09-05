@@ -81,8 +81,8 @@
                $ids .= $query->value('orders_status_id').",";
              }
              $ids = substr($ids, 0, -1);
-             $orderDate_qry->appendQuery(' and o.orders_status IN ('. $ids .')');          
-             //$orderDate_qry->bindValue(':orders_status', $ids);
+             $orderDate_qry->appendQuery(' and o.orders_status IN ( :orders_status )');          
+             $orderDate_qry->bindValue(':orders_status', $ids);
 
             break;
 
