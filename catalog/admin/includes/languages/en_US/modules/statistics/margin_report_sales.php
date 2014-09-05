@@ -21,7 +21,7 @@ text_to_date = To Date
 text_note = 
 
 text1 = Recommended for 
-text2 = This reports uses cost data only collected and managed in
+text2 = This reports uses cost data only collected and managed in the
 text3 = edition.
 
 text_class_upsell_title = Class
