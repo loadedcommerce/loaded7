@@ -16,8 +16,9 @@ statistics_margin_table_heading_margin(%) = Margin(%)
 
 text_select_manufacturers = Select Manufacturers
 text_select_supplier = Select Supplier
-text_from_date =From Date
-text_to_date =To Date
+text_from_date = From Date
+text_to_date = To Date
+text_note = NOTE:
 
 text1 = Recommended for 
 text2 = This reports uses for cost data only collected and managed in
