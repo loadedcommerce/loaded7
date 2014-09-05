@@ -26,7 +26,5 @@ text_class_upsell_title = Class
 text_class_upsell_desc = Additional Images Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. 
 
 text1 = Recommended for 
-text2 = This reports uses for cost data only collected and managed in
-text3 = Edition.
-
-
+text2 = This reports uses cost data only collected and managed in the
+text3 = edition.
