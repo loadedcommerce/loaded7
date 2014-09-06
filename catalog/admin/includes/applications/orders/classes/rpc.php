@@ -124,12 +124,14 @@ class lC_Orders_Admin_rpc {
   */
   public static function getProduct() {
     $result = lC_Orders_Admin::getProduct($_GET['oid'], $_GET['pid']);
+    
     if ($result !== false) {
       $result['rpcStatus'] = RPC_STATUS_SUCCESS;
     }
     
     echo json_encode($result);
   }
+  
   public static function getProductData() {
     $result = lC_Orders_Admin::getProductData($_GET['pid']);
     if ($result !== false) {
@@ -137,6 +139,7 @@ class lC_Orders_Admin_rpc {
     }
     echo json_encode($result);
   }
+  
   public static function updateOrderProductData() {
     $result = lC_Orders_Admin::updateOrderProductData();
     if ($result !== false) {
@@ -144,6 +147,7 @@ class lC_Orders_Admin_rpc {
     }
     echo json_encode($result);
   }
+  
   public static function removeOrderTotal() {
     $result = lC_Orders_Admin::removeOrderTotal();
     if ($result !== false) {
@@ -151,6 +155,7 @@ class lC_Orders_Admin_rpc {
     }
     echo json_encode($result);
   }
+  
   public static function getOrderTotalsData() {
     $result = lC_Orders_Admin::orderTotalsData();
     if ($result !== false) {
@@ -158,6 +163,7 @@ class lC_Orders_Admin_rpc {
     }
     echo json_encode($result);
   }
+  
   public static function getCouponOrderTotalsData() {
     $result = lC_Orders_Admin::couponOrderTotalsData();
     if ($result !== false) {
@@ -165,6 +171,7 @@ class lC_Orders_Admin_rpc {
     }
     echo json_encode($result);
   }
+  
   public static function getShippingMethodsData() {
     $result = lC_Orders_Admin::shippingMethodsData();
     if ($result !== false) {
@@ -172,41 +179,47 @@ class lC_Orders_Admin_rpc {
     }
     echo json_encode($result);
   }
+  
   public static function getTaxMethodsData() {
     $result = lC_Orders_Admin::taxMethodsData();
     if ($result !== false) {
       $result['rpcStatus'] = RPC_STATUS_SUCCESS;
     }
     echo json_encode($result);
-  }  
+  } 
+   
   public static function getCouponData() {
     $result = lC_Orders_Admin::CouponData();
     if ($result !== false) {
       $result['rpcStatus'] = RPC_STATUS_SUCCESS;
     }
     echo json_encode($result);
-  }  
+  }
+    
   public static function getShippingData() {
     $result = lC_Orders_Admin::ShippingData();
     if ($result !== false) {
       $result['rpcStatus'] = RPC_STATUS_SUCCESS;
     }
     echo json_encode($result);
-  }  
+  }
+    
   public static function getTaxData() {
     $result = lC_Orders_Admin::TaxData();
     if ($result !== false) {
       $result['rpcStatus'] = RPC_STATUS_SUCCESS;
     }
     echo json_encode($result);
-  }  
+  }
+    
   public static function saveOrderTotal() {
     $result = lC_Orders_Admin::saveOrderTotal();
     if ($result !== false) {
       $result['rpcStatus'] = RPC_STATUS_SUCCESS;
     }
     echo json_encode($result);
-  }  
+  }
+    
   public static function deleteOrderProduct() {
     $result = lC_Orders_Admin::deleteOrderProduct();
     if ($result !== false) { 

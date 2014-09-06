@@ -13,17 +13,5 @@
 $(document).ready(function() {
   $('body').removeClass('clearfix with-menu with-shortcuts');
   $('html').addClass('linen');
-  
-  // added for api communication health check
-  apiHealthCheck();
 });
-
-function apiHealthCheck() {
-  var jsonLink = '<?php echo lc_href_link_admin('rpc.php', 'login' . '&action=apiHealthCheck'); ?>';
-  $.getJSON(jsonLink,
-    function (data) {
-      return true;
-    }
-  );
-}
 </script>

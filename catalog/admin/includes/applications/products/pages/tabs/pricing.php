@@ -24,14 +24,16 @@ global $lC_Language, $lC_Currencies, $pInfo;
     </div>
 
     <div class="upsellwrapper field-block field-block-product button-height">
-      <label upselltitle="<?php echo $lC_Language->get('text_group_pricing'); ?>" upselldesc="<?php echo $lC_Language->get('text_group_pricing_desc'); ?>" for="" class="label upsellinfo"><b><?php echo $lC_Language->get('text_group_pricing'); ?></b></label>
-      <input type="checkbox" class="switch wider" onchange="togglePricingSection(this, 'groups_pricing_container');" data-text-off="<?php echo $lC_Language->get('slider_switch_disabled'); ?>" data-text-on="<?php echo $lC_Language->get('slider_switch_preview'); ?>" /><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_pricing_group_pricing'), null, 'info-spot on-left grey margin-left'); ?>
-      <?php //echo lc_go_pro(); ?>
+      <?php if (utility::isPro() === false || utility::isB2B() === false) { ?>
+        <label upselltitle="<?php echo $lC_Language->get('text_group_pricing'); ?>" upselldesc="<?php echo $lC_Language->get('text_group_pricing_desc'); ?>" for="" class="label upsellinfo"><b><?php echo $lC_Language->get('text_group_pricing'); ?></b></label>
+      <?php } ?>
+      <label for="groups_pricing_switch" class="label"><b><?php echo $lC_Language->get('text_group_pricing'); ?></b></label>
+      <input id="groups_pricing_switch" name="groups_pricing_switch" type="checkbox" class="switch wider" onchange="togglePricingSection(this, 'groups_pricing_container');" data-text-off="<?php echo $lC_Language->get('slider_switch_disabled'); ?>" data-text-on="<?php echo $lC_Language->get('slider_switch_preview'); ?>" /><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_pricing_group_pricing'), null, 'info-spot on-left grey margin-left'); ?>
       <div onclick="togglePricingSection(this, 'groups_pricing_container');" style="cursor:pointer;" class="field-block-chevron-container float-right"><span id="groups_pricing_container_span" class="icon-chevron-thin-down icon-size2"></span></div>
     </div>
     <div id="groups_pricing_container" class="field-drop button-height black-inputs" style="display:none;">
       <?php echo lC_Products_Admin::getGroupPricingContent(isset($pInfo) ? $pInfo->get('products_price') : null); ?>
-    </div>
+    </div>    
     
     <!--VQMOD PRICING-1 HOOK POINT - Do Not Change or Remove-->
     

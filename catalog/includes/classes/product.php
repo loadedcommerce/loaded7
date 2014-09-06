@@ -15,7 +15,7 @@ class lC_Product {
 
     if ( !empty($id) ) {
       if ( is_numeric($id) ) {
-        $Qproduct = $lC_Database->query('select products_id as id, parent_id, products_quantity as quantity, products_price as price, products_model as model, products_tax_class_id as tax_class_id, products_weight as weight, products_weight_class as weight_class_id, products_date_added as date_added, manufacturers_id, has_children, is_subproduct, access_levels from :table_products where products_id = :products_id and products_status = :products_status');
+        $Qproduct = $lC_Database->query('select products_id as id, parent_id, products_quantity as quantity, products_price as price, products_msrp as msrp, products_model as model, products_tax_class_id as tax_class_id, products_weight as weight, products_weight_class as weight_class_id, products_date_added as date_added, manufacturers_id, has_children, is_subproduct, access_levels from :table_products where products_id = :products_id and products_status = :products_status');
         $Qproduct->bindTable(':table_products', TABLE_PRODUCTS);
         $Qproduct->bindInt(':products_id', $id);
         $Qproduct->bindInt(':products_status', 1);
@@ -232,6 +232,17 @@ class lC_Product {
       while ( $Qcg->next() ) {
         $discount = $Qcg->valueDecimal('baseline_discount');
         $new_price = $this->_data['price'] - ($this->_data['price']*($discount/100));
+        
+        // check for an override
+        $Qov = $lC_Database->query('select group_price from :table_products_pricing where products_id = :products_id and group_id = :group_id and group_status = :group_status');
+        $Qov->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
+        $Qov->bindInt(':products_id', $this->_data['master_id']);
+        $Qov->bindInt(':group_id', (isset($_SESSION['lC_Customer_data']['customers_group_id'])? $_SESSION['lC_Customer_data']['customers_group_id'] : DEFAULT_CUSTOMERS_GROUP_ID));
+        $Qov->bindInt(':group_status', 1);        
+        $Qov->execute();
+        
+        if ($Qov->valueDecimal('group_price') > 0.00 && $Qov->valueDecimal('group_price') < $new_price) $new_price = $Qov->valueDecimal('group_price'); 
+        
         $this->_data['price'] = $new_price;
       }
     }
@@ -272,6 +283,10 @@ class lC_Product {
   public function getModel() {
     return $this->_data['model'];
   }
+  
+  public function getMSRP() {
+    return $this->_data['msrp'];
+  }  
 
   public function hasKeyword() {
     return (isset($this->_data['keyword']) && !empty($this->_data['keyword']));
@@ -289,6 +304,10 @@ class lC_Product {
     return $this->_data['tags'];
   }
   
+  public function getAccessLevels() {
+    return $this->_data['access_levels'];
+  }  
+  
   // ######## PRICING - ALL PRICING TO COME FROM HERE #########//
   public function getPriceInfo($product_id, $customers_group_id = 1, $data) {
     global $lC_Specials, $lC_Database, $lC_Language, $lC_Customer, $lC_Services, $lC_Currencies, $lC_ShoppingCart, $lC_Tax;
@@ -299,7 +318,7 @@ class lC_Product {
     
     // initial price = base price    
     $base_price = $this->getBasePrice();
-    $price = (float)$base_price;
+    $price = (float)$base_price;   
     
     // options modifiers
     if (is_array($data['simple_options']) && count($data['simple_options']) > 0) {
@@ -326,7 +345,7 @@ class lC_Product {
       $special_price = $lC_Specials->getPrice($product_id);
       $price = ((float)$special_price < (float)$price) ? (float)$special_price : (float)$price;
     }       
-    
+
     // if has qty price breaks, adjust base price to break price
     $qpbText = '';
     if ($this->hasQtyPriceBreaks($product_id, $customers_group_id)) {
@@ -386,6 +405,16 @@ class lC_Product {
     }
     
     $price = $price + $modTotal;
+    
+    // overrides
+    if (utility::isB2B() && $_GET['action'] != 'cart_add') {
+      if (defined('B2B_SETTINGS_SHOW_GUEST_ONLY_MSRP') && B2B_SETTINGS_SHOW_GUEST_ONLY_MSRP == '1' && $lC_Customer->isLoggedOn() === false) {
+        $price = $this->getMSRP();
+      }
+      if (defined('B2B_SETTINGS_SHOW_RETAIL_ONLY_MSRP') && B2B_SETTINGS_SHOW_RETAIL_ONLY_MSRP == '1' && $lC_Customer->isLoggedOn() === true && $lC_Customer->getCustomerGroup() == DEFAULT_CUSTOMERS_GROUP_ID) {
+        $price = $this->getMSRP();
+      }      
+    } 
     
     $tax = 0;
     $taxRate = 0;
@@ -463,11 +492,14 @@ class lC_Product {
   */   
   public function hasQtyPriceBreaks($products_id, $customers_group_id = 1) {
     global $lC_Database;
-    
-    $Qpb = $lC_Database->query('select * from :table_products_pricing where products_id = :products_id and group_id = :group_id limit 1');
+                          
+    $Qpb = $lC_Database->query('select pp.* from :table_products p left join :table_products_pricing pp on (p.products_id = pp.products_id) where p.qpb_pricing_enable = :qpb_pricing_enable and pp.products_id = :products_id and pp.group_id = :group_id and pp.qty_break != :qty_break limit 1');
+    $Qpb->bindTable(':table_products', TABLE_PRODUCTS);
     $Qpb->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
     $Qpb->bindInt(':products_id', $products_id);
     $Qpb->bindInt(':group_id', $customers_group_id);
+    $Qpb->bindInt(':qpb_pricing_enable', 1);
+    $Qpb->bindInt(':qty_break', -1);
     $Qpb->execute();  
     
     $hasQPB = false;
@@ -950,8 +982,8 @@ class lC_Product {
   * @return array
   */ 
   public function parseSubProducts($data) {
-    global $lC_Image, $lC_Currencies, $lC_Language;
-    
+    global $lC_Image, $lC_Currencies, $lC_Language, $lC_Tax, $lC_ShoppingCart;
+
     $output = '';
     foreach ($data as $key => $value) {
       
@@ -962,6 +994,17 @@ class lC_Product {
       $img = (isset($value['image']) && empty($value['image']) === false) ? $lC_Image->getAddress($value['image'], 'small') : 'images/pixel_trans.gif';
       $height = (isset($value['image']) && empty($value['image']) === false) ? $lC_Image->getHeight('small') : 1;
       $hcss = (isset($value['image']) && empty($value['image']) === false) ? null : ' style="height:1px;" ';
+      $price = $value['products_price'];
+      
+      if (DISPLAY_PRICE_WITH_TAX == 1) {
+        $taxClassID = ($lC_ShoppingCart->getShippingMethod('tax_class_id') != NULL) ? $lC_ShoppingCart->getShippingMethod('tax_class_id') : $this->_data['tax_class_id']; 
+        $countryID = ($lC_ShoppingCart->getShippingAddress('country_id') != NULL) ? $lC_ShoppingCart->getShippingAddress('country_id') : STORE_COUNTRY;
+        $zoneID = ($lC_ShoppingCart->getShippingAddress('zone_id') != NULL) ? $lC_ShoppingCart->getShippingAddress('zone_id') : STORE_ZONE;
+        $taxRate = $lC_Tax->getTaxRate($taxClassID, $countryID, $zoneID);
+        $tax = $lC_Tax->calculate($value['products_price'], $taxRate);
+        $price = lc_round($value['products_price'] + $tax, DECIMAL_PLACES);
+      }
+            
       $output .= '<div class="row clear-both margin-bottom margin-top">' .
                  '  <div class="col-sm-8 col-lg-8">' .
                  '    <span class="subproduct-image pull-left margin-right">' . 
@@ -971,7 +1014,7 @@ class lC_Product {
                  ((isset($extra) && $extra != null) ? '<span class="subproduct-model small-margin-left no-margin-top"><small>' . $extra . '</small></span>' : null) .
                  '  </div>' .
                  '  <div class="col-sm-4 col-lg-4">' .
-                 '    <span class="subproduct-price lead">' . $lC_Currencies->format($value['products_price']) . '</span>' .
+                 '    <span class="subproduct-price lead">' . $lC_Currencies->format($price) . '</span>' .
                  '    <span class="subproduct-buy-now pull-right">' . 
                  '      <form method="post" action="' . lc_href_link(FILENAME_DEFAULT, $value['products_id'] . '&action=cart_add') . '"><button class="subproduct-buy-now-button btn btn-success" type="submit" onclick="$(this).closest(\'form\').submit();">Buy Now</button></form>' . 
                  '    </span>' .

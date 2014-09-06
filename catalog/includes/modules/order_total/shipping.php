@@ -29,19 +29,24 @@ class lC_OrderTotal_shipping extends lC_OrderTotal {
   function process() {
     global $lC_Tax, $lC_ShoppingCart, $lC_Currencies;
 
+    //$shipping_cost = $lC_ShoppingCart->getShippingMethod('cost');
+    $shipping_cost = isset($_SESSION['SelectedShippingMethodCost']) ? $_SESSION['SelectedShippingMethodCost'] : $lC_ShoppingCart->getShippingMethod('cost') ;
+
     if ($lC_ShoppingCart->hasShippingMethod()) {
-      $lC_ShoppingCart->addToTotal($lC_ShoppingCart->getShippingMethod('cost'));
+      $lC_ShoppingCart->addToTotal($shipping_cost);
 
       if ($lC_ShoppingCart->getShippingMethod('tax_class_id') > 0) {
         $tax = $lC_Tax->getTaxRate($lC_ShoppingCart->getShippingMethod('tax_class_id'), $lC_ShoppingCart->getShippingAddress('country_id'), $lC_ShoppingCart->getShippingAddress('zone_id'));
         $tax_description = $lC_Tax->getTaxRateDescription($lC_ShoppingCart->getShippingMethod('tax_class_id'), $lC_ShoppingCart->getShippingAddress('country_id'), $lC_ShoppingCart->getShippingAddress('zone_id'));
 
-        $lC_ShoppingCart->addTaxAmount($lC_Tax->calculate($lC_ShoppingCart->getShippingMethod('cost'), $tax));
-        $lC_ShoppingCart->addTaxGroup($tax_description, $lC_Tax->calculate($lC_ShoppingCart->getShippingMethod('cost'), $tax));
+        $lC_ShoppingCart->addTaxAmount($lC_Tax->calculate($shipping_cost, $tax));
+        $lC_ShoppingCart->addTaxGroup($tax_description, $lC_Tax->calculate($shipping_cost, $tax));
 
         if (DISPLAY_PRICE_WITH_TAX == '1') {
-          $lC_ShoppingCart->addToTotal($lC_Tax->calculate($lC_ShoppingCart->getShippingMethod('cost'), $tax));
-          $lC_ShoppingCart->_shipping_method['cost'] += $lC_Tax->calculate($lC_ShoppingCart->getShippingMethod('cost'), $tax);
+          $lC_ShoppingCart->addToTotal($lC_Tax->calculate($shipping_cost, $tax));
+          $lC_ShoppingCart->_shipping_method['cost'] = $shipping_cost + $lC_Tax->calculate($shipping_cost, $tax);
+        }else if (DISPLAY_PRICE_WITH_TAX == '-1') {
+          $lC_ShoppingCart->addToTotal($lC_Tax->calculate($shipping_cost, $tax));
         }
       }
 

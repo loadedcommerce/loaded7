@@ -108,15 +108,16 @@ class lC_Template_output {
     if (isset($cPath) && strpos($cPath, '_')) {
       // check to see if there are deeper categories within the current category
       $category_links = array_reverse($cPath_array);
-      for($i=0, $n=sizeof($category_links); $i<$n; $i++) {
-        $Qcategories = $lC_Database->query('select count(*) as total from :table_categories c, :table_categories_description cd where c.parent_id = :parent_id and c.categories_id = cd.categories_id and cd.language_id = :language_id and c.categories_status = 1');
-        $Qcategories->bindTable(':table_categories', TABLE_CATEGORIES);
-        $Qcategories->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
-        $Qcategories->bindInt(':parent_id', $category_links[$i]);
-        $Qcategories->bindInt(':language_id', $lC_Language->getID());
-        $Qcategories->execute();
-
-        if ($Qcategories->valueInt('total') < 1) {
+      
+      for($i=0, $n=sizeof(end($category_links)); $i<$n; $i++) {
+        $Qcategoriescount = $lC_Database->query('select count(*) as total from :table_categories c, :table_categories_description cd where c.parent_id = :parent_id and c.categories_id = cd.categories_id and cd.language_id = :language_id and c.categories_status = 1');
+        $Qcategoriescount->bindTable(':table_categories', TABLE_CATEGORIES);
+        $Qcategoriescount->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
+        $Qcategoriescount->bindInt(':parent_id', $category_links[$i]);
+        $Qcategoriescount->bindInt(':language_id', $lC_Language->getID());
+        $Qcategoriescount->execute();
+        
+        if ($Qcategoriescount->valueInt('total') < 1) {
           // do nothing, go through the loop
         } else {
           $Qcategories = $lC_Database->query('select c.categories_id, cd.categories_name, c.categories_image, c.parent_id from :table_categories c, :table_categories_description cd where c.parent_id = :parent_id and c.categories_id = cd.categories_id and cd.language_id = :language_id and c.categories_status = 1 order by sort_order, cd.categories_name');
@@ -136,20 +137,21 @@ class lC_Template_output {
       $Qcategories->bindInt(':language_id', $lC_Language->getID());
       $Qcategories->execute();
     }
-    $number_of_categories = $Qcategories->numberOfRows();
-    $rows = 0;
     $output = '';
-    while ($Qcategories->next()) {
+    if ($Qcategories != null) { 
+      $number_of_categories = $Qcategories->numberOfRows();
+      while ($Qcategories->next()) {
+          
+        $url = ($Qcategories->value('categories_custom_url') != null) ? $Qcategories->value('categories_custom_url') : FILENAME_DEFAULT . '?cPath=' . $lC_CategoryTree->buildBreadcrumb($Qcategories->valueInt('categories_id'));
+        $image = ($Qcategories->value('categories_image') != null) ? $Qcategories->value('categories_image') : 'no_image.png';
         
-      $url = ($Qcategories->value('categories_custom_url') != null) ? $Qcategories->value('categories_custom_url') : FILENAME_DEFAULT . '?cPath=' . $lC_CategoryTree->buildBreadcrumb($Qcategories->valueInt('categories_id'));
-      $image = ($Qcategories->value('categories_image') != null) ? $Qcategories->value('categories_image') : 'no_image.png';
-      
-      $output .= '<div class="content-categories-container">' . "\n";
-      if (file_exists(DIR_WS_IMAGES . 'categories/' . $image)) {
-        $output .=  '  <div class="content-categories-image">' . lc_link_object(lc_href_link($url), lc_image(DIR_WS_IMAGES . 'categories/' . $image, $Qcategories->value('categories_name'), null, null, 'class="content-categories-image-src padding-top"')) . '</div>' . "\n";
+        $output .= '<div class="content-categories-container">' . "\n";
+        if (file_exists(DIR_WS_IMAGES . 'categories/' . $image)) {
+          $output .=  '  <div class="content-categories-image">' . lc_link_object(lc_href_link($url), lc_image(DIR_WS_IMAGES . 'categories/' . $image, $Qcategories->value('categories_name'), null, null, 'class="content-categories-image-src padding-top"')) . '</div>' . "\n";
+        }
+        $output .= '  <div class="content-categories-name">' . lc_link_object(lc_href_link($url), $Qcategories->value('categories_name'))  . '</div>' . "\n" . 
+                   '</div>' . "\n";      
       }
-      $output .= '  <div class="content-categories-name">' . lc_link_object(lc_href_link($url), $Qcategories->value('categories_name'))  . '</div>' . "\n" . 
-                 '</div>' . "\n";      
     }    
     
     return $output;

@@ -76,6 +76,13 @@ function editGroup(id) {
                   }
                 }).form();
                 if (bValid) {
+                  var module = $('#editModule').val();
+                  var isPro = '<?php echo utility::isPro(); ?>';
+                  if (isPro == false && (module == 'file_upload' || module == 'multiple_file_upload')) {
+                    $.modal.alert('<p class="align-center"><?php echo $lC_Language->get('text_available_with_pro'); ?></p><p class="align-center padding-top"><a target="_blank" href="http://loadedcommerce.com/pro/" class="button red-gradient glossy"><?php echo $lC_Language->get('button_buy_pro'); ?></a></p>');
+                    return false;
+                  }                  
+                  
                   var nvp = $("#pvEdit").serialize();
                   var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=saveGroup&pvid=PVID&BATCH'); ?>'
                   $.getJSON(jsonLink.replace('PVID', parseInt(id)).replace('BATCH', nvp),
@@ -103,10 +110,12 @@ function editGroup(id) {
       $.each(data.modulesArray, function(val, text) {
         var selected = (data.pvData.module == val) ? 'selected="selected"' : '';
         var text = text.replace(/_/g, " ").replace(/\b./g, function(m){ return m.toUpperCase(); });
+        var isPro = '<?php echo utility::isPro(); ?>';
         if(data.pvData.module == val) {
           $("#editModule").closest("span + *").prevAll("span.select-value:first").text(text);         
         }
-        $("#editModule").append(
+        if ( isPro == false  && (val == 'file_upload' || val == 'multiple_file_upload')) text = text + ' (PRO)';
+        $("#editModule").append( 
           $("<option " + selected + "></option>").val(val).html(text)
         );
       });

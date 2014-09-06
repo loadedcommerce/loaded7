@@ -72,10 +72,13 @@ class lC_CategoryTree {
     if ( $lC_Cache->read('category_tree-' . $lC_Language->getCode(), 720) ) {
       $this->_data = $lC_Cache->getCache();
     } else {
-      $Qcategories = $lC_Database->query('select c.categories_id, c.categories_image, c.parent_id, c.categories_mode, c.categories_link_target, c.categories_custom_url, c.categories_status, c.categories_visibility_nav, c.categories_visibility_box, c.access_levels, cd.categories_name, cd.categories_menu_name from :table_categories c, :table_categories_description cd where c.categories_status = 1 and c.categories_id = cd.categories_id and cd.language_id = :language_id order by c.parent_id, c.sort_order, cd.categories_name, cd.categories_menu_name');
+      $Qcategories = $lC_Database->query('select c.categories_id, c.categories_image, c.parent_id, c.categories_mode, c.categories_link_target, c.categories_custom_url, c.categories_status, c.categories_visibility_nav, c.categories_visibility_box, c.access_levels, cd.categories_name, cd.categories_menu_name from :table_categories c, :table_categories_description cd where c.categories_status = 1 and c.categories_id = cd.categories_id and cd.language_id = :language_id');
       $Qcategories->bindTable(':table_categories', TABLE_CATEGORIES);
       $Qcategories->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
       $Qcategories->bindInt(':language_id', $lC_Language->getID());
+
+      $Qcategories->appendQuery('order by c.parent_id, c.sort_order, cd.categories_name, cd.categories_menu_name');
+
       $Qcategories->execute();
 
       while ( $Qcategories->next() ) {
@@ -106,6 +109,23 @@ class lC_CategoryTree {
       if ( $this->_show_total_products === true ) {
         $this->_calculateProductTotals();
       }
+         
+      if (utility::isB2B() && !isset($_SESSION['admin'])) {
+        $catArr = array();
+        $gAccess = explode(';', $lC_Customer->getCustomerGroupAccess());
+        foreach ($this->_data as $parent_id => $data) {
+          foreach ($data as $categories_id => $cData) { 
+            $cAccess = explode(';', $cData['access_levels']);                 
+            foreach ($gAccess as $key => $gLevel) {
+              if (in_array($gLevel, $cAccess)) {
+                $catArr[$parent_id][$categories_id] = $cData;
+                break;
+              }
+            }
+          }
+        }
+        $this->_data = $catArr;
+      }       
 
       $lC_Cache->write($this->_data);
     }
@@ -195,10 +215,9 @@ class lC_CategoryTree {
 
           if ( isset($this->_data[$category_id]) && (($this->max_level == '0') || ($this->max_level > $level+1)) ) {
             if ( $this->follow_cpath === true ) {
-              // commented out below due to hindering the loading of the full category tree store side
-              //if ( in_array($category_id, $this->cpath_array) ) {
-              $result .= $this->_buildBranch($category_id, $level+1);
-              //}
+              if ( in_array($category_id, $this->cpath_array) ) {
+                $result .= $this->_buildBranch($category_id, $level+1);
+              }
             } else {
               $result .= $this->_buildBranch($category_id, $level+1);
             }
@@ -275,7 +294,7 @@ class lC_CategoryTree {
   * @return string
   */
 
-  public function getTree($aria = 1) {
+  public function getTree($aria = 1) { 
     return $this->_start_string . $this->_buildBranch($this->root_category_id, null, $aria) . $this->_end_string;
   } 
 

@@ -70,7 +70,7 @@ class lC_Checkout_Process extends lC_Template {
 
     $lC_Payment->process();
    
-    $lC_ShoppingCart->reset(true);
+    $lC_ShoppingCart->reset(true);  
 
     // unregister session variables used during checkout
     if (isset($_SESSION['comments'])) unset($_SESSION['comments']);
@@ -80,6 +80,8 @@ class lC_Checkout_Process extends lC_Template {
     if (isset($_SESSION['PPEC_TOKEN'])) unset($_SESSION['PPEC_TOKEN']);
     if (isset($_SESSION['PPEC_PROCESS'])) unset($_SESSION['PPEC_PROCESS']);
     if (isset($_SESSION['PPEC_PAYDATA'])) unset($_SESSION['PPEC_PAYDATA']);
+
+    if (isset($_SESSION['SelectedShippingMethodCost'])) unset($_SESSION['SelectedShippingMethodCost']);
 
     lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'success', 'SSL'));
   }

@@ -48,7 +48,8 @@ class lC_Order {
                                'country_iso3' => $Qorder->value('customers_country_iso3'),
                                'format' => $Qorder->value('customers_address_format'),
                                'telephone' => $Qorder->valueProtected('customers_telephone'),
-                               'email_address' => $Qorder->valueProtected('customers_email_address'));
+                               'email_address' => $Qorder->valueProtected('customers_email_address'),
+                               'ip_address' => $Qorder->valueProtected('customers_ip_address'));
 
       $this->_delivery = array('name' => $Qorder->valueProtected('delivery_name'),
                                'company' => $Qorder->valueProtected('delivery_company'),
@@ -124,7 +125,7 @@ class lC_Order {
 
     $Qhistory->bindInt(':orders_id', $this->_order_id);
     $Qhistory->execute();
-
+    
     while ($Qhistory->next()) {
       $QhAdmin = $lC_Database->query('select first_name, last_name, image from :table_administrators where id = :id limit 1');
       $QhAdmin->bindTable(':table_administrators', TABLE_ADMINISTRATORS);
@@ -134,7 +135,7 @@ class lC_Order {
                                'status' => $Qhistory->value('orders_status_name'),
                                'date_added' => $Qhistory->value('date_added'),
                                'customer_notified' => $Qhistory->valueInt('customer_notified'),
-                               'comment' => $Qhistory->valueProtected('comments'),
+                               'comment' => $Qhistory->value('comments'),
                                'admin_name' => $QhAdmin->value('first_name') . ' ' . $QhAdmin->value('last_name'),
                                'admin_image' => $QhAdmin->value('image'),
                                'admin_id' => $Qhistory->valueInt('administrators_id'),
@@ -142,6 +143,7 @@ class lC_Order {
     }
 
     $this->_status_history = $history_array;
+    
   }
 
   protected function _getTransactionHistory() {

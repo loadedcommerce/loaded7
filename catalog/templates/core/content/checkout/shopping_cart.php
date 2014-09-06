@@ -61,16 +61,16 @@
                   }                  
                   if ( (STOCK_CHECK == '1') && ($lC_ShoppingCart->isInStock($products['item_id']) === false) ) {
                     echo '<span class="warning">' . STOCK_MARK_PRODUCT_OUT_OF_STOCK . '</span>' . "\n";
-                  }
-                  if ( $lC_ShoppingCart->isVariant($products['item_id']) ) {
+                  }    
+                  if ( $lC_ShoppingCart->isVariant($products['item_id']) ) { 
                     foreach ( $lC_ShoppingCart->getVariant($products['item_id']) as $variant) {
-                      echo '<div class="small">- ' . $variant['group_title'] . ': ' . $variant['value_title'] . '</div>' . "\n";
+                      if ($variant['group_title'] != '') echo '<div class="small">- ' . $variant['group_title'] . ': ' . $variant['value_title'] . '</div>' . "\n";
                     }
                   }   
                   if ( $lC_ShoppingCart->hasSimpleOptions($products['item_id']) ) {
                     foreach ( $lC_ShoppingCart->getSimpleOptions($products['item_id']) as $option) {
                       $mod_price = (($option['price_modifier'] > 0) ? '+' . $option['price_modifier'] : (($option['price_modifier'] == 0) ? null : $option['price_modifier']));
-                      echo '<div class="small">- ' . $option['group_title'] . ': ' . $option['value_title'] . ' <em>' . $mod_price . '</em></div>' . "\n";
+                      if ($option['group_title'] != '') echo '<div class="small">- ' . $option['group_title'] . ': ' . $option['value_title'] . ' <em>' . $mod_price . '</em></div>' . "\n";
                     }
                   }                             
                   echo '</div>' . "\n";

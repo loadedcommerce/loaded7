@@ -181,6 +181,9 @@ final class VQMod {
   * @description Obfuscates the modified code
   */   
   private function _phpLiteObfuscator($SourceString) {
+    // we are temp bypassing this function due to issues.  we'll get back to it later.
+    return $SourceString;
+        
     ##remove comments
     $SourceString = preg_replace( "/(\s+)#(.*)\n/","$1\n",$SourceString );
     $SourceString = preg_replace( "/(\s+)\/\/(.*)\n/","$1\n",$SourceString );

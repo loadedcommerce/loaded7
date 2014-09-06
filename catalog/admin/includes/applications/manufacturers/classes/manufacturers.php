@@ -288,5 +288,18 @@ class lC_Manufacturers_Admin {
     }
     return true;
   }
+  public static function getManufacturersArray() {
+    global $lC_Language, $lC_Database;
+    // build the manufacturers array
+    $manufacturers_array = array();
+    $Qmanufacturers = $lC_Database->query('select manufacturers_id, manufacturers_name from :table_manufacturers order by manufacturers_name');
+    $Qmanufacturers->bindTable(':table_manufacturers', TABLE_MANUFACTURERS);
+    $Qmanufacturers->execute();
+    while ($Qmanufacturers->next()) {
+      $manufacturersArray[] = array('id' => $Qmanufacturers->valueInt('manufacturers_id'),
+                                    'text' => $Qmanufacturers->value('manufacturers_name'));
+    }
+    return $manufacturersArray;
+  }   
 }
 ?>

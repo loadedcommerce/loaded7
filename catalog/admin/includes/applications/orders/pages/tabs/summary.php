@@ -25,7 +25,10 @@
           <tbody>
             <tr>
               <!--<td class="align-right pad-5 width-25 bold grey"><?php echo $lC_Language->get('text_name'); ?></td>-->
-              <td class="align-left mid-padding-left small-padding-top"><?php echo $oInfo->get('customerAddress'); ?></td>
+              <td class="align-left mid-padding-left small-padding-top"><?php echo $oInfo->get('customerAddress');?></td>
+            </tr>
+            <tr>
+              <td class="class="align-left mid-padding-left" style="padding-top:10px;"><span class="bold icon-wifi icon-anthracite"> <?php echo $lC_Language->get('text_order_ip_address'); ?></span> <?php echo $oInfo->get('orderIPAddress');?></td>
             </tr>
             <!--<tr>
               <td class="align-right pad-5 width-33 bold grey"><?php echo $lC_Language->get('text_company_name'); ?></td>
@@ -172,14 +175,14 @@
           <div class="two-columns twelve-columns-mobile new-row-mobile no-wrap no-margin-bottom">
             <p class="white">
               <?php echo $lC_Language->get('text_balance'); ?> 
-                        <small class="tag small-margin-left with-min-padding<?php echo ((lC_Orders_Admin::getBalanceState($oInfo->get('oID')) == 'Paid') ? ' green-bg' : ' red-bg'); ?>">
-                          <?php echo lC_Orders_Admin::getBalanceState($oInfo->get('oID')); ?>
+              <small class="tag small-margin-left with-min-padding<?php echo ((lC_Orders_Admin::getBalanceState($oInfo->get('oID')) == 'Paid') ? ' green-bg' : ' red-bg'); ?>">
+                <?php echo lC_Orders_Admin::getBalanceState($oInfo->get('oID')); ?>
               </small>
             </p>
             <p class="white">
               <?php echo $lC_Language->get('text_address'); ?> 
-                        <small class="tag small-margin-left with-min-padding<?php echo ((lC_Orders_Admin::getAddressMatching($oInfo->get('oID')) == 'Same') ? ' green-bg' : ' orange-bg'); ?>">
-                          <?php echo lC_Orders_Admin::getAddressMatching($oInfo->get('oID')); ?>
+              <small class="tag small-margin-left with-min-padding<?php echo ((lC_Orders_Admin::getAddressMatching($oInfo->get('oID')) == 'Same') ? ' green-bg' : ' orange-bg'); ?>">
+                <?php echo lC_Orders_Admin::getAddressMatching($oInfo->get('oID')); ?>
               </small>
             </p>
           </div>
@@ -264,7 +267,7 @@
               <span class="icon-chat icon-size2 icon-anthracite mid-margin-left"><strong class="small-margin-left"><?php echo $lC_Language->get('text_recent_messages'); ?></strong></span>
             </legend>
             <div class="btop-anthracite">
-                        <?php echo lC_Orders_Admin::getOrderComments($oInfo->get('oID')); ?>
+              <?php echo lC_Orders_Admin::getOrderComments($oInfo->get('oID')); ?>
             </div>
           </fieldset>
         </div>
@@ -310,7 +313,7 @@
             </legend>
             <table width="100%" cellpadding="0" cellspacing="0">
               <tbody>
-                          <?php echo lC_Orders_Admin::getOrderComments($oInfo->get('oID')); ?>
+              <?php echo lC_Orders_Admin::getOrderComments($oInfo->get('oID')); ?>
               </tbody>
             </table>
           </fieldset>

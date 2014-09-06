@@ -376,7 +376,7 @@ if (!class_exists('lC_Store_Admin')) {
       }
 
       usort($addons, "self::_usortAddonsByRating");   
-
+      
       return $addons;
     }  
     /*
@@ -617,7 +617,7 @@ if (!class_exists('lC_Store_Admin')) {
     */  
     private static function _usortAddonsByRating($a, $b) {
       return $a['rating'] == $b['rating'] ? 0 : $a['rating'] > $b['rating'] ? -1 : 1;
-    } 
-  }
+    }     
+  } 
 }
 ?>

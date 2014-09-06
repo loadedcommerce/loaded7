@@ -264,7 +264,6 @@ class lC_Products_Admin {
   public function getProductsListingQty($data) {
     return $data['products_quantity'];
   }  
-  
  /*
   * Returns the data used on the dialog forms
   *
@@ -642,10 +641,10 @@ class lC_Products_Admin {
     $lC_Database->startTransaction();
 
     if ( is_numeric($id) ) {
-      $Qproduct = $lC_Database->query('update :table_products set parent_id = :parent_id, products_quantity = :products_quantity, products_cost = :products_cost, products_price = :products_price, products_msrp = :products_msrp, products_model = :products_model, products_sku = :products_sku, products_weight = :products_weight, products_weight_class = :products_weight_class, products_status = :products_status, products_tax_class_id = :products_tax_class_id, products_last_modified = now() where products_id = :products_id');
+      $Qproduct = $lC_Database->query('update :table_products set parent_id = :parent_id, products_quantity = :products_quantity, products_cost = :products_cost, products_price = :products_price, products_msrp = :products_msrp, products_model = :products_model, products_sku = :products_sku, products_weight = :products_weight, products_weight_class = :products_weight_class, products_status = :products_status, groups_pricing_enable = :groups_pricing_enable, qpb_pricing_enable = :qpb_pricing_enable, specials_pricing_enable = :specials_pricing_enable, products_tax_class_id = :products_tax_class_id, products_last_modified = now() where products_id = :products_id');
       $Qproduct->bindInt(':products_id', $id);
     } else {
-      $Qproduct = $lC_Database->query('insert into :table_products (parent_id, products_quantity, products_cost, products_price, products_msrp, products_model, products_sku, products_weight, products_weight_class, products_status, products_tax_class_id, products_ordered, products_date_added) values (:parent_id, :products_quantity, :products_cost, :products_price, :products_msrp, :products_model, :products_sku, :products_weight, :products_weight_class, :products_status, :products_tax_class_id, :products_ordered, :products_date_added)');
+      $Qproduct = $lC_Database->query('insert into :table_products (parent_id, products_quantity, products_cost, products_price, products_msrp, products_model, products_sku, products_weight, products_weight_class, products_status, products_tax_class_id, products_ordered, products_date_added, groups_pricing_enable, qpb_pricing_enable, specials_pricing_enable) values (:parent_id, :products_quantity, :products_cost, :products_price, :products_msrp, :products_model, :products_sku, :products_weight, :products_weight_class, :products_status, :products_tax_class_id, :products_ordered, :products_date_added, :groups_pricing_enable, :qpb_pricing_enable, :specials_pricing_enable)');
       $Qproduct->bindRaw(':products_date_added', 'now()');
       $Qproduct->bindInt(':products_ordered', $data['products_ordered']);
     }
@@ -667,6 +666,9 @@ class lC_Products_Admin {
     $Qproduct->bindInt(':products_weight_class', $data['weight_class']);
     $Qproduct->bindInt(':products_tax_class_id', $data['tax_class_id']);   
     $Qproduct->bindInt(':products_status', $data['status']);
+    $Qproduct->bindInt(':groups_pricing_enable', $data['groups_pricing_switch']);
+    $Qproduct->bindInt(':qpb_pricing_enable', $data['qpb_pricing_switch']);
+    $Qproduct->bindInt(':specials_pricing_enable', $data['specials_pricing_switch']);
     $Qproduct->setLogging($_SESSION['module'], $id);
     $Qproduct->execute();
       
@@ -825,9 +827,11 @@ class lC_Products_Admin {
     // product attributes
     if ( $error === false ) {
       if ( isset($data['attributes']) && !empty($data['attributes']) ) {
+
         foreach ( $data['attributes'] as $attributes_id => $value ) {
+
           if ( is_array($value) ) {
-          } elseif ( !empty($value) ) {
+          } elseif ( !empty($value) && $value != 'NULL') {
             $Qcheck = $lC_Database->query('select id from :table_product_attributes where products_id = :products_id and id = :id limit 1');
             $Qcheck->bindTable(':table_product_attributes', TABLE_PRODUCT_ATTRIBUTES);
             $Qcheck->bindInt(':products_id', $products_id);
@@ -838,7 +842,7 @@ class lC_Products_Admin {
               $Qattribute = $lC_Database->query('update :table_product_attributes set value = :value where products_id = :products_id and id = :id');
             } else {
               $Qattribute = $lC_Database->query('insert into :table_product_attributes (id, products_id, languages_id, value) values (:id, :products_id, :languages_id, :value)');
-              $Qattribute->bindInt(':languages_id', 0);
+              $Qattribute->bindInt(':languages_id', $lC_Language->getID());
             }
             
             $Qattribute->bindTable(':table_product_attributes', TABLE_PRODUCT_ATTRIBUTES);
@@ -855,6 +859,7 @@ class lC_Products_Admin {
         }
       }
     }
+ 
 
     // simple options
     if ( $error === false ) {

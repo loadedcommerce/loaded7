@@ -1,15 +1,15 @@
 <?php
 /**
-  @package    catalog::javascript
-  @author     Loaded Commerce
-  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
-  @copyright  Portions Copyright 2003 osCommerce
-  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
-  @version    $Id: general.js.php v1.0 2013-08-08 datazen $
+@package    catalog::javascript
+@author     Loaded Commerce
+@copyright  Copyright 2003-2014 Loaded Commerce, LLC
+@copyright  Portions Copyright 2003 osCommerce
+@license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+@version    $Id: general.js.php v1.0 2013-08-08 datazen $
 */
 global $lC_Template, $lC_Language, $lC_Vqmod, $lC_Session; 
 ?>
-<script><!--
+<script>
 $(document).ready(function() {
 
   function setMaintenanceMode(s) {
@@ -62,32 +62,31 @@ $(document).ready(function() {
     }
   ?>
   $(":contains('<?php echo addslashes($lC_Language->get('out_of_stock')); ?>')").closest('button').removeClass("btn-success").addClass("btn-default");
-
 });
 
 $(window).resize(function() {
 
-  var type = _setMediaType();
-  var width = '';
+    var type = _setMediaType();
+    var width = '';
 
-  // reset the payment iframe width
-  if (type == 'mobile-portrait') {
-    width = '254px';
-  } else if (type == 'mobile-landscape') {
-    width = '414px';
-  } else if (type == 'small-tablet-portrait') {
-    width = '490px';
-  } else if (type == 'small-tablet-landscape') {
-    width = '410px';
-  } else if (type == 'tablet-portrait') {
-    width = '390px';
-  } else if (type == 'tablet-landscape') {
-    width = '450px';
-  } else {
-    width = '478px';
-  }
+    // reset the payment iframe width
+    if (type == 'mobile-portrait') {
+      width = '254px';
+    } else if (type == 'mobile-landscape') {
+      width = '414px';
+    } else if (type == 'small-tablet-portrait') {
+      width = '490px';
+    } else if (type == 'small-tablet-landscape') {
+      width = '410px';
+    } else if (type == 'tablet-portrait') {
+      width = '390px';
+    } else if (type == 'tablet-landscape') {
+      width = '450px';
+    } else {
+      width = '478px';
+    }
 
-  $('#pmtFrame').css('width', width);
+    $('#pmtFrame').css('width', width);
 });
 
 function _setMediaType() {
@@ -162,13 +161,13 @@ function addCoupon() {
         }       
         return false;
       }
-        url = window.location.href;
-        if(data.rpcMessage != '') {     
-          //url = window.location.href+'&msg='+data.rpcMessage;
-          //url.replace("/&msg=/g", '&msg='+data.rpcMessage);   
-         }
-        window.location.href = url;
-      }
+      url = window.location.href;
+      if(data.rpcMessage != '') {     
+        //url = window.location.href+'&msg='+data.rpcMessage;
+        //url.replace("/&msg=/g", '&msg='+data.rpcMessage);   
+       }
+      window.location.href = url;
+    }
   );  
 }
 
@@ -181,11 +180,91 @@ function removeCoupon(code) {
         alert('<?php echo addslashes($lC_Language->get('ms_error_action_not_performed')); ?>');
         return false;
       }
-        url = window.location.href;        
-        window.location.href = url;       
+      url = window.location.href;        
+      window.location.href = url;       
     }
   );  
 }
+
+/* FILE UPLOAD VARIANT MODULE */
+
+$(document).on('change', '.btn-file :file', function() {
+  var input = $(this),
+  numFiles = input.get(0).files ? input.get(0).files.length : 1,
+  label = input.val().replace(/\\/g, '/').replace(/.*\//, ''),
+  title = input.attr('default').replace(/\\/g, '/').replace(/.*\//, ''),
+  htitle = input.attr('htitle').replace(/\\/g, '/').replace(/.*\//, ''),
+  groupID = input.attr('group-id').replace(/\\/g, '/').replace(/.*\//, ''),
+  valueID = input.attr('value-id').replace(/\\/g, '/').replace(/.*\//, ''),
+  modifier = input.attr('modifier').replace(/\\/g, '/').replace(/.*\//, ''),
+  id = input.attr('id').replace(/\\/g, '/').replace(/.*\//, '');
+  
+  newFileRow(numFiles, label, id, title, htitle, groupID, valueID, modifier);
+});
+
+$(document).ready( function() {  
+  $('.file-inputs').bootstrapFileInput();
+  $('.btn-file :file').on('fileselect', function(event, numFiles, label, id, title, htitle, groupID, valueID, modifier) {
+    newFileRow(numFiles, label, id, title, htitle, groupID, valueID, modifier)
+  });
+});
+
+function newFileRow(numFiles, label, id, title, htitle, groupID, valueID, modifier) {
+
+  if (id.indexOf("mupload") != -1) { // multiple file upload
+    icon = id.replace('_options_mupload_', '_options_remove_');
+    icon2 = id.replace('variants_mupload_', 'variants_remove_');
+  } else {
+    icon = id.replace('_options_upload_', '_options_remove_');
+    icon2 = id.replace('variants_upload_', 'variants_remove_');
+  }
+  
+  if (numFiles > 0) {  
+    $('#' + icon).removeClass('hidden');
+    $('#' + icon2).removeClass('hidden');
+    $('#' + id).parent('a').removeClass('btn-primary').addClass('btn-success').addClass('disabled').attr('onclick', 'return false;');
+  } else {
+    $('#' + icon).addClass('hidden');
+    $('#' + icon2).addClass('hidden');
+    $('#' + id).parent('a').removeClass('btn-success').addClass('btn-primary').removeClass('disabled').removeAttr('onclick');
+  }
+
+  if (id.indexOf("mupload") != -1) { // multiple file upload  
+    var cnt = parseInt(id.split('_').slice(-1)[0]) + 1;
+    
+    if (modifier == 'variant') {
+      var row = '<div id="file_upload_div_' + groupID + '_' + valueID + '_' + cnt + '" class="form-group margin-left">'+
+                '  <label class="label-control" style="width:29%;">' + htitle + '</label>'+
+                '  <input type="file" htitle="' + htitle + '" modifier="variant" group-id="' +  groupID + '" value-id="' + valueID + '" class="file-input-' + groupID + '_' + valueID + '_' + cnt + ' file-inputs btn-primary btn-file mid-margin-left" data-filename-placement="inside" title="' + title + '" default="' + title + '" name="variants_upload[]" value="' + valueID + '" onchange="refreshPrice();" id="variants_mupload_' + groupID + '_' + valueID + '_' + cnt + '">'+
+                '  <input type="hidden" name="variants[' + groupID + ']" value="' + valueID + '" id="variants_' + groupID + '_' + valueID + '">'+
+                '  <i id="variants_remove_' + groupID + '_' + valueID + '_' + cnt + '" class="fa fa-times margin-left red hidden" style="cursor:pointer;" onclick="removeFileUploadRow(\'file_upload_div_' + groupID + '_' + valueID + '_' + cnt + '\');"></i>'+
+                '</div>';
+    } else {
+      var row = '<div id="file_upload_div_' + groupID + '_' + valueID + '_' + cnt + '" class="no-margin-top small-margin-bottom small-padding-left small-margin-left">'+
+                '  <label>'+
+                '  <input type="file"  htitle="' + htitle + '" group-id="' + groupID + '" value-id="' + valueID + '" class="file-input-' + groupID + '_' + valueID + '_' + cnt + ' file-inputs btn-primary btn-file" data-filename-placement="inside" title="' + title + '" default="' + title + '" name="simple_options_upload[]" value="' + valueID + '" modifier="' + modifier + '" onchange="refreshPrice();" id="simple_options_mupload_' + groupID + '_' + valueID + '_' + cnt + '">'+
+                '  <input type="hidden" name="simple_options[' + groupID + '][' + valueID + '][]" value="' + valueID + '" modifier="' + modifier + '" id="simple_options_' + cnt + '">'+
+                '</label><i id="simple_options_remove_' + groupID + '_' + valueID + '_' + cnt + '" class="fa fa-times margin-left red hidden" style="cursor:pointer;" onclick="removeFileUploadRow(\'file_upload_div_' + groupID + '_' + valueID + '_' + cnt + '\');"></i>'+
+                '</div>';
+    }
+    $('#file_upload_container_' + groupID).append(row);
+    $('.file-input-' + groupID + '_' + valueID + '_' + cnt).bootstrapFileInput();
+  }
+};
+
+function removeFileUploadRow(id) {
+  if (id == 0) {
+    $('#upload-table').remove();  
+  } else {
+    $('#' + id).remove();
+  }
+  
+  // if no inputs, refresh the page
+  var len = $('.mupload-div').length;
+  if (len == 0) document.location.href = document.location.href;
+}
+
+/* FILE UPLOAD VARIANT MODULE /EOF */
 
 ;function print_r (array, return_val) {
   // http://kevin.vanzonneveld.net
@@ -276,5 +355,7 @@ $("#qrcode-tooltip").click(function(){
       $('#qr-message').show('500');
     }
   );
-})
-//--></script>
+});
+
+
+</script>

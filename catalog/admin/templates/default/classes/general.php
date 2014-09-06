@@ -264,12 +264,12 @@ class lC_General_Admin {
               }
             }
             
-            $result['html'] .= '      <li class="bevel cursor-pointer" title="' . $lC_Language->get('product_view_details') . ' ' . $value['products_name'] . '">' . "\n" . 
-                               '        <a onclick="setProductSearchSelection(\'' . $this_field . '\', \'' . $value['products_name'] . '\', \'' . $field . '\', \'' . $value['products_id'] . '\');">' . "\n" .
+            $result['html'] .= '      <li class="bevel cursor-pointer" title="' . $lC_Language->get('product_view_details') . ' ' . htmlspecialchars ($value['products_name']) . '">' . "\n" . 
+                               '        <a onclick="setProductSearchSelection(\'' . $this_field . '\', \'' . htmlspecialchars ($value['products_name']) . '\', \'' . $field . '\', \'' . $value['products_id'] . '\');">' . "\n" .
                                '          <span class="float-right">' . "\n" . 
                                '            ' . ($value['has_children'] != 0 ? '<span title="' . $lC_Language->get('this_product_has') . ' ' . $Qvariants[0]['variants'] . ' ' . $lC_Language->get('variants') . '">(' . $Qvariants[0]['variants'] . ') <span class="icon-path"></span></span>' : $lC_Currencies->format($value['products_price'])) . '<br />' . "\n" . 
                                '          </span>' . "\n" . 
-                               '          <span class="green" title="' . $value['products_name'] . '"><b>' . (strlen($value['products_name']) > 16 ? substr($value['products_name'], 0, 16) . '...' : $value['products_name']) . '</b></span>' . ($value['has_children'] != 0 ? '' : '<small>' . $lC_Language->get('text_model') . ': '  . $value['products_model'] . '</small>') . "\n" . 
+                               '          <span class="green" title="' . htmlspecialchars ($value['products_name']) . '"><b>' . (strlen($value['products_name']) > 16 ? substr($value['products_name'], 0, 16) . '...' : $value['products_name']) . '</b></span>' . ($value['has_children'] != 0 ? '' : '<small>' . $lC_Language->get('text_model') . ': '  . $value['products_model'] . '</small>') . "\n" . 
                                '        </a>' . "\n" .
                                '      </li>';
                                

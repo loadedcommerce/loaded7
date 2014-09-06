@@ -98,7 +98,8 @@ class lC_Featured_products_Admin {
      
     // insert/update the featured products table
     $Qfeatured->bindTable(':table_featured_products', TABLE_FEATURED_PRODUCTS);
-    $Qfeatured->bindDate(':expires_date', (($data['expires_date'] != '0000-00-00 00:00:00') ? ((strstr($data['expires_date'], '/')) ? lC_DateTime::toDateTime($data['expires_date']) : $data['expires_date']) : '0000-00-00 00:00:00'));
+    //$Qfeatured->bindDate(':expires_date', (($data['expires_date'] != '0000-00-00 00:00:00') ? ((strstr($data['expires_date'], '/')) ? lC_DateTime::toDateTime($data['expires_date']) : $data['expires_date']) : '0000-00-00 00:00:00'));
+    $Qfeatured->bindDate(':expires_date', ($data['expires_date'] != '0000-00-00 00:00:00') ? lC_DateTime::toDateTime($data['expires_date']) : $data['expires_date']);
     $Qfeatured->bindInt(':status', $data['status']);
     $Qfeatured->setLogging($_SESSION['module'], $id);
     $Qfeatured->execute();

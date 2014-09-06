@@ -35,8 +35,17 @@ class lC_Checkout_Payment extends lC_Template {
     // if no shipping method has been selected, redirect the customer to the shipping method selection page
     if ($lC_ShoppingCart->hasShippingMethod() === false ) {
       if (defined('SKIP_CHECKOUT_SHIPPING_PAGE') && SKIP_CHECKOUT_SHIPPING_PAGE == '1') {
+        if (lC_AddressBook::numberOfEntries() < 1) {
+          lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment_address', 'SSL'));
+        }
       } else {
         lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'));
+      }
+    } else {
+      if (defined('SKIP_CHECKOUT_SHIPPING_PAGE') && SKIP_CHECKOUT_SHIPPING_PAGE == '1') {
+        if (lC_AddressBook::numberOfEntries() < 1) {
+          lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment_address', 'SSL'));
+        }
       }
     }
 
