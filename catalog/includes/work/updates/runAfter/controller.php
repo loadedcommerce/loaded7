@@ -409,17 +409,15 @@ class lC_Updates_Admin_run_after extends lC_Updates_Admin {
       parent::log("Database Update: INSERT INTO `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('Maximum Upload File Size', 'PRODUCT_MODULES_FILE_UPLOAD_MAX_SIZE', '10', 'Enter the maximum size (in MB) allowed for file uploads.', 22, 0, now(), now(), NULL, NULL)");
     }         
      
-    if (utility::isB2B()) {
-      if (!defined('B2B_SETTINGS_ALLOW_SELF_REGISTER')) {
-        $lC_Database->simpleQuery("insert into `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('', 'B2B_SETTINGS_ALLOW_SELF_REGISTER', '1', '', '6', '0', '', '', now())");
-        parent::log("Database Update: insert into `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('', 'B2B_SETTINGS_ALLOW_SELF_REGISTER', '1', '', '6', '0', '', '', now())");
-  }
-      
-      if (!defined('B2B_SETTINGS_GUEST_CATALOG_ACCESS')) {
-        $lC_Database->simpleQuery("insert into `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('', 'B2B_SETTINGS_GUEST_CATALOG_ACCESS', '4', '', '6', '0', '', '', now())");
-        parent::log("Database Update: insert into `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('', 'B2B_SETTINGS_GUEST_CATALOG_ACCESS', '4', '', '6', '0', '', '', now())");
-}  
+    if (!defined('B2B_SETTINGS_ALLOW_SELF_REGISTER')) {
+      $lC_Database->simpleQuery("insert into `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('', 'B2B_SETTINGS_ALLOW_SELF_REGISTER', '1', '', '6', '0', '', '', now())");
+      parent::log("Database Update: insert into `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('', 'B2B_SETTINGS_ALLOW_SELF_REGISTER', '1', '', '6', '0', '', '', now())");
     }
+      
+    if (!defined('B2B_SETTINGS_GUEST_CATALOG_ACCESS')) {
+      $lC_Database->simpleQuery("insert into `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('', 'B2B_SETTINGS_GUEST_CATALOG_ACCESS', '4', '', '6', '0', '', '', now())");
+      parent::log("Database Update: insert into `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('', 'B2B_SETTINGS_GUEST_CATALOG_ACCESS', '4', '', '6', '0', '', '', now())");
+    }  
 
     $lC_Database->simpleQuery("CREATE TABLE IF NOT EXISTS `" . $pf . "purchase_orders_service` (`po_number_id` int(11) NOT NULL AUTO_INCREMENT, `po_number` varchar(255) NOT NULL, `orders_id` int(11) NOT NULL, `po_number_status` int(1) NOT NULL DEFAULT '1', PRIMARY KEY (`po_number_id`)) ENGINE=" . $engine . " CHARACTER SET utf8 COLLATE utf8_general_ci"); 
     parent::log("Database Update: CREATE TABLE IF NOT EXISTS `" . $pf . "purchase_orders_service` (`po_number_id` int(11) NOT NULL AUTO_INCREMENT, `po_number` varchar(255) NOT NULL, `orders_id` int(11) NOT NULL, `po_number_status` int(1) NOT NULL DEFAULT '1', PRIMARY KEY (`po_number_id`)) ENGINE=" . $engine . " CHARACTER SET utf8 COLLATE utf8_general_ci"); 

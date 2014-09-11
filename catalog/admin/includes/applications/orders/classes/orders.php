@@ -46,7 +46,7 @@ class lC_Orders_Admin {
     $QresultTotal->freeResult();      
     
     /* Paging */
-    $sLimit = "";
+    $sLimit = " LIMIT 0,25 ";
     if (isset($_GET['iDisplayStart'])) {
       if ($_GET['iDisplayLength'] != -1) {
         $sLimit = " LIMIT " . $_GET['iDisplayStart'] . ", " . $_GET['iDisplayLength'];
