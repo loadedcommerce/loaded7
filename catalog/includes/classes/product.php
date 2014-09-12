@@ -115,7 +115,7 @@ class lC_Product {
         // load price break array
         $this->_data['price_breaks'] = array();
 
-        $Qpb = $lC_Database->query('select tax_class_id, qty_break, price_break from :table_products_pricing where products_id = :products_id and group_id = :group_id order by group_id, qty_break');
+        $Qpb = $lC_Database->query('select tax_class_id, qty_break, price_break from :table_products_pricing where products_id = :products_id and group_id = :group_id and price_break > 0.00 and qty_break > 0 order by group_id, qty_break');
         $Qpb->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
         $Qpb->bindInt(':products_id', $this->_data['master_id']); 
         $Qpb->bindInt(':group_id', (isset($_SESSION['lC_Customer_data']['customers_group_id'])? $_SESSION['lC_Customer_data']['customers_group_id'] : DEFAULT_CUSTOMERS_GROUP_ID));
@@ -306,6 +306,22 @@ class lC_Product {
   
   public function getAccessLevels() {
     return $this->_data['access_levels'];
+  }
+  
+  public function getProductPrice($id) {
+    global $lC_Database; 
+    
+    $Qprice = $lC_Database->query('select products_price from :table_products where products_id = :products_id and products_status = :products_status');
+    $Qprice->bindTable(':table_products', TABLE_PRODUCTS);
+    $Qprice->bindInt(':products_id', $id);
+    $Qprice->bindInt(':products_status', 1);
+    $Qprice->execute();   
+    
+    $price = $Qprice->valueDecimal('products_price');
+    
+    $Qprice->freeResult();
+    
+    return $price;  
   }  
   
   // ######## PRICING - ALL PRICING TO COME FROM HERE #########//
@@ -315,11 +331,17 @@ class lC_Product {
     $quantity = (isset($data['quantity']) && $data['quantity'] != null) ? (int)$data['quantity'] : 1;
 
     // #### SET BASE PRICE #### //
-    
-    // initial price = base price    
     $base_price = $this->getBasePrice();
+    // check for variant
+    if (isset($data['variants']) && is_array($data['variants'])) {
+      $vpID = (int)self::getProductVariantID($data['variants']);
+      
+      if (isset($vpID) && is_numeric($vpID)) {
+        $base_price = self::getProductPrice($vpID);
+      }
+    }
     $price = (float)$base_price;   
-    
+
     // options modifiers
     if (is_array($data['simple_options']) && count($data['simple_options']) > 0) {
       $modTotal = 0;
