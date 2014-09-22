@@ -14,8 +14,10 @@ button_add_new_item = Add New Item
 button_add_another_group = Add Another Group to this set
 button_new_row = New Row
 button_revert_changes = Revert Changes
+button_select_file = Select File
 
 field_name = Name:
+field_blurb = Blurb:
 field_complete = Complete
 field_copy_method = Copy Method:
 field_copy_to_category = Copy to Category:
@@ -72,14 +74,12 @@ info_bubble_content_base_price = Product Base Price
 info_bubble_content_status = Product Status
 info_bubble_content_model = Product Model Number
 info_bubble_content_weight = Product Weight
-
+info_bubble_content_blurb = Product Blurb
 info_bubble_inventory_control = Simple product with no variants or Multi-SKU product with variants.
-
 info_bubble_pricing_base_price = Product Base Price
 info_bubble_pricing_group_pricing = Separate Pricing Per Customer Group
 info_bubble_pricing_qty_price_breaks = Quantity Price Breaks
 info_bubble_pricing_specials = Product Specials Pricing
-
 info_bubble_data_model = Product Model Number
 info_bubble_data_msrp = Manufacturer Suggested Retail Price
 info_bubble_data_track_inventory_override = Track Inventory Overrides
@@ -87,7 +87,6 @@ info_bubble_data_vendor = Product Vendor/Supplier
 info_bubble_data_tax_class = Product Tax Class
 info_bubble_data_price_with_tax = Product Price including Tax (calculated)
 info_bubble_data_product_class = The Product Classification
-
 info_bubble_shipping_weight = Product Weight
 info_bubble_shipping_weight_class = Product Weight Class 
 info_bubble_shipping_non_shippable = Select for products that do not require shipping
@@ -95,7 +94,7 @@ info_bubble_shipping_dimensions = Product Dimensions
 info_bubble_shipping_handling_fee = Shipping Handling Fee
 info_bubble_shipping_fee_override = Shipping Fee Override
 info_bubble_shipping_warehouse = Product Warehouse 
-info_bubble_shipping_date_expected = Producr Expected Date
+info_bubble_shipping_date_expected = Product Expected Date
 
 introduction_select_local_images = The following images are available on the server where additional images can be uploaded via FTP. The listing can be refreshed by clicking on the Local Files link.<br /><br />Please select from the following listing which images to assign to this product.
 introduction_delete_image = Please verify the removal of the product image.

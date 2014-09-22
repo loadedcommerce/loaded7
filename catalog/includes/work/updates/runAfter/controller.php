@@ -454,6 +454,9 @@ class lC_Updates_Admin_run_after extends lC_Updates_Admin {
     
     $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "products_pricing` ADD `parent_id` TINYINT(1) NOT NULL DEFAULT '0' AFTER `products_id`");
     parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "products_pricing` ADD `parent_id` TINYINT(1) NOT NULL DEFAULT '0' AFTER `products_id`");
+    
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "products_description` ADD `products_blurb` VARCHAR(4096) NOT NULL DEFAULT '' AFTER `products_name`");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "products_description` ADD `products_blurb` VARCHAR(4096) NOT NULL DEFAULT '' AFTER `products_name`");
 
   }
 }  

@@ -618,6 +618,7 @@ CREATE TABLE lc_products_description (
   products_id int(11) NOT NULL AUTO_INCREMENT,
   language_id int(11) NOT NULL DEFAULT '1',
   products_name varchar(255) NOT NULL,
+  products_blurb varchar(4096) DEFAULT NULL,
   products_description text,
   products_keyword varchar(255) DEFAULT NULL,
   products_tags varchar(255) DEFAULT NULL,

@@ -19,7 +19,7 @@ global $lC_Language, $pInfo, $products_description, $products_keyword, $products
           <div id="imagePreviewContainer" class="prod-image align-center">
             <?php if (!$pInfo) { ?>
             <div><img src="../images/no_image.png" style="max-width:100%;" /></div>
-            <div class="margin-top"><span class="input file"><span class="file-text"></span><span class="button compact">Select file</span><input type="file" class="file withClearFunctions" id="products_image" name="products_image"></span></div>
+            <div class="margin-top"><span class="input file"><span class="file-text"></span><span class="button compact"><?php echo $lC_Language->get('button_select_file'); ?></span><input type="file" class="file withClearFunctions" id="products_image" name="products_image"></span></div>
             <?php } ?>
           </div>
         </div>
@@ -56,19 +56,25 @@ global $lC_Language, $pInfo, $products_description, $products_keyword, $products
                     <?php echo lc_draw_input_field('products_name[' . $l['id'] . ']', (isset($pInfo) && isset($products_name[$l['id']]) ? $products_name[$l['id']] : null), 'id="products_name_' . $l['id'] . '" class="required input" style="width:97%;"'); ?>
                   </p>
                   <p class="button-height block-label">
-                  <label class="label" for="<?php echo 'products_description[' . $l['id'] . ']'; ?>"><?php echo $lC_Language->get('field_description') . lc_show_info_bubble($lC_Language->get('info_bubble_content_description')); ?></label>
-                  <?php echo lc_draw_textarea_field('products_description[' . $l['id'] . ']', (isset($pInfo) && isset($products_description[$l['id']]) ? $products_description[$l['id']] : null), null, 10, 'id="ckEditorProductDescription_' . $l['id'] . '" style="width:97%;" class="input full-width autoexpanding"'); ?>
-                  </p>
-                  <!-- <?php if (ENABLE_EDITOR == '1') { ?>
-                  <p class="toggle-html-editor"><?php echo '<a href="javascript:toggleEditor(\'' . $l['id'] . '\');">' . $lC_Language->get('text_toggle_html_editor') . '</a>'; ?></p>
-                  <p class="button-height block-label large-margin-top">
-                  <?php } else { ?>
-                  <p class="button-height block-label">
-                  <?php } ?> -->
                     <label class="label" for="<?php echo 'products_keyword[' . $l['id'] . ']'; ?>"><?php echo $lC_Language->get('field_keyword') . lc_show_info_bubble($lC_Language->get('info_bubble_content_keyword')); ?></label>
                     <?php echo lc_draw_input_field('products_keyword[' . $l['id'] . ']', (isset($pInfo) && isset($products_keyword[$l['id']]) ? $products_keyword[$l['id']] : null), 'class="required input" style="width:97%" id="products_keyword_' . $l['id'] . '"' . (!isset($pInfo) ? ' onblur="validatePermalink(this.value);"' : null)); ?>
                   </p>
                   <p class="button-height block-label">
+                    <label class="label" for="<?php echo 'products_blurb[' . $l['id'] . ']'; ?>"><?php echo $lC_Language->get('field_blurb') . lc_show_info_bubble($lC_Language->get('info_bubble_content_blurb')); ?></label>
+                    <?php echo lc_draw_textarea_field('products_blurb[' . $l['id'] . ']', (isset($pInfo) && isset($products_blurb[$l['id']]) ? $products_blurb[$l['id']] : null), null, 3, 'id="products_blurb_' . $l['id'] . '" class="input full-width autoexpanding"'); ?>
+                  </p>
+                  <p class="button-height block-label">
+                    <label class="label" for="<?php echo 'products_description[' . $l['id'] . ']'; ?>"><?php echo $lC_Language->get('field_description') . lc_show_info_bubble($lC_Language->get('info_bubble_content_description')); ?></label>
+                    <?php echo lc_draw_textarea_field('products_description[' . $l['id'] . ']', (isset($pInfo) && isset($products_description[$l['id']]) ? $products_description[$l['id']] : null), null, 10, 'id="ckEditorProductDescription_' . $l['id'] . '" style="width:97%;" class="input full-width autoexpanding"'); ?>
+                  </p>
+                  <?php if (ENABLE_EDITOR == '1') { ?>
+                  <p class="toggle-html-editor">
+                    <?php echo '<a href="javascript:toggleEditor(\'' . $l['id'] . '\');">' . $lC_Language->get('text_toggle_html_editor') . '</a>'; ?>
+                  </p>
+                  <p class="button-height block-label large-margin-top">
+                  <?php } else { ?>
+                  <p class="button-height block-label">
+                  <?php } ?>
                     <label class="label" for="<?php echo 'products_tags[' . $l['id'] . ']'; ?>"><?php echo $lC_Language->get('field_tags') . lc_show_info_bubble($lC_Language->get('info_bubble_content_tags')); ?></label>
                     <?php echo lc_draw_input_field('products_tags[' . $l['id'] . ']', (isset($pInfo) && isset($products_tags[$l['id']]) ? $products_tags[$l['id']] : null), 'id="products_tags_' . $l['id'] . '" class="input" style="width:97%" maxlength="255"'); ?>
                   </p>

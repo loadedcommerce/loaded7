@@ -45,7 +45,7 @@ class lC_Product {
 
           if ( !empty($this->_data) ) {
             
-            $Qdesc = $lC_Database->query('select products_name as name, products_description as description, products_keyword as keyword, products_tags as tags, products_url as url from :table_products_description where products_id = :products_id and language_id = :language_id');
+            $Qdesc = $lC_Database->query('select products_name as name, products_blurb as blurb, products_description as description, products_keyword as keyword, products_tags as tags, products_url as url from :table_products_description where products_id = :products_id and language_id = :language_id');
             $Qdesc->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
             $Qdesc->bindInt(':products_id', $this->_data['master_id']);
             $Qdesc->bindInt(':language_id', $lC_Language->getID());
@@ -77,7 +77,7 @@ class lC_Product {
           }
         }
       } else {
-        $Qproduct = $lC_Database->query('select p.products_id as id, p.parent_id, p.products_quantity as quantity, p.products_price as price, p.products_model as model, p.products_tax_class_id as tax_class_id, p.products_weight as weight, p.products_weight_class as weight_class_id, p.products_date_added as date_added, p.manufacturers_id, p.has_children, pd.products_name as name, pd.products_description as description, pd.products_keyword as keyword, pd.products_tags as tags, pd.products_url as url from :table_products p, :table_products_description pd where pd.products_keyword = :products_keyword and pd.language_id = :language_id and pd.products_id = p.products_id and p.products_status = :products_status');
+        $Qproduct = $lC_Database->query('select p.products_id as id, p.parent_id, p.products_quantity as quantity, p.products_price as price, p.products_model as model, p.products_tax_class_id as tax_class_id, p.products_weight as weight, p.products_weight_class as weight_class_id, p.products_date_added as date_added, p.manufacturers_id, p.has_children, pd.products_name as name, pd.products_blurb as blurb, pd.products_description as description, pd.products_keyword as keyword, pd.products_tags as tags, pd.products_url as url from :table_products p, :table_products_description pd where pd.products_keyword = :products_keyword and pd.language_id = :language_id and pd.products_id = p.products_id and p.products_status = :products_status');
         $Qproduct->bindTable(':table_products', TABLE_PRODUCTS);
         $Qproduct->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
         $Qproduct->bindValue(':products_keyword', $id);
@@ -270,6 +270,10 @@ class lC_Product {
 
   public function getTitle() {
     return $this->_data['name'];
+  }
+
+  public function getBlurb() {
+    return $this->_data['blurb'];
   }
 
   public function getDescription() {
