@@ -47,21 +47,59 @@ $error = (isset($_GET['error']) && $_GET['error'] != NULL) ? preg_replace('/[^A-
   <?php
   if ( $lC_Product->hasSubProducts($lC_Product->getID()) === false) {
     ?>  
-    <form role="form" class="form-horizontal" name="cart_quantity" id="cart_quantity" action="<?php echo lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword() . '&action=cart_add&info=1'); ?>" method="post">
+    <form role="form" class="form-horizontal" name="cart_quantity" id="cart_quantity" action="<?php echo lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword() . '&action=cart_add&info=1'); ?>" method="post" enctype="multipart/form-data">
     <?php
   }
   ?>
   <div class="col-sm-8 col-lg-8 clearfix">
     <h1 class="no-margin-top"><?php echo $lC_Template->getPageTitle(); ?></h1>
     <?php
-    $availability = ( (STOCK_CHECK == '1') && ($lC_ShoppingCart->isInStock($lC_Product->getID()) === false) ) ? '<span class="product-out-of-stock red">' . STOCK_MARK_PRODUCT_OUT_OF_STOCK . '</span>' : $lC_Product->getAttribute('shipping_availability');
-    if ($lC_Product->getAttribute('manufacturers') != null || $lC_Product->hasModel()) {
-      echo '<div class="content-products-info-manuf-model">' . "\n" . 
-           (($lC_Product->getAttribute('manufacturers') != null) ? '<span class="content-products-info-manuf small-margin-right">' . $lC_Product->getAttribute('manufacturers') . ':</span>' . "\n" : null) .
-           '  <span class="content-products-info-model">' . $lC_Product->getModel() . '</span>' . "\n" . 
-           '</div>' . "\n";
-    }
+      $availability = ( (STOCK_CHECK == '1') && ($lC_ShoppingCart->isInStock($lC_Product->getID()) === false) ) ? '<span class="product-out-of-stock red">' . STOCK_MARK_PRODUCT_OUT_OF_STOCK . '</span>' : $lC_Product->getAttribute('shipping_availability');
+      if ($lC_Product->getAttribute('manufacturers') != null || $lC_Product->hasModel()) {
+        echo '<div class="content-products-info-manuf-model">' . "\n" . 
+             (($lC_Product->getAttribute('manufacturers') != null) ? '<span class="content-products-info-manuf small-margin-right">' . $lC_Product->getAttribute('manufacturers') . ':</span>' . "\n" : null) .
+             '  <span class="content-products-info-model">' . $lC_Product->getModel() . '</span>' . "\n" . 
+             '</div>' . "\n";
+      }
+      
+      if ( PRODUCT_INFO_SOCIAL_SHARE_FACEBOOK == 1 || PRODUCT_INFO_SOCIAL_SHARE_TWITTER == 1 || PRODUCT_INFO_SOCIAL_SHARE_GOOGLE == 1 || PRODUCT_INFO_SOCIAL_SHARE_LINKED == 1 || PRODUCT_INFO_SOCIAL_SHARE_PIN == 1 || PRODUCT_INFO_SOCIAL_SHARE_TUMBLR == 1 ) { 
     ?>
+    <script>
+      function social_popup(url){
+        var myWindow = window.open(url, "Social Window", "width=600, height=400");
+      }
+    </script>
+    <style>
+    </style>
+    <div class="social-container">
+      <div class="social_wrap list-inline no-print">
+        <?php if ( PRODUCT_INFO_SOCIAL_SHARE_FACEBOOK == 1 ) { ?>
+        <button onclick="social_popup('https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode(HTTP_SERVER . $_SERVER['REQUEST_URI']); ?>');" class="btn btn-default btn-facebook" type="button">
+        <i class="fa fa-facebook"></i><span class="hide-on-mobile hide-on-tablet icon-facebook-text"><?php echo $lC_Language->get('text_social_share_facebook'); ?></span></button>
+        <?php } ?>
+        <?php if ( PRODUCT_INFO_SOCIAL_SHARE_TWITTER == 1 ) { ?>
+        <button onclick="social_popup('https://twitter.com/intent/tweet?text=<?php echo urlencode($lC_Product->getTitle()); ?>&url=<?php echo urlencode(HTTP_SERVER . $_SERVER['REQUEST_URI']); ?>');" class="btn btn-default btn-twitter" type="button">
+        <i class="fa fa-twitter"></i><span class="hide-on-mobile hide-on-tablet icon-twitter-text"><?php echo $lC_Language->get('text_social_share_twitter'); ?></span></button>
+        <?php } ?>
+        <?php if ( PRODUCT_INFO_SOCIAL_SHARE_GOOGLE == 1 ) { ?>
+        <button onclick="social_popup('https://plus.google.com/share?url=<?php echo urlencode(HTTP_SERVER . $_SERVER['REQUEST_URI']); ?>&gpsrc=frameless&btmpl=popup');" class="btn btn-default btn-google-plus" type="button">
+        <i class="fa fa-google-plus"></i><span class="hide-on-mobile hide-on-tablet icon-google-plus-text"><?php echo $lC_Language->get('text_social_share_google_plus'); ?></span></button>
+        <?php } ?>
+        <?php if ( PRODUCT_INFO_SOCIAL_SHARE_LINKED == 1 ) { ?>
+        <button onclick="social_popup('https://www.linkedin.com/shareArticle?mini=true&url=<?php echo urlencode(HTTP_SERVER . $_SERVER['REQUEST_URI']); ?>');" class="btn btn-default btn-pinterest" type="button">
+        <i class="fa fa-linkedin"></i><span class="hide-on-mobile hide-on-tablet icon-linkedin-text"><?php echo $lC_Language->get('text_social_share_linkedin'); ?></span></button>
+        <?php } ?>
+        <?php if ( PRODUCT_INFO_SOCIAL_SHARE_PIN == 1 ) { ?>
+        <button onclick="social_popup('https://www.pinterest.com/join/?next=/pin/create/button/?url=<?php echo urlencode(HTTP_SERVER.$_SERVER['REQUEST_URI']); ?>');" class="btn btn-default btn-pinterest" type="button">
+        <i class="fa fa-pinterest"></i><span class="hide-on-mobile hide-on-tablet icon-pinterest-text"><?php echo $lC_Language->get('text_social_share_pinterest'); ?></span></button>
+        <?php } ?>
+        <?php if ( PRODUCT_INFO_SOCIAL_SHARE_TUMBLR == 1 ) { ?>
+        <button onclick="social_popup('http://www.tumblr.com/share/link/?url=<?php echo urlencode(HTTP_SERVER.$_SERVER['REQUEST_URI']); ?>&name=<?php echo urlencode($lC_Product->getTitle()); ?>');" class="btn btn-default btn-tumblr" type="button">
+        <i class="fa fa-tumblr"></i><span class="hide-on-mobile hide-on-tablet icon-tumblr-text"><?php echo $lC_Language->get('text_social_share_tumblr'); ?></span></button>
+        <?php } ?>
+      </div>
+    </div> 
+    <?php } ?> 
     <hr class="small-margin-top small-margin-bottom">
     <p class="content-products-info-desc"><?php echo ($lC_Product->getDescription() != null) ? $lC_Product->getDescription() : $lC_Language->get('no_description_available'); ?></p>
     <?php
@@ -79,9 +117,9 @@ $error = (isset($_GET['error']) && $_GET['error'] != NULL) ? preg_replace('/[^A-
       <?php 
       if ( $lC_Product->hasSubProducts($lC_Product->getID()) === false) {
         ?>
-        <div class="content-products-info-price-container">
-          <span class="content-products-info-price pull-left lt-blue pricing-row clearfix margin-right"><?php echo $lC_Product->getPriceFormated(true); ?></span>
-          <span class="content-products-info-avail clearfix"><?php echo $availability ?></span>
+        <div class="content-products-info-price-container clearfix">
+          <span class="content-products-info-price pull-left lt-blue"><?php echo $lC_Product->getPriceFormated(true); ?></span>
+          <span class="content-products-info-avail with-padding-no-top-bottom"><?php echo $availability ?></span>
         </div>
         <?php
       }

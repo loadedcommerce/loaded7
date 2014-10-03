@@ -243,7 +243,7 @@ class lC_Configuration_Admin {
     }
 
     return $menu;
-  }
+  }                               
 
 
 

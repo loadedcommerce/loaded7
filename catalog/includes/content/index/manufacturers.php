@@ -21,7 +21,7 @@ class lC_Index_Manufacturers extends lC_Template {
     global $lC_Services, $lC_Language, $lC_Breadcrumb, $lC_Manufacturer;
 
     $this->_page_title = sprintf($lC_Language->get('index_heading'), STORE_NAME);
-    $template_code = (isset($_SESSION['template']['code']) && $_SESSION['template']['code'] != NULL) ? $_SESSION['template']['code'] : 'default';
+    $template_code = (isset($_SESSION['template']['code']) && $_SESSION['template']['code'] != NULL) ? $_SESSION['template']['code'] : 'core';
 
     if (is_numeric($_GET[$this->_module])) {
       include('includes/classes/manufacturer.php');

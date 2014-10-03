@@ -27,11 +27,13 @@
     ?>
     <form name="checkout_payment" id="checkout_payment" action="<?php echo lc_href_link(FILENAME_CHECKOUT, 'confirmation', 'SSL'); ?>" method="post" onsubmit="return check_form();">
       <div id="content-checkout-payment-container">
+        <?php if (defined('SKIP_CHECKOUT_SHIPPING_PAGE') && SKIP_CHECKOUT_SHIPPING_PAGE != '1') { ?>
         <div class="panel panel-default no-margin-bottom">
           <div class="panel-heading cursor-pointer" onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'); ?>'">
             <h3 class="no-margin-top no-margin-bottom"><?php echo $lC_Language->get('box_ordering_steps_delivery'); ?></h3>
           </div>
         </div>
+        <?php } ?>
         <div class="clearfix panel panel-default no-margin-bottom">
           <div class="panel-heading">
             <h3 class="no-margin-top no-margin-bottom"><?php echo $lC_Language->get('box_ordering_steps_payment'); ?></h3>
@@ -39,6 +41,7 @@
           <div class="panel-body no-padding-bottom">
             <div class="row">
               <div class="col-sm-4 col-lg-4">
+                <?php if (defined('SKIP_CHECKOUT_SHIPPING_PAGE') && SKIP_CHECKOUT_SHIPPING_PAGE != '1') { ?>
                 <div class="well relative no-padding-bottom">
                   <h4 class="no-margin-top"><?php echo $lC_Language->get('ship_to_address'); ?></h4>
                   <address>
@@ -54,7 +57,8 @@
                   <div class="btn-group clearfix absolute-top-right small-padding-right small-padding-top">
                     <button type="button" onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'); ?>';" class="btn btn-default btn-xs"><?php echo $lC_Language->get('button_edit'); ?></button>
                   </div>                  
-                </div>                
+                </div>
+                <?php } ?>                
                 <div class="well">
                   <?php
                   foreach ($lC_ShoppingCart->getOrderTotals() as $module) {  
@@ -90,9 +94,9 @@
                   </div>                                       
                 </div>
                 <h3 class="no-margin-top"><?php echo $lC_Language->get('payment_method_title'); ?></h3>
-                <?php 
+                <?php               
                 $selection = $lC_Payment->selection();
-                echo (sizeof($selection) > 1) ? '<div class="alert alert-warning">' . $lC_Language->get('choose_payment_method') . '</div>' : (sizeof($selection) == 1) ? '<div class="alert alert-warning">' . $lC_Language->get('only_one_payment_method_available') . '</div>' : '<div class="alert alert-warning">' . $lC_Language->get('no_payment_method_available') . '</div>' . "\n"; 
+                echo ((sizeof($selection) > 1) ? '<div class="alert alert-warning">' . $lC_Language->get('choose_payment_method') . '</div>' : ((sizeof($selection) == 1) ? '<div class="alert alert-warning">' . $lC_Language->get('only_one_payment_method_available') . '</div>' : '<div class="alert alert-warning">' . $lC_Language->get('no_payment_method_available') . '</div>' . "\n")); 
                 $radio_buttons = 0;
                 for ($i=0, $n=sizeof($selection); $i<$n; $i++) {
                   ?>

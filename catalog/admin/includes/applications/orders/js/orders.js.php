@@ -288,13 +288,10 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
         $("#editPrice").val(data.price);
         $("#editQuantity").val(data.quantity);
         $("#editProduct").empty();
-        $.each(data.productsArray, function(val, text) {          
-          var selected = (data.products_id == text['products_id']) ? 'selected="selected"' : '';
-          if (data.products_id == text['products_id']) {
-            $("#editProduct").closest("span + *").prevAll("span.select-value:first").text(text['products_name']);
-          }
+        $.each(data.productsArray, function(val, text) {
+          var selected = (text.products_id == opid) ? 'selected="selected"' : '';
           $("#editProduct").append(
-            $("<option " + selected + "></option>").val(text['products_id']).html(text['products_name'])
+            $("<option " + selected + "></option>").val(text.products_id).html(text.products_name)
           );
         });
         /*$("#editTaxclass").empty();

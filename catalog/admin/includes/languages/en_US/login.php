@@ -13,7 +13,6 @@ heading_product_registration = Product Registration
 
 button_activate_free = Activate Free Features
 button_activate_pro = Activate Pro Features
-button_buy_pro = Get the Pro Version
 button_login = Login
 button_lost_password = Lost password
 button_register = Register

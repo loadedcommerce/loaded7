@@ -7,7 +7,7 @@
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: product_listing.php v1.0 2013-08-08 datazen $
 */
-// create column list
+// create column list   
 $define_list = array('PRODUCT_LIST_MODEL' => PRODUCT_LIST_MODEL,
                      'PRODUCT_LIST_NAME' => PRODUCT_LIST_NAME,
                      'PRODUCT_LIST_MANUFACTURER' => PRODUCT_LIST_MANUFACTURER,
@@ -27,10 +27,18 @@ while (list($key, $value) = each($define_list)) {
 
 if ($Qlisting->numberOfRows() > 0) {
   
-  $output = '';      
+  $output = '';  
+  $show_price = true;    
+  $show_buy_now = true;    
   while ($Qlisting->next()) {
     // VQMOD-hookpoint; DO NOT MODIFY OR REMOVE THE LINE BELOW
     $lC_Product = new lC_Product($Qlisting->valueInt('products_id'));
+    
+    if (utility::isB2B() && $lC_Customer->isLoggedOn() === false) {
+      $access = (defined('B2B_SETTINGS_GUEST_CATALOG_ACCESS') && B2B_SETTINGS_GUEST_CATALOG_ACCESS > 0) ? (int)B2B_SETTINGS_GUEST_CATALOG_ACCESS : 0;
+      if ($access < 66) $show_price = false;
+      if ($access < 99) $show_buy_now = false;
+    }
 
     if ( strtotime($lC_Product->getDateAvailable()) <= strtotime(lC_Datetime::getShort()) ) {
       $output .= '<div class="product-listing-module-items">';
@@ -60,7 +68,7 @@ if ($Qlisting->numberOfRows() > 0) {
             break;
 
           case 'PRODUCT_LIST_PRICE':
-          $output .= '<div class="product-listing-module-price pricing-row">' . $lC_Product->getPriceFormated(true) . '</div>' . "\n";
+            $output .= '<div class="product-listing-module-price pricing-row">' . (($show_price) ? $lC_Product->getPriceFormated(true) : null) . '</div>' . "\n";
             break;
 
           case 'PRODUCT_LIST_QUANTITY':
@@ -81,9 +89,11 @@ if ($Qlisting->numberOfRows() > 0) {
             
           case 'PRODUCT_LIST_BUY_NOW':
             if (DISABLE_ADD_TO_CART == 1 && $lC_Product->getQuantity() < 1) {
-            $output .= '<div class="product-listing-module-buy-now buy-btn-div"><button class="product-listing-module-buy-now-button" disabled>' . $lC_Language->get('out_of_stock') . '</button></div>' . "\n"; 
+              $output .= '<div class="product-listing-module-buy-now buy-btn-div"><button class="product-listing-module-buy-now-button" disabled>' . $lC_Language->get('out_of_stock') . '</button></div>' . "\n"; 
             } else {
-            $output .= '<div class="product-listing-module-buy-now buy-btn-div"><form action="' . lc_href_link(basename($_SERVER['SCRIPT_FILENAME']), $lC_Product->getKeyword() . '&' . lc_get_all_get_params(array('action', 'new')) . '&action=cart_add') . '" method="post"><button onclick="$(this).closest(\'form\').submit();" type="submit" class="product-listing-module-buy-now-button">' . $lC_Language->get('button_buy_now') . '</button></form></div>' . "\n"; 
+              $output .= '<div class="product-listing-module-buy-now buy-btn-div">';
+              if ($show_buy_now) $output .= '<form action="' . lc_href_link(basename($_SERVER['SCRIPT_FILENAME']), $lC_Product->getKeyword() . '&' . lc_get_all_get_params(array('action', 'new')) . '&action=cart_add') . '" method="post"><button onclick="$(this).closest(\'form\').submit();" type="submit" class="product-listing-module-buy-now-button">' . $lC_Language->get('button_buy_now') . '</button></form>';
+              $output .= '</div>' . "\n"; 
             }
             break;
         }

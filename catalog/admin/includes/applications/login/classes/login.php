@@ -270,10 +270,10 @@ class lC_Login_Admin {
     }    
     
     if ($versions == null || $error) { // set the error flag
-      if ( is_writable(DIR_FS_WORK) ) {
-        file_put_contents(DIR_FS_WORK . 'apinocom.tmp', '[' . lC_DateTime::getNow('d-M-Y H:i:s') . '] ' . $errorMsg . "\n", FILE_APPEND);
-      }      
+      return -1;
     }
+    
+    return 1;
   }  
  /*
   * Download the product PHARs
@@ -321,7 +321,7 @@ class lC_Login_Admin {
     
     if (utility::isB2B()) {   
       return '<small class="tag orange-gradient mid-margin-left mid-margin-right">B2B</small>' . $lC_Language->get('text_version') . ' ' . utility::getB2BVersion();    
-    } else {
+    } else if (utility::isPro()) {
       return '<small class="tag red-gradient mid-margin-left mid-margin-right">PRO</small>' . $lC_Language->get('text_version') . ' ' . utility::getProVersion();    
     }
   }  

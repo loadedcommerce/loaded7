@@ -38,7 +38,7 @@ class lC_Boxes_categories extends lC_Modules {
     $lC_CategoryTree->setShowCategoryProductCount((BOX_CATEGORIES_SHOW_PRODUCT_COUNT == '1') ? true : false);
 
     $this->_content = $lC_CategoryTree->getTree();
-         
+           
   }
 
   function install() {

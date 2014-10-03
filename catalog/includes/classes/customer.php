@@ -33,8 +33,8 @@ class lC_Customer {
   public function getCustomerGroup($id = null) {
     global $lC_Database;
     
-    if (isset($this->_data['customers_group']) && is_numeric($this->_data['customers_group'])) {
-      $result = $this->_data['customers_group'];
+    if (isset($this->_data['customers_group_id']) && is_numeric($this->_data['customers_group_id'])) {
+      $result = $this->_data['customers_group_id'];
     } else if (is_numeric($id)) {
       $Qcg = $lC_Database->query('select customers_group_id from :table_customers where customers_id = :customers_id limit 1');
       $Qcg->bindTable(':table_customers', TABLE_CUSTOMERS);
@@ -51,26 +51,63 @@ class lC_Customer {
     return $result;
   }    
   
+  public function getCustomerGroupName($id) {
+    global $lC_Database;
+    
+    $Qcg = $lC_Database->query('select customers_group_name from :table_customers_groups where customers_group_id = :customers_group_id limit 1');
+    $Qcg->bindTable(':table_customers_groups', TABLE_CUSTOMERS_GROUPS);
+    $Qcg->bindInt(':customers_group_id', $id);
+    $Qcg->execute();
+            
+    $result = $Qcg->value('customers_group_name');
+      
+    $Qcg->freeResult();
+    
+    return $result;
+  }  
+  
   public function getCustomerGroupAccess($id = null) {
     global $lC_Database;
     
     if ($this->isLoggedOn() === false) { 
       $result = '1';
     } else {
-      if ($id == null) $id = DEFAULT_CUSTOMERS_GROUP_ID;
+      if (isset($this->_data['customers_group_id']) && is_numeric($this->_data['customers_group_id'])) {
+        $id = $this->_data['customers_group_id'];
+      } else if ($id == null) { 
+        $id = DEFAULT_CUSTOMERS_GROUP_ID;
+      }
       
       $Qcg = $lC_Database->query('select customers_access_levels from :table_customers_groups_data where customers_group_id = :customers_group_id limit 1');
       $Qcg->bindTable(':table_customers_groups_data', TABLE_CUSTOMERS_GROUPS_DATA);
-      $Qcg->bindInt(':customers_groups_id', $id);
+      $Qcg->bindInt(':customers_group_id', $id);
       $Qcg->execute();
-              
+          
       $result = $Qcg->value('customers_access_levels');
         
       $Qcg->freeResult();
-    
     }
     
     return $result;    
+  }
+  
+  public function getCustomerGroupAccessSql($id = null) {
+    
+    if ($id == null) $id = DEFAULT_CUSTOMERS_GROUP_ID;
+    
+    $levels = explode(';', $this->getCustomerGroupAccess($id));
+  
+    $result = '';
+    if (sizeof($levels) > 0) {
+      $result .= 'and ( ';
+      foreach ($levels as $key => $value) {
+        $result .= '(LOCATE(' . $value . ', p.access_levels) > 0) OR ';  
+      }
+      $result = substr($result, 0, -4);
+      $result .= ' )';
+    }
+
+    return $result;
   }
   
   public function getBaselineDiscount($id = null) {
@@ -315,6 +352,7 @@ if ($lC_Database->isError()) die($lC_Database->getError());
   public function setDefaultAddressID($id) {
     if (is_numeric($id) && ($id > 0)) {
       $this->_data['default_address_id'] = $id;
+      $_SESSION['lC_Customer_data']['default_address_id'] = $id; // fix for default_address_id
     } else {
       $this->_data['default_address_id'] = false;
     }

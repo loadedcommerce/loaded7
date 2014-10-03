@@ -130,5 +130,21 @@
 
       $d->close();
     }
-  }
+  
+/**
+ * Clear all cached files
+ *
+ * @access public
+ */
+    public static function clearAll() {
+      
+      $d = dir(DIR_FS_WORK . 'cache/');
+      
+      while ( ($entry = $d->read()) !== false ) {
+        @unlink(DIR_FS_WORK . 'cache/' . $entry);
+      }
+
+      $d->close();
+    }
+  }  
 ?>

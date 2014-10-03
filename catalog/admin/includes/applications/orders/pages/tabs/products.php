@@ -31,7 +31,7 @@
             </tr>
           </thead>
           <tbody>
-            <?php
+            <?php          
               foreach (lC_Orders_Admin::getOrdersProducts($_GET[$lC_Template->getModule()]) as $products) {
             ?>
             <tr id="orders_products_<?php echo $products['orders_products_id']; ?>">
@@ -71,7 +71,7 @@
               <td class="align-right" style="min-width:90px;">
                 <span id="buttons_<?php echo $products['orders_products_id']; ?>">
                   <span class="button-group">
-                    <a class="button icon-pencil" href="javascript:void(0);" onclick="editOrderProduct('<?php echo $_GET[$lC_Template->getModule()]; ?>','<?php echo $products['orders_products_id']; ?>');"><?php echo $lC_Language->get('text_edit'); ?></a>
+                    <a class="button icon-pencil" href="javascript:void(0);" onclick="editOrderProduct('<?php echo $_GET[$lC_Template->getModule()]; ?>','<?php echo $products['products_id']; ?>');"><?php echo $lC_Language->get('text_edit'); ?></a>
                   </span>
                   <span class="button-group">
                     <a class="button icon-trash with-tooltip" title="<?php echo $lC_Language->get('text_delete'); ?>" href="javascript:void(0)" onclick="deleteOrderProduct('<?php echo $products['orders_products_id']; ?>', '<?php echo $products['products_id']; ?>', '<?php echo $products['name']; ?>');"></a>

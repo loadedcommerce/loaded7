@@ -44,7 +44,7 @@ class lC_Application_Products_Actions_save extends lC_Application_Products {
                     'products_tags' => $_POST['products_tags'],
                     'products_url' => $_POST['products_url'],
                     'has_children' => $has_variants);
-
+                    
       if ( isset($_POST['attributes']) ) $data['attributes'] = $_POST['attributes'];
       if ( isset($_POST['categories']) ) $data['categories'] = $_POST['categories'];
       if ( isset($_POST['localimages']) ) $data['localimages'] = $_POST['localimages'];
@@ -59,6 +59,7 @@ class lC_Application_Products_Actions_save extends lC_Application_Products {
       
       // specials
       if ( isset($_POST['specials_pricing_switch']) && $_POST['specials_pricing_switch'] == 'on' ) {
+        if (is_array($_POST['products_special_pricing'])) $data['products_special_pricing'] = $_POST['products_special_pricing'];
         $data['specials_pricing_switch'] = 1;
         if ( isset($_POST['products_special_pricing_enable1']) ) $data['products_special_pricing_enable1'] = ($_POST['products_special_pricing_enable1'] == 'on' ? 1 : 0);
         if ( isset($_POST['products_special_price'][1]) ) $data['products_special_price1'] = $_POST['products_special_price'][1];
@@ -81,6 +82,7 @@ class lC_Application_Products_Actions_save extends lC_Application_Products {
       }  
       
       // qpb
+      $data['qpb_pricing_switch'] = (isset($_POST['qpb_pricing_switch']) && $_POST['qpb_pricing_switch'] == 'on') ? true : false;
       if (is_array($_POST['products_qty_break_point']) && $_POST['products_qty_break_point'][1] != NULL) $data['products_qty_break_point'] = $_POST['products_qty_break_point'];
       if (is_array($_POST['products_qty_break_price']) && $_POST['products_qty_break_price'][1] != NULL) $data['products_qty_break_price'] = $_POST['products_qty_break_price'];
       
@@ -89,6 +91,16 @@ class lC_Application_Products_Actions_save extends lC_Application_Products {
       
       // access levels
       if (isset($_POST['access_levels'])) $data['access_levels'] = $_POST['access_levels'];
+      
+      // options pricing
+      if (isset($_POST['options_pricing'])) $data['options_pricing'] = $_POST['options_pricing'];
+      
+      // specials pricing
+      if (isset($_POST['specials_pricing'])) $data['specials_pricing'] = $_POST['specials_pricing'];      
+      
+      // group pricing
+      $data['groups_pricing_switch'] = (isset($_POST['groups_pricing_switch']) && $_POST['groups_pricing_switch'] == 'on') ? true : false;
+      if (isset($_POST['group_pricing'])) $data['group_pricing'] = $_POST['group_pricing'];     
 
       if ( $error === false ) {
         // the line below is used as a hook match point - do not not modify or remove

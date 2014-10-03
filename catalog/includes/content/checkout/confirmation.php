@@ -57,6 +57,12 @@ class lC_Checkout_Confirmation extends lC_Template {
       $_SESSION['comments'] = lc_sanitize_string($_POST['comments']);
     }
     
+    if ( (isset($_POST['po_number'])) && (isset($_SESSION['po_number'])) && (empty($_POST['po_number'])) ) {
+      unset($_SESSION['po_number']);
+    } elseif (!empty($_POST['po_number'])) {
+      $_SESSION['po_number'] = lc_sanitize_string($_POST['po_number']);
+    }    
+    
     // load the selected payment module
     include($lC_Vqmod->modCheck('includes/classes/payment.php'));
     $lC_Payment = new lC_Payment((isset($_POST['payment_method']) ? $_POST['payment_method'] : $lC_ShoppingCart->getBillingMethod('id')));

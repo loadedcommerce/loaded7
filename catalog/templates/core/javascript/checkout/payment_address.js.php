@@ -9,17 +9,20 @@
   @version    $Id: payment_address.js.php v1.0 2013-08-08 datazen $
 */
 ?>
-?>
 <script>
 var selected;
 
-$(document).ready(function() {  
+$(document).ready(function() { 
   $('#payment-address-form').show();
   if (_setMediaType() == 'mobile-portrait') {
     $('#payment-address-form').text('<?php echo $lC_Language->get('text_add'); ?>'); 
   }
-  $('#addressBookDetails > div').removeClass('large-padding-left').addClass('padding-left');;
-  $('.small-margin-left-neg').removeClass('small-margin-left-neg').removeClass('no-margin-top').addClass('large-margin-top-neg');;
+  $('#addressBookDetails > div').removeClass('large-padding-left').addClass('padding-left');
+  $('.small-margin-left-neg').removeClass('small-margin-left-neg').removeClass('no-margin-top').addClass('large-margin-top-neg');
+  var paymentAddressEntries = '<?php echo lC_AddressBook::numberOfEntries(); ?>'; 
+  if (paymentAddressEntries < 1) {
+    $('#checkoutBillingAddressDetails').show();
+  }
 });        
 
 $('#payment-address-form').click(function(){

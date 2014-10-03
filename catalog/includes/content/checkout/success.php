@@ -19,7 +19,7 @@ class lC_Checkout_Success extends lC_Template {
   function lC_Checkout_Success() {
     global $lC_Services, $lC_Language, $lC_Customer, $lC_NavigationHistory, $lC_Breadcrumb, $lC_Vqmod;
 
-    $template_code = (isset($_SESSION['template']['code']) && $_SESSION['template']['code'] != NULL) ? $_SESSION['template']['code'] : 'default';
+    $template_code = (isset($_SESSION['template']['code']) && $_SESSION['template']['code'] != NULL) ? $_SESSION['template']['code'] : 'core';
     
     include_once($lC_Vqmod->modCheck('templates/' . $template_code . '/classes/success.php'));
 

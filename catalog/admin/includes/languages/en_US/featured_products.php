@@ -26,6 +26,8 @@ modal_heading_copy_featured_product = Copy Featured Product
 modal_heading_delete_featured_product = Delete Featured Product
 modal_heading_batch_delete_featured_products = Batch Delete Featured Products 
 
+ms_error_featured_products_products_id_required = You must select a product!
+
 table_heading_name = Product
 table_heading_expires = Expires
 table_heading_status = Status

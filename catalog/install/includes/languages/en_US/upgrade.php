@@ -198,7 +198,7 @@ upgrade_step1_page_desc_confirm = The following store information was located. I
 upgrade_step1_label = Path to existing install
 
 upgrade_step1_err_pathsame = The existing store file system path cannot match the currently executing file system path
-upgrade_step1_err_noconfig = The exisiting store configuration files (admin/includes/configure.php) cannot be accessed
+upgrade_step1_err_noconfig = The existing store configuration files (admin/includes/configure.php) cannot be accessed
 
 upgrade_step1_err_noserver	= The existing store file (admin/includes/configure.php) missing the value of DB_SERVER
 upgrade_step1_err_nouid 		= The existing store file (admin/includes/configure.php) missing the value of DB_SERVER_USERNAME

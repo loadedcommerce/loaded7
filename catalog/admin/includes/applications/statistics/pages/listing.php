@@ -40,8 +40,6 @@
   </div>
 </section>
 <?php 
-  if (isset($_SESSION['error'])) unset($_SESSION['error']);
-  if (isset($_SESSION['errmsg'])) unset($_SESSION['errmsg']); 
   $lC_Template->loadModal($lC_Template->getModule()); 
 ?>
 <!-- End main content -->

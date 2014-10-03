@@ -100,19 +100,5 @@ class lC_Login_Admin_rpc {
 
     echo json_encode($result);
   }
-
- /*
-  * ping the API server and make sure we get a response
-  *
-  * @access public
-  * @return json
-  */
-  public static function apiHealthCheck() {
-    lC_Login_Admin::apiCheck();
-    
-    $result['rpcStatus'] = RPC_STATUS_SUCCESS;
-    
-    echo json_encode($result);
-  }
 }
 ?>

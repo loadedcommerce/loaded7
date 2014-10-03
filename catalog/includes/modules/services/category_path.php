@@ -14,7 +14,7 @@ class lC_Services_category_path {
 
     lC_Services_category_path::process();
 
-    include($lC_Vqmod->modCheck('includes/classes/category_tree.php'));
+    include_once($lC_Vqmod->modCheck('includes/classes/category_tree.php'));
     $lC_CategoryTree = new lC_CategoryTree();
 
     return true;

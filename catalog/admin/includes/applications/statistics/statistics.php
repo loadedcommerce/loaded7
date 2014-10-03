@@ -23,15 +23,15 @@ class lC_Application_Statistics extends lC_Template_Admin {
 
     $this->_page_title = $lC_Language->get('heading_title');
     
-    if ( !isset($_GET['module']) ) {
+    if (!isset($_GET['module'])) {
       $_GET['module'] = '';
     }
                                                              
-    if ( !empty($_GET['module']) && !file_exists('includes/modules/statistics/' . $_GET['module'] . '.php') ) {
+    if (!empty($_GET['module']) && !file_exists('includes/modules/statistics/' . $_GET['module'] . '.php')) {
       $_GET['module'] = '';
     }
 
-    if ( empty($_GET['module']) ) {
+    if (empty($_GET['module'])) {
       $this->_page_contents = 'listing.php';
     } else {
       include_once($lC_Vqmod->modCheck('includes/modules/statistics/' . $_GET['module'] . '.php'));
