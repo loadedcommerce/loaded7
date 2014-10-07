@@ -381,7 +381,7 @@ class lC_Products_Admin {
     $Qp->bindInt(':default_flag', 1);
     $Qp->execute();
 
-    $Qpd = $lC_Database->query('select products_name, products_description, products_url, language_id from :table_products_description where products_id = :products_id');
+    $Qpd = $lC_Database->query('select products_name, products_blurb, products_description, products_url, language_id from :table_products_description where products_id = :products_id');
     $Qpd->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
     $Qpd->bindInt(':products_id', $id);
     $Qpd->execute();
@@ -389,6 +389,7 @@ class lC_Products_Admin {
     $pd_extra = array();
     while ( $Qpd->next() ) {
       $pd_extra['products_name'][$Qpd->valueInt('language_id')] = $Qpd->valueProtected('products_name');
+      $pd_extra['products_blurb'][$Qpd->valueInt('language_id')] = $Qpd->valueProtected('products_blurb');
       $pd_extra['products_description'][$Qpd->valueInt('language_id')] = $Qpd->value('products_description');
       $pd_extra['products_url'][$Qpd->valueInt('language_id')] = $Qpd->valueProtected('products_url');
     }
@@ -396,6 +397,7 @@ class lC_Products_Admin {
     $lC_ObjectInfo = new lC_ObjectInfo(array_merge($Qp->toArray(), $pd_extra));
 
     $products_name = $lC_ObjectInfo->get('products_name');
+    $products_blurb = $lC_ObjectInfo->get('products_blurb');
     $products_description = $lC_ObjectInfo->get('products_description');
     $products_url = $lC_ObjectInfo->get('products_url');
 
@@ -617,7 +619,7 @@ class lC_Products_Admin {
     }
     $Qoptions->freeResult();
     
-    if(DISPLAY_PRICE_WITH_TAX == 1) {
+    if (DISPLAY_PRICE_WITH_TAX == 1) {
       $tax_data = lC_Tax_classes_Admin::getEntry($data['products_tax_class_id']);
       $data['products_price_with_tax'] = ($data['products_price'] + ($tax_data['tax_rate']/100)*$data['products_price']);
       //$data['products_cost_with_tax'] = $data['products_cost'] + ($tax_data['tax_rate']/100)*$data['products_cost'];
@@ -780,15 +782,16 @@ class lC_Products_Admin {
         // }
         
         if (is_numeric($id)) {
-          $Qpd = $lC_Database->query('update :table_products_description set products_name = :products_name, products_description = :products_description, products_keyword = :products_keyword, products_tags = :products_tags, products_url = :products_url where products_id = :products_id and language_id = :language_id');
+          $Qpd = $lC_Database->query('update :table_products_description set products_name = :products_name, products_blurb = :products_blurb, products_description = :products_description, products_keyword = :products_keyword, products_tags = :products_tags, products_url = :products_url where products_id = :products_id and language_id = :language_id');
         } else {
-          $Qpd = $lC_Database->query('insert into :table_products_description (products_id, language_id, products_name, products_description, products_keyword, products_tags, products_url) values (:products_id, :language_id, :products_name, :products_description, :products_keyword, :products_tags, :products_url)');
+          $Qpd = $lC_Database->query('insert into :table_products_description (products_id, language_id, products_name, products_blurb, products_description, products_keyword, products_tags, products_url) values (:products_id, :language_id, :products_name, :products_blurb, :products_description, :products_keyword, :products_tags, :products_url)');
         }
         
         $Qpd->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
         $Qpd->bindInt(':products_id', $products_id);
         $Qpd->bindInt(':language_id', $l['id']);
         $Qpd->bindValue(':products_name', $data['products_name'][$l['id']]);
+        $Qpd->bindValue(':products_blurb', $data['products_blurb'][$l['id']]);
         $Qpd->bindValue(':products_description', $data['products_description'][$l['id']]);
         $Qpd->bindValue(':products_keyword', $data['products_keyword'][$l['id']]);
         $Qpd->bindValue(':products_tags', $data['products_tags'][$l['id']]);
@@ -1022,11 +1025,12 @@ class lC_Products_Admin {
           $Qdesc->execute();
 
           while ( $Qdesc->next() ) {
-            $Qnewdesc = $lC_Database->query('insert into :table_products_description (products_id, language_id, products_name, products_description, products_keyword, products_tags, products_url, products_viewed) values (:products_id, :language_id, :products_name, :products_description, :products_keyword, :products_tags, :products_url, 0)');
+            $Qnewdesc = $lC_Database->query('insert into :table_products_description (products_id, language_id, products_name, products_blurb, products_description, products_keyword, products_tags, products_url, products_viewed) values (:products_id, :language_id, :products_name, :products_blurb, :products_description, :products_keyword, :products_tags, :products_url, 0)');
             $Qnewdesc->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
             $Qnewdesc->bindInt(':products_id', $new_product_id);
             $Qnewdesc->bindInt(':language_id', $Qdesc->valueInt('language_id'));
             $Qnewdesc->bindValue(':products_name', $Qdesc->value('products_name') . '_Copy');
+            $Qnewdesc->bindValue(':products_blurb', $Qdesc->value('products_blurb'));
             $Qnewdesc->bindValue(':products_description', $Qdesc->value('products_description'));
             $Qnewdesc->bindValue(':products_keyword', $Qdesc->value('products_keyword') . '-copy');
             $Qnewdesc->bindValue(':products_tags', $Qdesc->value('products_tags'));
