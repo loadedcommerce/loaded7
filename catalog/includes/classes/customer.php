@@ -72,20 +72,32 @@ class lC_Customer {
     if ($this->isLoggedOn() === false) { 
       $access = '1';
     } else {
-      if ($id == null && isset($this->_data['customers_group_id']) && is_numeric($this->_data['customers_group_id'])) {
+      if ($id == null && isset($this->_data['id']) && is_numeric($this->_data['id'])) {
+        
+        $Qcustomer = $lC_Database->query('select customers_group_id from :table_customers where customers_id = :customers_id limit 1');
+        $Qcustomer->bindTable(':table_customers', TABLE_CUSTOMERS);
+        $Qcustomer->bindInt(':customers_id', $this->_data['id']);
+        $Qcustomer->execute();
+      
+        $id = $Qcustomer->valueInt('customers_group_id');
+        $this->_data['customers_group_id'] = $id;
+        
+        $Qcustomer->freeResult();        
+        
+      } else if ($id == null && isset($this->_data['customers_group_id']) && is_numeric($this->_data['customers_group_id'])) {        
         $id = $this->_data['customers_group_id'];
       } else if ($id == null) { 
         $id = DEFAULT_CUSTOMERS_GROUP_ID;
       }
       
-      $Qcg = $lC_Database->query('select customers_access_levels from :table_customers_groups_data where customers_group_id = :customers_group_id limit 1');
-      $Qcg->bindTable(':table_customers_groups_data', TABLE_CUSTOMERS_GROUPS_DATA);
-      $Qcg->bindInt(':customers_group_id', $id);
-      $Qcg->execute();
+      $Qcga = $lC_Database->query('select customers_access_levels from :table_customers_groups_data where customers_group_id = :customers_group_id limit 1');
+      $Qcga->bindTable(':table_customers_groups_data', TABLE_CUSTOMERS_GROUPS_DATA);
+      $Qcga->bindInt(':customers_group_id', $id);
+      $Qcga->execute();
 
-      $access = $Qcg->value('customers_access_levels');
+      $access = $Qcga->value('customers_access_levels');
 
-      $Qcg->freeResult();
+      $Qcga->freeResult();
     }
 
     return $access;    
