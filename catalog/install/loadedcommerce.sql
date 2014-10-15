@@ -574,6 +574,19 @@ CREATE TABLE lc_orders_transactions_status (
   KEY idx_orders_transactions_status_name (status_name)
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
+DROP TABLE IF EXISTS lc_payment_terms;
+CREATE TABLE IF NOT EXISTS lc_payment_terms (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  name varchar(255) NOT NULL DEFAULT '',
+  breakout varchar(255) NOT NULL DEFAULT '',
+  threshold decimal(15,4) NOT NULL DEFAULT '0.0000',
+  sort_order int(11) NOT NULL DEFAULT '0',
+  `status` tinyint(1) NOT NULL DEFAULT '0',
+  date_added datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  last_modified datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+
 DROP TABLE IF EXISTS lc_permalinks;
 CREATE TABLE IF NOT EXISTS lc_permalinks (
   permalink_id int(11) NOT NULL AUTO_INCREMENT,
