@@ -50,6 +50,7 @@ define('TABLE_ORDERS_TOTAL', DB_TABLE_PREFIX . 'orders_total');
 define('TABLE_ORDERS_TRANSACTIONS_HISTORY', DB_TABLE_PREFIX . 'orders_transactions_history');
 define('TABLE_ORDERS_TRANSACTIONS_STATUS', DB_TABLE_PREFIX . 'orders_transactions_status');
 define('TABLE_PERMALINKS', DB_TABLE_PREFIX . 'permalinks');
+define('TABLE_PAYMENT_INVOICES', DB_TABLE_PREFIX . 'payment_invoices');
 define('TABLE_PAYMENT_TERMS', DB_TABLE_PREFIX . 'payment_terms');
 define('TABLE_PLUGINS', DB_TABLE_PREFIX . 'plugins');
 define('TABLE_PLUGINS_GROUP', DB_TABLE_PREFIX . 'plugins_group');
