@@ -9,7 +9,10 @@
   @version    $Id: orders.php v1.0 2013-08-08 datazen $
 */
 global $lC_Template, $lC_Language, $cSearch;
-$cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '&cSearch=' . $_SESSION['cIDFilter'] : '';
+$cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '&cSearch=' . $_SESSION['cIDFilter'] : ''; 
+if ($cSearch == '') {
+  $cSearch = (isset($_GET['oID']) && $_GET['oID'] != '') ? '&oSearch=' . $_GET['oID'] : '';
+}
 ?>
 <script>
   $(document).ready(function() {
