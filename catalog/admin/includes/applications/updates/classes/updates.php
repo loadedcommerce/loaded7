@@ -774,11 +774,11 @@ class lC_Updates_Admin {
     // create full file backup
     if (utility::execEnabled() === true && utility::isLinux() === true) {
       try {
-        exec(CFG_APP_ZIP . ' -r ' . DIR_FS_WORK . 'updates/' . $backup_file . ' ' . DIR_FS_CATALOG . '* -x \*.zip\*');
+        //exec(CFG_APP_ZIP . ' -r ' . DIR_FS_WORK . 'updates/' . $backup_file . ' ' . DIR_FS_CATALOG . '* -x \*.zip\*');
+        exec(CFG_APP_ZIP . ' -r ' . DIR_FS_WORK . 'updates/' . $backup_file . ' ' . DIR_FS_CATALOG . '* -x "/home/loadedne/www/sandbox/datazen/www/loaded7/catalog/images/products/*" -x "*.cache" -x "*.zip"');
       } catch ( Exception $e ) {  
         return array('rpcStatus' => 0);
       } 
-      
       return array('rpcStatus' => 1);
       
     } else if (extension_loaded('zip')) {
@@ -1004,6 +1004,12 @@ class lC_Updates_Admin {
         
         // added to exclude zips
         if (strstr($file, '.zip')) continue;
+        
+        // added to exclude product images
+        if (strstr($file, 'images/products/')) continue;     
+        
+        // added to exclude work folder
+        if (strstr($file, 'includes/work/')) continue;           
 
         $file = realpath($file);
 
