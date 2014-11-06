@@ -124,9 +124,9 @@ DROP TABLE IF EXISTS lc_branding_data;
 CREATE TABLE IF NOT EXISTS lc_branding_data (
   site_image varchar(128) NOT NULL DEFAULT '',
   chat_code varchar(8192) NOT NULL DEFAULT '',
-  support_phone varchar(16) NOT NULL DEFAULT '',
+  support_phone varchar(128) NOT NULL DEFAULT '',
   support_email varchar(128) NOT NULL DEFAULT '',
-  sales_phone varchar(16) NOT NULL DEFAULT '',
+  sales_phone varchar(128) NOT NULL DEFAULT '',
   sales_email varchar(128) NOT NULL DEFAULT '',
   og_image varchar(128) NOT NULL DEFAULT '',
   meta_delimeter varchar(128) NOT NULL DEFAULT '',
