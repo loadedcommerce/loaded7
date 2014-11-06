@@ -123,6 +123,8 @@ class lC_Customer {
   }
   
   public function getBaselineDiscount($id = null) {
+    global $lC_Database;
+    
     if (isset($this->_data['baseline_discount']) && is_numeric($this->_data['baseline_discount'])) {
       return $this->_data['baseline_discount'];
     } else if (is_numeric($id)) {
@@ -304,8 +306,6 @@ class lC_Customer {
           $Qcg->bindInt(':language_id', $lC_Language->getID());
           $Qcg->execute();
 
-if ($lC_Database->isError()) die($lC_Database->getError());
-          
           if ($Qcg->numberOfRows() === 1) {
             $this->setGroupName($Qcg->value('customers_group_name'));
 
