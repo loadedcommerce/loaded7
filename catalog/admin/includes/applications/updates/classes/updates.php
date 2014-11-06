@@ -1012,7 +1012,10 @@ class lC_Updates_Admin {
         if (strstr($file, 'includes/work/')) continue;           
         
         // added to exclude work folder
-        if (strstr($file, 'php_error')) continue;          
+        if (strstr($file, 'php_error')) continue;  
+        
+        // added to exclude work folder
+        if (strstr($file, 'qrcode/')) continue;                  
 
         $file = realpath($file);
 
