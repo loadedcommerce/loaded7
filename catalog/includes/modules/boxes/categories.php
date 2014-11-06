@@ -23,14 +23,42 @@ class lC_Boxes_categories extends lC_Modules {
   }
 
   function initialize() {
-    global $lC_CategoryTree, $cPath;
-
+    global $lC_CategoryTree, $cPath, $cPath_array, $lC_Services, $lC_Database, $lC_Language;
+    
+    // Added for support of box expansion when SEO URL's are enabled - START
+    if ($_GET['cPath'] == '' && strpos($_SERVER['SCRIPT_NAME'], 'index.php') && isset($lC_Services) && $lC_Services->isStarted('seo')) {
+      foreach ($_GET as $cats => $values) { 
+        $fcat = end(explode("/", $cats));
+        if (defined('SERVICE_SEO_URL_ADD_CATEGORY_PARENT') && SERVICE_SEO_URL_ADD_CATEGORY_PARENT == 1) {
+          foreach ($fcat as $cat) {
+            $Qcid = $lC_Database->query('select item_id from :table_permalinks where permalink = :permalink and type = 1 and language_id = :language_id');
+            $Qcid->bindTable(':table_permalinks', TABLE_PERMALINKS);
+            $Qcid->bindValue(':permalink', $cat);
+            $Qcid->bindInt(':language_id', $lC_Language->getID());
+            $Qcid->execute();
+            
+            $cPath_array[] = $Qcid->valueInt('item_id');
+          }
+          $cPath = implode("_", $cPath_array);
+        } else {
+          $Qcid = $lC_Database->query('select query from :table_permalinks where permalink = :permalink and type = 1 and language_id = :language_id');
+          $Qcid->bindTable(':table_permalinks', TABLE_PERMALINKS);
+          $Qcid->bindValue(':permalink', $cats);
+          $Qcid->bindInt(':language_id', $lC_Language->getID());
+          $Qcid->execute();
+          
+          $cPath = substr($Qcid->value('query'), 6);
+        }
+      }
+    }
+    // Added for support of box expansion when SEO URL's are enabled - END
+    
     $lC_CategoryTree->reset();
     // added to control maximum level of categories infobox if desired
     if (isset($_SESSION['setCategoriesMaximumLevel']) && $_SESSION['setCategoriesMaximumLevel'] != '') {
       $lC_CategoryTree->setMaximumLevel($_SESSION['setCategoriesMaximumLevel']);
     }
-    $lC_CategoryTree->setCategoryPath($cPath, '', '');
+    $lC_CategoryTree->setCategoryPath($cPath, '<span class="active-cpath">', '</span>');
     $lC_CategoryTree->setParentGroupStringTop('<ul class="box-categories-ul-top">', '</ul>');
     $lC_CategoryTree->setParentGroupString('<ul class="box-categories-ul">', '</ul>');
     $lC_CategoryTree->setChildStringWithChildren('<li>', '</li>');
