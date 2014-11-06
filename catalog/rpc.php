@@ -35,27 +35,53 @@ $module = lc_sanitize_string(basename(key($first_array)));
 if ($module == 'action') $module = strtolower($lC_Template->getCode());
 
 $action = (isset($_GET['action']) && !empty($_GET['action'])) ? lc_sanitize_string(basename($_GET['action'])) : '';
+$addon = (isset($_GET['addon']) && !empty($_GET['addon'])) ? lc_sanitize_string(basename($_GET['addon'])) : NULL;
 
-if ( file_exists('templates/' . $module . '/classes/' . $class . '.php')) {
-  include('templates/' . $module . '/classes/' . $class . '.php');
-  if ( method_exists('lC_' . ucfirst($module) . '_' . $class, $action) ) {
-    call_user_func(array('lC_' . ucfirst($module) . '_' . $class, $action));
-    exit;
+if ($addon != NULL) {
+  if ( file_exists('addons/' . $addon . '/templates/' . $module . '/classes/' . $class . '.php')) {
+    include($lC_Vqmod->modCheck('addons/' . $addon . '/templates/' . $module . '/classes/' . $class . '.php'));
+    if ( method_exists('lC_' . ucfirst($module) . '_' . $class, $action) ) {
+      call_user_func(array('lC_' . ucfirst($module) . '_' . $class, $action));
+      exit;
+    } else {
+      echo json_encode(array('rpcStatus' => RPC_STATUS_METHOD_NONEXISTENT . ': lC_' . ucfirst($module) . '_' . $class . ' ' . $stat));
+      exit;
+    }
+  } else if ( file_exists('addons/' . $addon . '/rpc/' . $module . '/' . $class . '.php')) { 
+    include($lC_Vqmod->modCheck('addons/' . $addon . '/rpc/' . $module . '/' . $class . '.php'));
+    if ( method_exists('lC_' . ucfirst($module) . '_' . $class, $action) ) {
+      call_user_func(array('lC_' . ucfirst($module) . '_' . $class, $action));
+      exit;
+    } else {
+      echo json_encode(array('rpcStatus' => RPC_STATUS_METHOD_NONEXISTENT . ': Addon: ' . $addon . ': lC_' . ucfirst($module) . '_' . $class . ' ' . $stat));
+      exit;
+    }  
   } else {
-    echo json_encode(array('rpcStatus' => RPC_STATUS_METHOD_NONEXISTENT . ': lC_' . ucfirst($module) . '_' . $class . ' ' . $stat));
-    exit;
-  }
-} else if ( file_exists('includes/rpc/' . $module . '/' . $class . '.php')) { 
-  include('includes/rpc/' . $module . '/' . $class . '.php');
-  if ( method_exists('lC_' . ucfirst($module) . '_' . $class, $action) ) {
-    call_user_func(array('lC_' . ucfirst($module) . '_' . $class, $action));
-    exit;
-  } else {
-    echo json_encode(array('rpcStatus' => RPC_STATUS_METHOD_NONEXISTENT . ': lC_' . ucfirst($module) . '_' . $class . ' ' . $stat));
+    echo json_encode(array('rpcStatus' => RPC_STATUS_CLASS_NONEXISTENT . ': addons/' . $addon . '/templates/' . $module . '/classes/' . $class . '.php'));
     exit;
   }  
 } else {
-  echo json_encode(array('rpcStatus' => RPC_STATUS_CLASS_NONEXISTENT . ': templates/' . $module . '/classes/' . $class . '.php'));
-  exit;
+  if ( file_exists('templates/' . $module . '/classes/' . $class . '.php')) {
+    include($lC_Vqmod->modCheck('templates/' . $module . '/classes/' . $class . '.php'));
+    if ( method_exists('lC_' . ucfirst($module) . '_' . $class, $action) ) {
+      call_user_func(array('lC_' . ucfirst($module) . '_' . $class, $action));
+      exit;
+    } else {
+      echo json_encode(array('rpcStatus' => RPC_STATUS_METHOD_NONEXISTENT . ': lC_' . ucfirst($module) . '_' . $class . ' ' . $stat));
+      exit;
+    }
+  } else if ( file_exists('includes/rpc/' . $module . '/' . $class . '.php')) { 
+    include($lC_Vqmod->modCheck('includes/rpc/' . $module . '/' . $class . '.php'));
+    if ( method_exists('lC_' . ucfirst($module) . '_' . $class, $action) ) {
+      call_user_func(array('lC_' . ucfirst($module) . '_' . $class, $action));
+      exit;
+    } else {
+      echo json_encode(array('rpcStatus' => RPC_STATUS_METHOD_NONEXISTENT . ': lC_' . ucfirst($module) . '_' . $class . ' ' . $stat));
+      exit;
+    }  
+  } else {
+    echo json_encode(array('rpcStatus' => RPC_STATUS_CLASS_NONEXISTENT . ': templates/' . $module . '/classes/' . $class . '.php'));
+    exit;
+  }
 }
 ?>
