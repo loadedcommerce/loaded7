@@ -28,7 +28,7 @@
               <td class="align-left mid-padding-left small-padding-top"><?php echo $oInfo->get('customerAddress');?></td>
             </tr>
             <tr>
-              <td class="class="align-left mid-padding-left" style="padding-top:10px;"><span class="bold icon-wifi icon-anthracite"> <?php echo $lC_Language->get('text_order_ip_address'); ?></span> <?php echo $oInfo->get('orderIPAddress');?></td>
+              <td class="align-left mid-padding-left" style="padding-top:10px;"><span class="bold icon-wifi icon-anthracite"> <?php echo $lC_Language->get('text_order_ip_address'); ?></span> <?php echo $oInfo->get('orderIPAddress');?></td>
             </tr>
             <!--<tr>
               <td class="align-right pad-5 width-33 bold grey"><?php echo $lC_Language->get('text_company_name'); ?></td>

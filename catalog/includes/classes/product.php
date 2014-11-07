@@ -45,7 +45,7 @@ class lC_Product {
 
           if ( !empty($this->_data) ) {
             
-            $Qdesc = $lC_Database->query('select products_name as name, products_description as description, products_keyword as keyword, products_tags as tags, products_url as url from :table_products_description where products_id = :products_id and language_id = :language_id');
+            $Qdesc = $lC_Database->query('select products_name as name, products_blurb as blurb, products_description as description, products_keyword as keyword, products_tags as tags, products_url as url from :table_products_description where products_id = :products_id and language_id = :language_id');
             $Qdesc->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
             $Qdesc->bindInt(':products_id', $this->_data['master_id']);
             $Qdesc->bindInt(':language_id', $lC_Language->getID());
@@ -77,7 +77,7 @@ class lC_Product {
           }
         }
       } else {
-        $Qproduct = $lC_Database->query('select p.products_id as id, p.parent_id, p.products_quantity as quantity, p.products_price as price, p.products_model as model, p.products_tax_class_id as tax_class_id, p.products_weight as weight, p.products_weight_class as weight_class_id, p.products_date_added as date_added, p.manufacturers_id, p.has_children, pd.products_name as name, pd.products_description as description, pd.products_keyword as keyword, pd.products_tags as tags, pd.products_url as url from :table_products p, :table_products_description pd where pd.products_keyword = :products_keyword and pd.language_id = :language_id and pd.products_id = p.products_id and p.products_status = :products_status');
+        $Qproduct = $lC_Database->query('select p.products_id as id, p.parent_id, p.products_quantity as quantity, p.products_price as price, p.products_model as model, p.products_tax_class_id as tax_class_id, p.products_weight as weight, p.products_weight_class as weight_class_id, p.products_date_added as date_added, p.manufacturers_id, p.has_children, pd.products_name as name, pd.products_blurb as blurb, pd.products_description as description, pd.products_keyword as keyword, pd.products_tags as tags, pd.products_url as url from :table_products p, :table_products_description pd where pd.products_keyword = :products_keyword and pd.language_id = :language_id and pd.products_id = p.products_id and p.products_status = :products_status');
         $Qproduct->bindTable(':table_products', TABLE_PRODUCTS);
         $Qproduct->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
         $Qproduct->bindValue(':products_keyword', $id);
@@ -115,7 +115,7 @@ class lC_Product {
         // load price break array
         $this->_data['price_breaks'] = array();
 
-        $Qpb = $lC_Database->query('select tax_class_id, qty_break, price_break from :table_products_pricing where products_id = :products_id and group_id = :group_id order by group_id, qty_break');
+        $Qpb = $lC_Database->query('select tax_class_id, qty_break, price_break from :table_products_pricing where products_id = :products_id and group_id = :group_id and price_break > 0.00 and qty_break > 0 order by group_id, qty_break');
         $Qpb->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
         $Qpb->bindInt(':products_id', $this->_data['master_id']); 
         $Qpb->bindInt(':group_id', (isset($_SESSION['lC_Customer_data']['customers_group_id'])? $_SESSION['lC_Customer_data']['customers_group_id'] : DEFAULT_CUSTOMERS_GROUP_ID));
@@ -272,6 +272,10 @@ class lC_Product {
     return $this->_data['name'];
   }
 
+  public function getBlurb() {
+    return $this->_data['blurb'];
+  }
+
   public function getDescription() {
     return $this->_data['description'];
   }
@@ -306,6 +310,22 @@ class lC_Product {
   
   public function getAccessLevels() {
     return $this->_data['access_levels'];
+  }
+  
+  public function getProductPrice($id) {
+    global $lC_Database; 
+    
+    $Qprice = $lC_Database->query('select products_price from :table_products where products_id = :products_id and products_status = :products_status');
+    $Qprice->bindTable(':table_products', TABLE_PRODUCTS);
+    $Qprice->bindInt(':products_id', $id);
+    $Qprice->bindInt(':products_status', 1);
+    $Qprice->execute();   
+    
+    $price = $Qprice->valueDecimal('products_price');
+    
+    $Qprice->freeResult();
+    
+    return $price;  
   }  
   
   // ######## PRICING - ALL PRICING TO COME FROM HERE #########//
@@ -315,11 +335,17 @@ class lC_Product {
     $quantity = (isset($data['quantity']) && $data['quantity'] != null) ? (int)$data['quantity'] : 1;
 
     // #### SET BASE PRICE #### //
-    
-    // initial price = base price    
     $base_price = $this->getBasePrice();
+    // check for variant
+    if (isset($data['variants']) && is_array($data['variants'])) {
+      $vpID = (int)self::getProductVariantID($data['variants']);
+      
+      if (isset($vpID) && is_numeric($vpID)) {
+        $base_price = self::getProductPrice($vpID);
+      }
+    }
     $price = (float)$base_price;   
-    
+
     // options modifiers
     if (is_array($data['simple_options']) && count($data['simple_options']) > 0) {
       $modTotal = 0;

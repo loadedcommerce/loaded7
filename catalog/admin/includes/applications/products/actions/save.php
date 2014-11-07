@@ -39,6 +39,7 @@ class lC_Application_Products_Actions_save extends lC_Application_Products {
                     'sku' => (isset($_POST['products_sku'])) ? $_POST['products_sku'] : '',
                     'tax_class_id' => (isset($_POST['products_tax_class_id'])) ? $_POST['products_tax_class_id'] : 0,
                     'products_name' => $_POST['products_name'],
+                    'products_blurb' => $_POST['products_blurb'],
                     'products_description' => $_POST['products_description'],
                     'products_keyword' => $_POST['products_keyword'],
                     'products_tags' => $_POST['products_tags'],

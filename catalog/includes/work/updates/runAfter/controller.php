@@ -409,17 +409,15 @@ class lC_Updates_Admin_run_after extends lC_Updates_Admin {
       parent::log("Database Update: INSERT INTO `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('Maximum Upload File Size', 'PRODUCT_MODULES_FILE_UPLOAD_MAX_SIZE', '10', 'Enter the maximum size (in MB) allowed for file uploads.', 22, 0, now(), now(), NULL, NULL)");
     }         
      
-    if (utility::isB2B()) {
-      if (!defined('B2B_SETTINGS_ALLOW_SELF_REGISTER')) {
-        $lC_Database->simpleQuery("insert into `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('', 'B2B_SETTINGS_ALLOW_SELF_REGISTER', '1', '', '6', '0', '', '', now())");
-        parent::log("Database Update: insert into `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('', 'B2B_SETTINGS_ALLOW_SELF_REGISTER', '1', '', '6', '0', '', '', now())");
-  }
-      
-      if (!defined('B2B_SETTINGS_GUEST_CATALOG_ACCESS')) {
-        $lC_Database->simpleQuery("insert into `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('', 'B2B_SETTINGS_GUEST_CATALOG_ACCESS', '4', '', '6', '0', '', '', now())");
-        parent::log("Database Update: insert into `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('', 'B2B_SETTINGS_GUEST_CATALOG_ACCESS', '4', '', '6', '0', '', '', now())");
-}  
+    if (!defined('B2B_SETTINGS_ALLOW_SELF_REGISTER')) {
+      $lC_Database->simpleQuery("insert into `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('', 'B2B_SETTINGS_ALLOW_SELF_REGISTER', '1', '', '6', '0', '', '', now())");
+      parent::log("Database Update: insert into `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('', 'B2B_SETTINGS_ALLOW_SELF_REGISTER', '1', '', '6', '0', '', '', now())");
     }
+      
+    if (!defined('B2B_SETTINGS_GUEST_CATALOG_ACCESS')) {
+      $lC_Database->simpleQuery("insert into `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('', 'B2B_SETTINGS_GUEST_CATALOG_ACCESS', '4', '', '6', '0', '', '', now())");
+      parent::log("Database Update: insert into `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('', 'B2B_SETTINGS_GUEST_CATALOG_ACCESS', '4', '', '6', '0', '', '', now())");
+    }  
 
     $lC_Database->simpleQuery("CREATE TABLE IF NOT EXISTS `" . $pf . "purchase_orders_service` (`po_number_id` int(11) NOT NULL AUTO_INCREMENT, `po_number` varchar(255) NOT NULL, `orders_id` int(11) NOT NULL, `po_number_status` int(1) NOT NULL DEFAULT '1', PRIMARY KEY (`po_number_id`)) ENGINE=" . $engine . " CHARACTER SET utf8 COLLATE utf8_general_ci"); 
     parent::log("Database Update: CREATE TABLE IF NOT EXISTS `" . $pf . "purchase_orders_service` (`po_number_id` int(11) NOT NULL AUTO_INCREMENT, `po_number` varchar(255) NOT NULL, `orders_id` int(11) NOT NULL, `po_number_status` int(1) NOT NULL DEFAULT '1', PRIMARY KEY (`po_number_id`)) ENGINE=" . $engine . " CHARACTER SET utf8 COLLATE utf8_general_ci"); 
@@ -456,7 +454,15 @@ class lC_Updates_Admin_run_after extends lC_Updates_Admin {
     
     $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "products_pricing` ADD `parent_id` TINYINT(1) NOT NULL DEFAULT '0' AFTER `products_id`");
     parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "products_pricing` ADD `parent_id` TINYINT(1) NOT NULL DEFAULT '0' AFTER `products_id`");
+    
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "products_description` ADD `products_blurb` VARCHAR(4096) NOT NULL DEFAULT '' AFTER `products_name`");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "products_description` ADD `products_blurb` VARCHAR(4096) NOT NULL DEFAULT '' AFTER `products_name`");
 
+    $lC_Database->simpleQuery("CREATE TABLE IF NOT EXISTS `" . $pf . "payment_terms` (id int(11) NOT NULL AUTO_INCREMENT, `name` varchar(255) NOT NULL DEFAULT '', breakout varchar(255) NOT NULL DEFAULT '', threshold decimal(15,4) NOT NULL DEFAULT '0.0000', sort_order int(11) NOT NULL DEFAULT '0', `status` tinyint(1) NOT NULL DEFAULT '0', date_added datetime NOT NULL DEFAULT '0000-00-00 00:00:00', last_modified datetime NOT NULL DEFAULT '0000-00-00 00:00:00', PRIMARY KEY (id)) ENGINE=" . $engine . " CHARACTER SET utf8 COLLATE utf8_general_ci;");   
+    parent::log("Database Update: CREATE TABLE IF NOT EXISTS `" . $pf . "payment_terms` (id int(11) NOT NULL AUTO_INCREMENT, `name` varchar(255) NOT NULL DEFAULT '', breakout varchar(255) NOT NULL DEFAULT '', threshold decimal(15,4) NOT NULL DEFAULT '0.0000', sort_order int(11) NOT NULL DEFAULT '0', `status` tinyint(1) NOT NULL DEFAULT '0', date_added datetime NOT NULL DEFAULT '0000-00-00 00:00:00', last_modified datetime NOT NULL DEFAULT '0000-00-00 00:00:00', PRIMARY KEY (id)) ENGINE=" . $engine . " CHARACTER SET utf8 COLLATE utf8_general_ci;");   
+    
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "branding_data` CHANGE `support_phone` `support_phone` VARCHAR(128) NOT NULL DEFAULT '', CHANGE `sales_phone` `sales_phone` VARCHAR(128) NOT NULL DEFAULT ''");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "branding_data` CHANGE `support_phone` `support_phone` VARCHAR(128) NOT NULL DEFAULT '', CHANGE `sales_phone` `sales_phone` VARCHAR(128) NOT NULL DEFAULT ''");
   }
 }  
 ?>

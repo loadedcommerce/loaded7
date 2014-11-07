@@ -124,9 +124,9 @@ DROP TABLE IF EXISTS lc_branding_data;
 CREATE TABLE IF NOT EXISTS lc_branding_data (
   site_image varchar(128) NOT NULL DEFAULT '',
   chat_code varchar(8192) NOT NULL DEFAULT '',
-  support_phone varchar(16) NOT NULL DEFAULT '',
+  support_phone varchar(128) NOT NULL DEFAULT '',
   support_email varchar(128) NOT NULL DEFAULT '',
-  sales_phone varchar(16) NOT NULL DEFAULT '',
+  sales_phone varchar(128) NOT NULL DEFAULT '',
   sales_email varchar(128) NOT NULL DEFAULT '',
   og_image varchar(128) NOT NULL DEFAULT '',
   meta_delimeter varchar(128) NOT NULL DEFAULT '',
@@ -574,6 +574,19 @@ CREATE TABLE lc_orders_transactions_status (
   KEY idx_orders_transactions_status_name (status_name)
 ) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
+DROP TABLE IF EXISTS lc_payment_terms;
+CREATE TABLE IF NOT EXISTS lc_payment_terms (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  name varchar(255) NOT NULL DEFAULT '',
+  breakout varchar(255) NOT NULL DEFAULT '',
+  threshold decimal(15,4) NOT NULL DEFAULT '0.0000',
+  sort_order int(11) NOT NULL DEFAULT '0',
+  `status` tinyint(1) NOT NULL DEFAULT '0',
+  date_added datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  last_modified datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
+
 DROP TABLE IF EXISTS lc_permalinks;
 CREATE TABLE IF NOT EXISTS lc_permalinks (
   permalink_id int(11) NOT NULL AUTO_INCREMENT,
@@ -618,6 +631,7 @@ CREATE TABLE lc_products_description (
   products_id int(11) NOT NULL AUTO_INCREMENT,
   language_id int(11) NOT NULL DEFAULT '1',
   products_name varchar(255) NOT NULL,
+  products_blurb varchar(4096) DEFAULT NULL,
   products_description text,
   products_keyword varchar(255) DEFAULT NULL,
   products_tags varchar(255) DEFAULT NULL,

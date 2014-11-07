@@ -47,10 +47,12 @@ $(document).ready(function() {
     var buttonContent = $(this).find('.product-listing-module-buy-now').html();
     buttonContentText = $(this).find('.product-listing-module-buy-now-button').text();
 
-    var newNameContentText = (nameContentText.length > 18) ? nameContentText.substr(0, 15) + '...' : nameContentText;
+    //var newNameContentText = (nameContentText.length > 18) ? nameContentText.substr(0, 15) + '...' : nameContentText;
+    var newNameContentText = nameContentText;
     nameContent = nameContent.replace(nameContentText, newNameContentText);  
     
-    var newDescContentText = (descContentText.length > 65) ? descContentText.substr(0, 62) + '...' : descContentText;
+    //var newDescContentText = (descContentText.length > 65) ? descContentText.substr(0, 62) + '...' : descContentText;
+    var newDescContentText = descContentText;
     descContent = descContent.replace(descContentText, newDescContentText);      
     
     output = '<div class="' + thisContentClass+ ' with-padding-no-top-bottom">'+

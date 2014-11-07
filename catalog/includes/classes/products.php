@@ -120,9 +120,17 @@ class lC_Products {
     }
     
     if (utility::isB2B()) {
+      $chkSQL = $Qlisting->getQuery();
+      $Qchk = $lC_Database->query($chkSQL);
+      $Qchk->execute();
+      $rows_before = $Qchk->numberOfRows(); 
+      $Qchk->freeResult();
+      
       $Qlisting->appendQuery($lC_Customer->getCustomerGroupAccessSql());
+      $rows_after = $Qlisting->numberOfRows();
+                        
+      $_SESSION['has_hidden_products'] = ($rows_before != $rows_after) ? true : false;       
     }    
-
     $Qlisting->appendQuery('order by');
 
     if (isset($this->_sort_by)) {
