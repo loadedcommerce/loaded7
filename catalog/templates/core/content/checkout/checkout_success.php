@@ -107,18 +107,26 @@ $oID = lC_Success::getOrderID($lC_Customer->getID());
                 </table> 
                 <table class="table margin-bottom-neg"><tr><td>&nbsp;</td></tr></table>
               </div>
-              <div class="col-sm-offset-6 margin-right" id="content-shopping-cart-order-totals">
-                <?php
-                foreach (lC_Success::getOrderTotals($oID) as $module) { 
-                  ?>
-                  <div class="clearfix">
-                    <span class="pull-left ot-<?php echo strtolower(str_replace('_', '-', $module['class'])); ?>"><?php echo strip_tags($module['title']); ?></span>
-                    <span class="pull-right ot-<?php echo strtolower(str_replace('_', '-', $module['class'])); ?>"><?php echo strip_tags($module['text']); ?></span>                
-                  </div>                    
+              <div class="row padding-right" id="content-checkout-confirmation-order-totals">
+                <div id="content-checkout-confirmation-order-totals-left" class="col-sm-5 col-lg-5"></div>
+                <div id="content-checkout-confirmation-order-totals-right" class="col-sm-7 col-lg-7">
                   <?php
-                }
-                ?>     
-              </div>
+                  foreach (lC_Success::getOrderTotals($oID) as $module as $module) {  
+                    $title = (strstr($module['title'], '(')) ? substr($module['title'], 0, strpos($module['title'], '(')) . ':' : $module['title'];
+                    $class = str_replace(':', '', $title);
+                    $class = 'ot-' . strtolower(str_replace(' ', '-', $class));
+                 ?>
+                 <div class="clearfix">
+                 <?php echo '<div class="clearfix">' .
+                           '  <span class="pull-left ' . $class . '">' . $title . '</span>' .
+                           '  <span class="pull-right ' . $class . '">' . $module['text'] . '</span>' .'</div>';  
+                 ?> 
+                 </div>  
+                 <?php
+                   }
+                 ?>      
+                </div>
+              </div> 
               <div class="well large-margin-top padding-bottom">
                 <form name="checkout_success" id="checkout_success" action="<?php echo lc_href_link(FILENAME_CHECKOUT, 'success=update', 'SSL'); ?>" method="post">
                   <?php

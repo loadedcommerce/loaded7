@@ -262,10 +262,12 @@ class lC_Coupons {
       $cInfo_tmp = $this->_getData($code);      
       $valid = $lC_Coupons->_isValid($cInfo_tmp); 
       
+      $template_code = (isset($_SESSION['template']['code']) && $_SESSION['template']['code'] != NULL) ? $_SESSION['template']['code'] : 'core';
+
       if ($val['total'] > 0 && $valid['status'] === true) {
         $_SESSION['lC_ShoppingCart_data']['order_totals'][] = array('code' => 'coupon',
                                                                     'title' => $val['title'],
-                                                                    'text' => '<span onclick="removeCoupon(\'' . $code . '\');" style="padding:0; cursor:pointer;">' . lc_image(DIR_WS_CATALOG . 'templates/core/images/icons/16/cross_round.png', null, null, null, 'style="vertical-align:middle;"') . '&nbsp;-' . $lC_Currencies->format($val['total']) . '</span>',
+                                                                    'text' => '<span onclick="removeCoupon(\'' . $code . '\');" style="padding:0; cursor:pointer;">' . lc_image(DIR_WS_CATALOG . 'templates/' . $template_code . '/images/icons/16/cross_round.png', null, null, null, 'style="vertical-align:middle;"') . '&nbsp;-' . $lC_Currencies->format($val['total']) . '</span>',
                                                                     'value' => $val['total'],
                                                                     'sort_order' => (int)MODULE_ORDER_TOTAL_COUPON_SORT_ORDER);
       }
