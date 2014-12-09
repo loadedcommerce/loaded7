@@ -225,7 +225,10 @@ function installUpdate(t) {
                         oTable.fnReloadAjax(); 
                               
                         // set maint mode=off
-                        __setMaintenanceMode('off');                      
+                        __setMaintenanceMode('off');  
+                        
+                        // show update modal                    
+                        __showUpdateModal();                        
                       }
                     );                  
                   }
@@ -380,7 +383,11 @@ function undoUpdate() {
   });  
 } 
 
-function updateDatabase() {
+function updateDatabase() {  
+
+  __showUpdateModal();
+  return true;
+  
   var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=updateDatabase'); ?>'
   $.getJSON(jsonLink,
     function (data) {
@@ -538,4 +545,28 @@ function __writeHistory(ua, ur) {
     }
   );  
 }
+
+function __showUpdateModal() {
+  var msgBodyArr = <?php echo json_encode(lC_Updates_Admin::getAvailablePackageInfo()); ?>;
+  $.modal({                                 
+      url: 'iframe.php?url=' + msgBodyArr.announcement,
+      useIframe: true,
+      title: '<?php echo $lC_Language->get('modal_heading_update_msg'); ?>',
+      width: 500,
+      height: 500,
+        actions: {
+        'Close' : {
+          color: 'red',
+          click: function(win) { win.closeModal(); return false; }
+        }
+      },
+      buttons: {
+        '<?php echo $lC_Language->get('button_close'); ?>': {
+          classes:  'glossy',
+          click:    function(win) { win.closeModal(); }
+        }
+      },
+      buttonsLowPadding: true
+  });  
+} 
 </script>
