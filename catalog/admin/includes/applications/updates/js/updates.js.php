@@ -384,10 +384,6 @@ function undoUpdate() {
 } 
 
 function updateDatabase() {  
-
-  __showUpdateModal();
-  return true;
-  
   var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=updateDatabase'); ?>'
   $.getJSON(jsonLink,
     function (data) {

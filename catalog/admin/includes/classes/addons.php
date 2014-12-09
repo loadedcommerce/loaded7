@@ -7,9 +7,13 @@
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: addons.php v1.0 2013-08-08 datazen $
 */
+//error_reporting(E_ALL);
+//ini_set('display_errors', 1);
+
 global $lC_Vqmod;
 
 require_once($lC_Vqmod->modCheck('../includes/classes/addons.php'));
+require_once($lC_Vqmod->modCheck('includes/applications/store/classes/store.php'));
 
 class lC_Addons_Admin extends lC_Addons {
 
@@ -591,6 +595,10 @@ class lC_Addons_Admin extends lC_Addons {
                                                           'enabled' => $isEnabled);         
         
         if ($isEnabled) $enabled .= $addon['path'] . ';';
+        
+        if ($aoData->isAutoInstall() === true) {
+          self::_autoInstall($class);
+        }
       }
     } 
 
@@ -620,6 +628,22 @@ class lC_Addons_Admin extends lC_Addons {
     }
     
     $Qchk->freeResult();   
+  }
+  
+  private static function _autoInstall($key) {
+    global $lC_Database;
+    
+    $Qchk = $lC_Database->query("select id from :table_templates_boxes where modules_group LIKE '%" . $key . "%'");
+    $Qchk->bindTable(':table_templates_boxes', TABLE_TEMPLATES_BOXES);
+    $Qchk->execute();
+    
+    if ($Qchk->numberOfRows() > 0) { 
+      return false;
+    } else {
+      lC_Store_Admin::install($key);
+      return true;
+    }
+    
   }    
 }
 ?>
