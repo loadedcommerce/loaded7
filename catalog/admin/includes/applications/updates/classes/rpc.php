@@ -49,7 +49,7 @@ class lC_Updates_Admin_rpc {
     $result = lC_Updates_Admin::getPackageContents();
     if (isset($result['total'])) $result['rpcStatus'] = RPC_STATUS_SUCCESS;
     
-    echo json_encode($result);
+    echo json_encode($result);    
   } 
  /*
   * Perform a database backup

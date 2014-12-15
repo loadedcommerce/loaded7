@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<language>
+  <definitions>
+    <definition>
+      <key>addon_connectors_ib_title</key>
+      <value><![CDATA[itembase]]></value>
+      <group>connectors</group>
+    </definition>
+    <definition>
+      <key>addon_connectors_ib_description</key>
+      <value><![CDATA[Benchmark din nøgle salg og marketing målinger til virksomheder inden for din branche. Se hvor godt du rang til din direkte konkurrence , ved hjælp af aggregerede og anonymiserede data trukket fra over 75.000 butikker verden over.]]></value>
+      <group>connectors</group>
+    </definition>
+  </definitions>
+</language>

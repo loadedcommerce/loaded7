@@ -172,4 +172,10 @@ $backupArr = lC_Updates_Admin::getBackups();
 #updateProgressContainer .update-text {  margin-left:10px; }
 </style>
 <?php $lC_Template->loadModal($lC_Template->getModule()); ?>
+<script>
+$( document ).ready(function() {
+ var show = '<?php echo ($_GET['show'] == '1') ? 1 : 0; ?>';
+ if (show == 1) __showUpdateModal();
+});
+</script>
 <!-- Main content end -->

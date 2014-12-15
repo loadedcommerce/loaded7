@@ -125,20 +125,20 @@ class lC_Checkout_Payment_address extends lC_Template {
         $Qcheck->freeResult();
 
         if ($entry_state_has_zones === true) {
-          $Qzone = $lC_Database->query('select zone_id from :table_zones where zone_country_id = :zone_country_id and zone_code like :zone_code');
-          $Qzone->bindTable(':table_zones', TABLE_ZONES);
-          $Qzone->bindInt(':zone_country_id', $_POST['country']);
-          $Qzone->bindValue(':zone_code', preg_replace('/[^A-Za-z\s]/', '', $_POST['state']));
-          $Qzone->execute();
-
-          if ($Qzone->numberOfRows() === 1) {
-            $zone_id = $Qzone->valueInt('zone_id');
-          } else {
-            $Qzone = $lC_Database->query('select zone_id from :table_zones where zone_country_id = :zone_country_id and zone_name like :zone_name');
+            $Qzone = $lC_Database->query('select zone_id from :table_zones where zone_country_id = :zone_country_id and zone_code = :zone_code');
             $Qzone->bindTable(':table_zones', TABLE_ZONES);
             $Qzone->bindInt(':zone_country_id', $_POST['country']);
-            $Qzone->bindValue(':zone_name', '%' . preg_replace('/[^A-Za-z\s]/', '', $_POST['state']) . '%');
+            $Qzone->bindValue(':zone_code', $_POST['state']);
             $Qzone->execute();
+            
+            if ($Qzone->numberOfRows() === 1) {
+              $zone_id = $Qzone->valueInt('zone_id');
+            } else {
+              $Qzone = $lC_Database->query('select zone_id from :table_zones where zone_country_id = :zone_country_id and zone_name = :zone_name');
+              $Qzone->bindTable(':table_zones', TABLE_ZONES);
+              $Qzone->bindInt(':zone_country_id', $_POST['country']);
+              $Qzone->bindValue(':zone_name', $_POST['state']);
+              $Qzone->execute();
 
             if ($Qzone->numberOfRows() === 1) {
               $zone_id = $Qzone->valueInt('zone_id');
@@ -183,7 +183,7 @@ class lC_Checkout_Payment_address extends lC_Template {
         $Qab->bindValue(':entry_suburb', ((ACCOUNT_SUBURB > -1) ? trim($_POST['suburb']) : ''));
         $Qab->bindValue(':entry_postcode', ((ACCOUNT_POST_CODE > -1) ? trim($_POST['postcode']) : ''));
         $Qab->bindValue(':entry_city', trim($_POST['city']));
-        $Qab->bindValue(':entry_state', ((ACCOUNT_STATE > -1) ? (($zone_id > 0) ? '' : preg_replace('/[^A-Za-z\s]/', '', $_POST['state'])) : ''));
+        $Qab->bindValue(':entry_state', ((ACCOUNT_STATE > -1) ? (($zone_id > 0) ? '' : $_POST['state']) : ''));
         $Qab->bindInt(':entry_country_id', $_POST['country']);
         $Qab->bindInt(':entry_zone_id', ((ACCOUNT_STATE > -1) ? (($zone_id > 0) ? $zone_id : 0) : ''));
         $Qab->bindValue(':entry_telephone', ((ACCOUNT_TELEPHONE > -1) ? trim($_POST['telephone']) : ''));

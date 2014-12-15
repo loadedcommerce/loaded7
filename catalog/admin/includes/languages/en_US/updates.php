@@ -41,6 +41,7 @@ text_warning_do_not_interrupt = Interrupting the process may cause unexpected re
 
 field_restore_from = Restore from
 modal_heading_undo_update = Undo Last Update
+modal_heading_update_msg = Version Notes
 introduction_undo_update = Please choose the version you would like to revert back to and click the Undo button.
 
 button_ok = Ok

@@ -225,7 +225,10 @@ function installUpdate(t) {
                         oTable.fnReloadAjax(); 
                               
                         // set maint mode=off
-                        __setMaintenanceMode('off');                      
+                        __setMaintenanceMode('off');  
+                        
+                        // show update modal                    
+                        __showUpdateModal();                        
                       }
                     );                  
                   }
@@ -380,7 +383,7 @@ function undoUpdate() {
   });  
 } 
 
-function updateDatabase() {
+function updateDatabase() {  
   var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=updateDatabase'); ?>'
   $.getJSON(jsonLink,
     function (data) {
@@ -538,4 +541,29 @@ function __writeHistory(ua, ur) {
     }
   );  
 }
+
+function __showUpdateModal() {
+  var msgBodyArr = <?php echo json_encode(lC_Updates_Admin::getAvailablePackageInfo()); ?>;
+  var url = (msgBodyArr.announcement != undefined) ? msgBodyArr.announcement : 'https://api.loadedcommerce.com/messages/updates/default.html';
+  $.modal({                                 
+      url: 'iframe.php?url=' + url,
+      useIframe: true,
+      title: '<?php echo $lC_Language->get('modal_heading_update_msg'); ?>',
+      width: 550,
+      height: 500,
+        actions: {
+        'Close' : {
+          color: 'red',
+          click: function(win) { win.closeModal(); return false; }
+        }
+      },
+      buttons: {
+        '<?php echo $lC_Language->get('button_close'); ?>': {
+          classes:  'glossy',
+          click:    function(win) { win.closeModal(); }
+        }
+      },
+      buttonsLowPadding: true
+  });  
+} 
 </script>

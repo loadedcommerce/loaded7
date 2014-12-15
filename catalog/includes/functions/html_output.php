@@ -113,13 +113,14 @@
               $cat_ids = array();
               // categories
               if ( (strpos($link, 'index.php') && strpos($link, 'cPath')) ) {
-                $cat_id = explode("_", substr($link, $cPathPos+6));
-                if (count($cat_id) < 2) {
-                  $cat_data = $lC_CategoryTree->getData($cat_id[0]);
-                  $cat_ids = explode("_", substr($cat_data['query'], 6));
-                } else {
-                  $cat_ids = explode("_", substr($link, $cPathPos+6));
-                }
+                //$cat_id = explode("_", substr($link, $cPathPos+6));
+                //$r_cat_id = array_reverse($cat_id);
+                //if (count($cat_id) < 2) {
+                //  $cat_data = $lC_CategoryTree->getData($r_cat_id[0]);
+                //  $cat_ids = explode("_", substr($cat_data['query'], 6));
+                //} else {
+                $cat_ids = explode("_", substr($link, $cPathPos+6));
+                //}
               }
               // products
               if ( (strpos($link, 'products.php') && !strpos($link, 'featured_products') && !strpos($link, 'reviews') && !strpos($link, '?specials') && !strpos($link, '?new')) ) {
@@ -162,7 +163,7 @@
                   $cat_path .= strtolower(str_replace(' ', '-', $cat_data['name'])) . '/';
                 }
               }
-            }
+            }                                     
             $link = str_replace(array('?', '&', '=', 'index.php', 'products.php'), array('/', '/', ',', 'category', 'product'), $link);
             $link = str_replace(array('category/', 'product/'), array('category/' . $cat_path, 'product/' . $cat_path), $link);
             $link = str_replace(array('product//'), array('product/'), $link);
