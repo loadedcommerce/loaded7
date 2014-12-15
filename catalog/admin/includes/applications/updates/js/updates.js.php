@@ -544,11 +544,12 @@ function __writeHistory(ua, ur) {
 
 function __showUpdateModal() {
   var msgBodyArr = <?php echo json_encode(lC_Updates_Admin::getAvailablePackageInfo()); ?>;
+  var url = (msgBodyArr.announcement != undefined) ? msgBodyArr.announcement : 'https://api.loadedcommerce.com/messages/updates/default.html';
   $.modal({                                 
-      url: 'iframe.php?url=' + msgBodyArr.announcement,
+      url: 'iframe.php?url=' + url,
       useIframe: true,
       title: '<?php echo $lC_Language->get('modal_heading_update_msg'); ?>',
-      width: 500,
+      width: 550,
       height: 500,
         actions: {
         'Close' : {
