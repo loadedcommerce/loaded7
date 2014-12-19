@@ -46,13 +46,14 @@ class lC_Checkout_Shipping extends lC_Template {
 
     if ($lC_Customer->hasDefaultAddress() === false) {
       if (isset($_GET['account_created'])) {
-      lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'shipping_address&account_created=true', 'SSL'));
+        lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'shipping_address&account_created=true', 'SSL'));
+      } else {
+        lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'shipping_address', 'SSL'));
+      }
     } else {
-      lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'shipping_address', 'SSL'));
-    }
-    } else {
-      $this->addJavascriptFilename('templates/' . $this->getCode() . '/javascript/shipping.js.php');
-
+      if (file_exists('templates/' . $this->getCode() . '/javascript/shipping.js.php')) {
+        $this->addJavascriptPhpFilename('templates/' . $this->getCode() . '/javascript/shipping.js.php');
+      }
       // if no shipping destination address was selected, use the customers own address as default
       if ($lC_ShoppingCart->hasShippingAddress() === false) {
         $lC_ShoppingCart->setShippingAddress($lC_Customer->getDefaultAddressID());
