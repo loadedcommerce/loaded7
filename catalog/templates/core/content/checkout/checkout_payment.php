@@ -61,10 +61,16 @@
                 <?php } ?>                
                 <div class="well">
                   <?php
+                  $total = 0;
                   foreach ($lC_ShoppingCart->getOrderTotals() as $module) {  
                     $title = (strstr($module['title'], '(')) ? substr($module['title'], 0, strpos($module['title'], '(')) . ':' : $module['title'];
                     $class = str_replace(':', '', $title);
                     $class = 'ot-' . strtolower(str_replace(' ', '-', $class));
+                    if ($module['code'] != 'total') $total = $total + (float)$module['value'];
+                    if ($module['code'] == 'total') {
+                      $module['value'] = $total;
+                      $module['text'] = '<b>' . $lC_Currencies->displayPrice($total,1) . '</b>';
+                    }                    
                  ?>
                  <div class="clearfix">
                  <?php echo '<div class="clearfix">' .

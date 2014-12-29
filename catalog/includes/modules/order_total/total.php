@@ -28,7 +28,7 @@ class lC_OrderTotal_total extends lC_OrderTotal {
 
   function process() {
     global $lC_ShoppingCart, $lC_Currencies;
-
+    
     $this->output[] = array('title' => $this->_title . ':',
                             'text' => '<b>' . $lC_Currencies->format($lC_ShoppingCart->getTotal()) . '</b>',
                             'value' => $lC_ShoppingCart->getTotal());
