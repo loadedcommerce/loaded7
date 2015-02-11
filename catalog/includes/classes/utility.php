@@ -789,5 +789,17 @@ class utility {
     
     return $ioncubeStatus;
   } 
+ /**
+  * Convert nl2br string to array
+  *  
+  * @access public      
+  * @return array
+  */
+  public static function br2nl($string){
+    $string = preg_replace('#<br\s*?/?>#i', "|", $string);  
+    $parts = explode('|', $string);
+    
+    return $parts;
+  }
 } 
 ?>

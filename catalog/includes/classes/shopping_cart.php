@@ -1074,7 +1074,7 @@ class lC_ShoppingCart {
   public function numberOfShippingBoxes() {
     return $this->_shipping_boxes;
   }
-
+  
   private function _cleanUp() {
     global $lC_Database, $lC_Customer;
 
