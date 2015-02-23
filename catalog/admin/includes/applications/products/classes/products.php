@@ -781,11 +781,20 @@ class lC_Products_Admin {
         //   $data['products_keyword'][$l['id']] = $data['products_keyword'][$l['id']] . '-link';
         // }
         
-        if (is_numeric($id)) {
+        // check to see if the DB entry exists for the selected language
+        $Qchk1 = $lC_Database->query('select products_description from :table_products_description where products_id = :products_id and language_id = :language_id limit 1');
+        $Qchk1->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
+        $Qchk1->bindInt(':products_id', $products_id);
+        $Qchk1->bindInt(':language_id', $l['id']);
+        $Qchk1->execute();       
+
+        if (is_numeric($id) && $Qchk1->numberOfRows() == 1) {
           $Qpd = $lC_Database->query('update :table_products_description set products_name = :products_name, products_blurb = :products_blurb, products_description = :products_description, products_keyword = :products_keyword, products_tags = :products_tags, products_url = :products_url where products_id = :products_id and language_id = :language_id');
         } else {
           $Qpd = $lC_Database->query('insert into :table_products_description (products_id, language_id, products_name, products_blurb, products_description, products_keyword, products_tags, products_url) values (:products_id, :language_id, :products_name, :products_blurb, :products_description, :products_keyword, :products_tags, :products_url)');
         }
+        
+        $Qchk1->freeResult();
         
         $Qpd->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
         $Qpd->bindInt(':products_id', $products_id);
@@ -804,12 +813,21 @@ class lC_Products_Admin {
           break;
         }
         
+        // check to see if the DB entry exists for the selected language
+        $Qchk2 = $lC_Database->query('select products_description from :table_permalinks where item_id = :item_id and language_id = :language_id limit 1');
+        $Qchk2->bindTable(':table_permalinks', TABLE_PERMALINKS);
+        $Qchk2->bindInt(':item_id', $products_id);
+        $Qchk2->bindInt(':language_id', $l['id']);
+        $Qchk2->execute();         
+        
         // added for permalink
-        if (is_numeric($id)) {
+        if (is_numeric($id) && $Qchk2->numberOfRows() == 1) {
           $Qpl = $lC_Database->query('update :table_permalinks set permalink = :permalink, query = :query where item_id = :item_id and type = :type and language_id = :language_id');
         } else {
           $Qpl = $lC_Database->query('insert into :table_permalinks (item_id, language_id, type, query, permalink) values (:item_id, :language_id, :type, :query, :permalink)');
         }
+        
+        $Qchk2->freeResult();
         
         $Qpl->bindTable(':table_permalinks', TABLE_PERMALINKS);
         $Qpl->bindInt(':item_id', $products_id);
