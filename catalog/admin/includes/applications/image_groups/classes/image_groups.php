@@ -149,7 +149,7 @@ class lC_Image_groups_Admin {
       // check to see if the DB entry exists for the selected language
       $Qchk1 = $lC_Database->query('select title from :table_products_images_groups where code = :code and language_id = :language_id limit 1');
       $Qchk1->bindTable(':table_products_images_groups', TABLE_PRODUCTS_IMAGES_GROUPS);
-      $Qchk1->bindInt(':code', $data['code']);
+      $Qchk1->bindValue(':code', $data['code']);
       $Qchk1->bindInt(':language_id', $l['id']);
       $Qchk1->execute();       
 
