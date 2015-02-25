@@ -130,7 +130,7 @@ class lC_Image_groups_Admin {
   */
   public static function save($id = null, $data, $default = false) {
     global $lC_Database, $lC_Language;
-
+    
     if ( is_numeric($id) ) {
       $group_id = $id;
     } else {
@@ -146,12 +146,21 @@ class lC_Image_groups_Admin {
     $lC_Database->startTransaction();
 
     foreach ( $lC_Language->getAll() as $l ) {
-      if ( is_numeric($id) ) {
+      // check to see if the DB entry exists for the selected language
+      $Qchk1 = $lC_Database->query('select title from :table_products_images_groups where code = :code and language_id = :language_id limit 1');
+      $Qchk1->bindTable(':table_products_images_groups', TABLE_PRODUCTS_IMAGES_GROUPS);
+      $Qchk1->bindInt(':code', $data['code']);
+      $Qchk1->bindInt(':language_id', $l['id']);
+      $Qchk1->execute();       
+
+      if (is_numeric($id) && $Qchk1->numberOfRows() == 1) {      
         $Qgroup = $lC_Database->query('update :table_products_images_groups set title = :title, code = :code, size_width = :size_width, size_height = :size_height, force_size = :force_size where id = :id and language_id = :language_id');
       } else {
         $Qgroup = $lC_Database->query('insert into :table_products_images_groups (id, language_id, title, code, size_width, size_height, force_size) values (:id, :language_id, :title, :code, :size_width, :size_height, :force_size)');
       }
-
+      
+      $Qchk1->freeResult();      
+      
       $Qgroup->bindTable(':table_products_images_groups', TABLE_PRODUCTS_IMAGES_GROUPS);
       $Qgroup->bindInt(':id', $group_id);
       $Qgroup->bindValue(':title', $data['title'][$l['id']]);
