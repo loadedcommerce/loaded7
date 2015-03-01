@@ -15,12 +15,14 @@ button_new_group = New Group
 
 legend_checkout_options = Checkout Options
 legend_catalog_visibility = Catalog Visibility
+legend_invoice_terms = Invoice Terms    
 
 heading_payment_methods_available = Payment Methods Available
 heading_shipping_methods_available = Shipping Methods Available
 heading_access_group_visibility = Access Group Visibility
 heading_hidden_product_notification = Hidden Products Notification
 heading_taxable_status = Taxable Status
+heading_terms_access = Terms Access
 
 modal_heading_new_customer_group = New Customer Group
 modal_heading_edit_customer_group = Edit Customer Group
@@ -36,6 +38,7 @@ info_bubble_shipping_methods_available = Select the shipping methods restricted 
 info_bubble_access_group_visibility = Select the customer access levels restricted to this group.
 info_bubble_hidden_product_notification = Select to enable/disable hidden products notifications for this group.
 info_bubble_taxable_status = Set the taxable status for this group.
+info_bubble_invoice_terms = Set the payment terms available for this group.
 
 text_hidden_product_notification_info = Will let the customer know there is more product available but is restricted.
 
