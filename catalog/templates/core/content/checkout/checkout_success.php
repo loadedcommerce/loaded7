@@ -111,7 +111,7 @@ $oID = lC_Success::getOrderID($lC_Customer->getID());
                 <div id="content-checkout-confirmation-order-totals-left" class="col-sm-5 col-lg-5"></div>
                 <div id="content-checkout-confirmation-order-totals-right" class="col-sm-7 col-lg-7">
                   <?php
-                  foreach (lC_Success::getOrderTotals($oID) as $module as $module) {  
+                  foreach (lC_Success::getOrderTotals($oID) as $module) {  
                     $title = (strstr($module['title'], '(')) ? substr($module['title'], 0, strpos($module['title'], '(')) . ':' : $module['title'];
                     $class = str_replace(':', '', $title);
                     $class = 'ot-' . strtolower(str_replace(' ', '-', $class));
