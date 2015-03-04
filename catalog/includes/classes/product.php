@@ -948,10 +948,10 @@ class lC_Product {
   public function hasSubProducts($id) {
     global $lC_Database;
 
-    $Qchk = $lC_Database->query('select products_id from :table_products where parent_id = :parent_id and is_subproduct = :is_subproduct limit 1');
+    $Qchk = $lC_Database->query('select products_id from :table_products where parent_id = :parent_id and is_subproduct > :is_subproduct limit 1');
     $Qchk->bindTable(':table_products', TABLE_PRODUCTS);
     $Qchk->bindInt(':parent_id', $id);
-    $Qchk->bindInt(':is_subproduct', 1);
+    $Qchk->bindInt(':is_subproduct', 0);
     $Qchk->execute();
 
     if ( $Qchk->numberOfRows() === 1 ) {

@@ -534,6 +534,8 @@ class lC_Order {
 
     lC_Order::sendEmail($order_id);
 
+    $_SESSION['savedOrderID'] = $order_id;
+    
     unset($_SESSION['prepOrderID']);
   }
 
