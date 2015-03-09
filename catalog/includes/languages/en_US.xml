@@ -3021,6 +3021,10 @@ Your friend, %s, thought that you would be interested in %s from %s.]]></value>
       <value><![CDATA[Share]]></value>
       <group>general</group>
     </definition>
-    
+    <definition>
+      <key>text_qty_cannot_be_zero</key>
+      <value><![CDATA[Error:  Order quantity cannot be zero.]]></value>
+      <group>general</group>
+    </definition>    
   </definitions>  
 </language>

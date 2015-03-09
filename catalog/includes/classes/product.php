@@ -1022,6 +1022,8 @@ class lC_Product {
       $hcss = (isset($value['image']) && empty($value['image']) === false) ? null : ' style="height:1px;" ';
       $price = $value['products_price'];
       
+      $purchase_type = (defined('MULTISKU_SUBPRODUCTS_PURCHASE_PRESENTATION') && MULTISKU_SUBPRODUCTS_PURCHASE_PRESENTATION == 'Multi') ? 'multi' : 'single';
+      
       if (DISPLAY_PRICE_WITH_TAX == 1) {
         $taxClassID = ($lC_ShoppingCart->getShippingMethod('tax_class_id') != NULL) ? $lC_ShoppingCart->getShippingMethod('tax_class_id') : $this->_data['tax_class_id']; 
         $countryID = ($lC_ShoppingCart->getShippingAddress('country_id') != NULL) ? $lC_ShoppingCart->getShippingAddress('country_id') : STORE_COUNTRY;
@@ -1030,21 +1032,29 @@ class lC_Product {
         $tax = $lC_Tax->calculate($value['products_price'], $taxRate);
         $price = lc_round($value['products_price'] + $tax, DECIMAL_PLACES);
       }
-            
+       
       $output .= '<div class="row clear-both margin-bottom margin-top">' .
-                 '  <div class="col-sm-8 col-lg-8">' .
+                 '  <div class="col-sm-7 col-lg-7">' .
                  '    <span class="subproduct-image pull-left margin-right">' . 
                  '      <img class="img-responsive" ' . $hcss . 'src="' . $img . '" title="' . $value['products_name'] . '" height="' . $height . '" width="' . $lC_Image->getWidth('small') . '" alt="' . $value['products_name'] . '" />' .
                  '    </span>' .
                  '    <span class="subproduct-name lead lt-blue no-margin-bottom">' . $value['products_name'] . '</span><br />' . 
                  ((isset($extra) && $extra != null) ? '<span class="subproduct-model small-margin-left no-margin-top"><small>' . $extra . '</small></span>' : null) .
                  '  </div>' .
-                 '  <div class="col-sm-4 col-lg-4">' .
-                 '    <span class="subproduct-price lead">' . $lC_Currencies->format($price) . '</span>' .
-                 '    <span class="subproduct-buy-now pull-right">' . 
-                 '      <form method="post" action="' . lc_href_link(FILENAME_DEFAULT, $value['products_id'] . '&action=cart_add') . '"><button class="subproduct-buy-now-button btn btn-success" type="submit" onclick="$(this).closest(\'form\').submit();">Buy Now</button></form>' . 
-                 '    </span>' .
-                 '  </div>' .
+                 '  <div class="col-sm-5 col-lg-5">' .
+                 '    <span class="subproduct-price lead">' . $lC_Currencies->format($price) . '</span>';
+
+      if ($purchase_type == 'single') {     
+        $output .= '    <span class="subproduct-buy-now pull-right">' . 
+                   '      <form method="post" action="' . lc_href_link(FILENAME_DEFAULT, $value['products_id'] . '&action=cart_add') . '"><button class="subproduct-buy-now-button btn btn-success" type="submit" onclick="$(this).closest(\'form\').submit();">Buy Now</button></form>' . 
+                   '    </span>';
+      } else {
+        $output .= '    <span class="subproduct-qty-input pull-right half-width">' . 
+                   '      <label class="display-inline">' . $lC_Language->get('text_add_to_cart_quantity') . '</label><input type="text" id="quantity_' . $value['products_id'] . '" name="quantity[' . $value['products_id'] . ']" onfocus="this.select();" class="small-margin-left display-inline form-control form-control content-products-info-subproduct-qty-input half-width no-margin-right text-center" value="0">' . 
+                   '    </span>';        
+      }
+
+      $output .= '  </div>' .
                  '</div>';
     }
     
