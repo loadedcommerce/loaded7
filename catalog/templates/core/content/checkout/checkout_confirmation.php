@@ -80,6 +80,19 @@
                   <button type="button" onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'payment', 'SSL'); ?>';" class="btn btn-default btn-xs"><?php echo $lC_Language->get('button_edit'); ?></button>
                 </div>                  
               </div>
+              <?php
+              if (isset($_POST['payment_terms']) && $_POST['payment_terms'] != null) {
+                ?>
+                <div class="well relative clearfix small-padding-top small-padding-bottom"> 
+                  <h4><?php echo $lC_Language->get('payment_terms_heading'); ?></h4>
+                  <p><?php echo $lC_ShoppingCart->getBillingTermsName($_POST['payment_terms']); ?></p>
+                  <div class="btn-group clearfix absolute-top-right small-padding-right small-padding-top">
+                    <button type="button" onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'payment', 'SSL'); ?>';" class="btn btn-default btn-xs"><?php echo $lC_Language->get('button_edit'); ?></button>
+                  </div>                  
+                </div>
+                <?php
+              }
+              ?>
               <div class="well relative clearfix small-padding-top small-padding-bottom"> 
                 <h4><?php echo $lC_Language->get('order_comment_title'); ?></h4>
                 <div class="form-group">

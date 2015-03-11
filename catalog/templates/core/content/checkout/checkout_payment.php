@@ -84,7 +84,7 @@
                 </div>        
               </div>
               <div class="col-sm-8 col-lg-8">
-                <div class="well relative">
+                <div class="well relative no-margin-bottom">
                   <h4 class="no-margin-top"><?php echo $lC_Language->get('bill_to_address'); ?></h4>
                   <address class="no-margin-bottom">
                     <?php  

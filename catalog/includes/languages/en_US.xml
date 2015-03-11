@@ -1215,6 +1215,11 @@ Note: If you did not request this action via our password forgotten page, please
       <group>checkout</group>
     </definition>
     <definition>
+      <key>payment_terms_heading</key>
+      <value><![CDATA[Payment Terms]]></value>
+      <group>checkout</group>
+    </definition>    
+    <definition>
       <key>payment_address_heading</key>
       <value><![CDATA[Payment Address]]></value>
       <group>checkout</group>

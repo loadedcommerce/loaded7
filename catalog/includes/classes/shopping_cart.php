@@ -1205,5 +1205,20 @@ class lC_ShoppingCart {
 
     return ($a['date_added'] > $b['date_added']) ? -1 : 1;
   }
+  
+  public function getBillingTermsName($terms_id) {
+    global $lC_Database;
+    
+    $Qterms = $lC_Database->query('select name from :table_payment_terms where id = :id limit 1');
+    $Qterms->bindTable(':table_payment_terms', TABLE_PAYMENT_TERMS);
+    $Qterms->bindInt(':id', $terms_id);
+    $Qterms->execute(); 
+    
+    $name = $Qterms->value('name');
+    
+    $Qterms->freeResult();
+    
+    return $name;       
+  }
 }
 ?>
