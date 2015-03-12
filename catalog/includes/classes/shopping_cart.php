@@ -92,7 +92,7 @@ class lC_ShoppingCart {
           }
         }
       }
-      
+        
       if ( $db_action == 'check' ) {
         $Qproduct = $lC_Database->query('select item_id, meta_data, quantity from :table_shopping_carts where customers_id = :customers_id and products_id = :products_id');
         $Qproduct->bindTable(':table_shopping_carts', TABLE_SHOPPING_CARTS);
@@ -157,14 +157,14 @@ class lC_ShoppingCart {
           $simple_options[$item_id][] = $option;
         }
       }
-    }    
+    }   
     
     // reset per-session cart contents, but not the database contents
     $this->reset();
 
     $_delete_array = array();
 
-    $Qproducts = $lC_Database->query('select sc.item_id, sc.products_id, sc.quantity, sc.meta_data, sc.date_added, p.parent_id, p.products_price, p.products_model, p.products_sku, p.products_tax_class_id, p.products_weight, p.products_weight_class, p.products_status from :table_shopping_carts sc, :table_products p where sc.customers_id = :customers_id and sc.products_id = p.products_id order by sc.date_added desc');
+    $Qproducts = $lC_Database->query('select sc.item_id, sc.products_id, sc.quantity, sc.meta_data, sc.date_added, p.parent_id, p.products_price, p.products_model, p.products_sku, p.products_tax_class_id, p.products_weight, p.products_weight_class, p.products_status, p.is_subproduct from :table_shopping_carts sc, :table_products p where sc.customers_id = :customers_id and sc.products_id = p.products_id order by sc.date_added desc');
     $Qproducts->bindTable(':table_shopping_carts', TABLE_SHOPPING_CARTS);
     $Qproducts->bindTable(':table_products', TABLE_PRODUCTS);
     $Qproducts->bindInt(':customers_id', $lC_Customer->getID());
@@ -195,6 +195,7 @@ class lC_ShoppingCart {
         $this->_contents[$Qproducts->valueInt('item_id')] = array('item_id' => $Qproducts->valueInt('item_id'),
                                                                   'id' => $Qproducts->valueInt('products_id'),
                                                                   'parent_id' => $Qproducts->valueInt('parent_id'),
+                                                                  'is_subproduct' => $Qproducts->valueInt('is_subproduct'),
                                                                   'name' => $Qdesc->value('products_name'),
                                                                   'model' => $Qproducts->value('products_model'),
                                                                   'sku' => $Qproducts->value('products_sku'),
@@ -213,7 +214,7 @@ class lC_ShoppingCart {
         // simple options
         $this->_contents[$Qproducts->valueInt('item_id')]['simple_options'] = (strlen($Qproducts->value('meta_data')) > 2) ? $Qproducts->value('meta_data') : $simple_options[$Qproducts->valueInt('item_id')];
 
-        if ( $Qproducts->valueInt('parent_id') > 0 ) {
+        if ( $Qproducts->valueInt('parent_id') > 0 && $Qproducts->valueInt('is_subproduct') == 0 ) {
           $Qcheck = $lC_Database->query('select products_status from :table_products where products_id = :products_id');
           $Qcheck->bindTable(':table_products', TABLE_PRODUCTS);
           $Qcheck->bindInt(':products_id', $Qproducts->valueInt('parent_id'));
@@ -270,7 +271,7 @@ class lC_ShoppingCart {
       foreach ( $_delete_array as $id ) {
         unset($this->_contents[$id]);
       }
-
+      
       $Qdelete = $lC_Database->query('delete from :table_shopping_carts where customers_id = :customers_id and item_id in (":item_id")');
       $Qdelete->bindTable(':table_shopping_carts', TABLE_SHOPPING_CARTS);
       $Qdelete->bindInt(':customers_id', $lC_Customer->getID());
