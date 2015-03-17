@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<language>
+  <definitions>
+    <definition>
+      <key>order_total_terms_handling_title</key>
+      <value><![CDATA[Handling]]></value>
+      <group>modules-order_total</group>
+    </definition>
+    <definition>
+      <key>order_total_terms_handling_description</key>
+      <value><![CDATA[Terms/Invoicing Handling Fee]]></value>
+      <group>modules-order_total</group>
+    </definition>
+  </definitions>
+</language>

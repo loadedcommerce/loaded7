@@ -35,6 +35,9 @@ class lC_Modules_order_total_Admin {
         $module = new $module();
         $name = '<td>' . $module->_title . '</td>';
         $sort = '<td>' . $module->_sort_order . '</td>';
+
+        if ($module->_title == null) continue;       
+        
         if ( $module->isInstalled() ) {
           $action = '<td class="align-right vertical-center"><span class="button-group compact">
                        <a href="' . ((int)($_SESSION['admin']['access']['modules'] < 3) ? '#' : 'javascript://" onclick="editModule(\'' . $module->_code . '\')') . '" class="button icon-pencil' . ((int)($_SESSION['admin']['access']['modules'] < 3) ? ' disabled' : NULL) . '">' .  (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_edit')) . '</a>

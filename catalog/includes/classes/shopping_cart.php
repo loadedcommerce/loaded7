@@ -1035,6 +1035,10 @@ class lC_ShoppingCart {
 
     return $this->getShippingAddress($id);
   }
+  
+  public function getTaxAmount() {
+    return $this->_tax;
+  }  
 
   public function addTaxAmount($amount) {
     $this->_tax += $amount;

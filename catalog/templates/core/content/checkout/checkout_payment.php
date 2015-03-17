@@ -74,14 +74,15 @@
                  ?>
                  <div class="clearfix">
                  <?php echo '<div class="clearfix">' .
-                           '  <span class="pull-left ' . $class . '">' . $title . '</span>' .
-                           '  <span class="pull-right ' . $class . '">' . $module['text'] . '</span>' .'</div>';  
-                 ?> 
+                           '  <span class="pull-left ' . $class . ' ' . $class . '-title">' . $title . '</span>' .
+                           '  <span class="pull-right ' . $class . ' ' . $class . '-text">' . $module['text'] . '</span>' .'</div>';  
+                 ?>  
                  </div>  
                  <?php
                    }
                  ?>                 
-                </div>        
+                </div>    
+                <div id="ajax-msg-div"></div>
               </div>
               <div class="col-sm-8 col-lg-8">
                 <div class="well relative no-margin-bottom">

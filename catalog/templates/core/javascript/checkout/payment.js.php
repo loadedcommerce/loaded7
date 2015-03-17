@@ -46,4 +46,8 @@ function toggleSecurityInfo() {
     $('#arrow').removeClass('arrow-up').addClass('arrow-down');
   }  
 }
+
+function processTermsSelect(val) {
+  alert(val);
+}
 </script>

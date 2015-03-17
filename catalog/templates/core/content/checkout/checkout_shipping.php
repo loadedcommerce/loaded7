@@ -50,6 +50,7 @@
                   <?php 
                   $total = 0;
                   foreach ($lC_ShoppingCart->getOrderTotals() as $module) { 
+                    if ($module['code'] == 'terms_handling') continue;
                     $title = (strstr($module['title'], '(')) ? substr($module['title'], 0, strpos($module['title'], '(')) . ':' : $module['title'];
                     $class = str_replace(':', '', $title);
                     $class = 'ot-' . strtolower(str_replace(' ', '-', $class));
