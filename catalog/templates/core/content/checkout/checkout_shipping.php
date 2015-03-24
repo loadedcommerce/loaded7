@@ -63,9 +63,9 @@
                     <div class="clearfix">
                       <?php 
                       echo '<div class="clearfix">' .
-                           '  <span class="pull-left ' . $class . '">' . $title . '</span>' .
-                           '  <span class="pull-right ' . $class . '">' . $module['text'] . '</span>' .'</div>';  
-                      ?> 
+                           '  <span class="pull-left ' . $class . ' ot-' . $module['code'] . '-title"">' . $title . '</span>' .
+                           '  <span class="pull-right ' . $class . ' ot-' . $module['code'] . '-text">' . $module['text'] . '</span>' .'</div>';  
+                      ?>  
                     </div>                    
                     <?php
                   }

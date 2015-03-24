@@ -142,8 +142,14 @@ class lC_Checkout_rpc {
     $selected_id = $_GET['selected'];
     foreach ($termsSelectArr as $key => $value) {
       $selected = ($value['id'] == $selected_id) ? ' selected' : null;
-      if ($selected != null) $result['selected'] = $value;
-      $options .= '<option amount="' . $value['amount'] . '" payment="' . $value['payment'] . '" handling="' . $value['handling'] . '" value="' . $value['id'] . '" ' . $selected . '>' . $value['text'] . '</option>';
+      if ($selected != null) { 
+        $result['selected'] = $value;
+        // update the session var
+        $_SESSION['this_payment'] = $value['payment'];
+        $_SESSION['this_method'] = $_GET['method'];
+        $_SESSION['this_handling'] = $value['handling'];
+      }
+      $options .= '<option method="' . $_GET['method'] . '" amount="' . $value['amount'] . '" payment="' . $value['payment'] . '" handling="' . $value['handling'] . '" value="' . $value['id'] . '" ' . $selected . '>' . $value['text'] . '</option>';
     }    
 
     $result['termsSelectOptions'] = $options;

@@ -165,17 +165,18 @@
                   foreach ($lC_ShoppingCart->getOrderTotals() as $module) {  
                     $title = (strstr($module['title'], '(')) ? substr($module['title'], 0, strpos($module['title'], '(')) . ':' : $module['title'];
                     $class = str_replace(':', '', $title);
-                    $class = 'ot-' . strtolower(str_replace(' ', '-', $class));
+                    $class = 'ot-' . strtolower(str_replace(' ', '-', trim($class)));
                  ?>
                  <div class="clearfix">
                  <?php echo '<div class="clearfix">' .
-                           '  <span class="pull-left ' . $class . '">' . $title . '</span>' .
-                           '  <span class="pull-right ' . $class . '">' . $module['text'] . '</span>' .'</div>';  
-                 ?> 
+                           '  <span class="pull-left ' . $class . ' ' . $class . '-title">' . $title . '</span>' .
+                           '  <span class="pull-right ' . $class . ' ' . $class . '-text">' . $module['text'] . '</span>' .'</div>';  
+                 ?>
                  </div>  
                  <?php
                    }
-                 ?>      
+                 ?>  
+                 <div id="ajax-msg-div"></div>
                 </div>
               </div>              
               <?php         

@@ -65,7 +65,7 @@
                   foreach ($lC_ShoppingCart->getOrderTotals() as $module) {  
                     $title = (strstr($module['title'], '(')) ? substr($module['title'], 0, strpos($module['title'], '(')) . ':' : $module['title'];
                     $class = str_replace(':', '', $title);
-                    $class = 'ot-' . strtolower(str_replace(' ', '-', $class));
+                    $class = 'ot-' . strtolower(str_replace(' ', '-', trim($class)));
                     if ($module['code'] != 'total') $total = $total + (float)$module['value'];
                     if ($module['code'] == 'total') {
                       $module['value'] = $total;
@@ -74,8 +74,8 @@
                  ?>
                  <div class="clearfix">
                  <?php echo '<div class="clearfix">' .
-                           '  <span class="pull-left ' . $class . ' ' . $class . '-title">' . $title . '</span>' .
-                           '  <span class="pull-right ' . $class . ' ' . $class . '-text">' . $module['text'] . '</span>' .'</div>';  
+                           '  <span class="pull-left ' . $class . ' ot-' . $module['code'] . '-title">' . $title . '</span>' .
+                           '  <span class="pull-right ' . $class . ' ot-' . $module['code'] . '-text">' . $module['text'] . '</span>' .'</div>';  
                  ?>  
                  </div>  
                  <?php
@@ -105,6 +105,18 @@
                 $selection = $lC_Payment->selection();
                 echo ((sizeof($selection) > 1) ? '<div class="alert alert-warning">' . $lC_Language->get('choose_payment_method') . '</div>' : ((sizeof($selection) == 1) ? '<div class="alert alert-warning">' . $lC_Language->get('only_one_payment_method_available') . '</div>' : '<div class="alert alert-warning">' . $lC_Language->get('no_payment_method_available') . '</div>' . "\n")); 
                 $radio_buttons = 0;
+                
+                // insure there is a default selected
+                if ($lC_ShoppingCart->hasBillingMethod() == null) {
+                  if (strstr('|', $selection[0]['id'])) {
+                    $codeArr = explode('|', $selection[0]['id']);
+                    $code = $codeArr[0];
+                  } else {
+                    $code = $selection[0]['id'];
+                  }
+                  $lC_ShoppingCart->setBillingMethod(array('id' => $code, 'title' => $GLOBALS['lC_Payment_' . $code]->getMethodTitle()));
+                } 
+                                
                 for ($i=0, $n=sizeof($selection); $i<$n; $i++) {
                   ?>
                   <table class="content-checkout-payment-methods-table table table-hover table-responsive no-margin-bottom">

@@ -1143,7 +1143,7 @@ class lC_ShoppingCart {
 
           $this->_total += $tax_amount;
         }
-
+        
         $this->_tax += $tax_amount;
 
         if ( isset($this->_tax_groups[$tax_description]) ) {
@@ -1195,6 +1195,20 @@ class lC_ShoppingCart {
 
       $lC_OrderTotal = new lC_OrderTotal();
       $this->_order_totals = $lC_OrderTotal->getResult();
+      
+      // sanity recalc total
+      $tkey = '';
+      $ot_total = 0;
+      foreach ($this->_order_totals as $key => $ot) {
+        if ($ot['code'] != 'total') {
+          $ot_total = ($ot_total + $ot['value']);
+          $_SESSION['lC_ShoppingCart_data']['order_totals'][$key]['text'] = $lC_Currencies->format($ot['value']);  
+        } else {
+          $tkey = $key;  
+        }
+      }
+      $_SESSION['lC_ShoppingCart_data']['order_totals'][$tkey]['text'] = $lC_Currencies->format($ot_total);
+      $_SESSION['lC_ShoppingCart_data']['order_totals'][$tkey]['value'] = $ot_total;
       
        // coupons
       if (defined('MODULE_SERVICES_INSTALLED') && in_array('coupons', explode(';', MODULE_SERVICES_INSTALLED)) && isset($lC_Coupons)) {

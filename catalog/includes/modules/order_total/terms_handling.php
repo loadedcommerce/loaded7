@@ -32,10 +32,10 @@ class lC_OrderTotal_terms_handling extends lC_OrderTotal {
     // restrict to payment and confirmation pages
     if (strstr($_SERVER['REQUEST_URI'], 'shipping=process') || strstr($_SERVER['REQUEST_URI'], 'confirmation')) {
       if (utility::isB2B() === true) {
-          $value = 1.11;
+          $value = (isset($_SESSION['this_handling']) && $_SESSION['this_handling'] > 0) ? $_SESSION['this_handling'] : 0;
 
-          $this->output[] = array('title' => 'Handling',
-                                  'text' => $lC_Currencies->format($value),
+          $this->output[] = array('title' => $this->_title . ':',
+                                  'text' => $lC_Currencies->getSessionSymbolLeft() . number_format($value, DECIMAL_PLACES) . $lC_Currencies->getSessionSymbolRight(),
                                   'value' => $value);
         }
     }
