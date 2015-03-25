@@ -118,8 +118,8 @@ $oID = lC_Success::getOrderID($lC_Customer->getID());
                  ?>
                  <div class="clearfix">
                  <?php echo '<div class="clearfix">' .
-                           '  <span class="pull-left ' . $class . '">' . $title . '</span>' .
-                           '  <span class="pull-right ' . $class . '">' . $module['text'] . '</span>' .'</div>';  
+                           '  <span class="pull-left ' . $class . ' ' . strtolower(str_replace('_', '-', $class)) . '-title">' . $title . '</span>' .
+                           '  <span class="pull-right ' . $class . ' ' . strtolower(str_replace('_', '-', $class)) . '-text">' . $module['text'] . '</span>' .'</div>';  
                  ?> 
                  </div>  
                  <?php
@@ -175,6 +175,17 @@ $oID = lC_Success::getOrderID($lC_Customer->getID());
 </div> 
 <script>
 $(document).ready(function() {
+  var isB2B = '<?php echo (utility::isB2B() === true) ? 1 : 0; ?>';  
+  var decimals = '<?php echo DECIMAL_PLACES; ?>';  
+  if (isB2B == 1) { 
+    var symbol = $('.ot-total-text').text().substr(0, 1);
+    var ot_total = $('.ot-total-text').text().replace('$','');
+    var ot_handling = $('.ot-terms-handling-text').text().replace('$','');
+    if (ot_handling != null) {
+      var new_total = (parseFloat(ot_total) + parseFloat(ot_handling)).toFixed(decimals);
+      $('.ot-total-text').text(symbol + new_total);
+    }
+  }  
 });
 </script>
 <!--content//checkout_success.php end-->

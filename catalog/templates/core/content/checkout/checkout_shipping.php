@@ -50,6 +50,7 @@
                   <?php 
                   $total = 0;
                   foreach ($lC_ShoppingCart->getOrderTotals() as $module) { 
+                    if ($module['code'] == 'terms_handling') continue;
                     $title = (strstr($module['title'], '(')) ? substr($module['title'], 0, strpos($module['title'], '(')) . ':' : $module['title'];
                     $class = str_replace(':', '', $title);
                     $class = 'ot-' . strtolower(str_replace(' ', '-', $class));
@@ -62,9 +63,9 @@
                     <div class="clearfix">
                       <?php 
                       echo '<div class="clearfix">' .
-                           '  <span class="pull-left ' . $class . '">' . $title . '</span>' .
-                           '  <span class="pull-right ' . $class . '">' . $module['text'] . '</span>' .'</div>';  
-                      ?> 
+                           '  <span class="pull-left ' . $class . ' ot-' . $module['code'] . '-title"">' . $title . '</span>' .
+                           '  <span class="pull-right ' . $class . ' ot-' . $module['code'] . '-text">' . $module['text'] . '</span>' .'</div>';  
+                      ?>  
                     </div>                    
                     <?php
                   }

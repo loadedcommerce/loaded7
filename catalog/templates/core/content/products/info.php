@@ -45,7 +45,7 @@ $error = (isset($_GET['error']) && $_GET['error'] != NULL) ? preg_replace('/[^A-
     ?>
   </div>
   <?php
-  if ( $lC_Product->hasSubProducts($lC_Product->getID()) === false) {
+  if ( $lC_Product->hasSubProducts($lC_Product->getID()) === false || ($lC_Product->hasSubProducts($lC_Product->getID()) === true && MULTISKU_SUBPRODUCTS_PURCHASE_PRESENTATION == 'Multi') ) {
     ?>  
     <form role="form" class="form-horizontal" name="cart_quantity" id="cart_quantity" action="<?php echo lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword() . '&action=cart_add&info=1'); ?>" method="post" enctype="multipart/form-data">
     <?php
@@ -172,27 +172,33 @@ $error = (isset($_GET['error']) && $_GET['error'] != NULL) ? preg_replace('/[^A-
     </div>
   </div>
   <?php 
-  if ( $lC_Product->hasSubProducts($lC_Product->getID()) === false) {
+  if ( $lC_Product->hasSubProducts($lC_Product->getID()) === false || ($lC_Product->hasSubProducts($lC_Product->getID()) === true && MULTISKU_SUBPRODUCTS_PURCHASE_PRESENTATION == 'Multi') ) {
     ?>    
     <div id="qpb-message"></div>
     <div class="relative clear-both clearfix buy-btn-div">
       <div class="display-inline">
         <div class="col-sm-8 col-lg-8 align-right mid-margin-top">
-          <div class="form-group">
-            <label class="content-products-info-qty-label"><?php echo $lC_Language->get('text_add_to_cart_quantity'); ?></label>
-            <i class="fa fa-plus-square-o fa-lg" style="position:absolute; right:-1px; top:3px; opacity:.3; cursor:pointer;" onclick="setQty('up');"></i>
-            <input type="text" id="quantity" name="quantity" onfocus="this.select();" onchange="refreshPrice();" class="form-control content-products-info-qty-input mid-margin-right" value="1">
-            <i class="fa fa-minus-square-o fa-lg" style="position:absolute; right:-1px; top:19px; opacity:.3; cursor:pointer;" onclick="setQty('dn');"></i>
-          </div>
+        <?php
+          if ( $lC_Product->hasSubProducts($lC_Product->getID()) === false) {
+            ?>        
+            <div class="form-group">
+              <label class="content-products-info-qty-label"><?php echo $lC_Language->get('text_add_to_cart_quantity'); ?></label>
+              <i class="fa fa-plus-square-o fa-lg" style="position:absolute; right:-1px; top:3px; opacity:.3; cursor:pointer;" onclick="setQty('up');"></i>
+              <input type="text" id="quantity" name="quantity" onfocus="this.select();" onchange="refreshPrice();" class="form-control content-products-info-qty-input mid-margin-right" value="1">
+              <i class="fa fa-minus-square-o fa-lg" style="position:absolute; right:-1px; top:19px; opacity:.3; cursor:pointer;" onclick="setQty('dn');"></i>
+            </div>
+            <?php
+          }
+          ?>
         </div>
         <div class="col-sm-4 col-lg-4">
-          <p class="margin-top"><button onclick="$('#cart_quantity').submit();" id="btn-buy-now" class="btn btn-block btn-lg btn-success"><?php echo $lC_Language->get('button_buy_now'); ?></button></p>
+          <p class="margin-top"><button onclick="info_check_form(this); $('#cart_quantity').submit();" id="btn-buy-now" class="btn btn-block btn-lg btn-success"><?php echo $lC_Language->get('button_buy_now'); ?></button></p>
         </div>
       </div> 
     </div>
     <?php
   }
-  if ( $lC_Product->hasSubProducts($lC_Product->getID()) === false) {
+  if ( $lC_Product->hasSubProducts($lC_Product->getID()) === false || ($lC_Product->hasSubProducts($lC_Product->getID()) === true && MULTISKU_SUBPRODUCTS_PURCHASE_PRESENTATION == 'Multi') ) {
     ?>     
     </form>
     <?php
@@ -230,6 +236,28 @@ $(document).ready(function() {
 
   refreshPrice();
 });
+
+function info_check_form(e) {
+  var ok = true;
+  var isMultiViewSubProduct = '<?php echo ($lC_Product->hasSubProducts($lC_Product->getID()) === true && MULTISKU_SUBPRODUCTS_PURCHASE_PRESENTATION == 'Multi') ? 1 : 0; ?>';
+  if (isMultiViewSubProduct == 1) {
+    ok = false
+    $('.content-products-info-subproduct-qty-input').each(function () {
+      if (this.value != 0) {
+        ok = true; 
+      }
+    });
+  }
+
+  if (ok == true) { 
+    $('#cart_quantity').attr('action', '<?php echo lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword() . '&action=cart_add&info=1'); ?>');
+    return true;
+  } else {
+    $('#cart_quantity').attr('action', '');
+    alert('<?php echo $lC_Language->get('text_qty_cannot_be_zero'); ?>');
+    return false;
+  }
+}
 
 function setQty(mode) {
   var val = $('#quantity').val();

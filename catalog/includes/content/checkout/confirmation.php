@@ -63,6 +63,11 @@ class lC_Checkout_Confirmation extends lC_Template {
       $_SESSION['po_number'] = lc_sanitize_string($_POST['po_number']);
     }    
     
+    // added for payment terms
+    if (isset($_POST['payment_terms']) && empty($_POST['payment_terms']) === false) {
+      $_SESSION['payment_terms'] = $_POST['payment_terms'];
+    }    
+    
     // load the selected payment module
     include($lC_Vqmod->modCheck('includes/classes/payment.php'));
     $lC_Payment = new lC_Payment((isset($_POST['payment_method']) ? $_POST['payment_method'] : $lC_ShoppingCart->getBillingMethod('id')));
@@ -80,7 +85,7 @@ class lC_Checkout_Confirmation extends lC_Template {
       if ($lC_MessageStack->size('checkout_payment') > 0) {
         lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment', 'SSL'));
       }
-    }
+    }       
 
     if ($lC_Payment->hasActive()) {
       $lC_Payment->pre_confirmation_check();

@@ -114,7 +114,8 @@
         <div id="content-shopping-cart-order-totals-left" class="col-sm-6 col-lg-6"></div>
         <div id="content-shopping-cart-order-totals-right" class="col-sm-6 col-lg-6">
           <?php
-          foreach ($lC_ShoppingCart->getOrderTotals() as $module) {   
+          foreach ($lC_ShoppingCart->getOrderTotals() as $module) { 
+            if ($module['code'] == 'terms_handling') continue;
             $title = (strstr($module['title'], '(')) ? substr($module['title'], 0, strpos($module['title'], '(')) . ':' : $module['title'];
             $class = str_replace(':', '', $title);
             $class = 'ot-' . strtolower(str_replace(' ', '-', $class));
