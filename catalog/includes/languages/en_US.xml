@@ -3030,6 +3030,21 @@ Your friend, %s, thought that you would be interested in %s from %s.]]></value>
       <key>text_qty_cannot_be_zero</key>
       <value><![CDATA[Error:  Order quantity cannot be zero.]]></value>
       <group>general</group>
-    </definition>    
+    </definition>
+    <definition>
+      <key>breadcrumb_error</key>
+      <value><![CDATA[Error]]></value>
+      <group>info</group>
+    </definition>
+    <definition>
+      <key>error_heading</key>
+      <value><![CDATA[Well, this is embarrassing.]]></value>
+      <group>info</group>
+    </definition>
+    <definition>
+      <key>text_info_error_page</key>
+      <value><![CDATA[We're sorry, the page you are looking for can not be found. If you require assistance do not hesitate to <a href="info.php?contact">Contact Us</a>.]]></value>
+      <group>info</group>
+    </definition>
   </definitions>  
 </language>

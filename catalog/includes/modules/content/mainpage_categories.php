@@ -35,7 +35,7 @@ class lC_Content_mainpage_categories extends lC_Modules {
   public function initialize() {
 	global $lC_Database, $lC_Language, $lC_CategoryTree;  
       
-      $Qcategories = $lC_Database->query('select c.categories_id, cd.categories_name, c.categories_image, c.parent_id, c.categories_mode, c.categories_link_target, c.categories_custom_url from :table_categories c, :table_categories_description cd where c.parent_id = :parent_id and c.categories_id = cd.categories_id and cd.language_id = :language_id and c.categories_status = 1 order by sort_order, cd.categories_name');
+      $Qcategories = $lC_Database->query('select c.categories_id, cd.categories_name, c.categories_image, c.parent_id, c.categories_mode, c.categories_link_target, c.categories_custom_url from :table_categories c, :table_categories_description cd where c.parent_id = :parent_id and c.categories_id = cd.categories_id and cd.language_id = :language_id and c.categories_status = 1 and c.categories_visibility_box = 1 order by sort_order, cd.categories_name');
       $Qcategories->bindTable(':table_categories', TABLE_CATEGORIES);
       $Qcategories->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
       $Qcategories->bindInt(':parent_id', 0);

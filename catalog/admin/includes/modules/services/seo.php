@@ -44,6 +44,9 @@ class lC_Services_seo_Admin {
         if (strpos($line, 'RewriteBase /')) {
           $file = str_replace($line, '  RewriteBase ' . DIR_WS_HTTP_CATALOG, $file);
         }
+        if (strpos($line, 'ErrorDocument 404')) {
+          $file = str_replace($line, '  ErrorDocument 404 ' . DIR_WS_HTTP_CATALOG . 'info.php?error', $file);
+        }
       }
       file_put_contents(DIR_FS_CATALOG . 'dot.htaccess', $file);
       if (rename(DIR_FS_CATALOG . 'dot.htaccess', DIR_FS_CATALOG . '.htaccess')) {

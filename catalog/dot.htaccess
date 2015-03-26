@@ -35,7 +35,7 @@
 <IfModule mod_rewrite.c>
   Options +FollowSymLinks
   RewriteEngine on
-  RewriteBase /
+  RewriteBase /l7/
   RewriteRule category/(.*)$ index.php?$1
   RewriteRule product/(.*)/specials/(.*),(.*)$ products.php?$1&$2=$3
   RewriteRule product/reviews,new/(.*)/(.*),(.*)$ products.php?reviews=new&$1&$2=$3
@@ -43,5 +43,6 @@
   RewriteRule product/reviews,new/(.*)$ products.php?reviews=new&$1
   RewriteRule product/reviews/(.*)$ products.php?reviews&$1
   RewriteRule product/(.*)/(.*),(.*)$ products.php?$1&$2=$3
-  RewriteRule product/(.*)$ products.php?$1
+  RewriteRule product/(.*)$ products.php?$1  
+  ErrorDocument 404 /l7/info.php?error
 </IfModule> 
