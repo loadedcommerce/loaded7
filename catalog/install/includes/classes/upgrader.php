@@ -856,7 +856,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
         $tQry->bindDate (':products_last_modified', $product['products_last_modified']);
         $tQry->bindFloat(':products_weight'       , $product['products_weight']);
         $tQry->bindValue(':products_weight_class' , $product['products_weight_class']);
-        $tQry->bindInt  (':products_status'       , $product['products_status']);
+        $tQry->bindInt  (':products_status'       , 1);
         $tQry->bindInt  (':products_tax_class_id' , $product['products_tax_class_id']);
         $tQry->bindInt  (':manufacturers_id'      , $product['manufacturers_id']);
         $tQry->bindInt  (':products_ordered'      , $product['products_ordered']);
