@@ -10,10 +10,6 @@
 */
 ?>
 <style scoped="scoped">
-  .dragging, .dragging * { cursor: move !important; }
-  .dragged { position: absolute; opacity: 0.5; z-index: 2000; }
-  .placeholder { position: relative; }
-  .placeholder:before { position: absolute; }
   .dataColCheck { text-align: center; }
   .dataColCategory { text-align: left; }
   .dataColStatus { text-align: center; }

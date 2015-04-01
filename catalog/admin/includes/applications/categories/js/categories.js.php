@@ -34,7 +34,7 @@ function _refreshDataTable() {
 }   
   
 $(document).ready(function() {
-  _refreshDataTable();
+  _refreshDataTable();  
   $('.sorted_table').sortable({  
     containerSelector: 'tbody',
     itemSelector: 'tr',
@@ -60,7 +60,7 @@ $(document).ready(function() {
         }
       );
     }    
-  }); 
+  });   
   // instantiate breadcrumb
   $("#breadCrumb0").jBreadCrumb();
   
