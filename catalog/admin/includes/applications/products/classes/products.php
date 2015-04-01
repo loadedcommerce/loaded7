@@ -1397,6 +1397,19 @@ class lC_Products_Admin {
         }
       }
       
+      // featured products
+      if ( $error === false ) {
+        $Qfp = $lC_Database->query('delete from :table_featured_products where products_id = :products_id');
+        $Qfp->bindTable(':table_featured_products', TABLE_FEATURED_PRODUCTS);
+        $Qfp->bindInt(':products_id', $id);
+        $Qfp->setLogging($_SESSION['module'], $id);
+        $Qfp->execute();
+
+        if ( $lC_Database->isError() ) {
+          $error = true;
+        }
+      }      
+      
       // QPB
       if ( $error === false ) {
         $Qpb = $lC_Database->query('delete from :table_products_pricing where products_id = :products_id');
