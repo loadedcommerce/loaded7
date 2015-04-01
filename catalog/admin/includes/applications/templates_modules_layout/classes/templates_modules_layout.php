@@ -183,14 +183,13 @@ class lC_Templates_modules_layout_Admin {
     $group = (isset($_GET['group']) && $_GET['group'] != null) ? $_GET['group'] : $_GET['group_new'];
 
     if ( is_numeric($id) ) {
-      $Qlayout = $lC_Database->query('update :table_templates_boxes_to_pages set content_page = :content_page, boxes_group = :boxes_group, sort_order = :sort_order, page_specific = :page_specific where id = :id');
+      $Qlayout = $lC_Database->query('update :table_templates_boxes_to_pages set templates_boxes_id = :templates_boxes_id, content_page = :content_page, boxes_group = :boxes_group, sort_order = :sort_order, page_specific = :page_specific where id = :id');
       $Qlayout->bindInt(':id', $id);
     } else {
       $Qlayout = $lC_Database->query('insert into :table_templates_boxes_to_pages (templates_boxes_id, templates_id, content_page, boxes_group, sort_order, page_specific) values (:templates_boxes_id, :templates_id, :content_page, :boxes_group, :sort_order, :page_specific)');
-      $Qlayout->bindInt(':templates_boxes_id', $_GET['box']);
       $Qlayout->bindInt(':templates_id', $link[0]);
     }
-
+    $Qlayout->bindInt(':templates_boxes_id', $_GET['box']);
     $Qlayout->bindTable(':table_templates_boxes_to_pages', TABLE_TEMPLATES_BOXES_TO_PAGES);
     $Qlayout->bindValue(':content_page', $link[1]);
     $Qlayout->bindValue(':boxes_group', $group);
