@@ -59,7 +59,7 @@ class lC_Boxes_whats_new extends lC_Modules {
       }
       $this->_content .= '<li class="box-whats-new-name">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $data['keyword']), $data['name']) . '</li>';
       $this->_content .= '<li class="box-whats-new-price pricing-row">' . $data['display_price'] . '</li>';
-      $this->_content .= '<li class="box-whats-new-buy-now pricing-row buy-btn-div"><button onclick="window.location.href=\'' . lc_href_link(FILENAME_PRODUCTS, $data['products_keyword'] . '&action=cart_add') . '\'" title="" type="button">' . $lC_Language->get('button_buy_now') . '</button>';
+      $this->_content .= '<li class="box-whats-new-buy-now pricing-row buy-btn-div"><button onclick="window.location.href=\'' . lc_href_link(FILENAME_PRODUCTS, $data['keyword'] . '&action=cart_add') . '\'" title="" type="button">' . $lC_Language->get('button_buy_now') . '</button>';
     }
   }
 
