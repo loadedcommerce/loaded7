@@ -48,11 +48,10 @@ class lC_Boxes_whats_new extends lC_Modules {
         $data['display_image'] = $lC_Product->getImage();
       }
 
-      $lC_Cache->write($data);
+      if (isset($lC_Cache)) $lC_Cache->write($data);
     }
 
     if ( !empty($data) ) {
-      
       $this->_content = '';
       if (empty($data['display_image']) === false) {
         $this->_content = '<li class="box-whats-new-image"><div class="thumbnail">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $data['keyword']), $lC_Image->show($data['display_image'], $data['name'], 'class="box-whats-new-image-src"')) . '</div></li>';
