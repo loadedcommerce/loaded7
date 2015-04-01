@@ -14,8 +14,8 @@
   <div class="col-sm-12 col-lg-12">
     <h1 class="no-margin-top"><?php echo $lC_Template->getPageTitle(); ?></h1>
     <?php
-      if (isset($_GET['success']) && $_GET['success'] != NULL) echo '<div class="message-success-container alert alert-success"><img class="margin-right" src="images/icons/success.gif">' . preg_replace('/[^a-zA-Z0-9]\'\.\,/', '', $_GET['success']) . '</div>' . "\n"; 
-      if ( $lC_MessageStack->size('login') > 0 ) echo '<div class="message-stack-container alert alert-danger small-margin-bottom small-margin-left">' . $lC_MessageStack->get('login') . '</div>' . "\n"; 
+      if (isset($_GET['success']) && $_GET['success'] != NULL) echo '<div class="message-success-container alert alert-success">' . preg_replace('/[^a-zA-Z0-9]\'\.\,/', '', $_GET['success']) . '</div>' . "\n"; 
+      if ( $lC_MessageStack->size('login') > 0 ) echo '<div class="message-stack-container alert alert-danger small-margin-bottom">' . $lC_MessageStack->get('login') . '</div>' . "\n"; 
     ?>
     <div class="row">
       <div class="col-sm-6 col-lg-6 large-padding-left margin-top">
@@ -29,10 +29,10 @@
               <label class="sr-only"></label><?php echo lc_draw_password_field('password', 'class="form-control" placeholder="' . $lC_Language->get('field_customer_password') . '"'); ?>
               <p class="help-block small-margin-left"><?php echo sprintf($lC_Language->get('login_returning_customer_password_forgotten'), lc_href_link(FILENAME_ACCOUNT, 'password_forgotten', 'SSL')); ?></p>
             </div>
-          </form>   
-          <div class="button-set clearfix">
-            <button class="pull-right btn btn-lg btn-primary" onclick="$('#login').submit();" type="button"><?php echo $lC_Language->get('button_sign_in'); ?></button>
-          </div> 
+            <div class="button-set clearfix">
+              <button class="pull-right btn btn-lg btn-primary" onclick="$('#login').submit();" type="submit"><?php echo $lC_Language->get('button_sign_in'); ?></button>
+            </div> 
+          </form>
         </div>
       </div>
       <div class="col-sm-6 col-lg-6 margin-top create-account-div">
@@ -56,6 +56,5 @@ $(document).ready(function() {
 		$('#email_address').focus();
 	}
 });	
-	
 </script>                      
 <!--content/info/login.php end-->
