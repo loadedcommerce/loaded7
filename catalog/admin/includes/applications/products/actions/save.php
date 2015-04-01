@@ -47,6 +47,7 @@ class lC_Application_Products_Actions_save extends lC_Application_Products {
                     'has_children' => $has_variants);
                     
       if ( isset($_POST['attributes']) ) $data['attributes'] = $_POST['attributes'];
+      if ( isset($_POST['attributes2']) ) $data['attributes2'] = $_POST['attributes2'];
       if ( isset($_POST['categories']) ) $data['categories'] = $_POST['categories'];
       if ( isset($_POST['localimages']) ) $data['localimages'] = $_POST['localimages'];
 
