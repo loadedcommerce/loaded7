@@ -13,7 +13,7 @@ global $lC_Vqmod;
 require_once($lC_Vqmod->modCheck('includes/applications/categories/classes/categories.php'));
 require_once($lC_Vqmod->modCheck('includes/classes/category_tree.php'));
 require_once($lC_Vqmod->modCheck('includes/classes/image.php')); 
-
+    
 class lC_Categories_Admin_rpc {
  /*
   * Returns the categories datatable data for listings
@@ -254,5 +254,22 @@ class lC_Categories_Admin_rpc {
     
     echo json_encode($result);
   }
+ /*
+  * update category sort value
+  *
+  * @param int $_GET the category id and new value of the status 
+  * @access public
+  * @return json
+  */
+  public static function updateCategorySort() {    
+    $updated = lC_Categories_Admin::updateCategorySort($_GET['cid'], $_GET['val']);
+    
+    if ($updated) {
+      lC_Cache::clear('category_tree');
+      $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+    }  
+
+    echo json_encode($result);
+  }  
 }
 ?>

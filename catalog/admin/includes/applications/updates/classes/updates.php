@@ -775,7 +775,7 @@ class lC_Updates_Admin {
     if (utility::execEnabled() === true && utility::isLinux() === true) {
       try {
         //exec(CFG_APP_ZIP . ' -r ' . DIR_FS_WORK . 'updates/' . $backup_file . ' ' . DIR_FS_CATALOG . '* -x \*.zip\*');
-        exec(CFG_APP_ZIP . ' -r ' . DIR_FS_WORK . 'updates/' . $backup_file . ' ' . DIR_FS_CATALOG . '* -x "/home/loadedne/www/sandbox/datazen/www/loaded7/catalog/images/products/*" -x "*.cache" -x "*.zip" -x "php_error*"');
+        exec(CFG_APP_ZIP . ' -r ' . DIR_FS_WORK . 'updates/' . $backup_file . ' ' . DIR_FS_CATALOG . '* -x "/home/loadedne/www/sandbox/datazen/www/loaded7/catalog/images/products/*" -x "*.cache" -x "*.zip" -x "php_error*" -x "*.gif" -x "*.jpg" -x "*.jpeg" -x "*.png" -x "*.sql" -x "*.tgz" -x "*.tar" -x "*.gz"');
       } catch ( Exception $e ) {  
         return array('rpcStatus' => 0);
       } 
@@ -1009,7 +1009,10 @@ class lC_Updates_Admin {
         if (strstr($file, 'images/products/')) continue;     
         
         // added to exclude work folder
-        if (strstr($file, 'includes/work/')) continue;           
+        if (strstr($file, 'includes/work/')) continue;  
+        
+        // added to exclude downloads folder
+        if (strstr($file, 'download/')) continue;                  
         
         // added to exclude work folder
         if (strstr($file, 'php_error')) continue;  

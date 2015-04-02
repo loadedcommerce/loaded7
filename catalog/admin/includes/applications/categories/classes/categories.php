@@ -53,7 +53,7 @@ class lC_Categories_Admin {
                     '  </span>' .  
                     '</td>';
       $mode = '<td>' . $lC_Language->get('text_mode_' . $Qcategories->value('categories_mode')) . '</td>';
-      $sort = '<td>' . $Qcategories->valueInt('sort_order') . '<input type="hidden" name="sort_order_' . $Qcategories->value('categories_id') . '" value="' . $Qcategories->valueInt('sort_order') . '" class="sort" /></td>';
+      $sort = '<td><input type="text" onfocus="this.select();" name="sort_order_' . $Qcategories->value('categories_id') . '" onchange="updateCategorySort(this.value, \'' . $Qcategories->value('categories_id') . '\');" value="' . $Qcategories->valueInt('sort_order') . '" class="sort input" /></td>';
       $action = '<td class="align-right vertical-center">
                    <span class="button-group" style="white-space:nowrap;">
                      <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? '#' : lc_href_link_admin(FILENAME_DEFAULT, $_module . '=' . $Qcategories->value('categories_id') . '&cid=' . (($_GET['categories']) ? $_GET['categories'] : 0) . '&action=save')) . '" class="button icon-pencil' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? ' disabled' : NULL) . '">' .  (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_edit')) . '</a>
@@ -640,6 +640,29 @@ class lC_Categories_Admin {
     }
     return true;
   }
+  
+ /*
+  * Update individual category sort value
+  * 
+  * @access public
+  * @return array
+  */
+  public static function updateCategorySort($id, $val) {
+    global $lC_Database;
+
+    $Qupdate = $lC_Database->query('update :table_categories set sort_order = :sort_order, last_modified = now() where categories_id = :categories_id');
+    $Qupdate->bindTable(':table_categories', TABLE_CATEGORIES);
+    $Qupdate->bindInt(':sort_order', $val);
+    $Qupdate->bindInt(':categories_id', $id);
+    $Qupdate->setLogging($_SESSION['module'], $id);
+    $Qupdate->execute();
+
+    if ($lC_Database->isError()) {
+      return false;
+    }
+    
+    return true;
+  }  
   
  /*
   * get next category sort for new entry

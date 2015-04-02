@@ -31,10 +31,19 @@ function _refreshDataTable() {
                   { "sWidth": "25%", "bSortable": false, "sClass": "dataColAction" }]
   });
   $('#dataTable').responsiveTable();
-}   
+}  
+
+function updateCategorySort(val, id) {
+  var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=updateCategorySort&cid=CID&val=VAL'); ?>';
+  $.getJSON(jsonLink.replace('CID',id).replace('VAL', val),
+    function (data) {
+      _refreshDataTable();
+    }
+  );
+} 
   
 $(document).ready(function() {
-  _refreshDataTable();
+  _refreshDataTable();  
   $('.sorted_table').sortable({  
     containerSelector: 'tbody',
     itemSelector: 'tr',
@@ -60,7 +69,7 @@ $(document).ready(function() {
         }
       );
     }    
-  }); 
+  });   
   // instantiate breadcrumb
   $("#breadCrumb0").jBreadCrumb();
   

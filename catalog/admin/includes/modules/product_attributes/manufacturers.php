@@ -13,7 +13,7 @@ class lC_ProductAttributes_manufacturers extends lC_Product_attributes_Admin {
     $this->_section = 'dataManagementSettings';
   }
   
-  public function setFunction($value) {
+  public function setFunction($value, $value2 = null) {
     global $lC_Database, $lC_Language;
 
     $string = '';
