@@ -60,7 +60,7 @@ class lC_General_Admin {
       if ($QorderResults > 0) {
         if ((int)($_SESSION['admin']['access']['orders'] > 0)) {
           $result['html'] .= '    <ul class="title-menu">
-                                    <li>Orders</li>
+                                    <li>' . $lC_Language->get('orders_title') . '</li>
                                   </ul>' . "\n";
           $result['html'] .= '    <ul class="orders-menu">' . "\n";
                   
@@ -84,7 +84,7 @@ class lC_General_Admin {
         
       // return customer data
       $Qcustomers = array();    
-      $Qcustomers = $lC_Database->query("select customers_id, 
+      $Qcustomers = $lC_Database->query("select categories_id, 
                                                 customers_firstname, 
                                                 customers_lastname, 
                                                 customers_email_address 
@@ -109,7 +109,7 @@ class lC_General_Admin {
       if ($QcustomerResults > 0) {
         if ((int)($_SESSION['admin']['access']['customers'] > 0)) {
           $result['html'] .= '    <ul class="title-menu">
-                                    <li>Customers</li>
+                                    <li>' . $lC_Language->get('customers_title') . '</li>
                                   </ul>' . "\n";
           $result['html'] .= '    <ul class="customers-menu">' . "\n";
           foreach ($QcustomerResults as $key => $value) { 
@@ -126,6 +126,53 @@ class lC_General_Admin {
       } else {
         $result['html'] .= '';
       }
+      
+      // return content pages/categories data
+      $Qcategories = $lC_Database->query("select c.categories_id, 
+                                                 c.categories_mode, 
+                                                 c.categories_visibility_nav, 
+                                                 c.categories_visibility_box, 
+                                                 c.parent_id,
+                                                 cd.categories_name
+                                            from :table_categories c  
+                                       left join :table_categories_description cd 
+                                              on (c.categories_id = cd.categories_id) 
+                                           where (convert(`categories_name` using utf8) regexp '" . $search . "' 
+                                              or convert(`categories_description` using utf8) regexp '" . $search . "') 
+                                        order by cd.categories_name;");
+
+      $Qcategories->bindTable(':table_categories', TABLE_CATEGORIES);
+      $Qcategories->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
+      $Qcategories->bindInt(':language_id', $lC_Language->getID());
+      $Qcategories->execute();
+      
+      // set the customers data results as an array
+      while($Qcategories->next()) {
+        $QcategoriesResults[] = $Qcategories->toArray();
+      }   
+       
+      // build the customers results <li> html for output
+      // return <li> only if greater than 0 results from customers query  
+      if ($QcategoriesResults > 0) {
+        if ((int)($_SESSION['admin']['access']['categories'] > 0)) {
+          $result['html'] .= '    <ul class="title-menu">
+                                    <li>' . $lC_Language->get('content_title') . '</li>
+                                  </ul>' . "\n";
+          $result['html'] .= '    <ul class="customers-menu">' . "\n";
+          foreach ($QcategoriesResults as $key => $value) { 
+            
+            $result['html'] .= '      <li class="bevel" title="' . $lC_Language->get('content_view_details') . ' ' . $value['categories_name'] . '">' . "\n" . 
+                               '        <a href="' . lc_href_link_admin(FILENAME_DEFAULT, 'categories=' . $value['categories_id']) . '&action=save">' . "\n" .
+                               '          <time><i class="icon-page-list icon-size2 icon-grey"></i></time>' . "\n" . 
+                               '          <span class="green"><b>' . $value['categories_name'] . '</b></span><small>'  . $value['categories_mode'] . '</small>' . "\n" . 
+                               '        </a>' . "\n" .
+                               '      </li>';
+          }
+        }
+        $result['html'] .= '    </ul>' . "\n";
+      } else {
+        $result['html'] .= '';
+      }      
       
       // return products data
       $Qproducts = $lC_Database->query("select p.products_id, 
@@ -158,7 +205,7 @@ class lC_General_Admin {
       if ($QproductResults > 0) {
         if ((int)($_SESSION['admin']['access']['products'] > 0)) {
           $result['html'] .= '    <ul class="title-menu">
-                                    <li>Products</li>
+                                    <li>' . $lC_Language->get('products_title') . '</li>
                                   </ul>' . "\n";
           $result['html'] .= '    <ul class="products-menu">' . "\n";
           foreach ($QproductResults as $key => $value) {
