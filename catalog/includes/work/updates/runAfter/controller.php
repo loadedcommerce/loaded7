@@ -466,6 +466,10 @@ class lC_Updates_Admin_run_after extends lC_Updates_Admin {
     
     $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "branding_data` CHANGE `support_phone` `support_phone` VARCHAR(128) NOT NULL DEFAULT '', CHANGE `sales_phone` `sales_phone` VARCHAR(128) NOT NULL DEFAULT ''");
     parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "branding_data` CHANGE `support_phone` `support_phone` VARCHAR(128) NOT NULL DEFAULT '', CHANGE `sales_phone` `sales_phone` VARCHAR(128) NOT NULL DEFAULT ''");
+    
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "product_attributes` ADD `value2` TEXT NOT NULL AFTER `value`");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "product_attributes` ADD `value2` TEXT NOT NULL AFTER `value`");
+
   }
 }  
 ?>
