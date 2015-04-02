@@ -87,7 +87,7 @@ class lC_Products_import_export_Admin {
 
     $errormsg = '';
 
-    // make columns in clude full table names to i can implode into sql statement
+    // make columns include full table names so it can implode into sql statement
     // add image and category and other product tables to columns and query
     $sql_columns = array('p.products_id',
                          'p.parent_id',
@@ -96,13 +96,13 @@ class lC_Products_import_export_Admin {
                          'p.products_cost',
                          'p.products_msrp',
                          'p.products_model',
-                         'p.products_sku',
+                         'if(p.products_sku is null, " ", p.products_sku) as sku',
                          'p.products_date_added',
                          'p.products_weight',
                          'wc.weight_class_key',
                          'p.products_status',
                          'p.products_tax_class_id',
-                         'm.manufacturers_name',
+                         'if(m.manufacturers_name is null, " ", m.manufacturers_name) as manufacturer',
                          'p.products_ordered',
                          'p.has_children',
 
