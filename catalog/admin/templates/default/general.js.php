@@ -68,6 +68,9 @@ $(document).ready(function() {
     } else if (module.indexOf("languages") != -1 && document.location.href.indexOf("languages") != -1) {
       $("#big-menu_languages").addClass('current navigable-current').change();
       cfg = true;
+    } else if (module.indexOf("zone_groups") != -1 && document.location.href.indexOf("zone_groups") != -1) {
+      $("#big-menu_zones").addClass('current navigable-current').change();
+      cfg = true;      
     } else if (module.indexOf("templates_modules") != -1 && document.location.href.indexOf("set=boxes") != -1) {
       $("#big-menu_templates_modules").addClass('current navigable-current').change();
       cfg = true;
