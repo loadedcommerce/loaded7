@@ -8,6 +8,13 @@
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: reviews_new.php v1.0 2013-08-08 datazen $
 */
+      $show_price = true;    
+      $show_buy_now = true; 
+    if (utility::isB2B() && $lC_Customer->isLoggedOn() === false) {
+      $access = (defined('B2B_SETTINGS_GUEST_CATALOG_ACCESS') && B2B_SETTINGS_GUEST_CATALOG_ACCESS > 0) ? (int)B2B_SETTINGS_GUEST_CATALOG_ACCESS : 0;
+      if ($access < 66) $show_price = false;
+      if ($access < 99) $show_buy_now = false;
+    }
 ?>
 <!--content/products/reviews_new.php start--> 
 <div class="row">
@@ -23,12 +30,22 @@
             </h3>
             <p class=""><?php echo (strlen($lC_Product->getDescription()) > 60 ) ? substr(lc_clean_html($lC_Product->getDescription()), 0, 57) . '...' : lc_clean_html($lC_Product->getDescription()); ?></p>
             <div class="row pricing-row">
+            <?php
+                 if($show_price){
+            ?>
               <div class="col-sm-6 col-lg-6">
                 <p class="lead"><?php echo $lC_Product->getPriceFormated(); ?></p>
               </div>
+              <?php
+                 }
+                 if ($show_buy_now) {
+              ?>
               <div class="col-sm-6 col-lg-6 no-margin-left buy-btn-div">
                 <button class="btn btn-success btn-block" onclick="window.location.href='<?php echo lc_href_link(basename($_SERVER['SCRIPT_FILENAME']), $lC_Product->getKeyword() . '&' . lc_get_all_get_params(array('action', 'new')) . '&action=cart_add'); ?>'" type="button"><?php echo $lC_Language->get('button_buy_now'); ?></button>
               </div>
+              <?php
+                 }
+              ?>
             </div>
           </div>
         </div>    
