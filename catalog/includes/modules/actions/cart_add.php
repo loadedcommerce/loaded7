@@ -54,7 +54,15 @@ class lC_Actions_cart_add {
             lc_redirect(lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword()));
           }
         }
-        $lC_ShoppingCart->add($lC_Product->getID(), $quantity);
+        
+        if (isset($_POST['quantity']) && is_array($_POST['quantity'])) {
+          foreach($_POST['quantity'] as $product_id => $quantity) {
+            $lC_ShoppingCart->add((int)$product_id, (int)$quantity);
+          }
+          
+        } else {
+          $lC_ShoppingCart->add($lC_Product->getID(), $quantity);
+        }
       }
     }
 

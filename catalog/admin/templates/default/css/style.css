@@ -1288,8 +1288,12 @@ li.message-menu {
 		padding: 0 6px;
 		border: 1px solid white;
 	}
+  
 
-/* Sort handle */
+/* drag & drop table sort handle */
+.dragging, .dragging * { cursor: move !important; }
+.dragged { position: absolute; opacity: 0.5; z-index: 2000; }
+
 .list-sort {
 	display: block;
 	position: absolute;
@@ -1300,6 +1304,64 @@ li.message-menu {
 	height: 8px;
 	background: url(../img/standard/sprites.png) no-repeat -154px 0;
 	cursor: move;
+}
+
+.sorted_table tr {
+    cursor: pointer;
+}
+.sorted_table tr.placeholder {
+    background: none repeat scroll 0 0 red;
+    border: medium none;
+    display: block;
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+.sorted_table tr.placeholder:before {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-color: transparent -moz-use-text-color transparent red;
+    border-image: none;
+    border-style: solid none solid solid;
+    border-width: 5px medium 5px 5px;
+    content: "";
+    height: 0;
+    left: -5px;
+    margin-top: -5px;
+    position: absolute;
+    width: 0;
+}
+.sorted_head th {
+    cursor: pointer;
+}
+.sorted_head th.placeholder {
+    background: none repeat scroll 0 0 red;
+    display: block;
+    height: 0;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    width: 0;
+}
+.sorted_head th.placeholder:before {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-color: red transparent -moz-use-text-color;
+    border-image: none;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-style: solid solid none;
+    border-width: 5px 5px medium;
+    content: "";
+    height: 0;
+    margin-left: -5px;
+    position: absolute;
+    top: -6px;
+    width: 0;
 }
 
 
@@ -3116,6 +3178,57 @@ li.message-menu {
     li.customers-menu small {
       display: block;
     }
+    
+/* Customers menu */
+.content-menu {
+  margin: 0;
+  min-height: 0;
+  list-style-type: none;
+  -webkit-text-shadow: none;
+  -moz-text-shadow: none;
+  text-shadow: none;
+  }
+  .content-menu > li,
+  li.content-menu {
+    padding: 10px 10px 0 57px !important;
+    font-size: 13px;
+    line-height: 16px;
+    font-weight: normal;
+    min-height: 40px;
+    line-height: 14px;
+    }
+    .content-menu > li > a,
+    li.content-menu > a {
+      display: block;
+      margin: -10px -10px -10px -46px;
+      padding: 10px 14px 10px 24px;
+      color: inherit;
+    }
+    .content-menu > li time,
+    li.content-menu time {
+      float: left;
+      display: block;
+      margin: 6px 10px 0 -26px;
+      height: 30px;
+      vertical-align: top;
+      color: #CCCCCC;
+      color: rgba(0, 0, 0, 0.2);
+      text-transform: uppercase;
+      text-align: center;
+      line-height: 12px;
+      }
+      .content-menu > li time > b,
+      li.content-menu time > b {
+        display: block;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 26px;
+        line-height: 28px;
+        margin-bottom: -3px;
+      }
+    .content-menu > li small,
+    li.content-menu small {
+      display: block;
+    }   
     
 /* Products menu */
 .products-menu {

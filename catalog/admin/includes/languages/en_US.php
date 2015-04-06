@@ -65,6 +65,11 @@ button_no = No
 button_info = Info
 
 customer_view_details = View details for
+content_view_details = View details for
+content_title = Content
+customers_title = Customers
+products_title = Products
+orders_titls = Orders
 
 default = Default
 default_entry = default

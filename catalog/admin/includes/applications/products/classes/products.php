@@ -538,7 +538,7 @@ class lC_Products_Admin {
 
     $data['variants'] = $variants_array;
 
-    $Qattributes = $lC_Database->query('select id, value from :table_product_attributes where products_id = :products_id and languages_id in (0, :languages_id)');
+    $Qattributes = $lC_Database->query('select id, value, value2 from :table_product_attributes where products_id = :products_id and languages_id in (0, :languages_id)');
     $Qattributes->bindTable(':table_product_attributes', TABLE_PRODUCT_ATTRIBUTES);
     $Qattributes->bindInt(':products_id', $id);
     $Qattributes->bindInt(':languages_id', $lC_Language->getID());
@@ -546,10 +546,14 @@ class lC_Products_Admin {
 
     $attributes_array = array();
 
+    $data['attributes2'] = array();
+    
     while ( $Qattributes->next() ) {
       // if the value is date, reformat for datepicker
       $value = (substr($Qattributes->value('value'), 4, 1) == '-') ? lC_DateTime::getShort($Qattributes->value('value')) : $Qattributes->value('value');      
       $attributes_array[$Qattributes->valueInt('id')] = $value;
+      // check for value2
+      if ($Qattributes->value('value2') != null) $data['attributes2'][$Qattributes->valueInt('id')] = $Qattributes->value('value2');
     }
 
     $data['attributes'] = $attributes_array;
@@ -781,11 +785,20 @@ class lC_Products_Admin {
         //   $data['products_keyword'][$l['id']] = $data['products_keyword'][$l['id']] . '-link';
         // }
         
-        if (is_numeric($id)) {
+        // check to see if the DB entry exists for the selected language
+        $Qchk1 = $lC_Database->query('select products_description from :table_products_description where products_id = :products_id and language_id = :language_id limit 1');
+        $Qchk1->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
+        $Qchk1->bindInt(':products_id', $products_id);
+        $Qchk1->bindInt(':language_id', $l['id']);
+        $Qchk1->execute();       
+
+        if (is_numeric($id) && $Qchk1->numberOfRows() == 1) {
           $Qpd = $lC_Database->query('update :table_products_description set products_name = :products_name, products_blurb = :products_blurb, products_description = :products_description, products_keyword = :products_keyword, products_tags = :products_tags, products_url = :products_url where products_id = :products_id and language_id = :language_id');
         } else {
           $Qpd = $lC_Database->query('insert into :table_products_description (products_id, language_id, products_name, products_blurb, products_description, products_keyword, products_tags, products_url) values (:products_id, :language_id, :products_name, :products_blurb, :products_description, :products_keyword, :products_tags, :products_url)');
         }
+        
+        $Qchk1->freeResult();
         
         $Qpd->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
         $Qpd->bindInt(':products_id', $products_id);
@@ -804,12 +817,21 @@ class lC_Products_Admin {
           break;
         }
         
+        // check to see if the DB entry exists for the selected language
+        $Qchk2 = $lC_Database->query('select products_description from :table_permalinks where item_id = :item_id and language_id = :language_id limit 1');
+        $Qchk2->bindTable(':table_permalinks', TABLE_PERMALINKS);
+        $Qchk2->bindInt(':item_id', $products_id);
+        $Qchk2->bindInt(':language_id', $l['id']);
+        $Qchk2->execute();         
+        
         // added for permalink
-        if (is_numeric($id)) {
+        if (is_numeric($id) && $Qchk2->numberOfRows() == 1) {
           $Qpl = $lC_Database->query('update :table_permalinks set permalink = :permalink, query = :query where item_id = :item_id and type = :type and language_id = :language_id');
         } else {
           $Qpl = $lC_Database->query('insert into :table_permalinks (item_id, language_id, type, query, permalink) values (:item_id, :language_id, :type, :query, :permalink)');
         }
+        
+        $Qchk2->freeResult();
         
         $Qpl->bindTable(':table_permalinks', TABLE_PERMALINKS);
         $Qpl->bindInt(':item_id', $products_id);
@@ -832,7 +854,6 @@ class lC_Products_Admin {
       if ( isset($data['attributes']) && !empty($data['attributes']) ) {
 
         foreach ( $data['attributes'] as $attributes_id => $value ) {
-
           if ( is_array($value) ) {
           } elseif ( !empty($value) && $value != 'NULL') {
             $Qcheck = $lC_Database->query('select id from :table_product_attributes where products_id = :products_id and id = :id limit 1');
@@ -842,14 +863,18 @@ class lC_Products_Admin {
             $Qcheck->execute();
 
             if ( $Qcheck->numberOfRows() === 1 ) {
-              $Qattribute = $lC_Database->query('update :table_product_attributes set value = :value where products_id = :products_id and id = :id');
+              $Qattribute = $lC_Database->query('update :table_product_attributes set value = :value, value2 = :value2 where products_id = :products_id and id = :id');
             } else {
-              $Qattribute = $lC_Database->query('insert into :table_product_attributes (id, products_id, languages_id, value) values (:id, :products_id, :languages_id, :value)');
+              $Qattribute = $lC_Database->query('insert into :table_product_attributes (id, products_id, languages_id, value, value2) values (:id, :products_id, :languages_id, :value, :value2)');
               $Qattribute->bindInt(':languages_id', $lC_Language->getID());
             }
             
+            // support for 2nd value such as end date
+            $value2 = (isset($data['attributes2'][$attributes_id]) && $data['attributes2'][$attributes_id] != null) ? $data['attributes2'][$attributes_id] : '';
+            
             $Qattribute->bindTable(':table_product_attributes', TABLE_PRODUCT_ATTRIBUTES);
             $Qattribute->bindValue(':value', $value);
+            $Qattribute->bindValue(':value2', $value2);
             $Qattribute->bindInt(':products_id', $products_id);
             $Qattribute->bindInt(':id', $attributes_id);
             $Qattribute->execute();
@@ -1372,6 +1397,19 @@ class lC_Products_Admin {
         }
       }
       
+      // featured products
+      if ( $error === false ) {
+        $Qfp = $lC_Database->query('delete from :table_featured_products where products_id = :products_id');
+        $Qfp->bindTable(':table_featured_products', TABLE_FEATURED_PRODUCTS);
+        $Qfp->bindInt(':products_id', $id);
+        $Qfp->setLogging($_SESSION['module'], $id);
+        $Qfp->execute();
+
+        if ( $lC_Database->isError() ) {
+          $error = true;
+        }
+      }      
+      
       // QPB
       if ( $error === false ) {
         $Qpb = $lC_Database->query('delete from :table_products_pricing where products_id = :products_id');
@@ -1585,6 +1623,7 @@ class lC_Products_Admin {
 
     $aInfo = new lC_ObjectInfo(lC_Products_Admin::get($_GET[$_module]));
     $attributes = $aInfo->get('attributes');  
+    $attributes2 = $aInfo->get('attributes2');  
     
     $output = '';
     
@@ -1610,18 +1649,20 @@ class lC_Products_Admin {
           } else {
             lC_Addons_Admin::loadAdminAddonsProductAttributesDefinitions($module->getCode());
           }
+          // added for value2 support
+          $value2 = (isset($attributes2[$Qattributes->valueInt('id')]) && $attributes2[$Qattributes->valueInt('id')] != null) ? $attributes2[$Qattributes->valueInt('id')] : ''; 
           
           $output .= '<div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile no-margin-bottom">
                         <div class="twelve-columns strong mid-margin-bottom">
                           <span>' . $lC_Language->get('product_attributes_' . $module->getCode() . '_title') . '</span>' . lc_show_info_bubble($lC_Language->get('info_bubble_attributes_' . $module->getCode() . '_text'), null, 'info-spot on-left grey float-right mid-margin-bottom') . '
                         </div>
                         <div class="twelve-columns product-module-content margin-bottom">
-                          ' . $module->setFunction((isset($attributes[$Qattributes->valueInt('id')]) ? $attributes[$Qattributes->valueInt('id')] : null)) . '
+                          ' . $module->setFunction((isset($attributes[$Qattributes->valueInt('id')]) ? $attributes[$Qattributes->valueInt('id')] : null), $value2) . '
                         </div>
                       </div>';
         }
       }
-    }    
+    }  
     
     return $output;
   }

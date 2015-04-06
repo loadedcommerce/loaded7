@@ -10,10 +10,6 @@
 */
 ?>
 <style scoped="scoped">
-  .dragging, .dragging * { cursor: move !important; }
-  .dragged { position: absolute; opacity: 0.5; z-index: 2000; }
-  .placeholder { position: relative; }
-  .placeholder:before { position: absolute; }
   .dataColCheck { text-align: center; }
   .dataColCategory { text-align: left; }
   .dataColStatus { text-align: center; }
@@ -23,6 +19,7 @@
   .dataColAction { text-align: right; }
   .dataTables_info { bottom: 42px; color:#4c4c4c; }
   .selectContainer { position:absolute; bottom:29px; left:30px }
+  .sort { width:60%; }
 </style>
 <!-- Main content -->
 <section role="main" id="main">

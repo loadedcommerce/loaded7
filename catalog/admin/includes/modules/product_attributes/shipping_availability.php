@@ -13,7 +13,7 @@ class lC_ProductAttributes_shipping_availability extends lC_Product_attributes_A
     $this->_section = 'shippingSupplierCharacteristics';
   }
     
-  public function setFunction($value) {
+  public function setFunction($value, $value2 = null) {
     global $lC_Database, $lC_Language;
 
     $string = '';

@@ -461,8 +461,15 @@ class lC_Updates_Admin_run_after extends lC_Updates_Admin {
     $lC_Database->simpleQuery("CREATE TABLE IF NOT EXISTS `" . $pf . "payment_terms` (id int(11) NOT NULL AUTO_INCREMENT, `name` varchar(255) NOT NULL DEFAULT '', breakout varchar(255) NOT NULL DEFAULT '', threshold decimal(15,4) NOT NULL DEFAULT '0.0000', sort_order int(11) NOT NULL DEFAULT '0', `status` tinyint(1) NOT NULL DEFAULT '0', date_added datetime NOT NULL DEFAULT '0000-00-00 00:00:00', last_modified datetime NOT NULL DEFAULT '0000-00-00 00:00:00', PRIMARY KEY (id)) ENGINE=" . $engine . " CHARACTER SET utf8 COLLATE utf8_general_ci;");   
     parent::log("Database Update: CREATE TABLE IF NOT EXISTS `" . $pf . "payment_terms` (id int(11) NOT NULL AUTO_INCREMENT, `name` varchar(255) NOT NULL DEFAULT '', breakout varchar(255) NOT NULL DEFAULT '', threshold decimal(15,4) NOT NULL DEFAULT '0.0000', sort_order int(11) NOT NULL DEFAULT '0', `status` tinyint(1) NOT NULL DEFAULT '0', date_added datetime NOT NULL DEFAULT '0000-00-00 00:00:00', last_modified datetime NOT NULL DEFAULT '0000-00-00 00:00:00', PRIMARY KEY (id)) ENGINE=" . $engine . " CHARACTER SET utf8 COLLATE utf8_general_ci;");   
     
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "customers_groups_data` ADD `payment_terms` VARCHAR(255) NOT NULL DEFAULT '' AFTER `customers_access_levels`");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "customers_groups_data` ADD `payment_terms` VARCHAR(255) NOT NULL DEFAULT '' AFTER `customers_access_levels`");
+    
     $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "branding_data` CHANGE `support_phone` `support_phone` VARCHAR(128) NOT NULL DEFAULT '', CHANGE `sales_phone` `sales_phone` VARCHAR(128) NOT NULL DEFAULT ''");
     parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "branding_data` CHANGE `support_phone` `support_phone` VARCHAR(128) NOT NULL DEFAULT '', CHANGE `sales_phone` `sales_phone` VARCHAR(128) NOT NULL DEFAULT ''");
+    
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "product_attributes` ADD `value2` TEXT NOT NULL AFTER `value`");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "product_attributes` ADD `value2` TEXT NOT NULL AFTER `value`");
+
   }
 }  
 ?>

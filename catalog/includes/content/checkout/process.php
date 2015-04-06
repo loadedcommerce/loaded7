@@ -80,6 +80,8 @@ class lC_Checkout_Process extends lC_Template {
     if (isset($_SESSION['PPEC_TOKEN'])) unset($_SESSION['PPEC_TOKEN']);
     if (isset($_SESSION['PPEC_PROCESS'])) unset($_SESSION['PPEC_PROCESS']);
     if (isset($_SESSION['PPEC_PAYDATA'])) unset($_SESSION['PPEC_PAYDATA']);
+    if (isset($_SESSION['this_handling'])) unset($_SESSION['this_handling']);
+    if (isset($_SESSION['this_payment'])) unset($_SESSION['this_payment']);    
 
     if (isset($_SESSION['SelectedShippingMethodCost'])) unset($_SESSION['SelectedShippingMethodCost']);
 
