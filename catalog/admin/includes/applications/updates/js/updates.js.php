@@ -544,7 +544,8 @@ function __writeHistory(ua, ur) {
 
 function __showUpdateModal() {
   var msgBodyArr = <?php echo json_encode(lC_Updates_Admin::getAvailablePackageInfo()); ?>;
-  var url = (msgBodyArr.announcement != undefined) ? msgBodyArr.announcement : 'https://api.loadedcommerce.com/messages/updates/default.html';
+  var requestType = '<?php echo (isset($_SERVER['HTTPS']) && (strtolower($_SERVER['HTTPS']) == 'on')) ? 'https' : 'http'; ?>';
+  var url = (msgBodyArr.announcement != undefined) ? msgBodyArr.announcement : requestType + '://api.loadedcommerce.com/messages/updates/default.html';
   $.modal({                                 
       url: 'iframe.php?url=' + url,
       useIframe: true,
