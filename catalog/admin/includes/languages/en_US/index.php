@@ -18,7 +18,3 @@ text_sessions = sessions
 text_orders = orders
 
 text_chart_performance_current_month = Store Performance :: Current Month
-
-button_understood = I Understand
-text_api_com_issue = API Communication
-text_api_com_issue_warnings = There was an issue communicating with the API and<br />because of this some functionality such as Core<br />Updates and Addon delivery will not function properly.<br /><br />Please refer to the error log located at<br />catalog/includes/works/logs/api_errors.txt for more<br />detailed information.

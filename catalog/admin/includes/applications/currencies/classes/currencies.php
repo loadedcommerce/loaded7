@@ -295,5 +295,26 @@ class lC_Currencies_Admin {
 
     return $result;
   }
+ /*
+  * Returns the currencies id/name array
+  *
+  * @access public
+  * @return array
+  */
+  public static function getIdNameArray() { 
+    global $lC_Database;
+    
+    $Qcurrencies = $lC_Database->query('select currencies_id, title from :table_currencies order by title');
+    $Qcurrencies->bindTable(':table_currencies', TABLE_CURRENCIES);
+    $Qcurrencies->execute();
+
+    while ( $Qcurrencies->next() ) {
+      $result[] = $Qcurrencies->toArray();
+    }
+    
+    $Qcurrencies->freeResult();
+    
+    return $result;
+  }
 }
 ?>

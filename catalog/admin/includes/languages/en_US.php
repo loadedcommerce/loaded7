@@ -382,3 +382,6 @@ text_featured_product_no_expiration = No Expiration
 text_available_with_pro = This feature available with the <span class="tag red-gradient glossy">PRO</span> edition
 text_free_with_pro_edition = <span class="tag red-gradient glossy">PRO</span> Free with Pro Edition
 error_specials_date = Error:  The specials expire date cannot be before the start date.
+button_understood = I Understand
+text_api_com_issue = API Communication
+text_api_com_issue_warnings = There was an issue communicating with the API and<br />because of this some functionality such as Core<br />Updates and Addon delivery will not function properly.<br /><br />Please refer to the error log located at<br />catalog/includes/works/logs/api_errors.txt for more<br />detailed information.
