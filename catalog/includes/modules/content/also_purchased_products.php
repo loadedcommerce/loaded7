@@ -59,6 +59,7 @@ class lC_Content_also_purchased_products extends lC_Modules {
 
         $this->_content = '';
         while ($Qorders->next()) {
+            $lC_Product = new lC_Product($Qorders->value('products_id'));
           // VQMOD-hookpoint; DO NOT MODIFY OR REMOVE THE LINE BELOW          
           $this->_content .= '<div class="content-also-purchased-products-container">' . "\n";
           if ($lC_Product->hasImage()) {
