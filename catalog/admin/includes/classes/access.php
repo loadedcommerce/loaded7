@@ -126,7 +126,7 @@ class lC_Access {
     return $this->_subgroups;
   }
 
-  public function hasAccess($module = null) {
+  public function hasAccess($module = null) {  
     if ( empty($module) ) {
       $module = $this->_module;
     }

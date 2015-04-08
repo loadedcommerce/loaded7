@@ -23,9 +23,9 @@ class lC_Modules {
 
     $this->_group = $group;
 
-    if ($lC_Cache->read('templates_' . $this->_group . '_layout-' . $lC_Template->getCode() . '-' . $lC_Template->getGroup() . '-' . $lC_Template->getPageContentsFilename())) {
-      $data = $lC_Cache->getCache();
-    } else {
+//    if ($lC_Cache->read('templates_' . $this->_group . '_layout-' . $lC_Template->getCode() . '-' . $lC_Template->getGroup() . '-' . $lC_Template->getPageContentsFilename())) {
+//      $data = $lC_Cache->getCache();
+//    } else {
       $data = array();
 
       $Qspecific = $lC_Database->query('select b2p.boxes_group, b.code from :table_templates_boxes_to_pages b2p, :table_templates_boxes b, :table_templates t where b2p.templates_id = :templates_id and b2p.page_specific = 1 and b2p.content_page in (:content_page) and b2p.templates_boxes_id = b.id and b.modules_group = :modules_group and b2p.templates_id = t.id order by b2p.boxes_group, b2p.sort_order');
@@ -79,7 +79,7 @@ class lC_Modules {
             $data[$groups][] = $module['code'];
           }
         }
-      }
+//      }
 
       $lC_Cache->write($data);
     }
