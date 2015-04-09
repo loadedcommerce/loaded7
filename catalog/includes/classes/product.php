@@ -446,7 +446,7 @@ class lC_Product {
     $taxRate = 0;
     $priceWithTax = $price;
     
-    if (DISPLAY_PRICE_WITH_TAX == 1) {
+    if (DISPLAY_PRICE_WITH_TAX == 1 || $_SESSION['localization']['show_tax'] == 1) {
       $taxClassID = ($lC_ShoppingCart->getShippingMethod('tax_class_id') != NULL) ? $lC_ShoppingCart->getShippingMethod('tax_class_id') : $this->_data['tax_class_id']; 
       $countryID = ($lC_ShoppingCart->getShippingAddress('country_id') != NULL) ? $lC_ShoppingCart->getShippingAddress('country_id') : STORE_COUNTRY;
       $zoneID = ($lC_ShoppingCart->getShippingAddress('zone_id') != NULL) ? $lC_ShoppingCart->getShippingAddress('zone_id') : STORE_ZONE;
@@ -1024,7 +1024,7 @@ class lC_Product {
       
       $purchase_type = (defined('MULTISKU_SUBPRODUCTS_PURCHASE_PRESENTATION') && MULTISKU_SUBPRODUCTS_PURCHASE_PRESENTATION == 'Multi') ? 'multi' : 'single';
       
-      if (DISPLAY_PRICE_WITH_TAX == 1) {
+      if (DISPLAY_PRICE_WITH_TAX == 1 || $_SESSION['localization']['show_tax'] == 1) {
         $taxClassID = ($lC_ShoppingCart->getShippingMethod('tax_class_id') != NULL) ? $lC_ShoppingCart->getShippingMethod('tax_class_id') : $this->_data['tax_class_id']; 
         $countryID = ($lC_ShoppingCart->getShippingAddress('country_id') != NULL) ? $lC_ShoppingCart->getShippingAddress('country_id') : STORE_COUNTRY;
         $zoneID = ($lC_ShoppingCart->getShippingAddress('zone_id') != NULL) ? $lC_ShoppingCart->getShippingAddress('zone_id') : STORE_ZONE;

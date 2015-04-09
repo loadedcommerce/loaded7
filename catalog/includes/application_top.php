@@ -38,7 +38,7 @@ $lC_Vqmod = new VQMod();
 
 // compatibility work-around logic
 require($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/functions/compatibility.php'));
-  
+
 // set the type of request (secure or not)
 $request_type = getRequestType();
 if ($request_type == 'https') {
@@ -101,4 +101,6 @@ $lC_Services->startServices();
 // instantiate the addons class
 require_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/classes/addons.php'));
 $lC_Addons = new lC_Addons();
+
+setLocalization();
 ?>

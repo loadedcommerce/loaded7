@@ -63,7 +63,7 @@ class lC_Currencies {
     $price = $this->santizePrice($price);
     $price = lc_round($price, $this->currencies[DEFAULT_CURRENCY]['decimal_places']);
 
-    if ( (DISPLAY_PRICE_WITH_TAX == '1') && ($tax_rate > 0) ) {
+    if ( (DISPLAY_PRICE_WITH_TAX == '1' || $_SESSION['localization']['show_tax'] == 1) && ($tax_rate > 0) ) {
       $price += lc_round($price * ($tax_rate / 100), $this->currencies[DEFAULT_CURRENCY]['decimal_places']);
     }
     return lc_round($price * $quantity, $this->currencies[DEFAULT_CURRENCY]['decimal_places']);
@@ -74,7 +74,7 @@ class lC_Currencies {
     $price = $this->santizePrice($price);
     $price = lc_round($price, $this->currencies[DEFAULT_CURRENCY]['decimal_places']);
 
-    if ( (DISPLAY_PRICE_WITH_TAX == '1') && ($tax_class_id > 0) ) {
+    if ( (DISPLAY_PRICE_WITH_TAX == '1' || $_SESSION['localization']['show_tax'] == 1) && ($tax_class_id > 0) ) {
       $price += lc_round($price * ($lC_Tax->getTaxRate($tax_class_id) / 100), $this->currencies[DEFAULT_CURRENCY]['decimal_places']);
     }
 
@@ -86,7 +86,7 @@ class lC_Currencies {
     $price = $this->santizePrice($price);
     $price = lc_round($price, $this->currencies[DEFAULT_CURRENCY]['decimal_places']);
 
-    if ( (($force === true) || (DISPLAY_PRICE_WITH_TAX == '1')) && ($tax_rate > 0) ) {
+    if ( (($force === true) || (DISPLAY_PRICE_WITH_TAX == '1' || $_SESSION['localization']['show_tax'] == 1)) && ($tax_rate > 0) ) {
       $price += lc_round($price * ($tax_rate / 100), $this->currencies[DEFAULT_CURRENCY]['decimal_places']);
     }
     return $this->format($price * $quantity, $currency_code, $currency_value);

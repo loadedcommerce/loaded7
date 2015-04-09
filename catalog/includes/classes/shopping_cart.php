@@ -1136,7 +1136,7 @@ class lC_ShoppingCart {
         $this->_sub_total += $shown_price;
         $this->_total += $shown_price;
 
-        if ( DISPLAY_PRICE_WITH_TAX == '1' ) {
+        if ( DISPLAY_PRICE_WITH_TAX == '1' || $_SESSION['localization']['show_tax'] == 1) {
           $tax_amount = $shown_price - ($shown_price / (($tax < 10) ? '1.0' . str_replace('.', '', $tax) : '1.' . str_replace('.', '', $tax)));
         } else {
           $tax_amount = ($tax / 100) * $shown_price;

@@ -211,4 +211,34 @@ if (!function_exists('getRequestType')) {
     return $request_type;
   }
 }
+
+if (!function_exists('setLocalization')) {
+  function setLocalization() {
+    global $lC_Database, $lC_Currencies, $lC_Language;
+    
+    $_SESSION['localization'] = array();
+    
+    $Qlocal = $lC_Database->query('select * from :table_localization where domain = :domain limit 1');
+    $Qlocal->bindTable(':table_localization', TABLE_LOCALIZATION);
+    $Qlocal->bindValue(':domain', $_SERVER['HTTP_HOST']);
+    $Qlocal->execute();  
+    
+    if ($Qlocal->numberOfRows() > 0) {
+      $_SESSION['localization']['currency'] = $lC_Currencies->getCode($Qlocal->valueInt('currencies_id'));
+      $_SESSION['localization']['language'] = $lC_Language->getCode($Qlocal->valueInt('language_id'));
+      $_SESSION['localization']['show_tax'] = $Qlocal->valueInt('show_tax');
+    }
+    $Qlocal->freeResult();
+    
+    // overrides
+    $currency_or = (isset($_GET['currency']) && empty($_GET['currency']) === false) ? $_GET['currency'] : false;
+    if ($currency_or !== false) $_SESSION['localization']['currency'] = $currency_or;
+
+    $language_or = (isset($_GET['language']) && empty($_GET['language']) === false) ? $_GET['language'] : false;
+    if ($language_or !== false) $_SESSION['localization']['language'] = $language_or;
+    
+    $no_tax_or = (isset($_GET['no_tax']) && empty($_GET['no_tax']) === false) ? $_GET['no_tax'] : false;
+    if ($no_tax_or !== false) $_SESSION['localization']['no_tax'] = $no_tax_or;
+  }
+}
 ?>

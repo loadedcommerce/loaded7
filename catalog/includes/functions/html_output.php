@@ -75,6 +75,16 @@
           $separator = '&';
         }
       }
+      
+      // added for language localization switching
+      if (isset($_SESSION['localization']['language']) && empty($_SESSION['localization']['language']) === false) {
+        $link .= $separator . 'language=' . preg_replace('/[^A-Za-z\s]\_/', '', $_SESSION['localization']['language']);
+      }
+      
+      // added for currency localization switching
+      if (isset($_SESSION['localization']['currency']) && empty($_SESSION['localization']['currency']) === false) {
+        $link .= $separator . 'currency=' . preg_replace('/[^A-Z\s]/', '', strtoupper($_SESSION['localization']['currency']));
+      }      
 
       while ( (substr($link, -1) == '&') || (substr($link, -1) == '?') ) {
         $link = substr($link, 0, -1);
