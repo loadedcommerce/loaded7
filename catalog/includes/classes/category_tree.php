@@ -69,7 +69,7 @@ class lC_CategoryTree {
       $this->_show_total_products = true;
     }
 
-    if ( $lC_Cache->read('category_tree-' . $lC_Language->getCode(), 720) ) {
+    if ( $lC_Cache->isEnabled() && $lC_Cache->read('category_tree-' . $lC_Language->getCode(), 720) ) {
       $this->_data = $lC_Cache->getCache();
     } else {
       $Qcategories = $lC_Database->query('select c.categories_id, c.categories_image, c.parent_id, c.categories_mode, c.categories_link_target, c.categories_custom_url, c.categories_status, c.categories_visibility_nav, c.categories_visibility_box, c.access_levels, cd.categories_name, cd.categories_menu_name from :table_categories c, :table_categories_description cd where c.categories_status = 1 and c.categories_id = cd.categories_id and cd.language_id = :language_id');
@@ -127,7 +127,7 @@ class lC_CategoryTree {
         $this->_data = $catArr;
       }       
 
-      $lC_Cache->write($this->_data);
+      if ($lC_Cache->isEnabled()) $lC_Cache->write($this->_data);
     }
   }
 

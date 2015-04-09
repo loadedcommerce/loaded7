@@ -28,7 +28,7 @@ class lC_Boxes_reviews extends lC_Modules {
     $this->_title_link = lc_href_link(FILENAME_PRODUCTS, 'reviews');
 
     if ($lC_Services->isStarted('reviews')) {
-      if ((BOX_REVIEWS_CACHE > 0) && $lC_Cache->read('box-reviews' . (isset($lC_Product) && is_a($lC_Product, 'lC_Product') && $lC_Product->isValid() ? '-' . $lC_Product->getID() : '') . '-' . $lC_Language->getCode(), BOX_REVIEWS_CACHE)) {
+      if (($lC_Cache->isEnabled() && BOX_REVIEWS_CACHE > 0) && $lC_Cache->read('box-reviews' . (isset($lC_Product) && is_a($lC_Product, 'lC_Product') && $lC_Product->isValid() ? '-' . $lC_Product->getID() : '') . '-' . $lC_Language->getCode(), BOX_REVIEWS_CACHE)) {
         $data = $lC_Cache->getCache();
       } else {
         $data = array();
@@ -64,7 +64,7 @@ class lC_Boxes_reviews extends lC_Modules {
           $Qreview->freeResult();
         }
 
-        $lC_Cache->write($data);
+        if ($lC_Cache->isEnabled()) $lC_Cache->write($data);
       }
 
       $this->_content = '';

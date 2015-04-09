@@ -33,20 +33,14 @@
     private $_key;
     
 /**
- * Enable/disable cache
+ * Return cache service status
  *
  * @var boolean
  * @access public
  */
-
-    public $enabled = false;    
-
-/**
-* class constructor
-*/
     
-    public function __construct() {
-      $this->enabled = (defined('MODULE_SERVICES_INSTALLED') && in_array('coupons', explode(';', MODULE_SERVICES_INSTALLED))) ? true : false;
+    public function isEnabled() {
+      return (defined('MODULE_SERVICES_INSTALLED') && in_array('cache', explode(';', MODULE_SERVICES_INSTALLED))) ? true : false;
     }
 
 /**

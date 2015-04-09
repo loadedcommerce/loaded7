@@ -29,7 +29,7 @@ class lC_Boxes_whats_new extends lC_Modules {
 
     $data = array();
 
-    if ( (BOX_WHATS_NEW_CACHE > 0) && $lC_Cache->read('box-whats_new-' . $lC_Language->getCode() . '-' . $lC_Currencies->getCode(), BOX_WHATS_NEW_CACHE) ) {
+    if ( ($lC_Cache->isEnabled() && BOX_WHATS_NEW_CACHE > 0) && $lC_Cache->read('box-whats_new-' . $lC_Language->getCode() . '-' . $lC_Currencies->getCode(), BOX_WHATS_NEW_CACHE) ) {
       $data = $lC_Cache->getCache();
     } else {
       $Qnew = $lC_Database->query('select products_id from :table_products where products_status = :products_status order by products_date_added desc limit :max_random_select_new');
@@ -48,7 +48,7 @@ class lC_Boxes_whats_new extends lC_Modules {
         $data['display_image'] = $lC_Product->getImage();
       }
 
-      if (isset($lC_Cache)) $lC_Cache->write($data);
+      if ($lC_Cache->isEnabled()) $lC_Cache->write($data);
     }
 
     if ( !empty($data) ) {
