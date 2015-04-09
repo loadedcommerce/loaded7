@@ -31,6 +31,23 @@
  */
 
     private $_key;
+    
+/**
+ * Enable/disable cache
+ *
+ * @var boolean
+ * @access public
+ */
+
+    public $enabled = false;    
+
+/**
+* class constructor
+*/
+    
+    public function __construct() {
+      $this->enabled = (defined('MODULE_SERVICES_INSTALLED') && in_array('coupons', explode(';', MODULE_SERVICES_INSTALLED))) ? true : false;
+    }
 
 /**
  * Write the data to a cache file
@@ -44,7 +61,7 @@
       if ( empty($key) ) {
         $key = $this->_key;
       }
-
+       
       return ( @file_put_contents(DIR_FS_WORK . 'cache/' . $key . '.cache', serialize($data), LOCK_EX) !== false );
     }
 
@@ -58,7 +75,7 @@
  */
 
     public function read($key, $expire = null) {
-      $this->_key = $key;
+      $this->_key = $key;       
 
       $filename = DIR_FS_WORK . 'cache/' . $key . '.cache';
 
