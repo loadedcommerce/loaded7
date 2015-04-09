@@ -35,6 +35,9 @@ ini_set('error_log', DIR_FS_WORK . 'php_errors.log');
 // virtual hook system
 require_once(DIR_FS_CATALOG . 'ext/vqmod/vqmod.php');
 $lC_Vqmod = new VQMod();
+
+// compatibility work-around logic
+require($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/functions/compatibility.php'));
   
 // set the type of request (secure or not)
 $request_type = getRequestType();
@@ -44,9 +47,6 @@ if ($request_type == 'https') {
   define('DIR_WS_CATALOG', DIR_WS_HTTP_CATALOG);
 }
 define('API_VERSION', '1_0');
-
-// compatibility work-around logic for PHP4
-require($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/functions/compatibility.php'));
 
 // include the list of project filenames
 require($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/filenames.php'));

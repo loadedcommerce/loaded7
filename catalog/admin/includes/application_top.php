@@ -29,6 +29,10 @@ if (!ini_get('date.timezone') && function_exists(date_default_timezone_set)) {
 require_once('external/vqmod/vqmod.php');
 $lC_Vqmod = new VQMod();
   
+// compatibility work-around logic
+require($lC_Vqmod->modCheck('../includes/functions/compatibility.php'));
+require($lC_Vqmod->modCheck('includes/functions/compatibility.php'));
+  
 // set the type of request (secure or not)
 $request_type = getRequestType();
 if ($request_type == 'https') {
@@ -40,10 +44,6 @@ define('API_VERSION', '1_0');
 
 if (!defined('DIR_WS_ADMIN')) define('DIR_WS_ADMIN', 'admin/');
 if (!defined('DIR_FS_ADMIN')) define('DIR_FS_ADMIN', DIR_FS_CATALOG . 'admin/');
-
-// compatibility work-around logic for PHP4 
-require($lC_Vqmod->modCheck('../includes/functions/compatibility.php'));
-require($lC_Vqmod->modCheck('includes/functions/compatibility.php'));
 
 // include the list of project filenames
 require($lC_Vqmod->modCheck('includes/filenames.php'));

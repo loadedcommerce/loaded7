@@ -192,4 +192,23 @@ if (!function_exists('lc_strrpos_string')) {
     }
   }
 }
+/**
+* Returns the request type
+*
+* @access  public
+* @return  string;
+*/
+if (!function_exists('getRequestType')) {
+  function getRequestType() {
+    $isSecure = false;
+    if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') {
+      $isSecure = true;
+    } elseif (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https' || !empty($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] == 'on') {
+      $isSecure = true;
+    }
+    $request_type = $isSecure ? 'https' : 'http';   
+     
+    return $request_type;
+  }
+}
 ?>
