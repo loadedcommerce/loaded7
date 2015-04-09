@@ -336,11 +336,11 @@ if (!function_exists('lc_setcookie')) {
     global $request_type;
 
     if (empty($path)) {
-      $path = ($request_type == 'NONSSL') ? HTTP_COOKIE_PATH : HTTPS_COOKIE_PATH;
+      $path = ($request_type == 'https') ? HTTPS_COOKIE_PATH : HTTP_COOKIE_PATH;
     }
 
     if (empty($domain)) {
-      $domain = ($request_type == 'NONSSL') ? HTTP_COOKIE_DOMAIN : HTTPS_COOKIE_DOMAIN;
+      $domain = ($request_type == 'https') ? HTTPS_COOKIE_DOMAIN : HTTP_COOKIE_DOMAIN;
     }
 
     header('Set-Cookie: ' . $name . '=' . urlencode($value) . '; expires=' . @date('D, d-M-Y H:i:s T', $expires) . '; path=' . $path . '; domain=' . $domain . (($secure === true) ? ' secure;' : '') . (($httpOnly === true) ? ' httponly;' : ''));
@@ -625,4 +625,24 @@ if (!function_exists('lc_get_country_data')) {
      }
    }
  }
+ 
+  /**
+  * Returns the request type
+  *
+  * @access  public
+  * @return  string;
+  */
+  if (!function_exists('getRequestType')) {
+    function getRequestType() {
+      $isSecure = false;
+      if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') {
+        $isSecure = true;
+      } elseif (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https' || !empty($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] == 'on') {
+        $isSecure = true;
+      }
+      $request_type = $isSecure ? 'https' : 'http';   
+       
+      return $request_type;
+    }
+  }
 ?>

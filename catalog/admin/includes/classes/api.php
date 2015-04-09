@@ -67,7 +67,7 @@ class lC_Api {
     
     $api_version = (defined('API_VERSION') && API_VERSION != NULL) ? API_VERSION : '1_0';
     $registerArr['ver'] = utility::getVersion();
-    $request_type = (isset($_SERVER['HTTPS']) && (strtolower($_SERVER['HTTPS']) == 'on')) ? 'https' : 'http';
+    $request_type = getRequestType();
     
     $resultXML = transport::getResponse(array('url' => $request_type . '://api.loadedcommerce.com/' . $api_version . '/register/install/', 'method' => 'post', 'parameters' => $registerArr, 'timeout' => 10));
     

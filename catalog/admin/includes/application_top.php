@@ -30,11 +30,11 @@ require_once('external/vqmod/vqmod.php');
 $lC_Vqmod = new VQMod();
   
 // set the type of request (secure or not)
-$request_type = (isset($_SERVER['HTTPS']) && (strtolower($_SERVER['HTTPS']) == 'on')) ? 'SSL' : 'NONSSL';
-if ($request_type == 'NONSSL') {
-  define('DIR_WS_CATALOG', DIR_WS_HTTP_CATALOG);
-} else {
+$request_type = getRequestType();
+if ($request_type == 'https') {
   define('DIR_WS_CATALOG', DIR_WS_HTTPS_CATALOG);
+} else {
+  define('DIR_WS_CATALOG', DIR_WS_HTTP_CATALOG);
 }
 define('API_VERSION', '1_0');
 
