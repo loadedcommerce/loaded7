@@ -335,7 +335,7 @@ class lC_Product {
     $quantity = (isset($data['quantity']) && $data['quantity'] != null) ? (int)$data['quantity'] : 1;
 
     // #### SET BASE PRICE #### //
-    $base_price = $this->getBasePrice();
+    $base_price = $this->getBasePrice($product_id);
     // check for variant
     if (isset($data['variants']) && is_array($data['variants'])) {
       $vpID = (int)self::getProductVariantID($data['variants']);
@@ -505,8 +505,25 @@ class lC_Product {
   * @access public
   * @return array
   */  
-  public function getBasePrice() {
-    return $this->_data['price'];
+  public function getBasePrice($product_id = null) {
+    global $lC_Database;
+    
+    if ($product_id != null) { 
+        $Qproduct = $lC_Database->query('select products_price as price from :table_products where products_id = :products_id and products_status = :products_status');
+        $Qproduct->bindTable(':table_products', TABLE_PRODUCTS);
+        $Qproduct->bindInt(':products_id', $product_id);
+        $Qproduct->bindInt(':products_status', 1);
+        $Qproduct->execute(); 
+        
+        $price = $Qproduct->valueDecimal('price');
+        
+        $Qproduct->freeResult();
+        
+    } else {
+      $price = $this->_data['price'];
+    }
+    
+    return $price;
   }
  /*
   * Determine if product has quantity price breaks
