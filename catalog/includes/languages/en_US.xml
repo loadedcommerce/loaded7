@@ -2995,7 +2995,6 @@ Your friend, %s, thought that you would be interested in %s from %s.]]></value>
       <value><![CDATA[Files]]></value>
       <group>general</group>
     </definition>      
-    
     <definition>
       <key>text_social_share_facebook</key>
       <value><![CDATA[Share]]></value>

@@ -36,6 +36,10 @@ require('../includes/classes/xml.php');
 
 session_start();
 
+// initialize the cache class
+require('../includes/classes/cache.php');
+$lC_Cache = new lC_Cache();
+
 require('../includes/classes/directory_listing.php');
 
 require('includes/classes/language.php');
