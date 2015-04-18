@@ -192,4 +192,53 @@ if (!function_exists('lc_strrpos_string')) {
     }
   }
 }
+/**
+* Returns the request type
+*
+* @access  public
+* @return  string;
+*/
+if (!function_exists('getRequestType')) {
+  function getRequestType() {
+    $isSecure = false;
+    if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') {
+      $isSecure = true;
+    } elseif (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https' || !empty($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] == 'on') {
+      $isSecure = true;
+    }
+    $request_type = $isSecure ? 'https' : 'http';   
+     
+    return $request_type;
+  }
+}
+
+if (!function_exists('setLocalization')) {
+  function setLocalization() {
+    global $lC_Database, $lC_Currencies, $lC_Language;
+    
+    if (isset($_SESSION['localization']['currency']) || isset($_SESSION['localization']['language'])) return;
+    
+    $_SESSION['localization'] = array();
+    
+    $Qlocal = $lC_Database->query('select * from :table_localization where domain = :domain limit 1');
+    $Qlocal->bindTable(':table_localization', TABLE_LOCALIZATION);
+    $Qlocal->bindValue(':domain', $_SERVER['HTTP_HOST']);
+    $Qlocal->execute();  
+    
+    if ($Qlocal->numberOfRows() > 0) {
+      
+      // set the language
+      $_SESSION['currency'] = $lC_Currencies->getCode($Qlocal->valueInt('currencies_id'));
+      $_SESSION['language'] = $lC_Language->getCodeFromID($Qlocal->valueInt('language_id'));
+      $_SESSION['localization']['show_tax'] = $Qlocal->valueInt('show_tax');   
+      $_SESSION['localization']['language'] = $lC_Language->getCodeFromID($Qlocal->valueInt('language_id'));   
+      $_SESSION['localization']['currency'] = $lC_Currencies->getCode($Qlocal->valueInt('currencies_id'));   
+    }
+    $Qlocal->freeResult();
+    
+    // overrides
+    $no_tax_or = (isset($_GET['no_tax']) && empty($_GET['no_tax']) === false) ? $_GET['no_tax'] : false;
+    if ($no_tax_or !== false) $_SESSION['localization']['no_tax'] = $no_tax_or;
+  }
+}
 ?>

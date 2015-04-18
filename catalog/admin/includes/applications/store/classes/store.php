@@ -252,7 +252,7 @@ if (!class_exists('lC_Store_Admin')) {
       $request['checksum'] = $checksum;
 
       $api_version = (defined('API_VERSION') && API_VERSION != NULL) ? API_VERSION : '1_0';
-      $request_type = (isset($_SERVER['HTTPS']) && (strtolower($_SERVER['HTTPS']) == 'on')) ? 'https' : 'http';
+      $request_type = getRequestType();
       $resultXML = transport::getResponse(array('url' => $request_type . '://api.loadedcommerce.com/' . $api_version . '/store/types/?ref=' . $_SERVER['SCRIPT_FILENAME'], 'method' => 'post', 'parameters' => $request, 'timeout' => 10));
 
       $types = utility::xml2arr($resultXML);     
@@ -277,7 +277,7 @@ if (!class_exists('lC_Store_Admin')) {
       $request['checksum'] = $checksum;
       $request['instID'] = INSTALLATION_ID;
 
-      $request_type = (isset($_SERVER['HTTPS']) && (strtolower($_SERVER['HTTPS']) == 'on')) ? 'https' : 'http';
+      $request_type = getRequestType();
       $api_version = (defined('API_VERSION') && API_VERSION != NULL) ? API_VERSION : '1_0';
       $resultXML = transport::getResponse(array('url' => $request_type . '://api.loadedcommerce.com/' . $api_version . '/store/addons/?ref=' . $_SERVER['SCRIPT_FILENAME'], 'method' => 'post', 'parameters' => $request, 'timeout' => 10));
 
@@ -585,7 +585,7 @@ if (!class_exists('lC_Store_Admin')) {
       $pubkey = file_get_contents(DIR_FS_WORK . 'addons/update.phar.pubkey');
       file_put_contents(DIR_FS_WORK . 'addons/' . $key . '.phar.pubkey', $pubkey);      
       
-      $request_type = (isset($_SERVER['HTTPS']) && (strtolower($_SERVER['HTTPS']) == 'on')) ? 'https' : 'http';
+      $request_type = getRequestType();
       $response = transport::getResponse(array('url' => $request_type . '://api.loadedcommerce.com/' . $api_version . '/get/' . $key . '?type=addon&ver=' . utility::getVersion() . '&ref=' . urlencode($_SERVER['SCRIPT_FILENAME']), 'method' => 'get', 'timeout' => 10));
 
       if (strlen($response) == 0) {

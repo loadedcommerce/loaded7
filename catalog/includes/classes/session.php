@@ -90,7 +90,7 @@ class lC_Session {
     }
 
     if (defined('SESSION_FORCE_COOKIES') && SESSION_FORCE_COOKIES == 1) {
-      session_set_cookie_params($this->_life_time, (($request_type == 'NONSSL') ? HTTP_COOKIE_PATH : HTTPS_COOKIE_PATH), (($request_type == 'NONSSL') ? HTTP_COOKIE_DOMAIN : HTTPS_COOKIE_DOMAIN));
+      session_set_cookie_params($this->_life_time, (($request_type == 'https') ? HTTPS_COOKIE_PATH : HTTP_COOKIE_PATH), (($request_type == 'https') ? HTTPS_COOKIE_DOMAIN : HTTP_COOKIE_DOMAIN));
     }
 
     register_shutdown_function(array($this, 'close'));

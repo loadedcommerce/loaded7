@@ -37,9 +37,9 @@ class lC_Content_new_products extends lC_Modules {
 
     $data = array();
 
-  //  if ( (MODULE_CONTENT_NEW_PRODUCTS_CACHE > 0) && $lC_Cache->read('new_products-' . $lC_Language->getCode() . '-' . $lC_Currencies->getCode() . '-' . $current_category_id, MODULE_CONTENT_NEW_PRODUCTS_CACHE) ) {
-  //    $data = $lC_Cache->getCache();
-  //  } else {
+    if ( ($lC_Cache->isEnabled() && MODULE_CONTENT_NEW_PRODUCTS_CACHE > 0) && $lC_Cache->read('new_products-' . $lC_Language->getCode() . '-' . $lC_Currencies->getCode() . '-' . $current_category_id, MODULE_CONTENT_NEW_PRODUCTS_CACHE) ) {
+      $data = $lC_Cache->getCache();
+    } else {
       if ( $current_category_id < 1 ) {
         $Qproducts = $lC_Database->query('select products_id from :table_products where products_status = :products_status and parent_id = :parent_id order by products_date_added desc limit :max_display_new_products');
       } else {
@@ -64,8 +64,8 @@ class lC_Content_new_products extends lC_Modules {
         $data[$lC_Product->getID()]['display_image'] = $lC_Product->getImage();
       }
 
-      $lC_Cache->write($data);
- //   }
+      if ($lC_Cache->isEnabled()) $lC_Cache->write($data);
+    }
 
     if ( !empty($data) ) {
 

@@ -155,7 +155,7 @@ class lC_Search extends lC_Products {
 
     $Qlisting = $lC_Database->query('select SQL_CALC_FOUND_ROWS distinct p.*, pd.*, m.*, i.image, if(s.status, s.specials_new_products_price, null) as specials_new_products_price, if(s.status, s.specials_new_products_price, p.products_price) as final_price');
 
-    if (($this->hasPriceSet('from') || $this->hasPriceSet('to')) && (DISPLAY_PRICE_WITH_TAX == '1')) {
+    if (($this->hasPriceSet('from') || $this->hasPriceSet('to')) && (DISPLAY_PRICE_WITH_TAX == '1' || $_SESSION['localization']['show_tax'] == 1)) {
       $Qlisting->appendQuery(', sum(tr.tax_rate) as tax_rate');
     }
 
@@ -166,7 +166,7 @@ class lC_Search extends lC_Products {
     $Qlisting->bindTable(':table_products_images', TABLE_PRODUCTS_IMAGES);
     $Qlisting->bindInt(':default_flag', 1);
 
-    if (($this->hasPriceSet('from') || $this->hasPriceSet('to')) && (DISPLAY_PRICE_WITH_TAX == '1')) {
+    if (($this->hasPriceSet('from') || $this->hasPriceSet('to')) && (DISPLAY_PRICE_WITH_TAX == '1' || $_SESSION['localization']['show_tax'] == 1)) {
       if ($lC_Customer->isLoggedOn()) {
         $customer_country_id = $lC_Customer->getCountryID();
         $customer_zone_id = $lC_Customer->getZoneID();
@@ -264,7 +264,7 @@ class lC_Search extends lC_Products {
       }
     }
 
-    if (($this->hasPriceSet('from') || $this->hasPriceSet('to')) && (DISPLAY_PRICE_WITH_TAX == '1')) {
+    if (($this->hasPriceSet('from') || $this->hasPriceSet('to')) && (DISPLAY_PRICE_WITH_TAX == '1' || $_SESSION['localization']['show_tax'] == 1)) {
       $Qlisting->appendQuery('group by p.products_id, tr.tax_priority');
     }
     

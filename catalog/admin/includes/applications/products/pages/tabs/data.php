@@ -87,7 +87,7 @@ global $lC_Language, $pInfo, $tax_class_array;
             <span class="mid-margin-left no-margin-right strong"><?php echo $lC_Currencies->getSymbolLeft(); ?></span>
             <?php 
               if (isset($pInfo)) {
-                if(DISPLAY_PRICE_WITH_TAX == 1) { 
+                if(DISPLAY_PRICE_WITH_TAX == 1 || $_SESSION['localization']['show_tax'] == 1) { 
                   $products_price_gross = lc_round($pInfo->get('products_price_with_tax'), DECIMAL_PLACES);
                 } else {
                   $products_price_gross = lc_round($pInfo->get('products_price'), DECIMAL_PLACES);

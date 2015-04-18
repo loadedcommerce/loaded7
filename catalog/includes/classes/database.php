@@ -477,7 +477,7 @@ class lC_Database_Result {
         $this->db_class->freeResult($this->query_handler);
       }
 
-      if (isset($this->cache_key)) {
+      if ($lC_Cache->isEnabled() && isset($this->cache_key)) {
         $lC_Cache->write($this->cache_data, $this->cache_key);
       }
     }
@@ -516,14 +516,14 @@ class lC_Database_Result {
   public function execute() {
     global $lC_Cache;
 
-    if (isset($this->cache_key)) {
+    if ($lC_Cache->isEnabled() && isset($this->cache_key)) {
       if ($lC_Cache->read($this->cache_key, $this->cache_expire)) {
         $this->cache_data = $lC_Cache->getCache();
 
         $this->cache_read = true;
       }
     }
-
+                        
     if ($this->cache_read === false) {
       if ($this->logging === true) {
         $this->logging_action = substr($this->sql_query, 0, strpos($this->sql_query, ' '));

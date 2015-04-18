@@ -10,7 +10,7 @@
 function cURLTest(){  
   $testText = 'data';
   $ch = curl_init(); 
-  $request_type = (isset($_SERVER['HTTPS']) && (strtolower($_SERVER['HTTPS']) == 'on')) ? 'https' : 'http';
+  $request_type = getRequestType();
   curl_setopt($ch, CURLOPT_URL, $request_type . '://api.loadedcommerce.com/1_0/check/serial/'); 
   curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)"); 
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
