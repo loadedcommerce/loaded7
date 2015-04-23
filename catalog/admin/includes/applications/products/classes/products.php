@@ -243,7 +243,7 @@ class lC_Products_Admin {
     
     $Qspecials->freeResult();
     
-    if(DISPLAY_PRICE_WITH_TAX == 1) {
+    if(DISPLAY_PRICE_WITH_TAX == 1 || $_SESSION['localization']['show_tax'] == 1) {
       $tax_data = lC_Tax_classes_Admin::getEntry($data['products_tax_class_id']);
       $price = ($data['products_price'] + ($tax_data['tax_rate']/100)*$data['products_price']);
       $price = $lC_Currencies->format($price, DECIMAL_PLACES);
@@ -623,7 +623,7 @@ class lC_Products_Admin {
     }
     $Qoptions->freeResult();
     
-    if (DISPLAY_PRICE_WITH_TAX == 1) {
+    if (DISPLAY_PRICE_WITH_TAX == 1 || $_SESSION['localization']['show_tax'] == 1) {
       $tax_data = lC_Tax_classes_Admin::getEntry($data['products_tax_class_id']);
       $data['products_price_with_tax'] = ($data['products_price'] + ($tax_data['tax_rate']/100)*$data['products_price']);
       //$data['products_cost_with_tax'] = $data['products_cost'] + ($tax_data['tax_rate']/100)*$data['products_cost'];

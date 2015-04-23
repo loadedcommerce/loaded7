@@ -336,11 +336,11 @@ if (!function_exists('lc_setcookie')) {
     global $request_type;
 
     if (empty($path)) {
-      $path = ($request_type == 'NONSSL') ? HTTP_COOKIE_PATH : HTTPS_COOKIE_PATH;
+      $path = ($request_type == 'https') ? HTTPS_COOKIE_PATH : HTTP_COOKIE_PATH;
     }
 
     if (empty($domain)) {
-      $domain = ($request_type == 'NONSSL') ? HTTP_COOKIE_DOMAIN : HTTPS_COOKIE_DOMAIN;
+      $domain = ($request_type == 'https') ? HTTPS_COOKIE_DOMAIN : HTTP_COOKIE_DOMAIN;
     }
 
     header('Set-Cookie: ' . $name . '=' . urlencode($value) . '; expires=' . @date('D, d-M-Y H:i:s T', $expires) . '; path=' . $path . '; domain=' . $domain . (($secure === true) ? ' secure;' : '') . (($httpOnly === true) ? ' httponly;' : ''));

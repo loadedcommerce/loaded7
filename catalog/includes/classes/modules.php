@@ -23,7 +23,7 @@ class lC_Modules {
 
     $this->_group = $group;
 
-    if ($lC_Cache->read('templates_' . $this->_group . '_layout-' . $lC_Template->getCode() . '-' . $lC_Template->getGroup() . '-' . $lC_Template->getPageContentsFilename())) {
+    if ($lC_Cache->isEnabled() && ($lC_Cache->read('templates_' . $this->_group . '_layout-' . $lC_Template->getCode() . '-' . $lC_Template->getGroup() . '-' . $lC_Template->getPageContentsFilename()))) {
       $data = $lC_Cache->getCache();
     } else {
       $data = array();
@@ -81,7 +81,7 @@ class lC_Modules {
         }
       }
 
-      $lC_Cache->write($data);
+      if ($lC_Cache->isEnabled()) $lC_Cache->write($data);
     }
 
     $this->_modules = $data;

@@ -31,6 +31,17 @@
  */
 
     private $_key;
+    
+/**
+ * Return cache service status
+ *
+ * @var boolean
+ * @access public
+ */
+    
+    public function isEnabled() {
+      return (defined('MODULE_SERVICES_INSTALLED') && in_array('cache', explode(';', MODULE_SERVICES_INSTALLED))) ? true : false;
+    }
 
 /**
  * Write the data to a cache file
@@ -44,7 +55,7 @@
       if ( empty($key) ) {
         $key = $this->_key;
       }
-
+       
       return ( @file_put_contents(DIR_FS_WORK . 'cache/' . $key . '.cache', serialize($data), LOCK_EX) !== false );
     }
 
@@ -58,7 +69,7 @@
  */
 
     public function read($key, $expire = null) {
-      $this->_key = $key;
+      $this->_key = $key;       
 
       $filename = DIR_FS_WORK . 'cache/' . $key . '.cache';
 

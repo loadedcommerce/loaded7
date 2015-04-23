@@ -3179,6 +3179,57 @@ li.message-menu {
       display: block;
     }
     
+/* Customers menu */
+.content-menu {
+  margin: 0;
+  min-height: 0;
+  list-style-type: none;
+  -webkit-text-shadow: none;
+  -moz-text-shadow: none;
+  text-shadow: none;
+  }
+  .content-menu > li,
+  li.content-menu {
+    padding: 10px 10px 0 57px !important;
+    font-size: 13px;
+    line-height: 16px;
+    font-weight: normal;
+    min-height: 40px;
+    line-height: 14px;
+    }
+    .content-menu > li > a,
+    li.content-menu > a {
+      display: block;
+      margin: -10px -10px -10px -46px;
+      padding: 10px 14px 10px 24px;
+      color: inherit;
+    }
+    .content-menu > li time,
+    li.content-menu time {
+      float: left;
+      display: block;
+      margin: 6px 10px 0 -26px;
+      height: 30px;
+      vertical-align: top;
+      color: #CCCCCC;
+      color: rgba(0, 0, 0, 0.2);
+      text-transform: uppercase;
+      text-align: center;
+      line-height: 12px;
+      }
+      .content-menu > li time > b,
+      li.content-menu time > b {
+        display: block;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 26px;
+        line-height: 28px;
+        margin-bottom: -3px;
+      }
+    .content-menu > li small,
+    li.content-menu small {
+      display: block;
+    }   
+    
 /* Products menu */
 .products-menu {
   margin: 0;

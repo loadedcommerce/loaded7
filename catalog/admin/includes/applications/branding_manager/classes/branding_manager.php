@@ -88,7 +88,7 @@ class lC_Branding_manager_Admin {
       $QBrand->bindValue(':language_id', $l['id']);
       $QBrand->setLogging($_SESSION['module']);
       $QBrand->execute();
-    }
+    }     
 
     //save non language specific data
     $QbrandingData = $lC_Database->query('insert into :table_branding_data (site_image, chat_code, support_phone, support_email, sales_phone, sales_email, og_image, meta_delimeter, social_facebook_page, social_twitter, social_pinterest, social_google_plus, social_youtube, social_linkedin, custom_css) values ( :site_image, :chat_code, :support_phone, :support_email, :sales_phone, :sales_email, :og_image, :meta_delimeter, :social_facebook_page, :social_twitter, :social_pinterest, :social_google_plus, :social_youtube, :social_linkedin, :custom_css)');
@@ -111,7 +111,7 @@ class lC_Branding_manager_Admin {
     $QbrandingData->bindValue(':custom_css', $data['custom_css']);
     $QbrandingData->bindValue(':language_id', $language_id);
     $QbrandingData->execute();
-
+               
     $QbrandingName = $lC_Database->query('update :table_configuration set configuration_value = :name where configuration_key = "STORE_NAME"');
     $QbrandingName->bindTable(':table_configuration', TABLE_CONFIGURATION);
     $QbrandingName->bindValue(':name', $data['name']);

@@ -113,7 +113,8 @@ class lC_Updates_Admin {
       
     $result = array('entries' => array());
     $api_version = (defined('API_VERSION') && API_VERSION != NULL) ? API_VERSION : '1_0';
-    $versions = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/' . $api_version . '/updates/available/?ref=' . $_SERVER['SCRIPT_FILENAME'], 'method' => 'get', 'timeout' => 10));
+    $request_type = getRequestType();
+    $versions = transport::getResponse(array('url' => $request_type . '://api.loadedcommerce.com/' . $api_version . '/updates/available/?ref=' . $_SERVER['SCRIPT_FILENAME'], 'method' => 'get', 'timeout' => 10));
     $versions_array = utility::xml2arr($versions); 
 
     $counter = 0;
@@ -193,7 +194,8 @@ class lC_Updates_Admin {
       }
     }
     $api_version = (defined('API_VERSION') && API_VERSION != NULL) ? API_VERSION : '1_0';
-    if ($link == null) $link = 'https://api.loadedcommerce.com/' . $api_version . '/get/' . str_replace(".", "", $version) . '?ver=' . utility::getVersion() . '&ref=' . urlencode($_SERVER['SCRIPT_FILENAME']);
+    $request_type = getRequestType();
+    if ($link == null) $link = $request_type . '://api.loadedcommerce.com/' . $api_version . '/get/' . str_replace(".", "", $version) . '?ver=' . utility::getVersion() . '&ref=' . urlencode($_SERVER['SCRIPT_FILENAME']);
     if ($type != null) $link .= '&type=' . $type;
     
     $response = file_get_contents($link);
@@ -775,7 +777,7 @@ class lC_Updates_Admin {
     if (utility::execEnabled() === true && utility::isLinux() === true) {
       try {
         //exec(CFG_APP_ZIP . ' -r ' . DIR_FS_WORK . 'updates/' . $backup_file . ' ' . DIR_FS_CATALOG . '* -x \*.zip\*');
-        exec(CFG_APP_ZIP . ' -r ' . DIR_FS_WORK . 'updates/' . $backup_file . ' ' . DIR_FS_CATALOG . '* -x "/home/loadedne/www/sandbox/datazen/www/loaded7/catalog/images/products/*" -x "*.cache" -x "*.zip" -x "php_error*" -x "*.gif" -x "*.jpg" -x "*.jpeg" -x "*.png" -x "*.sql" -x "*.tgz" -x "*.tar" -x "*.gz"');
+        exec(CFG_APP_ZIP . ' -r ' . DIR_FS_WORK . 'updates/' . $backup_file . ' ' . DIR_FS_CATALOG . '* -x "' . DIR_FS_CATALOG . DIR_WS_IMAGES . 'products/*" -x "*.cache" -x "*.zip" -x "php_error*" -x "*.gif" -x "*.jpg" -x "*.jpeg" -x "*.png" -x "*.sql" -x "*.tgz" -x "*.tar" -x "*.gz"');
       } catch ( Exception $e ) {  
         return array('rpcStatus' => 0);
       } 

@@ -28,7 +28,7 @@ class lC_Boxes_specials extends lC_Modules {
     $this->_title_link = lc_href_link(FILENAME_PRODUCTS, 'specials');
 
     if ($lC_Services->isStarted('specials')) {
-      if ((BOX_SPECIALS_CACHE > 0) && $lC_Cache->read('box-specials-' . $lC_Language->getCode() . '-' . $lC_Currencies->getCode(), BOX_SPECIALS_CACHE)) {
+      if (($lC_Cache->isEnabled() && BOX_SPECIALS_CACHE > 0) && $lC_Cache->read('box-specials-' . $lC_Language->getCode() . '-' . $lC_Currencies->getCode(), BOX_SPECIALS_CACHE)) {
         $data = $lC_Cache->getCache();
       } else {
         $Qspecials = $lC_Database->query('select p.products_id, p.products_price, p.products_tax_class_id, pd.products_name, pd.products_keyword, s.specials_new_products_price, i.image from :table_products p left join :table_products_images i on (p.products_id = i.products_id and i.default_flag = :default_flag), :table_products_description pd, :table_specials s where s.status = 1 and s.products_id = p.products_id and p.products_status = 1 and p.products_id = pd.products_id and pd.language_id = :language_id order by s.specials_date_added desc limit :max_random_select_specials');
@@ -49,7 +49,7 @@ class lC_Boxes_specials extends lC_Modules {
 
           $data['products_price'] = '<s>' . $lC_Currencies->displayPrice($Qspecials->valueDecimal('products_price'), $Qspecials->valueInt('products_tax_class_id')) . '</s>&nbsp;<span class="box-specials-price">' . $lC_Currencies->displayPrice($Qspecials->valueDecimal('specials_new_products_price'), $Qspecials->valueInt('products_tax_class_id')) . '</span>';
 
-          $lC_Cache->write($data);
+          if ($lC_Cache->isEnabled() &&) $lC_Cache->write($data);
         }
       }
 

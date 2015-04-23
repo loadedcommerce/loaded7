@@ -45,7 +45,7 @@ class lC_Services_session {
     }
 
 // verify the ssl_session_id
-    if ( ($request_type == 'SSL') && (SERVICE_SESSION_CHECK_SSL_SESSION_ID == '1') && (ENABLE_SSL == true) ) {
+    if ( ($request_type == 'https') && (SERVICE_SESSION_CHECK_SSL_SESSION_ID == '1') && (ENABLE_SSL == true) ) {
       if (isset($_SERVER['SSL_SESSION_ID']) && ctype_xdigit($_SERVER['SSL_SESSION_ID'])) {
         if (isset($_SESSION['SESSION_SSL_ID']) === false) {
           $_SESSION['SESSION_SSL_ID'] = $_SERVER['SSL_SESSION_ID'];

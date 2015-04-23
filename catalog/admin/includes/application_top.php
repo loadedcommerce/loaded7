@@ -29,21 +29,21 @@ if (!ini_get('date.timezone') && function_exists(date_default_timezone_set)) {
 require_once('external/vqmod/vqmod.php');
 $lC_Vqmod = new VQMod();
   
+// compatibility work-around logic
+require($lC_Vqmod->modCheck('../includes/functions/compatibility.php'));
+require($lC_Vqmod->modCheck('includes/functions/compatibility.php'));
+  
 // set the type of request (secure or not)
-$request_type = (isset($_SERVER['HTTPS']) && (strtolower($_SERVER['HTTPS']) == 'on')) ? 'SSL' : 'NONSSL';
-if ($request_type == 'NONSSL') {
-  define('DIR_WS_CATALOG', DIR_WS_HTTP_CATALOG);
-} else {
+$request_type = getRequestType();
+if ($request_type == 'https') {
   define('DIR_WS_CATALOG', DIR_WS_HTTPS_CATALOG);
+} else {
+  define('DIR_WS_CATALOG', DIR_WS_HTTP_CATALOG);
 }
 define('API_VERSION', '1_0');
 
 if (!defined('DIR_WS_ADMIN')) define('DIR_WS_ADMIN', 'admin/');
 if (!defined('DIR_FS_ADMIN')) define('DIR_FS_ADMIN', DIR_FS_CATALOG . 'admin/');
-
-// compatibility work-around logic for PHP4 
-require($lC_Vqmod->modCheck('../includes/functions/compatibility.php'));
-require($lC_Vqmod->modCheck('includes/functions/compatibility.php'));
 
 // include the list of project filenames
 require($lC_Vqmod->modCheck('includes/filenames.php'));

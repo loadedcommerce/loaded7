@@ -17,7 +17,10 @@ if (!class_exists('curl')) {
     * @return mixed
     */  
     public static function execute($parameters) {
-      $curl = curl_init($parameters['server']['scheme'] . '://' . $parameters['server']['host'] . $parameters['server']['path'] . (isset($parameters['server']['query']) ? '?' . $parameters['server']['query'] : ''));
+      
+      $request_type = getRequestType();      
+      
+      $curl = curl_init($request_type . '://' . $parameters['server']['host'] . $parameters['server']['path'] . (isset($parameters['server']['query']) ? '?' . $parameters['server']['query'] : ''));
 
       $curl_options = array(CURLOPT_PORT => $parameters['server']['port'],
                             CURLOPT_HEADER => true,

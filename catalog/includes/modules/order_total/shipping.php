@@ -42,10 +42,10 @@ class lC_OrderTotal_shipping extends lC_OrderTotal {
         $lC_ShoppingCart->addTaxAmount($lC_Tax->calculate($shipping_cost, $tax));
         $lC_ShoppingCart->addTaxGroup($tax_description, $lC_Tax->calculate($shipping_cost, $tax));
 
-        if (DISPLAY_PRICE_WITH_TAX == '1') {
+        if (DISPLAY_PRICE_WITH_TAX == '1' || $_SESSION['localization']['show_tax'] == 1) {
           $lC_ShoppingCart->addToTotal($lC_Tax->calculate($shipping_cost, $tax));
           $lC_ShoppingCart->_shipping_method['cost'] = $shipping_cost + $lC_Tax->calculate($shipping_cost, $tax);
-        }else if (DISPLAY_PRICE_WITH_TAX == '-1') {
+        } else if (DISPLAY_PRICE_WITH_TAX == '-1' || $_SESSION['localization']['show_tax'] == 0) {
           $lC_ShoppingCart->addToTotal($lC_Tax->calculate($shipping_cost, $tax));
         }
       }
