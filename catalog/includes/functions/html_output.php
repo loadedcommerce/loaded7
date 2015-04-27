@@ -183,8 +183,10 @@
             }
           }
         } else {
-          if (strpos($link, '&') !== false) {
-            $link = str_replace('&', '&amp;', $link);
+          if (strpos($link, 'cart_add') === false) {
+            if (strpos($link, '&') !== false) {
+              $link = str_replace('&', '&amp;', $link);
+            }
           }
         }
       }

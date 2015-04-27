@@ -856,7 +856,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
         $tQry->bindDate (':products_last_modified', $product['products_last_modified']);
         $tQry->bindFloat(':products_weight'       , $product['products_weight']);
         $tQry->bindValue(':products_weight_class' , $product['products_weight_class']);
-        $tQry->bindInt  (':products_status'       , $product['products_status']);
+        $tQry->bindInt  (':products_status'       , 1);
         $tQry->bindInt  (':products_tax_class_id' , $product['products_tax_class_id']);
         $tQry->bindInt  (':manufacturers_id'      , $product['manufacturers_id']);
         $tQry->bindInt  (':products_ordered'      , $product['products_ordered']);
@@ -1114,17 +1114,20 @@ class lC_LocalUpgrader extends lC_Upgrader {
         $aQry = $target_db->query('INSERT INTO :table_product_attributes (id, 
                                                                           products_id, 
                                                                           languages_id,  
-                                                                          value) 
+                                                                          value,
+                                                                          value2) 
                                                                   VALUES (:id, 
                                                                           :products_id, 
                                                                           :languages_id, 
-                                                                          :value)');
+                                                                          :value,
+                                                                          :value2)');
 
         $aQry->bindTable(':table_product_attributes', TABLE_PRODUCT_ATTRIBUTES);
         $aQry->bindInt(':id'           , $mQry->value('id'));
         $aQry->bindInt(':products_id'  , $sQry->value($map['products_id']));
         $aQry->bindInt(':languages_id' , 0);
         $aQry->bindInt(':value'        , ($sQry->value($map['manufacturers_id']) != '' || $sQry->value($map['manufacturers_id']) != NULL) ? $sQry->value($map['manufacturers_id']) : 0);
+        $aQry->bindInt(':value2'       , '');
         $aQry->execute();
         
         if ($target_db->isError()) {
@@ -3769,7 +3772,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
     $map = $this->_data_mapping['orders'];
     $orders = array();
 
-    $sQry = $source_db->query('SELECT o.*, o.ipaddy as customers_ip_address, o.customers_address_format_id AS customers_address_format, o.billing_address_format_id AS billing_address_format, o.delivery_address_format_id AS delivery_address_format, c.countries_iso_code_2 AS customers_country_iso2, c.countries_iso_code_3 AS customers_country_iso3, z.zone_code AS customers_state_code, zz.zone_code AS delivery_state_code, cc.countries_iso_code_2 AS delivery_country_iso2, cc.countries_iso_code_3 AS delivery_country_iso3, zzz.zone_code AS billing_state_code, ccc.countries_iso_code_2 AS billing_country_iso2, ccc.countries_iso_code_3 AS billing_country_iso3 FROM orders o LEFT JOIN countries c ON o.customers_country = c.countries_name LEFT JOIN countries cc ON o.delivery_country = cc.countries_name LEFT JOIN countries ccc ON o.billing_country = ccc.countries_name LEFT JOIN zones z ON o.customers_state = z.zone_name LEFT JOIN zones zz ON o.delivery_state = zz.zone_name LEFT JOIN zones zzz ON o.billing_state = zzz.zone_name');
+    $sQry = $source_db->query('SELECT DISTINCT o.*, o.ipaddy as customers_ip_address, o.customers_address_format_id AS customers_address_format, o.billing_address_format_id AS billing_address_format, o.delivery_address_format_id AS delivery_address_format, c.countries_iso_code_2 AS customers_country_iso2, c.countries_iso_code_3 AS customers_country_iso3, z.zone_code AS customers_state_code, zz.zone_code AS delivery_state_code, cc.countries_iso_code_2 AS delivery_country_iso2, cc.countries_iso_code_3 AS delivery_country_iso3, zzz.zone_code AS billing_state_code, ccc.countries_iso_code_2 AS billing_country_iso2, ccc.countries_iso_code_3 AS billing_country_iso3 FROM orders o LEFT JOIN countries c ON o.customers_country = c.countries_name LEFT JOIN countries cc ON o.delivery_country = cc.countries_name LEFT JOIN countries ccc ON o.billing_country = ccc.countries_name LEFT JOIN zones z ON o.customers_state = z.zone_name LEFT JOIN zones zz ON o.delivery_state = zz.zone_name LEFT JOIN zones zzz ON o.billing_state = zzz.zone_name');
     $sQry->execute();
     
     if (!isset($pending_id) || $pending_id == null || $pending_id == '') $pending_id = 1;
