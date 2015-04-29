@@ -62,6 +62,15 @@
           $link = HTTP_SERVER . DIR_WS_HTTP_CATALOG;
         }
       }
+      
+      // added for localization
+      if (!strstr($page, '.css') && !strstr($page, '.js')) {
+        if (isset($_SESSION['localization']['domain']) && empty($_SESSION['localization']['domain']) === false) {
+          $config_domain = str_replace('http://', '', HTTP_SERVER);
+          $link = str_replace($config_domain, $_SESSION['localization']['domain'], $link);
+        }
+      }
+      
 
       $link .= $page;
 
@@ -82,6 +91,7 @@
 
       // Add the session ID when moving from different HTTP and HTTPS servers, or when SID is defined
       if ( ($add_session_id === true) && $lC_Session->hasStarted() && (SERVICE_SESSION_FORCE_COOKIE_USAGE == '-1') ) {
+        
         if (!lc_empty(SID)) {
           $_sid = SID;
         } elseif ( (($request_type == 'http') && ($connection == 'SSL') && (ENABLE_SSL === true)) || (($request_type == 'https') && ($connection != 'SSL')) ) {

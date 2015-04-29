@@ -344,6 +344,13 @@ class lC_Product {
         $base_price = self::getProductPrice($vpID);
       }
     }
+    
+    // added for localization
+    if (isset($_SESSION['localization']['base_price_modifier']) && $_SESSION['localization']['base_price_modifier'] > 0) { 
+      $modified_amt = round((($base_price * (float)$_SESSION['localization']['base_price_modifier']) / 100), DECIMAL_PLACES);  
+      $base_price = ($base_price + $modified_amt);
+    }
+    
     $price = (float)$base_price;   
 
     // options modifiers

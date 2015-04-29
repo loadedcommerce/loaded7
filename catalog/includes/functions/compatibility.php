@@ -214,26 +214,39 @@ if (!function_exists('getRequestType')) {
 
 if (!function_exists('setLocalization')) {
   function setLocalization() {
-    global $lC_Database, $lC_Currencies, $lC_Language;
-    
-    if (isset($_SESSION['localization']['currency']) || isset($_SESSION['localization']['language'])) return;
+    global $lC_Database, $lC_Currencies, $lC_Language, $lC_Session;
+ 
+//unset($_SESSION['localization']);
+
+ //   if (isset($_SESSION['localization']['currency']) || isset($_SESSION['localization']['language'])) return;
     
     $_SESSION['localization'] = array();
     
     $Qlocal = $lC_Database->query('select * from :table_localization where domain = :domain limit 1');
     $Qlocal->bindTable(':table_localization', TABLE_LOCALIZATION);
     $Qlocal->bindValue(':domain', $_SERVER['HTTP_HOST']);
-    $Qlocal->execute();  
+    $Qlocal->execute(); 
     
     if ($Qlocal->numberOfRows() > 0) {
-      
-      // set the language
       $_SESSION['currency'] = $lC_Currencies->getCode($Qlocal->valueInt('currencies_id'));
       $_SESSION['language'] = $lC_Language->getCodeFromID($Qlocal->valueInt('language_id'));
+      $_SESSION['localization']['domain'] = $Qlocal->value('domain');   
       $_SESSION['localization']['show_tax'] = $Qlocal->valueInt('show_tax');   
       $_SESSION['localization']['language'] = $lC_Language->getCodeFromID($Qlocal->valueInt('language_id'));   
-      $_SESSION['localization']['currency'] = $lC_Currencies->getCode($Qlocal->valueInt('currencies_id'));   
+      $_SESSION['localization']['currency'] = $lC_Currencies->getCode($Qlocal->valueInt('currencies_id')); 
+      $_SESSION['localization']['default_tax_zone'] = $Qlocal->valueInt('default_tax_zone');   
+      $_SESSION['localization']['base_price_modifier'] = $Qlocal->valueDecimal('base_price_modifier');   
+      $_SESSION['localization']['session_id'] = $lC_Session->getID();   
+      $_SESSION['localization']['session_name'] = $lC_Session->getName();  
+      
+      $lC_Language->set($_SESSION['localization']['language']);
+      $lC_Language->load('general');
+      $lC_Language->load('modules-boxes');
+      $lC_Language->load('modules-content');      
+      header('Content-Type: text/html; charset=' . $lC_Language->getCharacterSet());
+      lc_setlocale(LC_TIME, explode(',', $lC_Language->getLocale()));      
     }
+
     $Qlocal->freeResult();
     
     // overrides

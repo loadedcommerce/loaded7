@@ -23,6 +23,9 @@ class lC_Tax {
       $country_id = $lC_ShoppingCart->getTaxingAddress('country_id');
       $zone_id = $lC_ShoppingCart->getTaxingAddress('zone_id');
     }
+    
+    // added for localization
+    if (isset($_SESSION['localization']['default_tax_zone']) && $_SESSION['localization']['default_tax_zone'] != null) $zone_id = $_SESSION['localization']['default_tax_zone'];
 
     if (isset($this->tax_rates[$class_id][$country_id][$zone_id]['rate']) == false) {
       $Qtax = $lC_Database->query('select sum(tax_rate) as tax_rate from :table_tax_rates tr left join :table_zones_to_geo_zones za on (tr.tax_zone_id = za.geo_zone_id) left join :table_geo_zones tz on (tz.geo_zone_id = tr.tax_zone_id) where (za.zone_country_id is null or za.zone_country_id = 0 or za.zone_country_id = :zone_country_id) and (za.zone_id is null or za.zone_id = 0 or za.zone_id = :zone_id) and tr.tax_class_id = :tax_class_id group by tr.tax_priority');
@@ -82,8 +85,12 @@ class lC_Tax {
 
   public function calculate($price, $tax_rate) {
     global $lC_Currencies;
+    
+    // added for localization
+    if (isset($_SESSION['localization']['show_tax']) && $_SESSION['localization']['show_tax'] == 0) $tax_rate = 1;
 
     return lc_round($price * $tax_rate / 100, $lC_Currencies->currencies[DEFAULT_CURRENCY]['decimal_places']);
+    
   }
 
   public function displayTaxRateValue($value, $padding = null) {
