@@ -802,9 +802,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
                           , 'products_price10_qty'   => $sQry->value('products_price10_qty')
                           , 'products_price11_qty'   => $sQry->value('products_price11_qty')
                           , 'has_children'           => 0
-                           );
-                         
-        $products[] = $product; 
+                           ); 
       
         $tQry = $target_db->query('INSERT INTO :table_products (products_id, 
                                                                 parent_id, 
