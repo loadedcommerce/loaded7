@@ -49,7 +49,7 @@ class lC_Boxes_specials extends lC_Modules {
 
           $data['products_price'] = '<s>' . $lC_Currencies->displayPrice($Qspecials->valueDecimal('products_price'), $Qspecials->valueInt('products_tax_class_id')) . '</s>&nbsp;<span class="box-specials-price">' . $lC_Currencies->displayPrice($Qspecials->valueDecimal('specials_new_products_price'), $Qspecials->valueInt('products_tax_class_id')) . '</span>';
 
-          if ($lC_Cache->isEnabled() &&) $lC_Cache->write($data);
+          if ($lC_Cache->isEnabled()) $lC_Cache->write($data);
         }
       }
 
