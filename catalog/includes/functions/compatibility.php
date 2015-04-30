@@ -231,6 +231,7 @@ if (!function_exists('setLocalization')) {
       $_SESSION['currency'] = $lC_Currencies->getCode($Qlocal->valueInt('currencies_id'));
       $_SESSION['language'] = $lC_Language->getCodeFromID($Qlocal->valueInt('language_id'));
       $_SESSION['localization']['domain'] = $Qlocal->value('domain');   
+      $_SESSION['localization']['alt_domain'] = $Qlocal->value('alt_domain');   
       $_SESSION['localization']['show_tax'] = $Qlocal->valueInt('show_tax');   
       $_SESSION['localization']['language'] = $lC_Language->getCodeFromID($Qlocal->valueInt('language_id'));   
       $_SESSION['localization']['currency'] = $lC_Currencies->getCode($Qlocal->valueInt('currencies_id')); 
