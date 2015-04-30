@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<language>
+  <definitions>
+    <definition>
+      <key>specials_title</key>
+      <value><![CDATA[Specials]]></value>
+      <group>modules-content</group>
+    </definition>
+    <definition>
+      <key>specials_button_buy_now</key>
+      <value><![CDATA[Buy Now]]></value>
+      <group>modules-content</group>
+    </definition>    
+  </definitions>
+</language>
