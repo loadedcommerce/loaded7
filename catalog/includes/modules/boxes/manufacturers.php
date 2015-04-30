@@ -39,7 +39,7 @@ class lC_Boxes_manufacturers extends lC_Modules {
     $Qmanufacturers->freeResult();    
     
     foreach ($manufacturers_array as $man) {
-      $manufacturers .= '<option value="' . $man['id'] . '">' . $man['text'] . '</option>';
+      $manufacturers .= '<option value="' . $man['id'] . '"' . ((isset($_GET['manufacturers']) && $_GET['manufacturers'] == $man['id']) ? ' selected="selected"' : '') . '>' . $man['text'] . '</option>';
     }
     $this->_content = '<li class="box-manufacturers-selection">' . 
                       '  <select name="manufacturers" class="box-manufacturers-select" onchange="$(this).closest(\'form\').submit();" size="' . BOX_MANUFACTURERS_LIST_SIZE . '">' . 
