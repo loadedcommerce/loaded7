@@ -12,7 +12,11 @@
 <!--modules/content/specials.php start-->
 <div class="content-specials-div col-sm-12 col-lg-12">
   <div class="row margin-bottom">
-    <h3 class="no-margin-top"><?php echo $lC_Box->getTitle(); ?></h3>
+    <h3 class="col-xs-6 no-margin-top pull-left"><?php echo $lC_Box->getTitle(); ?></h3>
+    <h3 class="col-xs-6 no-margin-top pull-right text-right site-red">
+      <a href="<?php echo lc_href_link(FILENAME_PRODUCTS, 'specials', 'NONSSL'); ?>"><span class="hide-on-mobile-portrait"><?php echo $lC_Language->get('all_specials'); ?></span><i class="fa fa-arrow-circle-right margin-left"></i></a>
+    </h3>
+    <div class="clearfix"></div>
     <?php echo $lC_Box->getContent(); ?>
   </div>
 </div>

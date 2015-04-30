@@ -10,6 +10,11 @@
       <key>specials_button_buy_now</key>
       <value><![CDATA[Buy Now]]></value>
       <group>modules-content</group>
+    </definition>
+    <definition>
+      <key>all_specials</key>
+      <value><![CDATA[All Specials]]></value>
+      <group>modules-content</group>
     </definition>    
   </definitions>
 </language>
