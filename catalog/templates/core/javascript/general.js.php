@@ -94,6 +94,7 @@ equalheight = function(container) {
 $(window).load(function() {
   equalheight('.content-new-products-container .thumbnail');
   equalheight('.product-listing-module-container .thumbnail');
+  equalheight('.product-listing-module-items .thumbnail');
   equalheight('.content-categories-container .thumbnail');
   equalheight('.content-also-purchased-products-container .thumbnail');
   equalheight('.content-featured-products-container .thumbnail');
@@ -104,6 +105,7 @@ $(window).load(function() {
 $(window).resize(function(){
   equalheight('.content-new-products-container .thumbnail');
   equalheight('.product-listing-module-container .thumbnail');
+  equalheight('.product-listing-module-items .thumbnail');
   equalheight('.content-categories-container .thumbnail');
   equalheight('.content-also-purchased-products-container .thumbnail');
   equalheight('.content-featured-products-container .thumbnail');
