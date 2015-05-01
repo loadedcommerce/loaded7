@@ -13,11 +13,39 @@
 <div class="row">
   <div class="col-sm-12 col-lg-12">
     <h1 class="no-margin-top"><?php echo $lC_Template->getPageTitle(); ?></h1> 
-    <?php 
+    <?php    
+    if ( ($Qlisting->numberOfRows() > 0) && ( (PREV_NEXT_BAR_LOCATION == '1') || (PREV_NEXT_BAR_LOCATION == '3') ) ) {
+    ?>
+    <!-- PAGINATION-->
+    <div class="product-listing-module-pagination margin-bottom">
+      <div class="pull-left large-margin-bottom page-results"><?php echo $Qlisting->getBatchTotalPages($lC_Language->get('result_set_number_of_products')); ?></div>
+      <div class="pull-right large-margin-bottom no-margin-top">
+        <ul class="pagination no-margin-top no-margin-bottom">
+          <?php echo $Qlisting->getBatchPageLinks('page', lc_get_all_get_params(array('page', 'info', 'x', 'y')), false); ?>
+        </ul>
+      </div>
+    </div><div class="clear-both"></div>
+    <!-- /PAGINATION-->   
+    <?php
+    } 
     if (file_exists(DIR_FS_TEMPLATE . 'modules/product_listing.php')) {
       require($lC_Vqmod->modCheck(DIR_FS_TEMPLATE . 'modules/product_listing.php'));
     } else {
       require($lC_Vqmod->modCheck('includes/modules/product_listing.php')); 
+    }
+    if ( ($Qlisting->numberOfRows() > 0) && ( (PREV_NEXT_BAR_LOCATION == '2') || (PREV_NEXT_BAR_LOCATION == '3') ) ) {
+    ?>
+    <!-- PAGINATION-->
+    <div class="product-listing-module-pagination margin-bottom">
+      <div class="pull-left large-margin-bottom page-results"><?php echo $Qlisting->getBatchTotalPages($lC_Language->get('result_set_number_of_products')); ?></div>
+      <div class="pull-right large-margin-bottom no-margin-top">
+        <ul class="pagination no-margin-top no-margin-bottom">
+          <?php echo $Qlisting->getBatchPageLinks('page', lc_get_all_get_params(array('page', 'info', 'x', 'y')), false); ?>
+        </ul>
+      </div>
+    </div><div class="clear-both"></div>
+    <!-- /PAGINATION-->   
+    <?php
     }
     ?>   
   </div>
