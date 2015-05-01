@@ -48,7 +48,8 @@ class lC_Products {
   }
 
   function setSortBy($field, $direction = '+') {
-    switch ($field) {
+    
+    switch (strtolower($field)) {
       case 'model':
         $this->_sort_by = 'p.products_model';
         break;
@@ -62,11 +63,15 @@ class lC_Products {
         $this->_sort_by = 'p.products_weight';
         break;
       case 'price':
-        $this->_sort_by = 'final_price';
+        $this->_sort_by = 'p.products_price';
         break;
       case 'date_added':
         $this->_sort_by = 'p.products_date_added';
-        break;
+        break;      
+      case 'last_added':
+        $this->_sort_by = 'p.products_date_added';
+        $direction = '-';
+        break;           
     }
 
     $this->_sort_by_direction = ($direction == '-') ? '-' : '+';

@@ -163,6 +163,8 @@ class lC_Index_Index extends lC_Template {
       } else {
         $lC_Products->setSortBy($_GET['sort']);
       }
+    } else if (defined('PRODUCT_LISTING_DISPLAY_ORDER') && PRODUCT_LISTING_DISPLAY_ORDER != null) {
+      $lC_Products->setSortBy(PRODUCT_LISTING_DISPLAY_ORDER);  
     }
   }
 }

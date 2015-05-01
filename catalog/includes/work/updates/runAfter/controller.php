@@ -482,8 +482,16 @@ class lC_Updates_Admin_run_after extends lC_Updates_Admin {
     
     if ($Qchk->numberOfRows() == 0) {
       $lC_Database->simpleQuery("INSERT INTO `" . $pf . "customers_access` (id, level, status) VALUES (1, 'Guest', '1')");
+       parent::log("Database Update: INSERT INTO `" . $pf . "customers_access` (id, level, status) VALUES (1, 'Guest', '1')");
       $lC_Database->simpleQuery("INSERT INTO `" . $pf . "customers_access` (id, level, status) VALUES (2, 'Registered', '1')");    
+       parent::log("Database Update: INSERT INTO `" . $pf . "customers_access` (id, level, status) VALUES (2, 'Registered', '1')");    
     }
+    
+    if (!defined('PRODUCT_LISTING_DISPLAY_ORDER')) {
+      $lC_Database->simpleQuery("INSERT INTO `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('Products Display Order', 'PRODUCT_LISTING_DISPLAY_ORDER', 'Name', 'Products displayed on listing pages are ordered by this value.', 8, 0, now(), now(), null, 'lc_cfg_set_boolean_value(array(''Name'', ''Model'', ''Price'', ''Manufacturer'', ''Quantity'', ''Weight'', ''Last Added''))');");
+      parent::log("Database Update: INSERT INTO `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('Products Display Order', 'PRODUCT_LISTING_DISPLAY_ORDER', 'Name', 'Products displayed on listing pages are ordered by this value.', 8, 0, now(), now(), null, 'lc_cfg_set_boolean_value(array(''Name'', ''Model'', ''Price'', ''Manufacturer'', ''Quantity'', ''Weight'', ''Last Added''))');");
+    }    
+    
   }
 }  
 ?>

@@ -109,6 +109,8 @@ class lC_Search_Search extends lC_Template {
       } else {
         $lC_Search->setSortBy($_GET['sort']);
       }
+    } else if (defined('PRODUCT_LISTING_DISPLAY_ORDER') && PRODUCT_LISTING_DISPLAY_ORDER != null) {
+      $lC_Search->setSortBy(PRODUCT_LISTING_DISPLAY_ORDER);
     }
 
     if ($lC_MessageStack->size('search') > 0) {
