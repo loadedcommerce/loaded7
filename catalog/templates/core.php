@@ -52,6 +52,13 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
     <!-- font-awesome -->
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     
+    <!-- localization -->
+    <?php
+    if (isset($_SESSION['localization']['alt_domain']) && empty($_SESSION['localization']['alt_domain']) === false) {
+      echo '<link rel="alternate" href="' . $_SESSION['localization']['alt_domain'] . '" hreflang="' . strtolower($_SESSION['localization']['language']) . '" />';    
+    }
+    ?>
+        
     <!-- Custom CSS Tags -->
     <?php echo $lC_Template->loadBrandingCSS(); ?>
         
