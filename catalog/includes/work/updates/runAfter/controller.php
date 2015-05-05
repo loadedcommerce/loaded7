@@ -469,7 +469,21 @@ class lC_Updates_Admin_run_after extends lC_Updates_Admin {
     
     $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "product_attributes` ADD `value2` TEXT NOT NULL AFTER `value`");
     parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "product_attributes` ADD `value2` TEXT NOT NULL AFTER `value`");
-
+    
+    $lC_Database->simpleQuery("CREATE TABLE IF NOT EXISTS `" . $pf . "localization` (id int(11) NOT NULL AUTO_INCREMENT, domain varchar(255) NOT NULL, alt_domain varchar(255) NOT NULL, currencies_id int(11) NOT NULL, language_id int(11) NOT NULL, show_tax tinyint(1) NOT NULL, default_tax_zone int(11) NOT NULL, base_price_modifier decimal(15,4) NOT NULL DEFAULT '0', `status` tinyint(1) NOT NULL DEFAULT '1', PRIMARY KEY (id)) ENGINE=" . $engine . " CHARACTER SET utf8 COLLATE utf8_general_ci;");   
+    parent::log("Database Update: CREATE TABLE IF NOT EXISTS `" . $pf . "localization` (id int(11) NOT NULL AUTO_INCREMENT, domain varchar(255) NOT NULL, alt_domain varchar(255) NOT NULL, currencies_id int(11) NOT NULL, language_id int(11) NOT NULL, show_tax tinyint(1) NOT NULL, default_tax_zone int(11) NOT NULL, base_price_modifier decimal(15,4) NOT NULL DEFAULT '0', `status` tinyint(1) NOT NULL DEFAULT '1', PRIMARY KEY (id)) ENGINE=" . $engine . " CHARACTER SET utf8 COLLATE utf8_general_ci;");   
+    
+    $lC_Database->simpleQuery("CREATE TABLE IF NOT EXISTS `" . $pf . "customers_access` (  id int(11) NOT NULL AUTO_INCREMENT, `level` varchar(128) NOT NULL, `status` tinyint(1) NOT NULL, PRIMARY KEY (id)) ENGINE=" . $engine . " CHARACTER SET utf8 COLLATE utf8_general_ci;");   
+    parent::log("Database Update: CREATE TABLE IF NOT EXISTS `" . $pf . "customers_access` (  id int(11) NOT NULL AUTO_INCREMENT, `level` varchar(128) NOT NULL, `status` tinyint(1) NOT NULL, PRIMARY KEY (id)) ENGINE=" . $engine . " CHARACTER SET utf8 COLLATE utf8_general_ci;");   
+    
+    $Qchk = $lC_Database->query('select * from :table_customers_access")');
+    $Qchk->bindTable(':table_customers_access', $pf . "customers_access");
+    $Qchk->execute();  
+    
+    if ($Qchk->numberOfRows() == 0) {
+      $lC_Database->simpleQuery("INSERT INTO `" . $pf . "customers_access` (id, level, status) VALUES (1, 'Guest', '1')");
+      $lC_Database->simpleQuery("INSERT INTO `" . $pf . "customers_access` (id, level, status) VALUES (2, 'Registered', '1')");    
+    }
   }
 }  
 ?>

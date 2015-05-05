@@ -383,6 +383,20 @@ CREATE TABLE lc_languages_definitions (
   KEY IDX_LANGUAGES_DEFINITIONS_GROUPS (content_group)
 ) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
+DROP TABLE IF EXISTS lc_localization;
+CREATE TABLE IF NOT EXISTS lc_localization (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  domain varchar(255) NOT NULL,
+  alt_domain varchar(255) NOT NULL,
+  currencies_id int(11) NOT NULL,
+  language_id int(11) NOT NULL,
+  show_tax tinyint(1) NOT NULL,
+  default_tax_zone int(11) NOT NULL,
+  base_price_modifier decimal(15,4) NOT NULL DEFAULT '0',
+  `status` tinyint(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
+
 DROP TABLE IF EXISTS lc_manufacturers;
 CREATE TABLE lc_manufacturers (
   manufacturers_id int(11) NOT NULL AUTO_INCREMENT,
@@ -6225,6 +6239,9 @@ INSERT INTO lc_credit_cards (id, credit_card_name, pattern, credit_card_status, 
 INSERT INTO lc_currencies (currencies_id, title, code, symbol_left, symbol_right, decimal_places, value, last_updated) VALUES(1, 'US Dollar', 'USD', '$', '', '2', 1.00000000, '2014-03-03 09:59:23');
 INSERT INTO lc_currencies (currencies_id, title, code, symbol_left, symbol_right, decimal_places, value, last_updated) VALUES(2, 'Euro', 'EUR', '&euro;', '', '2', 0.726579, '2014-03-03 09:59:23');
 INSERT INTO lc_currencies (currencies_id, title, code, symbol_left, symbol_right, decimal_places, value, last_updated) VALUES(3, 'British Pounds', 'GBP', '&pound;', '', '2', 0.598311, '2014-03-03 09:59:23');
+
+INSERT INTO lc_customers_access (id, level, status) VALUES (1, 'Guest', 1);
+INSERT INTO lc_customers_access (id, level, status) VALUES (2, 'Registered', 1);
 
 INSERT INTO lc_customers_groups (customers_group_id, language_id, customers_group_name) VALUES(1, 1, 'Registered');
 INSERT INTO lc_customers_groups (customers_group_id, language_id, customers_group_name) VALUES(2, 1, 'Wholesale');
