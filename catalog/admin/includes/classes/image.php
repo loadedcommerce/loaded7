@@ -65,6 +65,8 @@ class lC_Image_Admin extends lC_Image {
     switch (substr($image, (strrpos($image, '.')+1))) {
       case 'jpg':
       case 'jpeg':
+      case 'JPG':
+      case 'JPEG':
         if (imagetypes() & IMG_JPG) {
           $img_type = 'jpg';
         }
@@ -72,6 +74,7 @@ class lC_Image_Admin extends lC_Image {
         break;
 
       case 'gif':
+      case 'GIF':
         if (imagetypes() & IMG_GIF) {
           $img_type = 'gif';
         }
@@ -79,6 +82,7 @@ class lC_Image_Admin extends lC_Image {
         break;
 
       case 'png':
+      case 'PNG':
         if (imagetypes() & IMG_PNG) {
           $img_type = 'png';
         }
