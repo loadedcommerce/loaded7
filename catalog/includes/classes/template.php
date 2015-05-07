@@ -153,6 +153,9 @@ class lC_Template {
   public function &setup($module) {
     global $lC_Vqmod;
     
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+    
     $group = basename($_SERVER['SCRIPT_FILENAME']);
     if (($pos = strrpos($group, '.')) !== false) {
       $group = substr($group, 0, $pos);
