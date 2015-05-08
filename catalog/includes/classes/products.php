@@ -71,7 +71,10 @@ class lC_Products {
       case 'last_added':
         $this->_sort_by = 'p.products_date_added';
         $direction = '-';
-        break;           
+        break; 
+      case 'sort_order':
+        $this->_sort_by = 'p.products_sort_order';
+        break;                   
     }
 
     $this->_sort_by_direction = ($direction == '-') ? '-' : '+';

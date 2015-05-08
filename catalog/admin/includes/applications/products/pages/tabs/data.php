@@ -12,6 +12,21 @@ global $lC_Language, $pInfo, $tax_class_array;
 ?>
 <div id="section_data_content" class="with-padding">
   <fieldset class="fieldset">
+    <legend class="legend"><?php echo $lC_Language->get('text_display_settings'); ?></legend>
+    <div class="columns no-margin-bottom">
+      <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile mid-margin-bottom">
+        <div class="twelve-columns no-margin-bottom strong">
+          <span><?php echo $lC_Language->get('text_sort_order'); ?></span><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_data_sort_order')); ?>
+        </div>
+        <div class="twelve-columns no-margin-bottom small-margin-top">
+          <input type="text" onfocus="this.select();" class="input full-width" value="<?php echo (isset($pInfo) ? $pInfo->get('products_sort_order') : 0); ?>" id="products_sort_order" name="products_sort_order" />
+        </div>        
+      </div>
+      <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile mid-margin-bottom">
+      </div>
+    </div>
+  </fieldset>
+  <fieldset class="fieldset">
     <legend class="legend"><?php echo $lC_Language->get('text_inventory_settings'); ?></legend>
     <div class="columns">
       <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
