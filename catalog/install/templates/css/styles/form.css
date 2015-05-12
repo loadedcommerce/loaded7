@@ -1561,9 +1561,9 @@ input:-moz-placeholder {
 	.field-block .label,
 	.field-drop .label {
 		float: left;
-		text-align: right;
-		margin: 0 0 0 -190px;
-		width: 170px;
+    margin: 0 0 0 -225px;
+    text-align: right;
+    width: 240px;
 	}
 
 	/* Field drop */

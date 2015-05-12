@@ -442,22 +442,112 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
 				return true;
       }
       exit;
-      break;
+      break; 
 
       case 'import_orders':
       {
-				require_once("includes/classes/upgrader.php");
-				$upgrader = UpgraderFactory::create($_POST['upgrade_method']);
-				$upgrader->setConnectDetails($_POST);
-				$rslt = $upgrader->importOrders($_POST['db_switch']);
-				
-				if ($rslt == false) {
-					echo '[[0|'.$upgrader->displayMessage().']]';
-					return false;
-				}
-				
-				echo '[[1]]';
-				return true;
+        require_once("includes/classes/upgrader.php");
+        $upgrader = UpgraderFactory::create($_POST['upgrade_method']);
+        $upgrader->setConnectDetails($_POST);
+        $rslt = $upgrader->importOrders($_POST['db_switch']);
+        
+        if ($rslt == false) {
+          echo '[[0|'.$upgrader->displayMessage().']]';
+          return false;
+        }
+        
+        echo '[[1]]';
+        return true;
+      }
+      exit;
+      break;
+
+      case 'import_orders_products':
+      {
+        require_once("includes/classes/upgrader.php");
+        $upgrader = UpgraderFactory::create($_POST['upgrade_method']);
+        $upgrader->setConnectDetails($_POST);
+        $rslt = $upgrader->importOrdersProducts($_POST['db_switch']);
+        
+        if ($rslt == false) {
+          echo '[[0|'.$upgrader->displayMessage().']]';
+          return false;
+        }
+        
+        echo '[[1]]';
+        return true;
+      }
+      exit;
+      break;
+
+      case 'import_orders_products_download':
+      {
+        require_once("includes/classes/upgrader.php");
+        $upgrader = UpgraderFactory::create($_POST['upgrade_method']);
+        $upgrader->setConnectDetails($_POST);
+        $rslt = $upgrader->importOrdersProductsDownload($_POST['db_switch']);
+        
+        if ($rslt == false) {
+          echo '[[0|'.$upgrader->displayMessage().']]';
+          return false;
+        }
+        
+        echo '[[1]]';
+        return true;
+      }
+      exit;
+      break;
+
+      case 'import_orders_status':
+      {
+        require_once("includes/classes/upgrader.php");
+        $upgrader = UpgraderFactory::create($_POST['upgrade_method']);
+        $upgrader->setConnectDetails($_POST);
+        $rslt = $upgrader->importOrdersStatus($_POST['db_switch']);
+        
+        if ($rslt == false) {
+          echo '[[0|'.$upgrader->displayMessage().']]';
+          return false;
+        }
+        
+        echo '[[1]]';
+        return true;
+      }
+      exit;
+      break;
+
+      case 'import_orders_status_history':
+      {
+        require_once("includes/classes/upgrader.php");
+        $upgrader = UpgraderFactory::create($_POST['upgrade_method']);
+        $upgrader->setConnectDetails($_POST);
+        $rslt = $upgrader->importOrdersStatusHistory($_POST['db_switch']);
+        
+        if ($rslt == false) {
+          echo '[[0|'.$upgrader->displayMessage().']]';
+          return false;
+        }
+        
+        echo '[[1]]';
+        return true;
+      }
+      exit;
+      break;
+
+      case 'import_orders_total':
+      {
+        require_once("includes/classes/upgrader.php");
+        $upgrader = UpgraderFactory::create($_POST['upgrade_method']);
+        $upgrader->setConnectDetails($_POST);
+        $rslt = $upgrader->importOrdersTotal($_POST['db_switch']);
+        
+        if ($rslt == false) {
+          echo '[[0|'.$upgrader->displayMessage().']]';
+          return false;
+        }
+        
+        echo '[[1]]';
+        return true;
       }
       exit;
       break;

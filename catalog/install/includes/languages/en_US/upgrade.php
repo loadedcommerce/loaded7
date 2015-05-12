@@ -123,6 +123,21 @@ param_import_customer_groups_description = importing Customer Groups data
 param_import_orders = ORDERS 
 param_import_orders_description = importing Orders data
 
+param_import_orders_products = ORDERS PRODUCTS 
+param_import_orders_products_description = importing Orders Products data
+
+param_import_orders_products_download = ORDERS PRODUCTS DOWNLOAD 
+param_import_orders_products_download_description = importing Orders Products Download data
+
+param_import_orders_status = ORDERS STATUS 
+param_import_orders_status_description = importing Orders Status data
+
+param_import_orders_status_history = ORDERS STATUS HISTORY
+param_import_orders_status_history_description = importing Orders Status History data
+
+param_import_orders_total = ORDERS TOTAL
+param_import_orders_total_description = importing Orders Total data
+
 param_import_cds = CONTENT DIRECTOR 
 param_import_cds_description = importing Content Director data 
 

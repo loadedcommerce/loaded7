@@ -236,22 +236,97 @@ function prepareWork() {
             <span id="eBoxContents_attributes"></span>
           </p> 
         </div>      
-      </div> 
+      </div>
       <div class="field-block button-height large-margin-left large-margin-right">
         <label for="IMPORT_ORDERS" class="label"><b><?php echo $lC_Language->get('param_import_orders'); ?></b></label>
-    	  <div style="display:block; padding:0px 20px 0px 0px"> 
-    	    <p id="pBoxContainer_orders" style="height:25px; padding-top:5px;">   
-    			  <img style="display:none;" id="img_copy_tick_orders" class="tick" src="images/tick.png" align="right" />
-    			  <img style="display:none;" id="img_copy_progress_orders" class="progress" src="images/ajax-loader-1.gif" align="right" />
-    			  <img style="display:none;" id="img_copy_cross_orders" class="cross" src="images/cross.png" align="right" />
-    	    </p> 
-    	  </div>      
-    	  <div id="eBox_orders" style="display:none; margin: 0px 0px 0px -190px; padding: 0px 10px 10px 0px;"> 
-    	    <p class="message icon-warning red-gradient">   
-    	      <span id="eBoxContents_orders"></span>
-    	    </p> 
-    	  </div>      
-      </div> 
+        <div style="display:block; padding:0px 20px 0px 0px"> 
+          <p id="pBoxContainer_orders" style="height:25px; padding-top:5px;">   
+            <img style="display:none;" id="img_copy_tick_orders" class="tick" src="images/tick.png" align="right" />
+            <img style="display:none;" id="img_copy_progress_orders" class="progress" src="images/ajax-loader-1.gif" align="right" />
+            <img style="display:none;" id="img_copy_cross_orders" class="cross" src="images/cross.png" align="right" />
+          </p> 
+        </div>      
+        <div id="eBox_orders" style="display:none; margin: 0px 0px 0px -190px; padding: 0px 10px 10px 0px;"> 
+          <p class="message icon-warning red-gradient">   
+            <span id="eBoxContents_orders"></span>
+          </p> 
+        </div>      
+      </div>       
+      <div class="field-block button-height large-margin-left large-margin-right">
+        <label for="IMPORT_ORDERS_PRODUCTS" class="label"><b><?php echo $lC_Language->get('param_import_orders_products'); ?></b></label>
+        <div style="display:block; padding:0px 20px 0px 0px"> 
+          <p id="pBoxContainer_orders_products" style="height:25px; padding-top:5px;">   
+            <img style="display:none;" id="img_copy_tick_orders_products" class="tick" src="images/tick.png" align="right" />
+            <img style="display:none;" id="img_copy_progress_orders_products" class="progress" src="images/ajax-loader-1.gif" align="right" />
+            <img style="display:none;" id="img_copy_cross_orders_products" class="cross" src="images/cross.png" align="right" />
+          </p> 
+        </div>      
+        <div id="eBox_orders_products" style="display:none; margin: 0px 0px 0px -190px; padding: 0px 10px 10px 0px;"> 
+          <p class="message icon-warning red-gradient">   
+            <span id="eBoxContents_orders_products"></span>
+          </p> 
+        </div>      
+      </div>       
+      <div class="field-block button-height large-margin-left large-margin-right">
+        <label for="IMPORT_ORDERS_PRODUCTS_DOWNLOAD" class="label"><b><?php echo $lC_Language->get('param_import_orders_products_download'); ?></b></label>
+        <div style="display:block; padding:0px 20px 0px 0px"> 
+          <p id="pBoxContainer_orders_products_download" style="height:25px; padding-top:5px;">   
+            <img style="display:none;" id="img_copy_tick_orders_products_download" class="tick" src="images/tick.png" align="right" />
+            <img style="display:none;" id="img_copy_progress_orders_products_download" class="progress" src="images/ajax-loader-1.gif" align="right" />
+            <img style="display:none;" id="img_copy_cross_orders_products_download" class="cross" src="images/cross.png" align="right" />
+          </p> 
+        </div>      
+        <div id="eBox_orders_products_download" style="display:none; margin: 0px 0px 0px -190px; padding: 0px 10px 10px 0px;"> 
+          <p class="message icon-warning red-gradient">   
+            <span id="eBoxContents_orders_products_download"></span>
+          </p> 
+        </div>      
+      </div>       
+      <div class="field-block button-height large-margin-left large-margin-right">
+        <label for="IMPORT_ORDERS_STATUS" class="label"><b><?php echo $lC_Language->get('param_import_orders_status'); ?></b></label>
+        <div style="display:block; padding:0px 20px 0px 0px"> 
+          <p id="pBoxContainer_orders_status" style="height:25px; padding-top:5px;">   
+            <img style="display:none;" id="img_copy_tick_orders_status" class="tick" src="images/tick.png" align="right" />
+            <img style="display:none;" id="img_copy_progress_orders_status" class="progress" src="images/ajax-loader-1.gif" align="right" />
+            <img style="display:none;" id="img_copy_cross_orders_status" class="cross" src="images/cross.png" align="right" />
+          </p> 
+        </div>      
+        <div id="eBox_orders_status" style="display:none; margin: 0px 0px 0px -190px; padding: 0px 10px 10px 0px;"> 
+          <p class="message icon-warning red-gradient">   
+            <span id="eBoxContents_orders_status"></span>
+          </p> 
+        </div>      
+      </div>       
+      <div class="field-block button-height large-margin-left large-margin-right">
+        <label for="IMPORT_ORDERS_STATUS_HISTORY" class="label"><b><?php echo $lC_Language->get('param_import_orders_status_history'); ?></b></label>
+        <div style="display:block; padding:0px 20px 0px 0px"> 
+          <p id="pBoxContainer_orders_status_history" style="height:25px; padding-top:5px;">   
+            <img style="display:none;" id="img_copy_tick_orders_status_history" class="tick" src="images/tick.png" align="right" />
+            <img style="display:none;" id="img_copy_progress_orders_status_history" class="progress" src="images/ajax-loader-1.gif" align="right" />
+            <img style="display:none;" id="img_copy_cross_orders_status_history" class="cross" src="images/cross.png" align="right" />
+          </p> 
+        </div>      
+        <div id="eBox_orders_status_history" style="display:none; margin: 0px 0px 0px -190px; padding: 0px 10px 10px 0px;"> 
+          <p class="message icon-warning red-gradient">   
+            <span id="eBoxContents_orders_status_history"></span>
+          </p> 
+        </div>      
+      </div>       
+      <div class="field-block button-height large-margin-left large-margin-right">
+        <label for="IMPORT_ORDERS_TOTAL" class="label"><b><?php echo $lC_Language->get('param_import_orders_total'); ?></b></label>
+        <div style="display:block; padding:0px 20px 0px 0px"> 
+          <p id="pBoxContainer_orders_total" style="height:25px; padding-top:5px;">   
+            <img style="display:none;" id="img_copy_tick_orders_total" class="tick" src="images/tick.png" align="right" />
+            <img style="display:none;" id="img_copy_progress_orders_total" class="progress" src="images/ajax-loader-1.gif" align="right" />
+            <img style="display:none;" id="img_copy_cross_orders_total" class="cross" src="images/cross.png" align="right" />
+          </p> 
+        </div>      
+        <div id="eBox_orders_total" style="display:none; margin: 0px 0px 0px -190px; padding: 0px 10px 10px 0px;"> 
+          <p class="message icon-warning red-gradient">   
+            <span id="eBoxContents_orders_total"></span>
+          </p> 
+        </div>      
+      </div>
       <div class="field-block button-height large-margin-left large-margin-right">
         <label for="IMPORT_CDS" class="label"><b><?php echo $lC_Language->get('param_import_cds'); ?></b></label>
     	  <div style="display:block; padding:0px 20px 0px 0px"> 
@@ -469,101 +544,146 @@ $(document).ready(function() {
                   if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
                     $('#eBoxContents_orders').html(_rslt);
                     $('#eBox_customer_orders').show();
-                  }
-                  
-                  $('#img_copy_progress_cds').show();
+                  } 
+                
+                  $('#img_copy_progress_orders_products').show();
                   setTimeout(function() {
-                    _rslt = doImport('_cds'); 
+                    _rslt = doImport('_orders_products'); 
                     if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
-                      $('#eBoxContents_cds').html(_rslt);
-                      $('#eBox_customer_cds').show();
+                      $('#eBoxContents_orders_products').html(_rslt);
+                      $('#eBox_customer_orders_products').show();
                     }
-
-                    $('#img_copy_progress_administrators').show();
+                
+                    $('#img_copy_progress_orders_products_download').show();
                     setTimeout(function() {
-                      _rslt = doImport('_administrators'); 
+                      _rslt = doImport('_orders_products_download'); 
                       if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
-                        $('#eBoxContents_administrators').html(_rslt);
-                        $('#eBox_customer_administrators').show();
+                        $('#eBoxContents_orders_products_download').html(_rslt);
+                        $('#eBox_customer_orders_products_download').show();
                       }
-                      
-                      $('#img_copy_progress_newsletter').show();
+                
+                      $('#img_copy_progress_orders_status').show();
                       setTimeout(function() {
-                        _rslt = doImport('_newsletter'); 
+                        _rslt = doImport('_orders_status'); 
                         if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
-                          $('#eBoxContents_newsletter').html(_rslt);
-                          $('#eBox_customer_newsletter').show();
+                          $('#eBoxContents_orders_status').html(_rslt);
+                          $('#eBox_customer_orders_status').show();
                         }
-                        
-                        $('#img_copy_progress_banners').show();
+                
+                        $('#img_copy_progress_orders_status_history').show();
                         setTimeout(function() {
-                          _rslt = doImport('_banners'); 
+                          _rslt = doImport('_orders_status_history'); 
                           if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
-                            $('#eBoxContents_banners').html(_rslt);
-                            $('#eBox_customer_banners').show();
+                            $('#eBoxContents_orders_status_history').html(_rslt);
+                            $('#eBox_customer_orders_status_history').show();
                           }
-
-                          $('#img_copy_progress_configuration').show();
+                
+                          $('#img_copy_progress_orders_total').show();
                           setTimeout(function() {
-                            _rslt = doImport('_configuration'); 
+                            _rslt = doImport('_orders_total'); 
                             if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
-                              $('#eBoxContents_configuration').html(_rslt);
-                              $('#eBox_customer_configuration').show();
+                              $('#eBoxContents_orders_total').html(_rslt);
+                              $('#eBox_customer_orders_total').show();
                             }
-                            
-                            $('#img_copy_progress_coupons').show();
+                   
+                            $('#img_copy_progress_cds').show();
                             setTimeout(function() {
-                              _rslt = doImport('_coupons'); 
+                              _rslt = doImport('_cds'); 
                               if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
-                                $('#eBoxContents_coupons').html(_rslt);
-                                $('#eBox_customer_coupons').show();
+                                $('#eBoxContents_cds').html(_rslt);
+                                $('#eBox_customer_cds').show();
                               }
-                              
-                              $('#img_copy_progress_taxclasses').show();
+
+                              $('#img_copy_progress_administrators').show();
                               setTimeout(function() {
-                                _rslt = doImport('_taxclasses'); 
+                                _rslt = doImport('_administrators'); 
                                 if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
-                                  $('#eBoxContents_taxclasses').html(_rslt);
-                                  $('#eBox_customer_taxclasses').show();
+                                  $('#eBoxContents_administrators').html(_rslt);
+                                  $('#eBox_customer_administrators').show();
                                 }
                                 
-                                $('#img_copy_progress_languages').show();
+                                $('#img_copy_progress_newsletter').show();
                                 setTimeout(function() {
-                                  _rslt = doImport('_languages'); 
+                                  _rslt = doImport('_newsletter'); 
                                   if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
-                                    $('#eBoxContents_languages').html(_rslt);
-                                    $('#eBox_languages').show();
+                                    $('#eBoxContents_newsletter').html(_rslt);
+                                    $('#eBox_customer_newsletter').show();
                                   }
                                   
-                                  $('#img_copy_progress_currencies').show();
+                                  $('#img_copy_progress_banners').show();
                                   setTimeout(function() {
-                                    _rslt = doImport('_currencies'); 
+                                    _rslt = doImport('_banners'); 
                                     if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
-                                      $('#eBoxContents_currencies').html(_rslt);
-                                      $('#eBox_currencies').show();
+                                      $('#eBoxContents_banners').html(_rslt);
+                                      $('#eBox_customer_banners').show();
                                     }
-                                  
-                                    // DONE
-                                    $('#pBox').hide();
-                                    
-                                    if (_err === false) {
-                                      $('#mBoxSuccessContents').html('UPGRADE COMPLETE');
-                                      $('#mBoxSuccess').show();
 
-                                      $("#upgradeForm").attr("action", "upgrade.php?step=4");
-                                      $('#btn_continue').show();
-                                      $('#btn_retry').hide();
-                                    } else {
-                                      $('#mBoxContents').html('<?php echo $lC_Language->get('upgrade_step3_page_errfound'); ?>');
-                                      $('#mBox').show();
+                                    $('#img_copy_progress_configuration').show();
+                                    setTimeout(function() {
+                                      _rslt = doImport('_configuration'); 
+                                      if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
+                                        $('#eBoxContents_configuration').html(_rslt);
+                                        $('#eBox_customer_configuration').show();
+                                      }
+                                      
+                                      $('#img_copy_progress_coupons').show();
+                                      setTimeout(function() {
+                                        _rslt = doImport('_coupons'); 
+                                        if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
+                                          $('#eBoxContents_coupons').html(_rslt);
+                                          $('#eBox_customer_coupons').show();
+                                        }
+                                        
+                                        $('#img_copy_progress_taxclasses').show();
+                                        setTimeout(function() {
+                                          _rslt = doImport('_taxclasses'); 
+                                          if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
+                                            $('#eBoxContents_taxclasses').html(_rslt);
+                                            $('#eBox_customer_taxclasses').show();
+                                          }
+                                          
+                                          $('#img_copy_progress_languages').show();
+                                          setTimeout(function() {
+                                            _rslt = doImport('_languages'); 
+                                            if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
+                                              $('#eBoxContents_languages').html(_rslt);
+                                              $('#eBox_languages').show();
+                                            }
+                                            
+                                            $('#img_copy_progress_currencies').show();
+                                            setTimeout(function() {
+                                              _rslt = doImport('_currencies'); 
+                                              if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
+                                                $('#eBoxContents_currencies').html(_rslt);
+                                                $('#eBox_currencies').show();
+                                              }
+                                            
+                                              // DONE
+                                              $('#pBox').hide();
+                                              
+                                              if (_err === false) {
+                                                $('#mBoxSuccessContents').html('UPGRADE COMPLETE');
+                                                $('#mBoxSuccess').show();
 
-                                      $("#upgradeForm").attr("action", "upgrade.php?step=3");
-                                      $('#btn_continue').hide();
-                                      $('#btn_retry').show();
-                                    }
-                                    
-                                    $('#buttonContainer').show();                                  
+                                                $("#upgradeForm").attr("action", "upgrade.php?step=4");
+                                                $('#btn_continue').show();
+                                                $('#btn_retry').hide();
+                                              } else {
+                                                $('#mBoxContents').html('<?php echo $lC_Language->get('upgrade_step3_page_errfound'); ?>');
+                                                $('#mBox').show();
+
+                                                $("#upgradeForm").attr("action", "upgrade.php?step=3");
+                                                $('#btn_continue').hide();
+                                                $('#btn_retry').show();
+                                              }
+                                              
+                                              $('#buttonContainer').show();                                  
                                   
+                                            }, 3000);
+                                          }, 3000);  
+                                        }, 3000);                                 
+                                      }, 3000);                              
+                                    }, 3000);
                                   }, 3000);
                                 }, 3000);  
                               }, 3000);                                 
