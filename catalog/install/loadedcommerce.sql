@@ -784,8 +784,8 @@ CREATE TABLE lc_product_attributes (
   id int(10) unsigned NOT NULL,
   products_id int(10) unsigned NOT NULL,
   languages_id int(10) unsigned NOT NULL,
-  `value` text NOT NULL,
-  `value2` text NOT NULL,
+  `value` text NOT NULL DEFAULT '',
+  `value2` text NOT NULL DEFAULT '',
   KEY idx_pa_id_products_id (id,products_id),
   KEY idx_pa_languages_id (languages_id),
   KEY idx_pa_products_id (products_id)
