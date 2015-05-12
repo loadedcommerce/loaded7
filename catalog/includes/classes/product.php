@@ -994,10 +994,11 @@ class lC_Product {
   public function getSubProducts($id) {
     global $lC_Database, $lC_Language;
 
-    $Qproducts = $lC_Database->query('select p.*, pd.products_name, pd.products_keyword from :table_products p, :table_products_description pd where p.parent_id = :parent_id and p.products_id = pd.products_id and pd.language_id = :language_id');
+    $Qproducts = $lC_Database->query('select p.*, pd.products_name, pd.products_keyword from :table_products p, :table_products_description pd where p.parent_id = :parent_id and p.products_id = pd.products_id and p.products_status = :products_status and pd.language_id = :language_id');
     $Qproducts->bindTable(':table_products', TABLE_PRODUCTS);
     $Qproducts->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
     $Qproducts->bindInt(':parent_id', $id);
+    $Qproducts->bindInt(':products_status', 1);
     $Qproducts->bindInt(':language_id', $lC_Language->getID());
     $Qproducts->execute();  
     
@@ -1037,9 +1038,9 @@ class lC_Product {
     $output = '';
     foreach ($data as $key => $value) {
       
-     $extra = ''; 
-     // $extra = (isset($value['products_model']) && empty($value['products_model']) === false) ? '<em>' . $lC_Language->get('listing_model_heading') . ': ' . $value['products_model'] . '</em>' : null;
-     // if ($extra == null && isset($value['products_sku']) && empty($value['products_sku']) === false) $extra = '<em>' . $lC_Language->get('listing_sku_heading') . ': ' . $value['products_sku'] . '</em>';
+      $extra = ''; 
+      // $extra = (isset($value['products_model']) && empty($value['products_model']) === false) ? '<em>' . $lC_Language->get('listing_model_heading') . ': ' . $value['products_model'] . '</em>' : null;
+      // if ($extra == null && isset($value['products_sku']) && empty($value['products_sku']) === false) $extra = '<em>' . $lC_Language->get('listing_sku_heading') . ': ' . $value['products_sku'] . '</em>';
       
       $img = (isset($value['image']) && empty($value['image']) === false) ? $lC_Image->getAddress($value['image'], 'small') : 'images/pixel_trans.gif';
       $height = (isset($value['image']) && empty($value['image']) === false) ? $lC_Image->getHeight('small') : 1;
@@ -1067,17 +1068,22 @@ class lC_Product {
                  '  </div>' .
                  '  <div class="col-sm-5 col-lg-5">' .
                  '    <span class="subproduct-price lead">' . $lC_Currencies->format($price) . '</span>';
-
+      
+      $disabled = '';
+      if (DISABLE_ADD_TO_CART == 1 && $value['products_quantity'] < 1) {
+        $disabled = ' disabled';
+      }
+       
       if ($purchase_type == 'single') {     
         $output .= '    <span class="subproduct-buy-now pull-right">' . 
-                   '      <form method="post" action="' . lc_href_link(FILENAME_DEFAULT, $value['products_id'] . '&action=cart_add') . '"><button class="subproduct-buy-now-button btn btn-success" type="submit" onclick="$(this).closest(\'form\').submit();">Buy Now</button></form>' . 
+                   '      <form method="post" action="' . lc_href_link(FILENAME_DEFAULT, $value['products_id'] . '&action=cart_add') . '"><button class="subproduct-buy-now-button btn btn-success' . $disabled . '" type="submit" onclick="$(this).closest(\'form\').submit();"' . $disabled . '>' . $lC_Language->get('button_buy_now') . '</button></form>' . 
                    '    </span>';
       } else {
         $output .= '    <span class="subproduct-qty-input pull-right half-width">' . 
-                   '      <label class="display-inline">' . $lC_Language->get('text_add_to_cart_quantity') . '</label><input type="text" id="quantity_' . $value['products_id'] . '" name="quantity[' . $value['products_id'] . ']" onfocus="this.select();" class="small-margin-left display-inline form-control form-control content-products-info-subproduct-qty-input half-width no-margin-right text-center" value="0">' . 
+                   '      <label class="display-inline">' . $lC_Language->get('text_add_to_cart_quantity') . '</label><input type="text" id="quantity_' . $value['products_id'] . '" name="quantity[' . $value['products_id'] . ']" onfocus="this.select();" class="small-margin-left display-inline form-control form-control content-products-info-subproduct-qty-input half-width no-margin-right text-center' . $disabled . '" value="0"' . $disabled . '>' . 
                    '    </span>';        
       }
-
+      
       $output .= '  </div>' .
                  '</div>';
     }

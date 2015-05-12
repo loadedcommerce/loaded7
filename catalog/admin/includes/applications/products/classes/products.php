@@ -1689,10 +1689,12 @@ class lC_Products_Admin {
     
     $optionsArr = array();
     foreach($veData as $key => $value) {
-      $Qoption = $lC_Database->query('select price_modifier from :table_products_simple_options_values where options_id = :options_id limit 1');
+      $Qoption = $lC_Database->query('select price_modifier from :table_products_simple_options_values where products_id = :products_id and options_id = :options_id and values_id = :values_id limit 1');
       $Qoption->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
-      $Qoption->bindValue(':options_id', $value['id']);
-      $Qoption->bindValue(':languages_id', $value['languages_id']);
+      $Qoption->bindInt(':products_id', $eData['products']);
+      $Qoption->bindInt(':options_id', $eData['group']);
+      $Qoption->bindInt(':values_id', $value['id']);
+      $Qoption->bindInt(':languages_id', $value['languages_id']);
       $Qoption->execute();      
       
       $optionsArr[$key] = array('id' => $value['id'],
