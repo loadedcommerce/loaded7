@@ -392,11 +392,11 @@ DROP TABLE IF EXISTS lc_localization;
 CREATE TABLE IF NOT EXISTS lc_localization (
   id int(11) NOT NULL AUTO_INCREMENT,
   domain varchar(255) NOT NULL,
-  alt_domain varchar(255) NOT NULL,
-  currencies_id int(11) NOT NULL,
-  language_id int(11) NOT NULL,
-  show_tax tinyint(1) NOT NULL,
-  default_tax_zone int(11) NOT NULL,
+  alt_domain tinyint(1) NOT NULL DEFAULT '0',
+  currencies_id int(11) NOT NULL DEFAULT '0',
+  language_id int(11) NOT NULL DEFAULT '0',
+  show_tax tinyint(1) NOT NULL DEFAULT '0',
+  default_tax_zone int(11) NOT NULL DEFAULT '0',
   base_price_modifier decimal(15,4) NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (id)

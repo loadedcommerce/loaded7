@@ -54,8 +54,11 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
     
     <!-- localization -->
     <?php
-    if (isset($_SESSION['localization']['alt_domain']) && empty($_SESSION['localization']['alt_domain']) === false) {
-      echo '<link rel="alternate" href="' . $_SESSION['localization']['alt_domain'] . '" hreflang="' . strtolower($_SESSION['localization']['language']) . '" />';    
+    if (isset($_SESSION['localization']['alt']) && empty($_SESSION['localization']['alt']) === false) {
+      foreach($_SESSION['localization']['alt'] as $key => $value) {
+        $params = (stristr($_SERVER['REQUEST_URI'], '?')) ? $_SERVER['REQUEST_URI'] : null;
+        echo '<link rel="alternate" href="' . $value['domain'] . $params . '" hreflang="' . strtolower($lC_Language->getCodeFromID($value['language_id'])) . '" />' . "\n";    
+      }
     }
     ?>
         

@@ -216,11 +216,22 @@ if (!function_exists('setLocalization')) {
   function setLocalization() {
     global $lC_Database, $lC_Currencies, $lC_Language, $lC_Session;
  
-//unset($_SESSION['localization']);
+unset($_SESSION['localization']);
 
  //   if (isset($_SESSION['localization']['currency']) || isset($_SESSION['localization']['language'])) return;
     
     $_SESSION['localization'] = array();
+    
+    $Qalt = $lC_Database->query('select * from :table_localization where alt_domain = :alt_domain');
+    $Qalt->bindTable(':table_localization', TABLE_LOCALIZATION);
+    $Qalt->bindInt(':alt_domain', 1);
+    $Qalt->execute();   
+    
+    while ($Qalt->next()) {
+     $_SESSION['localization']['alt'][] = $Qalt->toArray();
+    }   
+    
+    $Qalt->freeResult();  
     
     $Qlocal = $lC_Database->query('select * from :table_localization where domain = :domain limit 1');
     $Qlocal->bindTable(':table_localization', TABLE_LOCALIZATION);
