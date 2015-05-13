@@ -1479,9 +1479,10 @@ class lC_Products_Admin {
       $Qcheck->execute();
       // delete the simple options values
       while ( $Qcheck->next() ) {
-        $Qdel = $lC_Database->query('delete from :table_products_simple_options_values where options_id = :options_id');
+        $Qdel = $lC_Database->query('delete from :table_products_simple_options_values where options_id = :options_id AND products_id = :products_id');
         $Qdel->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
         $Qdel->bindInt(':options_id', $Qcheck->valueInt('options_id'));
+        $Qdel->bindInt(':products_id', $id);
         $Qdel->setLogging($_SESSION['module'], $id);
         $Qdel->execute();
       } 
