@@ -606,21 +606,25 @@ class lC_Products_Admin {
     $Qoptions->bindInt(':languages_id', $lC_Language->getID());
     $Qoptions->execute();
     
+    $cnt = 0;
     while ($Qoptions->next()) {
-      $data['simple_options'][] = $Qoptions->toArray();      
+      $data['simple_options'][$cnt] = $Qoptions->toArray();      
       
-      $Qvalues = $lC_Database->query('select sov.products_id, sov.options_id, sov.values_id, sov.price_modifier, sov.customers_group_id, vv.title from :table_products_simple_options_values sov left join :table_products_variants_values vv on (sov.values_id = vv.id) where sov.options_id = :options_id and vv.languages_id = :languages_id');
+      $Qvalues = $lC_Database->query('select sov.products_id, sov.options_id, sov.values_id, sov.price_modifier, sov.customers_group_id, vv.title from :table_products_simple_options_values sov left join :table_products_variants_values vv on (sov.values_id = vv.id) where sov.options_id = :options_id and sov.products_id = :products_id and vv.languages_id = :languages_id');
       $Qvalues->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
       $Qvalues->bindTable(':table_products_variants_values', TABLE_PRODUCTS_VARIANTS_VALUES);
-      $Qvalues->bindInt(':options_id', $Qoptions->valueInt('options_id'));
+      $Qvalues->bindInt(':options_id', $Qoptions->valueInt('options_id'));  
+      $Qvalues->bindInt(':products_id', $id);
       $Qvalues->bindInt(':languages_id', $lC_Language->getID());
       $Qvalues->execute();
-      
+
       while ($Qvalues->next()) {
-        $data['simple_options']['values'][] = $Qvalues->toArray();      
-      }
+        $data['simple_options'][$cnt]['values'][] = $Qvalues->toArray();      
+      }      
       $Qvalues->freeResult();    
+      $cnt++;
     }
+
     $Qoptions->freeResult();
     
     if (DISPLAY_PRICE_WITH_TAX == 1 || $_SESSION['localization']['show_tax'] == 1) {
@@ -889,7 +893,6 @@ class lC_Products_Admin {
       }
     }
  
-
     // simple options
     if ( $error === false ) {
       
@@ -907,6 +910,7 @@ class lC_Products_Admin {
       $Qdel->setLogging($_SESSION['module'], $products_id);
       $Qdel->execute();
 
+      
       // if values are set, save them
       if ( isset($data['simple_options_group_name']) && !empty($data['simple_options_group_name']) ) {   
         foreach ( $data['simple_options_group_name'] as $group_id => $value ) {
@@ -931,7 +935,7 @@ class lC_Products_Admin {
             foreach ( $data['simple_options_entry_price_modifier'] as $customers_group_id => $options ) {
               foreach ( $options as $options_id => $option_value ) {
                 if ($options_id == $group_id) {
-                  foreach ( $option_value as $values_id => $price_modifier ) {
+                  foreach ( $option_value as $values_id => $price_modifier ) {   
                     $Qoptval = $lC_Database->query('insert into :table_products_simple_options_values (products_id, values_id, options_id, customers_group_id, price_modifier) values (:products_id, :values_id, :options_id, :customers_group_id, :price_modifier)');
                     $Qoptval->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
                     $Qoptval->bindInt(':products_id', $products_id);
@@ -1782,7 +1786,7 @@ class lC_Products_Admin {
     global $lC_Language, $pInfo;  
     
     $content = '';
-    $groups = lC_Customer_groups_Admin::getAll();
+    $groups = lC_Customer_groups_Admin::getAll();      
     foreach($groups['entries'] as $key => $value) {
       $content .= '<dt id="dt-' . $value['customers_group_id'] . '"><span class="strong">' . $value['customers_group_name'] . '</span></dt>' .
                   '<dd id="dd-' . $value['customers_group_id'] . '">' .
@@ -1844,28 +1848,30 @@ class lC_Products_Admin {
     $gData = lC_Customer_groups_Admin::getData($customers_group_id);
     $baselineDiscount = (float)$gData['baseline_discount'];
     $basePrice = (isset($pInfo)) ? (float)$pInfo->get('products_price') : 0.00;
-
     $tbody = '';  
     if (isset($options) && !empty($options)) {
       foreach ($options as $key => $so) {
 
         if ((isset($so['title']) && $so['title'] != NULL)) {
           $items = '';
-          if (is_array($options['values'])) {
-            foreach ($options['values'] as $k => $v) {
-              if ($v['options_id'] == $so['options_id'] && $v['products_id'] == $pInfo->get('products_id') && $customers_group_id == $v['customers_group_id']) {
-                if ($customers_group_id == DEFAULT_CUSTOMERS_GROUP_ID) {
+          if (is_array($so['values'])) {
+ 
+            foreach ($so['values'] as $k => $v) {
+              
+              if ($v['options_id'] == $so['options_id'] && $v['products_id'] == $pInfo->get('products_id') && $customers_group_id == $v['customers_group_id']) { 
+//                if ($customers_group_id == DEFAULT_CUSTOMERS_GROUP_ID || (utility::isPro() === true && utility::isB2B() === true)) {
                   $mod = (isset($v['price_modifier']) && !empty($v['price_modifier'])) ? number_format($v['price_modifier'], DECIMAL_PLACES) : '0.00';
-                } else {
-                  $mod = number_format(round(($basePrice * $baselineDiscount) * .01, DECIMAL_PLACES), DECIMAL_PLACES);
-                }
+//                } else {
+//                  $mod = number_format(round(($basePrice * $baselineDiscount) * .01, DECIMAL_PLACES), DECIMAL_PLACES);
+//                }
+                
                 $items .= '<tr class="trp-' . $v['options_id'] . '">' .
                           '  <td class="element">' . $v['title'] . '</td>' . 
                           '  <td>' .
                           '    <div id="div_' . $v['customers_group_id'] . '_' . $v['options_id'] . '_' . $v['values_id'] . '" class="icon-plus-round icon-green icon-size2" style="display:inline;">' .
-                          '      <div class="inputs' . (($customers_group_id != DEFAULT_CUSTOMERS_GROUP_ID) ? ' disabled' : '') . '" style="display:inline; padding:8px 0;">' .
+                          '      <div class="inputs' . (($customers_group_id != DEFAULT_CUSTOMERS_GROUP_ID && utility::isB2B() === false) ? ' disabled' : '') . '" style="display:inline; padding:8px 0;">' .
                           '        <span class="mid-margin-left no-margin-right">' . $lC_Currencies->getSymbolLeft() . '</span>' .
-                          '        <input type="text" class="input-unstyled" onfocus="$(this).select()" value="' . $mod . '" onblur="showSimpleOptionsPricingSymbol(this, \'' . $v['customers_group_id'] . '_' . $v['options_id'] . '_' . $v['values_id'] . '\');" id="simple_options_entry_price_modifier_' . $v['customers_group_id'] . '_' . $v['options_id'] . '_' . $v['values_id'] . '" name="simple_options_entry_price_modifier[' . $v['customers_group_id'] . '][' . $v['options_id'] . '][' . $v['values_id'] . ']" ' . (($customers_group_id != DEFAULT_CUSTOMERS_GROUP_ID) ? ' DISABLED' : '') . '>' .
+                          '        <input type="text" class="input-unstyled" onfocus="$(this).select()" value="' . $mod . '" onblur="showSimpleOptionsPricingSymbol(this, \'' . $v['customers_group_id'] . '_' . $v['options_id'] . '_' . $v['values_id'] . '\');" id="simple_options_entry_price_modifier_' . $v['customers_group_id'] . '_' . $v['options_id'] . '_' . $v['values_id'] . '" name="simple_options_entry_price_modifier[' . $v['customers_group_id'] . '][' . $v['options_id'] . '][' . $v['values_id'] . ']" ' . (($customers_group_id != DEFAULT_CUSTOMERS_GROUP_ID && utility::isB2B() === false) ? ' DISABLED' : '') . '>' .
                           '      </div>' .
                           '    </div>' .
                           '  </td>' .
