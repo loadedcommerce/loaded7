@@ -678,7 +678,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
   /*
   *  function name : importProducts()
   *
-  *  description : load products, products_description, products_to_categories, products_notifications, manufacturers, reviews and specials from the source database to loaded7
+  *  description : load products from the source database to loaded7
   *
   *  returns : true or false  
   *
@@ -730,28 +730,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
     $tQry = $target_db->query('truncate table ' . TABLE_PRODUCTS);
     $tQry->execute();
     
-    $tQry = $target_db->query('truncate table ' . TABLE_PRODUCTS_DESCRIPTION);
-    $tQry->execute();
-    
     $tQry = $target_db->query('truncate table ' . TABLE_PRODUCTS_PRICING);
-    $tQry->execute();
-    
-    $tQry = $target_db->query('truncate table ' . TABLE_PRODUCTS_NOTIFICATIONS);
-    $tQry->execute();
-    
-    $tQry = $target_db->query('truncate table ' . TABLE_PRODUCTS_TO_CATEGORIES);
-    $tQry->execute();
-    
-    $tQry = $target_db->query('truncate table ' . TABLE_MANUFACTURERS);
-    $tQry->execute();
-    
-    $tQry = $target_db->query('truncate table ' . TABLE_MANUFACTURERS_INFO);
-    $tQry->execute();
-    
-    $tQry = $target_db->query('truncate table ' . TABLE_REVIEWS);
-    $tQry->execute();
-    
-    $tQry = $target_db->query('truncate table ' . TABLE_SPECIALS);
     $tQry->execute();
 
     // DISABLE AUTO INCREMENT WHEN PRIMARY KEY = 0
@@ -1159,14 +1138,89 @@ class lC_LocalUpgrader extends lC_Upgrader {
     
     // END LOAD PRODUCTS FROM SOURCE DB
 
+    // DISABLE AUTO INCREMENT WHEN PRIMARY KEY = 0
+    $tQry = $target_db->query('SET GLOBAL sql_mode = ""');
+    $tQry->execute();
+          
+    // DISCONNECT FROM SOURCE AND TARGET DBs
+    
+    $source_db->disconnect();    
+    $target_db->disconnect();  
+
+    // END DISCONNECT FROM SOURCE AND TARGET DBs
+    
+    return true;
+      
+  } // end importProducts
+
+  /*
+  *  function name : importProductsDescription()
+  *
+  *  description : load products_description and permalink from the source database to loaded7
+  *
+  *  returns : true or false  
+  *
+  */
+  public function importProductsDescription($switch = null) {
+
+    $s_db = $this->_sDB;
+    $t_db = $this->_tDB;
+          
+    if (!defined('DB_TABLE_PREFIX')) define('DB_TABLE_PREFIX', $t_db['DB_PREFIX']);
+
+    // CONNNECT TO SOURCE DB
+    
+    require_once('../includes/database_tables.php');  
+
+    require_once('../includes/classes/database/mysqli.php');
+    $class = 'lC_Database_mysqli'; // . $s_db['DB_DATABASE_CLASS'];
+    $source_db = new $class($s_db['DB_SERVER'], $s_db['DB_SERVER_USERNAME'], $s_db['DB_SERVER_PASSWORD']);
+    
+    if ($source_db->isError() === false) {
+      $source_db->selectDatabase($s_db['DB_DATABASE']);
+    }
+    
+    if ($source_db->isError()) {
+      $this->_msg = $source_db->getError();
+      return false;
+    }
+    // END CONNNECT TO SOURCE DB
+    
+    // CONNNECT TO TARGET DB
+                
+    $class = 'lC_Database_' . $t_db['DB_CLASS'];
+    $target_db = new $class($t_db['DB_SERVER'], $t_db['DB_SERVER_USERNAME'], $t_db['DB_SERVER_PASSWORD']);
+    
+    if ($target_db->isError() === false) {
+      $target_db->selectDatabase($t_db['DB_DATABASE']);
+    }
+    
+    if ($target_db->isError()) {
+      $this->_msg = $target_db->getError();
+      return false;
+    }
+
+    // END CONNNECT TO TARGET DB
+    
+    // TRUNCATE PRODUCTS DESCRIPTION TABLE IN TARGET DB 
+    
+    $tQry = $target_db->query('truncate table ' . TABLE_PRODUCTS_DESCRIPTION);
+    $tQry->execute();
+
+    // END TRUNCATE PRODUCTS DESCRIPTION TABLE IN TARGET DB
+
+    // DISABLE AUTO INCREMENT WHEN PRIMARY KEY = 0 
+    $tQry = $target_db->query('SET GLOBAL sql_mode = "NO_AUTO_VALUE_ON_ZERO"');
+    $tQry->execute();
+    
     // LOAD PRODUCTS DESCRIPTION FROM SOURCE DB
 
     $map = $this->_data_mapping['products_desc'];
 
-    $products_desc = array();
-    
     $sQry = $source_db->query('SELECT * FROM products_description');
     $sQry->execute();
+    
+    $products_desc = array();
       
     if ($sQry->numberOfRows() > 0) { 
       $cnt = 0;
@@ -1184,8 +1238,8 @@ class lC_LocalUpgrader extends lC_Upgrader {
                           , 'products_url'              => ($sQry->value($map['products_url']) != '' || $sQry->value($map['products_url']) != NULL) ? $sQry->value($map['products_url']) : ""
                           , 'products_viewed'           => ($sQry->value($map['products_viewed']) != '' || $sQry->value($map['products_viewed']) != NULL) ? $sQry->value($map['products_viewed']) : ""
                            ); 
-                         
-        $products_desc[] = $product;
+                           
+        $products_desc[] = $product;                 
         $cnt++;
       }
       
@@ -1217,40 +1271,40 @@ class lC_LocalUpgrader extends lC_Upgrader {
       
       
       $tQry = $target_db->query('INSERT INTO :table_products_description (products_id, 
-                                                                   language_id, 
-                                                                   products_name, 
-                                                                   products_description, 
-                                                                   products_keyword, 
-                                                                   products_tags, 
-                                                                   products_meta_title, 
-                                                                   products_meta_keywords, 
-                                                                   products_meta_description, 
-                                                                   products_url, 
-                                                                   products_viewed) 
-                                                           VALUES (:products_id, 
-                                                                   :language_id, 
-                                                                   :products_name, 
-                                                                   :products_description, 
-                                                                   :products_keyword, 
-                                                                   :products_tags, 
-                                                                   :products_meta_title, 
-                                                                   :products_meta_keywords, 
-                                                                   :products_meta_description, 
-                                                                   :products_url, 
-                                                                   :products_viewed)');
+                                                                          language_id, 
+                                                                          products_name, 
+                                                                          products_description, 
+                                                                          products_keyword, 
+                                                                          products_tags, 
+                                                                          products_meta_title, 
+                                                                          products_meta_keywords, 
+                                                                          products_meta_description, 
+                                                                          products_url, 
+                                                                          products_viewed) 
+                                                                  VALUES (:products_id, 
+                                                                          :language_id, 
+                                                                          :products_name, 
+                                                                          :products_description, 
+                                                                          :products_keyword, 
+                                                                          :products_tags, 
+                                                                          :products_meta_title, 
+                                                                          :products_meta_keywords, 
+                                                                          :products_meta_description, 
+                                                                          :products_url, 
+                                                                          :products_viewed)');
 
       $tQry->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
-      $tQry->bindInt  (':products_id'              , $product['products_id']);
-      $tQry->bindInt  (':language_id'              , $product['language_id']);
-      $tQry->bindValue(':products_name'            , $product['products_name']);
-      $tQry->bindValue(':products_description'     , $product['products_description']);
-      $tQry->bindValue(':products_keyword'         , $permalink);
-      $tQry->bindValue(':products_tags'            , $product['products_tags']);
-      $tQry->bindValue(':products_meta_title'      , $product['products_meta_title']);
-      $tQry->bindValue(':products_meta_keywords'   , $product['products_meta_keywords']);
-      $tQry->bindValue(':products_meta_description', $product['products_meta_description']);
-      $tQry->bindValue(':products_url'             , $product['products_url']);
-      $tQry->bindInt  (':products_viewed'          , $product['products_viewed']);
+      $tQry->bindInt  (':products_id'               , $product['products_id']);
+      $tQry->bindInt  (':language_id'               , $product['language_id']);
+      $tQry->bindValue(':products_name'             , $product['products_name']);
+      $tQry->bindValue(':products_description'      , $product['products_description']);
+      $tQry->bindValue(':products_keyword'          , $permalink);
+      $tQry->bindValue(':products_tags'             , $product['products_tags']);
+      $tQry->bindValue(':products_meta_title'       , $product['products_meta_title']);
+      $tQry->bindValue(':products_meta_keywords'    , $product['products_meta_keywords']);
+      $tQry->bindValue(':products_meta_description' , $product['products_meta_description']);
+      $tQry->bindValue(':products_url'              , $product['products_url']);
+      $tQry->bindInt  (':products_viewed'           , $product['products_viewed']);
       $tQry->execute();
       
       if ($target_db->isError()) {
@@ -1263,114 +1317,23 @@ class lC_LocalUpgrader extends lC_Upgrader {
 
     // END LOAD PRODUCTS DESCRIPTION TO TARGET DB
     
-    // ##########
-    
-    // LOAD PRODUCTS NOTIFICATIONS FROM SOURCE DB
-    
-    $map = $this->_data_mapping['products_notif'];
-
-    $products_notifs = array();
-    
-    $sQry = $source_db->query('SELECT * FROM products_notifications');
-    $sQry->execute();
-      
-    if ($sQry->numberOfRows() > 0) { 
-      $cnt = 0;
-      while ($sQry->next()) {
-        $product  = array(
-                            'products_id'  => $sQry->value($map['products_id'])
-                          , 'customers_id' => $sQry->value($map['customers_id'])
-                          , 'date_added'   => ($sQry->value($map['date_added']) != '' || $sQry->value($map['date_added']) != NULL) ? $sQry->value($map['date_added']) : ""
-                           ); 
-                         
-        $products_notifs[] = $product;
-
-      
-        $tQry = $target_db->query('INSERT INTO :table_products_notifs (products_id, 
-                                                                       customers_id, 
-                                                                       date_added) 
-                                                               VALUES (:products_id, 
-                                                                       :customers_id, 
-                                                                       :date_added)');
-
-        $tQry->bindTable(':table_products_notifs', TABLE_PRODUCTS_NOTIFICATIONS);
-        $tQry->bindInt  (':products_id' , $product['products_id']);
-        $tQry->bindInt  (':customers_id', $product['customers_id']);
-        $tQry->bindDate (':date_added'  , $product['date_added']);
-        $tQry->execute();
-        
-        if ($target_db->isError()) {
-          $this->_msg = $target_db->getError();
-          return false;
-        }
-
-        $cnt++;
-      }
-      
-      $sQry->freeResult();
-    }
-    
-    // END LOAD PRODUCTS DESCRIPTION FROM SOURCE DB
-
-    // ##########
-    
-    // LOAD PRODUCTS TO CATEGORIES FROM SOURCE DB
-    
-    $map = $this->_data_mapping['products_to_categs'];
-
-    $products_to_categs = array();
-    
-    $sQry = $source_db->query('SELECT * FROM products_to_categories');
-    $sQry->execute();
-      
-    if ($sQry->numberOfRows() > 0) { 
-      $cnt = 0;
-      while ($sQry->next()) {
-        $product  = array(
-                            'products_id'   => $sQry->value('products_id')
-                          , 'categories_id' => $sQry->value('categories_id')
-                           ); 
-                         
-        $tQry = $target_db->query('INSERT INTO :table_products_to_categs (products_id, 
-                                                                          categories_id) 
-                                                                  VALUES (:products_id, 
-                                                                          :categories_id)');
-
-        $tQry->bindTable(':table_products_to_categs', TABLE_PRODUCTS_TO_CATEGORIES);
-        $tQry->bindInt  (':products_id'  , $product['products_id']);
-        $tQry->bindInt  (':categories_id', $product['categories_id']);
-        $tQry->execute();
-        
-        if ($target_db->isError()) {
-          $this->_msg = $target_db->getError();
-          return false;
-        }
-
-        $cnt++;
-      }
-      
-      $sQry->freeResult();
-    }
-    
-    // END LOAD PRODUCTS TO CATEGORIES FROM SOURCE DB
-
-    // ##########
-    
     // LOAD PRODUCTS PERMALINK FROM SOURCE DB
 
     $map = $this->_data_mapping['permalink'];
 
-    $permalink_array = array();
-    
     $sQry = $source_db->query('SELECT p.products_id, language_id, products_name, categories_id FROM products as p, products_description AS pd, products_to_categories p2c WHERE p.products_id = pd.products_id AND p.products_id = p2c.products_id ORDER BY p.products_id, pd.language_id');
     $sQry->execute();
+    
+    // END LOAD PRODUCTS PERMALINK FROM SOURCE DB
+
+    // LOAD PERMALINK TO TARGET DB
       
     if ($sQry->numberOfRows() > 0) { 
       $cnt = 0;
       while ($sQry->next()) {
         $cID = $sQry->value('categories_id') ;
         
-        // getCPATH CODE         
+        // getCPATH CODE 
         
         $cat_list = $cID;
         $catID = $cID;
@@ -1453,17 +1416,316 @@ class lC_LocalUpgrader extends lC_Upgrader {
       
       $sQry->freeResult();
     }
-    
-    // END LOAD PRODUCTS PERMALINK FROM SOURCE DB
 
     // END LOAD PERMALINK TO TARGET DB
+    
+    // DISABLE AUTO INCREMENT WHEN PRIMARY KEY = 0
+    $tQry = $target_db->query('SET GLOBAL sql_mode = ""');
+    $tQry->execute();
+          
+    // DISCONNECT FROM SOURCE AND TARGET DBs
+    
+    $source_db->disconnect();    
+    $target_db->disconnect();  
 
-    // ##########
+    // END DISCONNECT FROM SOURCE AND TARGET DBs
+    
+    return true;
+      
+  } // end importProductsDescription
+
+  /*
+  *  function name : importProductsNotifications()
+  *
+  *  description : load products_notifications from the source database to loaded7
+  *
+  *  returns : true or false  
+  *
+  */
+  public function importProductsNotifications($switch = null) {
+
+    $s_db = $this->_sDB;
+    $t_db = $this->_tDB;
+          
+    if (!defined('DB_TABLE_PREFIX')) define('DB_TABLE_PREFIX', $t_db['DB_PREFIX']);
+
+    // CONNNECT TO SOURCE DB
+    
+    require_once('../includes/database_tables.php');  
+
+    require_once('../includes/classes/database/mysqli.php');
+    $class = 'lC_Database_mysqli'; // . $s_db['DB_DATABASE_CLASS'];
+    $source_db = new $class($s_db['DB_SERVER'], $s_db['DB_SERVER_USERNAME'], $s_db['DB_SERVER_PASSWORD']);
+    
+    if ($source_db->isError() === false) {
+      $source_db->selectDatabase($s_db['DB_DATABASE']);
+    }
+    
+    if ($source_db->isError()) {
+      $this->_msg = $source_db->getError();
+      return false;
+    }
+    // END CONNNECT TO SOURCE DB
+    
+    // CONNNECT TO TARGET DB
+                
+    $class = 'lC_Database_' . $t_db['DB_CLASS'];
+    $target_db = new $class($t_db['DB_SERVER'], $t_db['DB_SERVER_USERNAME'], $t_db['DB_SERVER_PASSWORD']);
+    
+    if ($target_db->isError() === false) {
+      $target_db->selectDatabase($t_db['DB_DATABASE']);
+    }
+    
+    if ($target_db->isError()) {
+      $this->_msg = $target_db->getError();
+      return false;
+    }
+
+    // END CONNNECT TO TARGET DB
+    
+    // TRUNCATE PRODUCTS NOTIFICATIONS TABLE IN TARGET DB 
+    
+    $tQry = $target_db->query('truncate table ' . TABLE_PRODUCTS_NOTIFICATIONS);
+    $tQry->execute();
+
+    // END TRUNCATE PRODUCTS NOTIFICATIONS TABLE IN TARGET DB
+
+    // DISABLE AUTO INCREMENT WHEN PRIMARY KEY = 0 
+    $tQry = $target_db->query('SET GLOBAL sql_mode = "NO_AUTO_VALUE_ON_ZERO"');
+    $tQry->execute();
+    
+    // LOAD PRODUCTS NOTIFICATIONS FROM SOURCE DB
+    
+    $map = $this->_data_mapping['products_notif'];
+
+    $sQry = $source_db->query('SELECT * FROM products_notifications');
+    $sQry->execute();
+      
+    if ($sQry->numberOfRows() > 0) { 
+      $cnt = 0;
+      while ($sQry->next()) {
+        $product  = array(
+                            'products_id'  => $sQry->value($map['products_id'])
+                          , 'customers_id' => $sQry->value($map['customers_id'])
+                          , 'date_added'   => ($sQry->value($map['date_added']) != '' || $sQry->value($map['date_added']) != NULL) ? $sQry->value($map['date_added']) : ""
+                           );
+      
+        $tQry = $target_db->query('INSERT INTO :table_products_notifs (products_id, 
+                                                                       customers_id, 
+                                                                       date_added) 
+                                                               VALUES (:products_id, 
+                                                                       :customers_id, 
+                                                                       :date_added)');
+
+        $tQry->bindTable(':table_products_notifs', TABLE_PRODUCTS_NOTIFICATIONS);
+        $tQry->bindInt  (':products_id'          , $product['products_id']);
+        $tQry->bindInt  (':customers_id'         , $product['customers_id']);
+        $tQry->bindDate (':date_added'           , $product['date_added']);
+        $tQry->execute();
+        
+        if ($target_db->isError()) {
+          $this->_msg = $target_db->getError();
+          return false;
+        }
+
+        $cnt++;
+      }
+      
+      $sQry->freeResult();
+    }
+    
+    // END LOAD PRODUCTS DESCRIPTION FROM SOURCE DB
+
+    // DISABLE AUTO INCREMENT WHEN PRIMARY KEY = 0
+    $tQry = $target_db->query('SET GLOBAL sql_mode = ""');
+    $tQry->execute();
+          
+    // DISCONNECT FROM SOURCE AND TARGET DBs
+    
+    $source_db->disconnect();    
+    $target_db->disconnect();  
+
+    // END DISCONNECT FROM SOURCE AND TARGET DBs
+    
+    return true;
+      
+  } // end importProductsNotifications 
+
+  /*
+  *  function name : importProductsToCategories()
+  *
+  *  description : load products_to_categories, manufacturers, reviews and specials from the source database to loaded7
+  *
+  *  returns : true or false  
+  *
+  */
+  public function importProductsToCategories($switch = null) {
+
+    $s_db = $this->_sDB;
+    $t_db = $this->_tDB;
+          
+    if (!defined('DB_TABLE_PREFIX')) define('DB_TABLE_PREFIX', $t_db['DB_PREFIX']);
+
+    // CONNNECT TO SOURCE DB
+    
+    require_once('../includes/database_tables.php');  
+
+    require_once('../includes/classes/database/mysqli.php');
+    $class = 'lC_Database_mysqli'; // . $s_db['DB_DATABASE_CLASS'];
+    $source_db = new $class($s_db['DB_SERVER'], $s_db['DB_SERVER_USERNAME'], $s_db['DB_SERVER_PASSWORD']);
+    
+    if ($source_db->isError() === false) {
+      $source_db->selectDatabase($s_db['DB_DATABASE']);
+    }
+    
+    if ($source_db->isError()) {
+      $this->_msg = $source_db->getError();
+      return false;
+    }
+    // END CONNNECT TO SOURCE DB
+    
+    // CONNNECT TO TARGET DB
+                
+    $class = 'lC_Database_' . $t_db['DB_CLASS'];
+    $target_db = new $class($t_db['DB_SERVER'], $t_db['DB_SERVER_USERNAME'], $t_db['DB_SERVER_PASSWORD']);
+    
+    if ($target_db->isError() === false) {
+      $target_db->selectDatabase($t_db['DB_DATABASE']);
+    }
+    
+    if ($target_db->isError()) {
+      $this->_msg = $target_db->getError();
+      return false;
+    }
+
+    // END CONNNECT TO TARGET DB
+    
+    // TRUNCATE PRODUCTS TO CATEGORIES TABLE IN TARGET DB 
+    
+    $tQry = $target_db->query('truncate table ' . TABLE_PRODUCTS_TO_CATEGORIES);
+    $tQry->execute(); 
+
+    // END TRUNCATE PRODUCTS TO CATEGORIES TABLE IN TARGET DB
+
+    // DISABLE AUTO INCREMENT WHEN PRIMARY KEY = 0 
+    $tQry = $target_db->query('SET GLOBAL sql_mode = "NO_AUTO_VALUE_ON_ZERO"');
+    $tQry->execute(); 
+    
+    // LOAD PRODUCTS TO CATEGORIES FROM SOURCE DB
+    
+    $map = $this->_data_mapping['products_to_categs'];
+
+    $sQry = $source_db->query('SELECT * FROM products_to_categories');
+    $sQry->execute();
+      
+    if ($sQry->numberOfRows() > 0) { 
+      $cnt = 0;
+      while ($sQry->next()) {
+        $product  = array(
+                            'products_id'   => $sQry->value('products_id')
+                          , 'categories_id' => $sQry->value('categories_id')
+                           ); 
+                         
+        $tQry = $target_db->query('INSERT INTO :table_products_to_categs (products_id, 
+                                                                          categories_id) 
+                                                                  VALUES (:products_id, 
+                                                                          :categories_id)');
+
+        $tQry->bindTable(':table_products_to_categs', TABLE_PRODUCTS_TO_CATEGORIES);
+        $tQry->bindInt  (':products_id'             , $product['products_id']);
+        $tQry->bindInt  (':categories_id'           , $product['categories_id']);
+        $tQry->execute();
+        
+        if ($target_db->isError()) {
+          $this->_msg = $target_db->getError();
+          return false;
+        }
+
+        $cnt++;
+      }
+      
+      $sQry->freeResult();
+    }
+    
+    // END LOAD PRODUCTS TO CATEGORIES FROM SOURCE DB
+
+    // DISABLE AUTO INCREMENT WHEN PRIMARY KEY = 0
+    $tQry = $target_db->query('SET GLOBAL sql_mode = ""');
+    $tQry->execute();
+          
+    // DISCONNECT FROM SOURCE AND TARGET DBs
+    
+    $source_db->disconnect();    
+    $target_db->disconnect();  
+
+    // END DISCONNECT FROM SOURCE AND TARGET DBs
+    
+    return true;
+      
+  } // end importProductsToCategories
+
+  /*
+  *  function name : importManufacturers()
+  *
+  *  description : load manufacturers from the source database to loaded7
+  *
+  *  returns : true or false  
+  *
+  */
+  public function importManufacturers($switch = null) {
+
+    $s_db = $this->_sDB;
+    $t_db = $this->_tDB;
+          
+    if (!defined('DB_TABLE_PREFIX')) define('DB_TABLE_PREFIX', $t_db['DB_PREFIX']);
+
+    // CONNNECT TO SOURCE DB
+    
+    require_once('../includes/database_tables.php');  
+
+    require_once('../includes/classes/database/mysqli.php');
+    $class = 'lC_Database_mysqli'; // . $s_db['DB_DATABASE_CLASS'];
+    $source_db = new $class($s_db['DB_SERVER'], $s_db['DB_SERVER_USERNAME'], $s_db['DB_SERVER_PASSWORD']);
+    
+    if ($source_db->isError() === false) {
+      $source_db->selectDatabase($s_db['DB_DATABASE']);
+    }
+    
+    if ($source_db->isError()) {
+      $this->_msg = $source_db->getError();
+      return false;
+    }
+    // END CONNNECT TO SOURCE DB
+    
+    // CONNNECT TO TARGET DB
+                
+    $class = 'lC_Database_' . $t_db['DB_CLASS'];
+    $target_db = new $class($t_db['DB_SERVER'], $t_db['DB_SERVER_USERNAME'], $t_db['DB_SERVER_PASSWORD']);
+    
+    if ($target_db->isError() === false) {
+      $target_db->selectDatabase($t_db['DB_DATABASE']);
+    }
+    
+    if ($target_db->isError()) {
+      $this->_msg = $target_db->getError();
+      return false;
+    }
+
+    // END CONNNECT TO TARGET DB
+    
+    // TRUNCATE MANUFACTURERS TABLE IN TARGET DB 
+    
+    $tQry = $target_db->query('truncate table ' . TABLE_MANUFACTURERS);
+    $tQry->execute(); 
+
+    // END TRUNCATE MANUFACTURERS TABLE IN TARGET DB
+
+    // DISABLE AUTO INCREMENT WHEN PRIMARY KEY = 0 
+    $tQry = $target_db->query('SET GLOBAL sql_mode = "NO_AUTO_VALUE_ON_ZERO"');
+    $tQry->execute();
     
     // LOAD MANUFACTURERS FROM SOURCE DB
     $map = $this->_data_mapping['manufacturers'];
-
-    $manufacturers = array();
 
     $sQry = $source_db->query('select * from manufacturers');
     $sQry->execute();
@@ -1510,8 +1772,81 @@ class lC_LocalUpgrader extends lC_Upgrader {
     }
     
     // END LOAD MANUFACTURERS FROM SOURCE DB
+
+    // DISABLE AUTO INCREMENT WHEN PRIMARY KEY = 0
+    $tQry = $target_db->query('SET GLOBAL sql_mode = ""');
+    $tQry->execute();
+          
+    // DISCONNECT FROM SOURCE AND TARGET DBs
     
-    // #############
+    $source_db->disconnect();    
+    $target_db->disconnect();  
+
+    // END DISCONNECT FROM SOURCE AND TARGET DBs
+    
+    return true;
+      
+  } // end importManufacturers
+
+  /*
+  *  function name : importManufacturersInfo()
+  *
+  *  description : load manufacturers info from the source database to loaded7
+  *
+  *  returns : true or false  
+  *
+  */
+  public function importManufacturersInfo($switch = null) {
+
+    $s_db = $this->_sDB;
+    $t_db = $this->_tDB;
+          
+    if (!defined('DB_TABLE_PREFIX')) define('DB_TABLE_PREFIX', $t_db['DB_PREFIX']);
+
+    // CONNNECT TO SOURCE DB
+    
+    require_once('../includes/database_tables.php');  
+
+    require_once('../includes/classes/database/mysqli.php');
+    $class = 'lC_Database_mysqli'; // . $s_db['DB_DATABASE_CLASS'];
+    $source_db = new $class($s_db['DB_SERVER'], $s_db['DB_SERVER_USERNAME'], $s_db['DB_SERVER_PASSWORD']);
+    
+    if ($source_db->isError() === false) {
+      $source_db->selectDatabase($s_db['DB_DATABASE']);
+    }
+    
+    if ($source_db->isError()) {
+      $this->_msg = $source_db->getError();
+      return false;
+    }
+    // END CONNNECT TO SOURCE DB
+    
+    // CONNNECT TO TARGET DB
+                
+    $class = 'lC_Database_' . $t_db['DB_CLASS'];
+    $target_db = new $class($t_db['DB_SERVER'], $t_db['DB_SERVER_USERNAME'], $t_db['DB_SERVER_PASSWORD']);
+    
+    if ($target_db->isError() === false) {
+      $target_db->selectDatabase($t_db['DB_DATABASE']);
+    }
+    
+    if ($target_db->isError()) {
+      $this->_msg = $target_db->getError();
+      return false;
+    }
+
+    // END CONNNECT TO TARGET DB
+    
+    // TRUNCATE MANUFACTURERS INFO TABLE IN TARGET DB 
+    
+    $tQry = $target_db->query('truncate table ' . TABLE_MANUFACTURERS_INFO);
+    $tQry->execute(); 
+
+    // END TRUNCATE MANUFACTURERS INFO TABLE IN TARGET DB
+
+    // DISABLE AUTO INCREMENT WHEN PRIMARY KEY = 0 
+    $tQry = $target_db->query('SET GLOBAL sql_mode = "NO_AUTO_VALUE_ON_ZERO"');
+    $tQry->execute();
 
     // LOAD MANUFACTURERS INFO FROM SOURCE DB
     $map = $this->_data_mapping['manufacturers_info'];
@@ -1572,9 +1907,82 @@ class lC_LocalUpgrader extends lC_Upgrader {
       $iCnt++;
     }
 
-    // END LOAD MANUFACTURERS INFO TO TARGET DB
+    // END LOAD MANUFACTURERS INFO TO TARGET DB 
+
+    // DISABLE AUTO INCREMENT WHEN PRIMARY KEY = 0
+    $tQry = $target_db->query('SET GLOBAL sql_mode = ""');
+    $tQry->execute();
+          
+    // DISCONNECT FROM SOURCE AND TARGET DBs
     
-    // ##########
+    $source_db->disconnect();    
+    $target_db->disconnect();  
+
+    // END DISCONNECT FROM SOURCE AND TARGET DBs
+    
+    return true;
+      
+  } // end importManufacturersInfo
+
+  /*
+  *  function name : importReviews()
+  *
+  *  description : load reviews from the source database to loaded7
+  *
+  *  returns : true or false  
+  *
+  */
+  public function importReviews($switch = null) {
+
+    $s_db = $this->_sDB;
+    $t_db = $this->_tDB;
+          
+    if (!defined('DB_TABLE_PREFIX')) define('DB_TABLE_PREFIX', $t_db['DB_PREFIX']);
+
+    // CONNNECT TO SOURCE DB
+    
+    require_once('../includes/database_tables.php');  
+
+    require_once('../includes/classes/database/mysqli.php');
+    $class = 'lC_Database_mysqli'; // . $s_db['DB_DATABASE_CLASS'];
+    $source_db = new $class($s_db['DB_SERVER'], $s_db['DB_SERVER_USERNAME'], $s_db['DB_SERVER_PASSWORD']);
+    
+    if ($source_db->isError() === false) {
+      $source_db->selectDatabase($s_db['DB_DATABASE']);
+    }
+    
+    if ($source_db->isError()) {
+      $this->_msg = $source_db->getError();
+      return false;
+    }
+    // END CONNNECT TO SOURCE DB
+    
+    // CONNNECT TO TARGET DB
+                
+    $class = 'lC_Database_' . $t_db['DB_CLASS'];
+    $target_db = new $class($t_db['DB_SERVER'], $t_db['DB_SERVER_USERNAME'], $t_db['DB_SERVER_PASSWORD']);
+    
+    if ($target_db->isError() === false) {
+      $target_db->selectDatabase($t_db['DB_DATABASE']);
+    }
+    
+    if ($target_db->isError()) {
+      $this->_msg = $target_db->getError();
+      return false;
+    }
+
+    // END CONNNECT TO TARGET DB
+    
+    // TRUNCATE REVIEWS TABLE IN TARGET DB 
+    
+    $tQry = $target_db->query('truncate table ' . TABLE_REVIEWS);
+    $tQry->execute(); 
+
+    // END TRUNCATE REVIEWS TABLE IN TARGET DB
+
+    // DISABLE AUTO INCREMENT WHEN PRIMARY KEY = 0 
+    $tQry = $target_db->query('SET GLOBAL sql_mode = "NO_AUTO_VALUE_ON_ZERO"');
+    $tQry->execute();
     
     // LOAD REVIEWS FROM SOURCE DB
     
@@ -1615,7 +2023,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
     
     $iCnt = 0;
     foreach ($reviews as $review) {
-      
+          
       $tQry = $target_db->query('INSERT INTO :table_reviews (reviews_id, 
                                                              products_id, 
                                                              customers_id, 
@@ -1663,8 +2071,81 @@ class lC_LocalUpgrader extends lC_Upgrader {
     $tQry->freeResult();
 
     // END LOAD REVIEWS FROM SOURCE DB
+
+    // DISABLE AUTO INCREMENT WHEN PRIMARY KEY = 0
+    $tQry = $target_db->query('SET GLOBAL sql_mode = ""');
+    $tQry->execute();
+          
+    // DISCONNECT FROM SOURCE AND TARGET DBs
     
-    // ##########
+    $source_db->disconnect();    
+    $target_db->disconnect();  
+
+    // END DISCONNECT FROM SOURCE AND TARGET DBs
+    
+    return true;
+      
+  } // end importReviews
+
+  /*
+  *  function name : importSpecials()
+  *
+  *  description : load specials from the source database to loaded7
+  *
+  *  returns : true or false  
+  *
+  */
+  public function importSpecials($switch = null) {
+
+    $s_db = $this->_sDB;
+    $t_db = $this->_tDB;
+          
+    if (!defined('DB_TABLE_PREFIX')) define('DB_TABLE_PREFIX', $t_db['DB_PREFIX']);
+
+    // CONNNECT TO SOURCE DB
+    
+    require_once('../includes/database_tables.php');  
+
+    require_once('../includes/classes/database/mysqli.php');
+    $class = 'lC_Database_mysqli'; // . $s_db['DB_DATABASE_CLASS'];
+    $source_db = new $class($s_db['DB_SERVER'], $s_db['DB_SERVER_USERNAME'], $s_db['DB_SERVER_PASSWORD']);
+    
+    if ($source_db->isError() === false) {
+      $source_db->selectDatabase($s_db['DB_DATABASE']);
+    }
+    
+    if ($source_db->isError()) {
+      $this->_msg = $source_db->getError();
+      return false;
+    }
+    // END CONNNECT TO SOURCE DB
+    
+    // CONNNECT TO TARGET DB
+                
+    $class = 'lC_Database_' . $t_db['DB_CLASS'];
+    $target_db = new $class($t_db['DB_SERVER'], $t_db['DB_SERVER_USERNAME'], $t_db['DB_SERVER_PASSWORD']);
+    
+    if ($target_db->isError() === false) {
+      $target_db->selectDatabase($t_db['DB_DATABASE']);
+    }
+    
+    if ($target_db->isError()) {
+      $this->_msg = $target_db->getError();
+      return false;
+    }
+
+    // END CONNNECT TO TARGET DB
+    
+    // TRUNCATE SPECIALS TABLE IN TARGET DB
+    
+    $tQry = $target_db->query('truncate table ' . TABLE_SPECIALS);
+    $tQry->execute(); 
+
+    // END TRUNCATE SPECIALS TABLE IN TARGET DB
+
+    // DISABLE AUTO INCREMENT WHEN PRIMARY KEY = 0 
+    $tQry = $target_db->query('SET GLOBAL sql_mode = "NO_AUTO_VALUE_ON_ZERO"');
+    $tQry->execute();
     
     // LOAD SPECIALS FROM SOURCE DB
     
@@ -1703,7 +2184,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
     
     $iCnt = 0;
     foreach ($specials as $special) {
-      
+          
       $tQry = $target_db->query('INSERT INTO :table_reviews (specials_id, 
                                                              products_id, 
                                                              specials_new_products_price, 
@@ -1751,15 +2232,14 @@ class lC_LocalUpgrader extends lC_Upgrader {
           
     // DISCONNECT FROM SOURCE AND TARGET DBs
     
-    $source_db->disconnect();  
-    
+    $source_db->disconnect();    
     $target_db->disconnect();  
 
     // END DISCONNECT FROM SOURCE AND TARGET DBs
     
     return true;
       
-  } // end importProducts
+  } // end importSpecials
 
   /*
   *  function name : getcPath()
@@ -2702,7 +3182,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
   /*
   *  function name : importCustomers()
   *
-  *  description : load customers and address book data from the source database to loaded7
+  *  description : load customers data from the source database to loaded7
   *
   *  returns : true or false  
   *
@@ -2752,9 +3232,6 @@ class lC_LocalUpgrader extends lC_Upgrader {
     // TRUNCATE CUSTOMERS TABLES IN TARGET DB
     
     $tQry = $target_db->query('truncate table ' . TABLE_CUSTOMERS);
-    $tQry->execute();
-    
-    $tQry = $target_db->query('truncate table ' . TABLE_ADDRESS_BOOK);
     $tQry->execute();
 
     // END TRUNCATE CUSTOMERS TABLES IN TARGET DB
@@ -2867,8 +3344,77 @@ class lC_LocalUpgrader extends lC_Upgrader {
     }
     
     // END LOAD CUSTOMERS FROM SOURCE DB
+
+    // DISABLE AUTO INCREMENT WHEN PRIMARY KEY = 0
+    $tQry = $target_db->query('SET GLOBAL sql_mode = ""');
+    $tQry->execute();
     
-    // ##########
+    $source_db->disconnect();  
+    $target_db->disconnect();  
+    
+    return true;
+      
+  } // end importCustomers
+  
+  /*
+  *  function name : importAddressBook()
+  *
+  *  description : load address book data from the source database to loaded7
+  *
+  *  returns : true or false  
+  *
+  */
+  public function importAddressBook($switch = null) {
+  
+    $s_db = $this->_sDB;
+    $t_db = $this->_tDB;
+          
+    if (!defined('DB_TABLE_PREFIX')) define('DB_TABLE_PREFIX', $t_db['DB_PREFIX']);
+
+    // CONNNECT TO SOURCE DB
+    
+    require_once('../includes/database_tables.php');
+                                                        
+    require_once('../includes/classes/database/mysqli.php');
+    $class = 'lC_Database_mysqli'; // . $s_db['DB_DATABASE_CLASS'];
+    $source_db = new $class($s_db['DB_SERVER'], $s_db['DB_SERVER_USERNAME'], $s_db['DB_SERVER_PASSWORD']);
+    
+    if ($source_db->isError() === false) {
+      $source_db->selectDatabase($s_db['DB_DATABASE']);
+    }
+    
+    if ($source_db->isError()) {
+      $this->_msg = $source_db->getError();
+      return false;
+    }
+    // END CONNNECT TO SOURCE DB
+    
+    // CONNNECT TO TARGET DB
+
+    $class = 'lC_Database_' . $t_db['DB_CLASS'];
+    $target_db = new $class($t_db['DB_SERVER'], $t_db['DB_SERVER_USERNAME'], $t_db['DB_SERVER_PASSWORD']);
+    
+    if ($target_db->isError() === false) {
+      $target_db->selectDatabase($t_db['DB_DATABASE']);
+    }
+    
+    if ($target_db->isError()) {
+      $this->_msg = $target_db->getError();
+      return false;
+    }
+
+    // END CONNNECT TO TARGET DB
+
+    // TRUNCATE ADDRESS BOOK TABLES IN TARGET DB
+    
+    $tQry = $target_db->query('truncate table ' . TABLE_ADDRESS_BOOK);
+    $tQry->execute();
+
+    // END TRUNCATE ADDRESS BOOK TABLES IN TARGET DB
+
+    // DISABLE AUTO INCREMENT WHEN PRIMARY KEY = 0
+    $tQry = $target_db->query('SET GLOBAL sql_mode = "NO_AUTO_VALUE_ON_ZERO"');
+    $tQry->execute();
 
     // LOAD ADDRESS BOOK FROM SOURCE DB
     
@@ -2973,8 +3519,6 @@ class lC_LocalUpgrader extends lC_Upgrader {
     }
     
     // END LOAD ADDRESS BOOK FROM SOURCE DB
-    
-    // ##########
 
     // DISABLE AUTO INCREMENT WHEN PRIMARY KEY = 0
     $tQry = $target_db->query('SET GLOBAL sql_mode = ""');
@@ -2985,7 +3529,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
     
     return true;
       
-  } // end importCustomers
+  } // end importAddressBook
 
   /*
   *  function name : importImages()
