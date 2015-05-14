@@ -108,8 +108,14 @@ rpc_sqlfile_error = Cannot locate source configuration file
 param_import_categories = CATEGORIES
 param_import_categories_description = importing Category data 
 
+param_import_categories_description = CATEGORIES DESCRIPTION
+param_import_categories_description_description = importing Category Description data 
+
 param_import_products = PRODUCTS
 param_import_products_description = importing Product data
+
+param_import_featured = FEATURED PRODUCTS
+param_import_featured_description = importing Featured Products data
 
 param_import_attributes = ATTRIBUTES
 param_import_attributes_description = importing Product Attributes data

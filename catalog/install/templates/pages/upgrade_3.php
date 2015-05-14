@@ -164,18 +164,33 @@ function prepareWork() {
     <div class="with-padding">  
       <div class="field-block button-height large-margin-left large-margin-right">
         <label for="IMPORT_CATEGORIES" class="label"><b><?php echo $lC_Language->get('param_import_categories'); ?></b></label>
-    	  <div style="display:block; padding:0px 20px 0px 0px"> 
-    	    <p id="pBoxContainer_categories" style="height:25px; padding-top:5px;">  
-    		  <img style="display:none;" id="img_copy_tick_categories" class="tick" src="images/tick.png" align="right" />
-    		  <img id="img_copy_progress_categories" class="progress" src="images/ajax-loader-1.gif" align="right" />
-    		  <img style="display:none;" id="img_copy_cross_categories" class="cross" src="images/cross.png" align="right" />
-    	    </p> 
-    	  </div>      
-    	  <div id="eBox_categories" style="display:none; margin: 0px 0px 0px -190px; padding: 0px 10px 10px 0px;"> 
-    	    <p class="message icon-warning red-gradient">   
-    	      <span id="eBoxContents_categories"></span>
-    	    </p> 
-    	  </div>      
+        <div style="display:block; padding:0px 20px 0px 0px"> 
+          <p id="pBoxContainer_categories" style="height:25px; padding-top:5px;">  
+          <img style="display:none;" id="img_copy_tick_categories" class="tick" src="images/tick.png" align="right" />
+          <img id="img_copy_progress_categories" class="progress" src="images/ajax-loader-1.gif" align="right" />
+          <img style="display:none;" id="img_copy_cross_categories" class="cross" src="images/cross.png" align="right" />
+          </p> 
+        </div>      
+        <div id="eBox_categories" style="display:none; margin: 0px 0px 0px -190px; padding: 0px 10px 10px 0px;"> 
+          <p class="message icon-warning red-gradient">   
+            <span id="eBoxContents_categories"></span>
+          </p> 
+        </div>      
+      </div>  
+      <div class="field-block button-height large-margin-left large-margin-right">
+        <label for="IMPORT_CATEGORIES_DESCRIPTION" class="label"><b><?php echo $lC_Language->get('param_import_categories_description'); ?></b></label>
+        <div style="display:block; padding:0px 20px 0px 0px"> 
+          <p id="pBoxContainer_categories_description" style="height:25px; padding-top:5px;">  
+          <img style="display:none;" id="img_copy_tick_categories_description" class="tick" src="images/tick.png" align="right" />
+          <img style="display:none;" id="img_copy_progress_categories_description" class="progress" src="images/ajax-loader-1.gif" align="right" />
+          <img style="display:none;" id="img_copy_cross_categories_description" class="cross" src="images/cross.png" align="right" />
+          </p> 
+        </div>      
+        <div id="eBox_categories_description" style="display:none; margin: 0px 0px 0px -190px; padding: 0px 10px 10px 0px;"> 
+          <p class="message icon-warning red-gradient">   
+            <span id="eBoxContents_categories_description"></span>
+          </p> 
+        </div>      
       </div>
       <div class="field-block button-height large-margin-left large-margin-right">
         <label for="IMPORT_CUSTOMERS" class="label"><b><?php echo $lC_Language->get('param_import_customers'); ?></b></label>
@@ -234,6 +249,21 @@ function prepareWork() {
         <div id="eBox_attributes" style="display:none; margin: 0px 0px 0px -190px; padding: 0px 10px 10px 0px;"> 
           <p class="message icon-warning red-gradient">   
             <span id="eBoxContents_attributes"></span>
+          </p> 
+        </div>      
+      </div>
+      <div class="field-block button-height large-margin-left large-margin-right">
+        <label for="IMPORT_FEATURED" class="label"><b><?php echo $lC_Language->get('param_import_featured'); ?></b></label>
+        <div style="display:block; padding:0px 20px 0px 0px"> 
+          <p id="pBoxContainer_featured" style="height:25px; padding-top:5px;">   
+          <img style="display:none;" id="img_copy_tick_featured" class="tick" src="images/tick.png" align="right" />
+          <img style="display:none;" id="img_copy_progress_featured" class="progress" src="images/ajax-loader-1.gif" align="right" />
+          <img style="display:none;" id="img_copy_cross_featured" class="cross" src="images/cross.png" align="right" />
+          </p> 
+        </div>      
+        <div id="eBox_featured" style="display:none; margin: 0px 0px 0px -190px; padding: 0px 10px 10px 0px;"> 
+          <p class="message icon-warning red-gradient">   
+            <span id="eBoxContents_featured"></span>
           </p> 
         </div>      
       </div>
@@ -505,195 +535,213 @@ $(document).ready(function() {
           $('#eBoxContents_categories').html(_rslt);
           $('#eBox_categories').show();
         }
-            
-        $('#img_copy_progress_customers').show();
-        setTimeout(function() {
-          _rslt = doImport('_customers'); 
-          if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
-            $('#eBoxContents_customers').html(_rslt);
-            $('#eBox_customers').show();
-          }
-
-          $('#img_copy_progress_customer_groups').show();
-          setTimeout(function() {
-            _rslt = doImport('_customer_groups'); 
-            if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
-              $('#eBoxContents_customer_groups').html(_rslt);
-              $('#eBox_customer_groups').show();
-            }
         
-            $('#img_copy_progress_products').show();
+        $('#img_copy_progress_categories_description').show();
+        setTimeout(function() {
+          _rslt = doImport('_categories_description'); 
+          if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
+            $('#eBoxContents_categories_description').html(_rslt);
+            $('#eBox_categories_description').show();
+          }
+            
+          $('#img_copy_progress_customers').show();
+          setTimeout(function() {
+            _rslt = doImport('_customers'); 
+            if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
+              $('#eBoxContents_customers').html(_rslt);
+              $('#eBox_customers').show();
+            }
+
+            $('#img_copy_progress_customer_groups').show();
             setTimeout(function() {
-              _rslt = doImport('_products'); 
+              _rslt = doImport('_customer_groups'); 
               if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
-                $('#eBoxContents_products').html(_rslt);
-                $('#eBox_products').show();
+                $('#eBoxContents_customer_groups').html(_rslt);
+                $('#eBox_customer_groups').show();
               }
-
-              $('#img_copy_progress_attributes').show();
+          
+              $('#img_copy_progress_products').show();
               setTimeout(function() {
-                _rslt = doImport('_attributes'); 
+                _rslt = doImport('_products'); 
                 if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
-                  $('#eBoxContents_attributes').html(_rslt);
-                  $('#eBox_attributes').show();
+                  $('#eBoxContents_products').html(_rslt);
+                  $('#eBox_products').show();
                 }
-                
-                $('#img_copy_progress_orders').show();
+
+                $('#img_copy_progress_attributes').show();
                 setTimeout(function() {
-                  _rslt = doImport('_orders'); 
+                  _rslt = doImport('_attributes'); 
                   if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
-                    $('#eBoxContents_orders').html(_rslt);
-                    $('#eBox_customer_orders').show();
-                  } 
-                
-                  $('#img_copy_progress_orders_products').show();
+                    $('#eBoxContents_attributes').html(_rslt);
+                    $('#eBox_attributes').show();
+                  }
+          
+                  $('#img_copy_progress_featured').show();
                   setTimeout(function() {
-                    _rslt = doImport('_orders_products'); 
+                    _rslt = doImport('_featured'); 
                     if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
-                      $('#eBoxContents_orders_products').html(_rslt);
-                      $('#eBox_customer_orders_products').show();
+                      $('#eBoxContents_featured').html(_rslt);
+                      $('#eBox_featured').show();
                     }
-                
-                    $('#img_copy_progress_orders_products_download').show();
+                    
+                    $('#img_copy_progress_orders').show();
                     setTimeout(function() {
-                      _rslt = doImport('_orders_products_download'); 
+                      _rslt = doImport('_orders'); 
                       if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
-                        $('#eBoxContents_orders_products_download').html(_rslt);
-                        $('#eBox_customer_orders_products_download').show();
-                      }
-                
-                      $('#img_copy_progress_orders_status').show();
+                        $('#eBoxContents_orders').html(_rslt);
+                        $('#eBox_customer_orders').show();
+                      } 
+                    
+                      $('#img_copy_progress_orders_products').show();
                       setTimeout(function() {
-                        _rslt = doImport('_orders_status'); 
+                        _rslt = doImport('_orders_products'); 
                         if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
-                          $('#eBoxContents_orders_status').html(_rslt);
-                          $('#eBox_customer_orders_status').show();
+                          $('#eBoxContents_orders_products').html(_rslt);
+                          $('#eBox_customer_orders_products').show();
                         }
-                
-                        $('#img_copy_progress_orders_status_history').show();
+                    
+                        $('#img_copy_progress_orders_products_download').show();
                         setTimeout(function() {
-                          _rslt = doImport('_orders_status_history'); 
+                          _rslt = doImport('_orders_products_download'); 
                           if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
-                            $('#eBoxContents_orders_status_history').html(_rslt);
-                            $('#eBox_customer_orders_status_history').show();
+                            $('#eBoxContents_orders_products_download').html(_rslt);
+                            $('#eBox_customer_orders_products_download').show();
                           }
-                
-                          $('#img_copy_progress_orders_total').show();
+                    
+                          $('#img_copy_progress_orders_status').show();
                           setTimeout(function() {
-                            _rslt = doImport('_orders_total'); 
+                            _rslt = doImport('_orders_status'); 
                             if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
-                              $('#eBoxContents_orders_total').html(_rslt);
-                              $('#eBox_customer_orders_total').show();
+                              $('#eBoxContents_orders_status').html(_rslt);
+                              $('#eBox_customer_orders_status').show();
                             }
-                   
-                            $('#img_copy_progress_cds').show();
+                    
+                            $('#img_copy_progress_orders_status_history').show();
                             setTimeout(function() {
-                              _rslt = doImport('_cds'); 
+                              _rslt = doImport('_orders_status_history'); 
                               if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
-                                $('#eBoxContents_cds').html(_rslt);
-                                $('#eBox_customer_cds').show();
+                                $('#eBoxContents_orders_status_history').html(_rslt);
+                                $('#eBox_customer_orders_status_history').show();
                               }
-
-                              $('#img_copy_progress_administrators').show();
+                    
+                              $('#img_copy_progress_orders_total').show();
                               setTimeout(function() {
-                                _rslt = doImport('_administrators'); 
+                                _rslt = doImport('_orders_total'); 
                                 if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
-                                  $('#eBoxContents_administrators').html(_rslt);
-                                  $('#eBox_customer_administrators').show();
+                                  $('#eBoxContents_orders_total').html(_rslt);
+                                  $('#eBox_customer_orders_total').show();
                                 }
-                                
-                                $('#img_copy_progress_newsletter').show();
+                       
+                                $('#img_copy_progress_cds').show();
                                 setTimeout(function() {
-                                  _rslt = doImport('_newsletter'); 
+                                  _rslt = doImport('_cds'); 
                                   if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
-                                    $('#eBoxContents_newsletter').html(_rslt);
-                                    $('#eBox_customer_newsletter').show();
+                                    $('#eBoxContents_cds').html(_rslt);
+                                    $('#eBox_customer_cds').show();
                                   }
-                                  
-                                  $('#img_copy_progress_banners').show();
-                                  setTimeout(function() {
-                                    _rslt = doImport('_banners'); 
-                                    if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
-                                      $('#eBoxContents_banners').html(_rslt);
-                                      $('#eBox_customer_banners').show();
-                                    }
 
-                                    $('#img_copy_progress_configuration').show();
+                                  $('#img_copy_progress_administrators').show();
+                                  setTimeout(function() {
+                                    _rslt = doImport('_administrators'); 
+                                    if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
+                                      $('#eBoxContents_administrators').html(_rslt);
+                                      $('#eBox_customer_administrators').show();
+                                    }
+                                    
+                                    $('#img_copy_progress_newsletter').show();
                                     setTimeout(function() {
-                                      _rslt = doImport('_configuration'); 
+                                      _rslt = doImport('_newsletter'); 
                                       if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
-                                        $('#eBoxContents_configuration').html(_rslt);
-                                        $('#eBox_customer_configuration').show();
+                                        $('#eBoxContents_newsletter').html(_rslt);
+                                        $('#eBox_customer_newsletter').show();
                                       }
                                       
-                                      $('#img_copy_progress_coupons').show();
+                                      $('#img_copy_progress_banners').show();
                                       setTimeout(function() {
-                                        _rslt = doImport('_coupons'); 
+                                        _rslt = doImport('_banners'); 
                                         if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
-                                          $('#eBoxContents_coupons').html(_rslt);
-                                          $('#eBox_customer_coupons').show();
+                                          $('#eBoxContents_banners').html(_rslt);
+                                          $('#eBox_customer_banners').show();
                                         }
-                                        
-                                        $('#img_copy_progress_taxclasses').show();
+
+                                        $('#img_copy_progress_configuration').show();
                                         setTimeout(function() {
-                                          _rslt = doImport('_taxclasses'); 
+                                          _rslt = doImport('_configuration'); 
                                           if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
-                                            $('#eBoxContents_taxclasses').html(_rslt);
-                                            $('#eBox_customer_taxclasses').show();
+                                            $('#eBoxContents_configuration').html(_rslt);
+                                            $('#eBox_customer_configuration').show();
                                           }
                                           
-                                          $('#img_copy_progress_languages').show();
+                                          $('#img_copy_progress_coupons').show();
                                           setTimeout(function() {
-                                            _rslt = doImport('_languages'); 
+                                            _rslt = doImport('_coupons'); 
                                             if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
-                                              $('#eBoxContents_languages').html(_rslt);
-                                              $('#eBox_languages').show();
+                                              $('#eBoxContents_coupons').html(_rslt);
+                                              $('#eBox_customer_coupons').show();
                                             }
                                             
-                                            $('#img_copy_progress_currencies').show();
+                                            $('#img_copy_progress_taxclasses').show();
                                             setTimeout(function() {
-                                              _rslt = doImport('_currencies'); 
+                                              _rslt = doImport('_taxclasses'); 
                                               if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
-                                                $('#eBoxContents_currencies').html(_rslt);
-                                                $('#eBox_currencies').show();
-                                              }
-                                            
-                                              // DONE
-                                              $('#pBox').hide();
-                                              
-                                              if (_err === false) {
-                                                $('#mBoxSuccessContents').html('UPGRADE COMPLETE');
-                                                $('#mBoxSuccess').show();
-
-                                                $("#upgradeForm").attr("action", "upgrade.php?step=4");
-                                                $('#btn_continue').show();
-                                                $('#btn_retry').hide();
-                                              } else {
-                                                $('#mBoxContents').html('<?php echo $lC_Language->get('upgrade_step3_page_errfound'); ?>');
-                                                $('#mBox').show();
-
-                                                $("#upgradeForm").attr("action", "upgrade.php?step=3");
-                                                $('#btn_continue').hide();
-                                                $('#btn_retry').show();
+                                                $('#eBoxContents_taxclasses').html(_rslt);
+                                                $('#eBox_customer_taxclasses').show();
                                               }
                                               
-                                              $('#buttonContainer').show();                                  
-                                  
-                                            }, 3000);
-                                          }, 3000);  
-                                        }, 3000);                                 
-                                      }, 3000);                              
+                                              $('#img_copy_progress_languages').show();
+                                              setTimeout(function() {
+                                                _rslt = doImport('_languages'); 
+                                                if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
+                                                  $('#eBoxContents_languages').html(_rslt);
+                                                  $('#eBox_languages').show();
+                                                }
+                                                
+                                                $('#img_copy_progress_currencies').show();
+                                                setTimeout(function() {
+                                                  _rslt = doImport('_currencies'); 
+                                                  if (_rslt === "") { } else { _err = true; _errmsg = _errmsg + '<p>' + _rslt; 
+                                                    $('#eBoxContents_currencies').html(_rslt);
+                                                    $('#eBox_currencies').show();
+                                                  }
+                                                
+                                                  // DONE
+                                                  $('#pBox').hide();
+                                                  
+                                                  if (_err === false) {
+                                                    $('#mBoxSuccessContents').html('UPGRADE COMPLETE');
+                                                    $('#mBoxSuccess').show();
+
+                                                    $("#upgradeForm").attr("action", "upgrade.php?step=4");
+                                                    $('#btn_continue').show();
+                                                    $('#btn_retry').hide();
+                                                  } else {
+                                                    $('#mBoxContents').html('<?php echo $lC_Language->get('upgrade_step3_page_errfound'); ?>');
+                                                    $('#mBox').show();
+
+                                                    $("#upgradeForm").attr("action", "upgrade.php?step=3");
+                                                    $('#btn_continue').hide();
+                                                    $('#btn_retry').show();
+                                                  }
+                                                  
+                                                  $('#buttonContainer').show();                                  
+                                      
+                                                }, 3000);
+                                              }, 3000);
+                                            }, 3000);  
+                                          }, 3000);                                 
+                                        }, 3000);                              
+                                      }, 3000);
                                     }, 3000);
-                                  }, 3000);
-                                }, 3000);  
-                              }, 3000);                                 
-                            }, 3000);                              
-                          }, 3000); 
-                        }, 3000);                           
-                      }, 3000);                        
-                    }, 3000);                      
-                  }, 3000);                     
-                }, 3000);                  
+                                  }, 3000);  
+                                }, 3000);                                 
+                              }, 3000);                              
+                            }, 3000); 
+                          }, 3000);                           
+                        }, 3000);                        
+                      }, 3000);                      
+                    }, 3000);                     
+                  }, 3000);                  
+                }, 3000);                
               }, 3000);                
             }, 3000);             
           }, 3000);             

@@ -372,6 +372,24 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
       exit;
       break;
 
+      case 'import_categories_description':
+      {
+        
+        $upgrader = UpgraderFactory::create($_POST['upgrade_method']); 
+        $upgrader->setConnectDetails($_POST);
+        $rslt = $upgrader->importCategoriesDescription($_POST['db_switch']);
+        
+        if ($rslt == false) {
+          echo '[[0|'.$upgrader->displayMessage().']]';
+          return false;
+        }
+
+        echo '[[1]]';
+        return false;
+      }
+      exit;
+      break;
+
       case 'import_customers':
       {
       
@@ -429,17 +447,34 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
 
       case 'import_attributes':
       {
-				$upgrader = UpgraderFactory::create($_POST['upgrade_method']); 
-				$upgrader->setConnectDetails($_POST);
-				$rslt = $upgrader->importAttributes($_POST['db_switch']);
-				
-				if ($rslt == false) {
-					echo '[[0|'.$upgrader->displayMessage().']]';
-					return false;
-				}
+        $upgrader = UpgraderFactory::create($_POST['upgrade_method']); 
+        $upgrader->setConnectDetails($_POST);
+        $rslt = $upgrader->importAttributes($_POST['db_switch']);
+        
+        if ($rslt == false) {
+          echo '[[0|'.$upgrader->displayMessage().']]';
+          return false;
+        }
 
-				echo '[[1]]';
-				return true;
+        echo '[[1]]';
+        return true;
+      }
+      exit;
+      break;
+
+      case 'import_featured':
+      {
+        $upgrader = UpgraderFactory::create($_POST['upgrade_method']); 
+        $upgrader->setConnectDetails($_POST);
+        $rslt = $upgrader->importFeatured($_POST['db_switch']);
+        
+        if ($rslt == false) {
+          echo '[[0|'.$upgrader->displayMessage().']]';
+          return false;
+        }
+
+        echo '[[1]]';
+        return true;
       }
       exit;
       break; 

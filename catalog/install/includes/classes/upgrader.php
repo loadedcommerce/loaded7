@@ -632,6 +632,14 @@ class lC_LocalUpgrader extends lC_Upgrader {
                                                                              , 'last_modified'   => 'last_modified'
                                                                              , 'date_added'      => 'date_added'
                                                                               )
+                                 , 'featured'                      => array(
+                                                                               'id'            => 'featured_id'
+                                                                             , 'products_id'   => 'products_id'
+                                                                             , 'date_added'    => 'featured_date_added'
+                                                                             , 'last_modified' => 'featured_last_modified'
+                                                                             , 'expires_date'  => 'expires_date'
+                                                                             , 'status'        => 'status'
+                                                                              )
                                   );
   }    
 
@@ -1813,7 +1821,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
   /*
   *  function name : importCategories()
   *
-  *  description : load categories and categories_description to loaded7
+  *  description : load categories to loaded7
   *
   *  returns : true or false  
   *
@@ -1863,12 +1871,6 @@ class lC_LocalUpgrader extends lC_Upgrader {
     // TRUNCATE CATEGORIES TABLES IN TARGET DB
     
     $tQry = $target_db->query('truncate table ' . TABLE_CATEGORIES);
-    $tQry->execute();
-    
-    $tQry = $target_db->query('truncate table ' . TABLE_CATEGORIES_DESCRIPTION);
-    $tQry->execute();
-    
-    $tQry = $target_db->query('truncate table ' . TABLE_PERMALINKS);
     $tQry->execute();
     
     // END TRUNCATE CATEGORIES TABLES IN TARGET DB
@@ -1954,9 +1956,82 @@ class lC_LocalUpgrader extends lC_Upgrader {
     }
     
     // END LOAD CATEGORIES FROM SOURCE DB
-
-    // ##########
     
+    // DISABLE AUTO INCREMENT WHEN PRIMARY KEY = 0
+    $tQry = $target_db->query('SET sql_mode = ""');
+    $tQry->execute();
+
+    $source_db->disconnect();  
+    $target_db->disconnect();  
+    
+    return true;
+      
+  } // end importCategories
+
+  /*
+  *  function name : importCategoriesDescription()
+  *
+  *  description : load categories_description & categories permalinks to loaded7
+  *
+  *  returns : true or false  
+  *
+  */
+  public function importCategoriesDescription($switch = null) {
+    
+    $s_db = $this->_sDB;
+    $t_db = $this->_tDB;
+    $map = $this->_data_mapping['categories'];
+    
+    if (!defined('DB_TABLE_PREFIX')) define('DB_TABLE_PREFIX', $t_db['DB_PREFIX']);
+
+    // CONNNECT TO SOURCE DB
+    
+    require_once('../includes/database_tables.php');
+    
+    require_once('../includes/classes/database/mysqli.php');
+    $class = 'lC_Database_mysqli'; // . $s_db['DB_DATABASE_CLASS']; 
+    $source_db = new $class($s_db['DB_SERVER'], $s_db['DB_SERVER_USERNAME'], $s_db['DB_SERVER_PASSWORD']);
+    
+    if ($source_db->isError() === false) {
+      $source_db->selectDatabase($s_db['DB_DATABASE']);
+    }
+    
+    if ($source_db->isError()) {
+      $this->_msg = $source_db->getError();
+      return false;
+    }
+    // END CONNNECT TO SOURCE DB
+    
+    // CONNNECT TO TARGET DB  
+
+    $class = 'lC_Database_' . $t_db['DB_CLASS'];
+    $target_db = new $class($t_db['DB_SERVER'], $t_db['DB_SERVER_USERNAME'], $t_db['DB_SERVER_PASSWORD']);
+    
+    if ($target_db->isError() === false) {
+      $target_db->selectDatabase($t_db['DB_DATABASE']);
+    }
+    
+    if ($target_db->isError()) {
+      $this->_msg = $target_db->getError();
+      return false;
+    }
+
+    // END CONNNECT TO TARGET DB
+
+    // TRUNCATE CATEGORIES DESCRIPTION & PERMALINKS TABLES IN TARGET DB
+    
+    $tQry = $target_db->query('truncate table ' . TABLE_CATEGORIES_DESCRIPTION);
+    $tQry->execute();
+    
+    $tQry = $target_db->query('truncate table ' . TABLE_PERMALINKS);
+    $tQry->execute();
+    
+    // END TRUNCATE CATEGORIES DESCRIPTION & PERMALINKS TABLES IN TARGET DB
+
+    // DISABLE AUTO INCREMENT WHEN PRIMARY KEY = 0
+    $tQry = $target_db->query('SET sql_mode = "NO_AUTO_VALUE_ON_ZERO"');
+    $tQry->execute();
+
     // LOAD CATEGORIES DESCRIPTION FROM SOURCE DB
 
     $map = $this->_data_mapping['categories_desc'];
@@ -2033,7 +2108,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
 
     // ##########
 
-    // LOAD CATEGORY PERMALINKs TO TARGET DB
+    // LOAD CATEGORIES PERMALINKS TO TARGET DB
     
     $iCnt = 0;
     $sQry = $source_db->query('SELECT c.categories_id, c.parent_id, cd.language_id, cd.categories_name FROM categories as c, categories_description AS cd WHERE c.categories_id = cd.categories_id');
@@ -2092,7 +2167,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
       $sQry->freeResult();
     }
     
-    // END LOAD PERMALINK TO TARGET DB
+    // END LOAD CATEGORIES PERMALINKS TO TARGET DB
     
     // DISABLE AUTO INCREMENT WHEN PRIMARY KEY = 0
     $tQry = $target_db->query('SET sql_mode = ""');
@@ -4968,8 +5043,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
     return true;
       
   } // end importAttributes
-
-  
+    
   /*
   *  function name : importAdministrators()
   *
@@ -6862,6 +6936,131 @@ class lC_LocalUpgrader extends lC_Upgrader {
     return true;
       
   } // end importCurrencies
+
+  /*
+  *  function name : importFeatured()
+  *
+  *  description : load featured products to loaded7
+  *
+  *  returns : true or false  
+  *
+  */
+  public function importFeatured($switch = null) {
+    
+    $s_db = $this->_sDB;
+    $t_db = $this->_tDB;
+    $map = $this->_data_mapping['featured'];
+    
+    if (!defined('DB_TABLE_PREFIX')) define('DB_TABLE_PREFIX', $t_db['DB_PREFIX']);
+
+    // CONNNECT TO SOURCE DB
+    
+    require_once('../includes/database_tables.php');
+    
+    require_once('../includes/classes/database/mysqli.php');
+    $class = 'lC_Database_mysqli'; // . $s_db['DB_DATABASE_CLASS']; 
+    $source_db = new $class($s_db['DB_SERVER'], $s_db['DB_SERVER_USERNAME'], $s_db['DB_SERVER_PASSWORD']);
+    
+    if ($source_db->isError() === false) {
+      $source_db->selectDatabase($s_db['DB_DATABASE']);
+    }
+    
+    if ($source_db->isError()) {
+      $this->_msg = $source_db->getError();
+      return false;
+    }
+    // END CONNNECT TO SOURCE DB
+    
+    // CONNNECT TO TARGET DB  
+
+    $class = 'lC_Database_' . $t_db['DB_CLASS'];
+    $target_db = new $class($t_db['DB_SERVER'], $t_db['DB_SERVER_USERNAME'], $t_db['DB_SERVER_PASSWORD']);
+    
+    if ($target_db->isError() === false) {
+      $target_db->selectDatabase($t_db['DB_DATABASE']);
+    }
+    
+    if ($target_db->isError()) {
+      $this->_msg = $target_db->getError();
+      return false;
+    }
+
+    // END CONNNECT TO TARGET DB
+
+    // TRUNCATE FEATURED TABLES IN TARGET DB
+    
+    $tQry = $target_db->query('truncate table ' . TABLE_FEATURED_PRODUCTS);
+    $tQry->execute();
+    
+    // END TRUNCATE FEATURED TABLES IN TARGET DB
+
+    // DISABLE AUTO INCREMENT WHEN PRIMARY KEY = 0
+    $tQry = $target_db->query('SET sql_mode = "NO_AUTO_VALUE_ON_ZERO"');
+    $tQry->execute();
+
+    // LOAD FEATURED FROM SOURCE DB
+    
+    $sQry = $source_db->query('SELECT * FROM featured');
+    $sQry->execute();
+
+    $numrows = $sQry->numberOfRows();
+    if ($numrows > 0) { 
+      $cnt = 0;
+      while ($sQry->next()) {
+        $featured  = array(
+                             'id' => $sQry->value('featured_id')
+                           , 'products_id' => $sQry->value('products_id')
+                           , 'date_added' => $sQry->value('featured_date_added')
+                           , 'last_modified' => $sQry->value('featured_last_modified')
+                           , 'expires_date' => $sQry->value('expires_date')
+                           , 'status' => $sQry->value('status')
+                            ); 
+
+        $tQry = $target_db->query('INSERT INTO :table_featured (id, 
+                                                                products_id, 
+                                                                date_added, 
+                                                                last_modified, 
+                                                                expires_date, 
+                                                                status) 
+                                                        VALUES (:id, 
+                                                                :products_id, 
+                                                                :date_added, 
+                                                                :last_modified, 
+                                                                :expires_date, 
+                                                                :status)');
+  
+        $tQry->bindTable(':table_featured', TABLE_FEATURED_PRODUCTS);
+        $tQry->bindInt  (':id'            , $featured['id']);
+        $tQry->bindInt  (':products_id'   , $featured['products_id']);
+        $tQry->bindDate (':date_added'    , $featured['date_added']);
+        $tQry->bindDate (':last_modified' , $featured['last_modified']);
+        $tQry->bindDate (':expires_date'  , $featured['expires_date']); 
+        $tQry->bindInt  (':status'        , $featured['status']);
+        $tQry->execute();
+        
+        if ($target_db->isError()) {
+          $this->_msg = $target_db->getError();
+          return false;
+        }
+        
+        $cnt++;
+      }
+      
+      $sQry->freeResult();
+    }
+    
+    // END LOAD FEATURED FROM SOURCE DB
+    
+    // DISABLE AUTO INCREMENT WHEN PRIMARY KEY = 0
+    $tQry = $target_db->query('SET sql_mode = ""');
+    $tQry->execute();
+
+    $source_db->disconnect();  
+    $target_db->disconnect();  
+    
+    return true;
+      
+  } // end importFeatured
     
   public function generateCleanPermalink($p) {
     $p = preg_replace("/&.{0,}?;/", '', $p);
