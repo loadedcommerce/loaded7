@@ -27,11 +27,23 @@ class lC_OrderTotal_total extends lC_OrderTotal {
   }
 
   function process() {
-    global $lC_ShoppingCart, $lC_Currencies;
+    global $lC_ShoppingCart, $lC_Currencies, $lC_Customer;
     
+    $ot_total = $lC_ShoppingCart->getTotal();
+    $store_credit = $lC_Customer->getStoreCredit(true);
+    if( isset($_POST['use_credit']) && $store_credit > 0 ) {
+
+      if($store_credit > $ot_total){
+        $ot_total = '0.00';
+      }else{
+        $ot_total = ($ot_total - $store_credit);
+      }
+    }
+
     $this->output[] = array('title' => $this->_title . ':',
-                            'text' => '<b>' . $lC_Currencies->format($lC_ShoppingCart->getTotal()) . '</b>',
-                            'value' => $lC_ShoppingCart->getTotal());
+                            'text' => '<b>' . $lC_Currencies->format($ot_total) . '</b>',
+                            'value' => $lC_Currencies->formatRaw($ot_total));
+
   }
 }
 ?>

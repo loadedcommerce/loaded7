@@ -35,6 +35,7 @@ field_first_name = First Name:
 field_last_name = Last Name:
 field_date_of_birth = Date of Birth:
 field_email_address = E-Mail Address:
+field_store_credit = Store Credit:
 field_newsletter_subscription = Newsletter:
 field_password = Password:
 field_password_confirmation = Confirmation:

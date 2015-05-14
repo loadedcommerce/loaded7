@@ -397,6 +397,23 @@ if (!class_exists('lC_Order')) {
         $Qpt->execute(); 
         
         foreach ($lC_ShoppingCart->getOrderTotals() as $module) {
+
+          if ($module['code'] == 'store_credit') {
+            $store_credit = $lC_Customer->getStoreCredit(true);
+            $ot_total = $lC_ShoppingCart->getTotal();
+            if ($store_credit > 0 && $store_credit > $ot_total) {
+              $store_credit = $ot_total - $store_credit;
+            }else{
+              $store_credit = '0.00';
+            }
+
+            $updateCredit = $lC_Database->query('update :table_customers set store_credit = :store_credit where customers_id = :customers_id')
+            $updateCredit->bindTable(':table_customers', TABLE_CUSTOMERS);
+            $updateCredit->bindInt(':customers_id', $lC_Customer->getID());
+            $updateCredit->bindValue(':store_credit', $store_credit);
+            $updateCredit->execute();
+          }
+
           $Qtotals = $lC_Database->query('insert into :table_orders_total (orders_id, title, text, value, class, sort_order) values (:orders_id, :title, :text, :value, :class, :sort_order)');
           $Qtotals->bindTable(':table_orders_total', TABLE_ORDERS_TOTAL);
           $Qtotals->bindInt(':orders_id', $order_id);

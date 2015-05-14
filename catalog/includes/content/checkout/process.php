@@ -69,7 +69,26 @@ class lC_Checkout_Process extends lC_Template {
     include($lC_Vqmod->modCheck('includes/classes/order.php'));
 
     $lC_Payment->process();
+    
+    if (isset($_SESSION['use_credit'])) {
+
    
+      $store_credit = $lC_Customer->getStoreCredit(true);
+      $ot_total = $lC_ShoppingCart->getTotal();
+      if ($store_credit > 0 && $store_credit > $ot_total) {
+        $store_credit = $ot_total - $store_credit;
+      }else{
+        $store_credit = '0.00';
+      }
+
+      echo $store_credit;
+      /*$updateCredit = $lC_Database->query('update :table_customers set store_credit = :store_credit where customers_id = :customers_id');
+      $updateCredit->bindTable(':table_customers', TABLE_CUSTOMERS);
+      $updateCredit->bindInt(':customers_id', $lC_Customer->getID());
+      $updateCredit->bindValue(':store_credit', $store_credit);
+      $updateCredit->execute();*/
+    }
+
     $lC_ShoppingCart->reset(true);  
 
     // unregister session variables used during checkout
@@ -81,10 +100,11 @@ class lC_Checkout_Process extends lC_Template {
     if (isset($_SESSION['PPEC_PROCESS'])) unset($_SESSION['PPEC_PROCESS']);
     if (isset($_SESSION['PPEC_PAYDATA'])) unset($_SESSION['PPEC_PAYDATA']);
     if (isset($_SESSION['this_handling'])) unset($_SESSION['this_handling']);
-    if (isset($_SESSION['this_payment'])) unset($_SESSION['this_payment']);    
+    if (isset($_SESSION['this_payment'])) unset($_SESSION['this_payment']); 
+    if (isset($_SESSION['use_credit'])) unset($_SESSION['use_credit']);    
 
     if (isset($_SESSION['SelectedShippingMethodCost'])) unset($_SESSION['SelectedShippingMethodCost']);
-
+exit();
     lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'success', 'SSL'));
   }
 }

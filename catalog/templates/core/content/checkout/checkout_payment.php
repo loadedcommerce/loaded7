@@ -163,6 +163,18 @@
                   <?php                          
                 }
                 ?>
+                <?php             
+                if ($lC_Customer->getStoreCredit(true)) {
+                ?>     
+                <div class="well padding-top padding-bottom large-margin-top">
+                  <div class="checkbox">
+                    <?php echo lc_draw_checkbox_field('use_credit', array(array('id' => 1, 'text' => sprintf($lC_Language->get('use_store_credit'), $lC_Customer->getStoreCredit(true)))), false); ?>
+                  </div>
+                </div>                    
+                <?php
+                }
+
+                ?>
                 <table class="table margin-bottom-neg"><tr><td>&nbsp;</td></tr></table>
                 <div class="btn-set clearfix no-margin-top">
                   <button class="btn btn-lg btn-success pull-right" onclick="$('#checkout_payment').submit();" type="button"><?php echo $lC_Language->get('button_continue'); ?></button>

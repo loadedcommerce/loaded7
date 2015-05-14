@@ -48,6 +48,12 @@ if ( ACCOUNT_NEWSLETTER == '1' ) {
                   lc_draw_checkbox_field('newsletter', '1', true, 'id="editNewsletter" class="switch medium" data-text-on="' . strtoupper($lC_Language->get('button_yes')) . '" data-text-off="' . strtoupper($lC_Language->get('button_no')) . '"') .
                '</p>';
 }
+
+/* Store credit */
+$pContent .= '<p class="button-height inline-label">' .
+              '  <label for="editStoreCredit" class="label" style="width:30%;">' . $lC_Language->get('field_store_credit') . '</label>'.lc_draw_input_field('store_credit', null, 'class="input" style="width:93%;" id="editStoreCredit"') .
+              '</p>';
+              
 $pContent .= '<p class="button-height inline-label">' .
              '  <label for="password" class="label" style="width:30%;">' . $lC_Language->get('field_password') . '</label>' .
                 lc_draw_password_field('password', 'class="input" style="width:93%;" id="editPassword"') .
@@ -278,6 +284,7 @@ function getCustomerFormData(id) {
       $("#ab_lastname").val(data.customerData.customers_lastname);
       $("#editDob").val(data.customerData.customers_dob_short);
       $("#editEmailAddress").val(data.customerData.customers_email_address);
+      $("#editStoreCredit").val(data.customerData.store_credit);
       if (data.customerData.customers_newsletter == 1) {
         $("#editNewsletter").attr('checked', true);
         $("#editNewsletter").parent().addClass("checked");

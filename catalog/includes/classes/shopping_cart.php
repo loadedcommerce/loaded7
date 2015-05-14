@@ -1200,11 +1200,20 @@ class lC_ShoppingCart {
       $tkey = '';
       $ot_total = 0;
       foreach ($this->_order_totals as $key => $ot) {
-        if ($ot['code'] != 'total') {
-          $ot_total = ($ot_total + $ot['value']);
+        if ($ot['code'] != 'total') { 
+          
           $_SESSION['lC_ShoppingCart_data']['order_totals'][$key]['text'] = $lC_Currencies->format($ot['value']);  
-        } else {
+        } else { 
+          $ot_total = $ot['value'];;
           $tkey = $key;  
+        }
+      }
+
+      $store_credit = $lC_Customer->getStoreCredit(true);
+      if( isset($_POST['use_credit']) && $store_credit > 0 ) {
+
+        if($store_credit > $ot_total){
+          $ot_total = '0.00';
         }
       }
       $_SESSION['lC_ShoppingCart_data']['order_totals'][$tkey]['text'] = $lC_Currencies->format($ot_total);

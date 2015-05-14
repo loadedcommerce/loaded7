@@ -91,6 +91,13 @@ class lC_Checkout_Confirmation extends lC_Template {
       $lC_Payment->pre_confirmation_check();
     }
 
+    // Set store credit to be used.
+    if (isset($_POST['use_credit'])){
+      $_SESSION['use_credit'] = true;
+    }elseif(isset($_SESSION['use_credit'])){
+      unset($_SESSION['use_credit']);
+    }
+
     // Stock Check
     if ( (STOCK_CHECK == '1') && (AUTODISABLE_OUT_OF_STOCK_PRODUCT == '1') ) {
       foreach ($lC_ShoppingCart->getProducts() as $product) {

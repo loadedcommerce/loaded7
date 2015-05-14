@@ -442,11 +442,11 @@ class lC_Customers_Admin {
       $lC_Database->startTransaction();
 
       if ( is_numeric($id) ) {
-        $Qcustomer = $lC_Database->query('update :table_customers set customers_group_id = :customers_group_id, customers_gender = :customers_gender, customers_firstname = :customers_firstname, customers_lastname = :customers_lastname, customers_email_address = :customers_email_address, customers_dob = :customers_dob, customers_newsletter = :customers_newsletter, customers_status = :customers_status, date_account_last_modified = :date_account_last_modified where customers_id = :customers_id');
+        $Qcustomer = $lC_Database->query('update :table_customers set customers_group_id = :customers_group_id, customers_gender = :customers_gender, customers_firstname = :customers_firstname, customers_lastname = :customers_lastname, customers_email_address = :customers_email_address, customers_dob = :customers_dob, customers_newsletter = :customers_newsletter, customers_status = :customers_status, date_account_last_modified = :date_account_last_modified, store_credit = :store_credit where customers_id = :customers_id');
         $Qcustomer->bindRaw(':date_account_last_modified', 'now()');
         $Qcustomer->bindInt(':customers_id', $id);
       } else {
-        $Qcustomer = $lC_Database->query('insert into :table_customers (customers_group_id, customers_gender, customers_firstname, customers_lastname, customers_email_address, customers_dob, customers_newsletter, customers_status, number_of_logons, date_account_created) values (:customers_group_id, :customers_gender, :customers_firstname, :customers_lastname, :customers_email_address, :customers_dob, :customers_newsletter, :customers_status, :number_of_logons, :date_account_created)');
+        $Qcustomer = $lC_Database->query('insert into :table_customers (customers_group_id, customers_gender, customers_firstname, customers_lastname, customers_email_address, customers_dob, customers_newsletter, customers_status, number_of_logons, date_account_created, store_credit) values (:customers_group_id, :customers_gender, :customers_firstname, :customers_lastname, :customers_email_address, :customers_dob, :customers_newsletter, :customers_status, :number_of_logons, :date_account_created,:store_credit)');
         $Qcustomer->bindInt(':number_of_logons', 0);
         $Qcustomer->bindRaw(':date_account_created', 'now()');
       }
@@ -460,6 +460,7 @@ class lC_Customers_Admin {
       $Qcustomer->bindValue(':customers_email_address', $data['email_address']);
       $Qcustomer->bindValue(':customers_dob', $dob);
       $Qcustomer->bindInt(':customers_newsletter', $data['newsletter']);
+      $Qcustomer->bindValue(':store_credit', $data['store_credit']);
       $Qcustomer->bindInt(':customers_status', $data['status']);
       $Qcustomer->bindInt(':customers_group_id', $data['group']);
       $Qcustomer->setLogging($_SESSION['module'], $id);

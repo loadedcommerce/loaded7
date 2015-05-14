@@ -301,6 +301,7 @@ CREATE TABLE lc_customers (
   date_account_created datetime DEFAULT NULL,
   date_account_last_modified datetime DEFAULT NULL,
   global_product_notifications int(11) DEFAULT NULL,
+  store_credit DECIMAL(15, 4) NOT NULL DEFAULT '0.0000',
   PRIMARY KEY (customers_id)
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 

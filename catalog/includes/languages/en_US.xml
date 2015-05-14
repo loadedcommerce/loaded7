@@ -1450,6 +1450,11 @@ Note: If you did not request this action via our password forgotten page, please
       <group>checkout</group>
     </definition>
     <definition>
+      <key>use_store_credit</key>
+      <value><![CDATA[Use your store credit for this order: %s]]></value>
+      <group>checkout</group>
+    </definition>
+    <definition>
       <key>payment_method_title</key>
       <value><![CDATA[Payment Method]]></value>
       <group>checkout</group>

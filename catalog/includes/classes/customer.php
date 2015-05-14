@@ -261,6 +261,32 @@ class lC_Customer {
     return $id;
   }
 
+  public function getStoreCredit($raw = false) {
+    global $lC_Currencies, $lC_Database;
+    static $credit = null;
+
+    $id = lC_Customer::getID();
+    $Qcustomer = $lC_Database->query('select store_credit from :table_customers where customers_id = :customers_id');
+    $Qcustomer->bindTable(':table_customers', TABLE_CUSTOMERS);
+    $Qcustomer->bindInt(':customers_id', $id);
+    $Qcustomer->execute();
+
+    if ($Qcustomer->numberOfRows() === 1) {
+      $store_credit = $Qcustomer->value('store_credit');
+      if (MODULE_ORDER_TOTAL_STORE_CREDIT_STATUS == true) {
+        if ($store_credit > 0) {
+          if($raw == true){
+            $credit = $lC_Currencies->formatRaw($store_credit);
+          }else{
+            $credit = $lC_Currencies->format($store_credit);
+          }
+        }
+      }
+    }
+
+    return $credit;
+  }
+
   public function setCustomerData($customer_id = -1) {
     global $lC_Database, $lC_Language;
 

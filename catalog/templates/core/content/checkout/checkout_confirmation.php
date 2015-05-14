@@ -166,11 +166,12 @@
                     $title = (strstr($module['title'], '(')) ? substr($module['title'], 0, strpos($module['title'], '(')) . ':' : $module['title'];
                     $class = str_replace(':', '', $title);
                     $class = 'ot-' . strtolower(str_replace(' ', '-', trim($class)));
+                    $minus = ($module['code'] == 'store_credit') ? '-' : '';
                  ?>
                  <div class="clearfix">
                  <?php echo '<div class="clearfix">' .
                            '  <span class="pull-left ' . $class . ' ' . $class . '-title">' . $title . '</span>' .
-                           '  <span class="pull-right ' . $class . ' ' . $class . '-text">' . $module['text'] . '</span>' .'</div>';  
+                           '  <span class="pull-right ' . $class . ' ' . $class . '-text">' . $minus . $module['text'] . '</span>' .'</div>';  
                  ?>
                  </div>  
                  <?php

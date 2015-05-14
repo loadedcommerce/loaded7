@@ -115,11 +115,12 @@ $oID = lC_Success::getOrderID($lC_Customer->getID());
                     $title = (strstr($module['title'], '(')) ? substr($module['title'], 0, strpos($module['title'], '(')) . ':' : $module['title'];
                     $class = str_replace(':', '', $title);
                     $class = 'ot-' . strtolower(str_replace(' ', '-', $class));
+                    $minus = ($module['code'] == 'store_credit') ? '-' : '';
                  ?>
                  <div class="clearfix">
                  <?php echo '<div class="clearfix">' .
                            '  <span class="pull-left ' . $class . ' ' . strtolower(str_replace('_', '-', $class)) . '-title">' . $title . '</span>' .
-                           '  <span class="pull-right ' . $class . ' ' . strtolower(str_replace('_', '-', $class)) . '-text">' . $module['text'] . '</span>' .'</div>';  
+                           '  <span class="pull-right ' . $class . ' ' . strtolower(str_replace('_', '-', $class)) . '-text">' . $minus . $module['text'] . '</span>' .'</div>';  
                  ?> 
                  </div>  
                  <?php
