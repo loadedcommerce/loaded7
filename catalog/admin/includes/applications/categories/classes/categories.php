@@ -889,7 +889,7 @@ class lC_Categories_Admin {
                          array('text' => $lC_Language->get('text_product_category'), 'value' => 'category'),
                          array('text' => $lC_Language->get('text_info_category'), 'value' => 'info_category'),
                          //array('text' => $lC_Language->get('text_faq_category'), 'value' => 'faq_category'),
-                         //array('text' => $lC_Language->get('text_article_category'), 'value' => 'article_category'),
+                         array('text' => $lC_Language->get('text_article_category'), 'value' => 'article_category'),
                          array('text' => $lC_Language->get('text_page'), 'value' => 'page'),
                          array('text' => $lC_Language->get('link_to_specials'), 'value' => 'specials'),
                          array('text' => $lC_Language->get('link_to_featured'), 'value' => 'featured'),
