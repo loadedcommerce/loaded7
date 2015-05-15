@@ -120,7 +120,7 @@ TD { padding: 5px 0 0 5px; }
                           <?php } ?> -->
                         </p>
                         <br />
-                        <p class="button-height block-label"<?php echo ($cInfo['categories_mode'] != 'category' && $cInfo['categories_mode'] != 'page') ? ' style="display:none;"' : ''; ?>>
+                        <p class="button-height block-label"<?php echo ($cInfo['categories_mode'] != 'category' && $cInfo['categories_mode'] != 'page' && $cInfo['categories_mode'] != 'article_category' && $cInfo['categories_mode'] != 'info_category') ? ' style="display:none;"' : ''; ?>>
                           <label class="label" for="<?php echo 'categories_permalink[' . $l['id'] . ']'; ?>">
                             <?php echo $lC_Language->get('field_permalink'); ?>
                             <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_categories_permalink'), null); ?>
