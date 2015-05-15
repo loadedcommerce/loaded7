@@ -190,7 +190,7 @@ if(($_POST['upgrade_method'] == 'R')) {
           
     <div class="field-block button-height small-margin-top">
       <label class="label"><b><?php echo $lC_Language->get('param_database_file_path'); ?></b></label>
-      <input type="text" name="FILE_PATH" id="FILE_PATH" value="localhost" class="input" style="width:93%;">
+      <input type="text" name="FILE_PATH" id="FILE_PATH" value="localhost" class="input margin-left" style="width:90%;">
     </div>
       <div id="buttonContainer" class="large-margin-top margin-right" style="float:right">
       <a href="#" class="button" onclick="window.history.back();">
@@ -229,27 +229,27 @@ if(($_POST['upgrade_method'] == 'R')) {
           
     <div class="field-block button-height small-margin-top large-margin-left large-margin-right">
       <label class="label"><b><?php echo $lC_Language->get('param_database_server'); ?></b></label>
-      <input type="text" name="DB_SERVER" id="DB_SERVER" value="localhost" class="input" style="width:93%;">
+      <input type="text" name="DB_SERVER" id="DB_SERVER" value="localhost" class="input margin-left" style="width:90%;">
     </div>
     <div class="field-block button-height large-margin-left large-margin-right">
       <label for="DB_SERVER_USERNAME" class="label"><b><?php echo $lC_Language->get('param_database_username'); ?></b>
-      <input type="text" name="DB_SERVER_USERNAME" id="DB_SERVER_USERNAME" value="" class="input" style="width:93%;"></label>
+      <input type="text" name="DB_SERVER_USERNAME" id="DB_SERVER_USERNAME" value="" class="input margin-left" style="width:90%;"></label>
     </div>
     <div class="field-block button-height large-margin-left large-margin-right">
       <label for="DB_SERVER_PASSWORD" class="label"><b><?php echo $lC_Language->get('param_database_password'); ?></b></label>
-      <input type="password" name="DB_SERVER_PASSWORD" id="DB_SERVER_PASSWORD" value="" class="input" style="width:93%;">
+      <input type="password" name="DB_SERVER_PASSWORD" id="DB_SERVER_PASSWORD" value="" class="input margin-left" style="width:90%;">
     </div> 
     <div class="field-block button-height large-margin-left large-margin-right">
       <label for="DB_DATABASE" class="label"><b><?php echo $lC_Language->get('param_database_name'); ?></b></label>
-      <input type="text" name="DB_DATABASE" id="DB_DATABASE" value="" class="input" style="width:93%;">
+      <input type="text" name="DB_DATABASE" id="DB_DATABASE" value="" class="input margin-left" style="width:90%;">
     </div>
     <div class="field-block button-height large-margin-left large-margin-right">
       <label for="DB_DATABASE_CLASS" class="label"><b><?php echo $lC_Language->get('param_database_type'); ?></b></label>
-      <?php echo lc_draw_pull_down_menu('DB_DATABASE_CLASS', $db_table_types, null, 'class="input with-small-padding" style="width:96%;"'); ?>
+      <?php echo lc_draw_pull_down_menu('DB_DATABASE_CLASS', $db_table_types, null, 'class="input with-small-padding margin-left" style="width:93%;"'); ?>
     </div>
     <div class="field-block button-height large-margin-left large-margin-right">
       <label for="DB_TABLE_PREFIX" class="label"><b><?php echo $lC_Language->get('param_database_prefix'); ?></b></label>
-      <input type="text" name="DB_TABLE_PREFIX" id="DB_TABLE_PREFIX" value="lc_" class="input" style="width:93%;">
+      <input type="text" name="DB_TABLE_PREFIX" id="DB_TABLE_PREFIX" value="lc_" class="input margin-left" style="width:90%;">
     </div>      
       <div id="buttonContainer" class="large-margin-top margin-right" style="float:right">
       <a href="index.php" class="button">
@@ -294,7 +294,7 @@ if(($_POST['upgrade_method'] == 'R')) {
     <div id="inputContainer" style="display:block;">
     	<div class="field-block button-height small-margin-top">
     	  <label class="label"><b><?php echo $lC_Language->get('upgrade_step1_label'); ?></b></label>
-    	  <input type="text" name="INSTALL_PATH" id="INSTALL_PATH" value="<?php echo $fs_www_root; ?>" class="input" style="width:93%;">
+    	  <input type="text" name="INSTALL_PATH" id="INSTALL_PATH" value="<?php echo $fs_www_root; ?>" class="input margin-left" style="width:90%;">
     	</div>
       <div class="margin-bottom large-margin-top">
         <h4><?php echo $lC_Language->get('upgrade_step1_method_title'); ?></h4>
@@ -319,19 +319,19 @@ if(($_POST['upgrade_method'] == 'R')) {
     <div id="confirmContainer" style="clear:both; display:block;">
     	<div class="field-block button-height small-margin-top large-margin-left large-margin-right">
     	  <label class="label"><b><?php echo $lC_Language->get('param_upgrade_existing_store'); ?></b></label>
-    	  <span id="exist_store_path"><?php echo $sourceInfo['source_path']; ?></span>
+    	  <span id="exist_store_path" class="margin-left"><?php echo $sourceInfo['source_path']; ?></span>
     	</div>
     	<div class="field-block button-height small-margin-top large-margin-left large-margin-right">
     	  <label class="label"><b><?php echo $lC_Language->get('param_upgrade_store_name'); ?></b></label>
-    	  <span id="exist_store_name"><?php echo $sourceInfo['store_name']; ?></span>
+    	  <span id="exist_store_name" class="margin-left"><?php echo $sourceInfo['store_name']; ?></span>
     	</div>
     	<div class="field-block button-height small-margin-top large-margin-left large-margin-right">
     	  <label class="label"><b><?php echo $lC_Language->get('param_upgrade_store_admin'); ?></b></label>
-    	  <span id="exist_store_admin"><?php echo $sourceInfo['admin']; ?></span>
+    	  <span id="exist_store_admin" class="margin-left"><?php echo $sourceInfo['admin']; ?></span>
     	</div>
     	<div class="field-block button-height small-margin-top large-margin-left large-margin-right">
     	  <label class="label"><b><?php echo $lC_Language->get('param_upgrade_store_dbase'); ?></b></label>
-    	  <span id="exist_store_dbase"><?php echo $sourceInfo['source_dbase']; ?></span>
+    	  <span id="exist_store_dbase" class="margin-left"><?php echo $sourceInfo['source_dbase']; ?></span>
     	</div>
     	<div id="buttonContainer" class="large-margin-top margin-right" style="float:right">
     	  <a href="index.php?step=1" class="button">
