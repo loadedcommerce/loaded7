@@ -61,7 +61,7 @@ if ($Qlisting->numberOfRows() > 0) {
 
           case 'PRODUCT_LIST_MANUFACTURER':
             if ( $lC_Product->hasManufacturer() ) {
-              $output .= '<div class="product-listing-module-manufacturer' . lc_link_object(lc_href_link(FILENAME_DEFAULT, 'manufacturers=' . $lC_Product->getManufacturerID()), $lC_Product->getManufacturer()) . '</div>' . "\n";
+              $output .= '<div class="product-listing-module-manufacturer">' . lc_link_object(lc_href_link(FILENAME_DEFAULT, 'manufacturers=' . $lC_Product->getManufacturerID()), $lC_Product->getManufacturer()) . '</div>' . "\n";
             } else {
               $output .= '<div class="product-listing-module-manufacturer"></div>' . "\n";
             }
