@@ -162,7 +162,7 @@ class lC_Template_output {
   * @access public
   * @return array
   */
-  function getCategoryNav($categoryId = 0, $level = 0) {
+  public static function getCategoryNav($categoryId = 0, $level = 0) {
     global $lC_Database, $lC_Language, $lC_CategoryTree;
     
     if ($level == 0) {
@@ -351,7 +351,7 @@ class lC_Template_output {
   * @access public
   * @return array
   */  
-  public function getTemplateLanguageSelection($include_image = true, $include_name = false, $params = '') {
+  public static function getTemplateLanguageSelection($include_image = true, $include_name = false, $params = '') {
     global $lC_Language;
     
     $text = '';
@@ -375,7 +375,7 @@ class lC_Template_output {
   * @access public
   * @return array
   */  
-  public function getTemplateCurrenciesSelection($include_symbol = true, $include_name = false, $params = '') {
+  public static function getTemplateCurrenciesSelection($include_symbol = true, $include_name = false, $params = '') {
     global $lC_Currencies;
     
     $currency_data = array();
