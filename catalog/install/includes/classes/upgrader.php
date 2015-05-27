@@ -1106,6 +1106,16 @@ class lC_LocalUpgrader extends lC_Upgrader {
         $dv2Qry->execute(); 
         // Added for default values fix during upgrade - end
       
+        // Added for default values fix during upgrade - START
+        $dvQry = $target_db->query('ALTER TABLE :table_product_attributes ALTER COLUMN value SET DEFAULT ""');
+        $dvQry->bindTable(':table_product_attributes', TABLE_PRODUCT_ATTRIBUTES);
+        $dvQry->execute(); 
+        
+        $dv2Qry = $target_db->query('ALTER TABLE :table_product_attributes ALTER COLUMN value2 SET DEFAULT ""');
+        $dv2Qry->bindTable(':table_product_attributes', TABLE_PRODUCT_ATTRIBUTES);
+        $dv2Qry->execute(); 
+        // Added for default values fix during upgrade - end
+      
         $aQry = $target_db->query('INSERT INTO :table_product_attributes (id, 
                                                                           products_id, 
                                                                           languages_id,  
