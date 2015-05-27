@@ -510,6 +510,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
                                                                              , 'manufacturers_id'       => 'manufacturers_id'
                                                                              , 'products_ordered'       => 'products_ordered'
                                                                              , 'has_children'           => 'has_children'
+                                                                             , 'products_sort_order'    => 'sort_order'
                                                                               )                                                        
                                  , 'products_desc'                  => array(
                                                                                'products_id'            => 'products_id'
@@ -789,6 +790,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
                           , 'products_price10_qty'   => $sQry->value('products_price10_qty')
                           , 'products_price11_qty'   => $sQry->value('products_price11_qty')
                           , 'has_children'           => 0
+                          , 'products_sort_order'    => $sQry->value($map['products_sort_order'])
                            ); 
       
         $tQry = $target_db->query('INSERT INTO :table_products (products_id, 
@@ -808,6 +810,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
                                                                 manufacturers_id, 
                                                                 products_ordered, 
                                                                 has_children,
+                                                                products_sort_order,
                                                                 is_subproduct) 
                                                         VALUES (:products_id, 
                                                                 :parent_id, 
@@ -826,6 +829,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
                                                                 :manufacturers_id, 
                                                                 :products_ordered, 
                                                                 :has_children,
+                                                                :products_sort_order,
                                                                 :is_subproduct)');
 
         $tQry->bindTable(':table_products', TABLE_PRODUCTS);
@@ -846,6 +850,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
         $tQry->bindInt  (':manufacturers_id'      , $product['manufacturers_id']);
         $tQry->bindInt  (':products_ordered'      , $product['products_ordered']);
         $tQry->bindInt  (':has_children'          , $product['has_children']);
+        $tQry->bindInt  (':products_sort_order'   , $product['products_sort_order']);
         $tQry->bindInt  (':is_subproduct'         , ($product['parent_id'] != 0) ? 1 : 0);
         $tQry->execute();
         
@@ -1104,17 +1109,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
         $dv2Qry = $target_db->query('ALTER TABLE :table_product_attributes ALTER COLUMN value2 SET DEFAULT ""');
         $dv2Qry->bindTable(':table_product_attributes', TABLE_PRODUCT_ATTRIBUTES);
         $dv2Qry->execute(); 
-        // Added for default values fix during upgrade - end
-      
-        // Added for default values fix during upgrade - START
-        $dvQry = $target_db->query('ALTER TABLE :table_product_attributes ALTER COLUMN value SET DEFAULT ""');
-        $dvQry->bindTable(':table_product_attributes', TABLE_PRODUCT_ATTRIBUTES);
-        $dvQry->execute(); 
-        
-        $dv2Qry = $target_db->query('ALTER TABLE :table_product_attributes ALTER COLUMN value2 SET DEFAULT ""');
-        $dv2Qry->bindTable(':table_product_attributes', TABLE_PRODUCT_ATTRIBUTES);
-        $dv2Qry->execute(); 
-        // Added for default values fix during upgrade - end
+        // Added for default values fix during upgrade - end 
       
         $aQry = $target_db->query('INSERT INTO :table_product_attributes (id, 
                                                                           products_id, 
