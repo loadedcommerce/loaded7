@@ -11,6 +11,7 @@ button_new_special = New Special
 
 table_heading_products = Products
 table_heading_price = Price
+table_heading_status = Status
 table_heading_action = Action
 
 modal_heading_new_special = New Special

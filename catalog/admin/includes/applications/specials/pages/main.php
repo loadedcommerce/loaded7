@@ -19,6 +19,7 @@
   .dataColCheck { text-align: center; }
   .dataColProducts { text-align: left; } 
   .dataColPrice { text-align: left; } 
+  .dataColStatus { text-align: center; } 
   .dataColAction { text-align: right; }
   .dataTables_info { position:absolute; bottom: 42px; color:#4c4c4c; }
   .selectContainer { position:absolute; bottom:29px; left:30px }
@@ -31,6 +32,7 @@
           <th scope="col" class="hide-on-mobile align-left"><input onclick="toggleCheck();" id="check-all" type="checkbox" value="1" name="check-all"></th>
           <th scope="col" class="align-left"><?php echo $lC_Language->get('table_heading_products'); ?></th>
           <th scope="col" class="align-left hide-on-mobile-portrait"><?php echo $lC_Language->get('table_heading_price'); ?></th>
+          <th scope="col" class="text-center hide-on-mobile-portrait"><?php echo $lC_Language->get('table_heading_status'); ?></th>
           <th scope="col" class="align-right">
            <span class="button-group compact" style="white-space:nowrap;">
              <a style="display:none;" href="javascript:void(0);" style="cursor:pointer" class="on-mobile button with-tooltip icon-plus-round green<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? ' disabled' : NULL); ?>" href="<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? '#' : 'javascript://" onclick="newSpecial(); return false;'); ?>" title="<?php echo $lC_Language->get('button_new_special'); ?>"></a>
@@ -44,7 +46,7 @@
       </tbody>
       <tfoot>
         <tr>
-          <th colspan="4">&nbsp;</th>
+          <th colspan="5">&nbsp;</th>
         </tr>
       </tfoot>
     </table>
