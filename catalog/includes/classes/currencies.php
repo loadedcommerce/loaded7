@@ -30,6 +30,8 @@ class lC_Currencies {
 
     $Qcurrencies->freeResult();
   }
+  
+  
 
   // class methods
   public function format($number, $currency_code = '', $currency_value = '') {
@@ -42,8 +44,64 @@ class lC_Currencies {
     if (empty($currency_value) || (is_numeric($currency_value) == false)) {
       $currency_value = $this->currencies[$currency_code]['value'];
     }
+    
+    // rounding rule 
+    if ((utility::isPro() === true || utility::isB2B() === true) && defined('PRO_SETTINGS_ROUNDING_RULES') && PRO_SETTINGS_ROUNDING_RULES != '') {
+      // determine the current price parts
+      $currentPriceValue = lc_round($number * $currency_value, $this->currencies[$currency_code]['decimal_places']);
+      $priceParts = explode('.', $currentPriceValue);
+      $dollarPrice = $priceParts[0];
+      $centsPrice = $priceParts[1];      
 
-    return $this->currencies[$currency_code]['symbol_left'] . number_format(lc_round($number * $currency_value, $this->currencies[$currency_code]['decimal_places']), $this->currencies[$currency_code]['decimal_places'], $lC_Language->getNumericDecimalSeparator(), $lC_Language->getNumericThousandsSeparator()) . $this->currencies[$currency_code]['symbol_right'];
+      $number_value = number_format(lc_round($number * $currency_value, $this->currencies[$currency_code]['decimal_places']), $this->currencies[$currency_code]['decimal_places'], $lC_Language->getNumericDecimalSeparator(), $lC_Language->getNumericThousandsSeparator());
+
+      // get the rounding rules
+      $rules = unserialize(PRO_SETTINGS_ROUNDING_RULES);
+      
+      if (is_array($rules[$this->getCode()])) {
+        if ($rules[$this->getCode()]['status'] == 'on' || $rules[$this->getCode()]['status'] == '1') {
+
+          $roundto = $rules[$this->getCode()]['roundto'];
+          $level = $rules[$this->getCode()]['level'];
+          
+          switch ($level) {
+            case '0' : // ###.#0
+              $number_value = number_format((float)(substr((string) $number_value, 0, -($level+1)) . str_replace(array('.', '#'), '', $roundto)), DECIMAL_PLACES);
+              break;
+            case '1' : // ###.00
+              $number_value = number_format((float)(substr((string) $number_value, 0, -($level+1)) . str_replace(array('.', '#'), '', $roundto)), DECIMAL_PLACES);
+              break;
+            case '2' : // ##0.00
+              if (strstr($roundto, '.')) {
+                $parts = explode('.', $roundto);
+                $rDollar = (string)$parts[0];
+                $rCents = (string)$parts[1];
+                $number_value = (float)(substr($dollarPrice, 0, -1) . $rDollar . '.' . $rCents);
+              } 
+              break;
+            case '3' : // #00.00
+              if (strstr($roundto, '.')) {
+                $parts = explode('.', $roundto);
+                $rDollar = (string)$parts[0];
+                $rCents = (string)$parts[1];
+                $number_value = (float)(substr($dollarPrice, 0, -2) . $rDollar . '.' . $rCents);
+              }            
+              break;
+            case '4' : // 000.00
+              if (strstr($roundto, '.')) {
+                $parts = explode('.', $roundto);
+                $rDollar = (string)$parts[0];
+                $rCents = (string)$parts[1];
+                $number_value = (float)(substr($dollarPrice, 0, -3) . $rDollar . '.' . $rCents);
+              }            
+              break;                                                        
+          }
+
+        }
+      }
+    }
+      
+    return $this->currencies[$currency_code]['symbol_left'] . $number_value . $this->currencies[$currency_code]['symbol_right'];
   }
 
   public function formatRaw($number, $currency_code = '', $currency_value = '') {
