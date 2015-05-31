@@ -24,6 +24,7 @@ $(document).ready(function() {
     "aoColumns": [{ "sWidth": "10px", "bSortable": false, "sClass": "dataColCheck hide-on-mobile" },
                   { "sWidth": "60%", "bSortable": true, "sClass": "dataColProducts" },
                   { "sWidth": "20%", "bSortable": true, "sClass": "dataColPrice hide-on-mobile-portrait" },
+                  { "sWidth": "10%", "bSortable": true, "sClass": "dataColStatus hide-on-mobile-portrait" },
                   { "sWidth": "20%", "bSortable": false, "sClass": "dataColAction" }]
   });
   $('#dataTable').responsiveTable();
