@@ -144,7 +144,8 @@
                     }
                     if ( $lC_ShoppingCart->hasSimpleOptions($products['item_id']) ) {
                       foreach ( $lC_ShoppingCart->getSimpleOptions($products['item_id']) as $option) {
-                        if ($option['group_title'] != '') echo '<div class="small">- ' . $option['group_title'] . ': ' . $option['value_title'] . '</div>' . "\n";
+                        $mod_price = (($option['price_modifier'] > 0) ? '+' . $option['price_modifier'] : (($option['price_modifier'] == 0) ? null : $option['price_modifier']));
+                        if ($option['group_title'] != '') echo '<div class="small">- ' . $option['group_title'] . ': ' . $option['value_title'] . ' <em>' . $mod_price . '</em></div>' . "\n";
                       }
                     }                        
                     echo '</td>' . "\n";
