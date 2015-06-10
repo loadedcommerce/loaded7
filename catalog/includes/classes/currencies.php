@@ -44,16 +44,16 @@ class lC_Currencies {
     if (empty($currency_value) || (is_numeric($currency_value) == false)) {
       $currency_value = $this->currencies[$currency_code]['value'];
     }
-    
-    // rounding rule 
+
+    $number_value = number_format(lc_round($number * $currency_value, $this->currencies[$currency_code]['decimal_places']), $this->currencies[$currency_code]['decimal_places'], $lC_Language->getNumericDecimalSeparator(), $lC_Language->getNumericThousandsSeparator());
+
+    // rounding rule
     if ((utility::isPro() === true || utility::isB2B() === true) && defined('PRO_SETTINGS_ROUNDING_RULES') && PRO_SETTINGS_ROUNDING_RULES != '') {
       // determine the current price parts
       $currentPriceValue = lc_round($number * $currency_value, $this->currencies[$currency_code]['decimal_places']);
       $priceParts = explode('.', $currentPriceValue);
       $dollarPrice = $priceParts[0];
       $centsPrice = $priceParts[1];      
-
-      $number_value = number_format(lc_round($number * $currency_value, $this->currencies[$currency_code]['decimal_places']), $this->currencies[$currency_code]['decimal_places'], $lC_Language->getNumericDecimalSeparator(), $lC_Language->getNumericThousandsSeparator());
 
       // get the rounding rules
       $rules = unserialize(PRO_SETTINGS_ROUNDING_RULES);
