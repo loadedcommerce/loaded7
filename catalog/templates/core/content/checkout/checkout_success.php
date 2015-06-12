@@ -181,7 +181,7 @@ $(document).ready(function() {
     var symbol = $('.ot-total-text').text().substr(0, 1);
     var ot_total = $('.ot-total-text').text().replace('$','');
     var ot_handling = $('.ot-terms-handling-text').text().replace('$','');
-    if (ot_handling != null) {
+    if (ot_handling != '') {
       var new_total = (parseFloat(ot_total) + parseFloat(ot_handling)).toFixed(decimals);
       $('.ot-total-text').text(symbol + new_total);
     }
