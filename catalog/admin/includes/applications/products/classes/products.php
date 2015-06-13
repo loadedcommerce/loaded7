@@ -936,12 +936,20 @@ class lC_Products_Admin {
               foreach ( $options as $options_id => $option_value ) {
                 if ($options_id == $group_id) {
                   foreach ( $option_value as $values_id => $price_modifier ) {   
-                    $Qoptval = $lC_Database->query('insert into :table_products_simple_options_values (products_id, values_id, options_id, customers_group_id, price_modifier) values (:products_id, :values_id, :options_id, :customers_group_id, :price_modifier)');
+                    // Added for simple options values sort order
+                    // based for now on variants values sort order globally across all products
+                    $Qsortorder = $lC_Database->query('select sort_order FROM :table_products_variants_values where id = :id');
+                    $Qsortorder->bindTable(':table_products_variants_values', TABLE_PRODUCTS_VARIANTS_VALUES);
+                    $Qsortorder->bindInt(':id', $values_id);
+                    $Qsortorder->execute();
+
+                    $Qoptval = $lC_Database->query('insert into :table_products_simple_options_values (products_id, values_id, options_id, customers_group_id, price_modifier, sort_order) values (:products_id, :values_id, :options_id, :customers_group_id, :price_modifier, :sort_order)');
                     $Qoptval->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
-                    $Qoptval->bindInt(':products_id', $products_id);
+                    $Qoptval->bindInt(':products_id', $products_id);                                                                                                                                                                                                                       
                     $Qoptval->bindInt(':values_id', $values_id);
                     $Qoptval->bindInt(':options_id', $options_id);
                     $Qoptval->bindInt(':customers_group_id', $customers_group_id);
+                    $Qoptval->bindInt(':sort_order', $Qsortorder->valueInt('sort_order'));
                     $Qoptval->bindFloat(':price_modifier', (float)$price_modifier);
                     $Qoptval->setLogging($_SESSION['module'], $products_id);
                     $Qoptval->execute();
