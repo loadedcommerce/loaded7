@@ -610,7 +610,7 @@ class lC_Products_Admin {
     while ($Qoptions->next()) {
       $data['simple_options'][$cnt] = $Qoptions->toArray();      
       
-      $Qvalues = $lC_Database->query('select sov.products_id, sov.options_id, sov.values_id, sov.price_modifier, sov.customers_group_id, vv.title from :table_products_simple_options_values sov left join :table_products_variants_values vv on (sov.values_id = vv.id) where sov.options_id = :options_id and sov.products_id = :products_id and vv.languages_id = :languages_id');
+      $Qvalues = $lC_Database->query('select sov.products_id, sov.options_id, sov.values_id, sov.price_modifier, sov.customers_group_id, vv.title from :table_products_simple_options_values sov left join :table_products_variants_values vv on (sov.values_id = vv.id) where sov.options_id = :options_id and vv.languages_id = :languages_id order by sov.sort_order');
       $Qvalues->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
       $Qvalues->bindTable(':table_products_variants_values', TABLE_PRODUCTS_VARIANTS_VALUES);
       $Qvalues->bindInt(':options_id', $Qoptions->valueInt('options_id'));  
