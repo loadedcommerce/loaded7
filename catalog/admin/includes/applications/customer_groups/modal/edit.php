@@ -123,7 +123,8 @@ function editGroup(id) {
       } else {
         $("#editGroupDefaultContainer").removeClass('field-block');
       }
-      $('#editBaseline').val(data.editBaseline.toFixed(2));
+      baseAmt = (data.editBaseline == undefined) ? 0 : data.editBaseline;
+      $('#editBaseline').val(baseAmt.toFixed(2));
     }
   );
 }

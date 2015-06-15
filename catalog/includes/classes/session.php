@@ -132,16 +132,16 @@ class lC_Session {
     } elseif ( isset($_COOKIE[$this->_name]) && (empty($_COOKIE[$this->_name]) || (ctype_alnum($_COOKIE[$this->_name]) === false)) ) {
       $sane_session_id = false;
     }
-    
+                     
     if ( $sane_session_id === false ) {
-      if ( isset($_COOKIE[$this->_name]) ) {
+      if ( isset($_COOKIE[$this->_name]) ) {    
         setcookie($this->_name, '', time()-42000, $this->getCookieParameters('path'), $this->getCookieParameters('domain'));
       }
-
+          
       lc_redirect(lc_href_link(FILENAME_DEFAULT, null, 'NONSSL', false));
-    } else if (isset($_GET['lCsid']) && $_GET['lCsid'] != NULL && isset($_GET['qr']) && $_GET['qr'] == '1') {
-      
-      $this->_is_started = true;
+    } else if (isset($_GET['lCsid']) && $_GET['lCsid'] != NULL || isset($_GET['qr']) && $_GET['qr'] == '1') {
+                                       
+      $this->_is_started = true;                                                                             
       $this->_id = $_GET['lCsid'];
       session_id($_GET['lCsid']);
       session_start();

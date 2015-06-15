@@ -162,7 +162,7 @@ class lC_Template_output {
   * @access public
   * @return array
   */
-  function getCategoryNav($categoryId = 0, $level = 0) {
+  public static function getCategoryNav($categoryId = 0, $level = 0) {
     global $lC_Database, $lC_Language, $lC_CategoryTree;
     
     if ($level == 0) {
@@ -275,7 +275,7 @@ class lC_Template_output {
     $Qfilterlist = $lC_Database->query($filterlist_sql);
     $Qfilterlist->execute();
     if ($Qfilterlist->numberOfRows() > 1) {
-      $output .= '<p><form name="filter" action="' . lc_href_link(FILENAME_DEFAULT) . '" method="get">' . $lC_Language->get('filter_show') . '&nbsp;';
+      $output .= '<div class="margin-left small-margin-bottom"><form name="filter" action="' . lc_href_link(FILENAME_DEFAULT) . '" method="get"><label for="filter">' . $lC_Language->get('filter_show') . '</label>';
       if (isset($_GET['manufacturers']) && !empty($_GET['manufacturers'])) {
         $output .=  lc_draw_hidden_field('manufacturers', $_GET['manufacturers']);
         $options = array(array('id' => '', 'text' => $lC_Language->get('filter_all_categories')));
@@ -289,8 +289,8 @@ class lC_Template_output {
       while ($Qfilterlist->next()) {
         $options[] = array('id' => $Qfilterlist->valueInt('id'), 'text' => $Qfilterlist->value('name'));
       }
-      $output .=  lc_draw_pull_down_menu('filter', $options, (isset($_GET['filter']) ? $_GET['filter'] : null), 'onchange="this.form.submit()"');
-      $output .=  lc_draw_hidden_session_id_field() . '</form></p>' . "\n";
+      $output .=  lc_draw_pull_down_menu('filter', $options, (isset($_GET['filter']) ? $_GET['filter'] : null), 'class="form-control" onchange="this.form.submit()"');
+      $output .=  lc_draw_hidden_session_id_field() . '</form></div>' . "\n";
     }
 
     if (isset($_GET['manufacturers']) && !empty($_GET['manufacturers'])) {
@@ -351,7 +351,7 @@ class lC_Template_output {
   * @access public
   * @return array
   */  
-  public function getTemplateLanguageSelection($include_image = true, $include_name = false, $params = '') {
+  public static function getTemplateLanguageSelection($include_image = true, $include_name = false, $params = '') {
     global $lC_Language;
     
     $text = '';
@@ -375,7 +375,7 @@ class lC_Template_output {
   * @access public
   * @return array
   */  
-  public function getTemplateCurrenciesSelection($include_symbol = true, $include_name = false, $params = '') {
+  public static function getTemplateCurrenciesSelection($include_symbol = true, $include_name = false, $params = '') {
     global $lC_Currencies;
     
     $currency_data = array();

@@ -48,7 +48,11 @@ class lC_Products {
   }
 
   function setSortBy($field, $direction = '+') {
-    switch ($field) {
+    
+    switch (strtolower($field)) {
+      case 'name':
+        $this->_sort_by = 'pd.products_name';
+        break;      
       case 'model':
         $this->_sort_by = 'p.products_model';
         break;
@@ -62,11 +66,18 @@ class lC_Products {
         $this->_sort_by = 'p.products_weight';
         break;
       case 'price':
-        $this->_sort_by = 'final_price';
+        $this->_sort_by = 'p.products_price';
         break;
       case 'date_added':
         $this->_sort_by = 'p.products_date_added';
-        break;
+        break;      
+      case 'last_added':
+        $this->_sort_by = 'p.products_date_added';
+        $direction = '-';
+        break; 
+      case 'sort_order':
+        $this->_sort_by = 'p.products_sort_order';
+        break;                   
     }
 
     $this->_sort_by_direction = ($direction == '-') ? '-' : '+';
@@ -134,7 +145,7 @@ class lC_Products {
     $Qlisting->appendQuery('order by');
 
     if (isset($this->_sort_by)) {
-      $Qlisting->appendQuery(':order_by :order_by_direction, pd.products_name');
+      $Qlisting->appendQuery(':order_by :order_by_direction');
       $Qlisting->bindRaw(':order_by', $this->_sort_by);
       $Qlisting->bindRaw(':order_by_direction', (($this->_sort_by_direction == '-') ? 'desc' : ''));
     } else {
@@ -142,7 +153,8 @@ class lC_Products {
       $Qlisting->bindRaw(':order_by_direction', (($this->_sort_by_direction == '-') ? 'desc' : ''));
     }
 
-    $Qlisting->setBatchLimit((isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : 1), $max_entries);     
+    $Qlisting->setBatchLimit((isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : 1), $max_entries);    
+     
     $Qlisting->execute();
     
     return $Qlisting;

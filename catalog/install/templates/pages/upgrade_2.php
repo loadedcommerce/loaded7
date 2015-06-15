@@ -306,27 +306,27 @@ if ((isset($_POST['save_settings']) && $_POST['upgrade_method'] == 'S')) {
     <div>         
       <div class="field-block button-height small-margin-top large-margin-left large-margin-right">
         <label for="DB_SERVER" class="label"><b><?php echo $lC_Language->get('param_database_server'); ?></b></label>
-        <input type="text" name="DB_SERVER" id="LC7_SERVER" value="" class="input" style="width:93%;">
+        <input type="text" name="DB_SERVER" id="LC7_SERVER" value="" class="input margin-left" style="width:90%;">
       </div>
       <div class="field-block button-height large-margin-left large-margin-right">
         <label for="DB_SERVER_USERNAME" class="label"><b><?php echo $lC_Language->get('param_database_username'); ?></b></label>
-        <input type="text" name="DB_SERVER_USERNAME" id="LC7_USER" value="" class="input" style="width:93%;">
+        <input type="text" name="DB_SERVER_USERNAME" id="LC7_USER" value="" class="input margin-left" style="width:90%;">
       </div>
       <div class="field-block button-height large-margin-left large-margin-right">
         <label for="DB_SERVER_PASSWORD" class="label"><b><?php echo $lC_Language->get('param_database_password'); ?></b></label>
-        <input type="password" name="DB_SERVER_PASSWORD" id="LC7_PASSWORD" value="" class="input" style="width:93%;">
+        <input type="password" name="DB_SERVER_PASSWORD" id="LC7_PASSWORD" value="" class="input margin-left" style="width:90%;">
       </div> 
       <div class="field-block button-height large-margin-left large-margin-right">
         <label for="DB_DATABASE" class="label"><b><?php echo $lC_Language->get('param_database_name'); ?></b></label>
-        <input type="text" name="DB_DATABASE" id="LC7_DB" value="" class="input" style="width:93%;">
+        <input type="text" name="DB_DATABASE" id="LC7_DB" value="" class="input margin-left" style="width:90%;">
       </div>
       <div class="field-block button-height large-margin-left large-margin-right">
         <label for="DB_DATABASE_CLASS" class="label"><b><?php echo $lC_Language->get('param_database_type'); ?></b></label>
-        <?php echo lc_draw_pull_down_menu('DB_DATABASE_CLASS', $db_table_types, null, 'class="input with-small-padding" style="width:96%;"'); ?>
+        <?php echo lc_draw_pull_down_menu('DB_DATABASE_CLASS', $db_table_types, null, 'class="input with-small-padding margin-left" style="width:93%;"'); ?>
       </div>
       <div class="field-block button-height large-margin-left large-margin-right">
         <label for="DB_TABLE_PREFIX" class="label"><b><?php echo $lC_Language->get('param_database_prefix'); ?></b></label>
-        <input type="text" name="DB_TABLE_PREFIX" id="LC7_PREFIX" value="lc_" class="input" style="width:93%;">
+        <input type="text" name="DB_TABLE_PREFIX" id="LC7_PREFIX" value="lc_" class="input margin-left" style="width:90%;">
       </div>      
     </div>
     <?php

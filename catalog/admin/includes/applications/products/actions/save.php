@@ -44,7 +44,8 @@ class lC_Application_Products_Actions_save extends lC_Application_Products {
                     'products_keyword' => $_POST['products_keyword'],
                     'products_tags' => $_POST['products_tags'],
                     'products_url' => $_POST['products_url'],
-                    'has_children' => $has_variants);
+                    'has_children' => $has_variants,
+                    'products_sort_order' => $_POST['products_sort_order']);
                     
       if ( isset($_POST['attributes']) ) $data['attributes'] = $_POST['attributes'];
       if ( isset($_POST['attributes2']) ) $data['attributes2'] = $_POST['attributes2'];

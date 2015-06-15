@@ -9,7 +9,6 @@ header_title_admin_menu = Administration
 header_title_help = Help
 
 batch_results_number_of_entries = Displaying <b>%d</b> to <b>%d</b> (of <b>%d</b> entries)
-
 button_active = Active
 button_add = Add
 button_add_new = Add New
@@ -63,16 +62,17 @@ button_upload = Upload
 button_yes = Yes
 button_no = No
 button_info = Info
+button_understood = I Understand
 
 customer_view_details = View details for
 content_view_details = View details for
 content_title = Content
 customers_title = Customers
-products_title = Products
-orders_titls = Orders
 
 default = Default
 default_entry = default
+
+error_specials_date = Error:  The specials expire date cannot be before the start date.
 
 field_admin_language = Admin Language:
 field_username = Email:
@@ -148,32 +148,26 @@ icon_user_female = Female
 icon_user_male = Male
 icon_view = View
 icon_view_in_catalog = View in catalog
-icon_processing = Processing ...
-
+icon_processing = Processing ...  
 introduction_profile_pass_change = Please make the necessary changes for this administrator.
 introduction_edit_administrator = Please make the necessary changes for this administrator.
 invalid_current_password = The current password you entered is not correct. Please re-enter it and try again.
 invalid_new_password_match = The new password and confirmation does not match. Please try again.
 
-maximum_file_upload_size = Max: %s
-
+maximum_file_upload_size = Max: %s 
 menu_title_addons = Add Ons
 menu_title_app_store = Add Ons
 menu_title_license_management = License Management
 menu_title_core_update = Core Update
 menu_title_report_issues = Report Issues
-menu_title_get_help = Get Help
-
+menu_title_get_help = Get Help 
 modal_heading_profile_edit = Edit Profile
 modal_heading_profile_pass_change = Change Profile Password
 modal_heading_system_message = System Message
-
 ms_success_action_performed = Success: The action was successfully performed.
-ms_success_upload_file_saved = Success: The file uploaded has been saved successfully.
-
+ms_success_upload_file_saved = Success: The file uploaded has been saved successfully. 
 ms_warning_upload_no_file = Warning: No file uploaded.
-ms_warning_uploads_disabled = Warning: File uploads are disabled in the php.ini configuration file.
-
+ms_warning_uploads_disabled = Warning: File uploads are disabled in the php.ini configuration file. 
 ms_error_action_not_performed = Error: There was a problem performing the action.
 ms_error_retrieving_data = Error: There was a problem retrieving the data.
 ms_error_no_default_currency = Error: There is currently no default currency defined.
@@ -193,12 +187,13 @@ ms_error_javascript_not_enabled_for_upload = Please enable JavaScript to use aja
 ms_error_javascript_not_enabled_warning = Your browser does not support JavaScript! Some features won't work as expected.
 ms_warning_resize_images = We have detected that your images need to be resized.  If you have a large amount of images, this process will take some time and can timeout depending on server settings and the number of images to process.<br /><br />For stores with more than 1000 images, we recommend choosing Never at this point and going to the <strong>Admin > Products > Settings > Image Groups</strong> area where you can resize individual groups one at a time.<br /><br /><small class="tag margin-right blue-gradient glossy" style="padding:2px 11px">YES</small>Attempt to process my images now.<br /><br /><small class="tag margin-right silver-gradient glossy" style="padding:2px 14px;">NO</small>Not now, remind me next session.<br /><br /><small class="tag red-gradient glossy margin-right">NEVER</small>Do nothing and do not remind me.
 
+orders_titls = Orders
+
 password_change_success = You have successfully updated your password.
 parameter_true = Yes
 parameter_false = No
 parameter_optional = Optional
-parameter_none = -- None --
-
+parameter_none = -- None -- 
 profile_slate_edit_logout = edit or logout
 profile_slate_edit_profile = edit<br />profile
 profile_slate_change_password = change<br />password
@@ -211,10 +206,10 @@ profile_password_new = New Password
 profile_password_confirm = Confirm Password
 profile_image = Profile Image:
 profile_new_image = New Image
+products_title = Products
 
 qrcode = QR Code
-qrcode_current_url = Current URL
-
+qrcode_current_url = Current URL 
 quick_add_order = Order
 quick_add_customer = Customer
 quick_add_category = Category
@@ -223,8 +218,7 @@ quick_add_special = Special
 quick_add_coupon = Coupon
 quick_add_manufacturer = Manufacturer
 quick_add_banner = Banner
-quick_add_newsletter = Newsletter
- 
+quick_add_newsletter = Newsletter  
 quick_add_order_title = Add new Order
 quick_add_customer_title = Add new Customer
 quick_add_category_title = Add new Category
@@ -234,7 +228,6 @@ quick_add_coupon_title = Add new Coupon
 quick_add_manufacturer_title = Add new Manufacturer
 quick_add_banner_title = Add new Banner
 quick_add_newsletter_title = Add new Newsletter
-
 quick_add_new_order = Typing lowercase o while the Quick Add menu is active will redirect you to the New Order page
 quick_add_new_customer = Typing lowercase c while the Quick Add menu is active will redirect you to the New Customer page 
 quick_add_new_category = Typing lowercase g while the Quick Add menu is active will redirect you to the New Category page 
@@ -244,7 +237,6 @@ quick_add_new_coupon = Typing lowercase u while the Quick Add menu is active wil
 quick_add_new_manufacturer = Typing lowercase t while the Quick Add menu is active will redirect you to the New Manufacturer page 
 quick_add_new_banner = Typing lowercase b while the Quick Add menu is active will redirect you to the New Banner page 
 quick_add_new_newsletter = Typing lowercase n while the Quick Add menu is active will redirect you to the New Newsletter page
-
 quick_add_order_trigger = o 
 quick_add_customer_trigger = c 
 quick_add_category_trigger = g 
@@ -266,14 +258,14 @@ messaging_trash = Trash
 order_view_details = View details for order number
 
 product_view_details = View details for
+product_search_placeholder = Product Search
+product_attributes_product_classes_title = Product Classes
 
 result_set_current_page = Page %s of %d
 
 search_placeholder = Search
-product_search_placeholder = Product Search
 site_maintenance_message_title = Maintenance Mode
-site_maintenance_message_text = Site is in Maintenance Mode.  Click here to disable it.
-
+site_maintenance_message_text = Site is in Maintenance Mode.  Click here to disable it. 
 slider_switch_enabled = ENABLED
 slider_switch_disabled = DISABLED
 slider_switch_preview = PREVIEW text_status = Statustext_select_product = Select Product
@@ -284,6 +276,8 @@ tooltip_quick_add = Quick Add (a)
 tooltip_messages = Messages (m)
 tooltip_settings = Settings (s) / Main Menu (escape)
 top_category = Top Category
+text_active = Active
+text_inactive = Inactive
 text_top = Top
 text_hello = Hello
 text_with_selected = With Selected
@@ -297,7 +291,6 @@ text_version = Version
 text_confirm_delete = Confirm Delete?
 text_sort = Sort
 text_mode = Mode
-
 text_model = Model
 text_mode_info_category = Information Category
 text_mode_faq_category = FAQ Category
@@ -329,13 +322,6 @@ text_select = Select
 text_product = Product
 text_special_enabled = Has Special Price (Enabled)
 text_special_disabled = Has Special Price (Disabled)
-
-update_message_title = Updates are Available!
-update_message_text1 = New version
-update_message_text2 = released.
-
-product_attributes_product_classes_title = Product Classes
-
 text_coming_soon = Pro Feature Coming Soon
 text_click_for_info = &nbsp;Click for Info&nbsp;
 text_pro = Pro
@@ -381,7 +367,9 @@ text_featured_product_expired = Featured Product has Expired!
 text_featured_product_no_expiration = No Expiration
 text_available_with_pro = This feature available with the <span class="tag red-gradient glossy">PRO</span> edition
 text_free_with_pro_edition = <span class="tag red-gradient glossy">PRO</span> Free with Pro Edition
-error_specials_date = Error:  The specials expire date cannot be before the start date.
-button_understood = I Understand
 text_api_com_issue = API Communication
 text_api_com_issue_warnings = There was an issue communicating with the API and<br />because of this some functionality such as Core<br />Updates and Addon delivery will not function properly.<br /><br />Please refer to the error log located at<br />catalog/includes/works/logs/api_errors.txt for more<br />detailed information.
+
+update_message_title = Updates are Available!
+update_message_text1 = New version
+update_message_text2 = released. 

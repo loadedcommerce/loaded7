@@ -106,22 +106,67 @@ rpc_configfile_error = No previous installation found. Please check the path and
 rpc_sqlfile_error = Cannot locate source configuration file 
 
 param_import_categories = CATEGORIES
-param_import_categories_description = importing Category data 
+param_import_categories_description = importing Categories data 
+
+param_import_categories_description = CATEGORIES DESCRIPTION
+param_import_categories_description_description = importing Categories Description data 
 
 param_import_products = PRODUCTS
-param_import_products_description = importing Product data
+param_import_products_description = importing Products data
+
+param_import_products_description = PRODUCTS DESCRIPTION
+param_import_products_description_description = importing Products Description data
+
+param_import_products_to_categories = PRODUCTS TO CATEGORIES
+param_import_products_to_categories_description = importing Products to Categories data 
+
+param_import_products_notifications = PRODUCTS NOTIFICATIONS
+param_import_products_notifications_description = importing Products Notifications data
+
+param_import_featured = FEATURED PRODUCTS
+param_import_featured_description = importing Featured Products data
 
 param_import_attributes = ATTRIBUTES
-param_import_attributes_description = importing Product Attributes data
+param_import_attributes_description = importing Attributes data
+
+param_import_manufacturers = MANUFACTURERS
+param_import_manufacturers_description = importing Manufacturers data
+
+param_import_manufacturers_info = MANUFACTURERS INFO
+param_import_manufacturers_info_description = importing Manufacturers Info data
+
+param_import_reviews = REVIEWS
+param_import_reviews_description = importing Reviews data
+
+param_import_specials = SPECIALS
+param_import_specials_description = importing Specials data
 
 param_import_customers = CUSTOMERS
 param_import_customers_description = importing Customer data 
+
+param_import_address_book = ADDRESS BOOK
+param_import_address_book_description = importing Address Book data 
 
 param_import_customer_groups = CUSTOMER GROUPS
 param_import_customer_groups_description = importing Customer Groups data
 
 param_import_orders = ORDERS 
 param_import_orders_description = importing Orders data
+
+param_import_orders_products = ORDERS PRODUCTS 
+param_import_orders_products_description = importing Orders Products data
+
+param_import_orders_products_download = ORDERS PRODUCTS DOWNLOAD 
+param_import_orders_products_download_description = importing Orders Products Download data
+
+param_import_orders_status = ORDERS STATUS 
+param_import_orders_status_description = importing Orders Status data
+
+param_import_orders_status_history = ORDERS STATUS HISTORY
+param_import_orders_status_history_description = importing Orders Status History data
+
+param_import_orders_total = ORDERS TOTAL
+param_import_orders_total_description = importing Orders Total data
 
 param_import_cds = CONTENT DIRECTOR 
 param_import_cds_description = importing Content Director data 
