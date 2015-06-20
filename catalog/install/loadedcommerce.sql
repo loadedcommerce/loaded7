@@ -622,6 +622,13 @@ CREATE TABLE lc_products (
   groups_pricing_enable tinyint(1) NOT NULL DEFAULT '0',
   qpb_pricing_enable tinyint(1) NOT NULL DEFAULT '0',
   specials_pricing_enable tinyint(1) NOT NULL DEFAULT '0',
+  special_order TINYINT(1) NOT NULL DEFAULT '0',
+  discontinued_product TINYINT(1) NOT NULL DEFAULT '0',
+  packs INT NOT NULL DEFAULT  '1',
+  min_purchase INT NOT NULL DEFAULT  '1',
+  limited BOOLEAN NULL DEFAULT NULL,
+  products_upc varchar(255) DEFAULT NULL,
+  products_rebate_price decimal(15,4) NOT NULL DEFAULT '0.0000',
   PRIMARY KEY (products_id),
   KEY idx_products_date_added (products_date_added)
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
