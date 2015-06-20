@@ -647,10 +647,10 @@ class lC_Products_Admin {
     $lC_Database->startTransaction();
 
     if ( is_numeric($id) ) {
-      $Qproduct = $lC_Database->query('update :table_products set parent_id = :parent_id, products_quantity = :products_quantity, products_cost = :products_cost, products_price = :products_price, products_msrp = :products_msrp, products_model = :products_model, products_sku = :products_sku, products_weight = :products_weight, products_weight_class = :products_weight_class, products_status = :products_status, groups_pricing_enable = :groups_pricing_enable, qpb_pricing_enable = :qpb_pricing_enable, specials_pricing_enable = :specials_pricing_enable, products_tax_class_id = :products_tax_class_id, products_last_modified = now() where products_id = :products_id');
+      $Qproduct = $lC_Database->query('update :table_products set parent_id = :parent_id, products_quantity = :products_quantity, products_cost = :products_cost, products_price = :products_price, products_msrp = :products_msrp, products_model = :products_model, products_sku = :products_sku, products_weight = :products_weight, products_weight_class = :products_weight_class, products_status = :products_status, groups_pricing_enable = :groups_pricing_enable, qpb_pricing_enable = :qpb_pricing_enable, specials_pricing_enable = :specials_pricing_enable, products_tax_class_id = :products_tax_class_id, products_last_modified = now(), packs = :packs, products_upc = :products_upc, products_sku = :products_sku, products_rebate_price = :products_rebate_price, special_order = :special_order, discontinued_product = :discontinued_product, limited = :limited, min_purchase = :min_purchase where products_id = :products_id');
       $Qproduct->bindInt(':products_id', $id);
     } else {
-      $Qproduct = $lC_Database->query('insert into :table_products (parent_id, products_quantity, products_cost, products_price, products_msrp, products_model, products_sku, products_weight, products_weight_class, products_status, products_tax_class_id, products_ordered, products_date_added, groups_pricing_enable, qpb_pricing_enable, specials_pricing_enable) values (:parent_id, :products_quantity, :products_cost, :products_price, :products_msrp, :products_model, :products_sku, :products_weight, :products_weight_class, :products_status, :products_tax_class_id, :products_ordered, :products_date_added, :groups_pricing_enable, :qpb_pricing_enable, :specials_pricing_enable)');
+      $Qproduct = $lC_Database->query('insert into :table_products (parent_id, products_quantity, products_cost, products_price, products_msrp, products_model, products_sku, products_weight, products_weight_class, products_status, products_tax_class_id, products_ordered, products_date_added, groups_pricing_enable, qpb_pricing_enable, specials_pricing_enable, packs, min_purchase, limited, products_upc, products_sku, products_rebate_price, discontinued_product) values (:parent_id, :products_quantity, :products_cost, :products_price, :products_msrp, :products_model, :products_sku, :products_weight, :products_weight_class, :products_status, :products_tax_class_id, :products_ordered, :products_date_added, :groups_pricing_enable, :qpb_pricing_enable, :specials_pricing_enable, :packs, :min_purchase, :limited, :products_upc, :products_sku, :products_rebate_price, :discontinued_product)');
       $Qproduct->bindRaw(':products_date_added', 'now()');
       $Qproduct->bindInt(':products_ordered', $data['products_ordered']);
     }
@@ -676,6 +676,14 @@ class lC_Products_Admin {
     $Qproduct->bindInt(':qpb_pricing_enable', $data['qpb_pricing_switch']);
     $Qproduct->bindInt(':specials_pricing_enable', $data['specials_pricing_switch']);
     $Qproduct->setLogging($_SESSION['module'], $id);
+    // Phrase 1 mods
+    $Qproduct->bindFloat(':packs', $data['packs']);
+    $Qproduct->bindFloat(':limited', $data['limited']);
+    $Qproduct->bindFloat(':products_rebate_price', $data['rebate_price']);
+    $Qproduct->bindFloat(':special_order', $data['special_order']);
+    $Qproduct->bindFloat(':discontinued_product', $data['discontinued_product']);
+    $Qproduct->bindValue(':products_upc', $data['upc']);
+    $Qproduct->bindValue(':min_purchase', $data['min_purchase']);
     $Qproduct->execute();
       
     if ( is_numeric($id) ) {

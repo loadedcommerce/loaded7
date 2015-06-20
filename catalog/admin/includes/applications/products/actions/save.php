@@ -44,7 +44,15 @@ class lC_Application_Products_Actions_save extends lC_Application_Products {
                     'products_keyword' => $_POST['products_keyword'],
                     'products_tags' => $_POST['products_tags'],
                     'products_url' => $_POST['products_url'],
-                    'has_children' => $has_variants);
+                    'has_children' => $has_variants,
+                    // Phrase 1 mods
+                    'upc' => (isset($_POST['products_upc'])) ? $_POST['products_upc'] : '',
+                    'rebate_price' => number_format((is_numeric($_POST['products_rebate_price']) ? $_POST['products_rebate_price'] : 0), DECIMAL_PLACES, '.', ''),
+                    'packs' => (isset($_POST['packs']) && $has_variants === false) ? $_POST['packs'] : 1,
+                    'min_purchase' => (is_numeric($_POST['min_purchase'])) ? $_POST['min_purchase'] : 1,
+                    'limited' => (is_numeric($_POST['limited'])) ? $_POST['limited'] : 0,
+                    'discontinued_product' => (is_numeric($_POST['discontinued_product'])) ? $_POST['discontinued_product'] : 0,
+                    'special_order' => (is_numeric($_POST['special_order'])) ? $_POST['special_order'] : 0);
                     
       if ( isset($_POST['attributes']) ) $data['attributes'] = $_POST['attributes'];
       if ( isset($_POST['attributes2']) ) $data['attributes2'] = $_POST['attributes2'];

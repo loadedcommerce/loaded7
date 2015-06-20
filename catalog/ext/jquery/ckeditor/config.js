@@ -22,17 +22,20 @@ CKEDITOR.editorConfig = function( config ) {
     { name: 'basicstyles', groups: [ 'basicstyles', 'colors' ], items: [ 'Bold', 'Italic', 'Underline', '-', 'TextColor' ] },
     { name: 'paragraph', groups: [ 'list' ], items: [ 'NumberedList', 'BulletedList' ] },
     { name: 'links', groups: ['links','insert'], items: [ 'Link', 'Unlink', '-', 'HorizontalRule', 'Image', 'tliyoutube', 'Slideshow' ] },
+    { name: 'oembed', items: [ 'oembed' ] },
     { name: 'clipboard', groups: [ 'clipboard', 'basicstyles' ], items: [  'PasteFromWord', '-', 'RemoveFormat' ] },
   ];
 
   // The Minimum toolbar groups arrangement.
   config.toolbar_Minimum = [
     { name: 'styles', items: [ 'FontSize' ] },
+
     { name: 'basicstyles', groups: [ 'basicstyles', 'colors' ], items: [ 'Bold', 'Italic', 'Underline', '-', 'TextColor' ] },
     { name: 'paragraph', groups: [ 'list' ], items: [ 'NumberedList', 'BulletedList' ] },
     { name: 'links', groups: ['links','insert'], items: [ 'Link', 'Unlink', '-', 'HorizontalRule', 'Image', 'tliyoutube', 'Slideshow'  ] },
     { name: 'clipboard', groups: [ 'clipboard', 'basicstyles' ], items: [  'PasteFromWord', '-', 'RemoveFormat' ] },
-    { name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ 'Source' ] }
+    { name: 'oembed', items: [ 'oembed' ] },
+    { name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ 'Source' ] },
   ];
 
   // The Standard toolbar groups arrangement.
@@ -42,7 +45,7 @@ CKEDITOR.editorConfig = function( config ) {
     { name: 'colors', items: [ 'TextColor', 'BGColor' ] },
     { name: 'paragraph', groups: [ 'list', 'indent', 'align' ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote' ] },
     { name: 'links', groups: ['links'], items: [ 'Link', 'Unlink', 'Anchor' ] },
-    { name: 'insert',  groups: ['table','insert'], items: [  'Image', 'Flash', 'Table', 'tliyoutube', 'HorizontalRule', 'SpecialChar', 'Slideshow'  ] },
+    { name: 'insert',  groups: ['table','insert'], items: [  'Image', 'Flash', 'Table', 'tliyoutube', 'HorizontalRule', 'SpecialChar', 'Slideshow', 'iframe'  ] },
     { name: 'clipboard', groups: [ 'clipboard' ], items: [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'RemoveFormat' ] },
     { name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ 'Source' ] },
     { name: 'tools', items: [ 'Maximize' ] },
@@ -56,7 +59,7 @@ CKEDITOR.editorConfig = function( config ) {
     { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript' ] },
     { name: 'colors', items: [ 'TextColor', 'BGColor' ] },
     { name: 'paragraph', groups: [ 'list', 'indent', 'align' ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
-    { name: 'insert',  groups: ['insert', 'table'], items: [  'Image', 'Table', 'oembed', 'tliyoutube', 'HorizontalRule', 'SpecialChar', '-', 'Slideshow', 'Uploadcare' ] },
+    { name: 'insert',  groups: ['insert', 'table'], items: [  'Image', 'Table', 'oembed', 'tliyoutube', 'HorizontalRule', 'SpecialChar', '-', 'Slideshow', 'iframe', 'Uploadcare' ] },
     { name: 'links', groups: ['links'], items: [ 'Link', 'Unlink', 'Anchor' ] },
     { name: 'clipboard', groups: [ 'clipboard' ], items: [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'RemoveFormat' ] },
   { name: 'forms', items: [ 'Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton', 'HiddenField' ] },

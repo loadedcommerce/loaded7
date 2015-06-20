@@ -51,7 +51,22 @@ global $lC_Language, $lC_Currencies, $pInfo;
       <?php 
     } 
     ?>                
-  </fieldset>     
+  </fieldset>
+
+  <fieldset class="fieldset fields-list" style="padding-bottom:0;">
+    <legend class="legend"><?php echo $lC_Language->get('text_pricing_rebate'); ?></legend>
+    
+    <div class="field-block button-height margin-bottom">
+      <label for="products_rebate_price" class="label"><b><?php echo $lC_Language->get('text_rebate_price'); ?></b></label>
+      <div class="inputs" style="display:inline; padding:8px 0;">
+        <span class="mid-margin-left no-margin-right"><?php echo $lC_Currencies->getSymbolLeft(); ?></span>
+        <input type="text" onfocus="this.select();" onchange="updatePricingDiscountDisplay();" class="input-unstyled" name="products_rebate_price" id="products_rebate_price" value="<?php echo (isset($pInfo) ? number_format(lc_round($pInfo->get('products_rebate_price'), DECIMAL_PLACES), DECIMAL_PLACES) : null); ?>" class="input strong" />
+      </div>    
+      <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_pricing_rebate_price'), null, 'info-spot on-left grey margin-left'); ?>
+    </div>           
+  </fieldset> 
+
+
   <fieldset class="fieldset large-margin-top">
     <legend class="legend"><?php echo $lC_Language->get('text_options_pricing'); ?></legend>  
     <dl id="simple-options-pricing-tab" class="accordion">

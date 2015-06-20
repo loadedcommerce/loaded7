@@ -174,29 +174,110 @@ $error = (isset($_GET['error']) && $_GET['error'] != NULL) ? preg_replace('/[^A-
       ?>  
     </div>
   </div>
+  <div class="col-sm-8 col-lg-8 align-right">
+    <?php 
+
+    if($lC_Product->getMinPurchase() > 1){
+
+      if($lC_Product->getPacks() > 1){
+        echo sprintf($lC_Language->get('text_qty_min'), $lC_Product->getMinPurchase(), $lC_Product->getPacks());
+      }else{
+        echo sprintf($lC_Language->get('text_qty_min_min'), $lC_Product->getMinPurchase());
+      }
+    } 
+
+    ?>
+  </div>
+  
+  <?php if($lC_Product->isLimited() && $lC_Product->getQuantity() > 0){ ?>
+  <?php $show_cart = true; ?>
+  <?php if(!$lC_Product->isSpecialOrder() && !$lC_Product->isDiscontinued()){ ?>
+  <div><?php echo sprintf($lC_Language->get('text_limited_qty'), $lC_Product->getQuantity()); ?></div>
+  <?php } ?>
+  <?php }elseif($lC_Product->isLimited()){ ?>
+  <?php $show_cart = false; ?>
+  <?php }else{ ?>
+  <?php $show_cart = true; ?>
+  <?php } ?>
+
   <?php 
-  if ( $lC_Product->hasSubProducts($lC_Product->getID()) === false || ($lC_Product->hasSubProducts($lC_Product->getID()) === true && MULTISKU_SUBPRODUCTS_PURCHASE_PRESENTATION == 'Multi') ) {
+  if ( $show_cart && $lC_Product->hasSubProducts($lC_Product->getID()) === false || ($lC_Product->hasSubProducts($lC_Product->getID()) === true && MULTISKU_SUBPRODUCTS_PURCHASE_PRESENTATION == 'Multi') ) {
     ?>    
     <div id="qpb-message"></div>
     <div class="relative clear-both clearfix buy-btn-div">
       <div class="display-inline">
         <div class="col-sm-8 col-lg-8 align-right mid-margin-top">
-        <?php
+        <?php 
           if ( $lC_Product->hasSubProducts($lC_Product->getID()) === false) {
-            ?>        
+            if ( $lC_Product->getPacks() > 1 && !$lC_Product->isSpecialOrder() && !$lC_Product->isDiscontinued()) { 
+
+              $packs = $lC_Product->getPacks();
+              $qty = $packs; 
+
+            ?>
+            <div class="form-group">
+              <label class="content-products-info-qty-label"><?php echo $lC_Language->get('text_add_to_cart_quantity'); ?></label>
+              <select id="quantity" name="quantity" class="form-control content-products-info-qty-input mid-margin-right">
+                <?php 
+
+                if($qty >= $lC_Product->getMinPurchase()){
+                  $limit = 12;
+                }else{
+                  $limit = 10;
+                }
+
+                for($i = 1; $i <= $limit; $i++){ 
+
+                  if($qty >= $lC_Product->getMinPurchase()){
+                  ?>
+                  <option value="<?php echo $qty; ?>"<?php if($i == 1){ echo ' selected'; } ?>><?php echo $qty; ?></option>
+                  <?php
+                  }
+
+                  $qty += $packs; 
+                } 
+
+                ?>
+              </select>
+            </div>
+            <?php }elseif(!$lC_Product->isSpecialOrder() && !$lC_Product->isDiscontinued()){ ?> 
             <div class="form-group">
               <label class="content-products-info-qty-label"><?php echo $lC_Language->get('text_add_to_cart_quantity'); ?></label>
               <i class="fa fa-plus-square-o fa-lg" style="position:absolute; right:-1px; top:3px; opacity:.3; cursor:pointer;" onclick="setQty('up');"></i>
-              <input type="text" id="quantity" name="quantity" onfocus="this.select();" onchange="refreshPrice();" class="form-control content-products-info-qty-input mid-margin-right" value="1">
+              <input type="text" id="quantity" name="quantity" onfocus="this.select();" onchange="refreshPrice();" class="form-control content-products-info-qty-input mid-margin-right" value="<?php echo $lC_Product->getMinPurchase(); ?>">
               <i class="fa fa-minus-square-o fa-lg" style="position:absolute; right:-1px; top:19px; opacity:.3; cursor:pointer;" onclick="setQty('dn');"></i>
             </div>
             <?php
+              }
           }
           ?>
+        </div><?php $str = preg_replace('[\D]', '', $lC_Product->getPriceFormated(false)); ?>
+        <?php if($lC_Product->isSpecialOrder() || $lC_Product->isDiscontinued()){ ?>
+          <?php if($lC_Product->isDiscontinued() && $str < 1){ // Display discontinued message ?>
+          <a href="<?php echo lc_href_link(FILENAME_INFO, 'contact', 'SSL'); ?>"><div class="col-sm-4 col-lg-4"><img src="<?php echo DIR_WS_TEMPLATE_IMAGES; ?>/not.png" />
+          <p class="margin-top"><div class="btn btn-block btn-lg btn-success"><?php echo $lC_Language->get('text_contact'); ?></div></p>
+        </div></a>
+          <?php }elseif($str > 0 && $lC_Product->isDiscontinued()){ // Display special order message ?>
+      <div class="form-group">
+              <label class="content-products-info-qty-label"><?php echo $lC_Language->get('text_add_to_cart_quantity'); ?></label>
+              <i class="fa fa-plus-square-o fa-lg" style="position:absolute; right:-1px; top:3px; opacity:.3; cursor:pointer;" onclick="setQty('up');"></i>
+              <input type="text" id="quantity" name="quantity" onfocus="this.select();" onchange="refreshPrice();" class="form-control content-products-info-qty-input mid-margin-right" value="<?php echo $lC_Product->getMinPurchase(); ?>">
+              <i class="fa fa-minus-square-o fa-lg" style="position:absolute; right:-1px; top:19px; opacity:.3; cursor:pointer;" onclick="setQty('dn');"></i>
+            </div>
+            <div class="col-sm-4 col-lg-4">
+          <p class="margin-top"><button onclick="info_check_form(this); $('#cart_quantity').submit();" id="btn-buy-now" class="btn btn-block btn-lg btn-success"><?php echo $lC_Language->get('button_buy_now'); ?></button></p>
         </div>
+          <?php }else{ ?>
+          
+          <a href="<?php echo lc_href_link(FILENAME_INFO, 'contact', 'SSL'); ?>"><div class="col-sm-4 col-lg-4"><img src="<?php echo DIR_WS_TEMPLATE_IMAGES; ?>/special-order.png" />
+          <p class="margin-top"><div class="btn btn-block btn-lg btn-success"><?php echo $lC_Language->get('text_contact'); ?></div></p>
+        </div></a>
+          <?php } ?>
+        <?php }else{ ?>
         <div class="col-sm-4 col-lg-4">
           <p class="margin-top"><button onclick="info_check_form(this); $('#cart_quantity').submit();" id="btn-buy-now" class="btn btn-block btn-lg btn-success"><?php echo $lC_Language->get('button_buy_now'); ?></button></p>
         </div>
+        <?php } ?>
       </div> 
     </div>
     <?php
@@ -241,6 +322,9 @@ $(document).ready(function() {
 });
 
 function info_check_form(e) {
+  //return true;
+  var selected_qty = (int)$('#quantity').val();
+  var total_qty = (int)'<?php echo $lC_Product->getQuantity(); ?>';
   var ok = true;
   var isMultiViewSubProduct = '<?php echo ($lC_Product->hasSubProducts($lC_Product->getID()) === true && MULTISKU_SUBPRODUCTS_PURCHASE_PRESENTATION == 'Multi') ? 1 : 0; ?>';
   if (isMultiViewSubProduct == 1) {
@@ -252,9 +336,27 @@ function info_check_form(e) {
     });
   }
 
+  <?php if($lC_Product->isLimited() == 1){ ?>
+  if( selected_qty > total_qty) {
+
+    $('#cart_quantity').attr('action', '');
+    alert(selected_qty+' '+total_qty+'<?php echo sprintf($lC_Language->get('text_qty_limited_more'), $lC_Product->getQuantity()); ?>');
+    return false;
+  }
+  <?php } ?>
+
   if (ok == true) { 
-    $('#cart_quantity').attr('action', '<?php echo lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword() . '&action=cart_add&info=1'); ?>');
-    return true;
+    var min_purchase = '<?php echo $lC_Product->getMinPurchase(); ?>';
+    if ( selected_qty < min_purchase){
+
+      $('#cart_quantity').attr('action', '');
+      alert('<?php echo sprintf($lC_Language->get('text_qty_min_purchase'), $lC_Product->getMinPurchase()); ?>');
+      return false;
+    } else {
+      
+     // $('#cart_quantity').attr('action', '<?php echo lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword() . '&action=cart_add&info=1'); ?>');
+      return true;
+    }
   } else {
     $('#cart_quantity').attr('action', '');
     alert('<?php echo $lC_Language->get('text_qty_cannot_be_zero'); ?>');

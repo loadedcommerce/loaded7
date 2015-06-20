@@ -15,7 +15,7 @@ class lC_Product {
 
     if ( !empty($id) ) {
       if ( is_numeric($id) ) {
-        $Qproduct = $lC_Database->query('select products_id as id, parent_id, products_quantity as quantity, products_price as price, products_msrp as msrp, products_model as model, products_tax_class_id as tax_class_id, products_weight as weight, products_weight_class as weight_class_id, products_date_added as date_added, manufacturers_id, has_children, is_subproduct, access_levels from :table_products where products_id = :products_id and products_status = :products_status');
+        $Qproduct = $lC_Database->query('select limited as limited, min_purchase as min_purchase, packs as packs, products_rebate_price as rebate_price, special_order, discontinued_product, products_id as id, parent_id, products_quantity as quantity, products_price as price, products_msrp as msrp, products_model as model, products_tax_class_id as tax_class_id, products_weight as weight, products_weight_class as weight_class_id, products_date_added as date_added, manufacturers_id, has_children, is_subproduct, access_levels from :table_products where products_id = :products_id and products_status = :products_status');
         $Qproduct->bindTable(':table_products', TABLE_PRODUCTS);
         $Qproduct->bindInt(':products_id', $id);
         $Qproduct->bindInt(':products_status', 1);
@@ -1101,6 +1101,37 @@ class lC_Product {
   */ 
   protected static function _usortBreakPoint($a, $b) {
     return $a['qty_break'] == $b['qty_break'] ? 0 : $a['qty_break'] > $b['qty_break'] ? 1 : -1;
-  }  
+  }
+
+  // Phrase 1 mod
+  
+    /*
+  * Is the product a special order?
+  * Returns boolean
+  */
+  public function isSpecialOrder(){
+
+    return $this->_data['special_order'];
+  }
+
+  /*
+  * Is the prodiuct discontinued?
+  * returns boolean
+  */
+  public function isDiscontinued(){
+
+    return $this->_data['discontinued_product'];
+  }
+
+  /*
+  * Retrieve the rebate price
+  *
+  * @access public
+  * @return array
+  */  
+  public function getRebatePrice() {
+    
+    return $this->_data['rebate_price'];
+  }
 } 
 ?>

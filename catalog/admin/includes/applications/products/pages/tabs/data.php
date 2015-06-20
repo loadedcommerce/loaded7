@@ -10,6 +10,7 @@
 */
 global $lC_Language, $pInfo, $tax_class_array; 
 ?>
+
 <div id="section_data_content" class="with-padding">
   <fieldset class="fieldset">
     <legend class="legend"><?php echo $lC_Language->get('text_inventory_settings'); ?></legend>
@@ -32,7 +33,101 @@ global $lC_Language, $pInfo, $tax_class_array;
             <input type="text" onfocus="this.select();" style="width:94%;" class="input-unstyled" value="<?php echo (isset($pInfo) ? number_format($pInfo->get('products_msrp'), DECIMAL_PLACES) : null); ?>" id="products_msrp" name="products_msrp" />
           </div>         
         </div>
-      </div>      
+      </div>
+
+
+      <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+        <div class="twelve-columns no-margin-bottom strong">
+          <span><?php echo $lC_Language->get('field_upc'); ?></span><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_data_upc')); ?>
+        </div>
+        <div class="twelve-columns no-margin-bottom small-margin-top">
+          <input type="text" onfocus="this.select();" class="input full-width" value="<?php echo (isset($pInfo) ? $pInfo->get('products_upc') : null); ?>" id="products_upc" name="products_upc" />
+        </div>
+      </div> 
+
+      <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+        <div class="twelve-columns no-margin-bottom strong">
+          <span><?php echo $lC_Language->get('text_cost'); ?></span><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_data_cost')); ?>
+        </div>
+        <div class="twelve-columns no-margin-bottom small-margin-top">
+          <div class="inputs" style="display:inline; padding:8px 0;">
+            <span class="mid-margin-left no-margin-right"><?php echo $lC_Currencies->getSymbolLeft(); ?></span>
+            <input type="text" onfocus="this.select();" style="width:94%;" class="input-unstyled" value="<?php echo (isset($pInfo) ? number_format($pInfo->get('products_cost'), DECIMAL_PLACES) : null); ?>" name="products_cost" />
+          </div>         
+        </div>
+      </div>
+
+      <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+        <div class="twelve-columns no-margin-bottom strong">
+          <span><?php echo $lC_Language->get('field_packs'); ?></span><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_data_packs')); ?>
+        </div>
+
+        <div class="twelve-columns no-margin-bottom small-margin-top">
+          <input type="text" onfocus="this.select();" class="input full-width" value="<?php echo (isset($pInfo) ? $pInfo->get('packs') : null); ?>" id="packs" name="packs" />
+        </div>
+      </div> 
+
+
+      <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+        <div class="twelve-columns no-margin-bottom strong">
+          <span><?php echo $lC_Language->get('field_min_purchase'); ?></span><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_data_min_purchase')); ?>
+        </div>
+        <div class="twelve-columns no-margin-bottom small-margin-top">
+          <input type="text" onfocus="this.select();" class="input full-width" value="<?php echo (isset($pInfo) ? $pInfo->get('min_purchase') : null); ?>" id="min_purchase" name="min_purchase" />
+        </div>
+      </div>
+    </div>
+
+      <div class="columns">
+      <div class="three-columns-mobile three-columns-tablet four-columns margin-bottom">
+        <span>
+          <span class="strong"><?php echo $lC_Language->get('field_special_order'); ?></span><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_content_special_order'), 'margin-left:8px', 'info-spot info-spot on-right grey'); ?>
+        </span><br />
+        <span class="button-group">
+          <label for="special_order1" class="button blue-active">
+            <input type="radio" name="special_order" id="special_order1" value="1"<?php echo ((isset($pInfo) && $pInfo->getInt('special_order') == 1) ? ' checked' : ''); ?> />
+            <?php echo $lC_Language->get('button_yes'); ?>
+          </label>
+          <label for="special_order2" class="button red-active">
+            <input type="radio" name="special_order" id="special_order2" value="0"<?php echo ((isset($pInfo) && $pInfo->getInt('special_order') == 0) ? ' checked' : ''); ?> />
+            <?php echo $lC_Language->get('button_no'); ?>
+          </label>
+        </span>
+      </div>
+
+      <div class="three-columns-mobile three-columns-tablet four-columns margin-bottom">
+        <span>
+          <span class="strong"><?php echo $lC_Language->get('field_discontinued_product'); ?></span><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_content_discontinued_product'), 'margin-left:8px', 'info-spot info-spot on-right grey'); ?>
+        </span><br />
+        <span class="button-group">
+          <label for="discontinued_product1" class="button blue-active">
+            <input type="radio" name="discontinued_product" id="discontinued_product1" value="1"<?php echo ((isset($pInfo) && $pInfo->getInt('discontinued_product') == 1) ? ' checked' : ''); ?> />
+            <?php echo $lC_Language->get('button_yes'); ?>
+          </label>
+          <label for="discontinued_product2" class="button red-active">
+            <input type="radio" name="discontinued_product" id="discontinued_product2" value="0"<?php echo ((isset($pInfo) && $pInfo->getInt('discontinued_product') == 0) ? ' checked' : ''); ?> />
+            <?php echo $lC_Language->get('button_no'); ?>
+          </label>
+        </span>
+      </div>
+
+
+      <div class="three-columns-mobile three-columns-tablet four-columns margin-bottom">
+        <span>
+          <span class="strong"><?php echo $lC_Language->get('field_limited'); ?></span><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_content_limited'), 'margin-left:8px', 'info-spot info-spot on-right grey'); ?>
+        </span><br />
+        <span class="button-group">
+          <label for="limited1" class="button blue-active">
+            <input type="radio" name="limited" id="limited1" value="1"<?php echo ((isset($pInfo) && $pInfo->getInt('limited') == 1) ? ' checked' : ''); ?> />
+            <?php echo $lC_Language->get('button_yes'); ?>
+          </label>
+          <label for="limited2" class="button red-active">
+            <input type="radio" name="limited" id="limited2" value="0"<?php echo ((isset($pInfo) && $pInfo->getInt('limited') == 0) ? ' checked' : ''); ?> />
+            <?php echo $lC_Language->get('button_no'); ?>
+          </label>
+        </span>
+      </div>
+
     </div>
     <div class="columns">
       <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
@@ -87,7 +182,7 @@ global $lC_Language, $pInfo, $tax_class_array;
             <span class="mid-margin-left no-margin-right strong"><?php echo $lC_Currencies->getSymbolLeft(); ?></span>
             <?php 
               if (isset($pInfo)) {
-                if(DISPLAY_PRICE_WITH_TAX == 1 || $_SESSION['localization']['show_tax'] == 1) { 
+                if(DISPLAY_PRICE_WITH_TAX == 1) { 
                   $products_price_gross = lc_round($pInfo->get('products_price_with_tax'), DECIMAL_PLACES);
                 } else {
                   $products_price_gross = lc_round($pInfo->get('products_price'), DECIMAL_PLACES);
