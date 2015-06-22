@@ -26,8 +26,8 @@ field_ip_address = IP Address:
 field_entry_time = Entry Time:
 field_last_click = Last Click:
 field_last_page_url = Last Page URL:
-field_shopping_cart_contents = Shopping Cart Contents:
-field_shopping_cart_total = Shopping Cart Total:
+field_shopping_cart_contents = Contents:
+field_shopping_cart_total = Total:
 
 introduction_delete_customer_session = Please verify the removal of this customer session.
 

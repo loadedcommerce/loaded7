@@ -61,6 +61,10 @@ function showInfo(id) {
                    '    <p class="button-height inline-label">'+
                    '      <label for="last_page_url" class="label"><?php echo $lC_Language->get('field_last_page_url'); ?></label>'+
                    '      <span id="lastPageUrl"></span>'+
+                   '    </p>'+
+                   '    <p class="button-height inline-label">'+
+                   '      <label for="cart_contents" class="label"><?php echo $lC_Language->get('field_shopping_cart_contents'); ?></label>'+
+                   '      <span id="cartContents"></span>'+
                    '    </p>'+                   
                    '  </div>'+
                    '</div>',

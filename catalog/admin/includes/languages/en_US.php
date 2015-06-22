@@ -78,6 +78,7 @@ field_admin_language = Admin Language:
 field_username = Email:
 field_first_name = First Name:
 field_last_name = Last Name:
+field_shopping_cart_total = Total:
 
 gender_male = Male
 gender_female = Female
