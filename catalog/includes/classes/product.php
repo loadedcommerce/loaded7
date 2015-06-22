@@ -1133,5 +1133,22 @@ class lC_Product {
     
     return $this->_data['rebate_price'];
   }
+
+  
+  public function getUPC() {
+    return $this->_data['upc'];
+  }
+
+  public function getPacks() {
+    return $this->_data['packs'];
+  }
+
+  public function getMinPurchase() {
+    return $this->_data['min_purchase'];
+  }
+
+  public function isLimited() {
+    return $this->_data['limited'];
+  }
 } 
 ?>
