@@ -89,7 +89,7 @@ class lC_Whos_online_Admin {
   * @return array
   */
   public static function getData($id) {
-    global $lC_Database;
+    global $lC_Database, $lC_Language;
 
     $lC_Currencies = new lC_Currencies();
     $lC_Tax = new lC_Tax_Admin();
