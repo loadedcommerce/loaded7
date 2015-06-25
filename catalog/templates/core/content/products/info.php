@@ -126,12 +126,14 @@ $error = (isset($_GET['error']) && $_GET['error'] != NULL) ? preg_replace('/[^A-
       ?>
       
       <div class="content-products-info-reviews-container large-margin-bottom">
+      <?php if ( SERVICE_REVIEW_HIDE_REVIEWS_RATING == 'No' ) { ?>
         <label class="content-products-info-reviews-rating-label with-padding-no-top-bottom"><?php echo $lC_Language->get('average_rating'); ?></label>
         <span class="content-products-info-reviews-rating margin-right"><?php echo lc_image(DIR_WS_TEMPLATE_IMAGES . 'stars_' . $lC_Product->getData('reviews_average_rating') . '.png', sprintf($lC_Language->get('rating_of_5_stars'), $lC_Product->getData('reviews_average_rating'))); ?></span>
         <?php       
+      }
         $Qreviews = lC_Reviews::getListing($lC_Product->getID());
         if ($lC_Reviews->getTotal($lC_Product->getID()) > 0) {
-          echo '<span><a href="' . lc_href_link(FILENAME_PRODUCTS, 'reviews&' . $lC_Product->getKeyword()) . '">(' . $lC_Language->get('more_information') . ')</a></span>' . "\n";
+          echo '<span><a href="' . lc_href_link(FILENAME_PRODUCTS, 'reviews&' . $lC_Product->getKeyword()) . '">(' . $lC_Language->get('text_read_reviews') . ')</a></span>' . "\n";
         } else {            
           echo '<span><a href="' . lc_href_link(FILENAME_PRODUCTS, 'reviews=new&' . $lC_Product->getKeyword()) . '">(' . $lC_Language->get('text_write_review_first') . '</a>)</span>' . "\n";
         }

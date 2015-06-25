@@ -381,6 +381,11 @@
       <group>general</group>
     </definition>
     <definition>
+      <key>text_read_reviews</key>
+      <value><![CDATA[Read Reviews]]></value>
+      <group>general</group>
+    </definition>
+    <definition>
       <key>icon_in_cart</key>
       <value><![CDATA[Add to Shopping Cart]]></value>
       <group>general</group>
