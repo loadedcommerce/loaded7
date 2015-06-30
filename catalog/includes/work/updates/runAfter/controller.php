@@ -490,7 +490,10 @@ class lC_Updates_Admin_run_after extends lC_Updates_Admin {
     if (!defined('PRODUCT_LISTING_DISPLAY_ORDER')) {
       $lC_Database->simpleQuery("INSERT INTO `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('Products Display Order', 'PRODUCT_LISTING_DISPLAY_ORDER', 'Name', 'Products displayed on listing pages are ordered by this value.', 8, 0, now(), now(), null, 'lc_cfg_set_boolean_value(array(''Name'', ''Model'', ''Price'', ''Manufacturer'', ''Quantity'', ''Weight'', ''Last Added'', ''Sort Order''))');");
       parent::log("Database Update: INSERT INTO `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('Products Display Order', 'PRODUCT_LISTING_DISPLAY_ORDER', 'Name', 'Products displayed on listing pages are ordered by this value.', 8, 0, now(), now(), null, 'lc_cfg_set_boolean_value(array(''Name'', ''Model'', ''Price'', ''Manufacturer'', ''Quantity'', ''Weight'', ''Last Added'', ''Sort Order''))');");
-    }    
+    }
+    
+    $lC_Database->simpleQuery("ALTER TABLE `" . $pf . "products` ADD `products_sort_order` int(11) NOT NULL DEFAULT '0'");
+    parent::log("Database Update: ALTER TABLE `" . $pf . "products` ADD `products_sort_order` int(11) NOT NULL DEFAULT '0'");        
     
   }
 }  
