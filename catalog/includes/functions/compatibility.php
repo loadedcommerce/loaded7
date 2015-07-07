@@ -199,7 +199,7 @@ if (!function_exists('lc_strrpos_string')) {
 * @return  string;
 */
 if (!function_exists('getRequestType')) {
-  function getRequestType($scheme) {
+  function getRequestType($scheme = null) {
     $isSecure = false;
     if (strstr($_SERVER['HTTP_REFERER'], 'api.loadedcommerce.com')) { 
       if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') {
@@ -209,7 +209,7 @@ if (!function_exists('getRequestType')) {
       }
       $request_type = $isSecure ? 'https' : 'http';   
     } else {
-      if ($scheme != '') {
+      if ($scheme != null) {
         $request_type = $scheme;
       } else {
         $request_type = 'http';
