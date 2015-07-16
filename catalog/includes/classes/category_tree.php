@@ -441,15 +441,17 @@ class lC_CategoryTree {
 
           $parent_category = $parent;
 
-          while ( $parent_category != $this->root_category_id ) {
-            foreach ( $this->_data as $parent_parent => $parent_categories ) {
-              foreach ( $parent_categories as $parent_category_id => $parent_category_info ) {
-                if ( $parent_category_id == $parent_category ) {
-                  $this->_data[$parent_parent][$parent_category_id]['count'] += $this->_data[$parent][$id]['count'];
+          if ($this->root_category_id != 0) {
+            while ( $parent_category != $this->root_category_id ) {
+              foreach ( $this->_data as $parent_parent => $parent_categories ) {
+                foreach ( $parent_categories as $parent_category_id => $parent_category_info ) {
+                  if ( $parent_category_id == $parent_category ) {
+                    $this->_data[$parent_parent][$parent_category_id]['count'] += $this->_data[$parent][$id]['count'];
 
-                  $parent_category = $parent_parent;
+                    $parent_category = $parent_parent;
 
-                  break 2;
+                    break 2;
+                  }
                 }
               }
             }
