@@ -13,7 +13,7 @@ $Qreviews = lC_Reviews::getEntry($_GET[$lC_Template->getModule()]);
 <!--content/products/reviews_info.php start--> 
 <div class="row">
   <div class="col-sm-12 col-lg-12 clearfix">
-    <h1 class="no-margin-top"><?php echo $lC_Language->get('reviews_heading'); ?></h1>
+    <h1 class="page-title"><?php echo $lC_Language->get('reviews_heading'); ?></h1>
     <div class="row">
       <div class="col-sm-4 col-lg-4 large-padding-left">
         <div class="thumbnail align-center large-padding-top">

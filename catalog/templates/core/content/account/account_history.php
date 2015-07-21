@@ -12,7 +12,7 @@
 <!--content/account/account_history.php start-->
 <div class="row">
   <div class="col-sm-12 col-lg-12">
-    <h1 class="no-margin-top"><?php echo $lC_Template->getPageTitle(); ?></h1> 
+    <h1 class="page-title"><?php echo $lC_Template->getPageTitle(); ?></h1> 
     <div class="">
       <table id="content-account-history-table" class="table table-striped table-hover">
         <thead>

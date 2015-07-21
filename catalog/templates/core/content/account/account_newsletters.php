@@ -12,7 +12,7 @@
 <!--content/account/account_newsletters.php start-->
 <div class="row">
   <div class="col-sm-12 col-lg-12">
-    <h1 class="no-margin-top"><?php echo $lC_Template->getPageTitle(); ?></h1>
+    <h1 class="page-title"><?php echo $lC_Template->getPageTitle(); ?></h1>
     <form role="form" class="form-inline" name="account_newsletter" id="account_newsletter" action="<?php echo lc_href_link(FILENAME_ACCOUNT, 'newsletters=save', 'SSL'); ?>" method="post">
       <div class="well">
         <div class="checkbox">

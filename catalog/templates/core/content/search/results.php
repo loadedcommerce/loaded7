@@ -12,7 +12,7 @@
 <!--content/search/results.php start-->
 <div class="row">
   <div class="col-sm-12 col-lg-12">
-    <h1 class="no-margin-top"><?php echo $lC_Template->getPageTitle(); ?></h1> 
+    <h1 class="page-title"><?php echo $lC_Template->getPageTitle(); ?></h1> 
     <?php    
     if ( ($Qlisting->numberOfRows() > 0) && ( (PREV_NEXT_BAR_LOCATION == '1') || (PREV_NEXT_BAR_LOCATION == '3') ) ) {
     ?>

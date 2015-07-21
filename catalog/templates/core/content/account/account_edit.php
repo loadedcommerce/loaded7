@@ -13,7 +13,7 @@ $Qaccount = lC_Account::getEntry();
 <!--content/info/account_edit.php start-->
 <div class="row">
   <div class="col-sm-12 col-lg-12">
-    <h1 class="no-margin-top"><?php echo $lC_Template->getPageTitle(); ?></h1>
+    <h1 class="page-title"><?php echo $lC_Template->getPageTitle(); ?></h1>
     <?php 
       if ( $lC_MessageStack->size('account_edit') > 0 ) echo '<div class="message-stack-container alert alert-error small-margin-bottom margin-left-neg">' . $lC_MessageStack->get('account_edit') . '</div>' . "\n"; 
     ?>

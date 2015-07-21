@@ -19,7 +19,7 @@
 <!--content/products/reviews_new.php start--> 
 <div class="row">
   <div class="col-sm-12 col-lg-12">
-    <h1 class="no-margin-top"><?php echo $lC_Language->get('button_write_review');?></h1>
+    <h1 class="page-title"><?php echo $lC_Language->get('button_write_review');?></h1>
     <div class="row">
       <div class="col-sm-4 col-lg-4 large-padding-left large-padding-right">
         <div class="thumbnail align-center large-padding-top">
