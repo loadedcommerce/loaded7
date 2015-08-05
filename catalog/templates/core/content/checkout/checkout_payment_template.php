@@ -99,10 +99,10 @@ if ($isIE && $lC_Payment->selected_module = 'lC_Payment_authorizenet_cc') {
                 <?php  
                 if ($lC_Payment->hasIframeURL()) {
                   $params = (isset($_SESSION['cartSync']['iFrameParams']) && empty($_SESSION['cartSync']['iFrameParams'] ) === false) ? $_SESSION['cartSync']['iFrameParams']  : NULL;
-                  echo '<iframe onload="hideLoader();" id="payformIframe" src="' . $lC_Payment->getIframeURL() . $params . '" scrolling="' . $fScroll . '" height="' . $fHeight . '" width="' . $fWidth . '" ' . $fStyle . ' frameborder="0" border="0" allowtransparency="true">Your browser does not support iframes.</iframe>';
+                  echo '<iframe onload="hideLoader();" id="payformIframe" src="' . $lC_Payment->getIframeURL() . $params . '" scrolling="' . $fScroll . '" height="' . $fHeight . '" width="100%" ' . $fStyle . ' frameborder="0" border="0" allowtransparency="true">Your browser does not support iframes.</iframe>';
                 } else if ($lC_Payment->hasRelayURL()) { 
                   echo '<form name="pmtForm" id="pmtForm" action="' . $lC_Payment->getRelayURL() . '" target="pmtFrame" method="post">' . lC_Checkout_Payment_template::rePost() . '</form>' . "\n";        
-                  echo '<iframe frameborder="0" onload="setTimeout(function() {hideLoader();},1250);" src="" id="pmtFrame" name="pmtFrame" width="' . $fWidth . '" height="' . $fHeight . '" scrolling="' . $fScroll . '" ' . $fStyle . ' frameborder="0" border="0" allowtransparency="true">Your browser does not support iframes.</iframe>'; 
+                  echo '<iframe frameborder="0" onload="setTimeout(function() {hideLoader();},1250);" src="" id="pmtFrame" name="pmtFrame" width="100%" height="' . $fHeight . '" scrolling="' . $fScroll . '" ' . $fStyle . ' frameborder="0" border="0" allowtransparency="true">Your browser does not support iframes.</iframe>'; 
                 } else {
                   echo '[[FORM INSERT]]'; 
                 }
