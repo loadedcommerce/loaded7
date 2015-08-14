@@ -572,7 +572,7 @@ class lC_Updates_Admin {
   * @access public      
   * @return boolean
   */   
-  public static function doRunAfter() {
+  public static function doRunAfter() {         
     // remove the vqmod cache files
     self::rmdir_r(DIR_FS_WORK . 'cache/vqmod/', true);    
     

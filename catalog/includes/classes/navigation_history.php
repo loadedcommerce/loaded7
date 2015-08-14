@@ -153,7 +153,7 @@ class lC_NavigationHistory {
 
   public function redirectToSnapshot() {
     $target = $this->getSnapshotURL(true);
-
+                     
     $this->resetSnapshot();
 
     lc_redirect($target);

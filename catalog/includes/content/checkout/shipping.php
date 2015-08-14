@@ -22,9 +22,9 @@ class lC_Checkout_Shipping extends lC_Template {
        
     require_once($lC_Vqmod->modCheck('includes/classes/address_book.php')); 
 
-    /*VQMOD-002*/
+    /*VQMOD-002*/      
     
-    if ($lC_Customer->isLoggedOn() === false) {
+    if ($lC_Customer->isLoggedOn() === false) {    
       $lC_NavigationHistory->setSnapshot();
       lc_redirect(lc_href_link(FILENAME_ACCOUNT, 'login', 'SSL'));
     }
