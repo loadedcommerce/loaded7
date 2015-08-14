@@ -26,7 +26,7 @@
     }       
     if ($lC_ShoppingCart->hasContents()) { 
       ?>
-      <form role="form" class="no-margin-bottom" name="shopping_cart" id="shopping_cart" action="<?php echo lc_href_link(FILENAME_CHECKOUT, 'action=cart_update', 'SSL'); ?>" method="post">
+      <form role="form" class="no-margin-bottom" name="shopping_cart" id="shopping_cart" action="<?php echo lc_href_link(FILENAME_CHECKOUT, 'action=cart_update', 'AUTO'); ?>" method="post">
         <table class="table tabled-striped table-responsive no-margin-bottom" id="shopping-cart-table">
           <thead>
             <tr>
@@ -134,7 +134,7 @@
       <!--VQMOD-001-->
       <div class="clear-both btn-set">
         <div class="margin-top large-margin-bottom pull-left">
-          <button onclick="window.location.href='<?php echo lc_href_link(FILENAME_PRODUCTS, 'new', 'SSL'); ?>'" class="btn btn-primary" type="button"><?php echo $lC_Language->get('cart_continue_shopping'); ?></button>
+          <button onclick="window.location.href='<?php echo lc_href_link(FILENAME_PRODUCTS, 'new', 'AUTO'); ?>'" class="btn btn-primary" type="button"><?php echo $lC_Language->get('cart_continue_shopping'); ?></button>
         </div>      
         <?php if ( (STOCK_CHECK == '1') && ($lC_ShoppingCart->isInStock($products['item_id']) === false) ) { ?>
         <div class="margin-top large-margin-bottom pull-right">
@@ -142,7 +142,7 @@
         </div> 
 				<?php } else { ?>
 				<div class="margin-top large-margin-bottom pull-right">
-          <button onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'); ?>'" id="btn-checkout" class="btn btn-lg btn-success" type="button"><?php echo $lC_Language->get('button_checkout'); ?></button>
+          <button onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'AUTO'); ?>'" id="btn-checkout" class="btn btn-lg btn-success" type="button"><?php echo $lC_Language->get('button_checkout'); ?></button>
         </div>  
 				<?php	} ?>         
       </div> 
@@ -177,7 +177,7 @@
         <p class="no-margin-bottom"><?php echo $lC_Language->get('shopping_cart_empty'); ?></p>
       </div>
       <div class="btn-set clearfix">  
-        <form action="<?php echo lc_href_link(FILENAME_PRODUCTS, 'new', 'SSL'); ?>" method="post"><button onclick="$(this).closest('form').submit();" class="pull-right btn btn-lg btn-primary" type="submit"><?php echo $lC_Language->get('cart_continue_shopping'); ?></button></form>
+        <form action="<?php echo lc_href_link(FILENAME_PRODUCTS, 'new', 'AUTO'); ?>" method="post"><button onclick="$(this).closest('form').submit();" class="pull-right btn btn-lg btn-primary" type="submit"><?php echo $lC_Language->get('cart_continue_shopping'); ?></button></form>
       </div>        
       <?php 
     } 

@@ -14,7 +14,7 @@ class lC_Actions_notify_remove {
     if (!$lC_Customer->isLoggedOn()) {
       $lC_NavigationHistory->setSnapshot();
 
-      lc_redirect(lc_href_link(FILENAME_ACCOUNT, 'login', 'SSL'));
+      lc_redirect(lc_href_link(FILENAME_ACCOUNT, 'login', 'AUTO'));
 
       return false;
     }

@@ -78,7 +78,7 @@ if ($Qdownloads->numberOfRows() > 0) {
       <td width="10">&nbsp;</td>
     </tr>
     <tr>
-      <td class="smalltext" colspan="4"><p><?php sprintf($lC_Language->get('download_footer'), lc_link_object(lc_href_link(FILENAME_ACCOUNT, null, 'SSL'), $lC_Language->get('my_account'))); ?></p></td>
+      <td class="smalltext" colspan="4"><p><?php sprintf($lC_Language->get('download_footer'), lc_link_object(lc_href_link(FILENAME_ACCOUNT, null, 'AUTO'), $lC_Language->get('my_account'))); ?></p></td>
     </tr>
     <?php
   }

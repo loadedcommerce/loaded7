@@ -51,7 +51,7 @@ class lC_Boxes_checkout_trail extends lC_Modules {
       $counter++;
 
       if (isset($step['code'])) {
-        $content .= '<li class="box-checkout-trail-title">' . lc_link_object(lc_href_link(FILENAME_CHECKOUT, $step['code'], 'SSL'), $step['title']) . '</li>';
+        $content .= '<li class="box-checkout-trail-title">' . lc_link_object(lc_href_link(FILENAME_CHECKOUT, $step['code'], 'AUTO'), $step['title']) . '</li>';
       } else {
         $content .= '<li class="box-checkout-trail-title">' . lc_link_object(lc_href_link('#'), $step['title']) . '</li>';
       }

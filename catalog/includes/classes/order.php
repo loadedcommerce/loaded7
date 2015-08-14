@@ -553,7 +553,7 @@ if (!class_exists('lC_Order')) {
         $email_order = STORE_NAME . "\n" .
                        $lC_Language->get('email_order_separator') . "\n" .
                        sprintf($lC_Language->get('email_order_order_number'), $id) . "\n" .
-                       sprintf($lC_Language->get('email_order_invoice_url'), lc_href_link(FILENAME_ACCOUNT, 'receipt=' . $id, 'SSL', false, true, true)) . "\n" .
+                       sprintf($lC_Language->get('email_order_invoice_url'), lc_href_link(FILENAME_ACCOUNT, 'receipt=' . $id, 'AUTO', false, true, true)) . "\n" .
                        sprintf($lC_Language->get('email_order_date_ordered'), lC_DateTime::getLong()) . "\n\n" .
                        $lC_Language->get('email_order_products') . "\n" .
                        $lC_Language->get('email_order_separator') . "\n";

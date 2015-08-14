@@ -23,7 +23,7 @@ class lC_Account_Notifications extends lC_Template {
     $this->_page_title = $lC_Language->get('notifications_heading');
 
     if ($lC_Services->isStarted('breadcrumb')) {
-      $lC_Breadcrumb->add($lC_Language->get('breadcrumb_notifications'), lc_href_link(FILENAME_ACCOUNT, $this->_module, 'SSL'));
+      $lC_Breadcrumb->add($lC_Language->get('breadcrumb_notifications'), lc_href_link(FILENAME_ACCOUNT, $this->_module, 'AUTO'));
     }
 
     //#### Should be moved to the customers class!
@@ -136,7 +136,7 @@ class lC_Account_Notifications extends lC_Template {
       $lC_MessageStack->add('account', $lC_Language->get('success_notifications_updated'), 'success');
     }
 
-    lc_redirect(lc_href_link(FILENAME_ACCOUNT, null, 'SSL'));
+    lc_redirect(lc_href_link(FILENAME_ACCOUNT, null, 'AUTO'));
   }
 }
 ?>

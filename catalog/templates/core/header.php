@@ -42,15 +42,15 @@ if (isset($_SESSION['admin_login']) && $_SESSION['admin_login'] === TRUE) echo '
           <ul class="dropdown-menu account-dropdown">
             <?php 
             if ($lC_Customer->isLoggedOn()) { 
-              echo '<li><a href="' . lc_href_link(FILENAME_ACCOUNT, 'logoff', 'SSL') , '">' . $lC_Language->get('text_sign_out') . '</a></li>';
+              echo '<li><a href="' . lc_href_link(FILENAME_ACCOUNT, 'logoff', 'AUTO') , '">' . $lC_Language->get('text_sign_out') . '</a></li>';
             } else {
-              echo '<li><a href="' . lc_href_link(FILENAME_ACCOUNT, '', 'SSL') . '">' . $lC_Language->get('text_login') . '</a></li>';
+              echo '<li><a href="' . lc_href_link(FILENAME_ACCOUNT, '', 'AUTO') . '">' . $lC_Language->get('text_login') . '</a></li>';
             }
             ?>
-            <li><a href="<?php echo lc_href_link(FILENAME_ACCOUNT, '', 'SSL'); ?>"><?php echo $lC_Language->get('my_account'); ?></a></li>
-            <li><a href="<?php echo lc_href_link(FILENAME_ACCOUNT, 'orders', 'SSL'); ?>"><?php echo $lC_Language->get('text_my_orders'); ?></a></li>
-            <li><a href="<?php echo lc_href_link(FILENAME_ACCOUNT, 'address_book', 'SSL'); ?>"><?php echo $lC_Language->get('text_address_book'); ?></a></li>
-            <li><a href="<?php echo lc_href_link(FILENAME_ACCOUNT, 'password', 'SSL'); ?>"><?php echo $lC_Language->get('text_change_password'); ?></a></li>
+            <li><a href="<?php echo lc_href_link(FILENAME_ACCOUNT, '', 'AUTO'); ?>"><?php echo $lC_Language->get('my_account'); ?></a></li>
+            <li><a href="<?php echo lc_href_link(FILENAME_ACCOUNT, 'orders', 'AUTO'); ?>"><?php echo $lC_Language->get('text_my_orders'); ?></a></li>
+            <li><a href="<?php echo lc_href_link(FILENAME_ACCOUNT, 'address_book', 'AUTO'); ?>"><?php echo $lC_Language->get('text_address_book'); ?></a></li>
+            <li><a href="<?php echo lc_href_link(FILENAME_ACCOUNT, 'password', 'AUTO'); ?>"><?php echo $lC_Language->get('text_change_password'); ?></a></li>
           </ul>
         </li>
       </ul>
@@ -165,7 +165,7 @@ if (isset($_SESSION['admin_login']) && $_SESSION['admin_login'] === TRUE) echo '
                   echo lc_link_object($lC_Template->getBranding('social_linkedin'), lc_image(DIR_WS_IMAGES . 'icons/in-ico.png', 'title', null, null, 'class="small-margin-right hide-on-mobile"'), 'target="_blank"');
                 }                  
               ?>
-              <button type="button" class="btn btn-sm cursor-pointer small-margin-right<?php echo (($lC_ShoppingCart->numberOfItems() > 0) ? ' btn-success' : ' btn-default disabled'); ?>" onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'); ?>'">Checkout</button>  
+              <button type="button" class="btn btn-sm cursor-pointer small-margin-right<?php echo (($lC_ShoppingCart->numberOfItems() > 0) ? ' btn-success' : ' btn-default disabled'); ?>" onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'AUTO'); ?>'">Checkout</button>  
               <i class="fa fa-search navbar-search-icon cursor-pointer" onclick="window.location.href='<?php echo lc_href_link(FILENAME_SEARCH, '', 'NONSSL'); ?>'"></i>
               <input type="text" class="navbar-search" name="keywords" placeholder="<?php echo $lC_Language->get('button_search'); ?>"><?php echo lc_draw_hidden_session_id_field(); ?>
             </span>
@@ -203,7 +203,7 @@ if (isset($_SESSION['admin_login']) && $_SESSION['admin_login'] === TRUE) echo '
                     echo lc_link_object($lC_Template->getBranding('social_linkedin'), lc_image(DIR_WS_IMAGES . 'icons/in-ico.png', 'title', null, null, 'class="small-margin-right social-nav-in"'), 'target="_blank"');
                   }                  
                 ?>
-                <button type="button" class="btn btn-sm cursor-pointer small-margin-right<?php echo (($lC_ShoppingCart->numberOfItems() > 0) ? ' btn-success' : ' btn-default disabled'); ?>" onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'); ?>'">Checkout</button>  
+                <button type="button" class="btn btn-sm cursor-pointer small-margin-right<?php echo (($lC_ShoppingCart->numberOfItems() > 0) ? ' btn-success' : ' btn-default disabled'); ?>" onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'AUTO'); ?>'">Checkout</button>  
                 <i class="fa fa-search navbar-search-icon"></i>
                 <input type="text" class="navbar-search" name="keywords" placeholder="<?php echo $lC_Language->get('button_search'); ?>"><?php echo lc_draw_hidden_session_id_field(); ?>
               </span>

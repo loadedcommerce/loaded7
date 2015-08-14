@@ -23,7 +23,7 @@ class lC_Products_Tell_a_friend extends lC_Template {
     if ((ALLOW_GUEST_TO_TELL_A_FRIEND == '-1') && ($lC_Customer->isLoggedOn() === false)) {
       $lC_NavigationHistory->setSnapshot();
 
-      lc_redirect(lc_href_link(FILENAME_ACCOUNT, 'login', 'SSL'));
+      lc_redirect(lc_href_link(FILENAME_ACCOUNT, 'login', 'AUTO'));
     }
 
     $counter = 0;

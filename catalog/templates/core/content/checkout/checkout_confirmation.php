@@ -28,13 +28,13 @@
     <div id="content-checkout-shipping-container">
       <?php if (defined('SKIP_CHECKOUT_SHIPPING_PAGE') && SKIP_CHECKOUT_SHIPPING_PAGE != '1') { ?>
       <div class="panel panel-default no-margin-bottom">
-        <div class="panel-heading cursor-pointer" onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'); ?>'">
+        <div class="panel-heading cursor-pointer" onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'AUTO'); ?>'">
           <h3 class="no-margin-top no-margin-bottom"><?php echo $lC_Language->get('box_ordering_steps_delivery'); ?></h3>
         </div>
       </div>
       <?php } ?>
       <div class="clearfix panel panel-default no-margin-bottom">
-        <div class="panel-heading cursor-pointer" onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'payment&skip=no', 'SSL'); ?>'">
+        <div class="panel-heading cursor-pointer" onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'payment&skip=no', 'AUTO'); ?>'">
           <h3 class="no-margin-top no-margin-bottom"><?php echo $lC_Language->get('box_ordering_steps_payment'); ?></h3>
         </div>
       </div>
@@ -43,7 +43,7 @@
           <h3 class="no-margin-top no-margin-bottom"><?php echo $lC_Language->get('box_ordering_steps_confirmation'); ?></h3>
         </div>
         <div class="panel-body no-padding-bottom">   
-          <form name="checkout_confirmation" id="checkout_confirmation" action="<?php echo ($lC_Payment->hasActionURL() && !isset($_SESSION['PPEC_PROCESS']['LINK'])) ? $lC_Payment->getActionURL() : lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL'); ?>" method="post">       
+          <form name="checkout_confirmation" id="checkout_confirmation" action="<?php echo ($lC_Payment->hasActionURL() && !isset($_SESSION['PPEC_PROCESS']['LINK'])) ? $lC_Payment->getActionURL() : lc_href_link(FILENAME_CHECKOUT, 'process', 'AUTO'); ?>" method="post">       
           <div class="row">
             <div class="col-sm-4 col-lg-4">
               <?php if (defined('SKIP_CHECKOUT_SHIPPING_PAGE') && SKIP_CHECKOUT_SHIPPING_PAGE != '1') { ?>
@@ -53,14 +53,14 @@
                   <?php echo lC_Address::format($lC_ShoppingCart->getShippingAddress(), '<br />'); ?>                
                 </address>
                 <div class="btn-group clearfix absolute-top-right small-padding-right small-padding-top">
-                  <button type="button" onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping_address', 'SSL'); ?>';" class="btn btn-default btn-xs"><?php echo $lC_Language->get('button_edit'); ?></button>
+                  <button type="button" onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping_address', 'AUTO'); ?>';" class="btn btn-default btn-xs"><?php echo $lC_Language->get('button_edit'); ?></button>
                 </div>
               </div>
               <div class="well relative clearfix small-padding-top small-padding-bottom"> 
                 <h4><?php echo $lC_Language->get('shipping_method_heading'); ?></h4>
                 <p><?php echo $lC_ShoppingCart->getShippingMethod('title'); ?></p>
                 <div class="btn-group clearfix absolute-top-right small-padding-right small-padding-top">
-                  <button type="button" onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'); ?>'" class="btn btn-default btn-xs"><?php echo $lC_Language->get('button_edit'); ?></button>
+                  <button type="button" onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'AUTO'); ?>'" class="btn btn-default btn-xs"><?php echo $lC_Language->get('button_edit'); ?></button>
                 </div>                  
               </div>
               <?php } ?>   
@@ -70,14 +70,14 @@
                   <?php echo lC_Address::format($lC_ShoppingCart->getBillingAddress(), '<br />'); ?>                
                 </address>
                 <div class="btn-group clearfix absolute-top-right small-padding-right small-padding-top">
-                  <button type="button" onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'payment_address', 'SSL'); ?>';" class="btn btn-default btn-xs"><?php echo $lC_Language->get('button_edit'); ?></button>
+                  <button type="button" onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'payment_address', 'AUTO'); ?>';" class="btn btn-default btn-xs"><?php echo $lC_Language->get('button_edit'); ?></button>
                 </div>
               </div>
               <div class="well relative clearfix small-padding-top small-padding-bottom"> 
                 <h4><?php echo $lC_Language->get('payment_method_heading'); ?></h4>
                 <p><?php echo $lC_ShoppingCart->getBillingMethod('title'); ?></p>
                 <div class="btn-group clearfix absolute-top-right small-padding-right small-padding-top">
-                  <button type="button" onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'payment', 'SSL'); ?>';" class="btn btn-default btn-xs"><?php echo $lC_Language->get('button_edit'); ?></button>
+                  <button type="button" onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'payment', 'AUTO'); ?>';" class="btn btn-default btn-xs"><?php echo $lC_Language->get('button_edit'); ?></button>
                 </div>                  
               </div>
               <?php
@@ -87,7 +87,7 @@
                   <h4><?php echo $lC_Language->get('payment_terms_heading'); ?></h4>
                   <p><?php echo $lC_ShoppingCart->getBillingTermsName($_POST['payment_terms']); ?></p>
                   <div class="btn-group clearfix absolute-top-right small-padding-right small-padding-top">
-                    <button type="button" onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'payment', 'SSL'); ?>';" class="btn btn-default btn-xs"><?php echo $lC_Language->get('button_edit'); ?></button>
+                    <button type="button" onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'payment', 'AUTO'); ?>';" class="btn btn-default btn-xs"><?php echo $lC_Language->get('button_edit'); ?></button>
                   </div>                  
                 </div>
                 <?php
@@ -194,7 +194,7 @@
               </form>
               <div class="btn-set clearfix">
                 <button id="content-checkout-confirmation-confirm-button" class="btn btn-lg btn-success pull-right" onclick="$('#checkout_confirmation').submit();" type="button"><?php echo $lC_Language->get('button_confirm_order'); ?></button>
-                <button class="btn btn-lg btn-default" onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'payment', 'SSL'); ?>';" type="button"><?php echo $lC_Language->get('button_back'); ?></button>
+                <button class="btn btn-lg btn-default" onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'payment', 'AUTO'); ?>';" type="button"><?php echo $lC_Language->get('button_back'); ?></button>
               </div> 
               <?php
               if ($lC_Customer->isLoggedOn() !== false) {

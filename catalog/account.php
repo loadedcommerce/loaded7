@@ -18,7 +18,7 @@ if ($lC_Customer->isLoggedOn() === false) {
   if (empty($_GET) || (!empty($_GET) && !in_array(lc_sanitize_string(basename(key($first_array))), array('login', 'create', 'password_forgotten')))) {
     $lC_NavigationHistory->setSnapshot();
 
-    lc_redirect(lc_href_link(FILENAME_ACCOUNT, 'login', 'SSL'));
+    lc_redirect(lc_href_link(FILENAME_ACCOUNT, 'login', 'AUTO'));
   }
 }
 
@@ -26,7 +26,7 @@ if ($lC_Customer->isLoggedOn() === false) {
 $lC_Language->load('account');
 
 if ($lC_Services->isStarted('breadcrumb')) {
-  $lC_Breadcrumb->add($lC_Language->get('breadcrumb_my_account'), lc_href_link(FILENAME_ACCOUNT, null, 'SSL'));
+  $lC_Breadcrumb->add($lC_Language->get('breadcrumb_my_account'), lc_href_link(FILENAME_ACCOUNT, null, 'AUTO'));
 }
 
 $lC_Template = lC_Template::setup('account');

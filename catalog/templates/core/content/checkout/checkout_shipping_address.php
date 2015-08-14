@@ -50,7 +50,7 @@
               </div>        
             </div>
             <div class="col-sm-8 col-lg-8">
-              <form role="form" name="checkout_address" id="checkout_address" action="<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping_address=process', 'SSL'); ?>" method="post">
+              <form role="form" name="checkout_address" id="checkout_address" action="<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping_address=process', 'AUTO'); ?>" method="post">
                 <div class="clearfix">
                   <?php
                   if (isset($_GET['shipping_address']) && ($_GET['shipping_address'] != 'process')) {

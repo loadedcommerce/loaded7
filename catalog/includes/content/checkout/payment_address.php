@@ -25,11 +25,11 @@ class lC_Checkout_Payment_address extends lC_Template {
     if ($lC_Customer->isLoggedOn() === false) {
       $lC_NavigationHistory->setSnapshot();
 
-      lc_redirect(lc_href_link(FILENAME_ACCOUNT, 'login', 'SSL'));
+      lc_redirect(lc_href_link(FILENAME_ACCOUNT, 'login', 'AUTO'));
     }
 
     if ($lC_ShoppingCart->hasContents() === false) {
-      lc_redirect(lc_href_link(FILENAME_CHECKOUT, null, 'SSL'));
+      lc_redirect(lc_href_link(FILENAME_CHECKOUT, null, 'AUTO'));
     }
 
     $this->_page_title = $lC_Language->get('payment_address_heading');
@@ -42,8 +42,8 @@ class lC_Checkout_Payment_address extends lC_Template {
     }
 
     if ($lC_Services->isStarted('breadcrumb')) {
-      $lC_Breadcrumb->add($lC_Language->get('breadcrumb_checkout_payment'), lc_href_link(FILENAME_CHECKOUT, 'payment', 'SSL'));
-      $lC_Breadcrumb->add($lC_Language->get('breadcrumb_checkout_payment_address'), lc_href_link(FILENAME_CHECKOUT, $this->_module, 'SSL'));
+      $lC_Breadcrumb->add($lC_Language->get('breadcrumb_checkout_payment'), lc_href_link(FILENAME_CHECKOUT, 'payment', 'AUTO'));
+      $lC_Breadcrumb->add($lC_Language->get('breadcrumb_checkout_payment_address'), lc_href_link(FILENAME_CHECKOUT, $this->_module, 'AUTO'));
     }
 
     if ($_GET[$this->_module] == 'process') {
@@ -208,7 +208,7 @@ class lC_Checkout_Payment_address extends lC_Template {
           $lC_ShoppingCart->setBillingAddress($address_book_id);
           //$lC_ShoppingCart->resetBillingMethod();
 
-          lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment', 'SSL'));
+          lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment', 'AUTO'));
         } else {
           $lC_MessageStack->add('checkout_address', 'Error inserting into address book table.');
         }
@@ -237,14 +237,14 @@ class lC_Checkout_Payment_address extends lC_Template {
         if ($reset_payment === true) {
           $lC_ShoppingCart->resetBillingMethod();
         }
-        lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment', 'SSL'));
+        lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment', 'AUTO'));
       } else {
         $lC_ShoppingCart->resetBillingAddress();
       }
       // no addresses to select from - customer decided to keep the current assigned address
     } else {
       $lC_ShoppingCart->setBillingAddress($lC_Customer->getDefaultAddressID());
-      lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment', 'SSL'));
+      lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment', 'AUTO'));
     }
   }
 }

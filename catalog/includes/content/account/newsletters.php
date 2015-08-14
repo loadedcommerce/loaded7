@@ -23,7 +23,7 @@ class lC_Account_Newsletters extends lC_Template {
     $this->_page_title = $lC_Language->get('newsletters_heading');
 
     if ($lC_Services->isStarted('breadcrumb')) {
-      $lC_Breadcrumb->add($lC_Language->get('breadcrumb_newsletters'), lc_href_link(FILENAME_ACCOUNT, $this->_module, 'SSL'));
+      $lC_Breadcrumb->add($lC_Language->get('breadcrumb_newsletters'), lc_href_link(FILENAME_ACCOUNT, $this->_module, 'AUTO'));
     }
 
     //#### Should be moved to the customers class!
@@ -61,7 +61,7 @@ class lC_Account_Newsletters extends lC_Template {
       }
     }
 
-    lc_redirect(lc_href_link(FILENAME_ACCOUNT, null, 'SSL'));
+    lc_redirect(lc_href_link(FILENAME_ACCOUNT, null, 'AUTO'));
   }
 }
 ?>

@@ -21,13 +21,13 @@
       <div class="col-sm-6 col-lg-6 large-padding-left margin-top">
         <div class="well no-padding-top">
           <h3><?php echo $lC_Language->get('login_returning_customer_heading'); ?></h3>
-          <form role="form" id="login" name="login" class="no-margin-bottom" action="<?php echo lc_href_link(FILENAME_ACCOUNT, 'login=process', 'SSL'); ?>" method="post">
+          <form role="form" id="login" name="login" class="no-margin-bottom" action="<?php echo lc_href_link(FILENAME_ACCOUNT, 'login=process', 'AUTO'); ?>" method="post">
             <div class="form-group">
               <label class="sr-only"></label><?php echo lc_draw_input_field('email_address', (($_POST['email']) ? $_POST['email'] : ($_SESSION['lC_Customer_data']['email_address']) ? $_SESSION['lC_Customer_data']['email_address'] : ''), 'class="form-control" placeholder="' . $lC_Language->get('field_customer_email_address') . '"'); ?>
             </div>
             <div class="form-group">
               <label class="sr-only"></label><?php echo lc_draw_password_field('password', 'class="form-control" placeholder="' . $lC_Language->get('field_customer_password') . '"'); ?>
-              <p class="help-block small-margin-left"><?php echo sprintf($lC_Language->get('login_returning_customer_password_forgotten'), lc_href_link(FILENAME_ACCOUNT, 'password_forgotten', 'SSL')); ?></p>
+              <p class="help-block small-margin-left"><?php echo sprintf($lC_Language->get('login_returning_customer_password_forgotten'), lc_href_link(FILENAME_ACCOUNT, 'password_forgotten', 'AUTO')); ?></p>
             </div>
             <div class="button-set clearfix">
               <button class="pull-right btn btn-lg btn-primary" onclick="$('#login').submit();" type="submit"><?php echo $lC_Language->get('button_sign_in'); ?></button>
@@ -40,7 +40,7 @@
           <h3><?php echo $lC_Language->get('login_new_customer_heading'); ?></h3>
           <p><?php echo $lC_Language->get('login_new_customer_text'); ?></p>    
           <div class="buttons-set clearfix large-margin-top">
-            <form class="form-inline" action="<?php echo lc_href_link(FILENAME_ACCOUNT, 'create', 'SSL'); ?>" method="post"><button class="pull-right btn btn-lg btn-primary" type="button" onclick="$(this).closest('form').submit();"><?php echo $lC_Language->get('button_create_account'); ?></button></form>
+            <form class="form-inline" action="<?php echo lc_href_link(FILENAME_ACCOUNT, 'create', 'AUTO'); ?>" method="post"><button class="pull-right btn btn-lg btn-primary" type="button" onclick="$(this).closest('form').submit();"><?php echo $lC_Language->get('button_create_account'); ?></button></form>
           </div>        
         </div>
       </div>

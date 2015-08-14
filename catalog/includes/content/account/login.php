@@ -28,7 +28,7 @@ class lC_Account_Login extends lC_Template {
     $this->_page_title = $lC_Language->get('sign_in_heading');
 
     if ($lC_Services->isStarted('breadcrumb')) {
-      $lC_Breadcrumb->add($lC_Language->get('breadcrumb_sign_in'), lc_href_link(FILENAME_ACCOUNT, $this->_module, 'SSL'));
+      $lC_Breadcrumb->add($lC_Language->get('breadcrumb_sign_in'), lc_href_link(FILENAME_ACCOUNT, $this->_module, 'AUTO'));
     }
 
     if ($_GET[$this->_module] == 'process') {

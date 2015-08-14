@@ -26,29 +26,29 @@ class lC_Checkout_Shipping extends lC_Template {
     
     if ($lC_Customer->isLoggedOn() === false) {    
       $lC_NavigationHistory->setSnapshot();
-      lc_redirect(lc_href_link(FILENAME_ACCOUNT, 'login', 'SSL'));
+      lc_redirect(lc_href_link(FILENAME_ACCOUNT, 'login', 'AUTO'));
     }
 
     if ($lC_ShoppingCart->hasContents() === false) {
-      lc_redirect(lc_href_link(FILENAME_CHECKOUT, null, 'SSL'));
+      lc_redirect(lc_href_link(FILENAME_CHECKOUT, null, 'AUTO'));
     }
 
     // if the order contains only virtual products, forward the customer to the billing page as a shipping address is not needed
     if ($lC_ShoppingCart->getContentType() == 'virtual' || (defined('SKIP_CHECKOUT_SHIPPING_PAGE') && SKIP_CHECKOUT_SHIPPING_PAGE == '1')) {
-      lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment', 'SSL'));
+      lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment', 'AUTO'));
     }
 
     $this->_page_title = $lC_Language->get('shipping_method_heading');
 
     if ($lC_Services->isStarted('breadcrumb')) {
-      $lC_Breadcrumb->add($lC_Language->get('breadcrumb_checkout_shipping'), lc_href_link(FILENAME_CHECKOUT, $this->_module, 'SSL'));
+      $lC_Breadcrumb->add($lC_Language->get('breadcrumb_checkout_shipping'), lc_href_link(FILENAME_CHECKOUT, $this->_module, 'AUTO'));
     }
 
     if ($lC_Customer->hasDefaultAddress() === false) {
       if (isset($_GET['account_created'])) {
-        lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'shipping_address&account_created=true', 'SSL'));
+        lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'shipping_address&account_created=true', 'AUTO'));
       } else {
-        lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'shipping_address', 'SSL'));
+        lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'shipping_address', 'AUTO'));
       }
     } else {
       if (file_exists('templates/' . $this->getCode() . '/javascript/shipping.js.php')) {
@@ -119,7 +119,7 @@ class lC_Checkout_Shipping extends lC_Template {
           } else {
             $lC_ShoppingCart->setShippingMethod($quote);
             $_SESSION['SelectedShippingMethodCost'] = $quote['cost'];
-            lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment', 'SSL'));
+            lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment', 'AUTO'));
           }
         } else {
           $lC_ShoppingCart->resetShippingMethod();
@@ -128,7 +128,7 @@ class lC_Checkout_Shipping extends lC_Template {
     } else {
       $lC_ShoppingCart->resetShippingMethod();
 
-      lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment', 'SSL'));
+      lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment', 'AUTO'));
     }
   }
 }

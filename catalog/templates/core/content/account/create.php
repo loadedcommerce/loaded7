@@ -17,7 +17,7 @@
       if ( $lC_MessageStack->size('create') > 0 ) echo '<div class="message-stack-container alert alert-danger small-margin-bottom small-margin-left">' . $lC_MessageStack->get('create') . '</div>' . "\n"; 
     ?>
     <div class="row">
-      <form role="form" class="form-inline" name="create" id="create" action="<?php echo lc_href_link(FILENAME_ACCOUNT, 'create=save', 'SSL'); ?>" method="post" onsubmit="return check_form(create);">
+      <form role="form" class="form-inline" name="create" id="create" action="<?php echo lc_href_link(FILENAME_ACCOUNT, 'create=save', 'AUTO'); ?>" method="post" onsubmit="return check_form(create);">
         <div class="col-sm-6 col-lg-6 large-padding-left margin-top">
           <div class="well no-padding-top">
             <h3><?php echo $lC_Language->get('personal_details_title'); ?></h3>

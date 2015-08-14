@@ -19,7 +19,7 @@ $Qaccount = lC_Account::getEntry();
     ?>
   </div>
   <div class="col-sm-12 col-lg-12">
-    <form role="form" name="account_edit" id="account_edit" action="<?php echo lc_href_link(FILENAME_ACCOUNT, 'edit=save', 'SSL'); ?>" method="post" onsubmit="return check_form(account_edit);">
+    <form role="form" name="account_edit" id="account_edit" action="<?php echo lc_href_link(FILENAME_ACCOUNT, 'edit=save', 'AUTO'); ?>" method="post" onsubmit="return check_form(account_edit);">
       <div class="row">
         <div class="col-sm-6 col-lg-6">
           <h3 class="small-margin-top"><?php echo $lC_Language->get('personal_details_title'); ?></h3>
@@ -60,7 +60,7 @@ $Qaccount = lC_Account::getEntry();
     </form>         
     <div class="button-set clearfix large-margin-bottom">
       <button class="pull-right btn btn-lg btn-success" onclick="$('#account_edit').submit();" type="button"><?php echo $lC_Language->get('button_update'); ?></button>
-      <form action="<?php echo lc_href_link(FILENAME_ACCOUNT, null, 'SSL'); ?>" method="post"><button onclick="$(this).closest('form').submit();" class="pull-left btn btn-lg btn-default" type="submit"><?php echo $lC_Language->get('button_back'); ?></button></form>
+      <form action="<?php echo lc_href_link(FILENAME_ACCOUNT, null, 'AUTO'); ?>" method="post"><button onclick="$(this).closest('form').submit();" class="pull-left btn btn-lg btn-default" type="submit"><?php echo $lC_Language->get('button_back'); ?></button></form>
     </div>     
   </div>
 </div>

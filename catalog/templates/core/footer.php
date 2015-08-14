@@ -25,18 +25,18 @@
         <li><a href="<?php echo lc_href_link(FILENAME_DEFAULT, 'cPath=2_3', 'AUTO'); ?>"><?php echo $lC_Language->get('text_shipping_returns'); ?></a></li>
         <li><a href="<?php echo lc_href_link(FILENAME_DEFAULT, 'cPath=2_4', 'AUTO'); ?>"><?php echo $lC_Language->get('text_privacy'); ?></a></li>                                              
         <li><a href="<?php echo lc_href_link(FILENAME_DEFAULT, 'cPath=2_5', 'AUTO'); ?>"><?php echo $lC_Language->get('text_terms_conditions'); ?></a></li>
-        <li><a href="<?php echo lc_href_link(FILENAME_INFO, 'contact', 'SSL'); ?>"><?php echo $lC_Language->get('text_contact'); ?></a></li>
+        <li><a href="<?php echo lc_href_link(FILENAME_INFO, 'contact', 'AUTO'); ?>"><?php echo $lC_Language->get('text_contact'); ?></a></li>
         <li><a href="<?php echo lc_href_link(FILENAME_INFO, 'sitemap', 'AUTO'); ?>"><?php echo $lC_Language->get('text_sitemap'); ?></a></li> 
       </ul>
     </div>
     <div class="col-sm-3 col-lg-3">
       <h4 class="line3 center standard-h4title"><span><?php echo $lC_Language->get('my_account'); ?></span></h4>
       <ul class="footer-links list-indent list-unstyled">
-        <li><a href="<?php echo lc_href_link(FILENAME_ACCOUNT, '', 'SSL'); ?>"><?php echo $lC_Language->get('text_sign_in'); ?></a></li>
-        <li><a href="<?php echo lc_href_link(FILENAME_ACCOUNT, 'password', 'SSL'); ?>"><?php echo $lC_Language->get('text_my_password'); ?></a></li>
-        <li><a href="<?php echo lc_href_link(FILENAME_ACCOUNT, 'orders', 'SSL'); ?>"><?php echo $lC_Language->get('text_my_order_history'); ?></a></li>
-        <li><a href="<?php echo lc_href_link(FILENAME_ACCOUNT, 'address_book', 'SSL'); ?>"><?php echo $lC_Language->get('text_my_address_book'); ?></a></li>
-        <li><a href="<?php echo lc_href_link(FILENAME_ACCOUNT, 'notifications', 'SSL'); ?>"><?php echo $lC_Language->get('text_my_updates_alerts'); ?></a></li>
+        <li><a href="<?php echo lc_href_link(FILENAME_ACCOUNT, '', 'AUTO'); ?>"><?php echo $lC_Language->get('text_sign_in'); ?></a></li>
+        <li><a href="<?php echo lc_href_link(FILENAME_ACCOUNT, 'password', 'AUTO'); ?>"><?php echo $lC_Language->get('text_my_password'); ?></a></li>
+        <li><a href="<?php echo lc_href_link(FILENAME_ACCOUNT, 'orders', 'AUTO'); ?>"><?php echo $lC_Language->get('text_my_order_history'); ?></a></li>
+        <li><a href="<?php echo lc_href_link(FILENAME_ACCOUNT, 'address_book', 'AUTO'); ?>"><?php echo $lC_Language->get('text_my_address_book'); ?></a></li>
+        <li><a href="<?php echo lc_href_link(FILENAME_ACCOUNT, 'notifications', 'AUTO'); ?>"><?php echo $lC_Language->get('text_my_updates_alerts'); ?></a></li>
       </ul>
     </div>
     <div class="col-sm-3 col-lg-3 large-margin-bottom">

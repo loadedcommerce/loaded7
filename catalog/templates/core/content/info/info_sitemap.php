@@ -27,16 +27,16 @@ $lC_CategoryTree->setUseAria(true);
     <div class="col-sm-6 col-lg-6">
       <div class="well">
         <ul>
-          <li><?php echo lc_link_object(lc_href_link(FILENAME_ACCOUNT, null, 'SSL'), $lC_Language->get('sitemap_account')); ?>
+          <li><?php echo lc_link_object(lc_href_link(FILENAME_ACCOUNT, null, 'AUTO'), $lC_Language->get('sitemap_account')); ?>
             <ul>
-              <li><?php echo lc_link_object(lc_href_link(FILENAME_ACCOUNT, 'edit', 'SSL'), $lC_Language->get('sitemap_account_edit')); ?></li>
-              <li><?php echo lc_link_object(lc_href_link(FILENAME_ACCOUNT, 'address_book', 'SSL'), $lC_Language->get('sitemap_address_book')); ?></li>
-              <li><?php echo lc_link_object(lc_href_link(FILENAME_ACCOUNT, 'orders', 'SSL'), $lC_Language->get('sitemap_account_history')); ?></li>
-              <li><?php echo lc_link_object(lc_href_link(FILENAME_ACCOUNT, 'newsletters', 'SSL'), $lC_Language->get('sitemap_account_notifications')); ?></li>
+              <li><?php echo lc_link_object(lc_href_link(FILENAME_ACCOUNT, 'edit', 'AUTO'), $lC_Language->get('sitemap_account_edit')); ?></li>
+              <li><?php echo lc_link_object(lc_href_link(FILENAME_ACCOUNT, 'address_book', 'AUTO'), $lC_Language->get('sitemap_address_book')); ?></li>
+              <li><?php echo lc_link_object(lc_href_link(FILENAME_ACCOUNT, 'orders', 'AUTO'), $lC_Language->get('sitemap_account_history')); ?></li>
+              <li><?php echo lc_link_object(lc_href_link(FILENAME_ACCOUNT, 'newsletters', 'AUTO'), $lC_Language->get('sitemap_account_notifications')); ?></li>
             </ul>
           </li>
-          <li><?php echo lc_link_object(lc_href_link(FILENAME_CHECKOUT, null, 'SSL'), $lC_Language->get('sitemap_shopping_cart')); ?></li>
-          <li><?php echo lc_link_object(lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'), $lC_Language->get('sitemap_checkout_shipping')); ?></li>
+          <li><?php echo lc_link_object(lc_href_link(FILENAME_CHECKOUT, null, 'AUTO'), $lC_Language->get('sitemap_shopping_cart')); ?></li>
+          <li><?php echo lc_link_object(lc_href_link(FILENAME_CHECKOUT, 'shipping', 'AUTO'), $lC_Language->get('sitemap_checkout_shipping')); ?></li>
           <li><?php echo lc_link_object(lc_href_link(FILENAME_SEARCH), $lC_Language->get('sitemap_advanced_search')); ?></li>
           <li><?php echo lc_link_object(lc_href_link(FILENAME_PRODUCTS, 'new'), $lC_Language->get('sitemap_products_new')); ?></li>
           <li><?php echo lc_link_object(lc_href_link(FILENAME_PRODUCTS, 'specials'), $lC_Language->get('sitemap_specials')); ?></li>

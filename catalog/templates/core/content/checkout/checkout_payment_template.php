@@ -35,12 +35,12 @@ if ($isIE && $lC_Payment->selected_module = 'lC_Payment_authorizenet_cc') {
     <h1 class="no-margin-top"><?php echo $lC_Language->get('text_checkout'); ?></h1>
     <div id="content-checkout-shipping-container">
       <div class="panel panel-default no-margin-bottom">
-        <div class="panel-heading cursor-pointer" onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'); ?>'">
+        <div class="panel-heading cursor-pointer" onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'AUTO'); ?>'">
           <h3 class="no-margin-top no-margin-bottom"><?php echo $lC_Language->get('box_ordering_steps_delivery'); ?></h3>
         </div>
       </div>
       <div class="clearfix panel panel-default no-margin-bottom">
-        <div class="panel-heading cursor-pointer" onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'payment&skip=no', 'SSL'); ?>'">
+        <div class="panel-heading cursor-pointer" onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'payment&skip=no', 'AUTO'); ?>'">
           <h3 class="no-margin-top no-margin-bottom"><?php echo $lC_Language->get('box_ordering_steps_payment'); ?></h3>
         </div>
       </div>
@@ -81,7 +81,7 @@ if ($isIE && $lC_Payment->selected_module = 'lC_Payment_authorizenet_cc') {
                     <?php echo lC_Address::format($lC_ShoppingCart->getBillingAddress(), '<br />'); ?>                
                   </address>
                   <div class="btn-group clearfix absolute-top-right">
-                    <form action="<?php echo lc_href_link(FILENAME_CHECKOUT, 'payment_address', 'SSL'); ?>" method="post"><button type="button" onclick="$(this).closest('form').submit();" class="btn btn-default btn-xs"><?php echo $lC_Language->get('button_edit'); ?></button></form>
+                    <form action="<?php echo lc_href_link(FILENAME_CHECKOUT, 'payment_address', 'AUTO'); ?>" method="post"><button type="button" onclick="$(this).closest('form').submit();" class="btn btn-default btn-xs"><?php echo $lC_Language->get('button_edit'); ?></button></form>
                   </div>                  
                 </div>
               </div>

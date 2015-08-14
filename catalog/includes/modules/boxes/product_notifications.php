@@ -25,7 +25,7 @@ class lC_Boxes_product_notifications extends lC_Modules {
   public function initialize() {
     global $lC_Database, $lC_Language, $lC_Product, $lC_Customer;
 
-    $this->_title_link = lc_href_link(FILENAME_ACCOUNT, 'notifications', 'SSL');
+    $this->_title_link = lc_href_link(FILENAME_ACCOUNT, 'notifications', 'AUTO');
 
     if (isset($lC_Product) && is_a($lC_Product, 'lC_Product')) {
       if ($lC_Customer->isLoggedOn()) {

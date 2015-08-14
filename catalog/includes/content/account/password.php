@@ -28,7 +28,7 @@ class lC_Account_Password extends lC_Template {
     $this->addJavascriptPhpFilename('templates/' . $this->getCode() . '/javascript/account/account_password.js.php');
 
     if ($lC_Services->isStarted('breadcrumb')) {
-      $lC_Breadcrumb->add($lC_Language->get('breadcrumb_edit_password'), lc_href_link(FILENAME_ACCOUNT, $this->_module, 'SSL'));
+      $lC_Breadcrumb->add($lC_Language->get('breadcrumb_edit_password'), lc_href_link(FILENAME_ACCOUNT, $this->_module, 'AUTO'));
     }
 
     if ($_GET[$this->_module] == 'save') {
@@ -53,7 +53,7 @@ class lC_Account_Password extends lC_Template {
     if ($lC_MessageStack->size('account_password') === 0) {
       if (lC_Account::checkPassword(trim($_POST['password_current']))) {
         if (lC_Account::savePassword(trim($_POST['password_new']))) {
-          lc_redirect(lc_href_link(FILENAME_ACCOUNT, 'success=' . urlencode($lC_Language->get('success_password_updated')), 'SSL'));
+          lc_redirect(lc_href_link(FILENAME_ACCOUNT, 'success=' . urlencode($lC_Language->get('success_password_updated')), 'AUTO'));
         } else {
           $lC_MessageStack->add('account_password', sprintf($lC_Language->get('field_customer_password_new_error'), ACCOUNT_PASSWORD));
         }
