@@ -329,7 +329,52 @@ class lC_Mail {
       @ini_set('sendmail_from', '"' . $this->_from['name'] . '" <' . $this->_from['email_address'] . '>');
     }
 
-    @mail(implode(', ', $to_email_addresses), $this->_subject, $this->_body, $headers);
+    if (EMAIL_TRANSPORT == 'smtp') {
+        require DIR_FS_CATALOG . 'ext/phpmailer/PHPMailerAutoload.php';
+
+        $mail = new PHPMailer;
+        $mail->isSMTP();
+        //Enable SMTP debugging
+        // 0 = off (for production use)
+        // 1 = client messages
+        // 2 = client and server messages
+        $mail->SMTPDebug = (EMAIL_SMTP_DEBUG == '') ? 0 : EMAIL_SMTP_DEBUG;
+        //Ask for HTML-friendly debug output
+        $mail->Debugoutput = EMAIL_SMTP_DEBUG_OUTPUT;
+        //Set the hostname of the mail server
+        $mail->Host = EMAIL_SMTP_HOST_SERVER;
+        //Set the SMTP port number - likely to be 25, 465 or 587
+        $mail->Port = (EMAIL_SMTP_PORT_SERVER == '') ? 25 : EMAIL_SMTP_PORT_SERVER;
+        //Whether to use SMTP authentication
+        $mail->SMTPAuth = EMAIL_SMTP_ACTIVE_PASSWORD;
+        //Username to use for SMTP authentication
+        $mail->Username = (EMAIL_SMTP_ACTIVE_PASSWORD == false) ? '' : EMAIL_SMTP_USERNAME;
+        //Password to use for SMTP authentication
+        $mail->Password = (EMAIL_SMTP_ACTIVE_PASSWORD == false) ? '' : EMAIL_SMTP_PASSWORD;
+        //Set who the message is to be sent from
+        $mail->setFrom($this->_from['email_address'], $this->_from['name']);
+
+        foreach ( $this->_to as $to ) {
+            //Set who the message is to be sent to
+            $mail->addAddress($to['email_address'], $to['name']);
+        }
+        //Set the subject line
+        $mail->Subject = $this->_subject;
+        //convert HTML into a basic plain-text alternative body
+        $mail->msgHTML($this->_body);
+        //Replace the plain text body with one created manually
+        $mail->AltBody = $this->_body;
+        //send the message, check for errors
+        if (!$mail->send()) {
+            if (EMAIL_SMTP_DEBUG != 0){
+                $lC_MessageStack->add('header', 'Mailer Error: ' . $mail->ErrorInfo, 'error');                
+            }
+        }   
+        //end smtp
+    } else {
+       // use sendmail
+        @mail(implode(', ', $to_email_addresses), $this->_subject, $this->_body, $headers);
+    }
 
     @ini_restore('sendmail_from');
   }
