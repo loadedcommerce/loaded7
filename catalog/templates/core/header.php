@@ -111,14 +111,14 @@ if (isset($_SESSION['admin_login']) && $_SESSION['admin_login'] === TRUE) echo '
             if ($lC_Template->getBranding('sales_phone') != '') { 
           ?>
           <span class="show-on-mobile header-fa-icons">
-            <i class="fa fa-phone fa-lg fa-sales-phone small-margin-bottom cursor-pointer" title="<?php echo $lC_Language->get('sales_phone'); ?>" data-toggle="popover-mobile" data-content="<?php echo $lC_Template->getBranding('sales_phone'); ?>"></i>
+            <i class="fa fa-phone fa-lg fa-sales-phone small-margin-bottom cursor-pointer" title="<?php echo $lC_Language->get('sales_phone'); ?>" data-toggle="popover-mobile" data-html="true" data-content='<a href="tel:<?php echo $lC_Template->getBranding('sales_phone'); ?>"><?php echo $lC_Template->getBranding('sales_phone'); ?></a>'></i>
           </span>
           <?php
             } 
             if ($lC_Template->getBranding('sales_email') != '') { 
           ?>
           <span class="show-on-mobile header-fa-icons">
-            <i class="fa fa-envelope fa-lg fa-sales-email small-margin-bottom cursor-pointer" title="<?php echo $lC_Language->get('sales_email'); ?>" data-toggle="popover-mobile" data-content="<?php echo $lC_Template->getBranding('sales_email'); ?>"></i>
+            <i class="fa fa-envelope fa-lg fa-sales-email small-margin-bottom cursor-pointer" title="<?php echo $lC_Language->get('sales_email'); ?>" data-toggle="popover-mobile" data-html="true" data-content='<a href="mailto:<?php echo $lC_Template->getBranding('sales_email'); ?>"><?php echo $lC_Template->getBranding('sales_email'); ?></a>'></i>
           </span>
           <?php
             } 
