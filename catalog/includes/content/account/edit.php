@@ -28,7 +28,7 @@ class lC_Account_Edit extends lC_Template {
     $this->addJavascriptPhpFilename('templates/' . $this->getCode() . '/javascript/form_check.js.php');
 
     if ($lC_Services->isStarted('breadcrumb')) {
-      $lC_Breadcrumb->add($lC_Language->get('breadcrumb_edit_account'), lc_href_link(FILENAME_ACCOUNT, $this->_module, 'AUTO'));
+      $lC_Breadcrumb->add($lC_Language->get('breadcrumb_edit_account'), lc_href_link(FILENAME_ACCOUNT, $this->_module, 'SSL'));
     }
 
     if ($_GET[$this->_module] == 'save') {
@@ -100,7 +100,7 @@ class lC_Account_Edit extends lC_Template {
         $lC_MessageStack->add('account', $lC_Language->get('success_account_updated'), 'success');
       }
 
-      lc_redirect(lc_href_link(FILENAME_ACCOUNT, null, 'AUTO'));
+      lc_redirect(lc_href_link(FILENAME_ACCOUNT, null, 'SSL'));
     }
   }
 }

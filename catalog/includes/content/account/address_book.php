@@ -25,7 +25,7 @@ class lC_Account_Address_book extends lC_Template {
     $this->_page_title = $lC_Language->get('address_book_heading');
 
     if ($lC_Services->isStarted('breadcrumb')) {
-      $lC_Breadcrumb->add($lC_Language->get('breadcrumb_address_book'), lc_href_link(FILENAME_ACCOUNT, $this->_module, 'AUTO'));
+      $lC_Breadcrumb->add($lC_Language->get('breadcrumb_address_book'), lc_href_link(FILENAME_ACCOUNT, $this->_module, 'SSL'));
     }
 
     if ($lC_Customer->hasDefaultAddress() === false) {
@@ -36,7 +36,7 @@ class lC_Account_Address_book extends lC_Template {
       $this->addJavascriptPhpFilename('templates/' . $this->getCode() . '/javascript/form_check.js.php');
     } elseif (isset($_GET['new'])) {
       if ($lC_Services->isStarted('breadcrumb')) {
-        $lC_Breadcrumb->add($lC_Language->get('breadcrumb_address_book_add_entry'), lc_href_link(FILENAME_ACCOUNT, $this->_module . '&new', 'AUTO'));
+        $lC_Breadcrumb->add($lC_Language->get('breadcrumb_address_book_add_entry'), lc_href_link(FILENAME_ACCOUNT, $this->_module . '&new', 'SSL'));
       }
 
       $this->_page_title = $lC_Language->get('address_book_add_entry_heading');
@@ -50,7 +50,7 @@ class lC_Account_Address_book extends lC_Template {
 
       if ($lC_MessageStack->size('address_book') == 0) {
         if ($lC_Services->isStarted('breadcrumb')) {
-          $lC_Breadcrumb->add($lC_Language->get('breadcrumb_address_book_edit_entry'), lc_href_link(FILENAME_ACCOUNT, $this->_module . '=' . $_GET[$this->_module] . '&edit', 'AUTO'));
+          $lC_Breadcrumb->add($lC_Language->get('breadcrumb_address_book_edit_entry'), lc_href_link(FILENAME_ACCOUNT, $this->_module . '=' . $_GET[$this->_module] . '&edit', 'SSL'));
         }
 
         $this->_page_title = $lC_Language->get('address_book_edit_entry_heading');
@@ -70,7 +70,7 @@ class lC_Account_Address_book extends lC_Template {
 
       if ($lC_MessageStack->size('address_book') == 0) {
         if ($lC_Services->isStarted('breadcrumb')) {
-          $lC_Breadcrumb->add($lC_Language->get('breadcrumb_address_book_delete_entry'), lc_href_link(FILENAME_ACCOUNT, $this->_module . '=' . $_GET[$this->_module] . '&delete', 'AUTO'));
+          $lC_Breadcrumb->add($lC_Language->get('breadcrumb_address_book_delete_entry'), lc_href_link(FILENAME_ACCOUNT, $this->_module . '=' . $_GET[$this->_module] . '&delete', 'SSL'));
         }
 
         $this->_page_title = $lC_Language->get('address_book_delete_entry_heading');
@@ -234,7 +234,7 @@ class lC_Account_Address_book extends lC_Template {
         $lC_MessageStack->add('address_book', $lC_Language->get('success_address_book_entry_updated'), 'success');
       }
 
-      lc_redirect(lc_href_link(FILENAME_ACCOUNT, 'address_book', 'AUTO'));
+      lc_redirect(lc_href_link(FILENAME_ACCOUNT, 'address_book', 'SSL'));
     }
   }
 
@@ -249,7 +249,7 @@ class lC_Account_Address_book extends lC_Template {
       $lC_MessageStack->add('address_book', $lC_Language->get('warning_primary_address_deletion'), 'warning');
     }
 
-    lc_redirect(lc_href_link(FILENAME_ACCOUNT, 'address_book', 'AUTO'));
+    lc_redirect(lc_href_link(FILENAME_ACCOUNT, 'address_book', 'SSL'));
   }
 }
 ?>

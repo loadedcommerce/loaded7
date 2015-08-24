@@ -28,11 +28,11 @@ class lC_Checkout_Success extends lC_Template {
     if ($lC_Customer->isLoggedOn() === false) {
       $lC_NavigationHistory->setSnapshot();
 
-      lc_redirect(lc_href_link(FILENAME_ACCOUNT, 'login', 'AUTO'));
+      lc_redirect(lc_href_link(FILENAME_ACCOUNT, 'login', 'SSL'));
     }
 
     if ($lC_Services->isStarted('breadcrumb')) {
-      $lC_Breadcrumb->add($lC_Language->get('breadcrumb_checkout_success'), lc_href_link(FILENAME_CHECKOUT, $this->_module, 'AUTO'));
+      $lC_Breadcrumb->add($lC_Language->get('breadcrumb_checkout_success'), lc_href_link(FILENAME_CHECKOUT, $this->_module, 'SSL'));
     }
 
     if ($_GET[$this->_module] == 'update') {

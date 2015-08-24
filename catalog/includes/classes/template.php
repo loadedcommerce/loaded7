@@ -826,7 +826,7 @@ class lC_Template {
                  '      <small>' . $lC_Language->get('box_shopping_cart_subtotal') . '</small>' .
                  '      <big>' . $lC_Currencies->format($lC_ShoppingCart->getSubTotal()) . '</big>' .
                  '    </div>' .
-                 '    <a href="' . lc_href_link(FILENAME_CHECKOUT, 'shopping_cart', 'AUTO') . '">' . $lC_Language->get('button_view_cart') . '</a>' .
+                 '    <a href="' . lc_href_link(FILENAME_CHECKOUT, 'shopping_cart', 'SSL') . '">' . $lC_Language->get('button_view_cart') . '</a>' .
                  '  </div>' .
                  '</div>';
                  
@@ -1012,7 +1012,7 @@ class lC_Template {
   /**
   * Cleans OGP and Meta tags and restrict OGP and Meta description to 300 characters
   *
-  * @access public
+  * @access private
   * @return string
   */  
   public function cleanMetaTags($data){

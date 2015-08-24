@@ -25,7 +25,7 @@ class lC_Boxes_shopping_cart extends lC_Modules {
   public function initialize() {
     global $lC_Language, $lC_ShoppingCart, $lC_Currencies;
 
-    $this->_title_link = lc_href_link(FILENAME_CHECKOUT, null, 'AUTO');
+    $this->_title_link = lc_href_link(FILENAME_CHECKOUT, null, 'SSL');
 
     if ($lC_ShoppingCart->hasContents()) {
       

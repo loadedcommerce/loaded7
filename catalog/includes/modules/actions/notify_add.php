@@ -14,7 +14,7 @@ class lC_Actions_notify_add {
     if (!$lC_Customer->isLoggedOn()) {
       $lC_NavigationHistory->setSnapshot();
 
-      lc_redirect(lc_href_link(FILENAME_ACCOUNT, 'login', 'AUTO'));
+      lc_redirect(lc_href_link(FILENAME_ACCOUNT, 'login', 'SSL'));
 
       return false;
     }

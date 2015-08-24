@@ -27,7 +27,7 @@ class lC_Account_Password_forgotten extends lC_Template {
     $this->addJavascriptPhpFilename('templates/' . $this->getCode() . '/javascript/form_check.js.php');
 
     if ($lC_Services->isStarted('breadcrumb')) {
-      $lC_Breadcrumb->add($lC_Language->get('breadcrumb_password_forgotten'), lc_href_link(FILENAME_ACCOUNT, $this->_module, 'AUTO'));
+      $lC_Breadcrumb->add($lC_Language->get('breadcrumb_password_forgotten'), lc_href_link(FILENAME_ACCOUNT, $this->_module, 'SSL'));
     }
 
     if ($_GET[$this->_module] == 'process') {
@@ -65,7 +65,7 @@ class lC_Account_Password_forgotten extends lC_Template {
         lc_email($Qcheck->valueProtected('customers_firstname') . ' ' . $Qcheck->valueProtected('customers_lastname'), $Qcheck->valueProtected('customers_email_address'), sprintf($lC_Language->get('email_password_reminder_subject'), STORE_NAME), $email_text, STORE_OWNER, STORE_OWNER_EMAIL_ADDRESS);
       }
 
-      lc_redirect(lc_href_link(FILENAME_ACCOUNT, 'login&success=' . urlencode($lC_Language->get('success_password_forgotten_sent')), 'AUTO'));
+      lc_redirect(lc_href_link(FILENAME_ACCOUNT, 'login&success=' . urlencode($lC_Language->get('success_password_forgotten_sent')), 'SSL'));
     } else {
       $lC_MessageStack->add('password_forgotten', $lC_Language->get('error_password_forgotten_no_email_address_found'));
     }

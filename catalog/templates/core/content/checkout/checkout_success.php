@@ -128,7 +128,7 @@ $oID = lC_Success::getOrderID($lC_Customer->getID());
                 </div>
               </div> 
               <div class="well large-margin-top padding-bottom">
-                <form name="checkout_success" id="checkout_success" action="<?php echo lc_href_link(FILENAME_CHECKOUT, 'success=update', 'AUTO'); ?>" method="post">
+                <form name="checkout_success" id="checkout_success" action="<?php echo lc_href_link(FILENAME_CHECKOUT, 'success=update', 'SSL'); ?>" method="post">
                   <?php
                     $products_array = lC_Success::globalNotifications($lC_Customer->getID());
                     if (isset($products_array) && !empty($products_array)) {
@@ -141,7 +141,7 @@ $oID = lC_Success::getOrderID($lC_Customer->getID());
                         }
                       }
                     } else {
-                      echo sprintf($lC_Language->get('view_order_history'), lc_href_link(FILENAME_ACCOUNT, null, 'AUTO'), lc_href_link(FILENAME_ACCOUNT, 'orders', 'AUTO')) . '<br /><br />' . sprintf($lC_Language->get('contact_store_owner'), lc_href_link(FILENAME_INFO, 'contact'));
+                      echo sprintf($lC_Language->get('view_order_history'), lc_href_link(FILENAME_ACCOUNT, null, 'SSL'), lc_href_link(FILENAME_ACCOUNT, 'orders', 'SSL')) . '<br /><br />' . sprintf($lC_Language->get('contact_store_owner'), lc_href_link(FILENAME_INFO, 'contact'));
                     }
                   ?>
                 </form>

@@ -24,18 +24,18 @@ class lC_Checkout_Confirmation extends lC_Template {
     if ($lC_Customer->isLoggedOn() === false) {
       $lC_NavigationHistory->setSnapshot();
 
-      lc_redirect(lc_href_link(FILENAME_ACCOUNT, 'login', 'AUTO'));
+      lc_redirect(lc_href_link(FILENAME_ACCOUNT, 'login', 'SSL'));
     }
 
     if ($lC_ShoppingCart->hasContents() === false) {     
-      lc_redirect(lc_href_link(FILENAME_CHECKOUT, null, 'AUTO'));
+      lc_redirect(lc_href_link(FILENAME_CHECKOUT, null, 'SSL'));
     }
 
     // if no shipping method has been selected, redirect the customer to the shipping method selection page
     if ($lC_ShoppingCart->hasShippingAddress() == false) {
       if (defined('SKIP_CHECKOUT_SHIPPING_PAGE') && SKIP_CHECKOUT_SHIPPING_PAGE == '1') {
       } else {
-        lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'shipping', 'AUTO'));
+        lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'));
       }
     }
 
@@ -46,7 +46,7 @@ class lC_Checkout_Confirmation extends lC_Template {
     $lC_Language->load('order');
 
     if ($lC_Services->isStarted('breadcrumb')) {
-      $lC_Breadcrumb->add($lC_Language->get('breadcrumb_checkout_confirmation'), lc_href_link(FILENAME_CHECKOUT, $this->_module, 'AUTO'));
+      $lC_Breadcrumb->add($lC_Language->get('breadcrumb_checkout_confirmation'), lc_href_link(FILENAME_CHECKOUT, $this->_module, 'SSL'));
     }
     // added due to bootstrap not having order comments before confirmation page
     $_POST['comments'] = $_POST['comments'];
@@ -83,7 +83,7 @@ class lC_Checkout_Confirmation extends lC_Template {
     if (isset($_SESSION['SKIP_PAYMENT_PAGE']) && $_SESSION['SKIP_PAYMENT_PAGE'] == '1') { 
     } else {
       if ($lC_MessageStack->size('checkout_payment') > 0) {
-        lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment', 'AUTO'));
+        lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment', 'SSL'));
       }
     }       
 

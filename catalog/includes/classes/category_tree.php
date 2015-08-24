@@ -127,7 +127,7 @@ class lC_CategoryTree {
         $this->_data = $catArr;
       }       
 
-    //  if ($lC_Cache->isEnabled()) $lC_Cache->write($this->_data);
+      if ($lC_Cache->isEnabled()) $lC_Cache->write($this->_data);
     }
   }
 

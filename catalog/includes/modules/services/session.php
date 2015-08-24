@@ -70,7 +70,7 @@ class lC_Services_session {
       if ($_SESSION['SESSION_USER_AGENT'] != $http_user_agent) {
         $lC_Session->destroy();
 
-        lc_redirect(lc_href_link(FILENAME_ACCOUNT, 'login', 'AUTO'));
+        lc_redirect(lc_href_link(FILENAME_ACCOUNT, 'login', 'SSL'));
       }
     }
 
@@ -83,7 +83,7 @@ class lC_Services_session {
       if ($_SESSION['SESSION_IP_ADDRESS'] != lc_get_ip_address()) {
         $lC_Session->destroy();
 
-        lc_redirect(lc_href_link(FILENAME_ACCOUNT, 'login', 'AUTO'));
+        lc_redirect(lc_href_link(FILENAME_ACCOUNT, 'login', 'SSL'));
       }
     }
 

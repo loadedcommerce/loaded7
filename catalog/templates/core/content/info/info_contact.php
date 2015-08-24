@@ -35,7 +35,7 @@
         if ( $lC_MessageStack->size('contact') > 0 ) echo '<div class="message-stack-container alert alert-danger">' . $lC_MessageStack->get('contact') . '</div>' . "\n";  
         if (isset($_GET['success']) && $_GET['success'] != NULL) echo '<div class="message-success-container alert alert-success">' . preg_replace('/[^a-zA-Z0-9]\'\.\,/', '', $_GET['success']) . '</div>' . "\n"; 
         ?>
-        <form role="form" id="contact" name="contact" class="row-fluid" action="<?php echo lc_href_link(FILENAME_INFO, 'contact=process', 'AUTO'); ?>" method="post" enctype="multipart/form-data">
+        <form role="form" id="contact" name="contact" class="row-fluid" action="<?php echo lc_href_link(FILENAME_INFO, 'contact=process', 'SSL'); ?>" method="post" enctype="multipart/form-data">
           <div class="form-group"><label class="sr-only"></label><input class="form-control" type="text" name="name" value="" placeholder="<?php echo $lC_Language->get('contact_name_title'); ?>"></div>
           <div class="form-group"><label class="sr-only"></label><input class="form-control" type="text" name="email" value="" placeholder="<?php echo $lC_Language->get('contact_email_address_title'); ?>"></div>
           <div class="form-group"><label class="sr-only"></label><textarea class="form-control" name="inquiry" rows="5" cols="25" placeholder="<?php echo $lC_Language->get('contact_inquiry_title'); ?>"></textarea></div>    

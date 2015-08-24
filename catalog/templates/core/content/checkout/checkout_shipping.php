@@ -25,7 +25,7 @@
       if ( $lC_MessageStack->size('shopping_cart') > 0 ) echo '<div class="message-stack-container alert alert-warning small-margin-bottom">' . $lC_MessageStack->get('shopping_cart') . '</div>' . "\n"; 
     }  
     ?>
-    <form name="checkout_shipping" id="checkout_shipping" action="<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping=process', 'AUTO'); ?>" method="post">
+    <form name="checkout_shipping" id="checkout_shipping" action="<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping=process', 'SSL'); ?>" method="post">
       <div id="content-checkout-shipping-container">      
         <div class="panel panel-default no-margin-bottom">
           <div class="panel-heading">
@@ -43,7 +43,7 @@
                     <input type="checkbox" name="shipto_as_billable" id="shipto_as_billable"><label class="small-margin-left"><?php echo $lC_Language->get('billable_address_checkbox'); ?></label>
                   </div>
                   <div class="btn-group clearfix absolute-top-right small-padding-right small-padding-top">
-                    <button type="button" onclick="document.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping_address', 'AUTO'); ?>'" class="btn btn-default btn-xs"><?php echo $lC_Language->get('button_edit'); ?></button>
+                    <button type="button" onclick="document.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping_address', 'SSL'); ?>'" class="btn btn-default btn-xs"><?php echo $lC_Language->get('button_edit'); ?></button>
                   </div>
                 </div>
                 <div class="well">
@@ -130,7 +130,7 @@
                 </div> 
                 <div class="btn-set clearfix">
                   <button class="btn btn-lg btn-success pull-right" onclick="$('#checkout_shipping').submit();" type="button"><?php echo $lC_Language->get('button_continue'); ?></button>
-                  <button class="btn btn-lg btn-default" onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, '', 'AUTO'); ?>'" type="button"><?php echo $lC_Language->get('button_back'); ?></button>
+                  <button class="btn btn-lg btn-default" onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, '', 'SSL'); ?>'" type="button"><?php echo $lC_Language->get('button_back'); ?></button>
                 </div> 
                 <?php
                 if ($lC_Customer->isLoggedOn() !== false) {

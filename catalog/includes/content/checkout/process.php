@@ -22,12 +22,12 @@ class lC_Checkout_Process extends lC_Template {
     } else {
       if ($lC_Customer->isLoggedOn() === false) {
         $lC_NavigationHistory->setSnapshot();                                     
-        lc_redirect(lc_href_link(FILENAME_ACCOUNT, 'login', 'AUTO'));
+        lc_redirect(lc_href_link(FILENAME_ACCOUNT, 'login', 'SSL'));
       }
     }    
 
     if ($lC_ShoppingCart->hasContents() === false) {
-      lc_redirect(lc_href_link(FILENAME_CHECKOUT, null, 'AUTO'));
+      lc_redirect(lc_href_link(FILENAME_CHECKOUT, null, 'SSL'));
     }
         
     // added for removal of order comments from shipping and payment pages and placed on confirmation page only during checkout
@@ -39,7 +39,7 @@ class lC_Checkout_Process extends lC_Template {
     if (($lC_ShoppingCart->hasShippingMethod() === false) && ($lC_ShoppingCart->getContentType() != 'virtual')) {
       if (defined('SKIP_CHECKOUT_SHIPPING_PAGE') && SKIP_CHECKOUT_SHIPPING_PAGE == '1') {
       } else {
-        lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'shipping', 'AUTO'));
+        lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'));
       }
     }
              
@@ -63,7 +63,7 @@ class lC_Checkout_Process extends lC_Template {
       $lC_Payment = new lC_Payment($lC_ShoppingCart->getBillingMethod('id'));
     }
     if ($lC_Payment->hasActive() && ($lC_ShoppingCart->hasBillingMethod() === false)) {
-      lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment', 'AUTO'));
+      lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment', 'SSL'));
     }
                 
     include($lC_Vqmod->modCheck('includes/classes/order.php'));
@@ -85,7 +85,7 @@ class lC_Checkout_Process extends lC_Template {
 
     if (isset($_SESSION['SelectedShippingMethodCost'])) unset($_SESSION['SelectedShippingMethodCost']);
 
-    lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'success', 'AUTO'));
+    lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'success', 'SSL'));
   }
 }
 ?>

@@ -25,7 +25,7 @@ if (isset($_GET['edit'])) {
       if ( ($lC_Customer->hasDefaultAddress() === false) || (isset($_GET['new']) && (lC_AddressBook::numberOfEntries() < MAX_ADDRESS_BOOK_ENTRIES)) || (isset($Qentry) && ($Qentry->numberOfRows() === 1)) ) {
         ?>
         <div class="row">
-          <form role="form" class="form-inline" name="address_book" id="address_book" action="<?php echo lc_href_link(FILENAME_ACCOUNT, 'address_book=' . $_GET['address_book'] . '&' . (isset($_GET['edit']) ? 'edit' : 'new') . '=save', 'AUTO'); ?>" method="post" onsubmit="return check_form(address_book);">
+          <form role="form" class="form-inline" name="address_book" id="address_book" action="<?php echo lc_href_link(FILENAME_ACCOUNT, 'address_book=' . $_GET['address_book'] . '&' . (isset($_GET['edit']) ? 'edit' : 'new') . '=save', 'SSL'); ?>" method="post" onsubmit="return check_form(address_book);">
             <?php
               if (file_exists(DIR_FS_TEMPLATE . 'modules/address_book_details.php')) {
                 require($lC_Vqmod->modCheck(DIR_FS_TEMPLATE . 'modules/address_book_details.php'));
@@ -37,13 +37,13 @@ if (isset($_GET['edit'])) {
         </div>
         <div class="btn-set small-margin-top clearfix">
           <button class="pull-right btn btn-lg btn-primary" onclick="$('#address_book').submit();" type="button"><?php echo $lC_Language->get('button_continue'); ?></button>
-          <form action="<?php echo ($lC_NavigationHistory->hasSnapshot()) ? $lC_NavigationHistory->getSnapshotURL() : ($lC_Customer->hasDefaultAddress() === false) ? lc_href_link(FILENAME_ACCOUNT, null, 'AUTO') : lc_href_link(FILENAME_ACCOUNT, 'address_book', 'SSL'); ?>" method="post"><button onclick="$(this).closest('form').submit();" class="pull-left btn btn-lg btn-default" type="submit"><?php echo $lC_Language->get('button_back'); ?></button></form>
+          <form action="<?php echo ($lC_NavigationHistory->hasSnapshot()) ? $lC_NavigationHistory->getSnapshotURL() : ($lC_Customer->hasDefaultAddress() === false) ? lc_href_link(FILENAME_ACCOUNT, null, 'SSL') : lc_href_link(FILENAME_ACCOUNT, 'address_book', 'SSL'); ?>" method="post"><button onclick="$(this).closest('form').submit();" class="pull-left btn btn-lg btn-default" type="submit"><?php echo $lC_Language->get('button_back'); ?></button></form>
         </div> 
         <?php
       } else {
         ?>
         <div class="btn-set small-margin-top clearfix">
-          <form action="<?php echo lc_href_link(FILENAME_ACCOUNT, 'address_book', 'AUTO'); ?>" method="post"><button onclick="$(this).closest('form').submit();" class="pull-left btn btn-lg btn-default" type="submit"><?php echo $lC_Language->get('button_back'); ?></button></form>
+          <form action="<?php echo lc_href_link(FILENAME_ACCOUNT, 'address_book', 'SSL'); ?>" method="post"><button onclick="$(this).closest('form').submit();" class="pull-left btn btn-lg btn-default" type="submit"><?php echo $lC_Language->get('button_back'); ?></button></form>
         </div> 
         <?php
       }

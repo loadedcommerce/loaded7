@@ -18,7 +18,7 @@
     ?>
     <div class="well">
       <p class="no-margin-bottom"><?php echo $lC_Language->get('password_forgotten'); ?></p>
-      <form role="form" name="password_forgotten" id="password_forgotten" action="<?php echo lc_href_link(FILENAME_ACCOUNT, 'password_forgotten=process', 'AUTO'); ?>" method="post" onsubmit="return check_form(password_forgotten);">
+      <form role="form" name="password_forgotten" id="password_forgotten" action="<?php echo lc_href_link(FILENAME_ACCOUNT, 'password_forgotten=process', 'SSL'); ?>" method="post" onsubmit="return check_form(password_forgotten);">
         <div class="form-group">
           <label></label><?php echo lc_draw_input_field('email_address', null, 'placeholder="' . $lC_Language->get('field_customer_email_address') . '" class="form-control"'); ?>
         </div>
@@ -26,7 +26,7 @@
     </div>
     <div class="btn-set small-margin-top clearfix">
       <button class="pull-right btn btn-lg btn-primary" onclick="$('#password_forgotten').submit();" type="button"><?php echo $lC_Language->get('button_continue'); ?></button>
-      <form action="<?php echo lc_href_link(FILENAME_ACCOUNT, null, 'AUTO'); ?>" method="post"><button class="pull-left btn btn-lg btn-default" onclick="$(this).closest('form').submit();" type="submit"><?php echo $lC_Language->get('button_back'); ?></button></form>
+      <form action="<?php echo lc_href_link(FILENAME_ACCOUNT, null, 'SSL'); ?>" method="post"><button class="pull-left btn btn-lg btn-default" onclick="$(this).closest('form').submit();" type="submit"><?php echo $lC_Language->get('button_back'); ?></button></form>
     </div> 
   </div>
 </div>

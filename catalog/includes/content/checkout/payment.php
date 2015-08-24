@@ -25,26 +25,26 @@ class lC_Checkout_Payment extends lC_Template {
     if ($lC_Customer->isLoggedOn() === false) {
       $lC_NavigationHistory->setSnapshot();
 
-      lc_redirect(lc_href_link(FILENAME_ACCOUNT, 'login', 'AUTO'));
+      lc_redirect(lc_href_link(FILENAME_ACCOUNT, 'login', 'SSL'));
     }
 
     if ($lC_ShoppingCart->hasContents() === false) {
-      lc_redirect(lc_href_link(FILENAME_CHECKOUT, null, 'AUTO'));
+      lc_redirect(lc_href_link(FILENAME_CHECKOUT, null, 'SSL'));
     }
 
     // if no shipping method has been selected, redirect the customer to the shipping method selection page
     if ($lC_ShoppingCart->hasShippingMethod() === false ) {
       if (defined('SKIP_CHECKOUT_SHIPPING_PAGE') && SKIP_CHECKOUT_SHIPPING_PAGE == '1') {
         if (lC_AddressBook::numberOfEntries() < 1) {
-          lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment_address', 'AUTO'));
+          lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment_address', 'SSL'));
         }
       } else {
-        lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'shipping', 'AUTO'));
+        lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'));
       }
     } else {
       if (defined('SKIP_CHECKOUT_SHIPPING_PAGE') && SKIP_CHECKOUT_SHIPPING_PAGE == '1') {
         if (lC_AddressBook::numberOfEntries() < 1) {
-          lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment_address', 'AUTO'));
+          lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment_address', 'SSL'));
         }
       }
     }
@@ -53,7 +53,7 @@ class lC_Checkout_Payment extends lC_Template {
     if ( (STOCK_CHECK == '1') && (AUTODISABLE_OUT_OF_STOCK_PRODUCT == '1') ) {
       foreach ($lC_ShoppingCart->getProducts() as $products) {
         if ($lC_ShoppingCart->isInStock($products['id']) === false) {
-          lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'AUTO'));
+          lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'SSL'));
           break;
         }
       }
@@ -62,7 +62,7 @@ class lC_Checkout_Payment extends lC_Template {
     $this->_page_title = $lC_Language->get('payment_method_heading');
 
     if ($lC_Services->isStarted('breadcrumb')) {
-      $lC_Breadcrumb->add($lC_Language->get('breadcrumb_checkout_payment'), lc_href_link(FILENAME_CHECKOUT, $this->_module, 'AUTO'));
+      $lC_Breadcrumb->add($lC_Language->get('breadcrumb_checkout_payment'), lc_href_link(FILENAME_CHECKOUT, $this->_module, 'SSL'));
     }
     
     // redirect to the billing address page when no default address exists
@@ -108,7 +108,7 @@ class lC_Checkout_Payment extends lC_Template {
       if (isset( $_SESSION['cartSync'])) unset($_SESSION['cartSync']);
     } else {
       if (isset($_SESSION['SKIP_PAYMENT_PAGE']) && $_SESSION['SKIP_PAYMENT_PAGE'] === TRUE) {
-        lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'confirmation', 'AUTO'));
+        lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'confirmation', 'SSL'));
       }
     }
   }

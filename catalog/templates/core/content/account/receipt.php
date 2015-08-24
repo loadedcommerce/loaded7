@@ -104,7 +104,7 @@ $order = new lC_Order($_GET['receipt']);
   </div>       
   <div class="button-set clearfix large-margin-top">
     <button onclick="javascript:window.print();" class="pull-right btn btn-lg btn-success" type="button"><?php echo $lC_Language->get('text_print'); ?></button>
-    <form action="<?php echo lc_href_link(FILENAME_ACCOUNT, 'orders', 'AUTO'); ?>" method="post"><button onclick="$(this).closest('form').submit();" class="pull-left btn btn-lg btn-default" type="submit"><?php echo $lC_Language->get('button_back'); ?></button></form>
+    <form action="<?php echo lc_href_link(FILENAME_ACCOUNT, 'orders', 'SSL'); ?>" method="post"><button onclick="$(this).closest('form').submit();" class="pull-left btn btn-lg btn-default" type="submit"><?php echo $lC_Language->get('button_back'); ?></button></form>
   </div>   
 </div>    
 <!--content/account/receipt.php end-->

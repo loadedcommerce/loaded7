@@ -31,7 +31,7 @@ class lC_Account_Create extends lC_Template {
       $this->_page_contents = 'create_success.php';
     } else {
       if ($lC_Services->isStarted('breadcrumb')) {
-        $lC_Breadcrumb->add($lC_Language->get('breadcrumb_create_account'), lc_href_link(FILENAME_ACCOUNT, $this->_module, 'AUTO'));
+        $lC_Breadcrumb->add($lC_Language->get('breadcrumb_create_account'), lc_href_link(FILENAME_ACCOUNT, $this->_module, 'SSL'));
       }
       
       $this->addJavascriptPhpFilename('templates/' . $this->getCode() . '/javascript/form_check.js.php');
@@ -135,9 +135,9 @@ class lC_Account_Create extends lC_Template {
       }
       
       if ($checkout == true) {
-        lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'shipping&account_created=true', 'AUTO'));
+        lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'shipping&account_created=true', 'SSL'));
       } else {
-        lc_redirect(lc_href_link(FILENAME_ACCOUNT, 'create=success', 'AUTO'));
+        lc_redirect(lc_href_link(FILENAME_ACCOUNT, 'create=success', 'SSL'));
       }
     }
   }

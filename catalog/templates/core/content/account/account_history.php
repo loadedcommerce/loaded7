@@ -42,7 +42,7 @@
             }          
           ?>
           <tr>
-            <td><a href="<?php echo lc_href_link(FILENAME_ACCOUNT, 'receipt=' . $Qhistory->valueInt('orders_id'), 'AUTO'); ?>"><?php echo lc_image(DIR_WS_TEMPLATE_IMAGES . 'icons/16/search.png', $lC_Language->get('text_view')); ?></a></td>
+            <td><a href="<?php echo lc_href_link(FILENAME_ACCOUNT, 'receipt=' . $Qhistory->valueInt('orders_id'), 'SSL'); ?>"><?php echo lc_image(DIR_WS_TEMPLATE_IMAGES . 'icons/16/search.png', $lC_Language->get('text_view')); ?></a></td>
             <td><?php echo $Qhistory->valueInt('orders_id'); ?></td>                
             <td><?php echo lc_output_string_protected($order_name); ?></td> 
             <td><?php echo lC_DateTime::getShort($Qhistory->value('date_purchased')); ?></td>
@@ -61,7 +61,7 @@
     </div>
     <div class="btn-set small-margin-top clearfix">
       <form action="<?php echo lc_href_link(FILENAME_PRODUCTS, 'new', 'AUTO'); ?>" method="post"><button onclick="$(this).closest('form').submit();" class="pull-right btn btn-lg btn-primary" type="submit"><?php echo $lC_Language->get('button_go_shopping'); ?></button></form>
-      <form action="<?php echo lc_href_link(FILENAME_ACCOUNT, '', 'AUTO'); ?>" method="post"><button onclick="$(this).closest('form').submit();" class="pull-left btn btn-lg btn-default" type="submit"><?php echo $lC_Language->get('button_back'); ?></button></form>
+      <form action="<?php echo lc_href_link(FILENAME_ACCOUNT, '', 'SSL'); ?>" method="post"><button onclick="$(this).closest('form').submit();" class="pull-left btn btn-lg btn-default" type="submit"><?php echo $lC_Language->get('button_back'); ?></button></form>
     </div>  
   </div>
 </div>

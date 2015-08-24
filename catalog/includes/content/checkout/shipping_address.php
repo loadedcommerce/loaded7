@@ -25,11 +25,11 @@
       if ($lC_Customer->isLoggedOn() === false) {
         $lC_NavigationHistory->setSnapshot();
 
-        lc_redirect(lc_href_link(FILENAME_ACCOUNT, 'login', 'AUTO'));
+        lc_redirect(lc_href_link(FILENAME_ACCOUNT, 'login', 'SSL'));
       }
 
       if ($lC_ShoppingCart->hasContents() === false) {
-        lc_redirect(lc_href_link(FILENAME_CHECKOUT, null, 'AUTO'));
+        lc_redirect(lc_href_link(FILENAME_CHECKOUT, null, 'SSL'));
       }
 
       $this->_page_title = $lC_Language->get('shipping_address_heading');
@@ -42,7 +42,7 @@
         $lC_ShoppingCart->resetShippingAddress();
         $lC_ShoppingCart->resetShippingMethod();
 
-        lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment', 'AUTO'));
+        lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment', 'SSL'));
       }
 
       // if no shipping destination address was selected, use their own address as default
@@ -51,8 +51,8 @@
       }
 
       if ($lC_Services->isStarted('breadcrumb')) {
-        $lC_Breadcrumb->add($lC_Language->get('breadcrumb_checkout_shipping'), lc_href_link(FILENAME_CHECKOUT, 'shipping', 'AUTO'));
-        $lC_Breadcrumb->add($lC_Language->get('breadcrumb_checkout_shipping_address'), lc_href_link(FILENAME_CHECKOUT, $this->_module, 'AUTO'));
+        $lC_Breadcrumb->add($lC_Language->get('breadcrumb_checkout_shipping'), lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'));
+        $lC_Breadcrumb->add($lC_Language->get('breadcrumb_checkout_shipping_address'), lc_href_link(FILENAME_CHECKOUT, $this->_module, 'SSL'));
       }
 
       if(isset($_GET['account_created'])){
@@ -220,7 +220,7 @@
 
             $lC_ShoppingCart->setShippingAddress($address_book_id);
 
-            lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'shipping', 'AUTO'));
+            lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'));
           } else {
             $lC_MessageStack->add('checkout_address', 'Error inserting into address book table.');
           }
@@ -237,14 +237,14 @@
         $Qcheck->execute();
 
         if ($Qcheck->numberOfRows() === 1) {          
-          lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'shipping', 'AUTO'));
+          lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'));
         } else {
           $lC_ShoppingCart->resetShippingAddress();
         }
       } else {
         $lC_ShoppingCart->setShippingAddress($lC_Customer->getDefaultAddressID());
 
-        lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'shipping', 'AUTO'));
+        lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'));
       }
     }
   }

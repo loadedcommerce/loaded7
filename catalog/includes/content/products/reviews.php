@@ -75,7 +75,7 @@ class lC_Products_Reviews extends lC_Template {
           if ( ($lC_Customer->isLoggedOn() === false ) && (SERVICE_REVIEW_ENABLE_REVIEWS == 1) ) {
             $lC_NavigationHistory->setSnapshot();
 
-            lc_redirect(lc_href_link(FILENAME_ACCOUNT, 'login', 'AUTO'));
+            lc_redirect(lc_href_link(FILENAME_ACCOUNT, 'login', 'SSL'));
           }
 
           $lC_Product = new lC_Product($key);

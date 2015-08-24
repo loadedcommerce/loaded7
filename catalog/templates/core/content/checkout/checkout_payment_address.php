@@ -19,7 +19,7 @@
     <div id="content-checkout-payment-address-container">
       <?php if (defined('SKIP_CHECKOUT_SHIPPING_PAGE') && SKIP_CHECKOUT_SHIPPING_PAGE != '1') { ?>
       <div class="panel panel-default no-margin-bottom">
-        <div class="panel-heading cursor-pointer" onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'AUTO'); ?>'">
+        <div class="panel-heading cursor-pointer" onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'); ?>'">
           <h3 class="no-margin-top no-margin-bottom"><?php echo $lC_Language->get('box_ordering_steps_delivery'); ?></h3>
         </div>
       </div>
@@ -53,7 +53,7 @@
               </div>        
             </div>
             <div class="col-sm-8 col-lg-8">
-              <form role="form" name="checkout_address" id="checkout_address" action="<?php echo lc_href_link(FILENAME_CHECKOUT, 'payment_address=process', 'AUTO'); ?>" method="post">
+              <form role="form" name="checkout_address" id="checkout_address" action="<?php echo lc_href_link(FILENAME_CHECKOUT, 'payment_address=process', 'SSL'); ?>" method="post">
                 <div class="clearfix">
                   <?php
                     if (isset($_GET['payment_address']) && ($_GET['payment_address'] != 'process')) {

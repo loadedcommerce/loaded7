@@ -27,16 +27,16 @@ class lC_Account_Orders extends lC_Template {
     $lC_Language->load('order');
 
     if ($lC_Services->isStarted('breadcrumb')) {
-      $lC_Breadcrumb->add($lC_Language->get('breadcrumb_my_orders'), lc_href_link(FILENAME_ACCOUNT, $this->_module, 'AUTO'));
+      $lC_Breadcrumb->add($lC_Language->get('breadcrumb_my_orders'), lc_href_link(FILENAME_ACCOUNT, $this->_module, 'SSL'));
 
       if (is_numeric($_GET[$this->_module])) {
-        $lC_Breadcrumb->add(sprintf($lC_Language->get('breadcrumb_order_information'), $_GET[$this->_module]), lc_href_link(FILENAME_ACCOUNT, $this->_module . '=' . $_GET[$this->_module], 'AUTO'));
+        $lC_Breadcrumb->add(sprintf($lC_Language->get('breadcrumb_order_information'), $_GET[$this->_module]), lc_href_link(FILENAME_ACCOUNT, $this->_module . '=' . $_GET[$this->_module], 'SSL'));
       }
     }
 
     if (is_numeric($_GET[$this->_module])) {
       if (lC_Order::getCustomerID($_GET[$this->_module]) !== $lC_Customer->getID()) {
-        lc_redirect(lc_href_link(FILENAME_ACCOUNT, $this->_module, 'AUTO'));
+        lc_redirect(lc_href_link(FILENAME_ACCOUNT, $this->_module, 'SSL'));
       }
 
       $this->_page_title = sprintf($lC_Language->get('order_information_heading'), $_GET[$this->_module]);
