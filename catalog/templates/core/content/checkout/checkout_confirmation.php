@@ -119,7 +119,7 @@
                     <thead>
                       <tr>
                         <th colspan="2"><?php echo $lC_Language->get('order_products_title'); ?></th>
-                        <th>&nbsp;</th>
+                        <th class="align-right"><button type="button" onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'cart', 'SSL'); ?>';" class="btn btn-default btn-xs"><?php echo $lC_Language->get('button_edit'); ?></button></th>
                       </tr>
                     </thead>
                     <?php
