@@ -12,7 +12,7 @@
 <!--content/products/specials.php start-->  
 <div class="row">
   <div class="col-sm-12 col-lg-12 clearfix">
-    <h1 class="no-margin-top"><?php echo $lC_Template->getPageTitle(); ?></h1> 
+    <h1 class="page-title"><?php echo $lC_Template->getPageTitle(); ?></h1> 
     <?php echo $lC_Specials->getListingOutput(); ?>
   </div>
 </div>

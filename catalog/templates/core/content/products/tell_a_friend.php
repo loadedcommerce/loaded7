@@ -12,7 +12,7 @@
 <!--content/info/tell_a_friend.php start-->
 <div class="row">
   <div class="col-sm-12 col-lg-12">
-    <h1 class="no-margin-top"><?php echo $lC_Language->get('products_tell_a_friend_title');?></h1>
+    <h1 class="page-title"><?php echo $lC_Language->get('products_tell_a_friend_title');?></h1>
     <div class="row">
       <div class="col-sm-4 col-lg-4 large-padding-left">
         <div class="thumbnail align-center large-padding-top">

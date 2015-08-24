@@ -32,7 +32,7 @@ if ($isIE && $lC_Payment->selected_module = 'lC_Payment_authorizenet_cc') {
 <!--content/checkout/checkout_payment_template.php start-->
 <div class="row">
   <div class="col-sm-12 col-lg-12 large-margin-bottom">  
-    <h1 class="no-margin-top"><?php echo $lC_Language->get('text_checkout'); ?></h1>
+    <h1 class="page-title"><?php echo $lC_Language->get('text_checkout'); ?></h1>
     <div id="content-checkout-shipping-container">
       <div class="panel panel-default no-margin-bottom">
         <div class="panel-heading cursor-pointer" onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'); ?>'">

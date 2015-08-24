@@ -12,7 +12,7 @@
 <!--content/info/info.php start-->
 <div class="row">
   <div class="col-sm-12 col-lg-12">
-    <h1 class="no-margin-top"><?php echo $lC_Template->getPageTitle(); ?></h1>
+    <h1 class="page-title"><?php echo $lC_Template->getPageTitle(); ?></h1>
     <ul class="nav nav-pills nav-stacked large-margin-bottom">
       <li><?php echo lc_link_object(lc_href_link(FILENAME_DEFAULT, 'cPath=2_3'), $lC_Language->get('text_shipping_returns')); ?></li>
       <li><?php echo lc_link_object(lc_href_link(FILENAME_DEFAULT, 'cPath=2_4'), $lC_Language->get('text_privacy')); ?></li>                                              

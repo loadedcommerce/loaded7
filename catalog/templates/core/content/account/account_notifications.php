@@ -13,7 +13,7 @@
 <div class="row">
   <div class="col-sm-12 col-lg-12">
     <form role="form" class="form-inline" name="account_notifications" id="account_notifications" action="<?php echo lc_href_link(FILENAME_ACCOUNT, 'notifications=save', 'SSL'); ?>" method="post">
-      <h1 class="no-margin-top"><?php echo $lC_Template->getPageTitle(); ?></h1>
+      <h1 class="page-title"><?php echo $lC_Template->getPageTitle(); ?></h1>
       <h3 class="large-margin-top"><?php echo $lC_Language->get('product_notifications_global'); ?></h3>
       <div class="well">
         <div class="checkbox">
