@@ -12,7 +12,7 @@
 <!--content/account/password_forgotten.php start-->
 <div class="row">
   <div class="col-sm-12 col-lg-12">
-    <h1 class="no-margin-top"><?php echo $lC_Template->getPageTitle(); ?></h1>
+    <h1 class="page-title"><?php echo $lC_Template->getPageTitle(); ?></h1>
     <?php    
     if ( $lC_MessageStack->size('password_forgotten') > 0 ) echo '<div class="message-stack-container alert alert-danger">' . $lC_MessageStack->get('password_forgotten') . '</div>' . "\n";  
     ?>

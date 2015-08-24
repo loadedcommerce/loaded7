@@ -12,7 +12,7 @@
 <!--content/checkout/checkout_shipping_address.php start-->
 <div class="row">
   <div class="col-sm-12 col-lg-12 large-margin-bottom">  
-    <h1 class="no-margin-top"><?php echo $lC_Language->get('text_checkout'); ?></h1>
+    <h1 class="page-title"><?php echo $lC_Language->get('text_checkout'); ?></h1>
     <?php 
     if ( $lC_MessageStack->size('checkout_shipping_address') > 0 ) echo '<div class="message-stack-container alert alert-danger small-margin-bottom">' . $lC_MessageStack->get('checkout_shipping_address') . '</div>' . "\n"; 
     ?>

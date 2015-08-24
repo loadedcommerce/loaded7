@@ -12,7 +12,7 @@
 <!--content/checkout/checkout_confirmation.php start-->
 <div class="row">
   <div class="col-sm-12 col-lg-12 large-margin-bottom">  
-    <h1 class="no-margin-top"><?php echo $lC_Language->get('text_checkout'); ?></h1>
+    <h1 class="page-title"><?php echo $lC_Language->get('text_checkout'); ?></h1>
     <?php 
     if(isset($_SESSION['coupon_msg']) && $_SESSION['coupon_msg'] != '') {
       $lC_MessageStack->add('shopping_cart', $_SESSION['coupon_msg'], 'success');
@@ -119,7 +119,7 @@
                     <thead>
                       <tr>
                         <th colspan="2"><?php echo $lC_Language->get('order_products_title'); ?></th>
-                        <th>&nbsp;</th>
+                        <th class="align-right"><button type="button" onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'cart', 'SSL'); ?>';" class="btn btn-default btn-xs"><?php echo $lC_Language->get('button_edit'); ?></button></th>
                       </tr>
                     </thead>
                     <?php

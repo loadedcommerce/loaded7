@@ -77,10 +77,15 @@ class lC_Product {
           }
         }
       } else {
-        $Qproduct = $lC_Database->query('select p.products_id as id, p.parent_id, p.products_quantity as quantity, p.products_price as price, p.products_model as model, p.products_tax_class_id as tax_class_id, p.products_weight as weight, p.products_weight_class as weight_class_id, p.products_date_added as date_added, p.manufacturers_id, p.has_children, pd.products_name as name, pd.products_blurb as blurb, pd.products_description as description, pd.products_keyword as keyword, pd.products_tags as tags, pd.products_url as url, p.products_sort_order as sort_order from :table_products p, :table_products_description pd where pd.products_keyword = :products_keyword and pd.language_id = :language_id and pd.products_id = p.products_id and p.products_status = :products_status');
+        $QproductID = $lC_Database->query('select products_id as id from :table_products_description where products_keyword=:products_keyword');
+        $QproductID->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
+        $QproductID->bindValue(':products_keyword', $id);
+        $QproductID->execute();
+        
+        $Qproduct = $lC_Database->query('select p.products_id as id, p.parent_id, p.products_quantity as quantity, p.products_price as price, p.products_model as model, p.products_tax_class_id as tax_class_id, p.products_weight as weight, p.products_weight_class as weight_class_id, p.products_date_added as date_added, p.manufacturers_id, p.has_children, pd.products_name as name, pd.products_blurb as blurb, pd.products_description as description, pd.products_keyword as keyword, pd.products_tags as tags, pd.products_url as url, p.products_sort_order as sort_order from :table_products p, :table_products_description pd where pd.products_id = :products_id and pd.language_id = :language_id and pd.products_id = p.products_id and p.products_status = :products_status');
         $Qproduct->bindTable(':table_products', TABLE_PRODUCTS);
         $Qproduct->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
-        $Qproduct->bindValue(':products_keyword', $id);
+        $Qproduct->bindValue(':products_id', $QproductID->valueInt('id'));
         $Qproduct->bindInt(':language_id', $lC_Language->getID());
         $Qproduct->bindInt(':products_status', 1);
         $Qproduct->execute();

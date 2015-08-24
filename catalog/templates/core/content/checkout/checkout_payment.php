@@ -12,8 +12,11 @@
 <!--content/checkout/checkout_payment.php start-->
 <div class="row">
   <div class="col-sm-12 col-lg-12 large-margin-bottom">  
-    <h1 class="no-margin-top"><?php echo $lC_Language->get('text_checkout'); ?></h1>
+    <h1 class="page-title"><?php echo $lC_Language->get('text_checkout'); ?></h1>
     <?php 
+    if ( $lC_MessageStack->size('checkout_payment') > 0 ) {
+        echo '<div class="message-stack-container danger alert-danger small-margin-bottom">' . $lC_MessageStack->get('checkout_payment', DIR_WS_TEMPLATE_IMAGES . 'icons/32/','.png') . '</div>' . "\n"; 
+    }
     if(isset($_SESSION['coupon_msg']) && $_SESSION['coupon_msg'] != '') {
       $lC_MessageStack->add('shopping_cart', $_SESSION['coupon_msg'], 'success');
       unset($_SESSION['coupon_msg']);

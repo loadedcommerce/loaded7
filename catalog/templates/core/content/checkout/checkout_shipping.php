@@ -12,7 +12,7 @@
 <!--content/checkout/checkout_shipping.php start-->
 <div class="row">
   <div class="col-sm-12 col-lg-12 large-margin-bottom">  
-    <h1 class="no-margin-top"><?php echo $lC_Language->get('text_checkout'); ?></h1>
+    <h1 class="page-title"><?php echo $lC_Language->get('text_checkout'); ?></h1>
     <?php 
     if(isset($_SESSION['coupon_msg']) && $_SESSION['coupon_msg'] != '') {
       $lC_MessageStack->add('shopping_cart', $_SESSION['coupon_msg'], 'success');
