@@ -190,7 +190,25 @@ class lC_ShoppingCart {
           if ( $new_price = $lC_Specials->getPrice($Qproducts->valueInt('products_id')) ) {
             $price = $new_price;
           }
-        }       
+        }    
+        
+         // options modifiers
+        if (is_array($data['simple_options']) && count($data['simple_options']) > 0) {
+          $modTotal = 0;
+          foreach ($data['simple_options'] as $options_id => $values_id) {
+            $QsimpleOptions = $lC_Database->query("select * from :table_products_simple_options_values where customers_group_id = :customers_group_id and options_id = :options_id and values_id = :values_id and products_id = :products_id limit 1");
+            $QsimpleOptions->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
+            $QsimpleOptions->bindInt(':customers_group_id', '1');        
+            $QsimpleOptions->bindInt(':products_id', $Qproducts->valueInt('products_id'));        
+            $QsimpleOptions->bindInt(':options_id', $values_id['group_id']);        
+            $QsimpleOptions->bindInt(':values_id', $values_id['value_id']);        
+            $QsimpleOptions->setDebug(true);
+            $QsimpleOptions->execute();
+
+            $price = (float)$price + $QsimpleOptions->valueDecimal('price_modifier');
+            $QsimpleOptions->freeResult();
+          }  
+        }   
 
         $this->_contents[$Qproducts->valueInt('item_id')] = array('item_id' => $Qproducts->valueInt('item_id'),
                                                                   'id' => $Qproducts->valueInt('products_id'),

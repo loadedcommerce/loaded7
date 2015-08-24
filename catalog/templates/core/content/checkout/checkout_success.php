@@ -96,7 +96,8 @@ $oID = lC_Success::getOrderID($lC_Customer->getID());
                     }
                     if ( is_array($products['options']) && empty($products['options']) === false ) {
                       foreach ( $products['options'] as $key => $option) {
-                        if ($option['group_title'] != '') echo '<div class="small">- ' . $option['group_title'] . ': ' . $option['value_title'] . '</div>' . "\n";
+                        $mod_price = (($option['price_modifier'] > 0) ? '+' . $option['price_modifier'] : (($option['price_modifier'] == 0) ? null : $option['price_modifier']));
+                        if ($option['group_title'] != '') echo '<div class="small">- ' . $option['group_title'] . ': ' . $option['value_title'] . ' <em>' . $mod_price . '</em></div>' . "\n";
                       }
                     }                        
                     echo '</td>' . "\n";
