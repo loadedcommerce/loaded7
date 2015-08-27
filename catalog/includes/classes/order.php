@@ -664,9 +664,9 @@ if (!class_exists('lC_Order')) {
           
           $email_order .= $Qorder->value('payment_method') . "\n\n";
           
-          /*if (isset($this->email_footer)) {
+          if (isset($this->email_footer)) {
             $email_order .= $this->email_footer . "\n\n";
-          }*/
+          }
         }
         
         lc_email($Qorder->value('customers_name'), $Qorder->value('customers_email_address'), $lC_Language->get('email_order_subject'), $email_order, STORE_OWNER, STORE_OWNER_EMAIL_ADDRESS);

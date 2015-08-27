@@ -582,6 +582,12 @@ class lC_LocalUpgrader extends lC_Upgrader {
                                                                              , 'products_image_xl_4' => 'products_image_xl_4'
                                                                              , 'products_image_xl_5' => 'products_image_xl_5'
                                                                              , 'products_image_xl_6' => 'products_image_xl_6'
+                                                                             , 'products_image_sm_1' => 'products_image_sm_1'
+                                                                             , 'products_image_sm_2' => 'products_image_sm_2'
+                                                                             , 'products_image_sm_3' => 'products_image_sm_3'
+                                                                             , 'products_image_sm_4' => 'products_image_sm_4'
+                                                                             , 'products_image_sm_5' => 'products_image_sm_5'
+                                                                             , 'products_image_sm_6' => 'products_image_sm_6'
                                                                               )
                                  , 'images_groups'                  => array(
                                                                                'id'          => 'id'
@@ -3656,12 +3662,12 @@ class lC_LocalUpgrader extends lC_Upgrader {
         
         $images = array(
                           'products_image'      => $product_main_image
-                        , 'products_image_xl_1' => $sQry->value($map['products_image_xl_1'])
-                        , 'products_image_xl_2' => $sQry->value($map['products_image_xl_2'])
-                        , 'products_image_xl_3' => $sQry->value($map['products_image_xl_3'])
-                        , 'products_image_xl_4' => $sQry->value($map['products_image_xl_4'])
-                        , 'products_image_xl_5' => $sQry->value($map['products_image_xl_5'])
-                        , 'products_image_xl_6' => $sQry->value($map['products_image_xl_6'])
+                        , 'products_image_xl_1' => $sQry->value($map['products_image_xl_1']) != '' ? $sQry->value($map['products_image_xl_1']) : $sQry->value($map['products_image_sm_1'])
+                        , 'products_image_xl_2' => $sQry->value($map['products_image_xl_2']) != '' ? $sQry->value($map['products_image_xl_2']) : $sQry->value($map['products_image_sm_2'])
+                        , 'products_image_xl_3' => $sQry->value($map['products_image_xl_3']) != '' ? $sQry->value($map['products_image_xl_3']) : $sQry->value($map['products_image_sm_3'])
+                        , 'products_image_xl_4' => $sQry->value($map['products_image_xl_4']) != '' ? $sQry->value($map['products_image_xl_4']) : $sQry->value($map['products_image_sm_4'])
+                        , 'products_image_xl_5' => $sQry->value($map['products_image_xl_5']) != '' ? $sQry->value($map['products_image_xl_5']) : $sQry->value($map['products_image_sm_5'])
+                        , 'products_image_xl_6' => $sQry->value($map['products_image_xl_6']) != '' ? $sQry->value($map['products_image_xl_6']) : $sQry->value($map['products_image_sm_6'])
                         );
       
         $images_info  = array(

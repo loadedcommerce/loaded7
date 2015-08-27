@@ -554,7 +554,8 @@ class lC_Updates_Admin {
           self::log('*** Could NOT Set Permissions on PHP files/directories', $pharCode);
         } 
         // remove the update phar
-        if (file_exists(DIR_FS_WORK . 'updates/update.phar')) unlink(DIR_FS_WORK . 'updates/update.phar');          
+        if (file_exists(DIR_FS_WORK . 'updates/update.phar')) unlink(DIR_FS_WORK . 'updates/update.phar');  
+                
         self::log('##### UPDATE TO ' . self::$_to_version . ' COMPLETE', $pharCode);      }
     } else {
       // remove the addon phar & pubkey
@@ -571,7 +572,10 @@ class lC_Updates_Admin {
   * @access public      
   * @return boolean
   */   
-  public static function doRunAfter() {
+  public static function doRunAfter() {         
+    // remove the vqmod cache files
+    self::rmdir_r(DIR_FS_WORK . 'cache/vqmod/', true);    
+    
     if (file_exists(DIR_FS_WORK . 'updates/runAfter/controller.php')) {
       try {
         include_once(DIR_FS_WORK . 'updates/runAfter/controller.php');
@@ -635,12 +639,12 @@ class lC_Updates_Admin {
   * @access protected      
   * @return boolean
   */ 
-  protected static function rmdir_r($path) {
+  protected static function rmdir_r($path, $files_only = false) {
     $i = new DirectoryIterator($path);
     foreach($i as $f) {
       if($f->isFile()) {
-        @unlink($f->getRealPath());
-      } else if(!$f->isDot() && $f->isDir()) {
+        if (!strstr($f->getRealPath(), '.htaccess')) @unlink($f->getRealPath());
+      } else if(!$f->isDot() && $f->isDir() && $files_only === false) {
         self::rmdir_r($f->getRealPath());
         @rmdir($f->getRealPath());
       }

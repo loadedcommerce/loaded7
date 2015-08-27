@@ -19,7 +19,7 @@ if (isset($_GET['edit'])) {
 <!--content/account/address_book_process.php start-->
 <div class="row">
   <div class="col-sm-12 col-lg-12">
-    <h1 class="no-margin-top"><?php echo $lC_Template->getPageTitle(); ?></h1>
+    <h1 class="page-title"><?php echo $lC_Template->getPageTitle(); ?></h1>
     <?php 
       if ( $lC_MessageStack->size('address_book') > 0 ) echo '<div class="message-stack-container alert alert-danger small-margin-bottom small-margin-left">' . $lC_MessageStack->get('address_book') . '</div>' . "\n"; 
       if ( ($lC_Customer->hasDefaultAddress() === false) || (isset($_GET['new']) && (lC_AddressBook::numberOfEntries() < MAX_ADDRESS_BOOK_ENTRIES)) || (isset($Qentry) && ($Qentry->numberOfRows() === 1)) ) {

@@ -11,7 +11,7 @@
 ?>
 <!--content/info/account.php start-->
 <div class="row">
-  <h1 class="no-margin-top"><?php echo $lC_Template->getPageTitle(); ?></h1>
+  <h1 class="page-title"><?php echo $lC_Template->getPageTitle(); ?></h1>
   <?php 
     if (isset($_GET['success']) && $_GET['success'] != NULL) echo '<div class="message-success-container alert alert-success"><img class="margin-right" src="images/icons/success.gif">' . preg_replace('/[^a-zA-Z0-9]\'\.\,/', '', $_GET['success']) . '</div>' . "\n";
   ?>

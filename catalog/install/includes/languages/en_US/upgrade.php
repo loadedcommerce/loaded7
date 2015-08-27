@@ -109,13 +109,19 @@ param_import_categories = CATEGORIES
 param_import_categories_description = importing Categories data 
 
 param_import_categories_description = CATEGORIES DESCRIPTION
-param_import_categories_description_description = importing Categories Description data 
+param_import_categories_description_description = importing Categories Description data
+
+param_import_categories_images = CATEGORY IMAGES
+param_import_categories_images_description = importing Category Images data 
 
 param_import_products = PRODUCTS
 param_import_products_description = importing Products data
 
 param_import_products_description = PRODUCTS DESCRIPTION
 param_import_products_description_description = importing Products Description data
+
+param_import_products_images = PRODUCT IMAGES
+param_import_products_images_description = importing Product Images data
 
 param_import_products_to_categories = PRODUCTS TO CATEGORIES
 param_import_products_to_categories_description = importing Products to Categories data 
@@ -245,11 +251,11 @@ upgrade_step1_label = Path to existing install
 upgrade_step1_err_pathsame = The existing store file system path cannot match the currently executing file system path
 upgrade_step1_err_noconfig = The existing store configuration files (admin/includes/configure.php) cannot be accessed
 
-upgrade_step1_err_noserver	= The existing store file (admin/includes/configure.php) missing the value of DB_SERVER
-upgrade_step1_err_nouid 		= The existing store file (admin/includes/configure.php) missing the value of DB_SERVER_USERNAME
-upgrade_step1_err_nopass 		= The existing store file (admin/includes/configure.php) missing the value of DB_SERVER_PASSWORD
-upgrade_step1_err_nodb 			= The existing store file (admin/includes/configure.php) missing the value of DB_DATABASE
-upgrade_step1_err_noimage		= The existing store file (admin/includes/configure.php) missing the value of DIR_WS_IMAGES
+upgrade_step1_err_noserver  = The existing store file (admin/includes/configure.php) missing the value of DB_SERVER
+upgrade_step1_err_nouid     = The existing store file (admin/includes/configure.php) missing the value of DB_SERVER_USERNAME
+upgrade_step1_err_nopass     = The existing store file (admin/includes/configure.php) missing the value of DB_SERVER_PASSWORD
+upgrade_step1_err_nodb       = The existing store file (admin/includes/configure.php) missing the value of DB_DATABASE
+upgrade_step1_err_noimage    = The existing store file (admin/includes/configure.php) missing the value of DIR_WS_IMAGES
 
 upgrade_step1_method_title = Upgrade Method
 upgrade_step1_method_description = To run an upgrade for the first time or completely overwrite previous data choose <strong>Create New Database</strong>. To Re-run an upgrade and preserve previous configuration data choose <strong>Re-run existing upgrade</strong>.
@@ -282,9 +288,13 @@ upgrade_step4_import_product_images_zipextracterror = unable to extract product 
 upgrade_step4_import_category_images_zipcreateerror = unable to create zip file for product images
 upgrade_step4_import_category_images_zipextracterror = unable to extract category zipped images to target directory
 
-upgrade_step4_zipoverrideerror = unable to override existing zip file 
-upgrade_step4_zipopenerror = unable to open zip file for writing 
-upgrade_step4_zipextracterror = unable to extract zip file to destination 
+upgrade_step4_zipoverrideerror = Unable to override existing zip file 
+upgrade_step4_zipopenerror = Unable to open zip file for writing 
+upgrade_step4_zipextracterror = Unable to extract zip file to destination 
+upgrade_step4_import_product_images_zipcreateerror = Unable to create Product Images Zip file
+upgrade_step4_import_product_images_zipextracteerror = Unable to extract Product Images zip file to destination
+upgrade_step4_import_category_images_zipcreateerror = Unable to create Categories Images zip file
+upgrade_step4_import_category_images_zipextracteerror = Unable to extract Categories Images zip file to destination
 
 upgrade_step4_page_errfound = Unable to copy files from source. Please manually copy your product and category image from your old creloaded site to loaded7 images/products/originals directory
 

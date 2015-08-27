@@ -31,6 +31,7 @@ class lC_Specials_Admin {
     while ( $Qspecials->next() ) {
       $check = '<td><input class="batch" type="checkbox" name="batch[]" value="' . $Qspecials->valueInt('specials_id') . '" id="' . $Qspecials->valueInt('specials_id') . '"></td>';
       $product = '<td>' . $Qspecials->value('products_name') . '</td>';
+      $price = '<td><s>' . $lC_Currencies->format($Qspecials->value('products_price')) . '</s>&nbsp;<font color="red">' . $lC_Currencies->format($Qspecials->value('specials_new_products_price')) . '</font></td>';
       //$status = '<td><span class="align-center" id="status_' . $Qspecials->valueInt('specials_id') . '" onclick="updateStatus(\'' . $Qspecials->valueInt('specials_id') . '\', \'' . (($Qspecials->valueInt('specials_status') == 1) ? 0 : 1) . '\');">' . (($Qspecials->valueInt('specials_status') == 1) ? '<span class="icon-tick icon-size2 icon-green cursor-pointer with-tooltip" title="' . $lC_Language->get('text_disable_special') . '"></span>' : '<span class="icon-cross icon-size2 icon-red cursor-pointer with-tooltip" title="' . $lC_Language->get('text_enable_special') . '"></span>') . '</span></td>';
       $status = '<td><span class="align-center">' . (($Qspecials->valueInt('status') == 1) ? '<span class="icon-tick icon-size2 icon-green with-tooltip" title="' . $lC_Language->get('text_active') . '"></span>' : '<span class="icon-cross icon-size2 icon-red with-tooltip" title="' . $lC_Language->get('text_inactive') . '"></span>') . '</span></td>';
       $action = '<td class="align-right vertical-center">

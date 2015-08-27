@@ -89,7 +89,7 @@ class lC_Whos_online_Admin {
   * @return array
   */
   public static function getData($id) {
-    global $lC_Database;
+    global $lC_Database, $lC_Language;
 
     $lC_Currencies = new lC_Currencies();
     $lC_Tax = new lC_Tax_Admin();
@@ -145,7 +145,6 @@ class lC_Whos_online_Admin {
                                '  <td colspan="2">&nbsp;</td>' . "\n" .
                                '</tr>' . "\n" .
                                '<tr>' . "\n" .
-                               '  <td width="200px" valign="top"><b>' . $lC_Language->get('field_shopping_cart_contents') . '</b></td>' . "\n" .
                                '  <td><table border="0" cellspacing="0" cellpadding="2">' . "\n";
       foreach ($cart['contents'] as $product) {
         $data['cartContents'] .= '<tr>' . "\n" .

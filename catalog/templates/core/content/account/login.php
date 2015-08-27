@@ -12,7 +12,7 @@
 <!--content/info/login.php start-->
 <div class="row">
   <div class="col-sm-12 col-lg-12">
-    <h1 class="no-margin-top"><?php echo $lC_Template->getPageTitle(); ?></h1>
+    <h1 class="page-title"><?php echo $lC_Template->getPageTitle(); ?></h1>
     <?php
       if (isset($_GET['success']) && $_GET['success'] != NULL) echo '<div class="message-success-container alert alert-success">' . preg_replace('/[^a-zA-Z0-9]\'\.\,/', '', $_GET['success']) . '</div>' . "\n"; 
       if ( $lC_MessageStack->size('login') > 0 ) echo '<div class="message-stack-container alert alert-danger small-margin-bottom">' . $lC_MessageStack->get('login') . '</div>' . "\n"; 

@@ -1012,7 +1012,7 @@ class lC_Template {
   /**
   * Cleans OGP and Meta tags and restrict OGP and Meta description to 300 characters
   *
-  * @access public
+  * @access private
   * @return string
   */  
   public function cleanMetaTags($data){

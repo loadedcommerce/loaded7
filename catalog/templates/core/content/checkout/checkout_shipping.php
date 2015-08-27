@@ -12,7 +12,7 @@
 <!--content/checkout/checkout_shipping.php start-->
 <div class="row">
   <div class="col-sm-12 col-lg-12 large-margin-bottom">  
-    <h1 class="no-margin-top"><?php echo $lC_Language->get('text_checkout'); ?></h1>
+    <h1 class="page-title"><?php echo $lC_Language->get('text_checkout'); ?></h1>
     <?php 
     if(isset($_SESSION['coupon_msg']) && $_SESSION['coupon_msg'] != '') {
       $lC_MessageStack->add('shopping_cart', $_SESSION['coupon_msg'], 'success');
@@ -54,7 +54,8 @@
                     $title = (strstr($module['title'], '(')) ? substr($module['title'], 0, strpos($module['title'], '(')) . ':' : $module['title'];
                     $class = str_replace(':', '', $title);
                     $class = 'ot-' . strtolower(str_replace(' ', '-', $class));
-                    if ($module['code'] != 'total') $total = $total + (float)$module['value'];
+                    if (($module['code'] != 'total') && ($module['code'] != 'coupon')) $total = $total + (float)$module['value'];
+                    if ($module['code'] == 'coupon') $total = $total - (float)$module['value'];
                     if ($module['code'] == 'total') {
                       $module['value'] = $total;
                       $module['text'] = '<b>' . $lC_Currencies->displayPrice($total,1) . '</b>';

@@ -19,7 +19,7 @@ if ($lC_NavigationHistory->hasSnapshot()) {
 <!--content/account/create_success.php start-->
 <div class="row">
   <div class="col-sm-12 col-lg-12">
-    <h1 class="no-margin-top"><?php echo $lC_Template->getPageTitle(); ?></h1>        
+    <h1 class="page-title"><?php echo $lC_Template->getPageTitle(); ?></h1>        
     <div class="well">
       <p><?php echo sprintf($lC_Language->get('success_account_created'), lc_href_link(FILENAME_INFO, 'contact')); ?></p>
     </div>

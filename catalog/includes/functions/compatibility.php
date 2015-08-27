@@ -199,14 +199,17 @@ if (!function_exists('lc_strrpos_string')) {
 * @return  string;
 */
 if (!function_exists('getRequestType')) {
-  function getRequestType() {
+  function getRequestType($scheme = null) {
     $isSecure = false;
     if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') {
       $isSecure = true;
     } elseif (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https' || !empty($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] == 'on') {
       $isSecure = true;
     }
-    $request_type = $isSecure ? 'https' : 'http';   
+    $request_type = $isSecure ? 'https' : 'http'; 
+    
+    //override
+    if ($scheme != null) $request_type = $scheme;  
      
     return $request_type;
   }
@@ -216,9 +219,9 @@ if (!function_exists('setLocalization')) {
   function setLocalization() {
     global $lC_Database, $lC_Currencies, $lC_Language, $lC_Session;
  
-unset($_SESSION['localization']);
+//unset($_SESSION['localization']);
 
- //   if (isset($_SESSION['localization']['currency']) || isset($_SESSION['localization']['language'])) return;
+    if (isset($_SESSION['localization']['currency']) || isset($_SESSION['localization']['language'])) return;
     
     $_SESSION['localization'] = array();
     

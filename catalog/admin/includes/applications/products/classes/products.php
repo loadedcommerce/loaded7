@@ -1750,8 +1750,8 @@ class lC_Products_Admin {
         if ( (isset($so['title']) && $so['title'] != NULL)  ){
           $items = '';
           $itemsInput = '';
-          if (is_array($options['values'])) {
-            foreach ($options['values'] as $k => $v) {    
+          if (is_array($options[$key]['values'])) {
+            foreach ($options[$key]['values'] as $k => $v) {    
               if (($v['options_id'] == $so['options_id']) && $v['customers_group_id'] == DEFAULT_CUSTOMERS_GROUP_ID && $so['products_id'] == $v['products_id']) {
                 $items .= '<div class="small"><span class="icon-right icon-blue with-small-padding"></span>' . $v['title'] . '</div>';
                 $itemsInput .= '<input type="hidden" id="simple_options_entry_' . $v['options_id'] . '_' . $v['values_id'] . '" name="simple_options_entry[' . $v['options_id'] . '][' . $v['values_id'] . ']" value="' . $v['title'] . '">';

@@ -18,7 +18,7 @@ if (!class_exists('curl')) {
     */  
     public static function execute($parameters) {
       
-      $request_type = getRequestType();      
+      $request_type = getRequestType($parameters['server']['scheme']);      
       
       $curl = curl_init($request_type . '://' . $parameters['server']['host'] . $parameters['server']['path'] . (isset($parameters['server']['query']) ? '?' . $parameters['server']['query'] : ''));
 

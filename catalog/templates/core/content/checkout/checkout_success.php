@@ -13,7 +13,7 @@ $oID = lC_Success::getOrderID($lC_Customer->getID());
 <!--content/checkout/checkout_success.php start-->
 <div class="row">
   <div class="col-sm-12 col-lg-12 large-margin-bottom">  
-    <h1 class="no-margin-top"><?php echo $lC_Language->get('text_checkout'); ?></h1>
+    <h1 class="page-title"><?php echo $lC_Language->get('text_checkout'); ?></h1>
     <?php 
     if ( $lC_MessageStack->size('checkout_success') > 0 ) echo '<div class="message-stack-container alert alert-danger small-margin-bottom">' . $lC_MessageStack->get('checkout_success') . '</div>' . "\n"; 
     ?>
@@ -96,7 +96,8 @@ $oID = lC_Success::getOrderID($lC_Customer->getID());
                     }
                     if ( is_array($products['options']) && empty($products['options']) === false ) {
                       foreach ( $products['options'] as $key => $option) {
-                        if ($option['group_title'] != '') echo '<div class="small">- ' . $option['group_title'] . ': ' . $option['value_title'] . '</div>' . "\n";
+                        $mod_price = (($option['price_modifier'] > 0) ? '+' . $option['price_modifier'] : (($option['price_modifier'] == 0) ? null : $option['price_modifier']));
+                        if ($option['group_title'] != '') echo '<div class="small">- ' . $option['group_title'] . ': ' . $option['value_title'] . ' <em>' . $mod_price . '</em></div>' . "\n";
                       }
                     }                        
                     echo '</td>' . "\n";

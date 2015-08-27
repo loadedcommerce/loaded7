@@ -381,6 +381,11 @@
       <group>general</group>
     </definition>
     <definition>
+      <key>text_read_reviews</key>
+      <value><![CDATA[Read Reviews]]></value>
+      <group>general</group>
+    </definition>
+    <definition>
       <key>icon_in_cart</key>
       <value><![CDATA[Add to Shopping Cart]]></value>
       <group>general</group>
@@ -3030,5 +3035,53 @@ Your friend, %s, thought that you would be interested in %s from %s.]]></value>
       <value><![CDATA[Error:  Order quantity cannot be zero.]]></value>
       <group>general</group>
     </definition>    
+    <definition>
+      <key>box_html_one_heading</key>
+      <value><![CDATA[Enter HTML One Box Heading]]></value>
+      <group>modules-boxes</group>
+    </definition>
+    <definition>
+    <definition>
+      <key>box_html_one_content</key>
+      <value><![CDATA[Enter HTML One Box Content]]></value>
+      <group>modules-boxes</group>
+    </definition>
+    <definition>
+    <definition>
+      <key>box_html_two_heading</key>
+      <value><![CDATA[Enter HTML Two Box Heading]]></value>
+      <group>modules-boxes</group>
+    </definition>
+    <definition>
+    <definition>
+      <key>box_html_two_content</key>
+      <value><![CDATA[Enter HTML Two Box Content]]></value>
+      <group>modules-boxes</group>
+    </definition>
+    <definition>
+    <definition>
+      <key>box_html_three_heading</key>
+      <value><![CDATA[Enter HTML Three Box Heading]]></value>
+      <group>modules-boxes</group>
+    </definition>
+    <definition>
+    <definition>
+      <key>box_html_three_content</key>
+      <value><![CDATA[Enter HTML Three Box Content]]></value>
+      <group>modules-boxes</group>
+    </definition>
+    <definition>
+    <definition>
+      <key>box_html_four_heading</key>
+      <value><![CDATA[Enter HTML Four Box Heading]]></value>
+      <group>modules-boxes</group>
+    </definition>
+    <definition>
+    <definition>
+      <key>box_html_four_content</key>
+      <value><![CDATA[Enter HTML Four Box Content]]></value>
+      <group>modules-boxes</group>
+    </definition>
+    <definition>
   </definitions>  
 </language>

@@ -17,7 +17,7 @@ class utility {
   * @return string
   */
   public static function generateUID($_include_braces = false, $_include_dashes = false) {
-    mt_srand((double) microtime() * 10000);
+    mt_srand((double) microtime(true) * 10000);
     $charid = strtoupper(md5(uniqid(rand(), true)));
 
     $uid = substr($charid,  0, 8) . '-' .

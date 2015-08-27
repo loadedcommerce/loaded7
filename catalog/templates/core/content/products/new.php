@@ -11,7 +11,7 @@
 ?>
 <!--content/index/product_listing.php start-->
 <div class="row">
-  <h1 class="no-margin-top"><?php echo $lC_Template->getPageTitle(); ?></h1>
+  <h1 class="page-title"><?php echo $lC_Template->getPageTitle(); ?></h1>
   
   <div id="content-product-listing-category-description-container">
     <?php 

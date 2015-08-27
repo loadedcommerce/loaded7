@@ -220,6 +220,32 @@
     }
 
 /**
+ * Display all banners based on banners_group.
+ *
+ * @access public
+ * @return array
+ */
+
+    public function getAllByGroup($banners_group = null) {
+      global $lC_Database;
+
+      $Qbanner = $lC_Database->query('select * from :table_banners where banners_group = :banners_group and status = "1"');
+      $Qbanner->bindTable(':table_banners', TABLE_BANNERS);
+      $Qbanner->bindValue(':banners_group', $banners_group);
+      $Qbanner->execute();      
+      
+      if( $Qbanner->numberOfRows() > 0 ){
+        while ( $Qbanner->next() ) {
+          if ( strtotime(lC_DateTime::getNow()) <= strtotime($Qbanner->value('expires_date')) ) {
+            $banners[] = $Qbanner->toArray();
+          }
+        }
+      }
+      
+      return $banners;
+    }
+
+/**
  * Return the URL assigned to the banner
  *
  * @param int $id The ID of the banner

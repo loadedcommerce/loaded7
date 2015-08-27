@@ -220,7 +220,7 @@ class lC_Login_Admin {
     $api_version = (defined('API_VERSION') && API_VERSION != NULL) ? API_VERSION : '1_0';
     $request_type = getRequestType();
     $resultXML = transport::getResponse(array('url' => $request_type . '://api.loadedcommerce.com/' . $api_version . '/check/serial/', 'method' => 'post', 'parameters' => $validateArr, 'timeout' => 10));  
-    $resultArr = utility::xml2arr($resultXML);
+    $resultArr = utility::xml2arr($resultXML); 
     
     if (count($resultArr) == 0) {  // there was an error with the api
       $error = true;
