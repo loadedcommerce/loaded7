@@ -619,10 +619,7 @@ if (!function_exists('lc_get_country_data')) {
      // It is conceivable that people might still want single line-breaks
      // without breaking into a new paragraph.
      if ($line_breaks == true){
-     	$data_string = str_replace("\n\n", "</p><p>", trim($string));
-     	$data_string = str_replace("\n", "<br>", trim($data_string));
-     	$data_string = str_replace("</p><p>", "</p>\n<p>", trim($data_string));
-     	return '<p>'.$data_string.'</p>';
+       return '<p>'.preg_replace(array("/([\n]{2,})/i", "/([^>])\n([^<])/i"), array("</p>\n<p>", '<br'.($xml == true ? ' /' : '').'>'), trim($string)).'</p>';
      } else {
        return '<p>'.preg_replace("/([\n]{1,})/i", "</p>\n<p>", trim($string)).'</p>';
      }

@@ -123,10 +123,8 @@ $error = (isset($_GET['error']) && $_GET['error'] != NULL) ? preg_replace('/[^A-
         </div>
         <?php
       }
+      ?>
       
-       // check if reviews service is active
-       if(isset($lC_Services) && $lC_Services->isStarted('reviews')){
-      ?>      
       <div class="content-products-info-reviews-container large-margin-bottom">
       <?php if ( SERVICE_REVIEW_HIDE_REVIEWS_RATING == 'No' ) { ?>
         <label class="content-products-info-reviews-rating-label with-padding-no-top-bottom"><?php echo $lC_Language->get('average_rating'); ?></label>
@@ -142,7 +140,6 @@ $error = (isset($_GET['error']) && $_GET['error'] != NULL) ? preg_replace('/[^A-
         ?>      
       </div>  
       <?php
-       }// reviews service check
       if ( $lC_Product->hasVariants() ) {
         ?>
         <div id="content-products-info-variants-container">
