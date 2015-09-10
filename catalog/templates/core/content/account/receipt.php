@@ -9,7 +9,8 @@
   @version    $Id: receipt.php v1.0 2013-08-08 datazen $
 */
 require_once($lC_Vqmod->modCheck('includes/classes/order.php'));
-$order = new lC_Order($_GET['receipt']); 
+$receipt = (int) $_GET['receipt'];
+$order = new lC_Order($receipt); 
 ?>
 <!--content/info/receipt.php start-->
 <div class="large-margin-top">
@@ -41,7 +42,7 @@ $order = new lC_Order($_GET['receipt']);
     </div>
     <div class="col-sm-6 col-lg-6">
       <div class="well text-right">
-        <h3 class="no-margin-top"><?php echo $lC_Language->get('receipt_order_number_title'); ?> <?php echo $_GET['receipt']; ?></h3>
+        <h3 class="no-margin-top"><?php echo $lC_Language->get('receipt_order_number_title'); ?> <?php echo $receipt; ?></h3>
         <div><strong><?php echo $lC_Language->get('receipt_order_date_title'); ?></strong> <?php echo lC_DateTime::getShort($order->info['date_purchased']); ?></div>
         <div><strong><?php echo $lC_Language->get('receipt_order_status_title'); ?></strong> <?php echo  $order->info['orders_status']; ?></div>
         <div><strong><?php echo $lC_Language->get('receipt_payment_method_title'); ?></strong> <?php echo $order->info['payment_method']; ?></div>        
