@@ -15,6 +15,10 @@ $order = new lC_Order($receipt);
 <!--content/info/receipt.php start-->
 <div class="large-margin-top">
 
+<?php
+if($order->customer['id'] == $_SESSION['lC_Customer_data']['id'])
+{
+?>
   <div class="row">
     <div class="col-sm-3 col-lg-3">
       <h1 class="logo"><a href="<?php echo lc_href_link(FILENAME_DEFAULT, '', 'NONSSL'); ?>"><img alt="<?php echo STORE_NAME; ?>" src="<?php echo DIR_WS_TEMPLATE_IMAGES; ?>logo.png" /></a></h1>
@@ -107,5 +111,21 @@ $order = new lC_Order($receipt);
     <button onclick="javascript:window.print();" class="pull-right btn btn-lg btn-success" type="button"><?php echo $lC_Language->get('text_print'); ?></button>
     <form action="<?php echo lc_href_link(FILENAME_ACCOUNT, 'orders', 'SSL'); ?>" method="post"><button onclick="$(this).closest('form').submit();" class="pull-left btn btn-lg btn-default" type="submit"><?php echo $lC_Language->get('button_back'); ?></button></form>
   </div>   
+<?php
+}
+else
+{
+?>
+  <div class="row">
+    <div class="col-sm-12 col-lg-12">
+      <h1>You are not authorized to view this page.</h1>
+    </div>
+  </div>
+  <div class="button-set clearfix large-margin-top">
+    <form action="<?php echo lc_href_link(FILENAME_ACCOUNT, 'orders', 'SSL'); ?>" method="post"><button onclick="$(this).closest('form').submit();" class="pull-left btn btn-lg btn-default" type="submit"><?php echo $lC_Language->get('button_back'); ?></button></form>
+  </div>   
+<?
+}
+?>
 </div>    
 <!--content/account/receipt.php end-->
