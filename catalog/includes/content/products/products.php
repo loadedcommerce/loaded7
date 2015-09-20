@@ -40,7 +40,8 @@ class lC_Products_Products extends lC_Template {
         $lC_Product->incrementCounter();
 
         if ( strtotime($lC_Product->getDateAvailable()) <= strtotime(lC_Datetime::getShort()) ) {
-        $this->addPageTags('description', substr(strip_tags($lC_Product->getDescription()),0,300));
+        $this->addPageTags('description', $lC_Product->getMetaDescription());
+        $this->addPageTags('keywords', $lC_Product->getMetaKeywords());
         $this->addPageTags('keywords', $lC_Product->getTitle());
         $this->addPageTags('keywords', $lC_Product->getModel());
 
@@ -90,6 +91,7 @@ class lC_Products_Products extends lC_Template {
         }
 
         $this->_page_title = $lC_Product->getTitle();
+        $this->_page_meta_title = $lC_Product->getMetaTitle();
       } else {
         $this->_page_title = $lC_Language->get('product_not_found_heading');
           $this->_page_contents = 'info_not_available.php';

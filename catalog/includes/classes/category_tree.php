@@ -72,7 +72,7 @@ class lC_CategoryTree {
     if ( $lC_Cache->isEnabled() && $lC_Cache->read('category_tree-' . $lC_Language->getCode(), 720) ) {
       $this->_data = $lC_Cache->getCache();
     } else {
-      $Qcategories = $lC_Database->query('select c.categories_id, c.categories_image, c.parent_id, c.categories_mode, c.categories_link_target, c.categories_custom_url, c.categories_status, c.categories_visibility_nav, c.categories_visibility_box, c.access_levels, cd.categories_name, cd.categories_menu_name from :table_categories c, :table_categories_description cd where c.categories_status = 1 and c.categories_id = cd.categories_id and cd.language_id = :language_id');
+      $Qcategories = $lC_Database->query('select c.categories_id, c.categories_image, c.parent_id, c.categories_mode, c.categories_link_target, c.categories_custom_url, c.categories_status, c.categories_visibility_nav, c.categories_visibility_box, c.access_levels, cd.categories_name, cd.categories_meta_title, cd.categories_meta_description, cd.categories_tags, cd.categories_menu_name from :table_categories c, :table_categories_description cd where c.categories_status = 1 and c.categories_id = cd.categories_id and cd.language_id = :language_id');
       $Qcategories->bindTable(':table_categories', TABLE_CATEGORIES);
       $Qcategories->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
       $Qcategories->bindInt(':language_id', $lC_Language->getID());
@@ -91,6 +91,9 @@ class lC_CategoryTree {
    
         $this->_data[$Qcategories->valueInt('parent_id')][$Qcategories->valueInt('categories_id')] = array('item_id' => $Qpermalink->valueInt('item_id'), 
                                                                                                            'name' => $Qcategories->value('categories_name'),
+                                                                                                           'meta_title' => $Qcategories->value('categories_meta_title'),
+                                                                                                           'meta_description' => $Qcategories->value('categories_meta_description'),
+                                                                                                           'meta_keywords' => $Qcategories->value('categories_tags'),
                                                                                                            'menu_name' => $Qcategories->value('categories_menu_name'),
                                                                                                            'query' => $Qpermalink->value('query'),
                                                                                                            'permalink' => $Qpermalink->value('permalink'),
@@ -380,6 +383,9 @@ class lC_CategoryTree {
         if ($id == $category_id) {
           return array('id' => $id,
                        'name' => $info['name'],
+                       'meta_title' => $info['meta_title'],
+                       'meta_keywords' => $info['meta_keywords'],
+                       'meta_description' => $info['meta_description'],
                        'item_id' => $info['item_id'],
                        'query' => $info['query'],
                        'permalink' => $info['permalink'],

@@ -13,6 +13,9 @@ class lC_Index_Index extends lC_Template {
   var $_module = 'index',
       $_group = 'index',
       $_page_title,
+      $_page_meta_title,
+      $_page_meta_description,
+      $_page_meta_keywords,
       $_page_contents = 'index.php',
       $_page_image = 'table_background_default.gif';
 
@@ -93,6 +96,9 @@ class lC_Index_Index extends lC_Template {
       if ( $lC_CategoryTree->getStatus($current_category_id) == 1 ) {
         // categry is enabled move on
         $this->_page_title = $lC_Category->getTitle();
+        $this->_page_meta_title = $lC_Category->getMetaTitle();
+        $this->_page_meta_description = $lC_Category->getMetaDescription();
+        $this->_page_meta_keywords = $lC_Category->getMetaKeywords();
 
         if ( $lC_Category->hasImage() ) {
           $this->_page_image = 'categories/' . $lC_Category->getImage();

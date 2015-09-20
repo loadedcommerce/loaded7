@@ -55,6 +55,27 @@ class lC_Template {
   */
   protected $_page_title;
   /**
+  * Holds the meta title of the page
+  *
+  * @var string
+  * @access protected
+  */
+  protected $_page_meta_title;
+  /**
+  * Holds the meta description of the page
+  *
+  * @var string
+  * @access protected
+  */
+  protected $_page_meta_description;
+  /**
+  * Holds the meta keywords of the page
+  *
+  * @var string
+  * @access protected
+  */
+  protected $_page_meta_keywords;
+  /**
   * Holds the image of the page
   *
   * @var string
@@ -268,12 +289,24 @@ class lC_Template {
     $meta_keywords = $lC_Template->getBranding('meta_keywords') != '' ? $lC_Template->getBranding('meta_keywords') : '';;
 
 
-    if($this->_module == 'index' && isset($_GET['cpath']) && (empty($_GET['cpath']) === false) ){
-      $tag_parts_title = $meta_title_prefix . $meta_delimeter . ($this->_page_title != '' ? $this->_page_title : $meta_title) . $meta_delimeter . $meta_title_suffix;
-      $tag_parts_description = $meta_description;
-      $tag_parts_keywords = ($this->_page_tags['keywords'] != '' ? implode(",", $this->_page_tags['keywords']) . ',' : '' ) . $meta_keywords;
+    if($this->_module == 'index'){
+	  if(is_object($lC_Category))
+	  {
+		  if($lC_Category->getData('meta_title') != "")
+			$tag_parts_title = $meta_title_prefix . $meta_delimeter . $lC_Category->getData('meta_title') . $meta_delimeter . $meta_title_suffix;
+		  else
+			$tag_parts_title = $meta_title_prefix . $meta_delimeter . ($this->_page_title != '' ? $this->_page_title : $meta_title) . $meta_delimeter . $meta_title_suffix;
+		  $tag_parts_description = ($lC_Category->getData('meta_description') != "")?$lC_Category->getData('meta_description'):$meta_description;
+		  $tag_parts_keywords = (($lC_Category->getData('meta_keywords') != "") ? $lC_Category->getData('meta_keywords'): '' ) . (($meta_keywords != "")?','.$meta_keywords:'');
+	  }
+	  else
+	  {
+		  $tag_parts_title = $meta_title_prefix . $meta_delimeter . ($this->_page_title != '' ? $this->_page_title : $meta_title) . $meta_delimeter . $meta_title_suffix;
+		  $tag_parts_description = $meta_description;
+		  $tag_parts_keywords = ($this->_page_tags['keywords'] != '' ? implode(",", $this->_page_tags['keywords']) . ',' : '' ) . $meta_keywords;
+	  }
     } else if($this->_group == 'products'){
-      $tag_parts_title =  $meta_title_prefix . $meta_delimeter . ($this->_page_title != '' ? $this->_page_title : $meta_title) . $meta_delimeter . $meta_title_suffix ;
+      $tag_parts_title =  $meta_title_prefix . $meta_delimeter . (trim($this->_page_meta_title) != '' ? $this->_page_meta_title : $this->_page_title) . $meta_delimeter . $meta_title_suffix ;
       $tag_parts_description .=  ($this->_page_tags['description'] != '' ? implode(",", $this->_page_tags['description']) . ' ' : '' ) .$meta_description ;
       $tag_parts_keywords =  ($this->_page_tags['keywords'] != '' ? implode(",", $this->_page_tags['keywords']) . ',' : '' ) . $meta_keywords ;
     } else {

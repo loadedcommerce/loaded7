@@ -61,6 +61,39 @@
     }
 
 /**
+ * Return the meta title of the assigned category
+ *
+ * @access public
+ * @return string
+ */
+
+    public function getMetaTitle() {
+      return $this->_data['meta_title'];
+    }
+
+/**
+ * Return the meta description of the assigned category
+ *
+ * @access public
+ * @return string
+ */
+
+    public function getMetaDescription() {
+      return $this->_data['meta_description'];
+    }
+
+/**
+ * Return the meta keywords of the assigned category
+ *
+ * @access public
+ * @return string
+ */
+
+    public function getMetaKeywords() {
+      return $this->_data['meta_keywords'];
+    }
+
+/**
  * Check if the category has an image
  *
  * @access public
