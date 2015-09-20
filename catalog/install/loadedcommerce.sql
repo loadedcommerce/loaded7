@@ -168,6 +168,8 @@ CREATE TABLE IF NOT EXISTS lc_categories_description (
   categories_description text,
   categories_keyword text,
   categories_tags varchar(255) DEFAULT NULL,
+  categories_meta_title varchar(100) DEFAULT NULL,
+  categories_meta_description text,
   PRIMARY KEY (categories_id,language_id),
   KEY idx_categories_name (categories_name)
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
