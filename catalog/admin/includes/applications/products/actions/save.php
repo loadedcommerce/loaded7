@@ -43,6 +43,9 @@ class lC_Application_Products_Actions_save extends lC_Application_Products {
                     'products_description' => $_POST['products_description'],
                     'products_keyword' => $_POST['products_keyword'],
                     'products_tags' => $_POST['products_tags'],
+                    'products_meta_keywords' => $_POST['products_meta_keywords'],
+                    'products_meta_title' => $_POST['products_meta_title'],
+                    'products_meta_description' => $_POST['products_meta_description'],
                     'products_url' => $_POST['products_url'],
                     'has_children' => $has_variants,
                     'products_sort_order' => $_POST['products_sort_order']);

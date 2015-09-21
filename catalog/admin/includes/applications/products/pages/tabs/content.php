@@ -8,7 +8,7 @@
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: content.php v1.0 2013-08-08 datazen $
 */
-global $lC_Language, $pInfo, $products_description, $products_keyword, $products_tags; 
+global $lC_Language, $pInfo, $products_description, $products_keyword, $products_tags, $products_meta_keywords, $products_meta_title, $products_meta_description; 
 ?>
 <div id="section_general_content" class="with-padding">
   <div class="columns">
@@ -77,6 +77,18 @@ global $lC_Language, $pInfo, $products_description, $products_keyword, $products
                   <?php } ?>
                     <label class="label" for="<?php echo 'products_tags[' . $l['id'] . ']'; ?>"><?php echo $lC_Language->get('field_tags') . lc_show_info_bubble($lC_Language->get('info_bubble_content_tags')); ?></label>
                     <?php echo lc_draw_input_field('products_tags[' . $l['id'] . ']', (isset($pInfo) && isset($products_tags[$l['id']]) ? $products_tags[$l['id']] : null), 'id="products_tags_' . $l['id'] . '" class="input" style="width:97%" maxlength="255"'); ?>
+                  </p>
+                  <p class="button-height block-label">
+                    <label class="label" for="<?php echo 'products_meta_keywords[' . $l['id'] . ']'; ?>"><?php echo $lC_Language->get('field_meta_keywords') . lc_show_info_bubble($lC_Language->get('info_bubble_content_meta_keywords')); ?></label>
+                    <?php echo lc_draw_input_field('products_meta_keywords[' . $l['id'] . ']', (isset($pInfo) && isset($products_meta_keywords[$l['id']]) ? $products_meta_keywords[$l['id']] : null), 'id="products_meta_keywords_' . $l['id'] . '" class="input" style="width:97%" maxlength="255"'); ?>
+                  </p>
+                  <p class="button-height block-label">
+                    <label class="label" for="<?php echo 'products_meta_title[' . $l['id'] . ']'; ?>"><?php echo $lC_Language->get('field_meta_title') . lc_show_info_bubble($lC_Language->get('info_bubble_content_meta_title')); ?></label>
+                    <?php echo lc_draw_input_field('products_meta_title[' . $l['id'] . ']', (isset($pInfo) && isset($products_meta_title[$l['id']]) ? $products_meta_title[$l['id']] : null), 'id="products_meta_title_' . $l['id'] . '" class="input" style="width:97%" maxlength="255"'); ?>
+                  </p>
+                  <p class="button-height block-label">
+                    <label class="label" for="<?php echo 'products_meta_description[' . $l['id'] . ']'; ?>"><?php echo $lC_Language->get('field_meta_description') . lc_show_info_bubble($lC_Language->get('info_bubble_content_meta_description')); ?></label>
+                    <?php echo lc_draw_textarea_field('products_meta_description[' . $l['id'] . ']', (isset($pInfo) && isset($products_meta_description[$l['id']]) ? $products_meta_description[$l['id']] : null), null, 3, 'id="products_meta_description_' . $l['id'] . '" class="input full-width autoexpanding"'); ?>
                   </p>
                 </fieldset>
               </div><div style="clear:both;"></div>

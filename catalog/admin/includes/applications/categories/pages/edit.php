@@ -134,6 +134,20 @@ TD { padding: 5px 0 0 5px; }
                           </label>
                           <?php echo lc_draw_input_field('categories_tags[' . $l['id'] . ']', (isset($cInfo) && isset($cInfo[$l['id']]['categories_tags']) ? $cInfo[$l['id']]['categories_tags'] : null), 'class="input full-width mid-margin-top"'); ?>
                         </p>
+                        <p class="button-height block-label">
+                          <label class="label" for="<?php echo 'categories_meta_title[' . $l['id'] . ']'; ?>">
+                            <?php echo $lC_Language->get('field_meta_title'); ?>
+                            <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_categories_meta_title'), null); ?>
+                          </label>
+                          <?php echo lc_draw_input_field('categories_meta_title[' . $l['id'] . ']', (isset($cInfo) && isset($cInfo[$l['id']]['categories_meta_title']) ? $cInfo[$l['id']]['categories_meta_title'] : null), 'class="input full-width mid-margin-top"'); ?>
+                        </p>
+                        <p class="button-height block-label">
+                          <label class="label" for="<?php echo 'categories_meta_descritions[' . $l['id'] . ']'; ?>">
+                            <?php echo $lC_Language->get('field_meta_descriptions'); ?>
+                            <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_categories_meta_descriptions'), null); ?>
+                          </label>
+                          <?php echo lc_draw_textarea_field('categories_meta_description[' . $l['id'] . ']', (isset($cInfo) && isset($cInfo[$l['id']]['categories_meta_description']) ? $cInfo[$l['id']]['categories_meta_description'] : null), null, 1, 'class="input full-width mid-margin-top"'); ?>
+                        </p>
                       </div>
                       <div class="clear-both"></div>
                       <?php

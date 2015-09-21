@@ -33,6 +33,8 @@ class lC_Application_Categories_Actions_save extends lC_Application_Categories {
                         'blurb' =>  $_POST['categories_blurb'],
                         'description' =>  $_POST['categories_description'],
                         'permalink' =>  $_POST['categories_permalink'],
+                        'meta_title' =>  $_POST['categories_meta_title'],
+                        'meta_description' =>  $_POST['categories_meta_description'],
                         'tags' =>  $_POST['categories_tags']);
                         
           // access levels

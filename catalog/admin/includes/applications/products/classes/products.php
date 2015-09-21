@@ -8,6 +8,7 @@
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: products.php v1.0 2013-08-08 datazen $
 */
+ini_set('memory_limit', '-1');
 global $lC_Vqmod;   
 
 if (!defined('DIR_FS_ADMIN')) return false;
@@ -798,9 +799,9 @@ class lC_Products_Admin {
         $Qchk1->execute();       
 
         if (is_numeric($id) && $Qchk1->numberOfRows() == 1) {
-          $Qpd = $lC_Database->query('update :table_products_description set products_name = :products_name, products_blurb = :products_blurb, products_description = :products_description, products_keyword = :products_keyword, products_tags = :products_tags, products_url = :products_url where products_id = :products_id and language_id = :language_id');
+          $Qpd = $lC_Database->query('update :table_products_description set products_name = :products_name, products_blurb = :products_blurb, products_description = :products_description, products_keyword = :products_keyword, products_tags = :products_tags, products_meta_title = :products_meta_title, products_meta_keywords = :products_meta_keywords, products_meta_description = :products_meta_description, products_url = :products_url where products_id = :products_id and language_id = :language_id');
         } else {
-          $Qpd = $lC_Database->query('insert into :table_products_description (products_id, language_id, products_name, products_blurb, products_description, products_keyword, products_tags, products_url) values (:products_id, :language_id, :products_name, :products_blurb, :products_description, :products_keyword, :products_tags, :products_url)');
+          $Qpd = $lC_Database->query('insert into :table_products_description (products_id, language_id, products_name, products_blurb, products_description, products_keyword, products_tags, products_meta_title, products_meta_keywords, products_meta_description, products_url) values (:products_id, :language_id, :products_name, :products_blurb, :products_description, :products_keyword, :products_tags, :products_meta_title, :products_meta_keywords, :products_meta_description, :products_url)');
         }
         
         $Qchk1->freeResult();
@@ -813,6 +814,9 @@ class lC_Products_Admin {
         $Qpd->bindValue(':products_description', $data['products_description'][$l['id']]);
         $Qpd->bindValue(':products_keyword', $data['products_keyword'][$l['id']]);
         $Qpd->bindValue(':products_tags', $data['products_tags'][$l['id']]);
+        $Qpd->bindValue(':products_meta_title', $data['products_meta_title'][$l['id']]);
+        $Qpd->bindValue(':products_meta_keywords', $data['products_meta_keywords'][$l['id']]);
+        $Qpd->bindValue(':products_meta_description', $data['products_meta_description'][$l['id']]);
         $Qpd->bindValue(':products_url', $data['products_url'][$l['id']]);
         $Qpd->setLogging($_SESSION['module'], $products_id);
         $Qpd->execute();
@@ -1063,7 +1067,7 @@ class lC_Products_Admin {
           $Qdesc->execute();
 
           while ( $Qdesc->next() ) {
-            $Qnewdesc = $lC_Database->query('insert into :table_products_description (products_id, language_id, products_name, products_blurb, products_description, products_keyword, products_tags, products_url, products_viewed) values (:products_id, :language_id, :products_name, :products_blurb, :products_description, :products_keyword, :products_tags, :products_url, 0)');
+            $Qnewdesc = $lC_Database->query('insert into :table_products_description (products_id, language_id, products_name, products_blurb, products_description, products_keyword, products_tags, products_meta_title, products_meta_keywords, products_meta_description, products_url, products_viewed) values (:products_id, :language_id, :products_name, :products_blurb, :products_description, :products_keyword, :products_tags, :products_meta_title, :products_meta_keywords, :products_meta_description, :products_url, 0)');
             $Qnewdesc->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
             $Qnewdesc->bindInt(':products_id', $new_product_id);
             $Qnewdesc->bindInt(':language_id', $Qdesc->valueInt('language_id'));
@@ -1072,6 +1076,9 @@ class lC_Products_Admin {
             $Qnewdesc->bindValue(':products_description', $Qdesc->value('products_description'));
             $Qnewdesc->bindValue(':products_keyword', $Qdesc->value('products_keyword') . '-copy');
             $Qnewdesc->bindValue(':products_tags', $Qdesc->value('products_tags'));
+            $Qnewdesc->bindValue(':products_meta_title', $Qdesc->value('products_meta_title'));
+            $Qnewdesc->bindValue(':products_meta_keywords', $Qdesc->value('products_meta_keywords'));
+            $Qnewdesc->bindValue(':products_meta_description', $Qdesc->value('products_meta_description'));
             $Qnewdesc->bindValue(':products_url', $Qdesc->value('products_url'));
             $Qnewdesc->setLogging($_SESSION['module'], $new_product_id);
             $Qnewdesc->execute();

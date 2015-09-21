@@ -17,7 +17,7 @@
   if ( is_numeric($_GET[$lC_Template->getModule()]) ) {
     $lC_ObjectInfo = new lC_ObjectInfo(lC_Products_Admin::get($_GET[$lC_Template->getModule()]));
     $attributes = $lC_ObjectInfo->get('attributes');
-    $Qpd = $lC_Database->query('select products_name, products_blurb, products_description, products_keyword, products_tags, products_url, language_id from :table_products_description where products_id = :products_id');
+    $Qpd = $lC_Database->query('select products_name, products_blurb, products_description, products_keyword, products_tags, products_meta_title, products_meta_keywords, products_meta_description, products_url, language_id from :table_products_description where products_id = :products_id');
     $Qpd->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
     $Qpd->bindInt(':products_id', $lC_ObjectInfo->getInt('products_id'));
     $Qpd->execute();
@@ -26,6 +26,9 @@
     $products_description = array();
     $products_keyword = array();
     $products_tags = array();
+    $products_meta_title = array();
+    $products_meta_keywords = array();
+    $products_meta_description = array();
     $products_url = array();
     while ($Qpd->next()) {
       $products_name[$Qpd->valueInt('language_id')] = $Qpd->value('products_name');
@@ -33,6 +36,9 @@
       $products_description[$Qpd->valueInt('language_id')] = $Qpd->value('products_description');
       $products_keyword[$Qpd->valueInt('language_id')] = $Qpd->value('products_keyword');
       $products_tags[$Qpd->valueInt('language_id')] = $Qpd->value('products_tags');
+      $products_meta_title[$Qpd->valueInt('language_id')] = $Qpd->value('products_meta_title');
+      $products_meta_keywords[$Qpd->valueInt('language_id')] = $Qpd->value('products_meta_keywords');
+      $products_meta_description[$Qpd->valueInt('language_id')] = $Qpd->value('products_meta_description');
       $products_url[$Qpd->valueInt('language_id')] = $Qpd->value('products_url');
     }
   }
