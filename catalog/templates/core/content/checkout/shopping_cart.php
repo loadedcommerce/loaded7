@@ -274,7 +274,7 @@ function _update(row, qty) {
       $('#btn-checkout').attr('onclick', href);
       if (stockCheck == true) {
         if (disableAddToCart == true) {
-          if (data.priceData.qoh < $('#products_' + row).val()) {
+          if (parseInt(data.priceData.qoh) < $('#products_' + row).val()) {
             $('#lowqoh').modal();
             $("#btn-checkout").attr('disabled', 'disabled');
           } else {

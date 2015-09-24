@@ -300,7 +300,7 @@ function refreshPrice() {
       $('#btn-buy-now').attr('onclick', href);
       if (stockCheck == true) {
         if (disableAddToCart == true) {
-          if (data.qoh < $("#quantity").val()) {
+          if (parseInt(data.qoh) < $("#quantity").val()) {
             $('#lowqoh').modal();
             $("#btn-buy-now").attr('disabled', 'disabled');
           } else {
