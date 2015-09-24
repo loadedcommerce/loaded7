@@ -12,12 +12,12 @@ if ($lC_Payment->hasIframeParams()) {
   $params = utility::nvp2arr($lC_Payment->getIframeParams());
   $fWidth = (isset($params['width']) && empty($params['width']) === false) ? $params['width'] : '550px';
   $fHeight = (isset($params['height']) && empty($params['height']) === false) ? $params['height'] : '550px';
-  $fScroll = (isset($params['scroll']) && empty($params['scroll']) === false) ? $params['scroll'] : 'no';
+  $fScroll = (isset($params['scroll']) && empty($params['scroll']) === false) ? $params['scroll'] : 'auto';
   $fStyle = (isset($params['margin-left']) && empty($params['margin-left']) === false) ? 'style="margin-left:' . $params['margin-left'] . '"' : null;
 } else {
   $fWidth = '550px';
   $fHeight = '550px';
-  $fScroll = 'no';
+  $fScroll = 'auto';
   $fStyle = null;
 }
 $secureUrl = ($lC_Payment->hasIframeURL()) ? substr($lC_Payment->getIframeURL(), 0, strpos($lC_Payment->getIframeURL(), '?')) : (($lC_Payment->hasRelayURL()) ?  $lC_Payment->getRelayURL() : NULL);
