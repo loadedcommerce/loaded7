@@ -221,14 +221,16 @@ class lC_LocalUpgrader extends lC_Upgrader {
                                                                              , 'last_modified'             => 'last_modified'
                                                                               )
                                  , 'categories_desc'                => array(
-                                                                               'categories_id'          => 'categories_id'
-                                                                             , 'language_id'            => 'language_id'
-                                                                             , 'categories_name'        => 'categories_name'
-                                                                             , 'categories_menu_name'   => 'categories_menu_name'
-                                                                             , 'categories_blurb'       => 'categories_blurb'
-                                                                             , 'categories_description' => 'categories_description'
-                                                                             , 'categories_keyword'     => 'categories_keywords'
-                                                                             , 'categories_tags'        => 'categories_keywords_tags'
+                                                                               'categories_id'          		=> 'categories_id'
+                                                                             , 'language_id'            		=> 'language_id'
+                                                                             , 'categories_name'        		=> 'categories_name'
+                                                                             , 'categories_menu_name'   		=> 'categories_menu_name'
+                                                                             , 'categories_blurb'       		=> 'categories_blurb'
+                                                                             , 'categories_description' 		=> 'categories_description'
+                                                                             , 'categories_keyword'     		=> 'categories_keywords'
+                                                                             , 'categories_tags'				=> 'categories_head_keywords_tag'
+                                                                             , 'categories_meta_title'			=> 'categories_head_title_tag'
+                                                                             , 'categories_meta_description'	=> 'categories_head_desc_tag'
                                                                               )
                                  , 'page_categories'                => array(
                                                                                'categories_id'             => 'categories_id'
@@ -513,16 +515,17 @@ class lC_LocalUpgrader extends lC_Upgrader {
                                                                              , 'products_sort_order'    => 'sort_order'
                                                                               )                                                        
                                  , 'products_desc'                  => array(
-                                                                               'products_id'            => 'products_id'
-                                                                             , 'language_id'            => 'language_id'
-                                                                             , 'products_name'          => 'products_name'
-                                                                             , 'products_description'   => 'products_description'
-                                                                             , 'products_keyword'       => 'products_keyword'
-                                                                             , 'products_tags'          => 'products_tags'
-                                                                             , 'products_meta_title'    => 'products_meta_title'
-                                                                             , 'products_meta_keywords' => 'products_meta_keywords'
-                                                                             , 'products_url'           => 'products_url'
-                                                                             , 'products_viewed'        => 'products_viewed'
+                                                                               'products_id'            	=> 'products_id'
+                                                                             , 'language_id'            	=> 'language_id'
+                                                                             , 'products_name'          	=> 'products_name'
+                                                                             , 'products_description'   	=> 'products_description'
+                                                                             , 'products_keyword'       	=> 'products_keyword'
+                                                                             , 'products_tags'          	=> 'products_tags'
+                                                                             , 'products_meta_title'    	=> 'products_head_title_tag'
+                                                                             , 'products_meta_keywords' 	=> 'products_head_keywords_tag'
+                                                                             , 'products_meta_description'	=> 'products_head_desc_tag'
+                                                                             , 'products_url'           	=> 'products_url'
+                                                                             , 'products_viewed'        	=> 'products_viewed'
                                                                               )
                                  , 'products_images'                => array(
                                                                                'id'           => 'id'
@@ -2556,14 +2559,16 @@ class lC_LocalUpgrader extends lC_Upgrader {
         }
         
         $category  = array(
-                             'categories_id'          => $c_ID
-                           , 'language_id'            => $sQry->value('language_id')
-                           , 'categories_name'        => $sQry->value('categories_name')
-                           , 'categories_menu_name'   => ""
-                           , 'categories_blurb'       => ""
-                           , 'categories_description' => $sQry->value('categories_description')
-                           , 'categories_keyword'     => $c_keyword
-                           , 'categories_tags'        => $sQry->value('categories_head_keywords_tag')
+                             'categories_id'          		=> $c_ID
+                           , 'language_id'            		=> $sQry->value('language_id')
+                           , 'categories_name'        		=> $sQry->value('categories_name')
+                           , 'categories_menu_name'   		=> ""
+                           , 'categories_blurb'       		=> ""
+                           , 'categories_description' 		=> $sQry->value('categories_description')
+                           , 'categories_keyword'     		=> $c_keyword
+                           , 'categories_tags'        		=> $sQry->value('categories_head_keywords_tag')
+                           , 'categories_meta_title'        => $sQry->value('categories_head_title_tag')
+                           , 'categories_meta_description'	=> $sQry->value('categories_head_desc_tag')
                             ); 
 
         $tQry = $target_db->query('INSERT INTO :table_categories_desc (categories_id, 
@@ -2573,7 +2578,9 @@ class lC_LocalUpgrader extends lC_Upgrader {
                                                                        categories_blurb, 
                                                                        categories_description, 
                                                                        categories_keyword, 
-                                                                       categories_tags) 
+                                                                       categories_tags, 
+                                                                       categories_meta_title, 
+                                                                       categories_meta_description) 
                                                                VALUES (:categories_id, 
                                                                        :language_id, 
                                                                        :categories_name, 
@@ -2581,7 +2588,9 @@ class lC_LocalUpgrader extends lC_Upgrader {
                                                                        :categories_blurb, 
                                                                        :categories_description, 
                                                                        :categories_keyword, 
-                                                                       :categories_tags)');
+                                                                       :categories_tags, 
+                                                                       :categories_meta_title, 
+                                                                       :categories_meta_description)');
         
         $tQry->bindTable(':table_categories_desc', TABLE_CATEGORIES_DESCRIPTION);
         $tQry->bindInt  (':categories_id'         , $category['categories_id']);
@@ -2592,6 +2601,8 @@ class lC_LocalUpgrader extends lC_Upgrader {
         $tQry->bindValue(':categories_description', $category['categories_description']);
         $tQry->bindValue(':categories_keyword'    , $category['categories_keyword']);
         $tQry->bindValue(':categories_tags'       , substr($category['categories_tags'], 0, 255));
+        $tQry->bindValue(':categories_meta_title' , substr($category['categories_meta_title'], 0, 255));
+        $tQry->bindValue(':categories_meta_description', substr($category['categories_meta_description'], 0, 255));
         $tQry->execute();
         
         if ($target_db->isError()) {
