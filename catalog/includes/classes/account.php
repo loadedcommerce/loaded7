@@ -109,6 +109,15 @@
         
         lc_email($lC_Customer->getName(), $lC_Customer->getEmailAddress(), sprintf($lC_Language->get('email_create_account_subject'), STORE_NAME), $email_text, STORE_OWNER, STORE_OWNER_EMAIL_ADDRESS);
 
+//Build the admin notification email
+		$admin_email = "
+First Name: ". $lC_Customer->getFirstName() ."
+Last Name: ". $lC_Customer->getLastName() ."
+Email:  ". $lC_Customer->getEmailAddress() ."
+Registration Date: ".date('m/d/Y H:i:s');
+        $admin_email_text .= sprintf($lC_Language->get('email_create_account_admin'), $admin_email);
+        lc_email(STORE_OWNER, STORE_OWNER_EMAIL_ADDRESS, sprintf($lC_Language->get('email_create_account_admin_subject'), STORE_NAME), $admin_email_text, STORE_OWNER_EMAIL_ADDRESS, STORE_OWNER_EMAIL_ADDRESS);
+
         return true;
       }
 
