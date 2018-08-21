@@ -3,6 +3,5 @@
 
 Based on a 3rd generation e-commerce platform, Loaded 7 includes new mobile responsive template in both admin and catalog. 
 
-* Product Roadmap here http://www.loaded7.com/blog/loaded-7-roadmap/ 
-* Developer Forums here   http://www.loaded7.com/forums/
-* Release Notes here http://loadedcommerce.github.com/loaded7/
+We have stopped development on Loaded 7. Please see our Loaded 6 which we are continueing development on at
+https://gitlab.com/Loaded-commerce/Loaded6 
